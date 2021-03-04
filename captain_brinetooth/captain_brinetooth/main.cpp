@@ -18,7 +18,7 @@ int InitGame()
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 	Mix_Music* song;  
 	
-	song = Mix_LoadMUS("../Assets/music/forest.wav");
+	song = Mix_LoadMUS("../../../../Assets/music/forest.wav");
 
 	if (song == nullptr)
 		int n = 0;
