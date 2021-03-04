@@ -1,22 +1,29 @@
 #include <iostream>;
 #include "SDL.h"
 #include "box2d.h"
-#include <SDL_mixer.h>
+#include "SDL_mixer.h"
 
 using namespace std;
 
-void CrearJuego()
+int InitGame()
 {
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-	
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-	Mix_Music* song;
-	song = Mix_LoadMUS("../../../../Assets/music/song1.mp3");
-
+	SDL_Init(SDL_INIT_EVERYTHING);
 	//Creacion de ventana provisional
-	SDL_Window* window = SDL_CreateWindow("Captain Brinetooth", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_OPENGL);
+	SDL_Window* window = SDL_CreateWindow("PAC-MAN", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	Mix_PlayMusic(song, 0);
+	//Codigo Defensivo
+	if (window == nullptr || renderer == nullptr) throw ("Error loading window o renderer.");
+
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+	Mix_Music* song;  
+	
+	song = Mix_LoadMUS("../Assets/music/forest.wav");
+
+	if (song == nullptr)
+		int n = 0;
+
+	Mix_PlayMusic(song, -1);
 
 	//Bucle para probar que funciona la música
 	bool run = true;
@@ -27,10 +34,13 @@ void CrearJuego()
 			SDL_QUIT;
 		}
 	}
+
+	Mix_FreeMusic(song);
+	song = nullptr; 
 }
 
 int main(int argc, char* argv[])
 {
-	CrearJuego();
+	InitGame();
 	return 0;
 }
