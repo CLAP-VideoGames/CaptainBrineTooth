@@ -1,6 +1,7 @@
 #include <iostream>;
 #include "SDL.h"
 #include "box2d.h"
+#include <SDL_mixer.h>
 
 using namespace std;
 
