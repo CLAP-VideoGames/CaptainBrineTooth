@@ -13,6 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de origen\json">
+      <UniqueIdentifier>{14a72b96-4e3b-45b8-8bba-b9d01d9650c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\sdlutils">
+      <UniqueIdentifier>{8fd940b7-823f-49bb-87a2-2f8982a1ab23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\utils">
+      <UniqueIdentifier>{61e5adf6-0b35-4891-86af-6e32290f9940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\json">
+      <UniqueIdentifier>{5467a99d-da34-4f94-9651-41aa865b0973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\utils">
+      <UniqueIdentifier>{3ee5f713-ecce-4bc6-a99c-3191edffe965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\sdlutils">
+      <UniqueIdentifier>{3fdd93d9-8efd-46dc-8303-e4fc30f72dd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ecs">
+      <UniqueIdentifier>{0579cad1-2d47-4bce-8b86-a55bb9ac667e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\game">
+      <UniqueIdentifier>{a6581581-1d41-4e9c-a9bf-8bf6033bc215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\ecs">
+      <UniqueIdentifier>{85a7bab5-28ad-40d7-a869-5af3961d91fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\game">
+      <UniqueIdentifier>{fcf230d5-aa3e-4389-b9c8-8f909f003ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\components">
+      <UniqueIdentifier>{5f03bba9-d32d-4d6e-b53f-1a3238ac79a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -26,6 +59,96 @@
     </ClInclude>
     <ClInclude Include="captain_brinetooth.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="json\JSON.h">
+      <Filter>Archivos de encabezado\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\JSONValue.h">
+      <Filter>Archivos de encabezado\json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\simplejson_demo.h">
+      <Filter>Archivos de encabezado\json</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\Font.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\InputHandler.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\macros.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\Music.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\SDLUtils.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\RandomNumberGenerator.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\sdlutils_demo.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\SoundEffect.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\Texture.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="sdlutils\VirtualTimer.h">
+      <Filter>Archivos de encabezado\sdlutils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Collisions.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Singleton.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Vector2D.h">
+      <Filter>Archivos de encabezado\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="game\ecs_defs.h">
+      <Filter>Archivos de encabezado\game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Game.h">
+      <Filter>Archivos de encabezado\game</Filter>
+    </ClInclude>
+    <ClInclude Include="ecs\Component.h">
+      <Filter>Archivos de encabezado\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ecs\ecs.h">
+      <Filter>Archivos de encabezado\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ecs\ecs_defs_example.h">
+      <Filter>Archivos de encabezado\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ecs\Entity.h">
+      <Filter>Archivos de encabezado\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ecs\Manager.h">
+      <Filter>Archivos de encabezado\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ecs\mpl.h">
+      <Filter>Archivos de encabezado\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Bounce.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Image.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\KeyBoardCtrl.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Rectangle.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Rotate.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Transform.h">
+      <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -45,5 +168,49 @@
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="utils\Collisions.cpp">
+      <Filter>Archivos de origen\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Vector2D.cpp">
+      <Filter>Archivos de origen\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="sdlutils\RandomNumberGenerator.cpp">
+      <Filter>Archivos de origen\sdlutils</Filter>
+    </ClCompile>
+    <ClCompile Include="sdlutils\SDLUtils.cpp">
+      <Filter>Archivos de origen\sdlutils</Filter>
+    </ClCompile>
+    <ClCompile Include="sdlutils\sdlutils_demo.cpp">
+      <Filter>Archivos de origen\sdlutils</Filter>
+    </ClCompile>
+    <ClCompile Include="sdlutils\SoundEffect.cpp">
+      <Filter>Archivos de origen\sdlutils</Filter>
+    </ClCompile>
+    <ClCompile Include="sdlutils\Texture.cpp">
+      <Filter>Archivos de origen\sdlutils</Filter>
+    </ClCompile>
+    <ClCompile Include="json\JSON.cpp">
+      <Filter>Archivos de origen\json</Filter>
+    </ClCompile>
+    <ClCompile Include="json\JSONValue.cpp">
+      <Filter>Archivos de origen\json</Filter>
+    </ClCompile>
+    <ClCompile Include="json\somplejson_demo.cpp">
+      <Filter>Archivos de origen\json</Filter>
+    </ClCompile>
+    <ClCompile Include="game\Game.cpp">
+      <Filter>Archivos de origen\game</Filter>
+    </ClCompile>
+    <ClCompile Include="ecs\Entity.cpp">
+      <Filter>Archivos de origen\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="ecs\Manager.cpp">
+      <Filter>Archivos de origen\ecs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="base.resources.json">
+      <Filter>Archivos de origen</Filter>
+    </None>
   </ItemGroup>
 </Project>

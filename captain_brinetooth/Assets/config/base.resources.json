@@ -1,0 +1,16 @@
+{
+  "images": [
+    {
+      "id": "tennis_ball",
+      "file": "../../../../assets/images/tennis_ball.png"
+    }
+  ],
+
+  "sounds": [
+    {
+      "id": "forest",
+      "file": "../../../../assets/sounds/forest.wav"
+    }
+  ]
+
+}

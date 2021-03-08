@@ -1,0 +1,8 @@
+{  
+  "sounds" : [
+    {
+      "id": "forest",
+      "file": "../../../../assets/sounds/forest.wav"
+    }
+  ]
+}

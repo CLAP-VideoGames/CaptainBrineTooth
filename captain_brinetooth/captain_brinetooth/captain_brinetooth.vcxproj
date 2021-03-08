@@ -117,13 +117,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\libraries\SDL2-2.0.14\include;..\libraries\SDL2_image-2.0.5\include;..\libraries\Box2D\include;..\libraries\SDL2_mixer-2.0.4\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libraries\SDL2-2.0.14\include;..\libraries\SDL2_image-2.0.5\include;..\libraries\Box2D\include;..\libraries\SDL2_net-2.0.1\include;..\libraries\SDL2_mixer-2.0.4\include;..\libraries\SDL2_ttf-2.0.14\include..\libraries\SDL2_net-2.0.1\include;..\libraries\SDL2_mixer-2.0.4\include;..\libraries\SDL2_ttf-2.0.14\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libraries\SDL2-2.0.14\lib\x64; ..\libraries\SDL2_image-2.0.5\lib\x64;..\libraries\Box2D\libs;..\libraries\SDL2_mixer-2.0.4\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;box2d.lib;glad.lib;glfw.lib;imgui.lib;sajson.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libraries\Box2D\libs;..\libraries\SDL2_image-2.0.5\lib\x64;..\libraries\SDL2_mixer-2.0.4\lib\x64;..\libraries\SDL2_ttf-2.0.14\lib\x64;..\libraries\SDL2_net-2.0.1\lib\x64;..\libraries\SDL2-2.0.14\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_net.lib;SDL2_ttf.lib;box2d.lib;glad.lib;glfw.lib;imgui.lib;sajson.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,25 +134,68 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\libraries\SDL2-2.0.14\include;..\libraries\SDL2_image-2.0.5\include;..\libraries\Box2D\include;..\libraries\SDL2_mixer-2.0.4\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libraries\SDL2-2.0.14\include;..\libraries\SDL2_image-2.0.5\include;..\libraries\Box2D\include;..\libraries\SDL2_net-2.0.1\include;..\libraries\SDL2_mixer-2.0.4\include;..\libraries\SDL2_ttf-2.0.14\include..\libraries\SDL2_mixer-2.0.4\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libraries\SDL2-2.0.14\lib\x64; ..\libraries\SDL2_image-2.0.5\lib\x64;..\libraries\Box2D\libs;..\libraries\SDL2_mixer-2.0.4\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;box2d.lib;glad.lib;glfw.lib;imgui.lib;sajson.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\libraries\Box2D\libs;..\libraries\SDL2_image-2.0.5\lib\x64;..\libraries\SDL2_mixer-2.0.4\lib\x64;..\libraries\SDL2_ttf-2.0.14\lib\x64;..\libraries\SDL2_net-2.0.1\lib\x64;..\libraries\SDL2-2.0.14\lib\x64</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_net.lib;SDL2_ttf.lib;box2d.lib;glad.lib;glfw.lib;imgui.lib;sajson.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="captain_brinetooth.h" />
+    <ClInclude Include="components\Bounce.h" />
+    <ClInclude Include="components\Image.h" />
+    <ClInclude Include="components\KeyBoardCtrl.h" />
+    <ClInclude Include="components\Rectangle.h" />
+    <ClInclude Include="components\Rotate.h" />
+    <ClInclude Include="components\Transform.h" />
+    <ClInclude Include="ecs\Component.h" />
+    <ClInclude Include="ecs\ecs.h" />
+    <ClInclude Include="ecs\ecs_defs_example.h" />
+    <ClInclude Include="ecs\Entity.h" />
+    <ClInclude Include="ecs\Manager.h" />
+    <ClInclude Include="ecs\mpl.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="game\ecs_defs.h" />
+    <ClInclude Include="game\Game.h" />
+    <ClInclude Include="json\JSON.h" />
+    <ClInclude Include="json\JSONValue.h" />
+    <ClInclude Include="json\simplejson_demo.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="sdlutils\Font.h" />
+    <ClInclude Include="sdlutils\InputHandler.h" />
+    <ClInclude Include="sdlutils\macros.h" />
+    <ClInclude Include="sdlutils\Music.h" />
+    <ClInclude Include="sdlutils\RandomNumberGenerator.h" />
+    <ClInclude Include="sdlutils\SDLUtils.h" />
+    <ClInclude Include="sdlutils\sdlutils_demo.h" />
+    <ClInclude Include="sdlutils\SoundEffect.h" />
+    <ClInclude Include="sdlutils\Texture.h" />
+    <ClInclude Include="sdlutils\VirtualTimer.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="utils\Collisions.h" />
+    <ClInclude Include="utils\Singleton.h" />
+    <ClInclude Include="utils\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ecs\Entity.cpp" />
+    <ClCompile Include="ecs\Manager.cpp" />
+    <ClCompile Include="game\Game.cpp" />
+    <ClCompile Include="json\JSON.cpp" />
+    <ClCompile Include="json\JSONValue.cpp" />
+    <ClCompile Include="json\somplejson_demo.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="sdlutils\RandomNumberGenerator.cpp" />
+    <ClCompile Include="sdlutils\SDLUtils.cpp" />
+    <ClCompile Include="sdlutils\sdlutils_demo.cpp" />
+    <ClCompile Include="sdlutils\SoundEffect.cpp" />
+    <ClCompile Include="sdlutils\Texture.cpp" />
+    <ClCompile Include="utils\Collisions.cpp" />
+    <ClCompile Include="utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc" />
@@ -160,6 +203,9 @@
   <ItemGroup>
     <Image Include="captain_brinetooth.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="base.resources.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
