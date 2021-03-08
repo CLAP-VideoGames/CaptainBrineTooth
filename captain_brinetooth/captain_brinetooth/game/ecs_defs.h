@@ -9,6 +9,7 @@ class KeyBoardCtrl;
 class Bounce;
 class Image;
 class Rotate;
+class FramedImage;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -16,7 +17,8 @@ class Rotate;
 	KeyBoardCtrl,\
 	Bounce,\
 	Image,\
-	Rotate
+	Rotate,\
+FramedImage
 
 // groups
 

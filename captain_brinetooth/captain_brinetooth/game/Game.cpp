@@ -6,6 +6,7 @@
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Rotate.h"
 #include "../components/Image.h"
+#include "../components/FramedImage.h"
 #include "../components/Transform.h"
 #include "../ecs/ecs.h"
 #include "../ecs/Entity.h"
@@ -41,11 +42,19 @@ void Game::init() {
 
 
 	//Enemigo
+	
+	
 	auto* enemy1 = mngr_->addEntity();
 	enemy1->addComponent<Transform>(
 		Vector2D(sdlutils().width() / 3.0f, sdlutils().height() / 3.0f),
-		Vector2D(), 100.0f, 100.0f, 0.0f);
-	enemy1->addComponent<Image>(&sdlutils().images().at("Medusa"));
+		Vector2D(), 50.0f, 50.0f, 0.0f);
+	
+	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 0.0003f, 4);
+	
+	
+	auto* player = mngr_->addEntity();
+	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f),Vector2D(), 100.0f, 100.0f, 0.0f);
+	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5,3.0f,2);
 }
 
 void Game::start() {
