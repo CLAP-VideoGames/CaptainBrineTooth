@@ -30,6 +30,7 @@ void Game::init() {
 	SDLUtils::init("Captain BrineTooth", 800, 600,
 			"../../../../assets/config/base.resources.json");
 
+	//Player
 	auto *ball = mngr_->addEntity();
 	ball->addComponent<Transform>(
 			Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f),
@@ -37,6 +38,14 @@ void Game::init() {
 	ball->addComponent<Image>(&sdlutils().images().at("tennis_ball"));
 	ball->addComponent<Rotate>();
 	ball->addComponent<Bounce>();
+
+
+	//Enemigo
+	auto* enemy1 = mngr_->addEntity();
+	enemy1->addComponent<Transform>(
+		Vector2D(sdlutils().width() / 3.0f, sdlutils().height() / 3.0f),
+		Vector2D(), 100.0f, 100.0f, 0.0f);
+	enemy1->addComponent<Image>(&sdlutils().images().at("Medusa"));
 }
 
 void Game::start() {
