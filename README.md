@@ -30,19 +30,13 @@ El juego será producido utilizando Visual Studio y la librería SDL.
 | --- |
 | ![Logo](readmeImages/logo.jpg) |
 
-**Tabla de contenidos**
-
-1. Aspectos Generales
-2. Relato Breve y Parcial de una partida típica
-3. Menús y Modos de Juego
-
 **Documento**
 
 1. **Aspectos generales**
 
 Captain BrineTooth es un juego roguelike en el que se pretende transmitir al jugador una sensación de frenetismo y rapidez.
 
-_Insertar cosas relacionadas con la trama cuando esté decidida._
+Nuestro jugador controlará a un pescador gallego, quien ha naufragado en una isla aparentemente desierta, pero luego descubre que no está solo. Debido a varios residuos tóxicos de la 2º guerra mundial, varios peces han mutado volviéndose agresivos. Entonces, buscando una forma de salir de ahí, busca al enemigo más fuerte para derrotarlo y escapar
 
 La principal mecánica innovadora del juego es la mecánica de pesca, en la que el jugador utiliza su caña para intentar obtener un arma o mejora en un minijuego. El arma o mejora obtenida depende de la suerte del jugador y de su habilidad. Esto añade una cierta aleatoriedad a la partida que provoca que cada partida sea diferente.
 
@@ -82,9 +76,7 @@ El jugador tiene una cantidad limitada de cebos para pescar. Cada vez que lo int
 
 La caña irá bajando automáticamente y el jugador podrá moverse lateralmente, esquivando obstáculos. Habrá 3 capas de profundidad y cuanto más profundo llegue el jugador, mayor la calidad del recursos que consiga.
 
-(Si el jugador no tiene armas, y no consigue pescar nada, entonces usara un arma por defecto)
-
-El jugador podra salir del modo de pesca en cualquier momento, siempre que le de al boton ESC
+El jugador podrá salir del modo de pesca en cualquier momento, siempre que le de al boton ESC
 
 Ej Gráfico:
 
@@ -92,7 +84,7 @@ Ej Gráfico:
 
 MOVIMIENTO
 
-El jugador puede moverse lateralmente y saltar. Para moverse con más facilidad, podrá hacer un dash (que se ve como un slide). Además podra equiparse con armas y atacar con ellas.
+El jugador puede moverse lateralmente y saltar. Para moverse con más facilidad, podrá hacer un dash (que se ve como un slide). Además podrá equiparse con armas y atacar con ellas.
 
 SISTEMA DE COMBATE
 
@@ -102,11 +94,10 @@ ECONOMÍA
 
 El jugador puede conseguir monedas en una sala especial (cofre del tesoro), con las cuales podrá comprar armas y desbloquearlas para ese &quot;intento&quot;. Cada cofre suelta 500 Monedas
 
-- Ratio de aparicion
+- Ratio de aparición
   - 1º nivel = 1 cofre
   - 2º nivel = 2 cofres
   - 3º nivel = 3 cofres
-- (Cuanto costará cada arma? Cuanto dinero da el cofre?)
 
   3.2. **Dinámica**
 
@@ -128,7 +119,7 @@ Ahora pasamos a describir todo el contenido jugable del juego:
 
   4.1. **Historia**
 
-Pescador en la segunda guerra mundial. Naufragas en una isla la cual está contaminada por antiguos residuos tóxicos alemanes de la 2º guerra mundial. Los peces se empiezan a convertir en peces nazis y para salir de la isla tienes que llegar hasta Fishtler que es muy malo dependiendo de tu punto de vista respecto a la sociedad y la política y para nuestro pescador eso está mal.
+Pescador gallego en la segunda guerra mundial. Naufragas en una isla la cual está contaminada por antiguos residuos tóxicos alemanes de la 2º guerra mundial. Los peces se empiezan a convertir en peces nazis y para salir de la isla tienes que llegar hasta Fishtler que es muy malo dependiendo de tu punto de vista respecto a la sociedad y la política y para nuestro pescador eso está mal.
 
 [Idea para primer enemigo: un pez o algo que ves como se mete en un charco verde y se vuelve humanoide, se pone de pie y coge del suelo un sombrero nazi o algo y se rie o lo que sea].
 
@@ -148,11 +139,18 @@ Ej Gráfico:
 
 ![Niveles](readmeImages/niveles.jpg)
 
-Habrá 3 niveles diferentes, tal que tendran como principales diferencias:
+Habrá 3 niveles diferentes, tal que tendrán como principales diferencias:
 
 - La estética de los escenarios
-- Ciertos enemigos, y los tipos de sala que se genera.
+- Ciertos enemigos, y los tipos de sala que se generan.
 - Tipos de trampas
+- Nº de habitaciones
+
+El número de habitaciones de cada nivel se repartirán tal que:
+- 1º nivel = 12 habitaciones
+- 2º nivel = 10 habitaciones
+- 3º nivel = 8 habitaciones
+- Las habitaciones del cofre del tesoro y de pescar no cuentan en el número total de habitaciones
 
 Las trampas que habrá serán:
 
@@ -179,7 +177,7 @@ ROOMS ESPECIALES
   En este apartado describimos los personajes que van apareciendo en el juego:
     4.5.1. **Protagonista (Pescador)**
 
-Pescador: Hombre de unos X años, calvo, rechoncho y con barba, que tiene como hobby pescar y hacer armas. Por eso ha decidido pescar los peces mas extraños y agresivos para formar las armas más mortíferas posibles
+Pescador: Buen hombre, gallego calvo, rechoncho y con barba, que tiene como hobby pescar y hacer armas. Por eso ha decidido pescar los peces mas extraños y agresivos para formar las armas más mortíferas posibles
 
 **IMAGEN**
 
@@ -268,6 +266,29 @@ _ **Datos útiles sobre los enemigos** _
 
 ![Triton](readmeImages/triton.jpg)
 
+**FISHLER**
+- Fishler tendrá 2 fases. Al perder la mitad de su vida, liberara un pedo de tinta a modo de rugido(?) y cambiará de fase
+
+- Movimiento
+  - **[1º FASE]** Camina X pasos de forma normal hacia el jugador
+  - **[2º FASE]** Salta de forma impredecible (De una forma parecida al movimiento de la medusa)
+  - Placaje (Corre directamente hacia el jugador a modo de placaje)
+- Ataque sorpresa (El ataque es parecido al de ElfShark)
+  - Visualmente, se podrá ver a Fishler acariciar una MORENA / Pez Vibora. Si el jugador se acerca mucho, le muerde a modo de perro rabioso
+  - Si falla el ataque entonces usará un ataque a distancia random de estos 2
+    - Dispara de lejos com el FringeHead 
+    - **IMAGEN**
+    - ![Pistola](readmeImages/pistola.jpg)
+
+    - **[2º FASE]** Lanza puas con cierto ángulo como el Pompey Worm
+    - Visualmente, se verá como Fishler usa unas serpetinas que dispara erizos de mar
+    - ![Serpentinas](readmeImages/serpentinas.jpg)
+
+- VIDA = 5000-4000
+- **CONCEPT ART DE FISHLER**
+![Concept Fishler](readmeImages/conceptFishler.jpg)
+
+
   4.6. **Items**
 
 **CANTIMPLORA**
@@ -282,6 +303,10 @@ Item que restaura X anzuelos de vida. El jugador empezará con 2 usos como máxi
 - C: pez espada, shuriken
 
 - TODOS LOS DAÑOS DE LAS ARMAS TIENEN YA APLICADO EL X2 DEL DAÑO
+
+**MINIMAPA/BRÚJULA**
+El jugador podrá ver durante todo momento de la partida, el minimapa (Situada arriba a la derecha de la pantalla). Si no ha explorado X sala o esa sala no tiene nada en especial, aparecerá en blanco. Pero si es una zona de pescar o una habitacion del cofre del tesoro, entonces aparecera marcado
+![Minimapa](readmeImages/minimapa.jpg)
 
 **Armas CUERPO A CUERPO**
 
@@ -303,22 +328,9 @@ Item que restaura X anzuelos de vida. El jugador empezará con 2 usos como máxi
 | _Shuriken Estrellado_ | Se lanza un shuriken con forma de estrella que atraviesa enemigos | _Estrellas de mar con una cinta ninja??_ | _DAÑO_50 x golpe(75 x segundo) | PRECIO = 500 monedas(1 salas cofre) |
 | WhaleSome | _Dispara ondas ultrasónicas que hacen daño y noquean hacia atrás a los enemigos. Reduce la velocidad del jugador al cargar con una ballena mórbida_ | **OPCIONAL** | **DAÑO** 150 x golpe(300 x segundo) | PRECIO =2500 monedas (5 salas cofre) |
 
-**TIPOS DE MEJORAS**
-
-El jugador podrá conseguir todo tipo de mejoras relacionadas con la fauna marina. Las mejoras otorgan diferentes efectos al jugador, como aumentar estadísticas, efectos secundarios en enemigos (veneno u otros), o conseguir más botín al realizar ciertas acciones. Estas mejoras solo se podrán obtener durante la partida y al terminar la partida, todas las mejoras que haya conseguido el jugador se eliminaran.
-
-| Colgante de Coral | Reduce el daño recibido [Te quitan medio corazón en vez de 1 corazon] | ![Colgante De Coral Desactivado](readmeImages/colganteCoralDesactivado.jpg) ![Colgante De Coral](readmeImages/colganteCoral.jpg) |
-| --- | --- | --- |
-| Hoja de Alga | Aumenta la velocidad | ![Hoja De Alga Desactivada](readmeImages/hojaAlgaDesactivada.jpg) ![Hoja De Alga](readmeImages/hojaAlga.jpg) |
-| Brinestone (piedra salmuera) | Todas las armas tienen efecto de **Sal** | ![Brinestone Desactivada](readmeImages/brinestoneDesactivada.jpg) ![Brinestone](readmeImages/brinestone.jpg) |
-| Diente Piraña | Aumenta el ataque | ![Diente Pirania Desactivado](readmeImages/dientePiraniaDesactivado.jpg) ![Diente Pirania](readmeImages/dientePirania.jpg) |
-| Escama de Arapaima [Pez del Amazonas] | Cuando el jugador recibe daño, el enemigo recibe el mismo daño | ![Escama Desactivada](readmeImages/escamaDesactivada.jpg) ![Escama](readmeImages/escama.jpg) |
-| Amuleto de Pez volador | Doble Salto | ![Pez Volador Desactivado](readmeImages/pezVoladorDesactivado.jpg) ![Pez Volador](readmeImages/pezVolador.jpg) |
-| Sombrero de Ornitorrinco | Te hace parecer Cool | It&#39;s Perry, Perry the Platypus!! |
-
 **TIPOS DE EFECTOS**
 
-| Electrificar | Si un enemigo está electrificado, se le añade + 100 de daño al siguiente golpe que reciba y se le quita el efecto eléctrico (Por poner un ejemplo) | **Como se ve visualmente en el juego** |
+| Electrificar | Si un enemigo está electrificado, se le añade + 150 de daño al siguiente golpe que reciba y se le quita el efecto eléctrico (Por poner un ejemplo) | **Como se ve visualmente en el juego** |
 | --- | --- | --- |
 | Ralentizar | Reduce la velocidad de movimiento | --- |
 | Sal | El veneno de toda la vida. Hace 10 de daño x segundo | --- |
@@ -340,64 +352,28 @@ Habrá 4 ramas principales
 
 Algunas de las habilidades son:
 
-- Robo de vida = Matar 10 enemigos implica recuperar 1 anzuelo de vida
-- Aumento de velocidad de ataque: (Aumenta la rapidez con la que ataca)
 - Dash: un corto dash horizontal hacia donde esté mirando el jugador. ¿El jugador es inmune a todo tipo de daño mientras lo hace?
 - Doble salto
-- Escudo: un escudo que para un ataque. Cuando para un ataque se desactiva durante 30 segundos.
-- Malla de espinas: si el jugador recibe daño el enemigo recibe daño también.
-- Reducción de daño: el jugador recibe la mitad de daño.
+- Escudo: un escudo que anula un golpe. Cuando para un ataque se desactiva durante 30 segundos.
 - Counter: si el jugador pulsa una tecla y recibe un golpe durante un cierto periodo de tiempo pequeño, bloquea el ataque (anulando el daño) y le hace un daño fijo de **XXXXXXXXXXXXXXX**
   - El pescador esconde las armas, bloquea el ataque con el brazo, y pega una patada al enemigo
   - El pescador esconde las armas, bloquea el ataque con un salmón random y pega un BITCH SLAP (con la mano o con un salmon)
-- + Vida máxima: el jugador consigue una vida máxima más de forma permanente
-- + Capacidad cantimplora: aumenta en 1 el número de usos de la cantimplora.
-- Doble de daño: se aplica solo al daño base, no a los efectos (veneno, electrificar, malla de espinas, etc)
-- Arma venenosa: el jugador envenena al enemigo durante 10 segundos. El veneno quita vida al enemigo cada 2 segundos. Si el jugador envenena a un enemigo envenenado, simplemente se reinicia la duración del veneno (no es acumulativo)
-- Ralentizar a los enemigos: los enemigos se mueven a la mitad de velocidad durante 10 segundos tras ser golpeados por el jugador. Tampoco es acumulativo.
-- Electrificar?: los ataques del jugador aplican el efecto de electrificar al enemigo (pls nerf this shit).
+- Infección de anémonas: Matar a un enemigo, recupera 0.1 de un anzuelo (Solo se suma al total cuando llega al 0.5, lo que significa que tiene que matar 5 enemigos para que se aplique)
+- Special Counter: Si el counter tiene éxito entonces se aplica uno de estos efectos además del counter:
+  - Si el enemigo está en un rango cercano, entonces el efecto es **KNOCKBACK**
+  - Si el enemigo está lejos, entonces su velocidad de ataque se **RALENTIZA**
+- Dientes de piraña: se aplica sólo al daño base, no a los efectos (veneno, electrificar, malla de espinas, etc)
+- Armas en salmuera (Aumenta la rapidez con la que ataca)
+- Golpe de Arpón: 20% de realizar un crítico (crítico = +25% daño total)
+- Kit de anzuelos: el jugador consigue 2 anzuelos extras de vida (Equivalente a 4 golpes)
+- Agua potable: aumenta el número de usos de la cantimplora y se podrá usar un total de 3 veces.
+- Escamas de Arapaima: si el jugador recibe daño, el enemigo recibe 100 de daño.
 
-    1. **Versión 1**
+![Arbol](readmeImages/arbol.jpg)
 
-![Arbol 1](readmeImages/arbol1.jpg)
-
-    1. **Versión 2**
-
-![Arbol 2](readmeImages/arbol2.jpg)
-
-    1. **Versión 3**
-
-![Arbol 3](readmeImages/arbol3.jpg)
-
-**Referencias**
-
-- _Dead Cells_
-- _Hollow Knight_
-- _Enter The Gungeon_
-- _Binding of Isaac_
-
-_ **BRAINSTORMING** _
-
-**MINIMAPA/BRÚJULA**
-
-El jugador podrá acceder a un minimapa de forma que podrá ubicarse dentro del nivel aleatorio
-
-**OTROS ITEMS**
-
-- Desbloquear mapa
-- Llave Universal
-- ...
-
-ESCENARIOS
-
-- Trampas (Restos de barcos a modo de pinchos)
-- Piscina de pirañas (Cualquier personaje tiene X segundos para salir de la piscina, antes de hacer Y daño por segundo)
-- ¿Suelo inestable?
-- Placa de presion que abre una compuerta y deja caer un ancla que puede hacer insta kill a enemigos pequeños(??)
-- ThornFish (Antena con Moneda)
-
-PROGRESION NIVEL (3 niveles)
-
+5. **Progresión del juego**
+Aquí describimos nuestras estimaciones en cuanto a la dificultad de la partida y distribuimos enemigos y trampas de forma acorde:
+  5.1. **Progresión de los niveles**
 - 1º nivel
   - Medusa
   - ElfShark
@@ -417,8 +393,7 @@ PROGRESION NIVEL (3 niveles)
   - + Piscina de Pirañas
   - Ahora se busca joder al jugador. El jugador tendra su movilidad reducida por los Pompey Worm y su veneno que se queda tambien en las paredes/suelo. Los tritones le joderan con su patron de ataques impredecible y dificiles de matar. La piscina de pirañas, le obligara a no estar quieto en un mismo sitio porque sino recibira daño
 
-**ESTIMACION DAÑO POR NIVEL**
-
+  5.2.Estimación dificultad del juego
 _OJO, muchas estimaciones pueden variar dependiendo de el rango, rapidez y cadencia de algunos ataques recibidos y enemigos_
 
 - 1º PARTIDA (0 conocimiento de enemigos, 0 dinero, 0 manejo controles, llega al principio de la capa amarilla de pesca)
@@ -432,7 +407,7 @@ _OJO, muchas estimaciones pueden variar dependiendo de el rango, rapidez y caden
     - Lo mas probable es que no llegue, o se quede a principios de nivel
   - 3º Nivel
     - No llega ni Jesucristo armado con agua bendita purificando a estos sucios nazis
-- Varias Partidas (Conocimiento de enemigos de 1º nivel y parcial del segundo nivel, Ahorros suficientes como para comprar de vez en cuando un arma, puede pescar hasta la capa amarilla rozando la roja, manejo basico de controles, sabe usar bien las armas basicas del juego, sabe usar la cantimplora pero no usarlo en el momento correcto, sabe que existen mejoras y un arbol de habilidades pero no lo entiende muy bien)
+- Varias Partidas (Conocimiento de enemigos de 1º nivel y parcial del segundo nivel, Ahorros suficientes como para comprar de vez en cuando un arma, puede pescar hasta la capa amarilla rozando la roja, manejo basico de controles, sabe usar bien las armas básicas del juego, sabe usar la cantimplora pero no usarlo en el momento correcto, sabe que existen mejoras y un arbol de habilidades pero no lo entiende muy bien)
   - 1º Nivel (1-3 enemigos x nivel)
     - Medusa = 0-1 golpes x habitacion
     - ElfShark = (1-3 golpes) → 2 golpes x habitacion
@@ -525,32 +500,9 @@ _OJO, muchas estimaciones pueden variar dependiendo de el rango, rapidez y caden
     - Piscina Pirañas = 0-1 golpes x habitacion
     - TOTAL = 1.375-1.75 golpes x enemigo x habitacion
 
-Teniendo en cuenta los golpes que recibe el jugador, una buena cifra de golpes seria 20 golpes (Se mostrarian 10 de vida, y cada golpe, te quita medio anzuelo, y el usar la cantimplora restaura 2.5 de vida [5 golpes de recuperacion])
+**Referencias**
 
-La cifra ideal de habitaciones rondaria los 12 habitaciones en el primer nivel, 10 habitaciones en el 2º nivel, 8 habitaciones en el ultimo nivel
-
-**ROOM FISHLER Y PATRONES DE ATAQUE**
-
-- Movimiento
-  - Camina X pasos de forma normal hacia el jugador
-  - Salta de forma impredecible (Usar el movimiento de las medusas que van botando por ahi)
-  - Placaje (Corre directamente hacia el jugador a modo de placaje)
-- Ataque sorpresa (Usar ElfShark a modo de referencia)
-  - Visualmente, se podra ver a Fishler acariciar una MORENA / Pez Vibora. Si el jugador se acerca mucho, le muerde a modo de perror rabioso
-  - Si falla el ataque entonces usara un ataque a distancia random de estos 2
-    - Dispara de lejos com el FringeHead (Podriamos meter una pistola nazi) ![Pistola](readmeImages/pistola.jpg)
-    - Lanza puas con cierto angulo como el Pompey Worm (Se podrian usar serpentinas que liberen erizos de mar o algo por el estilo)
-
-![Serpentinas](readmeImages/serpentinas.jpg)
-
-- Si es golpeado cierto numero de veces, entonces libera una especie de pedo de tinta rapido alrededor de si mismo
-- 2 Fases
-- El aspecto de Fishler podria ser parecido al de Davy Jones de Piratas del Caribe pero hecho mas nazi
-
-![Concept Fishler](readmeImages/conceptFishler.jpg)
-
-ARBOL DE HABILIDADES DEFINITIVO
-
-**KnockBack (Copy paste to facil gg well played)**
-
-[**https://gamedev.stackexchange.com/questions/111604/making-knockback-in-c**](https://gamedev.stackexchange.com/questions/111604/making-knockback-in-c)
+- _Dead Cells_
+- _Hollow Knight_
+- _Enter The Gungeon_
+- _Binding of Isaac_
