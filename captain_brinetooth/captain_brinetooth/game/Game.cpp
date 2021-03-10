@@ -24,12 +24,8 @@ Game::~Game() {
 }
 
 void Game::init() {
-
-	//SDLUtils::init("Ping Pong", 800, 600,
-	//		"../../../../resources/config/pingpong.resources.json");
-	
 	SDLUtils::init("Captain BrineTooth", 800, 600,
-			"../../../../assets/config/base.resources.json");
+			"assets/config/base.resources.json");
 
 	//Player
 	auto *ball = mngr_->addEntity();
