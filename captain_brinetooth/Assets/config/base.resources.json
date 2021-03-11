@@ -2,25 +2,27 @@
   "images": [
     {
       "id": "tennis_ball",
-      "file": "assets/images/tennis_ball.png"
+      "file": "../../../../assets/images/tennis_ball.png"
     },
 
     {
       "id": "Medusa",
-      "file": "assets/sprites/medusa/medusa_anim.png"
+      "file": "../../../../assets/sprites/medusa/medusa_anim.png"
     },
-
-
     {
       "id": "Player",
-      "file": "assets/sprites/player/player_anim.png"
+      "file": "../../../../assets/sprites/player/player_anim.png"
+    },
+    {
+      "id": "Square",
+      "file": "../../../../assets/sprites/redsquare.png"
     }
   ],
 
   "sounds": [
     {
       "id": "forest",
-      "file": "assets/sounds/forest.wav"
+      "file": "../../../../assets/sounds/forest.wav"
     }
   ]
 

@@ -8,6 +8,7 @@
 
 #include "ecs.h"
 #include "Entity.h"
+#include "box2d.h"
 
 class Manager {
 public:
@@ -17,7 +18,7 @@ public:
 
 	// entities
 	Entity* addEntity() {
-		Entity *e = new Entity(this);
+		Entity *e = new Entity(this, world_);
 		if (e != nullptr) {
 			e->resetGroups();
 			entities_.emplace_back(e);
@@ -40,12 +41,18 @@ public:
 		return entities_;
 	}
 
+	inline b2World* getWorld() {
+		return world_;
+	}
+
 	void update();
 	void render();
 	void refresh();
 
 private:
 
+
+	b2World* world_;
 	std::vector<Entity*> entities_;
 	std::array<Entity*, ecs::maxHdlr> hdlrs_;
 

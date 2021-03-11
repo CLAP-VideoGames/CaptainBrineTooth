@@ -10,6 +10,8 @@
 #include "Component.h"
 #include "ecs.h"
 
+#include "box2d.h"
+
 class Manager;
 
 class Entity {
@@ -17,9 +19,10 @@ class Entity {
 
 public:
 
-	Entity(Manager *mngr) :
+	Entity(Manager* mngr, b2World* wrld) :
 			active_(true), //
 			mngr_(mngr), //
+			world_(wrld), //
 			cmpArray_(), //
 			groups_() //
 	{
@@ -85,6 +88,10 @@ public:
 		return mngr_;
 	}
 
+	inline b2World* getWorld() {
+		return world_;
+	}
+
 	inline bool isActive() const {
 		return active_;
 	}
@@ -126,6 +133,7 @@ private:
 
 	bool active_;
 	Manager *mngr_;
+	b2World* world_;
 	std::vector<Component*> components_;
 	std::array<Component*, ecs::maxComponent> cmpArray_;
 	std::bitset<ecs::maxGroup> groups_;

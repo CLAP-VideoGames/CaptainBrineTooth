@@ -2,6 +2,7 @@
 
 #pragma once
 #include <memory>
+#include "box2d.h"
 
 
 
@@ -16,6 +17,7 @@ public:
 	void init();
 	void start();
 private:
+	b2World* world_;
 	std::unique_ptr<Manager> mngr_;
 };
 

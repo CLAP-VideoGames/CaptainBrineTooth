@@ -5,9 +5,14 @@
 #include <algorithm>
 
 Manager::Manager() {
+
+	b2Vec2 gravity(0.0f, 9.8f);
+	world_ = new b2World(gravity);
 }
 
 Manager::~Manager() {
+	delete world_;
+
 	for (auto e : entities_) {
 		delete e;
 	}

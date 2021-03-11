@@ -153,6 +153,9 @@
     <ClInclude Include="components\FramedImage.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="components\BoxCollider.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -209,9 +212,6 @@
     </ClCompile>
     <ClCompile Include="ecs\Manager.cpp">
       <Filter>Archivos de origen\ecs</Filter>
-    </ClCompile>
-    <ClCompile Include="components\FramedImage.cpp">
-      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 
 #include "Game.h"
 
+#include "../components/BoxCollider.h"
 #include "../components/Bounce.h"
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Rotate.h"
@@ -18,6 +19,7 @@
 
 Game::Game() {
 	mngr_.reset(new Manager());
+	world_ = mngr_->getWorld();
 }
 
 Game::~Game() {
@@ -25,32 +27,52 @@ Game::~Game() {
 
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", 800, 600,
-			"assets/config/base.resources.json");
+			"../../../../assets/config/base.resources.json");
+	
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0.0f, 500.0f);
+	b2Body* groundBody = world_->CreateBody(&groundBodyDef);
 
-	//Player
-	auto *ball = mngr_->addEntity();
-	ball->addComponent<Transform>(
-			Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f),
-			Vector2D(), 10.0f, 10.0f, 0.0f);
-	ball->addComponent<Image>(&sdlutils().images().at("tennis_ball"));
-	ball->addComponent<Rotate>();
-	ball->addComponent<Bounce>();
+	//RealBox
+	b2PolygonShape groundBox;
+						//x/2, y/2
+	groundBox.SetAsBox(400.0f, 50.0f);
+											//density = 0 is not going to move
+	groundBody->CreateFixture(&groundBox, 0.0f);
 
 
-	//Enemigo
-	
-	
-	auto* enemy1 = mngr_->addEntity();
-	enemy1->addComponent<Transform>(
-		Vector2D(sdlutils().width() / 3.0f, sdlutils().height() / 3.0f),
-		Vector2D(), 50.0f, 50.0f, 0.0f);
-	
-	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6 , 100.0f, 4);
-	
-	
-	auto* player = mngr_->addEntity();
-	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f),Vector2D(), 100.0f, 100.0f, 0.0f);
-	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f,2);
+	//TestBox
+	auto* box = mngr_->addEntity();
+	box->addComponent<Transform>(Vector2D(sdlutils().width()/2.0f, sdlutils().height() / 2.0f), Vector2D(), 20.0f, 20.0f, 0.0f);
+	box->addComponent<Image>(&sdlutils().images().at("Square"));
+	box->addComponent<BoxCollider>();
+
+
+
+	////Player
+	//auto *ball = mngr_->addEntity();
+	//ball->addComponent<Transform>(
+	//		Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f),
+	//		Vector2D(), 10.0f, 10.0f, 0.0f);
+	//ball->addComponent<Image>(&sdlutils().images().at("tennis_ball"));
+	//ball->addComponent<Rotate>();
+	//ball->addComponent<Bounce>();
+
+
+	////Enemigo
+	//
+	//
+	//auto* enemy1 = mngr_->addEntity();
+	//enemy1->addComponent<Transform>(
+	//	Vector2D(sdlutils().width() / 3.0f, sdlutils().height() / 3.0f),
+	//	Vector2D(), 50.0f, 50.0f, 0.0f);
+	//
+	//enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 0.0003f, 4);
+	//
+	//
+	//auto* player = mngr_->addEntity();
+	//player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f),Vector2D(), 100.0f, 100.0f, 0.0f);
+	//player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5,3.0f,2);
 }
 
 void Game::start() {
@@ -70,6 +92,9 @@ void Game::start() {
 			exit = true;
 			continue;
 		}
+
+
+		world_->Step(1.0f / 60.0f, 6, 2);
 
 		mngr_->update();
 		mngr_->refresh();

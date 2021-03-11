@@ -10,6 +10,7 @@ class Bounce;
 class Image;
 class Rotate;
 class FramedImage;
+class BoxCollider;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -18,7 +19,8 @@ class FramedImage;
 	Bounce,\
 	Image,\
 	Rotate,\
-FramedImage
+	BoxCollider,\
+	FramedImage	
 
 // groups
 

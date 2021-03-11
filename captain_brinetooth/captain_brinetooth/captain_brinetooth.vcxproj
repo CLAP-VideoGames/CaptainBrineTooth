@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="captain_brinetooth.h" />
     <ClInclude Include="components\Bounce.h" />
+    <ClInclude Include="components\BoxCollider.h" />
     <ClInclude Include="components\FramedImage.h" />
     <ClInclude Include="components\Image.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
@@ -183,7 +184,6 @@
     <ClInclude Include="utils\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="components\FramedImage.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="game\Game.cpp" />

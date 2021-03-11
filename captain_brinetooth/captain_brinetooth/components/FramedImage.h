@@ -26,10 +26,10 @@ public:
 		assert(tr_ != nullptr);
 	}
 	void render() override {
-		SDL_Rect dest = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
-		tex_->render(src, dest);
-		if (sdlutils().currRealTime() > time + tiempoanimacion) {
+		if (sdlutils().currRealTime() > time +tiempoanimacion) {
 			time = sdlutils().currRealTime();
+			SDL_Rect dest = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
+			tex_->render(src, dest);
 			src = nextSrcRect();
 		}
 	}
@@ -44,7 +44,7 @@ private:
 				frame.set(0, 0);
 			}
 		} 
-		if (frame.getY() == size.getY() - 1 && frame.getX() > size.getX()-emptyframes-1)frame.set(Vector2D(0, 0)); //Si estamos en el ultimo sprite a recorrer
+		if (frame.getY() == size.getY() - 1 && frame.getX() > size.getX() - emptyframes - 1)frame.set(Vector2D(0, 0)); //Si estamos en el ultimo sprite a recorrer
 		Vector2D a(frame.getX() * frameSize.getX(), frame.getY() * frameSize.getY());
 		return build_sdlrect(a, frameSize.getX(), frameSize.getY());
 	}

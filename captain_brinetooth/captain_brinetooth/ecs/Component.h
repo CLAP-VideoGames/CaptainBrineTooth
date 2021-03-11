@@ -31,7 +31,6 @@ public:
 	}
 
 protected:
-	Entity *entity_;
-
+	Entity * entity_;
 };
 
