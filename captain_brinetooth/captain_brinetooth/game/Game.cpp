@@ -29,7 +29,13 @@ void Game::init() {
 	SDLUtils::init("Captain BrineTooth", 800, 600,
 			"../../../../assets/config/base.resources.json");
 	
-	b2BodyDef groundBodyDef;
+	//Test ground
+	auto* ground = mngr_->addEntity();
+	ground->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() * 0.8), Vector2D(), 20.0f, 20.0f, 0.0f);
+	ground->addComponent<Image>(&sdlutils().images().at("Square"));
+	ground->addComponent<BoxCollider>(false);
+
+	/*b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, 500.0f);
 	b2Body* groundBody = world_->CreateBody(&groundBodyDef);
 
@@ -38,14 +44,14 @@ void Game::init() {
 						//x/2, y/2
 	groundBox.SetAsBox(400.0f, 50.0f);
 											//density = 0 is not going to move
-	groundBody->CreateFixture(&groundBox, 0.0f);
+	groundBody->CreateFixture(&groundBox, 0.0f);*/
 
 
 	//TestBox
 	auto* box = mngr_->addEntity();
 	box->addComponent<Transform>(Vector2D(sdlutils().width()/2.0f, sdlutils().height() / 2.0f), Vector2D(), 20.0f, 20.0f, 0.0f);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
-	box->addComponent<BoxCollider>();
+	box->addComponent<BoxCollider>(true);
 
 
 

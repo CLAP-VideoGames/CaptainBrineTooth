@@ -11,9 +11,9 @@
 
 class BoxCollider : public Component {
 public:
-	BoxCollider()
+	BoxCollider(bool dynamic = false)
 	{
-
+		isDynamic = dynamic;
 	}
 
 	virtual ~BoxCollider() {
@@ -28,7 +28,13 @@ public:
 		assert(tr_ != nullptr);
 
 		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
+		if (isDynamic) {
+			bodyDef.type = b2_dynamicBody;
+		}
+		else {
+			bodyDef.type = b2_staticBody;
+		}
+		
 		bodyDef.position.Set(pos.getX(), pos.getY());
 		//Make the body
 		body = world->CreateBody(&bodyDef);
@@ -49,10 +55,21 @@ public:
 	void update() override {
 		auto& pos = tr_->getPos();
 
-		std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << std::endl;
+		//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << std::endl;
 
 		tr_->getPos().set(body->GetPosition().x, body->GetPosition().y);
 		tr_->setRot(body->GetAngle());
+
+		/*´Custom method to detect collisions and delete a body
+		b2ContactEdge* b;
+		
+		b = body->GetContactList();
+
+		if (b != nullptr && entra == false) {
+			std::cout << "Collided";
+			world->DestroyBody(b->contact->GetFixtureA()->GetBody());
+			entra = 1;
+		}*/
 
 	}
 
@@ -69,6 +86,8 @@ public:
 private:
 	Transform* tr_;
 	Vector2D pos, size;
+	bool isDynamic;
+	//bool entra = 0;
 
 	b2World* world = nullptr;
 	b2Body* body = nullptr;

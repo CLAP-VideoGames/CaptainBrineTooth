@@ -20,7 +20,7 @@ class BoxCollider;
 	Image,\
 	Rotate,\
 	BoxCollider,\
-	FramedImage	
+	FramedImage
 
 // groups
 
