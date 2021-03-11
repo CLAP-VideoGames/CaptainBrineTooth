@@ -11,6 +11,8 @@ class Image;
 class Rotate;
 class FramedImage;
 class BoxCollider;
+class Player_Health;
+class Armas_HUD;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -20,7 +22,9 @@ class BoxCollider;
 	Image,\
 	Rotate,\
 	BoxCollider,\
-	FramedImage
+	FramedImage,\
+	Player_Health,\
+	Armas_HUD
 
 // groups
 

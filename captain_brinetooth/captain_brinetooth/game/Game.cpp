@@ -13,6 +13,8 @@
 #include "../ecs/Entity.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../components/Player_Health.h"
+#include "../components/Armas_HUD.h"
 
 #include "../ecs/Manager.h"
 #include "../utils/Vector2D.h"
@@ -54,6 +56,9 @@ void Game::init() {
 	box->addComponent<BoxCollider>(true);
 
 
+	auto* HUD = mngr_->addEntity();
+	HUD->addComponent<Player_Health>(&sdlutils().images().at("vida"));
+	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 
 	////Player
 	//auto *ball = mngr_->addEntity();

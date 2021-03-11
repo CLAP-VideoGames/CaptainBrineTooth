@@ -16,6 +16,22 @@
     {
       "id": "Square",
       "file": "assets/sprites/redsquare.png"
+    },
+    {
+      "id": "vida",
+      "file": "assets/sprites/player/HUD/anzuelo.png"
+    },
+    {
+      "id": "sierra",
+      "file": "assets/sprites/armas/pez_sierra.png"
+    },
+    {
+      "id": "martillo",
+      "file": "assets/sprites/armas/tiburon_martillo.png"
+    },
+    {
+      "id": "espada",
+      "file": "assets/sprites/armas/pez_espada.png"
     }
   ],
 
