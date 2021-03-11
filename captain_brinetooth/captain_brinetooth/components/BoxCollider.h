@@ -53,8 +53,6 @@ public:
 	}
 
 	void update() override {
-		auto& pos = tr_->getPos();
-
 		//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << std::endl;
 
 		tr_->getPos().set(body->GetPosition().x, body->GetPosition().y);

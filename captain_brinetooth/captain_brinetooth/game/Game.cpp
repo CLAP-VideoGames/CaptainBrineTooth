@@ -27,11 +27,11 @@ Game::~Game() {
 
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", 800, 600,
-			"../../../../assets/config/base.resources.json");
+			"assets/config/base.resources.json");
 	
 	//Test ground
 	auto* ground = mngr_->addEntity();
-	ground->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() * 0.8), Vector2D(), 20.0f, 20.0f, 0.0f);
+	ground->addComponent<Transform>(Vector2D(sdlutils().width() / 2.08f, sdlutils().height() * 0.6), Vector2D(), 20.0f, 20.0f, 0.0f);
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
 	ground->addComponent<BoxCollider>(false);
 
