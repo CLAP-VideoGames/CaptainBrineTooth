@@ -26,6 +26,7 @@ public:
 	void init() override {
 		tr_ = entity_->getComponent<Transform>();
 		assert(tr_ != nullptr);
+
 	}
 
 	void update() override {

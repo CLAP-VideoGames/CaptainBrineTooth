@@ -2,6 +2,7 @@
 
 #include "Game.h"
 
+#include "../components/Rectangle.h"
 #include "../components/BoxCollider.h"
 #include "../components/Bounce.h"
 #include "../components/KeyBoardCtrl.h"
@@ -33,9 +34,14 @@ void Game::init() {
 	
 	//Test ground
 	auto* ground = mngr_->addEntity();
-	ground->addComponent<Transform>(Vector2D(sdlutils().width() / 2.08f, sdlutils().height() * 0.6), Vector2D(), 20.0f, 20.0f, 0.0f);
+	ground->addComponent<Transform>(Vector2D(-150 , 400), Vector2D(), sdlutils().width(), 10.0f, 0.0f);
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
-	ground->addComponent<BoxCollider>(false);
+	ground->addComponent<BoxCollider>(0.0f, false);
+
+	/*auto* ground2 = mngr_->addEntity();
+	ground2->addComponent<Transform>(Vector2D(0, sdlutils().height()), Vector2D(), sdlutils().width(), 10.0f, 0.0f);
+	ground2->addComponent<Image>(&sdlutils().images().at("Square"));
+	ground2->addComponent<BoxCollider>(0.0f, false);*/
 
 	/*b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, 500.0f);
@@ -51,14 +57,15 @@ void Game::init() {
 
 	//TestBox
 	auto* box = mngr_->addEntity();
-	box->addComponent<Transform>(Vector2D(sdlutils().width()/2.0f, sdlutils().height() / 2.0f), Vector2D(), 20.0f, 20.0f, 0.0f);
+	box->addComponent<Transform>(Vector2D(sdlutils().width()/1.7f, sdlutils().height()/1.5f), Vector2D(), 80.0f, 80.0f, 0.0f);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
-	box->addComponent<BoxCollider>(true);
+	box->addComponent<BoxCollider>(0.0f, true);
+	box->addComponent<KeyBoardCtrl>();
 
 
-	auto* HUD = mngr_->addEntity();
+	/*auto* HUD = mngr_->addEntity();
 	HUD->addComponent<Player_Health>(&sdlutils().images().at("vida"));
-	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
+	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));*/
 
 	////Player
 	//auto *ball = mngr_->addEntity();

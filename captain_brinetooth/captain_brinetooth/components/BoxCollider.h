@@ -3,16 +3,20 @@
 
 
 #include "box2d.h"
+#include <cmath>
 
 #include "../ecs/Component.h"
 #include "../ecs/Entity.h"
 #include "Transform.h"
 #include "../sdlutils/SDLUtils.h"
 
+const double PIXELS_IN_METERS = 100;
+
 class BoxCollider : public Component {
 public:
-	BoxCollider(bool dynamic = false)
+	BoxCollider(float rotation = 0.0f, bool dynamic = false)
 	{
+		rotation_ = rotation;
 		isDynamic = dynamic;
 	}
 
@@ -23,7 +27,10 @@ public:
 	void init() override {
 		tr_ = entity_->getComponent<Transform>();
 		pos = tr_->getPos();
-		size = Vector2D(tr_->getW(), tr_->getH());
+
+		//1 pixel(X) 0.0002645833 m
+		//then n pixels = n * 0.0002645833;
+		size = Vector2D(tr_->getW() / PIXELS_IN_METERS, tr_->getH() / PIXELS_IN_METERS);
 		world = entity_->getWorld();
 		assert(tr_ != nullptr);
 
@@ -35,7 +42,8 @@ public:
 			bodyDef.type = b2_staticBody;
 		}
 		
-		bodyDef.position.Set(pos.getX(), pos.getY());
+		bodyDef.position.Set(pos.getX() /PIXELS_IN_METERS, pos.getY() / PIXELS_IN_METERS);
+		//bodyDef.angle = rotation_;
 		//Make the body
 		body = world->CreateBody(&bodyDef);
 
@@ -52,12 +60,21 @@ public:
 		fixture = body->CreateFixture(&fixtureDef);
 	}
 
+	void setSpeed(Vector2D speed)
+	{
+		b2Vec2 vel = body->GetLinearVelocity();
+		vel.x = speed.getX(); vel.y = speed.getY();
+		body->SetLinearVelocity(vel);
+	}
+
 	void update() override {
-		//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << std::endl;
 
-		tr_->getPos().set(body->GetPosition().x, body->GetPosition().y);
-		tr_->setRot(body->GetAngle());
+		if(isDynamic)
+			std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
 
+		tr_->getPos().set(round((body->GetPosition().x * PIXELS_IN_METERS ) - tr_->getW()/2.0f), round((body->GetPosition().y * PIXELS_IN_METERS)- tr_->getH() / 2.0f));
+		tr_->setRot((body->GetAngle() * (180.0f))/ M_PI);
+		
 		/*´Custom method to detect collisions and delete a body
 		b2ContactEdge* b;
 		
@@ -85,6 +102,7 @@ private:
 	Transform* tr_;
 	Vector2D pos, size;
 	bool isDynamic;
+	float rotation_;
 	//bool entra = 0;
 
 	b2World* world = nullptr;

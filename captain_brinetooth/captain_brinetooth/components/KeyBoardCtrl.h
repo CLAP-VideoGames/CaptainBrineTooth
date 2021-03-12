@@ -13,7 +13,7 @@
 class KeyBoardCtrl: public Component {
 public:
 	KeyBoardCtrl() :
-			tr_(nullptr), speed_(10.0) {
+			tr_(nullptr), speed_(1.0) {
 	}
 	virtual ~KeyBoardCtrl() {
 	}
@@ -26,28 +26,30 @@ public:
 	void init() override {
 		tr_ = entity_->getComponent<Transform>();
 		assert(tr_ != nullptr);
+		collider_ = entity_->getComponent<BoxCollider>();
+		assert(collider_ != nullptr);
 	}
 
 	void update() override {
 		if (ih().keyDownEvent()) {
-			auto &vel = tr_->getVel();
+			assert(collider_ != nullptr);
 			if (ih().isKeyDown(SDL_SCANCODE_UP)) {
-				vel.setY(-speed_);
+				collider_->setSpeed(Vector2D(0.0f, -speed_));
 			} else if (ih().isKeyDown(SDL_SCANCODE_DOWN)) {
-				vel.setY(speed_);
+				collider_->setSpeed(Vector2D(0.0f, speed_));
 			} else if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
-				vel.setX(-speed_);
+				collider_->setSpeed(Vector2D(-speed_, 0.0f));
 			} else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
-				vel.setX(speed_);
+				collider_->setSpeed(Vector2D(speed_, 0.0f));
 			} else if (ih().isKeyDown(SDL_SCANCODE_SPACE)) {
-				vel.setY(0.0f);
-				vel.setX(0.0f);
+				collider_->setSpeed(Vector2D(0.0f, 0.0f));
 			}
 		}
 	}
 
 private:
 	Transform *tr_;
+	BoxCollider* collider_;
 	float speed_;
 }
 ;
