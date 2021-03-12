@@ -46,6 +46,9 @@
     <Filter Include="Archivos de encabezado\components">
       <UniqueIdentifier>{5f03bba9-d32d-4d6e-b53f-1a3238ac79a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="configJson">
+      <UniqueIdentifier>{eda6e058-ab0a-4b17-8e73-0890d3e486c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -221,8 +224,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="base.resources.json">
-      <Filter>Archivos de origen</Filter>
+    <None Include="..\assets\config\base.resources.json">
+      <Filter>configJson</Filter>
     </None>
   </ItemGroup>
 </Project>
