@@ -49,6 +49,9 @@
     <Filter Include="configJson">
       <UniqueIdentifier>{eda6e058-ab0a-4b17-8e73-0890d3e486c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\components">
+      <UniqueIdentifier>{dcde0b05-df85-400f-a228-dffc575b6898}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -221,6 +224,12 @@
     </ClCompile>
     <ClCompile Include="ecs\Manager.cpp">
       <Filter>Archivos de origen\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Player_Health.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Armas_HUD.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -63,9 +63,9 @@ void Game::init() {
 	box->addComponent<KeyBoardCtrl>();
 
 
-	/*auto* HUD = mngr_->addEntity();
+	auto* HUD = mngr_->addEntity();
 	HUD->addComponent<Player_Health>(&sdlutils().images().at("vida"));
-	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));*/
+	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 
 	////Player
 	//auto *ball = mngr_->addEntity();

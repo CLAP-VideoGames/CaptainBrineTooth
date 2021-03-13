@@ -1,11 +1,6 @@
 {
   "images": [
     {
-      "id": "tennis_ball",
-      "file": "assets/images/tennis_ball.png"
-    },
-
-    {
       "id": "Medusa",
       "file": "assets/sprites/medusa/medusa_anim.png"
     },
