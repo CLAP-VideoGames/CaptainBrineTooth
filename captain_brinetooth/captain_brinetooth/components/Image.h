@@ -27,6 +27,8 @@ public:
 		tex_->render(dest, tr_->getRot());
 	}
 
+	Texture* getTexture() { return tex_; }
+
 private:
 	Transform *tr_;
 	Texture *tex_;

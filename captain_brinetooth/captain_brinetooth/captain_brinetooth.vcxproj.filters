@@ -168,6 +168,12 @@
     <ClInclude Include="components\Armas_HUD.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
+    <ClInclude Include="components\framework.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="components\enemyMovement.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -229,6 +235,9 @@
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="components\Armas_HUD.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\enemyMovement.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>

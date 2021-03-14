@@ -55,7 +55,7 @@ public:
 		fixtureDef.shape = &boxShape;
 		//No puede ser la densidad 0 para un objeto dinamico
 		fixtureDef.density = 1.0f;
-		fixtureDef.friction = 3.0f;
+		fixtureDef.friction = 0.2f;
 
 		fixture = body->CreateFixture(&fixtureDef);
 	}
@@ -70,7 +70,7 @@ public:
 	void update() override {
 
 		if(isDynamic)
-			std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
+			//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
 
 		tr_->getPos().set(round((body->GetPosition().x * PIXELS_IN_METERS ) - tr_->getW()/2.0f), round((body->GetPosition().y * PIXELS_IN_METERS)- tr_->getH() / 2.0f));
 		tr_->setRot((body->GetAngle() * (180.0f))/ M_PI);

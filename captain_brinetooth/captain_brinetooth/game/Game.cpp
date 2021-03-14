@@ -16,6 +16,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../components/Player_Health.h"
 #include "../components/Armas_HUD.h"
+#include "..//components/enemyMovement.h"
 
 #include "../ecs/Manager.h"
 #include "../utils/Vector2D.h"
@@ -34,7 +35,7 @@ void Game::init() {
 	
 	//Test ground
 	auto* ground = mngr_->addEntity();
-	ground->addComponent<Transform>(Vector2D(-150 , 400), Vector2D(), sdlutils().width(), 10.0f, 0.0f);
+	ground->addComponent<Transform>(Vector2D(-150 , 400), Vector2D(), sdlutils().width() * 10, 10.0f, 0.0f);
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
 	ground->addComponent<BoxCollider>(0.0f, false);
 
@@ -56,11 +57,11 @@ void Game::init() {
 
 
 	//TestBox
-	auto* box = mngr_->addEntity();
+	/*auto* box = mngr_->addEntity();
 	box->addComponent<Transform>(Vector2D(sdlutils().width()/1.7f, sdlutils().height()/1.5f), Vector2D(), 80.0f, 80.0f, 0.0f);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
 	box->addComponent<BoxCollider>(0.0f, true);
-	box->addComponent<KeyBoardCtrl>();
+	box->addComponent<KeyBoardCtrl>();*/
 
 
 	auto* HUD = mngr_->addEntity();
@@ -80,12 +81,16 @@ void Game::init() {
 	////Enemigo
 	//
 	//
-	//auto* enemy1 = mngr_->addEntity();
-	//enemy1->addComponent<Transform>(
-	//	Vector2D(sdlutils().width() / 3.0f, sdlutils().height() / 3.0f),
-	//	Vector2D(), 50.0f, 50.0f, 0.0f);
-	//
-	//enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 0.0003f, 4);
+	auto* enemy1 = mngr_->addEntity();
+	enemy1->addComponent<Transform>(
+		Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
+		Vector2D(), 50.0f, 50.0f, 0.0f);
+	
+	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 0.0003f, 4);
+
+	enemy1->addComponent<BoxCollider>(0.0f, true);
+
+	enemy1->addComponent<EnemyMovement>(Vector2D(1,0));
 	//
 	//
 	//auto* player = mngr_->addEntity();
@@ -128,4 +133,5 @@ void Game::start() {
 	}
 
 }
+
 

@@ -34,6 +34,8 @@ public:
 		}
 	}
 
+	SDL_Rect getFrameSize() { return src; }
+
 private:
 	SDL_Rect nextSrcRect() {
 		if (frame.getX() < size.getX() - 1) frame.setX(frame.getX() + 1);

@@ -150,7 +150,9 @@
     <ClInclude Include="components\Armas_HUD.h" />
     <ClInclude Include="components\Bounce.h" />
     <ClInclude Include="components\BoxCollider.h" />
+    <ClInclude Include="components\enemyMovement.h" />
     <ClInclude Include="components\FramedImage.h" />
+    <ClInclude Include="components\framework.h" />
     <ClInclude Include="components\Image.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
     <ClInclude Include="components\Player_Health.h" />
@@ -187,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="components\Armas_HUD.cpp" />
+    <ClCompile Include="components\enemyMovement.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
