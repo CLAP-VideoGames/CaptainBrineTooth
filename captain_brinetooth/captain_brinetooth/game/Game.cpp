@@ -2,23 +2,22 @@
 
 #include "Game.h"
 
-#include "../components/Rectangle.h"
-#include "../components/BoxCollider.h"
-#include "../components/Bounce.h"
-#include "../components/KeyBoardCtrl.h"
-#include "../components/Rotate.h"
-#include "../components/Image.h"
-#include "../components/FramedImage.h"
-#include "../components/Transform.h"
 #include "../ecs/ecs.h"
 #include "../ecs/Entity.h"
+#include "../ecs/Manager.h"
+#include "../components/Image.h"
+#include "../components/Rotate.h"
+#include "../components/Bounce.h"
+#include "../components/Armas_HUD.h"
+#include "../components/Transform.h"
+#include "../components/Rectangle.h"
+#include "../components/FramedImage.h"
+#include "../components/BoxCollider.h"
+#include "../components/KeyBoardCtrl.h"
+#include "../components/Player_Health.h"
+#include "..//components/enemyMovement.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
-#include "../components/Player_Health.h"
-#include "../components/Armas_HUD.h"
-#include "..//components/enemyMovement.h"
-
-#include "../ecs/Manager.h"
 #include "../utils/Vector2D.h"
 
 Game::Game() {
@@ -30,8 +29,7 @@ Game::~Game() {
 }
 
 void Game::init() {
-	SDLUtils::init("Captain BrineTooth", 800, 600,
-			"assets/config/base.resources.json");
+	SDLUtils::init("Captain BrineTooth", 800, 600, "assets/config/base.resources.json");
 
 	auto* bg = mngr_->addEntity();
 	bg->addComponent<Transform>(Vector2D(0, 0), Vector2D(), sdlutils().width(), sdlutils().height(), 0.0f);
@@ -90,7 +88,7 @@ void Game::init() {
 		Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
 		Vector2D(), 50.0f, 50.0f, 0.0f);
 	
-	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 100.0f, 4);
+	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
 
 	enemy1->addComponent<BoxCollider>(0.0f, true);
 

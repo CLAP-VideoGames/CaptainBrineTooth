@@ -2,13 +2,13 @@
 
 #pragma once
 
+
 #include <SDL.h>
 #include <cassert>
-
+#include "Transform.h"
+#include "../ecs/Entity.h"
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
-#include "../ecs/Entity.h"
-#include "Transform.h"
 
 class KeyBoardCtrl: public Component {
 public:

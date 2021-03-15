@@ -2,15 +2,15 @@
 
 #pragma once
 
-#include <algorithm>
+#include "ecs.h"
 #include <array>
 #include <bitset>
 #include <vector>
-#include <iostream>
-#include "Component.h"
-#include "ecs.h"
-
 #include "box2d.h"
+#include <iostream>
+#include <algorithm>
+#include "Component.h"
+
 
 class Manager;
 

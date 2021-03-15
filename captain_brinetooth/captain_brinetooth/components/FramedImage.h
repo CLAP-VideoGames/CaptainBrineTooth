@@ -53,6 +53,7 @@ private:
 
 	Transform* tr_;
 	Texture* tex_;
+
 	Uint32 time;
 	Vector2D frame;	//Posicion en x y en y del frame actual
 	Vector2D frameSize; //Ancho y alto de un frame
