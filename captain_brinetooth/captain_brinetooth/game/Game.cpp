@@ -97,9 +97,11 @@ void Game::init() {
 	enemy1->addComponent<EnemyMovement>(Vector2D(1,0));
 	//
 	//
-	//auto* player = mngr_->addEntity();
-	//player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f),Vector2D(), 100.0f, 100.0f, 0.0f);
-	//player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5,3.0f,2);
+
+
+	auto* player = mngr_->addEntity();
+	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f+250.0, sdlutils().height() / 2.0f),Vector2D(), 100.0f, 100.0f, 0.0f);
+	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5,0.01f,2);
 }
 
 void Game::start() {
