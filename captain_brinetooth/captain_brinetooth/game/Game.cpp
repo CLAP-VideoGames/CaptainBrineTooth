@@ -32,6 +32,10 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", 800, 600,
 			"assets/config/base.resources.json");
+
+	auto* bg = mngr_->addEntity();
+	bg->addComponent<Transform>(Vector2D(0, 0), Vector2D(), sdlutils().width(), sdlutils().height(), 0.0f);
+	bg->addComponent<FramedImage>(&sdlutils().images().at("fondo"), 11, 11, 0.1f, 2);
 	
 	//Test ground
 	auto* ground = mngr_->addEntity();
