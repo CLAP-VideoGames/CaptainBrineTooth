@@ -26,10 +26,10 @@ public:
 		assert(tr_ != nullptr);
 	}
 	void render() override {
+		SDL_Rect dest = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
+		tex_->render(src, dest);
 		if (sdlutils().currRealTime() > time +tiempoanimacion) {
 			time = sdlutils().currRealTime();
-			SDL_Rect dest = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
-			tex_->render(src, dest);
 			src = nextSrcRect();
 		}
 	}

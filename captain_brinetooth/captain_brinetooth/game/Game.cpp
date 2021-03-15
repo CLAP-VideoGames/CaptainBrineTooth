@@ -90,7 +90,7 @@ void Game::init() {
 		Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
 		Vector2D(), 50.0f, 50.0f, 0.0f);
 	
-	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 0.0003f, 4);
+	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 100.0f, 4);
 
 	enemy1->addComponent<BoxCollider>(0.0f, true);
 
@@ -101,7 +101,7 @@ void Game::init() {
 
 	auto* player = mngr_->addEntity();
 	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f+250.0, sdlutils().height() / 2.0f),Vector2D(), 100.0f, 100.0f, 0.0f);
-	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5,0.01f,2);
+	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f,2);
 }
 
 void Game::start() {
