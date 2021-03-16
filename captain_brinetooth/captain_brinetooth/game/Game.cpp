@@ -26,7 +26,7 @@
 #include "../utils/Vector2D.h"
 
 //tiledmap
-const auto MAP_PATH = "../../Assets/maps/level0.tmx";	// 512x272 pixeles
+const auto MAP_PATH = "assets/maps/level0.tmx";	// 512x272 pixeles
 level tiled_map_level("level0");
 
 Game::Game() {
