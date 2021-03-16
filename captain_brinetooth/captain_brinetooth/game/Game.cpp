@@ -2,6 +2,11 @@
 
 #include "Game.h"
 
+
+#include "tmxlite/Map.hpp"
+#include "tmxlite/Layer.hpp"
+#include "tmxlite/TileLayer.hpp"
+
 #include "../ecs/ecs.h"
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
