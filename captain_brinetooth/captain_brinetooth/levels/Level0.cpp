@@ -32,6 +32,8 @@ Level0::Level0(const string &name)
 void Level0::load(const string& path) {
 	//carga el mapa con TMXLite
 	tmx::Map tiled_map;
+
+
 	tiled_map.load(path);
 
 	//dimensiones del mapa en tiles
@@ -63,17 +65,17 @@ void Level0::load(const string& path) {
 		//se obtienen todos los tiles de esta capa
 		auto& layer_tiles = tile_layer->getTiles();
 		
-		//recorremos cada coordenada buscando dónde hay tiles
+		//recorremos cada coordenada buscando dï¿½nde hay tiles
 		for (auto y = 0; y < fils_; y++) {
 			for (auto x = 0; x < cols_; x++) {
 				//como layer_tiles no es un array 2D, 
-				//convertimos las coordenadas x, y en un índice para poder accederlo.
+				//convertimos las coordenadas x, y en un ï¿½ndice para poder accederlo.
 				auto tile_index = x + (y * cols_);
 
 				//GID del tile actual (current GID -> cur_gid)
 				auto cur_gid = layer_tiles[tile_index].ID;
 
-				// si GID = 0, la tile esta vacía.
+				// si GID = 0, la tile esta vacï¿½a.
 				if (cur_gid == 0)
 					continue;
 
