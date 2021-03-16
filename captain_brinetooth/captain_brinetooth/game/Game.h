@@ -3,7 +3,7 @@
 #pragma once
 #include <memory>
 #include "box2d.h"
-
+#include "SDL.h"
 
 
 // when you are not using the methods of a class, just

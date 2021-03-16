@@ -52,6 +52,18 @@
     <Filter Include="Archivos de origen\components">
       <UniqueIdentifier>{dcde0b05-df85-400f-a228-dffc575b6898}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\levels">
+      <UniqueIdentifier>{bcdef1ec-ca2f-42a5-bcb5-ea66c8d12da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\levels">
+      <UniqueIdentifier>{92d53180-bc59-4915-85f2-7a85cca9ed5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\assets">
+      <UniqueIdentifier>{48efe671-72eb-4975-9ec4-9cd23b1cc2d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\assets">
+      <UniqueIdentifier>{7f891221-4db7-49a4-967f-49222a2f155f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -177,6 +189,12 @@
     <ClInclude Include="components\RayCast.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
+    <ClInclude Include="assets\assets.h">
+      <Filter>Archivos de encabezado\assets</Filter>
+    </ClInclude>
+    <ClInclude Include="levels\Level0.h">
+      <Filter>Archivos de encabezado\levels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -242,6 +260,12 @@
     </ClCompile>
     <ClCompile Include="components\enemyMovement.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="assets\assets.cpp">
+      <Filter>Archivos de origen\assets</Filter>
+    </ClCompile>
+    <ClCompile Include="levels\Level0.cpp">
+      <Filter>Archivos de origen\levels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

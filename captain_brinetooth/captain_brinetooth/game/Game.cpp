@@ -2,7 +2,7 @@
 
 #include "Game.h"
 
-
+#include "../levels/Level0.h"
 #include "tmxlite/Map.hpp"
 #include "tmxlite/Layer.hpp"
 #include "tmxlite/TileLayer.hpp"
@@ -24,6 +24,10 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
+
+//tiledmap
+const auto MAP_PATH = "../../Assets/maps/level0.tmx";	// 512x272 pixeles
+level tiled_map_level("level0");
 
 Game::Game() {
 	mngr_.reset(new Manager());
@@ -119,6 +123,8 @@ void Game::start() {
 		mngr_->refresh();
 
 		sdlutils().clearRenderer();
+		tiled_map_level.load(MAP_PATH, sdlutils().renderer());
+		tiled_map_level.draw(sdlutils().renderer());
 		mngr_->render();
 		sdlutils().presentRenderer();
 
@@ -129,5 +135,3 @@ void Game::start() {
 	}
 
 }
-
-
