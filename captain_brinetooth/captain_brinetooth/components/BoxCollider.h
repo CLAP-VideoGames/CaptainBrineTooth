@@ -10,6 +10,7 @@
 #include "Transform.h"
 #include "../sdlutils/SDLUtils.h"
 
+
 const double PIXELS_IN_METERS = 200;
 
 class BoxCollider : public Component {
@@ -21,7 +22,7 @@ public:
 	}
 
 	virtual ~BoxCollider() {
-
+		
 	}
 
 	void init() override {
@@ -58,6 +59,7 @@ public:
 		fixtureDef.friction = 0.2f;
 
 		fixture = body->CreateFixture(&fixtureDef);
+		
 	}
 
 	void setSpeed(Vector2D speed)
@@ -65,6 +67,7 @@ public:
 		b2Vec2 vel = body->GetLinearVelocity();
 		vel.x = speed.getX(); vel.y = speed.getY();
 		body->SetLinearVelocity(vel);
+	
 	}
 
 	void update() override {
@@ -95,6 +98,7 @@ public:
 
 	inline b2Fixture* getFixture() const
 	{
+		
 		return fixture;
 	}
 
