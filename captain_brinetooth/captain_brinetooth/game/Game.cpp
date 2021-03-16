@@ -39,7 +39,7 @@ void Game::init() {
 
 	//Test ground
 	auto* ground = mngr_->addEntity();
-	ground->addComponent<Transform>(Vector2D(-150, 425), Vector2D(), sdlutils().width() * 10, 10.0f, 0.0f);
+	ground->addComponent<Transform>(Vector2D(sdlutils().width() / 3.0f + 50.0, 0), Vector2D(), sdlutils().width() * 10, 10.0f, 0.0f);
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
 	ground->addComponent<BoxCollider>(0.0f, false);
 
@@ -67,16 +67,19 @@ void Game::init() {
 
 
 	auto* physBody = mngr_->addEntity();
-	physBody->addComponent<Transform>(Vector2D(sdlutils().width() / 3.0f - 50.0, 205),Vector2D(), 50.0f, 50.0f, 0.0f);
-	physBody->addComponent<Image>(&sdlutils().images().at("Square"));
+	physBody->addComponent<Transform>(Vector2D(50.0f,50.0f),Vector2D(), 50.0f, 50.0f, 0.0f);
+	physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
 	physBody->addComponent<BoxCollider>(0.0f, true);
 
+
+	b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();
+	b2joint->bodyA = physBody->getComponent<BoxCollider>()->getBody();
+	b2joint->bodyB = ground->getComponent<BoxCollider>()->getBody();
+	b2joint->collideConnected = true;
+	b2joint->localAnchorA.Set(0, 1);
+	b2joint->localAnchorB.Set(0, 1);
+	world_->CreateJoint(b2joint);
 	
-	b2RevoluteJointDef* joint=new b2RevoluteJointDef();
-	joint->bodyA = physBody->getComponent<BoxCollider>()->getBody();
-	joint->bodyB= ground->getComponent<BoxCollider>()->getBody();
-	joint->collideConnected = true;
-	world_->CreateJoint(joint);
 	
 }
 

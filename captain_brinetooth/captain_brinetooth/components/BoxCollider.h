@@ -37,7 +37,7 @@ public:
 
 		b2BodyDef bodyDef;
 		if (isDynamic) {
-			bodyDef.type = b2_kinematicBody;
+			bodyDef.type =b2_dynamicBody;
 		}
 		else {
 			bodyDef.type = b2_staticBody;
@@ -57,7 +57,7 @@ public:
 		//No puede ser la densidad 0 para un objeto dinamico
 		fixtureDef.density = 1.0f;
 		fixtureDef.friction = 0.2f;
-
+		
 		fixture = body->CreateFixture(&fixtureDef);
 		
 	}
