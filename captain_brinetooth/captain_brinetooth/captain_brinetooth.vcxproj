@@ -156,6 +156,7 @@
     <ClInclude Include="components\Image.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
     <ClInclude Include="components\Player_Health.h" />
+    <ClInclude Include="components\RayCast.h" />
     <ClInclude Include="components\Rectangle.h" />
     <ClInclude Include="components\Rotate.h" />
     <ClInclude Include="components\Transform.h" />
