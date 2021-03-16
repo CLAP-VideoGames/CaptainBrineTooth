@@ -213,6 +213,27 @@ void SDLUtils::loadReasources(std::string filename) {
 		}
 	}
 
+	//load tilesets
+	jValue = root["tilesets"];
+	if (jValue != nullptr) {
+		if (jValue->IsArray()) {
+			for (auto& v : jValue->AsArray()) {
+				if (v->IsObject()) {
+					JSONObject vObj = v->AsObject();
+					std::string key = vObj["id"]->AsString();
+					std::string file = vObj["file"]->AsString();
+					tilesets_.emplace(key, Texture(renderer(), file));
+				}
+				else {
+					throw "'tilesets' array in '" + filename
+						+ "' includes and invalid value";
+				}
+			}
+		}
+		else {
+			throw "'tilesets' is not an array in '" + filename + "'";
+		}
+	}
 }
 
 void SDLUtils::closeSDLExtensions() {
@@ -221,6 +242,7 @@ void SDLUtils::closeSDLExtensions() {
 	msgs_.clear();
 	images_.clear();
 	fonts_.clear();
+	tilesets_.clear();
 
 	Mix_Quit(); // quit SDL_mixer
 	IMG_Quit(); // quit SDL_image

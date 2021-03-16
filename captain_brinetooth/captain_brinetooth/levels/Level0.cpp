@@ -6,11 +6,11 @@
 #include <iostream>
 #include <algorithm>
 
-tile::tile(SDL_Texture* tset, int x, int y, int tx, int ty, int w, int h) 
-: sheet_(tset), x_(x), y_(y), tx_(ty), width_(w), height_(h) {}
+tile::tile(Texture* tset, int x, int y, int tx, int ty, int w, int h) 
+: sheet_(tset), x_(x), y_(y), tx_(tx), ty_(ty), width_(w), height_(h) {}
 
-void tile::draw(SDL_Renderer* ren) {
-	if (!ren || !sheet_)
+void tile::draw() {
+	if (!sheet_)
 		return;
 
 	SDL_Rect src;
@@ -21,13 +21,15 @@ void tile::draw(SDL_Renderer* ren) {
 	dest.x = x_; dest.y = y_;
 	dest.w = src.w; dest.h = src.h;
 
-	SDL_RenderCopy(ren, sheet_, &src, &dest);
+	sheet_->render(src, dest);
 }
 
-level::level(const string &name)
-: name_(name), fils_(0), cols_(0) {}
+Level0::Level0(const string &name)
+	: name_(name), fils_(0), cols_(0) {
+	load(name);
+}
 
-void level::load(const string& path, SDL_Renderer* ren) {
+void Level0::load(const string& path) {
 	//carga el mapa con TMXLite
 	tmx::Map tiled_map;
 	tiled_map.load(path);
@@ -45,8 +47,8 @@ void level::load(const string& path, SDL_Renderer* ren) {
 	//carga todo los tilesets y los guarda en un 'map'
 	auto& map_tilesets = tiled_map.getTilesets();
 	for (auto& tset : map_tilesets) {
-		auto tex = assets::instance().load_texture(tset.getImagePath(), ren);
-		tilesets_.insert(pair<gid, SDL_Texture*>(tset.getFirstGID(), tex));
+		Texture* tex = &sdlutils().tilesets().find("level0")->second;
+		tilesets_.insert(pair<gid, Texture*>(tset.getFirstGID(), tex));
 	}
 
 	//Lectura y guardado del Tiled Map de abajo a arriba.
@@ -80,8 +82,9 @@ void level::load(const string& path, SDL_Renderer* ren) {
 				for (auto& ts : tilesets_) {
 					if (ts.first <= cur_gid) {
 						tset_gid = ts.first;
-						break;
 					}
+					else
+						break;
 				}
 
 				// si no se encuentra el tileset, no se dibuja nada
@@ -92,7 +95,7 @@ void level::load(const string& path, SDL_Renderer* ren) {
 
 				//Dimensiones de la tile sheet.
 				auto ts_width = 0, ts_height = 0;
-				SDL_QueryTexture(tilesets_[tset_gid], NULL, NULL, &ts_width, &ts_height);
+				SDL_QueryTexture(tilesets_[tset_gid]->getTexture(), NULL, NULL, &ts_width, &ts_height);
 
 				//area dentro de la tile sheet de la que dibujar
 				auto region_x = (cur_gid % (ts_width / tile_width_)) * tile_width_,
@@ -102,14 +105,13 @@ void level::load(const string& path, SDL_Renderer* ren) {
 				auto x_pos = x * tile_width_,
 				     y_pos = y * tile_height_;
 
-				tile t(tilesets_[tset_gid], x_pos, y_pos, region_x, region_y, tile_width_, tile_height_);
-				tiles_.push_back(t);
+				tiles_.push_back(new tile(tilesets_[tset_gid], x_pos, y_pos, region_x, region_y, tile_width_, tile_height_));
 			}
 		}
 	}
 }
 
-void level::draw(SDL_Renderer* ren) {
-	for (auto& tile : tiles_)
-		tile.draw(ren);
+void Level0::render() {
+	for (auto tile : tiles_)
+		tile->draw();
 }

@@ -14,6 +14,7 @@ class BoxCollider;
 class Player_Health;
 class Armas_HUD;
 class EnemyMovement;
+class Level0;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -26,7 +27,8 @@ class EnemyMovement;
 	FramedImage,\
 	Player_Health,\
 	Armas_HUD, \
-	EnemyMovement
+	EnemyMovement, \
+	Level0
 
 // groups
 

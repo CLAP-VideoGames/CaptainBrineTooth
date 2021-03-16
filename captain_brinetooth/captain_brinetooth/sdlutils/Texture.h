@@ -45,6 +45,10 @@ public:
 		return height_;
 	}
 
+	inline SDL_Texture* getTexture() const {
+		return texture_;
+	}
+
 	// This rendering method corresponds to method SDL_RenderCopyEx.
 	//
 	// Renders part of the texture (src) to a destination rectangle (dest)

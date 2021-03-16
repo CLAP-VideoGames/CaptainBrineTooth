@@ -39,6 +39,13 @@
       "id": "forest",
       "file": "assets/sounds/forest.wav"
     }
-  ]
+  ],
+  
+  "tilesets": [
+    {
+        "id": "level0",
+        "file": "assets/tileset/level0.png"
+    }
+]
 
 }

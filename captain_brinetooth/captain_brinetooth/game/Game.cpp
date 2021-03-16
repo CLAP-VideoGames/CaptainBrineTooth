@@ -26,8 +26,7 @@
 #include "../utils/Vector2D.h"
 
 //tiledmap
-const auto MAP_PATH = "assets/maps/level0.tmx";	// 512x272 pixeles
-level tiled_map_level("level0");
+const auto MAP_PATH = "assets/maps/level0.tmx";
 
 Game::Game() {
 	mngr_.reset(new Manager());
@@ -38,13 +37,14 @@ Game::~Game() {
 }
 
 void Game::init() {
-	SDLUtils::init("Captain BrineTooth", 800, 600, "assets/config/base.resources.json");
-
-
+	SDLUtils::init("Captain BrineTooth", 1100, 900, "assets/config/base.resources.json");
 
 	auto* bg = mngr_->addEntity();
 	bg->addComponent<Transform>(Vector2D(0, 0), Vector2D(), sdlutils().width(), sdlutils().height(), 0.0f);
 	bg->addComponent<FramedImage>(&sdlutils().images().at("fondo"), 11, 11, 0.1f, 2);
+
+	auto* nivel = mngr_->addEntity();
+	nivel->addComponent<Level0>(MAP_PATH);
 
 	//Test ground
 	auto* ground = mngr_->addEntity();
@@ -57,7 +57,7 @@ void Game::init() {
 	HUD->addComponent<Player_Health>(&sdlutils().images().at("vida"));
 	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 
-	/*
+	
 		auto* enemy1 = mngr_->addEntity();
 		enemy1->addComponent<Transform>(
 		Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
@@ -71,11 +71,7 @@ void Game::init() {
 	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f + 250.0, sdlutils().height() / 2.0f), Vector2D(), 100.0f, 100.0f, 0.0f);
 	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
 
-	*/
-
-
-
-	//Creacion de una medusa fisica que va a estar anclada al techo 
+	//Creacion de una medusa fisica que va a estar anclada al techo
 	auto* physBody = mngr_->addEntity();
 	physBody->addComponent<Transform>(Vector2D(50.0f,50.0f),Vector2D(), 50.0f, 50.0f, 0.0f);
 	physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
@@ -94,8 +90,6 @@ void Game::init() {
 	b2joint->localAnchorB.Set(2, 0);
 	// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
 	world_->CreateJoint(b2joint);
-	
-	
 }
 
 void Game::start() {
@@ -123,8 +117,6 @@ void Game::start() {
 		mngr_->refresh();
 
 		sdlutils().clearRenderer();
-		tiled_map_level.load(MAP_PATH, sdlutils().renderer());
-		tiled_map_level.draw(sdlutils().renderer());
 		mngr_->render();
 		sdlutils().presentRenderer();
 
