@@ -39,7 +39,7 @@ void Game::init() {
 
 	//Test ground
 	auto* ground = mngr_->addEntity();
-	ground->addComponent<Transform>(Vector2D(sdlutils().width() / 3.0f + 50.0, 0), Vector2D(), sdlutils().width() * 10, 10.0f, 0.0f);
+	ground->addComponent<Transform>(Vector2D(0 , 0), Vector2D(), sdlutils().width() * 10, 10.0f, 0.0f);
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
 	ground->addComponent<BoxCollider>(0.0f, false);
 
@@ -66,6 +66,7 @@ void Game::init() {
 
 
 
+	//Creacion de una medusa fisica que va a estar anclada al techo 
 	auto* physBody = mngr_->addEntity();
 	physBody->addComponent<Transform>(Vector2D(50.0f,50.0f),Vector2D(), 50.0f, 50.0f, 0.0f);
 	physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
@@ -73,11 +74,16 @@ void Game::init() {
 
 
 	b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();
+	//Asignar a que cuerpos esta asociado el joint 
 	b2joint->bodyA = physBody->getComponent<BoxCollider>()->getBody();
 	b2joint->bodyB = ground->getComponent<BoxCollider>()->getBody();
+	//Si sus colisiones estan o no estan conectadas 
 	b2joint->collideConnected = true;
-	b2joint->localAnchorA.Set(0, 1);
-	b2joint->localAnchorB.Set(0, 1);
+	//No se del todo como van las anclas 
+	b2joint->localAnchorA.Set(1, 0);
+	//Mas o menos en lamitad de su anclaje 
+	b2joint->localAnchorB.Set(2, 0);
+	// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
 	world_->CreateJoint(b2joint);
 	
 	
