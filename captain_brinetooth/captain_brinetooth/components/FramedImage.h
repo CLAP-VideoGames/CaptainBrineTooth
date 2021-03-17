@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "../sdlutils/Texture.h"
 #include "../ecs/Entity.h"
+#include "../game/Game.h"
 #include "../sdlutils/SDLUtils.h"
 
 
@@ -26,7 +27,12 @@ public:
 		assert(tr_ != nullptr);
 	}
 	void render() override {
-		SDL_Rect dest = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
+		Vector2D actpos;
+		actpos.setX(tr_->getPos().getX()- Game::camera.x);
+		actpos.setY(tr_->getPos().getY() - Game::camera.y);
+		SDL_Rect dest = build_sdlrect(actpos, tr_->getW(), tr_->getH());
+
+		//Falta meter el flip
 		tex_->render(src, dest);
 		if (sdlutils().currRealTime() > time +tiempoanimacion) {
 			time = sdlutils().currRealTime();

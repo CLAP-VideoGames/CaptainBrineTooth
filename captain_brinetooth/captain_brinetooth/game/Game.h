@@ -16,8 +16,12 @@ public:
 	virtual ~Game();
 	void init();
 	void start();
+	void UpdateCamera();
+	static SDL_Rect camera;
+
 private:
 	b2World* world_;
 	std::unique_ptr<Manager> mngr_;
+	 
 };
 

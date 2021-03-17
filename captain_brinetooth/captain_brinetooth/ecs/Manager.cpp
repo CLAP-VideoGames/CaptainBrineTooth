@@ -6,7 +6,7 @@
 
 Manager::Manager() {
 
-	b2Vec2 gravity(0.0f, 1.8f);
+	b2Vec2 gravity(0.0f, 0.0f);
 	world_ = new b2World(gravity);
 }
 
