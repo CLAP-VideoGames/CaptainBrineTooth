@@ -10,6 +10,13 @@
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
 
+
+
+
+
+#include "../components/Player_Health.h"
+
+
 class KeyBoardCtrl: public Component {
 public:
 	KeyBoardCtrl() :
@@ -43,6 +50,7 @@ public:
 				collider_->setSpeed(Vector2D(speed_, 0.0f));
 			} else if (ih().isKeyDown(SDL_SCANCODE_SPACE)) {
 				collider_->setSpeed(Vector2D(0.0f, 0.0f));
+				//entity_->getComponent<Player_Health>()->loseLife();
 			}
 		}
 	}

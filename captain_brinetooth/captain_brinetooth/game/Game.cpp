@@ -55,9 +55,8 @@ void Game::init() {
 
 
 	auto* HUD = mngr_->addEntity();
-	HUD->addComponent<Player_Health>(&sdlutils().images().at("vida"));
+	HUD->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"),300.0f);
 	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
-
 	
 		//auto* enemy1 = mngr_->addEntity();
 		//enemy1->addComponent<Transform>(
@@ -76,6 +75,7 @@ void Game::init() {
 
 
 	mngr_->setHandler<Player>(player);
+
 
 	//Creacion de una medusa fisica que va a estar anclada al techo
 	//auto* physBody = mngr_->addEntity();
@@ -150,4 +150,31 @@ void Game::UpdateCamera()
 	//if (camera.x > camera.w) camera.x = camera.w;
 	//if (camera.y > camera.h) camera.y = camera.h;
 
+}
+
+void Game::ShakeCamera(int time)
+{
+	int aux = 0;
+	SDL_Rect aux2 = camera;
+
+	// Movemos la camara de forma random y rapidamente
+	for (int i = 0; i < time; i++)
+	{
+		if (aux == 0)
+		{
+			camera.x -= sdlutils().rand().nextInt(0, 100);
+			camera.y -= sdlutils().rand().nextInt(0, 100);
+			aux++;
+		}
+		else
+		{
+			camera.x += sdlutils().rand().nextInt(0, 100);
+			camera.y += sdlutils().rand().nextInt(0, 100);
+			aux--;
+		}	
+	}
+
+	// Devolvemos la camara a la posicion original
+	camera = aux2;
+	
 }

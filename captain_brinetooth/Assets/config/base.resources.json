@@ -1,38 +1,42 @@
 {
-    "images": [
-        {
-            "id": "Medusa",
-            "file": "assets/sprites/medusa/medusa_anim.png"
-        },
-        {
-            "id": "Player",
-            "file": "assets/sprites/player/player_anim.png"
-        },
-        {
-            "id": "Square",
-            "file": "assets/sprites/redsquare.png"
-        },
-        {
-            "id": "vida",
-            "file": "assets/sprites/player/HUD/anzuelo.png"
-        },
-        {
-            "id": "sierra",
-            "file": "assets/sprites/armas/pez_sierra.png"
-        },
-        {
-            "id": "martillo",
-            "file": "assets/sprites/armas/tiburon_martillo.png"
-        },
-        {
-            "id": "espada",
-            "file": "assets/sprites/armas/pez_espada.png"
-        },
-        {
-            "id": "fondo",
-            "file": "assets/sprites/background.png"
-        }
-    ],
+  "images": [
+    {
+      "id": "Medusa",
+      "file": "assets/sprites/medusa/medusa_anim.png"
+    },
+    {
+      "id": "Player",
+      "file": "assets/sprites/player/player_anim.png"
+    },
+    {
+      "id": "Square",
+      "file": "assets/sprites/redsquare.png"
+    },
+    {
+      "id": "fullvida",
+      "file": "assets/sprites/player/HUD/anzuelo_sheet.png"
+    },
+    {
+      "id": "mediavida",
+      "file": "assets/sprites/player/HUD/medioanzuelo_sheet.png"
+    },
+    {
+      "id": "sierra",
+      "file": "assets/sprites/armas/pez_sierra.png"
+    },
+    {
+      "id": "martillo",
+      "file": "assets/sprites/armas/tiburon_martillo.png"
+    },
+    {
+      "id": "espada",
+      "file": "assets/sprites/armas/pez_espada.png"
+    },
+    {
+      "id": "fondo",
+      "file": "assets/sprites/background.png"
+    }
+  ],
 
   "sounds": [
     {

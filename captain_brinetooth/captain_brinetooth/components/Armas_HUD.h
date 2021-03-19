@@ -2,6 +2,7 @@
 
 #include "../ecs/Component.h"
 #include "../sdlutils/Texture.h"
+#include "../game/Game.h"
 
 
 class Armas_HUD : public Component {

@@ -17,6 +17,7 @@ public:
 	void init();
 	void start();
 	void UpdateCamera();
+	static void ShakeCamera(int time);
 	static SDL_Rect camera;
 
 private:
