@@ -6,9 +6,10 @@
 #include "../game/Game.h"
 
 
+
 class Player_Health : public Component {
 public:
-	Player_Health(Texture* tex, Texture* tex2, float tanim) : fvida(tex), hvida(tex2), time(0)
+	Player_Health(Texture* tex, Texture* tex2, float tanim, Game* game) : fvida(tex), hvida(tex2), time(0), g(game)
 	{
 		frame = Vector2D(0, 15);
 		auto w = fvida->width() / 8;
@@ -24,7 +25,7 @@ public:
 
 	void render() override;
 
-	void loseLife() { vidas -= 0.5f; }
+	void loseLife() { vidas -= 0.5f;  g->ShakeCamera(20); }
 
 	int getLife(){ return vidas; }
 
@@ -37,9 +38,10 @@ private:
 	Vector2D frame;	//Posicion en x y en y del frame actual
 	Vector2D frameSize; //Ancho y alto de un frame
 	SDL_Rect src; //Rectangulo que se renderiza
-	Uint32 time;
+	Uint32 time; // Tiempo inicial
 
-	float tiempoanimacion;
+	Game* g;
+	float tiempoanimacion; // Tiempo entre frame y frame
 	int nFrame = 0;
 
 

@@ -53,11 +53,6 @@ void Game::init() {
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
 	ground->addComponent<BoxCollider>(0.0f, false);
 
-
-	auto* HUD = mngr_->addEntity();
-	HUD->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"),300.0f);
-	HUD->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
-	
 		//auto* enemy1 = mngr_->addEntity();
 		//enemy1->addComponent<Transform>(
 		//Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
@@ -71,6 +66,10 @@ void Game::init() {
 	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f), Vector2D(), 100.0f, 100.0f, 0.0f);
 	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
 	player->addComponent<BoxCollider>(0.0f, true);
+	
+	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), 300.0f, this);
+	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
+
 	player->addComponent<KeyBoardCtrl>();
 
 
@@ -156,22 +155,29 @@ void Game::ShakeCamera(int time)
 {
 	int aux = 0;
 	SDL_Rect aux2 = camera;
-
+	int slow = 0;
 	// Movemos la camara de forma random y rapidamente
 	for (int i = 0; i < time; i++)
 	{
-		if (aux == 0)
+		if (slow % 2 == 0)
 		{
-			camera.x -= sdlutils().rand().nextInt(0, 100);
-			camera.y -= sdlutils().rand().nextInt(0, 100);
-			aux++;
+			if (aux == 0)
+			{
+				camera.x -= 15; 
+				camera.y -= 15;
+				aux++;
+			}
+			else
+			{
+				camera.x += 15;
+				camera.y += 15;
+				aux--;
+			}
 		}
-		else
-		{
-			camera.x += sdlutils().rand().nextInt(0, 100);
-			camera.y += sdlutils().rand().nextInt(0, 100);
-			aux--;
-		}	
+		slow++;
+		sdlutils().clearRenderer();
+		mngr_->render();
+		sdlutils().presentRenderer();
 	}
 
 	// Devolvemos la camara a la posicion original
