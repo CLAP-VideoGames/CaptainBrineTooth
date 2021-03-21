@@ -25,7 +25,8 @@ public:
 
 	void render() override;
 
-	void loseLife() { vidas -= 0.5f;  g->ShakeCamera(20); }
+	void loseLife() { vidas -= 0.5f;  g->ShakeCamera(20); 
+	sdlutils().musics().at("player_hurt").play(); }
 
 	int getLife(){ return vidas; }
 
