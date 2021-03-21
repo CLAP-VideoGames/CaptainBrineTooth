@@ -75,7 +75,7 @@ void Game::init() {
 
 	mngr_->setHandler<Player>(player);
 
-
+	
 	//Creacion de una medusa fisica que va a estar anclada al techo
 	//auto* physBody = mngr_->addEntity();
 	//physBody->addComponent<Transform>(Vector2D(50.0f,50.0f),Vector2D(), 50.0f, 50.0f, 0.0f);
