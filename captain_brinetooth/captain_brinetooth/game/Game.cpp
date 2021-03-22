@@ -21,6 +21,7 @@
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Player_Health.h"
 #include "..//components/enemyMovement.h"
+#include "..//components/Chainsaw.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../utils/Vector2D.h"
@@ -72,6 +73,8 @@ void Game::init() {
 
 	player->addComponent<KeyBoardCtrl>();
 
+
+	player->addComponent<Chainsaw>();
 
 	mngr_->setHandler<Player>(player);
 

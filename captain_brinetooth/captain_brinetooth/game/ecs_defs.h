@@ -15,6 +15,7 @@ class Player_Health;
 class Armas_HUD;
 class EnemyMovement;
 class Level0;
+class Chainsaw;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -28,7 +29,8 @@ class Level0;
 	Player_Health,\
 	Armas_HUD, \
 	EnemyMovement, \
-	Level0
+	Level0, \
+	Chainsaw
 
 // groups
 
