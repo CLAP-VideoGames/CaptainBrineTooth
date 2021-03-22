@@ -55,6 +55,13 @@ void Game::init() {
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
 	ground->addComponent<BoxCollider>(0.0f, false);
 
+
+	auto* box = mngr_->addEntity();
+	box->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.5f), Vector2D(), 150.0f, 80.0f, 0.0f);
+	box->addComponent<Image>(&sdlutils().images().at("Square"));
+	box->addComponent<BoxCollider>(0.0f, true);
+	box->addComponent<KeyBoardCtrl>();
+
 		//auto* enemy1 = mngr_->addEntity();
 		//enemy1->addComponent<Transform>(
 		//Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
@@ -129,20 +136,8 @@ void Game::start() {
 			continue;
 		}
 
-
 		world_->Step(1.0f / 60.0f, 6, 2);
 
-		/*//Update rate refresh
-		Uint32 frameTime = sdlutils().currRealTime() - mLastUpdateTime;
-		
-		if (frameTime >= MILLISECS_PER_TICK) {
-			mngr_->update();
-			mngr_->refresh();
-
-			UpdateCamera();
-
-			mLastUpdateTime = sdlutils().currRealTime();
-		}*/
 		mngr_->update();
 		mngr_->refresh();
 
