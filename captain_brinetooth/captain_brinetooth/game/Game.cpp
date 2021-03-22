@@ -44,9 +44,8 @@ void Game::init() {
 	//auto* bg = mngr_->addEntity();
 	//bg->addComponent<Transform>(Vector2D(0,0), Vector2D(), sdlutils().width(), sdlutils().height(), 0.0f);
 	//bg->addComponent<FramedImage>(&sdlutils().images().at("fondo"), 11, 11, 0.1f, 2);
-
 	auto* nivel = mngr_->addEntity();
-	nivel->addComponent<Level0>(MAP_PATH);
+	nivel->addComponent<Level0>(MAP_PATH, world_);
 
 	//Test ground
 	auto* ground = mngr_->addEntity();

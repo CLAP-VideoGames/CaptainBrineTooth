@@ -1,4 +1,5 @@
 #include "Level0.h"
+#include "../game/Game.h"
 #include "../assets/assets.h"
 #include "tmxlite/Map.hpp"
 #include "tmxlite/Layer.hpp"
@@ -17,22 +18,26 @@ void tile::draw() {
 	src.x = tx_; src.y = ty_;
 	src.w = width_; src.h = height_;
 
+	// Para que el tileset no siga a la cámara, hay que restarle la posición de la misma.
+	// Para agrandar el tiledmap, hay que hacerlo manualmente en el propio TiledMapEditor, aumentando los píxeles por tile.
 	SDL_Rect dest;
-	dest.x = x_; dest.y = y_;
+	dest.x = x_ - Game::camera.x; dest.y = y_ - Game::camera.y;
 	dest.w = src.w; dest.h = src.h;
 
 	sheet_->render(src, dest);
 }
 
-Level0::Level0(const string &name)
-	: name_(name), fils_(0), cols_(0) {
+object::object(float oX, float oY, float oWidth, float oHeight)
+: oX_(oX), oY_(oY), oWidth_(oWidth), oHeight_(oHeight) {}
+
+Level0::Level0(const string &name, b2World* b2World)
+	: name_(name), fils_(0), cols_(0), b2World_(b2World) {
 	load(name);
 }
 
 void Level0::load(const string& path) {
 	//carga el mapa con TMXLite
 	tmx::Map tiled_map;
-
 
 	tiled_map.load(path);
 
@@ -61,7 +66,6 @@ void Level0::load(const string& path) {
 			continue;
 
 		auto* tile_layer = dynamic_cast<const tmx::TileLayer*>(layer.get());
-
 		//se obtienen todos los tiles de esta capa
 		auto& layer_tiles = tile_layer->getTiles();
 		
@@ -106,10 +110,39 @@ void Level0::load(const string& path) {
 				//posicion en el mundo del tile.
 				auto x_pos = x * tile_width_,
 				     y_pos = y * tile_height_;
-
+				
 				tiles_.push_back(new tile(tilesets_[tset_gid], x_pos, y_pos, region_x, region_y, tile_width_, tile_height_));
 			}
 		}
+	}
+
+	for (auto& layer : map_layers) {
+		//comprobamos si es una capa con Objetos en ella.
+		if (layer->getType() != tmx::Layer::Type::Object)
+			continue;
+
+		auto* object_layer = dynamic_cast<const tmx::ObjectGroup*>(layer.get());
+		auto layer_objects = object_layer->getObjects();
+
+		objects_.push_back(new object(layer_objects.back().getPosition().x,
+									  layer_objects.back().getPosition().y, 
+									  layer_objects.back().getAABB().width,
+									  layer_objects.back().getAABB().height));
+
+		Vector2D size((int)layer_objects.back().getAABB().width / 200, (int)layer_objects.back().getAABB().height / 200);
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_staticBody;
+		bodyDef.position.Set((int)layer_objects.back().getPosition().x / 200, (int)layer_objects.back().getPosition().y / 200);
+		body_ = b2World_->CreateBody(&bodyDef);
+
+		b2PolygonShape shape;
+		shape.SetAsBox(size.getX() / 2.0f, size.getY() / 2.0f);
+
+		b2FixtureDef fixture;
+		fixture.shape = &shape;
+		fixture.density = 1.0f;
+		fixture.friction = 0.1f;
+		fixture_ = body_->CreateFixture(&fixture);
 	}
 }
 
