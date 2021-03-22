@@ -56,22 +56,24 @@ public:
 			currentAnim_->anim_->render();
 	}
 
-	void updateAnim() {
-		if (currentAnim_->anim_->getState() != Stop) {  //No hacer nada si la animacion se para
-			if (waitOnComplete) {   //Esperar a que la animacion se haya terminado
-				if (currentAnim_->anim_->getState() == Complete) {
-					currentAnim_ = nextAnim_; 
-					reset();    //resetea nextframe y waitOnComplete
-					play(); //Activar la animacion
-				}
-			}
-			else {
-				currentAnim_ = nextAnim_;
-				reset();    
-				play(); //Activar la animacion
-			}
-		}
-	}
+    void updateAnim() {
+        if (currentAnim_ == nullptr)
+            currentAnim_ == defaultAnim_;
+        if (currentAnim_->anim_->getState() != Stop) {  //No hacer nada si la animacion se para
+            if (waitOnComplete) {   //Esperar a que la animacion se haya terminado
+                if (currentAnim_->anim_->getState() == Complete) {
+                    currentAnim_ = nextAnim_; 
+                    reset();    //resetea nextframe y waitOnComplete
+                    play(); //Activar la animacion
+                }
+            }
+            else {
+                currentAnim_ = nextAnim_;
+                reset();    
+                play(); //Activar la animacion
+            }
+        }
+    }
 
 	void checkAnimState(Parameter& p) { 
 		int i = 0;
@@ -149,9 +151,9 @@ public:
 
 protected:
 	Transform* tr_;
-	std::vector<Parameter> params_; //Parametros de transicion entre componentes del grafo
-	std::vector<Animation*> entityAnims_;    //Componentes (Animation) del grafo
-	std::vector<AnimState*> animStates_;
-	AnimState *currentAnim_, *nextAnim_;
-	bool waitOnComplete;
+    std::vector<Parameter> params_; //Parametros de transicion entre componentes del grafo
+    std::vector<Animation*> entityAnims_;    //Componentes (Animation) del grafo
+    std::vector<AnimState*> animStates_;
+    AnimState *currentAnim_, *nextAnim_, *defaultAnim_;
+    bool waitOnComplete;
 };

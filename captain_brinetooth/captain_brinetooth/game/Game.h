@@ -21,8 +21,8 @@ public:
 	static SDL_Rect camera;
 
 	//update (Si esta en Mayusculas pq es una constante)
-	const Uint32 FRAME_RATE = 60;
-	const Uint32 MILLISECS_PER_FRAME = 1000 / FRAME_RATE;
+	const Uint32 TICKS = 60;
+	const Uint32 MILLISECS_PER_TICK = 1000 / TICKS;
 private:
 	b2World* world_;
 	std::unique_ptr<Manager> mngr_;

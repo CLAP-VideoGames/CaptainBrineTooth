@@ -12,6 +12,7 @@
 #include "../ecs/Manager.h"
 #include "../components/Image.h"
 #include "../components/Animation.h"
+#include "../components/AnimBlendGraph.h"
 #include "../components/Rotate.h"
 #include "../components/Bounce.h"
 #include "../components/Armas_HUD.h"
@@ -65,9 +66,8 @@ void Game::init() {
 
 	auto* player = mngr_->addEntity();   
 	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f), Vector2D(), 200.0f, 200.0f, 0.0f);
-	//A?adir componente blendgraph
-	player->addComponent<Animation>("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
-	player->getComponent<Animation>()->play();
+	//Aadir componente blendgraph
+	auto anim_controller = player->addComponent<AnimBlendGraph>();
 	//player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
 	player->addComponent<BoxCollider>(0.0f, true);
 	
@@ -126,7 +126,7 @@ void Game::start() {
 		//Update rate refresh
 		Uint32 frameTime = sdlutils().currRealTime() - mLastUpdateTime;
 		
-		if (frameTime >= MILLISECS_PER_FRAME) {
+		if (frameTime >= MILLISECS_PER_TICK) {
 			mngr_->update();
 			mngr_->refresh();
 
