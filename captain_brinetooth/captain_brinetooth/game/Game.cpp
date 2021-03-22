@@ -76,7 +76,6 @@ void Game::init() {
 
 	player->addComponent<KeyBoardCtrl>();
 
-
 	mngr_->setHandler<Player>(player);
 
 	
