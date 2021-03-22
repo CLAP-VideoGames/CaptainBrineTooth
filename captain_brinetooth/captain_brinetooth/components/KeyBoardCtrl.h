@@ -20,7 +20,7 @@
 class KeyBoardCtrl: public Component {
 public:
 	KeyBoardCtrl() :
-			tr_(nullptr), speed_(1.0)  {
+			tr_(nullptr), speed_(3.0)  {
 	}
 	virtual ~KeyBoardCtrl() {
 	}
@@ -36,7 +36,7 @@ public:
 		collider_ = entity_->getComponent<BoxCollider>();
 		assert(collider_ != nullptr);
 		animController_ = entity_->getComponent<AnimBlendGraph>();
-		assert(animController_ != nullptr);
+		//assert(animController_ != nullptr);
 	}
 
 	void update() override {

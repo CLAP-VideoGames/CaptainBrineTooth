@@ -46,10 +46,16 @@ void Game::init() {
 	//auto* bg = mngr_->addEntity();
 	//bg->addComponent<Transform>(Vector2D(0,0), Vector2D(), sdlutils().width(), sdlutils().height(), 0.0f);
 	//bg->addComponent<FramedImage>(&sdlutils().images().at("fondo"), 11, 11, 0.1f, 2);
-	auto* nivel = mngr_->addEntity();
-	nivel->addComponent<Level0>(MAP_PATH, world_);
+	//auto* nivel = mngr_->addEntity();
+	//nivel->addComponent<Level0>(MAP_PATH, world_);
 
 	//Test ground
+	auto* box = mngr_->addEntity();
+	box->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f);
+	box->addComponent<Image>(&sdlutils().images().at("Square"));
+	box->addComponent<BoxCollider>(0.0f, true);
+	box->addComponent<KeyBoardCtrl>();
+	
 	auto* ground = mngr_->addEntity();
 	ground->addComponent<Transform>(Vector2D(0 , 700), Vector2D(), sdlutils().width() * 10, 10.0f, 0.0f);
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
@@ -64,8 +70,8 @@ void Game::init() {
 		//enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
 
 
-	auto* player = mngr_->addEntity();   
-	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f), Vector2D(), 200.0f, 200.0f, 0.0f);
+	/*auto* player = mngr_->addEntity();   
+	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f ), Vector2D(), 200.0f, 200.0f, 0.0f);
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
@@ -84,7 +90,7 @@ void Game::init() {
 
 	player->addComponent<Chainsaw>();
 
-	mngr_->setHandler<Player>(player);
+	mngr_->setHandler<Player>(player);*/
 
 	
 	//Creacion de una medusa fisica que va a estar anclada al techo

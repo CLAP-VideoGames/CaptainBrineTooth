@@ -27,13 +27,13 @@ public:
 
 	void init() override {
 		tr_ = entity_->getComponent<Transform>();
+		assert(tr_ != nullptr);
 		pos = tr_->getPos();
 
 		//1 pixel(X) 0.0002645833 m
 		//then n pixels = n * 0.0002645833;
 		size = Vector2D(tr_->getW() / PIXELS_IN_METERS, tr_->getH() / PIXELS_IN_METERS);
 		world = entity_->getWorld();
-		assert(tr_ != nullptr);
 
 		b2BodyDef bodyDef;
 		if (isDynamic) {
@@ -56,7 +56,7 @@ public:
 		fixtureDef.shape = &boxShape;
 		//No puede ser la densidad 0 para un objeto dinamico
 		fixtureDef.density = 1.0f;
-		fixtureDef.friction = 0.2f;
+		fixtureDef.friction = 0.7f;
 		
 		fixture = body->CreateFixture(&fixtureDef);
 		
@@ -72,7 +72,7 @@ public:
 
 	void update() override {
 
-		if(isDynamic)
+		//if(isDynamic)
 			//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
 
 		tr_->getPos().set(round((body->GetPosition().x * PIXELS_IN_METERS ) - tr_->getW()/2.0f), round((body->GetPosition().y * PIXELS_IN_METERS)- tr_->getH() / 2.0f));
