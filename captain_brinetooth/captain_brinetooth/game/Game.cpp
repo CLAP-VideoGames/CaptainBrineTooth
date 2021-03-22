@@ -40,9 +40,17 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", 1100, 900, "assets/config/base.resources.json");
 
-	//auto* bg = mngr_->addEntity();
-	//bg->addComponent<Transform>(Vector2D(0,0), Vector2D(), sdlutils().width(), sdlutils().height(), 0.0f);
-	//bg->addComponent<FramedImage>(&sdlutils().images().at("fondo"), 11, 11, 0.1f, 2);
+
+	sdlutils().soundEffects().at("pla");
+	sdlutils().soundEffects().at("pla");
+	sdlutils().soundEffects().at("pla");
+	sdlutils().soundEffects().at("pla");
+
+
+
+	auto* bg = mngr_->addEntity();
+	bg->addComponent<Transform>(Vector2D(0,0), Vector2D(), sdlutils().width(), sdlutils().height(), 0.0f);
+	bg->addComponent<FramedImage>(&sdlutils().images().at("fondo"), 11, 11, 0.1f, 2);
 
 	auto* nivel = mngr_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH);
@@ -53,16 +61,16 @@ void Game::init() {
 	ground->addComponent<Image>(&sdlutils().images().at("Square"));
 	ground->addComponent<BoxCollider>(0.0f, false);
 
-		//auto* enemy1 = mngr_->addEntity();
-		//enemy1->addComponent<Transform>(
-		//Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
-		//Vector2D(), 50.0f, 50.0f, 0.0f);
-		//enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
-		//enemy1->addComponent<BoxCollider>(0.0f, true);
-		//enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
+	//auto* enemy1 = mngr_->addEntity();
+	//enemy1->addComponent<Transform>(
+	//Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f),
+	//Vector2D(), 50.0f, 50.0f, 0.0f);
+	//enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
+	//enemy1->addComponent<BoxCollider>(0.0f, true);
+	//enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
 
 
-		auto* player = mngr_->addEntity();   
+	auto* player = mngr_->addEntity();   
 	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f), Vector2D(), 100.0f, 100.0f, 0.0f);
 	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
 	player->addComponent<BoxCollider>(0.0f, true);

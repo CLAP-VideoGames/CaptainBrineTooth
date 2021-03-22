@@ -31,6 +31,10 @@
     {
       "id": "espada",
       "file": "assets/sprites/armas/pez_espada.png"
+    },
+    {
+      "id": "fondo",
+      "file": "assets/sprites/background.png"
     }
 
   ],
@@ -41,8 +45,8 @@
       "file": "assets/sounds/forest.wav"
     },
     {
-      "id": "player_hurt",
-      "file": "assets/sounds/player/player1.mp3"
+      "id": "pla",
+      "file": "assets/sounds/forest.wav"
     }
   ],
   
