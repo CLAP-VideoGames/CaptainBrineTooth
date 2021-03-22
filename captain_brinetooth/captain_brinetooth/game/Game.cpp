@@ -68,7 +68,7 @@ void Game::init() {
 	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
 	player->addComponent<BoxCollider>(0.0f, true);
 	
-	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), 300.0f, this);
+	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 
 	player->addComponent<KeyBoardCtrl>();

@@ -9,11 +9,11 @@
 
 class Player_Health : public Component {
 public:
-	Player_Health(Texture* tex, Texture* tex2, float tanim, Game* game) : fvida(tex), hvida(tex2), time(0), g(game)
+	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, Game* game) : fVida(tex), hVida(tex2),vVida(tex3) , time(0), g(game)
 	{
 		frame = Vector2D(0, 15);
-		auto w = fvida->width() / 8;
-		auto h = fvida->height();
+		auto w = fVida->width() / 8;
+		auto h = fVida->height();
 
 		src = build_sdlrect(frame, w, h);
 		tiempoanimacion = tanim;
@@ -26,7 +26,7 @@ public:
 	void render() override;
 
 	void loseLife() { vidas -= 0.5f;  g->ShakeCamera(20); 
-	sdlutils().soundEffects().at("player_hurt").play(); }
+	/*sdlutils().soundEffects().at("player_hurt").play();*/ }
 
 	int getLife(){ return vidas; }
 
@@ -34,10 +34,12 @@ public:
 
 private:
 	float vidas = 10;
-	Texture* fvida;
-	Texture* hvida;
-	Vector2D frame;	//Posicion en x y en y del frame actual
-	Vector2D frameSize; //Ancho y alto de un frame
+	float maxVidas = vidas;
+	Texture* fVida;
+	Texture* hVida;
+	Texture* vVida;
+	Vector2D frame;	// Posicion en x y en y del frame actual
+	Vector2D frameSize; // Ancho y alto de un frame
 	SDL_Rect src; //Rectangulo que se renderiza
 	Uint32 time; // Tiempo inicial
 

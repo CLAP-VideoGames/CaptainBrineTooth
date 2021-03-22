@@ -3,24 +3,39 @@
 void Player_Health::render()
 {
 	float vidaRestante = vidas;
+	float currentVidas = vidas+0.5;
 	src = build_sdlrect(frame, frameSize.getX(), frameSize.getY());
+	Vector2D aux = Vector2D(10 + 35 * 0, 10);
 
 	for (int i = 0; i < vidas-0.5; i++)
 	{
-		Vector2D aux = Vector2D(10 + 35 * i, 10);
+		aux = Vector2D(10 + 35 * i, 10);
 		SDL_Rect dest = build_sdlrect(aux, src.w / 4, src.h / 4);
-		fvida->render(src, dest);
+		fVida->render(src, dest);
 		vidaRestante--;
 	}
 	
 	// Si hay media vida, renderizamos medio anzuelo
 	if (vidaRestante > 0)
 	{
-		Vector2D aux = Vector2D(10 + 35 * (vidas-0.5), 10);
+		aux = Vector2D(10 + 35 * (vidas-0.5), 10);
 		SDL_Rect dest = build_sdlrect(aux, src.w / 4, src.h / 4);
-		hvida->render(src, dest);
+		hVida->render(src, dest);
 	}
 	
+	if (currentVidas < maxVidas)
+	{
+		aux = Vector2D(aux.getX() + 55, 10);
+		SDL_Rect dest = build_sdlrect(aux, src.w / 6, src.h / 5);
+		vVida->render(dest);
+		for (int i = 1; i < (maxVidas - currentVidas); i++)
+		{
+			aux = Vector2D(aux.getX() + 35, 10);
+			SDL_Rect dest = build_sdlrect(aux, src.w / 6, src.h / 5);
+			vVida->render(dest);
+		}
+	}
+
 	// Si pasa mas de X tiempo, pasamos al siguiente frame
 	if (sdlutils().currRealTime() > time + tiempoanimacion)
 	{
@@ -34,6 +49,4 @@ void Player_Health::render()
 		if (nFrame > 7) { frame = Vector2D(0, 15); nFrame = 0; }
 	}
 	
-
-
 }

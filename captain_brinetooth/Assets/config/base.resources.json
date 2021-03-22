@@ -31,6 +31,10 @@
     {
       "id": "espada",
       "file": "assets/sprites/armas/pez_espada.png"
+    },
+    {
+      "id": "vacio",
+      "file": "assets/sprites/player/HUD/anzuelo_vacio.png"
     }
 
   ],
