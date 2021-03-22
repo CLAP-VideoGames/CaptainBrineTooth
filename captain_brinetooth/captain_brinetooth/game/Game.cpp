@@ -66,9 +66,14 @@ void Game::init() {
 
 	auto* player = mngr_->addEntity();   
 	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f), Vector2D(), 200.0f, 200.0f, 0.0f);
-	//Aadir componente blendgraph
-	auto anim_controller = player->addComponent<AnimBlendGraph>();
-	//player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
+	//Plantilla de uso de ANIMATION CONTROLLER
+	auto* anim_controller = player->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
+	anim_controller->addAnimation("jump", &sdlutils().images().at("Player_jump"), 4, 5, 20, 24, 0);
+	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
+	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
+	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
+
 	player->addComponent<BoxCollider>(0.0f, true);
 	
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), 300.0f, this);
@@ -110,6 +115,7 @@ void Game::start() {
 	SDL_Event event;
 
 	while (!exit) {
+		Uint32 startTime = sdlutils().currRealTime();
 
 		ih().clearState();
 		while (SDL_PollEvent(&event))
@@ -123,7 +129,7 @@ void Game::start() {
 
 		world_->Step(1.0f / 60.0f, 6, 2);
 
-		//Update rate refresh
+		/*//Update rate refresh
 		Uint32 frameTime = sdlutils().currRealTime() - mLastUpdateTime;
 		
 		if (frameTime >= MILLISECS_PER_TICK) {
@@ -133,16 +139,19 @@ void Game::start() {
 			UpdateCamera();
 
 			mLastUpdateTime = sdlutils().currRealTime();
-		}
+		}*/
+		mngr_->update();
+		mngr_->refresh();
 
 		sdlutils().clearRenderer();
 		mngr_->render();
 		sdlutils().presentRenderer();
 		
+		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
 
-		//if (frameTime < MILLISECS_PER_FRAME)
-			//SDL_Delay(MILLISECS_PER_FRAME - frameTime);
+		if (frameTime < 20)
+			SDL_Delay(20 - frameTime);
 	}
 
 }

@@ -37,7 +37,7 @@ public:
 			framepos_.emplace_back(p);
 		}
 		actfr_ = startfr_;	//1er frame es el inicial
-		state_ = Stop;		//No empieza la animacion de base
+		state_ = Playing;		//No empieza la animacion de base
 		lastUpdateTime = sdlutils().currRealTime();
 	}
 
@@ -74,7 +74,7 @@ public:
 	}
 
 	void stop() { if(state_ != Complete) state_ = Stop; }
-	void play() { if (state_ != Complete) state_ = Playing; }
+	void play() {state_ = Playing; }
 	void reset() { actfr_ = startfr_; }
 	const State& getState() const { return state_; }
 	const std::string& getID() const { return id_; }
