@@ -11,6 +11,7 @@
 #include "../ecs/Entity.h"
 #include "../ecs/Manager.h"
 #include "../components/Image.h"
+#include "../components/Animation.h"
 #include "../components/Rotate.h"
 #include "../components/Bounce.h"
 #include "../components/Armas_HUD.h"
@@ -62,9 +63,12 @@ void Game::init() {
 		//enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
 
 
-		auto* player = mngr_->addEntity();   
-	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f), Vector2D(), 100.0f, 100.0f, 0.0f);
-	player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
+	auto* player = mngr_->addEntity();   
+	player->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 2.0f), Vector2D(), 200.0f, 200.0f, 0.0f);
+	//A?adir componente blendgraph
+	player->addComponent<Animation>("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
+	player->getComponent<Animation>()->play();
+	//player->addComponent<FramedImage>(&sdlutils().images().at("Player"), 8, 5, 100.0f, 2);
 	player->addComponent<BoxCollider>(0.0f, true);
 	
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), 300.0f, this);
@@ -95,6 +99,9 @@ void Game::init() {
 	//b2joint->localAnchorB.Set(2, 0);
 	//// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
 	//world_->CreateJoint(b2joint);
+
+
+	mLastUpdateTime = sdlutils().currRealTime();
 }
 
 void Game::start() {
@@ -104,7 +111,6 @@ void Game::start() {
 	SDL_Event event;
 
 	while (!exit) {
-		Uint32 startTime = sdlutils().currRealTime();
 
 		ih().clearState();
 		while (SDL_PollEvent(&event))
@@ -118,22 +124,26 @@ void Game::start() {
 
 		world_->Step(1.0f / 60.0f, 6, 2);
 
-
-		mngr_->update();
-		mngr_->refresh();
+		//Update rate refresh
+		Uint32 frameTime = sdlutils().currRealTime() - mLastUpdateTime;
 		
-		UpdateCamera();
+		if (frameTime >= MILLISECS_PER_FRAME) {
+			mngr_->update();
+			mngr_->refresh();
 
+			UpdateCamera();
+
+			mLastUpdateTime = sdlutils().currRealTime();
+		}
 
 		sdlutils().clearRenderer();
 		mngr_->render();
 		sdlutils().presentRenderer();
 		
 
-		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
-		if (frameTime < 20)
-			SDL_Delay(20 - frameTime);
+		//if (frameTime < MILLISECS_PER_FRAME)
+			//SDL_Delay(MILLISECS_PER_FRAME - frameTime);
 	}
 
 }

@@ -5,8 +5,12 @@
       "file": "assets/sprites/medusa/medusa_anim.png"
     },
     {
-      "id": "Player",
+      "id": "Player_run",
       "file": "assets/sprites/player/player_anim.png"
+    },
+	{
+      "id": "Player_jump",
+      "file": "assets/sprites/player/player_jump.png"
     },
     {
       "id": "Square",
