@@ -148,7 +148,9 @@
   <ItemGroup>
     <ClInclude Include="assets\assets.h" />
     <ClInclude Include="captain_brinetooth.h" />
+    <ClInclude Include="components\Animation.h" />
     <ClInclude Include="components\Armas_HUD.h" />
+    <ClInclude Include="components\AnimBlendGraph.h" />
     <ClInclude Include="components\Bounce.h" />
     <ClInclude Include="components\BoxCollider.h" />
     <ClInclude Include="components\Chainsaw.h" />

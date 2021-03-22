@@ -8,6 +8,8 @@ class Rectangle;
 class KeyBoardCtrl;
 class Bounce;
 class Image;
+class Animation;
+class AnimBlendGraph;
 class Rotate;
 class FramedImage;
 class BoxCollider;
@@ -23,6 +25,8 @@ class Chainsaw;
 	KeyBoardCtrl,\
 	Bounce,\
 	Image,\
+	Animation,\
+	AnimBlendGraph,\
 	Rotate,\
 	BoxCollider,\
 	FramedImage,\
