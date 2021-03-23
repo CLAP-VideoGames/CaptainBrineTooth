@@ -45,7 +45,7 @@ void Game::init() {
 	//createLevel0();
 
 	//Caja para hacer testeo con movimiento
-	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f, 2);
+	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f, 1);
 
 	//Crea el suelo
 	createBoxTest(Vector2D(500, 700), Vector2D(), sdlutils().width()/1.5, 10.0f, 0.0f, 0);
@@ -53,7 +53,8 @@ void Game::init() {
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 
 	//Creamos al player
-	//createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), 200.0f, 200.0f, 0.0f);
+	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), 200.0f, 200.0f, 0.0f);
+	
 
 }
 
@@ -78,6 +79,7 @@ void Game::start() {
 		world_->Step(1.0f / 60.0f, 6, 2);
 
 		mngr_->update();
+		UpdateCamera();
 		mngr_->refresh();
 
 		sdlutils().clearRenderer();
@@ -181,6 +183,7 @@ void Game::createBoxTest(Vector2D pos, Vector2D vel, float height, float width, 
 void Game::createPlayer(Vector2D pos, Vector2D vel, float height, float width, float rotation)
 {
 	auto* player = createBasicEntity(pos, height, width, rotation, vel);
+	
 
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
@@ -192,7 +195,7 @@ void Game::createPlayer(Vector2D pos, Vector2D vel, float height, float width, f
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 #pragma endregion
 
-	player->addComponent<BoxCollider>(0.0f, 2);
+	player->addComponent<BoxCollider>(0.0f, 1);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	player->addComponent<KeyBoardCtrl>();
