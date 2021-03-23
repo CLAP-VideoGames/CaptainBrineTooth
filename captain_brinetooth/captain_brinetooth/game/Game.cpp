@@ -39,15 +39,16 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", 1100, 900, "assets/config/base.resources.json");
 
-	
+	world_->SetContactListener(&collisionListener);
+
 	createBackGround("fondo", 11, 11, 0.1f, 2);
 	//createLevel0();
 
 	//Caja para hacer testeo con movimiento
-	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f, true);
+	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f, 2);
 
 	//Crea el suelo
-	createBoxTest(Vector2D(500, 700), Vector2D(), sdlutils().width()/1.5, 10.0f, 0.0f, false);
+	createBoxTest(Vector2D(500, 700), Vector2D(), sdlutils().width()/1.5, 10.0f, 0.0f, 0);
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 
@@ -167,13 +168,13 @@ Entity* Game::createBasicEntity(Vector2D pos, float height, float width, float r
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="isPhysics">Determina si el objeto se puede mover</param>
-void Game::createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, bool isPhysic)
+void Game::createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, int physicType)
 {
 	auto* box = createBasicEntity(pos, height, width, rotation, vel);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
-	box->addComponent<BoxCollider>(0.0f, isPhysic);
+	box->addComponent<BoxCollider>(0.0f, physicType);
 
-	if(isPhysic)
+	if(physicType == 2)
 		box->addComponent<KeyBoardCtrl>();
 }
 
@@ -191,7 +192,7 @@ void Game::createPlayer(Vector2D pos, Vector2D vel, float height, float width, f
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 #pragma endregion
 
-	player->addComponent<BoxCollider>(0.0f, true);
+	player->addComponent<BoxCollider>(0.0f, 2);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	player->addComponent<KeyBoardCtrl>();
@@ -206,7 +207,7 @@ void Game::createMedusa(Vector2D pos, Vector2D vel, float height, float width, f
 {
 	auto* enemy1 = createBasicEntity(pos, height, width, rotation, vel);
 	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
-	enemy1->addComponent<BoxCollider>(0.0f, true);
+	enemy1->addComponent<BoxCollider>(0.0f, 1);
 	enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
 }
 
@@ -225,7 +226,7 @@ void Game::createJointMedusa(Entity* ground)
 	auto* physBody = mngr_->addEntity();
 	physBody->addComponent<Transform>(Vector2D(50.0f, 50.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 	physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
-	physBody->addComponent<BoxCollider>(0.0f, true);
+	physBody->addComponent<BoxCollider>(0.0f, 1);
 
 
 	b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();

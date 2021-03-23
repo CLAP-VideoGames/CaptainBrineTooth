@@ -12,6 +12,7 @@
 
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "..//components/DamageCollisionCallbacks.h"
 
 
 // when you are not using the methods of a class, just
@@ -32,7 +33,7 @@ public:
 	static SDL_Rect camera;
 	void createBackGround(const std::string& spriteId, int fils, int cols, float tanim, int empty);
 	Entity* createBasicEntity(Vector2D pos, float height, float width, float rotation, Vector2D vel);
-	void createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, bool isPhysic);
+	void createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, int physicType);
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, float height, float width, float rotation);
 	void createPlayer(Vector2D pos, Vector2D vel, float height, float width, float rotation);
@@ -42,6 +43,7 @@ public:
 	//const Uint32 MILLISECS_PER_TICK = 1000 / TICKS;
 private:
 	b2World* world_;
+	DamageCollisionCallbacks collisionListener;
 	std::unique_ptr<Manager> mngr_;
 };
 

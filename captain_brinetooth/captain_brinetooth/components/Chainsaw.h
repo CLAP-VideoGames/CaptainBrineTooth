@@ -4,10 +4,15 @@
 #include <SDL.h>
 #include <cassert>
 #include "Transform.h"
+#include "FramedImage.h"
+#include "Image.h"
+#include "BoxCollider.h"
 #include "../ecs/Entity.h"
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
+#include "../ecs/Manager.h"
+
 
 enum STATUS {Iddle, Sawing, OnAnimationLock, OnCombo};
 enum ATTACKS {NotAttacking, Attack1, Attack2, Attack3};
@@ -35,9 +40,14 @@ private:
 	float comboActivationTime;
 
 	//Cooldown variables (should be able to be changed as you see fit)
-	float maxHoldTime = 3000;	//Be careful with units
+	float maxHoldTime = 3000;	//Time player is sawing
 	float animationLockTime = 1000;		//Counted after one attack is stopped to avoid animation clipping
 	float maxComboPanningTime = 2000;	//Counted after animation lock is released
 
+	//Variables related to ChainsawTriggerPosition
+	int triggerOffSetX = -60;
+	int triggerOffSetY = 30;
+
+	Entity* trigger;
 }
 ;

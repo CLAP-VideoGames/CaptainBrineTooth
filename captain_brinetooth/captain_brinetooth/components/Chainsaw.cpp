@@ -20,8 +20,14 @@ void Chainsaw::update() {
 				CURRENT_ATTACK = ATTACKS::Attack1;
 
 				//Activate attack animation + sawing on attack
+				
 
 				//Activate attack trigger
+				trigger = entity_->getMngr()->addEntity();
+				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+					Vector2D(0, 0), 100, 50, 0.0f);
+				trigger->addComponent<Image>(&sdlutils().images().at("Square"));
+				trigger->addComponent<BoxCollider>(0.0f, 0, true);
 
 				//Time control variables
 				sawActivationTime = sdlutils().currRealTime();
@@ -33,12 +39,26 @@ void Chainsaw::update() {
 					std::cout << "Attack 2 Initiated\n";
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack2;
+
+					trigger = entity_->getMngr()->addEntity();
+					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+						Vector2D(0, 0), 100, 50, 0.0f);
+					trigger->addComponent<Image>(&sdlutils().images().at("Square"));
+					trigger->addComponent<BoxCollider>(0.0f, 0, true);
+
 					sawActivationTime = sdlutils().currRealTime();
 					break;
 				case ATTACKS::Attack2:
 					std::cout << "Attack 3 Initiated\n";
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
+
+					trigger = entity_->getMngr()->addEntity();
+					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+						Vector2D(0, 0), 100, 50, 0.0f);
+					trigger->addComponent<Image>(&sdlutils().images().at("Square"));
+					trigger->addComponent<BoxCollider>(0.0f, 0, true);
+
 					sawActivationTime = sdlutils().currRealTime();
 					break;
 				default:
@@ -54,6 +74,9 @@ void Chainsaw::update() {
 			if (CURRENT_STATUS == STATUS::Sawing) {
 				std::cout << "STOPPED SAWING\n";
 				CURRENT_STATUS = STATUS::OnAnimationLock;
+
+				trigger->setActive(false);
+
 				stoppedSawTime = sdlutils().currRealTime();
 			}
 		}
@@ -64,6 +87,9 @@ void Chainsaw::update() {
 		//Deactivate chainsaw
 		std::cout << "STOPPED SAWING\n";
 		CURRENT_STATUS = STATUS::OnAnimationLock;
+
+		trigger->setActive(false);
+
 		stoppedSawTime = sdlutils().currRealTime();
 	}
 	else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()){

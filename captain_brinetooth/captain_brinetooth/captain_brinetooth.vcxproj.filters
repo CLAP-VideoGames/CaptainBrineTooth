@@ -204,6 +204,9 @@
     <ClInclude Include="components\AnimBlendGraph.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
+    <ClInclude Include="components\DamageCollisionCallbacks.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">

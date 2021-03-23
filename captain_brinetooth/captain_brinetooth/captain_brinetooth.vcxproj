@@ -154,6 +154,7 @@
     <ClInclude Include="components\Bounce.h" />
     <ClInclude Include="components\BoxCollider.h" />
     <ClInclude Include="components\Chainsaw.h" />
+    <ClInclude Include="components\DamageCollisionCallbacks.h" />
     <ClInclude Include="components\enemyMovement.h" />
     <ClInclude Include="components\FramedImage.h" />
     <ClInclude Include="components\framework.h" />

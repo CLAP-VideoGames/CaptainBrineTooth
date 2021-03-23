@@ -12,13 +12,15 @@
 
 
 const double PIXELS_IN_METERS = 200;
+enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
 class BoxCollider : public Component {
 public:
-	BoxCollider(float rotation = 0.0f, bool dynamic = false)
+	BoxCollider(float rotation = 0.0f, int typeAux = TYPE::STATIC, bool isTriggerAux = false)
 	{
 		rotation_ = rotation;
-		isDynamic = dynamic;
+		type = typeAux;
+		isTrigger = isTriggerAux;
 	}
 
 	virtual ~BoxCollider() {
@@ -36,11 +38,22 @@ public:
 		world = entity_->getWorld();
 
 		b2BodyDef bodyDef;
-		if (isDynamic) {
-			bodyDef.type =b2_dynamicBody;
-		}
-		else {
+		switch (type) {
+		case TYPE::STATIC:
 			bodyDef.type = b2_staticBody;
+			break;
+
+		case TYPE::DYNAMIC:
+			bodyDef.type = b2_dynamicBody;
+			break;
+
+		case TYPE::KINEMATIC:
+			bodyDef.type = b2_kinematicBody;
+			break;
+
+		default:
+			bodyDef.type = b2_staticBody;
+			break;
 		}
 		
 		bodyDef.position.Set(pos.getX() /PIXELS_IN_METERS, pos.getY() / PIXELS_IN_METERS);
@@ -57,6 +70,7 @@ public:
 		//No puede ser la densidad 0 para un objeto dinamico
 		fixtureDef.density = 1.0f;
 		fixtureDef.friction = 0.7f;
+		fixtureDef.isSensor = isTrigger;
 		
 		fixture = body->CreateFixture(&fixtureDef);
 		
@@ -72,7 +86,7 @@ public:
 
 	void update() override {
 
-		//if(isDynamic)
+		//if(type == TYPE::DYNAMIC)
 			//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
 
 		tr_->getPos().set(round((body->GetPosition().x * PIXELS_IN_METERS ) - tr_->getW()/2.0f), round((body->GetPosition().y * PIXELS_IN_METERS)- tr_->getH() / 2.0f));
@@ -105,7 +119,8 @@ public:
 private:
 	Transform* tr_;
 	Vector2D pos, size;
-	bool isDynamic;
+	int type;
+	bool isTrigger;
 	float rotation_;
 	//bool entra = 0;
 
