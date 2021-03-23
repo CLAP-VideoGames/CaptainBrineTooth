@@ -16,11 +16,12 @@ enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
 class BoxCollider : public Component {
 public:
-	BoxCollider(float rotation = 0.0f, int typeAux = TYPE::STATIC, bool isTriggerAux = false)
+	BoxCollider(float rotation = 0.0f, int typeAux = TYPE::STATIC, bool isTriggerAux = false, float friction = 0.7f)
 	{
 		rotation_ = rotation;
 		type = typeAux;
 		isTrigger = isTriggerAux;
+		friction_ = friction;
 	}
 
 	virtual ~BoxCollider() {
@@ -69,7 +70,7 @@ public:
 		fixtureDef.shape = &boxShape;
 		//No puede ser la densidad 0 para un objeto dinamico
 		fixtureDef.density = 1.0f;
-		fixtureDef.friction = 0.7f;
+		fixtureDef.friction = friction_;
 		fixtureDef.isSensor = isTrigger;
 		
 		fixture = body->CreateFixture(&fixtureDef);
@@ -122,6 +123,7 @@ private:
 	int type;
 	bool isTrigger;
 	float rotation_;
+	float friction_;
 	//bool entra = 0;
 
 	b2World* world = nullptr;

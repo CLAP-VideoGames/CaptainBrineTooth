@@ -34,11 +34,11 @@ public:
 	void createLevel0();
 	static SDL_Rect camera;
 	void createBackGround(const std::string& spriteId, int fils, int cols, float tanim, int empty);
-	Entity* createBasicEntity(Vector2D pos, float height, float width, float rotation, Vector2D vel);
-	void createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, const TYPE physicType);
+	Entity* createBasicEntity(Vector2D pos, Vector2D size, float rotation, Vector2D vel);
+	void createBoxTest(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction, const TYPE physicType, bool isTrigger);
 	void createJointMedusa(Entity* ground);
-	void createMedusa(Vector2D pos, Vector2D vel, float height, float width, float rotation);
-	void createPlayer(Vector2D pos, Vector2D vel, float height, float width, float rotation);
+	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
+	void createPlayer(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction);
 
 	//update (Juan: Si esta en Mayusculas pq es una constante) Joseda: asi es gente, lo que sea en mayus tiene que ser constante
 	//const Uint32 TICKS = 60;

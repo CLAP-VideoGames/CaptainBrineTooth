@@ -44,17 +44,15 @@ void Game::init() {
 	//createLevel0();
 
 	//Caja para hacer testeo con movimiento
-	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f, DYNAMIC);
+	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.0f, 2.0f, DYNAMIC, false);
 
 	//Crea el suelo
-	createBoxTest(Vector2D(500, 700), Vector2D(), sdlutils().width()/1.5, 10.0f, 0.0f, STATIC);
+	createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 0.0f, 2.0f, STATIC, false);
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 
 	//Creamos al player
-	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), 200.0f, 200.0f, 0.0f);
-	
-
+	//createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), 200.0f, 200.0f, 0.0f);
 }
 
 void Game::start() {
@@ -96,8 +94,11 @@ void Game::start() {
 void Game::UpdateCamera() 
 {
 	//Seguimiento del jugador en base a la camara y ajuste de los limites
-	camera.x = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getX()-  camera.w/2.0f;
-	camera.y = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getY() - camera.h/ 2.0f;
+	if (mngr_->getHandler<Player>() != nullptr)
+	{
+		camera.x = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getX()-  camera.w/2.0f;
+		camera.y = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getY() - camera.h/ 2.0f;
+	}
 
 
 	//if (camera.x < 0) camera.x = 0;
@@ -139,7 +140,7 @@ void Game::ShakeCamera(int time)
 
 void Game::createBackGround(const std::string& spriteId, int fils, int cols,float tanim, int empty)
 {
-	auto* bg = createBasicEntity(Vector2D(0, 0), sdlutils().width(), sdlutils().height(), 0.0f, Vector2D());
+	auto* bg = createBasicEntity(Vector2D(0, 0), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
 	bg->addComponent<FramedImage>(&sdlutils().images().at(spriteId), fils, cols, tanim, empty);
 }
 
@@ -152,10 +153,10 @@ void Game::createBackGround(const std::string& spriteId, int fils, int cols,floa
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="vel">Velocidad (por defecto es cero)</param>
 /// <returns></returns>
-Entity* Game::createBasicEntity(Vector2D pos, float height, float width, float rotation = 0.0f, Vector2D vel = Vector2D(0.0f, 0.0f))
+Entity* Game::createBasicEntity(Vector2D pos, Vector2D size, float rotation = 0.0f, Vector2D vel = Vector2D(0.0f, 0.0f))
 {
 	auto* entity_ = mngr_->addEntity();
-	entity_->addComponent<Transform>(pos, vel, height, width, rotation);
+	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
 
 	return entity_;
 }
@@ -169,19 +170,19 @@ Entity* Game::createBasicEntity(Vector2D pos, float height, float width, float r
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="physicType">Determina el tipo físico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
-void Game::createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, const TYPE physicType)
+void Game::createBoxTest(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction, const TYPE physicType, bool isTrigger)
 {
-	auto* box = createBasicEntity(pos, height, width, rotation, vel);
+	auto* box = createBasicEntity(pos, size, rotation, vel);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
-	box->addComponent<BoxCollider>(0.0f, physicType);
+	box->addComponent<BoxCollider>(0.0f, physicType, isTrigger, friction);
 
 	if(physicType == 1 || physicType == 2)
 		box->addComponent<KeyBoardCtrl>();
 }
 
-void Game::createPlayer(Vector2D pos, Vector2D vel, float height, float width, float rotation)
+void Game::createPlayer(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction)
 {
-	auto* player = createBasicEntity(pos, height, width, rotation, vel);
+	auto* player = createBasicEntity(pos, size, rotation, vel);
 	
 
 #pragma region Animations
@@ -194,7 +195,7 @@ void Game::createPlayer(Vector2D pos, Vector2D vel, float height, float width, f
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 #pragma endregion
 
-	player->addComponent<BoxCollider>(0.0f, 1);
+	player->addComponent<BoxCollider>(0.0f, 1, false, friction);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	player->addComponent<KeyBoardCtrl>();
@@ -205,9 +206,9 @@ void Game::createPlayer(Vector2D pos, Vector2D vel, float height, float width, f
 	mngr_->setHandler<Player>(player);
 }
 
-void Game::createMedusa(Vector2D pos, Vector2D vel, float height, float width, float rotation)
+void Game::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation)
 {
-	auto* enemy1 = createBasicEntity(pos, height, width, rotation, vel);
+	auto* enemy1 = createBasicEntity(pos, size, rotation, vel);
 	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
 	enemy1->addComponent<BoxCollider>(0.0f, 1);
 	enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
