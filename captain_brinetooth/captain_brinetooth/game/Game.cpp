@@ -45,10 +45,10 @@ void Game::init() {
 	//createLevel0();
 
 	//Caja para hacer testeo con movimiento
-	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.0f, 2.0f, DYNAMIC, false);
+	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.0f, 2.0f, DYNAMIC, false, 1);
 
 	//Crea el suelo
-	createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 0.0f, 2.0f, STATIC, false);
+	createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 0.0f, 2.0f, STATIC, false, 1);
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 
@@ -171,11 +171,11 @@ Entity* Game::createBasicEntity(Vector2D pos, Vector2D size, float rotation = 0.
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="physicType">Determina el tipo físico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
-void Game::createBoxTest(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction, const TYPE physicType, bool isTrigger)
+void Game::createBoxTest(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction, const TYPE physicType, bool isTrigger, int col)
 {
 	auto* box = createBasicEntity(pos, size, rotation, vel);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
-	box->addComponent<BoxCollider>(0.0f, physicType, isTrigger, friction);
+	box->addComponent<BoxCollider>(0.0f, physicType, col, isTrigger, friction);
 
 	if(physicType == 1 || physicType == 2)
 		box->addComponent<KeyBoardCtrl>();

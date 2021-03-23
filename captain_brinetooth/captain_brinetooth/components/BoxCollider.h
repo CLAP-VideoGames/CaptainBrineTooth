@@ -16,13 +16,14 @@ enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
 class BoxCollider : public Component {
 public:
-	BoxCollider(float rotation = 0.0f, int typeAux = TYPE::STATIC, bool isTriggerAux = false, float friction = 0.7f)
+	BoxCollider(float rotation = 0.0f, int typeAux = TYPE::STATIC, int colLay = 1 ,bool isTriggerAux = false, float friction = 0.7f)
 	{
 		rotation_ = rotation;
 		type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
 		tr_ = nullptr;
+		colLay_ = colLay;
 	}
 
 	virtual ~BoxCollider() {
@@ -73,7 +74,8 @@ public:
 		fixtureDef.density = 1.0f;
 		fixtureDef.friction = friction_;
 		fixtureDef.isSensor = isTrigger;
-		
+		setColLays(fixtureDef);
+
 		fixture = body->CreateFixture(&fixtureDef);
 		
 	}
@@ -84,6 +86,20 @@ public:
 		vel.x = speed.getX(); vel.y = speed.getY();
 		body->SetLinearVelocity(vel);
 	
+	}
+
+	void setColLays(b2FixtureDef& fix) {
+		switch (colLay_)
+		{
+		case 2:
+			fix.filter.categoryBits = 0x0004; // tag para determinar capa de colision
+			fix.filter.maskBits = 0x0004; // con que capas de colision se hace pues eso, colision
+			break;
+		default:
+			fix.filter.categoryBits = 0x0002;
+			fix.filter.maskBits = 0x0002;
+			break;
+		}
 	}
 
 	void update() override {
@@ -125,6 +141,7 @@ private:
 	bool isTrigger;
 	float rotation_;
 	float friction_;
+	int colLay_;
 	//bool entra = 0;
 
 	b2World* world = nullptr;

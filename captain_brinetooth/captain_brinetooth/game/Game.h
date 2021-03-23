@@ -35,7 +35,7 @@ public:
 	static SDL_Rect camera;
 	void createBackGround(const std::string& spriteId, int fils, int cols, float tanim, int empty);
 	Entity* createBasicEntity(Vector2D pos, Vector2D size, float rotation, Vector2D vel);
-	void createBoxTest(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction, const TYPE physicType, bool isTrigger);
+	void createBoxTest(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction, const TYPE physicType, bool isTrigger, int col);
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
 	void createPlayer(Vector2D pos, Vector2D vel, Vector2D size, float rotation, float friction);
