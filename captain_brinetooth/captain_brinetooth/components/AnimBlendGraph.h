@@ -39,7 +39,6 @@ typedef struct {
 class AnimBlendGraph : public Component
 {
 public:
-
 	AnimBlendGraph() {};
 	virtual	~AnimBlendGraph() {};
 	void init() override {
@@ -57,7 +56,7 @@ public:
 			currentAnim_->anim_->render();
 	}
 
-    void updateAnim() {
+	void updateAnim() {
 		if (currentAnim_ == nullptr) {
 			if (animStates_.size() == 0 && entityAnims_.size() > 0)	//Si solo hay vertices en el grafo, coge el primer vertice
 				currentAnim_ = new AnimState({ entityAnims_[0] });
@@ -78,7 +77,7 @@ public:
 				}
 			}
 		}
-    }
+	}
 
 	void checkAnimState(Parameter* p) { 
 		int i = 0;
@@ -121,12 +120,12 @@ public:
 			i++;
 		}
 		//Comprobar si existe un parametro ya existente, si no, lo crea y lo inicializa a -1
-		i = 0;
-		while (i < params_.size() && params_[i]->name_ != param->name_)i++;
-		if (i >= params_.size()) {
+		i = searchParamValue(param->name_);
+		if (i == -1) {
 			Parameter* newP = new Parameter({ param->name_, -1 });
 			params_.push_back(newP);
 		}
+
 		//Comprobar si existe un AnimState con la animacion fuente
 		i = 0;
 		while (i < animStates_.size() && animStates_[i]->anim_ != src)i++;
@@ -142,13 +141,24 @@ public:
 	}
 
 	void setParamValue(std::string paramName, int value) {
-		int i = 0;
-		while (i < params_.size() && params_[i]->name_ != paramName) i++; //Busqueda del parametro por su nombre
-		if (i < params_.size()) {
+		int i = searchParamValue(paramName);
+		if (i != -1) {
 			params_[i]->value_ = value;
 			//Comprobar si cambia la animacion
 			checkAnimState(params_[i]);
 		}
+	}
+
+	/// <summary>
+	/// Busca si el nombre del parámtro existe en el vector de parámetros
+	/// </summary>
+	/// <param name="paramName"></param>
+	/// <returns></returns>
+	int searchParamValue(std::string paramName)
+	{
+		int i = 0;
+		while (i < params_.size() && params_[i]->name_ != paramName) i++; //Busqueda del parametro por su nombre
+		return (i < params_.size() ? i : -1);
 	}
 
 	void reset() {
@@ -167,9 +177,9 @@ public:
 
 protected:
 	Transform* tr_;
-    std::vector<Parameter*> params_; //Parametros de transicion entre componentes del grafo
-    std::vector<Animation*> entityAnims_;    //Componentes (Animation) del grafo
-    std::vector<AnimState*> animStates_;
-    AnimState *currentAnim_, *nextAnim_, *defaultAnim_;
-    bool waitOnComplete;
+	std::vector<Parameter*> params_; //Parametros de transicion entre componentes del grafo
+	std::vector<Animation*> entityAnims_;    //Componentes (Animation) del grafo
+	std::vector<AnimState*> animStates_;
+	AnimState *currentAnim_, *nextAnim_, *defaultAnim_;
+	bool waitOnComplete;
 };

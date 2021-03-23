@@ -7,10 +7,13 @@
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
 
+#include "Player_Health.h"
+
 class PlayerController : public Component {
-public:
-	PlayerController()
-	{
+public:																
+	PlayerController(const float & speed = 4.0f, const float& forceJ = 3.0f):
+															//falso				//falso
+		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false){
 
 	}
 
@@ -23,38 +26,59 @@ public:
 		assert(tr_ != nullptr);
 		collider_ = entity_->getComponent<BoxCollider>();
 		assert(collider_ != nullptr);
+
 		animController_ = entity_->getComponent<AnimBlendGraph>();
-		//assert(animController_ != nullptr);
+
+		lastTimeJumped = sdlutils().currRealTime();
+
+		//health_ = entity_->getComponent<Player_Health>();
+		//assert(health_!= nullptr);
+
 	}
 
 
 	void update() override {
 		if (ih().keyDownEvent()) {
 			assert(collider_ != nullptr);
-			if (ih().isKeyDown(SDL_SCANCODE_UP)) {
-				collider_->setSpeed(Vector2D(0.0f, -speed_));
-			}
-			else if (ih().isKeyDown(SDL_SCANCODE_DOWN)) {
-				collider_->setSpeed(Vector2D(0.0f, speed_));
-			}
-			else if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
+			
+			if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
 				collider_->setSpeed(Vector2D(-speed_, 0.0f));
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
 				collider_->setSpeed(Vector2D(speed_, 0.0f));
 			}
-			else if (ih().isKeyDown(SDL_SCANCODE_SPACE)) {
-				collider_->setSpeed(Vector2D(0.0f, 0.0f));
-			}
-			//Test animacion, Ejemplo de uso
-			else if (ih().isKeyDown(SDL_SCANCODE_A)) {
-				animController_->setParamValue("NotOnFloor", 1);
+			
+			//Parte Vertical
+			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor){
+				isOnFloor = false;
+
+				//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho más
+				collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
+				
+				//Realizar daño
+				//health_->loseLife();
+
+				//Test animacion de salto, Ejemplo de uso
+				if(animController_ != nullptr )
+					if(animController_->searchParamValue("NotOnFloor") != -1)
+						animController_->setParamValue("NotOnFloor", 1);
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_X)) {
-				animController_->setParamValue("NotOnFloor", 0);
+				
 			}
+	
 		}
 
+		//Timer provisional hasta tener los Triggers de colision, para preparar bien el saltos
+		if (sdlutils().currRealTime() - lastTimeJumped >= time)
+		{
+			isOnFloor = true;
+			lastTimeJumped = sdlutils().currRealTime();
+
+			if (animController_ != nullptr)
+				if (animController_->searchParamValue("NotOnFloor") != -1)
+						animController_->setParamValue("NotOnFloor", 0);
+		}
 	}
 
 	void methods()
@@ -106,13 +130,40 @@ public:
 		//if (Input.GetAxis("Horizontal") < 0) parent.localScale = new Vector3(-1, 1, 1);
 
 		//#endregion
+
+		//private void OnTriggerEnter2D(Collider2D collision)
+		//{
+		//	if (!isInRest && !isJumping)
+		//	{
+		//		anim.SetBool("isJumping", false);
+		//		anim.SetBool("isFalling", false);
+		//		anim.SetTrigger("OnLand");
+		//	}
+
+		//	ResetSpeed();
+		//	isInRest = true;
+		//}
+
+		//private void OnTriggerExit2D(Collider2D collision)
+		//{
+		//	isInRest = false;
+
+		//	if (!isJumping)
+		//		anim.SetBool("isFalling", true); //Si sale de una plataforma y no esta saltando, empieza la animacion de caida.
+		//}
 	}
 
 
 private:
-	Transform* tr_;
-	BoxCollider* collider_;
-	AnimBlendGraph* animController_;
-	float speed_;
+	Transform* tr_ = nullptr;
+	BoxCollider* collider_ = nullptr;
+	AnimBlendGraph* animController_ = nullptr;
+	Player_Health* health_ = nullptr;
+
+
+	int lastTimeJumped; 
+	int time = 1500;
+	float speed_, forceJump_;
+	bool isOnFloor, isOnAir;
 
 };

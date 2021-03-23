@@ -11,19 +11,22 @@
 #include "../sdlutils/SDLUtils.h"
 
 
+//1 pixel(X) 0.0002645833 m
+//then n pixels = n * 0.0002645833;
 const double PIXELS_IN_METERS = 200;
 enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
 class BoxCollider : public Component {
 public:
-	BoxCollider(float rotation = 0.0f, int typeAux = TYPE::STATIC, int colLay = 1 ,bool isTriggerAux = false, float friction = 0.7f)
+	BoxCollider(int typeAux = TYPE::STATIC, int colLay = 1 ,bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true,  float rotation = 0.0f)
 	{
-		rotation_ = rotation;
 		type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
 		tr_ = nullptr;
 		colLay_ = colLay;
+		fixedRotation_ = fixedRotation;
+		rotation_ = rotation;
 	}
 
 	virtual ~BoxCollider() {
@@ -35,8 +38,6 @@ public:
 		assert(tr_ != nullptr);
 		pos = tr_->getPos();
 
-		//1 pixel(X) 0.0002645833 m
-		//then n pixels = n * 0.0002645833;
 		size = Vector2D(tr_->getW() / PIXELS_IN_METERS, tr_->getH() / PIXELS_IN_METERS);
 		world = entity_->getWorld();
 
@@ -67,6 +68,12 @@ public:
 
 		b2PolygonShape boxShape;
 		boxShape.SetAsBox(size.getX() / 2.0f, size.getY() / 2.0f);
+
+		/*b2EdgeShape edgeShape;
+		edgeShape.se (b2Vec2(-15, 0), b2Vec2(15, 0));
+		myFixtureDef.shape = &edgeShape;*/
+
+
 		b2FixtureDef fixtureDef;
 		//Que el cubo real tenga la misma forma que la definicion
 		fixtureDef.shape = &boxShape;
@@ -74,6 +81,9 @@ public:
 		fixtureDef.density = 1.0f;
 		fixtureDef.friction = friction_;
 		fixtureDef.isSensor = isTrigger;
+
+		body->SetFixedRotation(fixedRotation_);
+		
 		setColLays(fixtureDef);
 
 		fixture = body->CreateFixture(&fixtureDef);
@@ -86,6 +96,26 @@ public:
 		vel.x = speed.getX(); vel.y = speed.getY();
 		body->SetLinearVelocity(vel);
 	
+	}
+
+	/// <summary>
+	/// Aplica una fuerza gradual en la direccion indicada
+	/// </summary>
+	/// <param name="dir">Vector2D de dirección</param>
+	/// <param name="force">Fuerza aplicada</param>
+	void applyForce(Vector2D dir, float force = 1.0f)
+	{
+		body->ApplyForce(b2Vec2(dir.getX() * force, dir.getY() * force), body->GetWorldCenter(), true);
+	}
+
+	/// <summary>
+	/// Aplica una fuerza inmediata en la direccion indicada
+	/// </summary>
+	/// <param name="dir">Vector2D de dirección</param>
+	/// <param name="force">Fuerza aplicada</param>
+	void applyLinearForce(Vector2D dir, float force = 1.0f)
+	{
+		body->ApplyLinearImpulse(b2Vec2(dir.getX()* force, dir.getY()* force) , body->GetWorldCenter(), true);
 	}
 
 	void setColLays(b2FixtureDef& fix) {
@@ -143,7 +173,7 @@ private:
 	float friction_;
 	int colLay_;
 	//bool entra = 0;
-
+	bool fixedRotation_;
 	b2World* world = nullptr;
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
