@@ -17,7 +17,6 @@
 #include "../components/Transform.h"
 #include "../components/Rectangle.h"
 #include "../components/FramedImage.h"
-#include "../components/BoxCollider.h"
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Player_Health.h"
 #include "..//components/enemyMovement.h"
@@ -45,10 +44,10 @@ void Game::init() {
 	//createLevel0();
 
 	//Caja para hacer testeo con movimiento
-	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f, 1);
+	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), 150.0f, 80.0f, 0.0f, DYNAMIC);
 
 	//Crea el suelo
-	createBoxTest(Vector2D(500, 700), Vector2D(), sdlutils().width()/1.5, 10.0f, 0.0f, 0);
+	createBoxTest(Vector2D(500, 700), Vector2D(), sdlutils().width()/1.5, 10.0f, 0.0f, STATIC);
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 
@@ -169,14 +168,14 @@ Entity* Game::createBasicEntity(Vector2D pos, float height, float width, float r
 /// <param name="height">Altura en pixeles</param>
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
-/// <param name="isPhysics">Determina si el objeto se puede mover</param>
-void Game::createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, int physicType)
+/// <param name="physicType">Determina el tipo físico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
+void Game::createBoxTest(Vector2D pos, Vector2D vel, float height, float width, float rotation, const TYPE physicType)
 {
 	auto* box = createBasicEntity(pos, height, width, rotation, vel);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
 	box->addComponent<BoxCollider>(0.0f, physicType);
 
-	if(physicType == 2)
+	if(physicType == 1 || physicType == 2)
 		box->addComponent<KeyBoardCtrl>();
 }
 
