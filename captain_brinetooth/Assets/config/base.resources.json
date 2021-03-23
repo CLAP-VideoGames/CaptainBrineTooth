@@ -39,7 +39,11 @@
     {
       "id": "vacio",
       "file": "assets/sprites/player/HUD/anzuelo_vacio.png"
-    }
+    },
+		{
+			"id": "fondo",
+			"file": "assets/sprites/background.png"
+		}
 
 	],
 
