@@ -22,6 +22,7 @@ public:
 		type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
+		tr_ = nullptr;
 	}
 
 	virtual ~BoxCollider() {

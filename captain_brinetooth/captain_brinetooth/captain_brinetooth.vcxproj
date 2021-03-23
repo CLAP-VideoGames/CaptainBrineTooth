@@ -160,6 +160,7 @@
     <ClInclude Include="components\framework.h" />
     <ClInclude Include="components\Image.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
+    <ClInclude Include="components\PlayerController.h" />
     <ClInclude Include="components\Player_Health.h" />
     <ClInclude Include="components\RayCast.h" />
     <ClInclude Include="components\Rectangle.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="components\Armas_HUD.cpp" />
     <ClCompile Include="components\Chainsaw.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
+    <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />

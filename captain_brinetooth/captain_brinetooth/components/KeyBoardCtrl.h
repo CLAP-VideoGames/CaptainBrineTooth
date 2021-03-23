@@ -11,9 +11,6 @@
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
 
-
-
-
 #include "../components/Player_Health.h"
 
 
@@ -51,7 +48,7 @@ public:
 			} else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
 				collider_->setSpeed(Vector2D(speed_, 0.0f));
 			} else if (ih().isKeyDown(SDL_SCANCODE_SPACE)) {
-  				collider_->setSpeed(Vector2D(0.0f, 0.0f));
+				collider_->setSpeed(Vector2D(0.0f, 0.0f));
 				entity_->getComponent<Player_Health>()->loseLife();
 			} 
 			//Test animacion, Ejemplo de uso

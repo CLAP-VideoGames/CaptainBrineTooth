@@ -20,6 +20,7 @@
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Player_Health.h"
 #include "..//components/enemyMovement.h"
+#include "..//components/PlayerController.h"
 #include "..//components/Chainsaw.h"
 
 
@@ -198,7 +199,7 @@ void Game::createPlayer(Vector2D pos, Vector2D vel, Vector2D size, float rotatio
 	player->addComponent<BoxCollider>(0.0f, 1, false, friction);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
-	player->addComponent<KeyBoardCtrl>();
+	player->addComponent<PlayerController>();
 
 	player->addComponent<Chainsaw>();
 
