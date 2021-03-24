@@ -14,7 +14,7 @@ Manager::~Manager() {
 	delete world_;
 
 	for (auto e : entities_) {
-		delete e;
+		if(e->isSleeping())delete e;
 	}
 }
 
@@ -38,11 +38,11 @@ void Manager::refresh() {
 void Manager::update() {
 	auto n = entities_.size();
 	for (auto i = 0u; i < n; i++)
-		entities_[i]->update();
+		if(!entities_[i]->isSleeping())entities_[i]->update();
 }
 
 void Manager::render() {
 	auto n = entities_.size();
 	for (auto i = 0u; i < n; i++)
-		entities_[i]->render();
+		if(!entities_[i]->isSleeping())entities_[i]->render();
 }

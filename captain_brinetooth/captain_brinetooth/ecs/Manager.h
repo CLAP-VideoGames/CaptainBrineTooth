@@ -17,8 +17,8 @@ public:
 	virtual ~Manager();
 
 	// entities
-	Entity* addEntity() {
-		Entity *e = new Entity(this, world_);
+	Entity* addEntity(bool sleeping) {
+		Entity *e = new Entity(this, world_,sleeping);
 		if (e != nullptr) {
 			e->resetGroups();
 			entities_.emplace_back(e);

@@ -23,7 +23,7 @@ void Chainsaw::update() {
 				
 
 				//Activate attack trigger
-				trigger = entity_->getMngr()->addEntity();
+				trigger = entity_->getMngr()->addEntity(false);
 				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 					Vector2D(0, 0), 100, 50, 0.0f);
 				trigger->addComponent<Image>(&sdlutils().images().at("Square"));
@@ -40,7 +40,7 @@ void Chainsaw::update() {
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack2;
 
-					trigger = entity_->getMngr()->addEntity();
+					trigger = entity_->getMngr()->addEntity(false);
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 						Vector2D(0, 0), 100, 50, 0.0f);
 					trigger->addComponent<Image>(&sdlutils().images().at("Square"));
@@ -53,7 +53,7 @@ void Chainsaw::update() {
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
 
-					trigger = entity_->getMngr()->addEntity();
+					trigger = entity_->getMngr()->addEntity(false);
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 						Vector2D(0, 0), 100, 50, 0.0f);
 					trigger->addComponent<Image>(&sdlutils().images().at("Square"));

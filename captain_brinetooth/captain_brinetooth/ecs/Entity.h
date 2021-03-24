@@ -19,12 +19,13 @@ class Entity {
 
 public:
 
-	Entity(Manager* mngr, b2World* wrld) :
+	Entity(Manager* mngr, b2World* wrld, bool slp) :
 			active_(true), //
 			mngr_(mngr), //
 			world_(wrld), //
 			cmpArray_(), //
-			groups_() //
+			groups_(), //
+		    sleeping_(slp)
 	{
 	}
 
@@ -95,6 +96,10 @@ public:
 	inline bool isActive() const {
 		return active_;
 	}
+	inline bool isSleeping() const {
+		return sleeping_;
+	}
+	inline void gotoSleep() { sleeping_ = true; }
 
 	inline void setActive(bool state) {
 		active_ = state;
@@ -131,6 +136,7 @@ public:
 
 private:
 
+	bool sleeping_;
 	bool active_;
 	Manager *mngr_;
 	b2World* world_;

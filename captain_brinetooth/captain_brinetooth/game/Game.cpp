@@ -6,6 +6,8 @@
 #include "tmxlite/Map.hpp"
 #include "tmxlite/Layer.hpp"
 #include "tmxlite/TileLayer.hpp"
+#include "../GameStateMachine.h"
+#include "../GameState.h"
 
 
 #include "../components/Image.h"
@@ -29,7 +31,11 @@ const auto MAP_PATH = "assets/maps/level0.tmx";
 SDL_Rect Game::camera = {0 ,0,1100,900};
 
 Game::Game() {
-	mngr_.reset(new Manager());
+	Manager* a = new Manager();
+	stateMachine = new GameStateMachine();
+	//Creariamos el menu y hariamos un setManager dandole el valor a 
+	//Hariamos un push del menu
+	mngr_.reset(a);
 	world_ = mngr_->getWorld();
 }
 
@@ -75,8 +81,11 @@ void Game::start() {
 		}
 
 		world_->Step(1.0f / 60.0f, 6, 2);
+		  
 
-		mngr_->update();
+
+		//Los estados son capaces de actualizar todo lo suyo gracias a la referencia del manager
+		//mngr_->update();
 		UpdateCamera();
 		mngr_->refresh();
 
@@ -92,6 +101,7 @@ void Game::start() {
 	}
 
 }
+//Metodos propios de game 
 void Game::UpdateCamera() 
 {
 	//Seguimiento del jugador en base a la camara y ajuste de los limites
@@ -139,6 +149,10 @@ void Game::ShakeCamera(int time)
 }
 
 
+
+
+
+//Metodos que todo GameState deberia de tener 
 void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols, const float & tanim, const int & empty)
 {
 	auto* bg = createBasicEntity(Vector2D(0, 0), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
@@ -156,7 +170,7 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 /// <returns></returns>
 Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation = 0.0f, const Vector2D & vel = Vector2D(0.0f,0.0f))
 {
-	auto* entity_ = mngr_->addEntity();
+	auto* entity_ = mngr_->addEntity(false);
 	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
 
 	return entity_;
@@ -218,14 +232,14 @@ void Game::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotatio
 /// </summary>
 void Game::createLevel0()
 {
-	auto* nivel = mngr_->addEntity();
+	auto* nivel = mngr_->addEntity(false);
 	nivel->addComponent<Level0>(MAP_PATH, world_);
 }
 
 void Game::createJointMedusa(Entity* ground)
 {
 	//Creacion de una medusa fisica que va a estar anclada al techo
-	auto* physBody = mngr_->addEntity();
+	auto* physBody = mngr_->addEntity(false);
 	physBody->addComponent<Transform>(Vector2D(50.0f, 50.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 	physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
 	physBody->addComponent<BoxCollider>(0.0f, 1);
@@ -244,4 +258,3 @@ void Game::createJointMedusa(Entity* ground)
 	// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
 	world_->CreateJoint(b2joint);
 }
-

@@ -14,6 +14,9 @@
 #include "../sdlutils/SDLUtils.h"
 #include "..//components/DamageCollisionCallbacks.h"
 #include "../components/BoxCollider.h"
+class GameState;
+class GameStateMachine;
+
 
 
 
@@ -41,7 +44,7 @@ public:
 
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
-
+	
 	//update (Juan: Si esta en Mayusculas pq es una constante) Joseda: asi es gente, lo que sea en mayus tiene que ser constante
 	//const Uint32 TICKS = 60;
 	//const Uint32 MILLISECS_PER_TICK = 1000 / TICKS;
@@ -49,5 +52,7 @@ private:
 	b2World* world_;
 	DamageCollisionCallbacks collisionListener;
 	std::unique_ptr<Manager> mngr_;
+	//Control de los estados en los que esta el juego 
+	GameStateMachine* stateMachine;
 };
 
