@@ -24,6 +24,7 @@
 #include "..//components/enemyMovement.h"
 #include "..//components/PlayerController.h"
 #include "..//components/Chainsaw.h"
+#include "../PruebaState.h"
 
 
 //tiledmap
@@ -35,8 +36,11 @@ Game::Game() {
 	stateMachine = new GameStateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
+	
 	mngr_.reset(a);
 	world_ = mngr_->getWorld();
+	PruebaState* prueba = new PruebaState(this,a);
+	stateMachine->pushState(prueba);
 }
 
 Game::~Game() {
@@ -49,7 +53,8 @@ void Game::init() {
 
 	createBackGround("fondo", 11, 11, 0.1f, 2);
 	//createLevel0();
-
+	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
+	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
 
@@ -60,6 +65,7 @@ void Game::init() {
 
 	//Creamos al player
 	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
+
 }
 
 void Game::start() {
@@ -86,11 +92,14 @@ void Game::start() {
 
 		//Los estados son capaces de actualizar todo lo suyo gracias a la referencia del manager
 		//mngr_->update();
-		UpdateCamera();
-		mngr_->refresh();
+		stateMachine->currentState()->update();
+		//No tengo muy claro que la camara se actualize en base al juego , en base a cada estado individual
+		//O en base a cualquier estado
+		if(mngr_->getHandler<Player>()!=nullptr)UpdateCamera();
+		stateMachine->currentState()->refresh();
 
 		sdlutils().clearRenderer();
-		mngr_->render();
+		stateMachine->currentState()->render();
 		sdlutils().presentRenderer();
 		
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;

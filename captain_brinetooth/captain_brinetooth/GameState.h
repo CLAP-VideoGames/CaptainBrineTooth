@@ -13,7 +13,7 @@ protected:
 	Game* app;
 	std::vector<Entity*> stage;
 
-	GameState(Game* a) { app = a; };
+	GameState(Game* a, Manager* m) { app = a; manager_ = m; };
 
 
 
@@ -21,6 +21,7 @@ public:
 	virtual ~GameState();
 	virtual void render() const;
 	virtual void update();
-	void setManager(Manager* m) { manager_ = m; };
+	virtual void refresh();
+	//void setManager(Manager* m) { manager_ = m; };
 };
 

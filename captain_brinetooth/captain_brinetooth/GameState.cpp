@@ -17,3 +17,6 @@ void GameState::render() const {
 void GameState::update() {
 	manager_->update();
 }
+void GameState::refresh() {
+	manager_->refresh();
+}
