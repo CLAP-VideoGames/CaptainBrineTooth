@@ -27,9 +27,11 @@ public:
 		assert(tr_ != nullptr);
 	}
 	void render() override {
-		Vector2D actpos;
-		actpos.setX(tr_->getPos().getX()- Game::camera.x);
-		actpos.setY(tr_->getPos().getY() - Game::camera.y);
+		//Vector2D actpos;
+		//actpos.setX(tr_->getPos().getX()- Game::camera.x);
+		//actpos.setY(tr_->getPos().getY() - Game::camera.y);
+		Vector2D actpos (tr_->getPos().getX(), tr_->getPos().getY());
+
 		SDL_Rect dest = build_sdlrect(actpos, tr_->getW(), tr_->getH());
 
 		//Falta meter el flip

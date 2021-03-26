@@ -57,7 +57,7 @@ void Game::init() {
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
-	//createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
+	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
 
 	//Crea el suelo
 	createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
@@ -65,7 +65,7 @@ void Game::init() {
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 
 	//Creamos al player
-	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
+	//createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
 
 }
 
@@ -96,7 +96,6 @@ void Game::start() {
 		stateMachine->currentState()->update();
 		//No tengo muy claro que la camara se actualize en base al juego , en base a cada estado individual
 		//O en base a cualquier estado
-		if(mngr_->getHandler<Player>()!=nullptr)UpdateCamera();
 		stateMachine->currentState()->refresh();
 
 		sdlutils().clearRenderer();
@@ -112,22 +111,6 @@ void Game::start() {
 
 }
 //Metodos propios de game 
-void Game::UpdateCamera() 
-{
-	////Seguimiento del jugador en base a la camara y ajuste de los limites
-	//if (mngr_->getHandler<Player>() != nullptr)
-	//{
-	//	camera.x = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getX()-  camera.w/2.0f;
-	//	camera.y = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getY() - camera.h/ 2.0f;
-	//}
-
-
-	//if (camera.x < 0) camera.x = 0;
-	//if (camera.y < 0) camera.y = 0;
-	//if (camera.x > camera.w) camera.x = camera.w;
-	//if (camera.y > camera.h) camera.y = camera.h;
-
-}
 
 void Game::ShakeCamera(int time)
 {
@@ -200,6 +183,7 @@ void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vect
 	auto* box = createBasicEntity(pos, size, rotation, vel);
 	box->addComponent<Image>(&sdlutils().images().at("Square"));
 	box->addComponent<BoxCollider>(physicType, col, isTrigger, friction, fixedRotation, rotation);
+	box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
 	if(physicType == 1 || physicType == 2)
 		box->addComponent<PlayerController>();
