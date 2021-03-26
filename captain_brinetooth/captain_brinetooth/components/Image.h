@@ -23,10 +23,12 @@ public:
 	}
 
 	void render() override {
-		Vector2D actpos;
-		actpos.setX(tr_->getPos().getX() - Game::camera.x);
-		actpos.setY(tr_->getPos().getY() - Game::camera.y);
-		SDL_Rect dest = build_sdlrect(actpos, tr_->getW(), tr_->getH());
+		//Vector2D actpos;
+		//actpos.setX(tr_->getPos().getX() - Game::camera.x);
+		//actpos.setY(tr_->getPos().getY() - Game::camera.y);
+
+		//Vector2D actpos(tr_->getPos().getX(), tr_->getPos().getY());
+		SDL_Rect dest = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
 
 		tex_->render(dest, tr_->getRot());
 	}

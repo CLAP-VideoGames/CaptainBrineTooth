@@ -54,7 +54,7 @@ public:
 		//Construccion de los rectangulos fuente(textura) y destino (entidad)
 		SDL_Rect src = build_sdlrect(framepos_[actfr_].getX() * framewidth_, framepos_[actfr_].getY() * frameheight_, framewidth_, frameheight_);
 		SDL_Rect dest = build_sdlrect(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
-		tex_->render(src, dest);
+		tex_->render(src, dest, tr_->getRot());
 	}
 
 	void nextFrame() { 

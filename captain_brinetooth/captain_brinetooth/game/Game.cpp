@@ -57,7 +57,7 @@ void Game::init() {
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
-	createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
+	//createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
 
 	//Crea el suelo
 	createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
@@ -65,7 +65,7 @@ void Game::init() {
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
 
 	//Creamos al player
-	//createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
+	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
 
 }
 
@@ -196,10 +196,11 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
-	anim_controller->addAnimation("jump", &sdlutils().images().at("Player_jump"), 4, 5, 20, 24, 0);
-	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
-	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
-	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
+	//anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
+	//anim_controller->addAnimation("jump", &sdlutils().images().at("Player_jump"), 4, 5, 20, 24, 0);
+	//anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
+	//anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
+	//anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 #pragma endregion
 
 	player->addComponent<BoxCollider>(DYNAMIC , 1, false, friction, fixedRotation, rotation);
