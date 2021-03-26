@@ -153,9 +153,6 @@
     <ClInclude Include="components\Bounce.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\Image.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\KeyBoardCtrl.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
@@ -181,9 +178,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="components\enemyMovement.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\FramedImage.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\RayCast.h">

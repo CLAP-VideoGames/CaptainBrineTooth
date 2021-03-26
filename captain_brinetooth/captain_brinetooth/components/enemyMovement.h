@@ -6,7 +6,6 @@
 #include "../sdlutils/SDLUtils.h"
 #include "Transform.h"
 #include "../components/BoxCollider.h"
-#include "..//components/FramedImage.h"
 
 class EnemyMovement : public Component {
 public:

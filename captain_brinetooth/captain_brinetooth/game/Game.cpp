@@ -10,7 +10,6 @@
 #include "../GameState.h"
 
 
-#include "../components/Image.h"
 #include "../components/Animation.h"
 #include "../components/AnimBlendGraph.h"
 #include "../components/Rotate.h"
@@ -18,7 +17,6 @@
 #include "../components/Armas_HUD.h"
 #include "../components/Transform.h"
 #include "../components/Rectangle.h"
-#include "../components/FramedImage.h"
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Player_Health.h"
 #include "..//components/enemyMovement.h"
@@ -52,20 +50,19 @@ void Game::init() {
 
 	world_->SetContactListener(&collisionListener);
 
-	createBackGround("fondo", 11, 11, 0.1f, 2);
+	createBackGround("fondo", 11, 11);
 	//createLevel0();
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
-
 	//Crea el suelo
 	createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
 
-	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
+	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
 	//Creamos al player
-	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
+	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 
 }
 
@@ -146,10 +143,13 @@ void Game::ShakeCamera(int time)
 
 
 //Metodos que todo GameState deberia de tener 
-void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols, const float & tanim, const int & empty)
+void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols)
 {
 	auto* bg = createBasicEntity(Vector2D(0, 0), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
-	bg->addComponent<FramedImage>(&sdlutils().images().at(spriteId), fils, cols, tanim, empty);
+	auto* anim_controller = bg->addComponent<AnimBlendGraph>();
+
+	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
+	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 121, 24, -1, 0, 119);
 }
 
 /// <summary>
@@ -181,7 +181,10 @@ Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, con
 void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vector2D & size, const float & friction, const TYPE physicType, const bool & isTrigger, const int & col, const bool & fixedRotation, const float & rotation)
 {
 	auto* box = createBasicEntity(pos, size, rotation, vel);
-	box->addComponent<Image>(&sdlutils().images().at("Square"));
+
+	auto* anim_controller = box->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
+
 	box->addComponent<BoxCollider>(physicType, col, isTrigger, friction, fixedRotation, rotation);
 	box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
@@ -195,12 +198,12 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
-	//anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
-	//anim_controller->addAnimation("jump", &sdlutils().images().at("Player_jump"), 4, 5, 20, 24, 0);
-	//anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
-	//anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
-	//anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
+	//anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
+	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
+	anim_controller->addAnimation("jump", &sdlutils().images().at("Player_jump"), 4, 5, 20, 24, 0);
+	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
+	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
+	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 #pragma endregion
 
 	player->addComponent<BoxCollider>(DYNAMIC , 1, false, friction, fixedRotation, rotation);
@@ -208,7 +211,6 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	player->addComponent<PlayerController>();
 	player->addComponent<CameraFollow>(player->getComponent<Transform>());
-
 	player->addComponent<Chainsaw>();
 
 	//Seteamos al Player como MainHandler
@@ -218,9 +220,13 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 void Game::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation)
 {
 	auto* enemy1 = createBasicEntity(pos, size, rotation, vel);
-	enemy1->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
+
+	auto* anim_controller = enemy1->addComponent<AnimBlendGraph>();
+
+								//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
+	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
 	enemy1->addComponent<BoxCollider>();
-	enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
+	//enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
 }
 
 /// <summary>
@@ -234,23 +240,23 @@ void Game::createLevel0()
 
 void Game::createJointMedusa(Entity* ground)
 {
-	//Creacion de una medusa fisica que va a estar anclada al techo
-	auto* physBody = mngr_->addEntity(false);
-	physBody->addComponent<Transform>(Vector2D(50.0f, 50.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
-	physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
-	physBody->addComponent<BoxCollider>(0.0f, 1);
+	////Creacion de una medusa fisica que va a estar anclada al techo
+	//auto* physBody = mngr_->addEntity(false);
+	//physBody->addComponent<Transform>(Vector2D(50.0f, 50.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
+	//physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
+	//physBody->addComponent<BoxCollider>(0.0f, 1);
 
 
-	b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();
-	//Asignar a que cuerpos esta asociado el joint 
-	b2joint->bodyA = physBody->getComponent<BoxCollider>()->getBody();
-	b2joint->bodyB = ground->getComponent<BoxCollider>()->getBody();
-	//Si sus colisiones estan o no estan conectadas 
-	b2joint->collideConnected = true;
-	//No se del todo como van las anclas 
-	b2joint->localAnchorA.Set(1, 0);
-	//Mas o menos en lamitad de su anclaje 
-	b2joint->localAnchorB.Set(2, 0);
-	// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
-	world_->CreateJoint(b2joint);
+	//b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();
+	////Asignar a que cuerpos esta asociado el joint 
+	//b2joint->bodyA = physBody->getComponent<BoxCollider>()->getBody();
+	//b2joint->bodyB = ground->getComponent<BoxCollider>()->getBody();
+	////Si sus colisiones estan o no estan conectadas 
+	//b2joint->collideConnected = true;
+	////No se del todo como van las anclas 
+	//b2joint->localAnchorA.Set(1, 0);
+	////Mas o menos en lamitad de su anclaje 
+	//b2joint->localAnchorB.Set(2, 0);
+	//// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
+	//world_->CreateJoint(b2joint);
 }

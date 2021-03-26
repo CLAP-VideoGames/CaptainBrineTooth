@@ -12,11 +12,7 @@ public:
 		player = p;
 	}
 
-
 	void update() override;
-
-
-
 
 
 protected:

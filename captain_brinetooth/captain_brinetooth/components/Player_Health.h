@@ -46,9 +46,5 @@ private:
 	Game* g;
 	float tiempoanimacion; // Tiempo entre frame y frame
 	int nFrame = 0;
-
-
-
-
 };
 

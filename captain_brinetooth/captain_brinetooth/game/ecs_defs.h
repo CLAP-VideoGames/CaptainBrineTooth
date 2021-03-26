@@ -7,11 +7,9 @@ class Transform;
 class Rectangle;
 class KeyBoardCtrl;
 class Bounce;
-class Image;
 class Animation;
 class AnimBlendGraph;
 class Rotate;
-class FramedImage;
 class BoxCollider;
 class Player_Health;
 class Armas_HUD;
@@ -26,12 +24,10 @@ class CameraFollow;
 	Rectangle,\
 	KeyBoardCtrl,\
 	Bounce,\
-	Image,\
 	Animation,\
 	AnimBlendGraph,\
 	Rotate,\
 	BoxCollider,\
-	FramedImage,\
 	Player_Health,\
 	Armas_HUD, \
 	EnemyMovement, \

@@ -2,7 +2,6 @@
 #include "ecs/Entity.h"
 #include "game/Game.h"
 #include "utils/Vector2D.h"
-#include "components/FramedImage.h"
 #include "ecs/Manager.h"
 
 PruebaState::PruebaState(Game* a, Manager* m) : GameState(a,m)
@@ -20,5 +19,5 @@ void PruebaState::addStateEntityPrueba() {
 
 	
 	e->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), 200.0f, 200.0f, 0.0f);
-	e->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
+	//e->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
 }

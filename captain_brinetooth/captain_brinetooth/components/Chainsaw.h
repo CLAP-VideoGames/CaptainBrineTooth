@@ -4,8 +4,6 @@
 #include <SDL.h>
 #include <cassert>
 #include "Transform.h"
-#include "FramedImage.h"
-#include "Image.h"
 #include "BoxCollider.h"
 #include "../ecs/Entity.h"
 #include "../ecs/Component.h"

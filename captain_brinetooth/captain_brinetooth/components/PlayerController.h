@@ -11,7 +11,7 @@
 
 class PlayerController : public Component {
 public:																
-	PlayerController(const float & speed = 4.0f, const float& forceJ = 3.0f):
+	PlayerController(const float & speed = 1.0f, const float& forceJ = 3.0f):
 															//falso				//falso
 		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false){
 

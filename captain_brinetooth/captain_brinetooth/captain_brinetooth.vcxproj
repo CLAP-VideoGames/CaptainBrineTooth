@@ -157,9 +157,7 @@
     <ClInclude Include="components\Chainsaw.h" />
     <ClInclude Include="components\DamageCollisionCallbacks.h" />
     <ClInclude Include="components\enemyMovement.h" />
-    <ClInclude Include="components\FramedImage.h" />
     <ClInclude Include="components\framework.h" />
-    <ClInclude Include="components\Image.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
     <ClInclude Include="components\PlayerController.h" />
     <ClInclude Include="components\Player_Health.h" />

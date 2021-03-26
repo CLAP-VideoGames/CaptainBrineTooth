@@ -137,7 +137,7 @@ public:
 		//if(type == TYPE::DYNAMIC)
 			//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
 
-		tr_->getPos().set(round((body->GetPosition().x * PIXELS_IN_METERS ) - (tr_->getW()/2.0f)), round((body->GetPosition().y * PIXELS_IN_METERS)- (tr_->getH() / 2.0f) ));
+		tr_->getPos().set(round((body->GetPosition().x * PIXELS_IN_METERS ) - tr_->getW()/2.0f), round((body->GetPosition().y * PIXELS_IN_METERS)- tr_->getH() / 2.0f));
 		tr_->setRot((body->GetAngle() * (180.0f))/ M_PI);
 		
 		/*�Custom method to detect collisions and delete a body

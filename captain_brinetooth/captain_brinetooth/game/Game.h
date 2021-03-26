@@ -30,13 +30,12 @@ public:
 	virtual ~Game();
 	void init();
 	void start();
-	void UpdateCamera();
 	void ShakeCamera(int time);
 
 	static SDL_Rect camera;
 
 	void createLevel0();
-	void createBackGround(const std::string& spriteId, const int & fils, const int & cols, const float & tanim, const int & empty);
+	void createBackGround(const std::string& spriteId, const int & fils, const int & cols);
 
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
 	void createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector2D & size, const float & friction, const bool & fixedRotation, const float& rotation);

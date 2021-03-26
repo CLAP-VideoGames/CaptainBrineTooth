@@ -26,7 +26,7 @@ void Chainsaw::update() {
 				trigger = entity_->getMngr()->addEntity(false);
 				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 					Vector2D(0, 0), 100, 50, 0.0f);
-				trigger->addComponent<Image>(&sdlutils().images().at("Square"));
+				//trigger->addComponent<Image>(&sdlutils().images().at("Square"));
 				trigger->addComponent<BoxCollider>(0.0f, 0, true);
 
 				//Time control variables
@@ -43,7 +43,7 @@ void Chainsaw::update() {
 					trigger = entity_->getMngr()->addEntity(false);
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 						Vector2D(0, 0), 100, 50, 0.0f);
-					trigger->addComponent<Image>(&sdlutils().images().at("Square"));
+					//trigger->addComponent<Image>(&sdlutils().images().at("Square"));
 					trigger->addComponent<BoxCollider>(0.0f, 0, true);
 
 					sawActivationTime = sdlutils().currRealTime();
@@ -56,7 +56,7 @@ void Chainsaw::update() {
 					trigger = entity_->getMngr()->addEntity(false);
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 						Vector2D(0, 0), 100, 50, 0.0f);
-					trigger->addComponent<Image>(&sdlutils().images().at("Square"));
+					//trigger->addComponent<Image>(&sdlutils().images().at("Square"));
 					trigger->addComponent<BoxCollider>(0.0f, 0, true);
 
 					sawActivationTime = sdlutils().currRealTime();
