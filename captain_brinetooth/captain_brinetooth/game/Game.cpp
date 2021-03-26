@@ -52,14 +52,14 @@ void Game::init() {
 
 	world_->SetContactListener(&collisionListener);
 
-	//createBackGround("fondo", 11, 11);
-	//createLevel0();
+	createBackGround("fondo", 11, 11);
+	createLevel0();
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
 	//Crea el suelo
-	createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
+	//createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
@@ -155,9 +155,9 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 }
 
 /// <summary>
-/// Crea un entidad básica, con el componente Transform
+/// Crea un entidad bï¿½sica, con el componente Transform
 /// </summary>
-/// <param name="pos">Posición</param>
+/// <param name="pos">Posiciï¿½n</param>
 /// <param name="height">Altura en pixeles</param>
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
@@ -172,14 +172,14 @@ Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, con
 }
 
 /// <summary>
-/// Crea una caja roja que posee físicas y controlador de teclado
+/// Crea una caja roja que posee fï¿½sicas y controlador de teclado
 /// </summary>
-/// <param name="pos">Posición</param>
+/// <param name="pos">Posiciï¿½n</param>
 /// <param name="vel">Velocidad (por defecto es cero)</param>
 /// <param name="height">Altura en pixeles</param>
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
-/// <param name="physicType">Determina el tipo físico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
+/// <param name="physicType">Determina el tipo fï¿½sico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
 void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vector2D & size, const float & friction, const TYPE physicType, const bool & isTrigger, const int & col, const bool & fixedRotation, const float & rotation)
 {
 	auto* box = createBasicEntity(pos, size, rotation, vel);
@@ -200,8 +200,8 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
-	//anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
-	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
+	anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
+	//anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 1, 1, 1, 1, -1);
 	anim_controller->addAnimation("jump", &sdlutils().images().at("Player_jump"), 4, 5, 20, 24, 0);
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
 	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
@@ -232,12 +232,13 @@ void Game::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotatio
 }
 
 /// <summary>
-/// Crea el tile nivel 0 con físicas
+/// Crea el tile nivel 0 con fï¿½sicas
 /// </summary>
 void Game::createLevel0()
 {
 	auto* nivel = mngr_->addEntity(false);
 	nivel->addComponent<Level0>(MAP_PATH, world_);
+	nivel->getComponent<Level0>()->setCollision();
 }
 
 void Game::createJointMedusa(Entity* ground)

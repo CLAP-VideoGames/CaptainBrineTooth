@@ -35,6 +35,7 @@ public:
 	void render() override;
 	Vector2D getFilsCols() { return Vector2D(fils_, cols_); }
 	Vector2D getTileSize() { return Vector2D(tile_height_, tile_width_); }
+	void setCollision();
 private:
 	string name_;
 	int fils_, cols_,		// filas y columnas de 
