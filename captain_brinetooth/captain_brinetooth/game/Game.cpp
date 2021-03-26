@@ -27,8 +27,10 @@
 
 
 //tiledmap
+const Vector2D window(1100, 900);
+
 const auto MAP_PATH = "assets/maps/level0.tmx";
-SDL_Rect Game::camera = {0 ,0,1100,900};
+SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 
 Game::Game() {
 	Manager* a = new Manager();
@@ -46,11 +48,11 @@ Game::~Game() {
 }
 
 void Game::init() {
-	SDLUtils::init("Captain BrineTooth", 1100, 900, "assets/config/base.resources.json");
+	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
 
 	world_->SetContactListener(&collisionListener);
 
-	createBackGround("fondo", 11, 11);
+	//createBackGround("fondo", 11, 11);
 	//createLevel0();
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();

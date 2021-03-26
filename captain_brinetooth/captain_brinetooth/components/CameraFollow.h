@@ -12,9 +12,13 @@ public:
 		player = p;
 	}
 
+	void init() override;
+
 	void update() override;
 
 
 protected:
 	Transform* player;
+	std::vector<Entity*> entities_;
+
 };
