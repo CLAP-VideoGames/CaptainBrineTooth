@@ -54,5 +54,6 @@ private:
 	std::unique_ptr<Manager> mngr_;
 	//Control de los estados en los que esta el juego 
 	GameStateMachine* stateMachine;
+
 };
 

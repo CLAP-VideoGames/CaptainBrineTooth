@@ -19,6 +19,7 @@ class EnemyMovement;
 class Level0;
 class Chainsaw;
 class PlayerController;
+class CameraFollow;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -36,7 +37,8 @@ class PlayerController;
 	EnemyMovement, \
 	PlayerController, \
 	Level0, \
-	Chainsaw
+	Chainsaw,\
+	CameraFollow
 
 // groups
 

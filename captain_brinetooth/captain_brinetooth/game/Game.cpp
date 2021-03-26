@@ -25,6 +25,7 @@
 #include "..//components/PlayerController.h"
 #include "..//components/Chainsaw.h"
 #include "../PruebaState.h"
+#include "..//components/CameraFollow.h"
 
 
 //tiledmap
@@ -113,12 +114,12 @@ void Game::start() {
 //Metodos propios de game 
 void Game::UpdateCamera() 
 {
-	//Seguimiento del jugador en base a la camara y ajuste de los limites
-	if (mngr_->getHandler<Player>() != nullptr)
-	{
-		camera.x = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getX()-  camera.w/2.0f;
-		camera.y = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getY() - camera.h/ 2.0f;
-	}
+	////Seguimiento del jugador en base a la camara y ajuste de los limites
+	//if (mngr_->getHandler<Player>() != nullptr)
+	//{
+	//	camera.x = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getX()-  camera.w/2.0f;
+	//	camera.y = mngr_->getHandler<Player>()->getComponent<Transform>()->getPos().getY() - camera.h/ 2.0f;
+	//}
 
 
 	//if (camera.x < 0) camera.x = 0;
@@ -221,6 +222,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	player->addComponent<PlayerController>();
+	player->addComponent<CameraFollow>(player->getComponent<Transform>());
 
 	player->addComponent<Chainsaw>();
 
