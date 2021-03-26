@@ -22,7 +22,4 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="2" name="Object Layer 1">
-  <object id="7" x="194.667" y="577.333" width="1726.67" height="254.667"/>
- </objectgroup>
 </map>
