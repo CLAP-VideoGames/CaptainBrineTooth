@@ -119,7 +119,7 @@ void Level0::load(const string& path) {
 		}
 	}
 
-	for (auto& layer : map_layers) {
+	//for (auto& layer : map_layers) {
 		//comprobamos si es una capa con Objetos en ella.
 		/*if (layer->getType() != tmx::Layer::Type::Object)
 			continue;
@@ -146,7 +146,7 @@ void Level0::load(const string& path) {
 		fixture.density = 1.0f;
 		fixture.friction = 0.1f;
 		fixture_ = body_->CreateFixture(&fixture);*/
-	}
+	//}
 }
 //Por favor Joseda no me grites
 void Level0::setCollision() {
@@ -157,6 +157,7 @@ void Level0::setCollision() {
 		t->addComponent<Transform>(Vector2D(tile->x_ + tile_width_/2, tile->y_ + tile_height_/2), Vector2D(), tile_width_, tile_height_, 0.0f);
 		//Tenemos que hacer que pinte los colliders
 		t->addComponent<BoxCollider>();
+		t->addComponent<FixedCameraPosition>();
 		auto* anim_controller = t->addComponent<AnimBlendGraph>();
 		anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 	}

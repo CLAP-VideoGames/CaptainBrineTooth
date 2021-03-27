@@ -11,6 +11,7 @@
 
 
 #include "../components/Animation.h"
+//#include "../components/FixedCameraPosition.h"
 #include "../components/AnimBlendGraph.h"
 #include "../components/Rotate.h"
 #include "../components/Bounce.h"
@@ -53,7 +54,10 @@ void Game::init() {
 	world_->SetContactListener(&collisionListener);
 
 	createBackGround("fondo", 11, 11);
+	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 	createLevel0();
+
+
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
@@ -63,8 +67,13 @@ void Game::init() {
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
+
+	//createChain();
+
+
+
+
 	//Creamos al player
-	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 
 }
 
@@ -150,6 +159,8 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 	auto* bg = createBasicEntity(Vector2D(0, 0), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
 	auto* anim_controller = bg->addComponent<AnimBlendGraph>();
 
+	bg->addComponent<FixedCameraPosition>();
+
 	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
 	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 121, 24, -1, 0, 119);
 }
@@ -188,10 +199,10 @@ void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vect
 	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 
 	box->addComponent<BoxCollider>(physicType, col, isTrigger, friction, fixedRotation, rotation);
-	box->addComponent<CameraFollow>(box->getComponent<Transform>());
+	//box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
 	if(physicType == 1 || physicType == 2)
-		box->addComponent<PlayerController>();
+		box->addComponent<KeyBoardCtrl>();
 }
 
 void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector2D & size, const float & friction, const bool & fixedRotation, const float& rotation)
@@ -239,6 +250,34 @@ void Game::createLevel0()
 	auto* nivel = mngr_->addEntity(false);
 	nivel->addComponent<Level0>(MAP_PATH, world_);
 	nivel->getComponent<Level0>()->setCollision();
+}
+
+void Game::createChain()
+{
+	b2BodyDef bdDef;
+	bdDef.type = b2_staticBody;
+
+	b2Body* body = world_->CreateBody(&bdDef);
+
+	b2Vec2 vs[4];
+
+	vs[0] = b2Vec2((sdlutils().width() / 15.0f) / sdlutils().getPPM(), (sdlutils().height() / 1.5f) / sdlutils().getPPM());
+	vs[1] = b2Vec2((sdlutils().width() / 5.0f) / sdlutils().getPPM(), (sdlutils().height() / 1.1f) / sdlutils().getPPM());
+	vs[2] = b2Vec2((sdlutils().width() / 1.5f) / sdlutils().getPPM(), (sdlutils().height() / 1.1f) / sdlutils().getPPM());
+	vs[3] = b2Vec2((sdlutils().width() / 1.1f) / sdlutils().getPPM(), (sdlutils().height() / 1.5f) / sdlutils().getPPM());
+
+	b2ChainShape chain;
+	//Vertice fantasmas inicial								//Vertice fantasmas final
+//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
+	chain.CreateChain(vs, 4, b2Vec2((sdlutils().width() / 16.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()), b2Vec2((sdlutils().width() / 1.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()));
+
+	b2FixtureDef fixtureDef;
+
+	fixtureDef.shape = &chain;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.4f;
+
+	b2Fixture* fix = body->CreateFixture(&fixtureDef);
 }
 
 void Game::createJointMedusa(Entity* ground)

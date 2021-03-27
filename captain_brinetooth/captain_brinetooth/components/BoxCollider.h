@@ -13,7 +13,7 @@
 
 //1 pixel(X) 0.0002645833 m
 //then n pixels = n * 0.0002645833;
-const double PIXELS_IN_METERS = 200;
+
 enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
 class BoxCollider : public Component {
@@ -38,7 +38,7 @@ public:
 		assert(tr_ != nullptr);
 		pos = tr_->getPos();
 
-		size = Vector2D(tr_->getW() / PIXELS_IN_METERS, tr_->getH() / PIXELS_IN_METERS);
+		size = Vector2D(tr_->getW() / sdlutils().getPPM() , tr_->getH() / sdlutils().getPPM());
 		world = entity_->getWorld();
 
 		b2BodyDef bodyDef;
@@ -60,7 +60,7 @@ public:
 			break;
 		}
 		
-		bodyDef.position.Set(pos.getX() /PIXELS_IN_METERS, pos.getY() / PIXELS_IN_METERS);
+		bodyDef.position.Set(pos.getX() / sdlutils().getPPM(), pos.getY() / sdlutils().getPPM());
 		//bodyDef.angle = rotation_;
 		//Make the body
 		body = world->CreateBody(&bodyDef);
@@ -68,11 +68,6 @@ public:
 
 		b2PolygonShape boxShape;
 		boxShape.SetAsBox(size.getX() / 2.0f, size.getY() / 2.0f);
-
-		/*b2EdgeShape edgeShape;
-		edgeShape.se (b2Vec2(-15, 0), b2Vec2(15, 0));
-		myFixtureDef.shape = &edgeShape;*/
-
 
 		b2FixtureDef fixtureDef;
 		//Que el cubo real tenga la misma forma que la definicion
@@ -103,8 +98,7 @@ public:
 	/// </summary>
 	/// <param name="dir">Vector2D de dirección</param>
 	/// <param name="force">Fuerza aplicada</param>
-	void applyForce(Vector2D dir, float force = 1.0f)
-	{
+	void applyForce(Vector2D dir, float force = 1.0f){
 		body->ApplyForce(b2Vec2(dir.getX() * force, dir.getY() * force), body->GetWorldCenter(), true);
 	}
 
@@ -113,23 +107,22 @@ public:
 	/// </summary>
 	/// <param name="dir">Vector2D de dirección</param>
 	/// <param name="force">Fuerza aplicada</param>
-	void applyLinearForce(Vector2D dir, float force = 1.0f)
-	{
+	void applyLinearForce(Vector2D dir, float force = 1.0f){
 		body->ApplyLinearImpulse(b2Vec2(dir.getX()* force, dir.getY()* force) , body->GetWorldCenter(), true);
 	}
 
 	void setColLays(b2FixtureDef& fix) {
-		switch (colLay_)
-		{
-		case 2:
-			fix.filter.categoryBits = 0x0004; // tag para determinar capa de colision
-			fix.filter.maskBits = 0x0004; // con que capas de colision se hace pues eso, colision
-			break;
-		default:
-			fix.filter.categoryBits = 0x0002;
-			fix.filter.maskBits = 0x0002;
-			break;
-		}
+		//switch (colLay_)
+		//{
+		//case 2:
+		//	fix.filter.categoryBits = 0x0004; // tag para determinar capa de colision
+		//	fix.filter.maskBits = 0x0004; // con que capas de colision se hace pues eso, colision
+		//	break;
+		//default:
+		//	fix.filter.categoryBits = 0x0002;
+		//	fix.filter.maskBits = 0x0002;
+		//	break;
+		//}
 	}
 
 	void update() override {
@@ -137,7 +130,8 @@ public:
 		//if(type == TYPE::DYNAMIC)
 			//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
 
-		tr_->getPos().set(round((body->GetPosition().x * PIXELS_IN_METERS ) - tr_->getW()/2.0f), round((body->GetPosition().y * PIXELS_IN_METERS)- tr_->getH() / 2.0f));
+		actRenderPos();
+
 		tr_->setRot((body->GetAngle() * (180.0f))/ M_PI);
 		
 		/*�Custom method to detect collisions and delete a body
@@ -153,16 +147,33 @@ public:
 
 	}
 
-	inline b2Body* getBody() const
-	{
+	inline b2Body* getBody() const{
 		return body;
 	}
 
-	inline b2Fixture* getFixture() const
-	{
-		
+	inline b2Fixture* getFixture() const{
 		return fixture;
 	}
+
+	/// <summary>
+	/// Actualiza las coordenadas físicas de un cuerpo
+	/// </summary>
+	/// <param name="x">in pixels</param>
+	/// <param name="y">in pixels</param>
+	inline void actPhyscialPos(int x, int y){
+		int x_ = x / sdlutils().getPPM();
+		int y_ = y / sdlutils().getPPM();
+
+		b2Vec2 toMove(x_, y_);
+		body->SetTransform(body->GetPosition() + toMove, body->GetAngle());
+
+		actRenderPos();
+	}
+
+	inline void actRenderPos(){
+		tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f));
+	}
+
 
 private:
 	Transform* tr_;

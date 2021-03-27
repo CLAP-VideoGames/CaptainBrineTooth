@@ -9,7 +9,7 @@ class CameraFollow : public Component
 {
 public: 
 	CameraFollow(Transform* p) {
-		player = p;
+		entityT = p;
 	}
 
 	void init() override;
@@ -18,7 +18,7 @@ public:
 
 
 protected:
-	Transform* player;
+	Transform* entityT;
 	std::vector<Entity*> entities_;
 
 };

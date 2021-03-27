@@ -4,6 +4,8 @@
 #include <cassert>
 #include "../json/JSON.h"
 
+
+
 SDLUtils::SDLUtils() :
 		SDLUtils("SDL Demo", 600, 400) {
 }

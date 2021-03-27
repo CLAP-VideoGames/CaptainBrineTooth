@@ -157,6 +157,7 @@
     <ClInclude Include="components\Chainsaw.h" />
     <ClInclude Include="components\DamageCollisionCallbacks.h" />
     <ClInclude Include="components\enemyMovement.h" />
+    <ClInclude Include="components\FixedCameraPosition.h" />
     <ClInclude Include="components\framework.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
     <ClInclude Include="components\PlayerController.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="components\CameraFollow.cpp" />
     <ClCompile Include="components\Chainsaw.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
+    <ClCompile Include="components\FixedCameraPosition.cpp" />
     <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />

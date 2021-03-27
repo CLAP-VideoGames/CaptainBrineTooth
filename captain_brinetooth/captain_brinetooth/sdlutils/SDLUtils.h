@@ -15,6 +15,8 @@
 #include "VirtualTimer.h"
 
 
+const double PPM = 200;
+
 class SDLUtils: public Singleton<SDLUtils> {
 
 	friend Singleton<SDLUtils> ; // needed to give access to private constructors
@@ -70,6 +72,12 @@ public:
 	// the window's height
 	inline int height() {
 		return height_;
+	}
+
+	//return the pixels per meter
+	inline int getPPM()
+	{
+		return PPM;
 	}
 
 	// toggle to full-screen/window mode
