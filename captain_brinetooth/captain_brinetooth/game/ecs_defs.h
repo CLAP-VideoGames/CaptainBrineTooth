@@ -18,6 +18,7 @@ class Level0;
 class Chainsaw;
 class PlayerController;
 class CameraFollow;
+class SoundManager;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -34,7 +35,8 @@ class CameraFollow;
 	PlayerController, \
 	Level0, \
 	Chainsaw,\
-	CameraFollow
+	CameraFollow,\
+	SoundManager
 
 // groups
 
