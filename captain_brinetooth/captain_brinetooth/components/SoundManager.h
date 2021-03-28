@@ -1,25 +1,36 @@
 #pragma once
 
 #include "../ecs/Component.h"
-#include "../sdlutils/Texture.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../game/Game.h"
-
-
+#include "../sdlutils/Music.h"
 
 class SoundManager : public Component {
 public:
-	SoundManager() 
+
+	SoundManager(int volume, std::string initMus)
 	{
-		
+		volumen = volume;
+		mainMusic = initMus;
 	}
-	virtual ~SoundManager() {}
+	virtual ~SoundManager() {
+
+	}
 
 	void init() override {}
 
-	// Mutear
 
-	// Subir-Bajar Volumen
+	void modifyVolume(int volume); // Modificar el volumen
+
+	void playMainMusic() { sdlutils().musics().at(mainMusic).play(); } // Tocar la melodia que tiene seleccionado el sound manager
+	
+	void playPauseMusic(std::string mus); // Detener todo los sonidos y musica del juego principal y tocar la musica del menu de Pausa
+	
+	void resumeMainMusic(); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
+	
+	void ChangeMainMusic(std::string newMusic); // Cambiar de cancion principal
+	
+	void playSoundEffect(std::string effect);
 
 	// Bucle musica
 
@@ -29,11 +40,12 @@ public:
 
 	// Retomar musica
 
+	// sound effects map
 
 private:
-	// Musica
-	// Efectos sonido (varios)
-
+	std::string mainMusic;
+	std::string pauseMusic;
+	int volumen;
 
 };
 

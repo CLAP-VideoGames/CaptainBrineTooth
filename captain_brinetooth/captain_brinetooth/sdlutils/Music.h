@@ -44,6 +44,11 @@ public:
 		return Mix_VolumeMusic(volume);
 	}
 
+	inline static int muteMusic()
+	{
+		return Mix_VolumeMusic(0);
+	}
+
 	inline static void haltMusic() {
 		Mix_HaltMusic();
 	}

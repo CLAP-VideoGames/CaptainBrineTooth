@@ -222,6 +222,7 @@
     <ClCompile Include="sdlutils\sdlutils_demo.cpp" />
     <ClCompile Include="sdlutils\SoundEffect.cpp" />
     <ClCompile Include="sdlutils\Texture.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="utils\Collisions.cpp" />
     <ClCompile Include="utils\Vector2D.cpp" />
   </ItemGroup>

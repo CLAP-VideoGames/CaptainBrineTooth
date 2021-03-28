@@ -8,7 +8,7 @@
 			"id": "Player_run",
 			"file": "assets/sprites/player/player_anim.png"
 		},
-	{
+		{
 			"id": "Player_jump",
 			"file": "assets/sprites/player/player_jump.png"
 		},
@@ -35,11 +35,11 @@
 		{
 			"id": "espada",
 			"file": "assets/sprites/armas/pez_espada.png"
-    },
-    {
-      "id": "vacio",
-      "file": "assets/sprites/player/HUD/anzuelo_vacio.png"
-    },
+		},
+		{
+			"id": "vacio",
+			"file": "assets/sprites/player/HUD/anzuelo_vacio.png"
+		},
 		{
 			"id": "fondo",
 			"file": "assets/sprites/redsquare.png"
@@ -49,20 +49,23 @@
 
 	"sounds": [
 		{
-			"id": "forest",
-			"file": "assets/sounds/forest.wav"
-		},
-		{
 			"id": "player_hurt",
 			"file": "assets/sounds/player/player1.mp3"
 		}
 	],
-	
+
+	"musics": [
+		{
+			"id": "drunken",
+			"file": "assets/sounds/soundtrack/drunken_sailor.mp3"
+		}
+	],
+
 	"tilesets": [
 		{
-				"id": "level0",
-				"file": "assets/tileset/level0.png"
+			"id": "level0",
+			"file": "assets/tileset/level0.png"
 		}
-]
+	]
 
 }

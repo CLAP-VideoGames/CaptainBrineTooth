@@ -21,6 +21,7 @@
 #include "../components/Player_Health.h"
 #include "..//components/enemyMovement.h"
 #include "..//components/PlayerController.h"
+#include "..//components/SoundManager.h"
 #include "..//components/Chainsaw.h"
 #include "../PruebaState.h"
 #include "..//components/CameraFollow.h"
@@ -49,6 +50,10 @@ Game::~Game() {
 
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
+
+	auto* soundController = mngr_->addEntity(false);
+	soundController->addComponent<SoundManager>(75,"drunken");
+	//soundController->getComponent<SoundManager>()->playMainMusic();
 
 	world_->SetContactListener(&collisionListener);
 
