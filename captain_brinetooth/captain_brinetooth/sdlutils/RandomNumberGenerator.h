@@ -8,8 +8,6 @@
 
 #include "RandomNumberGenerator.h"
 
-using teCuoto = RandomNumberGenerator::nextInt(int, int);
-
 class RandomNumberGenerator {
 public:
 
@@ -27,14 +25,14 @@ public:
 	virtual ~RandomNumberGenerator() {
 	}
 
-	inline int nextInt() {
+	inline int teCuoto() {
 		return dist_(gen_);
 	}
 
 	// return an integer between low (inclusive) and high (exclusive)
-	inline int nextInt(int low, int high) {
+	inline int teCuoto(int low, int high) {
 		assert(low < high);
-		return low + (nextInt() % (high - low));
+		return low + (teCuoto() % (high - low));
 	}
 
 private:

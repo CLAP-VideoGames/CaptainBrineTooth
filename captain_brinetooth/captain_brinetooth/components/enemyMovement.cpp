@@ -5,7 +5,7 @@ void EnemyMovement::init() {
 	assert(tr_ != nullptr);
 
 	box = entity_->getComponent<BoxCollider>();
-	setVel(sdlutils().rand().nextInt(0, 1));		//Ponemos una velocidad incial aleatoria
+	setVel(sdlutils().rand().teCuoto(0, 1));		//Ponemos una velocidad incial aleatoria
 
 }
 
