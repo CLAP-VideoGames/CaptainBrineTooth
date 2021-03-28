@@ -7,6 +7,11 @@ class DamageCollisionCallbacks : public b2ContactListener
         //Debugg
         std::cout << "TOUCHED WITH BEGIN CONTACT\n";
 
+        Entity* cosaA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+        cosaA->playCollisionMethod();
+
+        Entity* cosaB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+        cosaB->playCollisionMethod();
     }
 
     void EndContact(b2Contact* contact) {

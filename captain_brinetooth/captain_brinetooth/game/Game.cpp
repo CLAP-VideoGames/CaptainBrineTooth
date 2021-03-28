@@ -25,13 +25,16 @@
 #include "..//components/Chainsaw.h"
 #include "../PruebaState.h"
 #include "..//components/CameraFollow.h"
-
+#include "../CollisionLayers.h"
+#include "../components/LoseLife.h"
 
 //tiledmap
 const Vector2D window(1100, 900);
 
 const auto MAP_PATH = "assets/maps/level0.tmx";
 SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
+
+using namespace ColLayers;
 
 Game::Game() {
 	Manager* a = new Manager();
@@ -63,9 +66,9 @@ void Game::init() {
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
-	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
+	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
 	//Crea el suelo
-	//createBoxTest2(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
+	//createBoxTest2(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
@@ -161,7 +164,7 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 {
 	auto* bg = createBasicEntity(Vector2D(300, 300), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
 
-	bg->addComponent<BoxCollider>(STATIC, 1, false, 1.0f, false, 0.0f);
+	//bg->addComponent<BoxCollider>(STATIC, 1, false, 1.0f, false, 0.0f);
 	auto* anim_controller = bg->addComponent<AnimBlendGraph>();
 
 	//bg->addComponent<FixedCameraPosition>();
@@ -197,28 +200,28 @@ Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, con
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="physicType">Determina el tipo f�sico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
-void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vector2D & size, const float & friction, const TYPE physicType, const bool & isTrigger, const int & col, const bool & fixedRotation, const float & rotation)
+void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vector2D & size, const float & friction, const TYPE physicType, const bool & isTrigger, const uint16& col, const uint16& colMask, const bool & fixedRotation, const float & rotation)
 {
 	auto* box = createBasicEntity(pos, size, rotation, vel);
 
 	auto* anim_controller = box->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 
-	box->addComponent<BoxCollider>(physicType, col, isTrigger, friction, fixedRotation, rotation);
+	box->addComponent<BoxCollider>(physicType, col, colMask, isTrigger, friction, fixedRotation, rotation);
 	box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
 	if(physicType == 1 || physicType == 2)
 		box->addComponent<KeyBoardCtrl>();
 }
 
-void Game::createBoxTest2(const Vector2D& pos, const  Vector2D& vel, const Vector2D& size, const float& friction, const TYPE physicType, const bool& isTrigger, const int& col, const bool& fixedRotation, const float& rotation)
+void Game::createBoxTest2(const Vector2D& pos, const  Vector2D& vel, const Vector2D& size, const float& friction, const TYPE physicType, const bool& isTrigger, const uint16& col, const uint16& colMask, const bool& fixedRotation, const float& rotation)
 {
 	auto* box = createBasicEntity(pos, size, rotation, vel);
 
 	auto* anim_controller = box->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 
-	box->addComponent<BoxCollider>(physicType, col, isTrigger, friction, fixedRotation, rotation);
+	box->addComponent<BoxCollider>(physicType, col, colMask, isTrigger, friction, fixedRotation, rotation);
 	//box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
 	//if (physicType == 1 || physicType == 2)
@@ -239,7 +242,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 #pragma endregion
 
-	player->addComponent<BoxCollider>(DYNAMIC , 1, false, friction, fixedRotation, rotation);
+	player->addComponent<BoxCollider>(DYNAMIC, PLAYER, PLAYER_MASK, false, friction, fixedRotation, rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	player->addComponent<PlayerController>();

@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="assets\assets.h" />
     <ClInclude Include="captain_brinetooth.h" />
+    <ClInclude Include="CollisionLayers.h" />
     <ClInclude Include="components\Animation.h" />
     <ClInclude Include="components\Armas_HUD.h" />
     <ClInclude Include="components\AnimBlendGraph.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="components\enemyMovement.h" />
     <ClInclude Include="components\framework.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
+    <ClInclude Include="components\LoseLife.h" />
     <ClInclude Include="components\PlayerController.h" />
     <ClInclude Include="components\Player_Health.h" />
     <ClInclude Include="components\RayCast.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="components\CameraFollow.cpp" />
     <ClCompile Include="components\Chainsaw.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
+    <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />

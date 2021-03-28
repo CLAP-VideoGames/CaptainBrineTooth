@@ -18,13 +18,14 @@ enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
 class BoxCollider : public Component {
 public:
-	BoxCollider(int typeAux = TYPE::STATIC, int colLay = 1 ,bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true,  float rotation = 0.0f)
+	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f)
 	{
 		type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
 		tr_ = nullptr;
-		colLay_ = colLay;
+		colLay_ = collisionLayer;
+		colMask_ = collisionMask;
 		fixedRotation_ = fixedRotation;
 		rotation_ = rotation;
 	}
@@ -62,6 +63,10 @@ public:
 		
 		bodyDef.position.Set(pos.getX() / sdlutils().getPPM(), pos.getY() / sdlutils().getPPM());
 		//bodyDef.angle = rotation_;
+
+		//Stores the entity in the body for future reference in collisions
+		bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
+
 		//Make the body
 		body = world->CreateBody(&bodyDef);
 
@@ -79,7 +84,8 @@ public:
 
 		body->SetFixedRotation(fixedRotation_);
 		
-		setColLays(fixtureDef);
+		fixtureDef.filter.categoryBits = colLay_; // tag para determinar capa de colision
+		fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
 
 		fixture = body->CreateFixture(&fixtureDef);
 		
@@ -109,20 +115,6 @@ public:
 	/// <param name="force">Fuerza aplicada</param>
 	void applyLinearForce(Vector2D dir, float force = 1.0f){
 		body->ApplyLinearImpulse(b2Vec2(dir.getX()* force, dir.getY()* force) , body->GetWorldCenter(), true);
-	}
-
-	void setColLays(b2FixtureDef& fix) {
-		//switch (colLay_)
-		//{
-		//case 2:
-		//	fix.filter.categoryBits = 0x0004; // tag para determinar capa de colision
-		//	fix.filter.maskBits = 0x0004; // con que capas de colision se hace pues eso, colision
-		//	break;
-		//default:
-		//	fix.filter.categoryBits = 0x0002;
-		//	fix.filter.maskBits = 0x0002;
-		//	break;
-		//}
 	}
 
 	void update() override {
@@ -182,7 +174,9 @@ private:
 	bool isTrigger;
 	float rotation_;
 	float friction_;
-	int colLay_;
+	uint16 colLay_;
+	uint16 colMask_;
+
 	//bool entra = 0;
 	bool fixedRotation_;
 	b2World* world = nullptr;

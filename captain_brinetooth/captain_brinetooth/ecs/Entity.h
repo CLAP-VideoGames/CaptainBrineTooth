@@ -14,6 +14,8 @@
 
 class Manager;
 
+using CallBackCollision = void();
+
 class Entity {
 	friend Manager;
 
@@ -119,6 +121,14 @@ public:
 		groups_.reset();
 	}
 
+	void setCollisionMethod(CallBackCollision* method) {
+		collisionMethod = method;
+	}
+
+	void playCollisionMethod() {
+		if(collisionMethod != nullptr)
+			collisionMethod();
+	}
 
 	void update() {
 		std::size_t n = components_.size();
@@ -143,5 +153,7 @@ private:
 	std::vector<Component*> components_;
 	std::array<Component*, ecs::maxComponent> cmpArray_;
 	std::bitset<ecs::maxGroup> groups_;
+
+	CallBackCollision* collisionMethod;
 };
 

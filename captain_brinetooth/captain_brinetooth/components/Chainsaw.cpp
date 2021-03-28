@@ -1,6 +1,9 @@
 #include "Chainsaw.h"
 
 #include <iostream>
+#include "../CollisionLayers.h"
+
+using namespace ColLayers;
 
 void Chainsaw::init() {
 	tr_ = entity_->getComponent<Transform>();
@@ -25,9 +28,10 @@ void Chainsaw::update() {
 				//Activate attack trigger
 				trigger = entity_->getMngr()->addEntity(false);
 				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-					Vector2D(0, 0), 100, 50, 0.0f);
-				//trigger->addComponent<Image>(&sdlutils().images().at("Square"));
-				trigger->addComponent<BoxCollider>(0.0f, 0, true);
+					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+				anim_controller = trigger->addComponent<AnimBlendGraph>();
+				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
+				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 
 				//Time control variables
 				sawActivationTime = sdlutils().currRealTime();
@@ -42,9 +46,10 @@ void Chainsaw::update() {
 
 					trigger = entity_->getMngr()->addEntity(false);
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-						Vector2D(0, 0), 100, 50, 0.0f);
-					//trigger->addComponent<Image>(&sdlutils().images().at("Square"));
-					trigger->addComponent<BoxCollider>(0.0f, 0, true);
+						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+					anim_controller = trigger->addComponent<AnimBlendGraph>();
+					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
+					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 
 					sawActivationTime = sdlutils().currRealTime();
 					break;
@@ -55,9 +60,10 @@ void Chainsaw::update() {
 
 					trigger = entity_->getMngr()->addEntity(false);
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-						Vector2D(0, 0), 100, 50, 0.0f);
-					//trigger->addComponent<Image>(&sdlutils().images().at("Square"));
-					trigger->addComponent<BoxCollider>(0.0f, 0, true);
+						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+					anim_controller = trigger->addComponent<AnimBlendGraph>();
+					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
+					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 
 					sawActivationTime = sdlutils().currRealTime();
 					break;
@@ -76,6 +82,7 @@ void Chainsaw::update() {
 				CURRENT_STATUS = STATUS::OnAnimationLock;
 
 				trigger->setActive(false);
+				trigger = nullptr;
 
 				stoppedSawTime = sdlutils().currRealTime();
 			}
@@ -89,6 +96,7 @@ void Chainsaw::update() {
 		CURRENT_STATUS = STATUS::OnAnimationLock;
 
 		trigger->setActive(false);
+		trigger = nullptr;
 
 		stoppedSawTime = sdlutils().currRealTime();
 	}
@@ -103,6 +111,12 @@ void Chainsaw::update() {
 		std::cout << "STOPPED COMBO\n";
 		CURRENT_STATUS = STATUS::Iddle;
 		CURRENT_ATTACK = ATTACKS::NotAttacking;
+	}
+
+	//Updating the trigger's position
+	if (trigger != nullptr) {
+		trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) /sdlutils().getPPM(),
+																			(tr_->getPos().getY() + triggerOffSetY)/ sdlutils().getPPM()), 0.0f);
 	}
 
 	//Local debugging

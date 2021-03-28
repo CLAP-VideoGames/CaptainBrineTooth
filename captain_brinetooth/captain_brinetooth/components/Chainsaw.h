@@ -10,6 +10,7 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
+#include "AnimBlendGraph.h"
 
 
 enum STATUS {Iddle, Sawing, OnAnimationLock, OnCombo};
@@ -29,6 +30,7 @@ public:
 
 private:
 	Transform* tr_;
+	AnimBlendGraph* anim_controller;
 
 	//Local control variables (don't touch or change them except in code)
 	int CURRENT_STATUS = STATUS::Iddle;
@@ -44,8 +46,9 @@ private:
 
 	//Variables related to ChainsawTriggerPosition
 	int triggerOffSetX = -60;
-	int triggerOffSetY = 30;
+	int triggerOffSetY = 100;
+	int triggerWidth = 150;
+	int triggerHeight = 150;
 
 	Entity* trigger;
-}
-;
+};
