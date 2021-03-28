@@ -80,6 +80,14 @@ public:
 		return PPM;
 	}
 
+	inline float lerp(float a, float b, float t) {
+		return a + t * (b - a);
+	}	
+	
+	inline float lerpPrecise(float a, float b, float t) {
+		return (1 - t) * a + t * b;
+	}
+
 	// toggle to full-screen/window mode
 	inline void toggleFullScreen() {
 		auto flags = SDL_GetWindowFlags(window_);

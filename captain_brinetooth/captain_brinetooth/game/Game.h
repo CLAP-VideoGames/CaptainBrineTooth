@@ -14,7 +14,6 @@
 #include "../sdlutils/SDLUtils.h"
 #include "..//components/DamageCollisionCallbacks.h"
 #include "../components/BoxCollider.h"
-#include "../components/FixedCameraPosition.h"
 
 class GameState;
 class GameStateMachine;

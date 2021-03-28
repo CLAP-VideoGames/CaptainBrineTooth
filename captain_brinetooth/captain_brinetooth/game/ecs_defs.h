@@ -19,7 +19,6 @@ class Chainsaw;
 class PlayerController;
 class CameraFollow;
 class SoundManager;
-class FixedCameraPosition;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -37,7 +36,6 @@ class FixedCameraPosition;
 	Level0, \
 	Chainsaw,\
 	CameraFollow,\
-	FixedCameraPosition,\
 	SoundManager
 
 // groups
