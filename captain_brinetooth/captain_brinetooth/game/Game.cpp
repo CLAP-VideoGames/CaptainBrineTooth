@@ -55,8 +55,10 @@ void Game::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
 
 	auto* soundController = mngr_->addEntity(false);
-	soundController->addComponent<SoundManager>(75,"drunken");
-	//soundController->getComponent<SoundManager>()->playMainMusic();
+	soundController->addComponent<SoundManager>(75, "drunken", "tale");
+	/*soundController->getComponent<SoundManager>()->playMainMusic();
+	soundController->getComponent<SoundManager>()->playPauseMusic();
+	soundController->getComponent<SoundManager>()->modifyVolume(-70);*/
 
 	world_->SetContactListener(&collisionListener);
 

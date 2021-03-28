@@ -5,8 +5,8 @@ void SoundManager::modifyVolume(int volume)
 {
 	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
 
-	//if (volume != 0)
-	//{
+	if (volume != 0)
+	{
 		volumen += volume;
 		sdlutils().musics().at(mainMusic).setMusicVolume(volumen);
 
@@ -14,9 +14,10 @@ void SoundManager::modifyVolume(int volume)
 		while (it != sdlutils().soundEffects().end())
 		{
 			it->second.setChannelVolume(volumen);
+			++it;
 		}
-	//}
-	/*else
+	}
+	else
 	{
 		sdlutils().musics().at(mainMusic).muteMusic();
 		sdlutils().musics().at(pauseMusic).muteMusic();
@@ -24,8 +25,9 @@ void SoundManager::modifyVolume(int volume)
 		while (it != sdlutils().soundEffects().end())
 		{
 			it->second.setChannelVolume(0);
+			++it;
 		}
-	}*/
+	}
 }
 
 void SoundManager::ChangeMainMusic(std::string newMusic)
@@ -36,13 +38,14 @@ void SoundManager::ChangeMainMusic(std::string newMusic)
 	playMainMusic();
 }
 
-void SoundManager::playPauseMusic(std::string mus)
+void SoundManager::playPauseMusic()
 {
 	sdlutils().musics().at(mainMusic).pauseMusic();
 	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
 	while (it != sdlutils().soundEffects().end())
 	{
 		it->second.pauseChannel();
+		++it;
 	}
 
 	sdlutils().musics().at(pauseMusic).play();
@@ -56,6 +59,8 @@ void SoundManager::resumeMainMusic()
 	while (it != sdlutils().soundEffects().end())
 	{
 		it->second.resumeChannel();
+		++it;
+
 	}
 
 }

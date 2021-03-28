@@ -8,10 +8,11 @@
 class SoundManager : public Component {
 public:
 
-	SoundManager(int volume, std::string initMus)
+	SoundManager(int volume, std::string initMus, std::string pausMus)
 	{
 		volumen = volume;
 		mainMusic = initMus;
+		pauseMusic = pausMus;
 	}
 	virtual ~SoundManager() {
 
@@ -22,9 +23,9 @@ public:
 
 	void modifyVolume(int volume); // Modificar el volumen
 
-	void playMainMusic() { sdlutils().musics().at(mainMusic).play(); } // Tocar la melodia que tiene seleccionado el sound manager
+	void playMainMusic() { sdlutils().musics().at(mainMusic).play(); } // Tocar la melodia que tiene seleccionado el sound manager (Sirve como bucle infinito) 
 	
-	void playPauseMusic(std::string mus); // Detener todo los sonidos y musica del juego principal y tocar la musica del menu de Pausa
+	void playPauseMusic(); // Detener todo los sonidos y musica del juego principal y tocar la musica del menu de Pausa
 	
 	void resumeMainMusic(); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
 	

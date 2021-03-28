@@ -58,6 +58,10 @@
 		{
 			"id": "drunken",
 			"file": "assets/sounds/soundtrack/drunken_sailor.mp3"
+		},
+		{
+			"id": "tale",
+			"file": "assets/sounds/soundtrack/olds_man_tale.mp3"
 		}
 	],
 
