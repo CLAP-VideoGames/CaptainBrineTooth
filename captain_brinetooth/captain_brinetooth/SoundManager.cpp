@@ -30,6 +30,22 @@ void SoundManager::modifyVolume(int volume)
 	}
 }
 
+void SoundManager::setVolume(int volume)
+{
+	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
+
+	volumen = volume;
+	sdlutils().musics().at(mainMusic).setMusicVolume(volumen);
+
+
+	while (it != sdlutils().soundEffects().end())
+	{
+		it->second.setChannelVolume(volumen);
+		++it;
+	}
+
+}
+
 void SoundManager::ChangeMainMusic(std::string newMusic)
 {
 	sdlutils().musics().at(mainMusic).haltMusic(); 

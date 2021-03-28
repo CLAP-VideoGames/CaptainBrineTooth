@@ -54,8 +54,8 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
 
-	auto* soundController = mngr_->addEntity(false);
-	soundController->addComponent<SoundManager>(75, "drunken", "tale");
+	//auto* soundController = mngr_->addEntity(false);
+	//soundController->addComponent<SoundManager>(75, "drunken", "tale");
 	/*soundController->getComponent<SoundManager>()->playMainMusic();
 	soundController->getComponent<SoundManager>()->playPauseMusic();
 	soundController->getComponent<SoundManager>()->modifyVolume(-70);*/
@@ -76,7 +76,7 @@ void Game::init() {
 
 	//sdlutils().musics().at(mainMusic).setMusicVolume(volumen++);
 
-	createChain();
+	//createChain();
 
 
 	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
@@ -243,14 +243,18 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
 	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
+
 #pragma endregion
 
 	player->addComponent<BoxCollider>(DYNAMIC, PLAYER, PLAYER_MASK, false, friction, fixedRotation, rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
+	player->addComponent<SoundManager>(75, "drunken", "tale");
+	player->getComponent<SoundManager>()->playMainMusic();
 	player->addComponent<PlayerController>();
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
 	player->addComponent<Chainsaw>();
+	
 	
 
 

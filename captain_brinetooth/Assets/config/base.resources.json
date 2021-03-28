@@ -62,6 +62,58 @@
 		{
 			"id": "tale",
 			"file": "assets/sounds/soundtrack/olds_man_tale.mp3"
+		},
+		{
+			"id": "adventure",
+			"file": "assets/sounds/soundtrack/adventure.mp3"
+		},
+		{
+			"id": "celtic",
+			"file": "assets/sounds/soundtrack/celtic.wav"
+		},
+		{
+			"id": "danny_boy",
+			"file": "assets/sounds/soundtrack/danny_boy.mp3"
+		},
+		{
+			"id": "folky_armonica",
+			"file": "assets/sounds/soundtrack/folky_armonica.mp3"
+		},
+		{
+			"id": "irish",
+			"file": "assets/sounds/soundtrack/irish.mp3"
+		},
+		{
+			"id": "irish_bar",
+			"file": "assets/sounds/soundtrack/irish_bar.wav"
+		},
+		{
+			"id": "paddyback",
+			"file": "assets/sounds/soundtrack/paddyback.mp3"
+		},
+		{
+			"id": "the_sailor_song",
+			"file": "assets/sounds/soundtrack/the_sailor_song.mp3"
+		},
+		{
+			"id": "the_sailors_waltz",
+			"file": "assets/sounds/soundtrack/the_sailors_waltz.mp3"
+		},
+		{
+			"id": "travel_cinematic",
+			"file": "assets/sounds/soundtrack/travel_cinematic.mp3"
+		},
+		{
+			"id": "uplifting_irish",
+			"file": "assets/sounds/soundtrack/uplifting_irish.mp3"
+		},
+		{
+			"id": "whiskey_in_the_jar",
+			"file": "assets/sounds/soundtrack/whiskey_in_the_jar.wav"
+		},
+		{
+			"id": "whiskey_looped",
+			"file": "assets/sounds/soundtrack/whiskey_looped.wav"
 		}
 	],
 

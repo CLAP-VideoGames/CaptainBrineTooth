@@ -7,7 +7,7 @@
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
 
-#include "Player_Health.h"
+#include "SoundManager.h"
 
 class PlayerController : public Component {
 public:																
@@ -30,6 +30,9 @@ public:
 		animController_ = entity_->getComponent<AnimBlendGraph>();
 
 		lastTimeJumped = sdlutils().currRealTime();
+
+		snd = entity_->getComponent<SoundManager>();
+		assert(snd!= nullptr);
 
 		//health_ = entity_->getComponent<Player_Health>();
 		//assert(health_!= nullptr);
@@ -64,7 +67,7 @@ public:
 						animController_->setParamValue("NotOnFloor", 1);
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_X)) {
-				
+				snd->ChangeMainMusic("adventure");
 			}
 	
 		}
@@ -158,7 +161,7 @@ private:
 	Transform* tr_ = nullptr;
 	BoxCollider* collider_ = nullptr;
 	AnimBlendGraph* animController_ = nullptr;
-	Player_Health* health_ = nullptr;
+	SoundManager* snd = nullptr;
 
 
 	int lastTimeJumped; 
