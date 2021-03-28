@@ -62,8 +62,8 @@ void Game::init() {
 
 	world_->SetContactListener(&collisionListener);
 
-	//createBackGround("Square", 11, 11);
-	createLevel0();
+	createBackGround("Square", 11, 11);
+	//createLevel0();
 
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
@@ -74,8 +74,9 @@ void Game::init() {
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
+	//sdlutils().musics().at(mainMusic).setMusicVolume(volumen++);
 
-	//createChain();
+	createChain();
 
 
 	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
@@ -248,7 +249,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	player->addComponent<PlayerController>();
-	player->addComponent<CameraFollow>(player->getComponent<Transform>());
+	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
 	player->addComponent<Chainsaw>();
 	
 
@@ -288,10 +289,13 @@ void Game::createChain()
 
 	b2Vec2 vs[4];
 
-	vs[0] = b2Vec2((sdlutils().width() / 15.0f) / sdlutils().getPPM(), (sdlutils().height() / 1.5f) / sdlutils().getPPM());
-	vs[1] = b2Vec2((sdlutils().width() / 5.0f) / sdlutils().getPPM(), (sdlutils().height() / 1.1f) / sdlutils().getPPM());
-	vs[2] = b2Vec2((sdlutils().width() / 1.5f) / sdlutils().getPPM(), (sdlutils().height() / 1.1f) / sdlutils().getPPM());
-	vs[3] = b2Vec2((sdlutils().width() / 1.1f) / sdlutils().getPPM(), (sdlutils().height() / 1.5f) / sdlutils().getPPM());
+	int alt1 = 1.4f;
+	int alt2 = 1.1f;
+
+	vs[0] = b2Vec2((sdlutils().width() / 15.0f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
+	vs[1] = b2Vec2((sdlutils().width() / 5.0f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
+	vs[2] = b2Vec2((sdlutils().width() / 0.5f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
+	vs[3] = b2Vec2((sdlutils().width() / 0.1f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
 
 	b2ChainShape chain;
 	//Vertice fantasmas inicial								//Vertice fantasmas final

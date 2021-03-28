@@ -8,9 +8,10 @@ class Game;
 class CameraFollow : public Component 
 {
 public: 
-	CameraFollow(Transform* p, float percentage_ = 0.05f) {
+	CameraFollow(Transform* p, const Vector2D & offS = Vector2D(0.0f, 0.f), const float& percentage_ = 0.0f) : lastDiff(), differenceX(), differenceY(){
 		entityT = p;
 		percentage = percentage_;
+		offset = offS;
 	}
 
 	void init() override;
@@ -19,15 +20,11 @@ public:
 	void actPos();
 	void actPosAdvanced();
 
-
-
-
 protected:
 	Transform* entityT;
 	std::vector<Entity*> entities_;
 
-	int limit;
-	int difference;
-	int last;
+	int differenceX, differenceY;
 	float percentage;
+	Vector2D lastDiff, offset;
 };
