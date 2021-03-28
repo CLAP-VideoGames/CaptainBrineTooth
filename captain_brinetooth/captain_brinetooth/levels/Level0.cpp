@@ -8,6 +8,9 @@
 #include <algorithm>
 #include "..//components/AnimBlendGraph.h"
 
+
+#include "..//game/Game.h"
+
 tile::tile(Texture* tset, int x, int y, int tx, int ty, int w, int h) 
 : sheet_(tset), x_(x), y_(y), tx_(tx), ty_(ty), width_(w), height_(h) {}
 
@@ -22,7 +25,7 @@ void tile::draw() {
 	// Para que el tileset no siga a la cámara, hay que restarle la posición de la misma.
 	// Para agrandar el tiledmap, hay que hacerlo manualmente en el propio TiledMapEditor, aumentando los píxeles por tile.
 	SDL_Rect dest;
-	dest.x = x_; dest.y = y_;
+	dest.x = x_ - Game::camera.x; dest.y = y_ - Game::camera.y;
 	dest.w = src.w; dest.h = src.h;
 
 	sheet_->render(src, dest);
@@ -157,7 +160,6 @@ void Level0::setCollision() {
 		t->addComponent<Transform>(Vector2D(tile->x_ + tile_width_/2, tile->y_ + tile_height_/2), Vector2D(), tile_width_, tile_height_, 0.0f);
 		//Tenemos que hacer que pinte los colliders
 		t->addComponent<BoxCollider>();
-		t->addComponent<FixedCameraPosition>();
 		auto* anim_controller = t->addComponent<AnimBlendGraph>();
 		anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 	}

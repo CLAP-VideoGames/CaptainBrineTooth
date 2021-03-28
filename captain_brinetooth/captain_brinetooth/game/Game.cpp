@@ -53,17 +53,15 @@ void Game::init() {
 
 	world_->SetContactListener(&collisionListener);
 
-	createBackGround("fondo", 11, 11);
-	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
+	//createBackGround("Square", 11, 11);
 	createLevel0();
-
 
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//Caja para hacer testeo con movimiento
-	//createBoxTest(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
+	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, 1, false, 0.0f);
 	//Crea el suelo
-	//createBoxTest(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
+	//createBoxTest2(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, 1, false, 0.0f);
 
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
@@ -71,6 +69,7 @@ void Game::init() {
 	//createChain();
 
 
+	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 
 
 	//Creamos al player
@@ -156,13 +155,16 @@ void Game::ShakeCamera(int time)
 //Metodos que todo GameState deberia de tener 
 void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols)
 {
-	auto* bg = createBasicEntity(Vector2D(0, 0), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
+	auto* bg = createBasicEntity(Vector2D(300, 300), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
+
+	bg->addComponent<BoxCollider>(STATIC, 1, false, 1.0f, false, 0.0f);
 	auto* anim_controller = bg->addComponent<AnimBlendGraph>();
 
-	bg->addComponent<FixedCameraPosition>();
+	//bg->addComponent<FixedCameraPosition>();
 
 	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
-	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 121, 24, -1, 0, 119);
+	//anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 121, 24, -1, 0, 119);
+	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 1, 1, -1);
 }
 
 /// <summary>
@@ -199,10 +201,24 @@ void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vect
 	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 
 	box->addComponent<BoxCollider>(physicType, col, isTrigger, friction, fixedRotation, rotation);
-	//box->addComponent<CameraFollow>(box->getComponent<Transform>());
+	box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
 	if(physicType == 1 || physicType == 2)
 		box->addComponent<KeyBoardCtrl>();
+}
+
+void Game::createBoxTest2(const Vector2D& pos, const  Vector2D& vel, const Vector2D& size, const float& friction, const TYPE physicType, const bool& isTrigger, const int& col, const bool& fixedRotation, const float& rotation)
+{
+	auto* box = createBasicEntity(pos, size, rotation, vel);
+
+	auto* anim_controller = box->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
+
+	box->addComponent<BoxCollider>(physicType, col, isTrigger, friction, fixedRotation, rotation);
+	//box->addComponent<CameraFollow>(box->getComponent<Transform>());
+
+	//if (physicType == 1 || physicType == 2)
+	//	box->addComponent<KeyBoardCtrl>();
 }
 
 void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector2D & size, const float & friction, const bool & fixedRotation, const float& rotation)
@@ -225,6 +241,8 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<PlayerController>();
 	player->addComponent<CameraFollow>(player->getComponent<Transform>());
 	player->addComponent<Chainsaw>();
+	
+
 
 	//Seteamos al Player como MainHandler
 	mngr_->setHandler<Player>(player);

@@ -8,6 +8,8 @@
 
 #include "RandomNumberGenerator.h"
 
+using teCuoto = RandomNumberGenerator::nextInt(int, int);
+
 class RandomNumberGenerator {
 public:
 

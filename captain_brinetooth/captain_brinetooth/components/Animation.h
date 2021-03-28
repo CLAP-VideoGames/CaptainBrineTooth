@@ -7,6 +7,9 @@
 #include "Transform.h"
 
 
+#include "..//game/Game.h"
+
+
 enum State { Complete, Playing, Stop };	//Estado de la animacion
 
 class Animation : public Component
@@ -53,7 +56,7 @@ public:
 		
 		//Construccion de los rectangulos fuente(textura) y destino (entidad)
 		SDL_Rect src = build_sdlrect(framepos_[actfr_].getX() * framewidth_, framepos_[actfr_].getY() * frameheight_, framewidth_, frameheight_);
-		SDL_Rect dest = build_sdlrect(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
+		SDL_Rect dest = build_sdlrect(tr_->getPos().getX() - Game::camera.x, tr_->getPos().getY() - Game::camera.y, tr_->getW(), tr_->getH());
 		tex_->render(src, dest, tr_->getRot());
 	}
 
