@@ -276,7 +276,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
 	player->addComponent<Chainsaw>();
 	
-	
+	player->addComponent<LoseLife>();
 
 
 	//Seteamos al Player como MainHandler

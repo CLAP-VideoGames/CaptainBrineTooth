@@ -15,9 +15,12 @@ public:
 	}
 
 	void init() override {
+		//Asigna el metodo introducido en la entidad para que se pueda utilizar mediante el metodo PlayCollisionMethod
 		entity_->setCollisionMethod(LoseLifeMethod);
 	}
 
+	//Metodo de ejemplo que se llama al colisionar
+	//IMPORTANTE: debe de ser estatico
 	static void LoseLifeMethod() {
 		std::cout << "OHHH NOOO Perdió vida\n";
 	}
