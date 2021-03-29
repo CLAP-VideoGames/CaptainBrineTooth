@@ -33,10 +33,6 @@ public:
 
 		snd = entity_->getComponent<SoundManager>();
 		assert(snd!= nullptr);
-
-		//health_ = entity_->getComponent<Player_Health>();
-		//assert(health_!= nullptr);
-
 	}
 
 
@@ -46,9 +42,13 @@ public:
 			//Parte Horizontal
 			if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
 				collider_->setSpeed(Vector2D(-speed_, 0.0f));
+				snd->playSoundEffect("walk");
+
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
 				collider_->setSpeed(Vector2D(speed_, 0.0f));
+				snd->playSoundEffect("walk");
+
 			}
 			
 			//Parte Vertical
@@ -65,9 +65,15 @@ public:
 				if(animController_ != nullptr )
 					if(animController_->searchParamValue("NotOnFloor") != -1)
 						animController_->setParamValue("NotOnFloor", 1);
+				snd->playSoundEffect("player_jump");
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_X)) {
-				snd->ChangeMainMusic("adventure");
+				//snd->ChangeMainMusic("adventure");
+				snd->setGeneralVolume(snd->GeneralVolume() - 5);
+			}
+			else if (ih().isKeyDown(SDL_SCANCODE_Z)) {
+				//snd->ChangeMainMusic("adventure");
+				snd->setGeneralVolume(snd->GeneralVolume() + 5);
 			}
 	
 		}

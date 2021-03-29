@@ -164,7 +164,7 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 1, 1, -1);
 }
 
-void Game::createChain(const int& value = 10){
+/*void Game::createChain(const int& value = 10){
 
 	//Podemos usar un vector<b2Vec> para ir haciendo emplace back y una vez finalizado, 
 	//copiar todos esos datos a un  b2Vec2* vs = new b2Vec2[value]; para crear la cadena
@@ -186,7 +186,7 @@ void Game::createChain(const int& value = 10){
 
 	b2ChainShape chain;
 	//Vertice fantasmas inicial								//Vertice fantasmas final
-//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
+//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f));
 	chain.CreateChain(vs, 4, b2Vec2((sdlutils().width() / 16.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()), b2Vec2((sdlutils().width() / 1.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()));
 
 	b2FixtureDef fixtureDef;
@@ -196,7 +196,7 @@ void Game::createChain(const int& value = 10){
 	fixtureDef.friction = 0.4f;
 
 	b2Fixture* fix = body->CreateFixture(&fixtureDef);
-}
+}*/
 
 /// <summary>
 /// Crea un entidad b�sica, con el componente Transform
@@ -270,9 +270,12 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<BoxCollider>(DYNAMIC, PLAYER, PLAYER_MASK, false, friction, fixedRotation, rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
+	
 	player->addComponent<SoundManager>(75, "drunken", "tale");
-	player->getComponent<SoundManager>()->playMainMusic();
+	//player->getComponent<SoundManager>()->playMainMusic();
+	
 	player->addComponent<PlayerController>();
+
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
 	player->addComponent<Chainsaw>();
 	

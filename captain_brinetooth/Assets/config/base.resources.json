@@ -51,6 +51,30 @@
 		{
 			"id": "player_hurt",
 			"file": "assets/sounds/player/player1.mp3"
+		},
+		{
+			"id": "player_jump",
+			"file": "assets/sounds/player/player_jump.mp3"
+		},
+		{
+			"id": "walk",
+			"file": "assets/sounds/player/walk.mp3"
+		},
+		{
+			"id": "punch",
+			"file": "assets/sounds/weapons/boxing_punch.mp3"
+		},
+		{
+			"id": "chainsaw1",
+			"file": "assets/sounds/weapons/chainsaw1.mp3"
+		},
+		{
+			"id": "chainsaw2",
+			"file": "assets/sounds/weapons/chainsaw2.mp3"
+		},
+		{
+			"id": "sword_whoosh",
+			"file": "assets/sounds/weapons/sword_swing_whoosh.mp3"
 		}
 	],
 
@@ -69,7 +93,7 @@
 		},
 		{
 			"id": "celtic",
-			"file": "assets/sounds/soundtrack/celtic.wav"
+			"file": "assets/sounds/soundtrack/celtic.mp3"
 		},
 		{
 			"id": "danny_boy",
@@ -85,7 +109,7 @@
 		},
 		{
 			"id": "irish_bar",
-			"file": "assets/sounds/soundtrack/irish_bar.wav"
+			"file": "assets/sounds/soundtrack/irish_bar.mp3"
 		},
 		{
 			"id": "paddyback",
@@ -109,11 +133,11 @@
 		},
 		{
 			"id": "whiskey_in_the_jar",
-			"file": "assets/sounds/soundtrack/whiskey_in_the_jar.wav"
+			"file": "assets/sounds/soundtrack/whiskey_in_the_jar.mp3"
 		},
 		{
 			"id": "whiskey_looped",
-			"file": "assets/sounds/soundtrack/whiskey_looped.wav"
+			"file": "assets/sounds/soundtrack/whiskey_looped.mp3"
 		}
 	],
 

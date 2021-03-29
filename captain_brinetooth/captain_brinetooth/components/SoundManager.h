@@ -10,7 +10,9 @@ public:
 
 	SoundManager(int volume, std::string initMus, std::string pausMus)
 	{
-		volumen = volume;
+		volumenGeneral = volume;
+		volumenEfectos = volume;
+		volumenMusica = volume;
 		mainMusic = initMus;
 		pauseMusic = pausMus;
 	}
@@ -20,10 +22,13 @@ public:
 
 	void init() override {}
 
+	int MusicVolume() { return volumenMusica; }  
+	int EffectsVolume() { return volumenEfectos; }
+	int GeneralVolume() { return volumenGeneral; }
 
-	void modifyVolume(int volume); // Modificar el volumen
-
-	void setVolume(int volume); // Poner el volumen a cierto nivel especifico
+	void setGeneralVolume(int volume); // Poner el volumen GENERAL a cierto nivel especifico
+	void setMusicVolume(int volume); // Poner el volumen de la MUSICA a cierto nivel especifico
+	void setEffectsVolume(int volume); // Poner el volumen de los EFECTOS a cierto nivel especifico
 
 	void playMainMusic() { sdlutils().musics().at(mainMusic).play(); } // Tocar la melodia que tiene seleccionado el sound manager (Sirve como bucle infinito) 
 	
@@ -33,13 +38,13 @@ public:
 	
 	void ChangeMainMusic(std::string newMusic); // Cambiar de cancion principal
 	
-	void playSoundEffect(std::string effect);
+	void playSoundEffect(std::string effect) {sdlutils().soundEffects().at(effect).play();}
 
 
 private:
 	std::string mainMusic;
 	std::string pauseMusic;
-	int volumen;
+	int volumenGeneral, volumenMusica, volumenEfectos;
 
 };
 

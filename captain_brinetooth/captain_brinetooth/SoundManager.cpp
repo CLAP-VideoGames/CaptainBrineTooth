@@ -1,49 +1,49 @@
 #include "components/SoundManager.h"
 #include "sdlutils/SDLUtils.h"
 
-void SoundManager::modifyVolume(int volume)
+void SoundManager::setGeneralVolume(int volume)
 {
-	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
 
-	if (volume != 0)
+	volumenGeneral = volume;
+
+	setMusicVolume(volumenGeneral);
+	setEffectsVolume(volumenGeneral);
+
+}
+
+void SoundManager::setMusicVolume(int volume)
+{
+	volumenMusica = volume;
+	if (volumenMusica >= 0 && volumenMusica < 128)
 	{
-		volumen += volume;
-		sdlutils().musics().at(mainMusic).setMusicVolume(volumen);
+		sdlutils().musics().at(mainMusic).setMusicVolume(volumenMusica);
+	}
+	else
+	{
+		if (volumenMusica < 0) { volumenMusica = 0; }
+		else if (volumenMusica >= 128) { volumenMusica = 127; }
+	}
+}  
 
-
+void SoundManager::setEffectsVolume(int volume)
+{
+	volumenEfectos = volume;
+	if (volumenEfectos >= 0 && volumenEfectos < 128)
+	{
+		std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
 		while (it != sdlutils().soundEffects().end())
 		{
-			it->second.setChannelVolume(volumen);
+			it->second.setChannelVolume(volumenEfectos);
 			++it;
 		}
 	}
 	else
 	{
-		sdlutils().musics().at(mainMusic).muteMusic();
-		sdlutils().musics().at(pauseMusic).muteMusic();
-
-		while (it != sdlutils().soundEffects().end())
-		{
-			it->second.setChannelVolume(0);
-			++it;
-		}
+		if (volumenEfectos < 0) { volumenEfectos = 0; }
+		else if (volumenEfectos >= 128) { volumenEfectos = 127; }
 	}
-}
-
-void SoundManager::setVolume(int volume)
-{
-	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
-
-	volumen = volume;
-	sdlutils().musics().at(mainMusic).setMusicVolume(volumen);
-
-
-	while (it != sdlutils().soundEffects().end())
-	{
-		it->second.setChannelVolume(volumen);
-		++it;
-	}
-
+	
+	
 }
 
 void SoundManager::ChangeMainMusic(std::string newMusic)
@@ -81,7 +81,3 @@ void SoundManager::resumeMainMusic()
 
 }
 
-void SoundManager::playSoundEffect(std::string effect)
-{
-	sdlutils().soundEffects().at(effect).play();
-}
