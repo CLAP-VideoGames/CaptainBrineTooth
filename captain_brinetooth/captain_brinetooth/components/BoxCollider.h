@@ -105,6 +105,7 @@ public:
 	/// <param name="dir">Vector2D de dirección</param>
 	/// <param name="force">Fuerza aplicada</param>
 	void applyForce(Vector2D dir, float force = 1.0f){
+		dir.normalize();
 		body->ApplyForce(b2Vec2(dir.getX() * force, dir.getY() * force), body->GetWorldCenter(), true);
 	}
 
@@ -114,6 +115,7 @@ public:
 	/// <param name="dir">Vector2D de dirección</param>
 	/// <param name="force">Fuerza aplicada</param>
 	void applyLinearForce(Vector2D dir, float force = 1.0f){
+		dir.normalize();
 		body->ApplyLinearImpulse(b2Vec2(dir.getX()* force, dir.getY()* force) , body->GetWorldCenter(), true);
 	}
 

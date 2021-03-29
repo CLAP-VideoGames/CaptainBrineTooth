@@ -63,7 +63,7 @@ void Game::init() {
 	world_->SetContactListener(&collisionListener);
 
 	createBackGround("Square", 11, 11);
-	//createLevel0();
+	createLevel0();
 
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
@@ -76,18 +76,12 @@ void Game::init() {
 
 	//sdlutils().musics().at(mainMusic).setMusicVolume(volumen++);
 
-	createChain();
-
+	//createChain();
 
 	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
-
-
-	//Creamos al player
-
 }
 
 void Game::start() {
-
 	// a boolean to exit the loop
 	bool exit = false;
 	SDL_Event event;
@@ -129,8 +123,7 @@ void Game::start() {
 }
 //Metodos propios de game 
 
-void Game::ShakeCamera(int time)
-{
+void Game::ShakeCamera(int time){
 	int aux = 0;
 	SDL_Rect aux2 = camera;
 	int slow = 0;
@@ -158,13 +151,7 @@ void Game::ShakeCamera(int time)
 	camera = aux2;
 }
 
-
-
-
-
-//Metodos que todo GameState deberia de tener 
-void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols)
-{
+void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols){
 	auto* bg = createBasicEntity(Vector2D(300, 300), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
 
 	//bg->addComponent<BoxCollider>(STATIC, 1, false, 1.0f, false, 0.0f);
@@ -175,6 +162,40 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
 	//anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 121, 24, -1, 0, 119);
 	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 1, 1, -1);
+}
+
+void Game::createChain(const int& value = 10){
+
+	//Podemos usar un vector<b2Vec> para ir haciendo emplace back y una vez finalizado, 
+	//copiar todos esos datos a un  b2Vec2* vs = new b2Vec2[value]; para crear la cadena
+
+	b2BodyDef bdDef;
+	bdDef.type = b2_staticBody;
+
+	b2Body* body = world_->CreateBody(&bdDef);
+
+	b2Vec2* vs = new b2Vec2[value];
+
+	int alt1 = 1.4f;
+	int alt2 = 1.1f;
+
+	vs[0] = b2Vec2((sdlutils().width() / 15.0f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
+	vs[1] = b2Vec2((sdlutils().width() / 5.0f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
+	vs[2] = b2Vec2((sdlutils().width() / 0.5f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
+	vs[3] = b2Vec2((sdlutils().width() / 0.1f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
+
+	b2ChainShape chain;
+	//Vertice fantasmas inicial								//Vertice fantasmas final
+//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
+	chain.CreateChain(vs, 4, b2Vec2((sdlutils().width() / 16.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()), b2Vec2((sdlutils().width() / 1.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()));
+
+	b2FixtureDef fixtureDef;
+
+	fixtureDef.shape = &chain;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.4f;
+
+	b2Fixture* fix = body->CreateFixture(&fixtureDef);
 }
 
 /// <summary>
@@ -280,36 +301,6 @@ void Game::createLevel0()
 	nivel->getComponent<Level0>()->setCollision();
 }
 
-void Game::createChain()
-{
-	b2BodyDef bdDef;
-	bdDef.type = b2_staticBody;
-
-	b2Body* body = world_->CreateBody(&bdDef);
-
-	b2Vec2 vs[4];
-
-	int alt1 = 1.4f;
-	int alt2 = 1.1f;
-
-	vs[0] = b2Vec2((sdlutils().width() / 15.0f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
-	vs[1] = b2Vec2((sdlutils().width() / 5.0f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
-	vs[2] = b2Vec2((sdlutils().width() / 0.5f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
-	vs[3] = b2Vec2((sdlutils().width() / 0.1f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
-
-	b2ChainShape chain;
-	//Vertice fantasmas inicial								//Vertice fantasmas final
-//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
-	chain.CreateChain(vs, 4, b2Vec2((sdlutils().width() / 16.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()), b2Vec2((sdlutils().width() / 1.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()));
-
-	b2FixtureDef fixtureDef;
-
-	fixtureDef.shape = &chain;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.4f;
-
-	b2Fixture* fix = body->CreateFixture(&fixtureDef);
-}
 
 void Game::createJointMedusa(Entity* ground)
 {

@@ -40,7 +40,7 @@ public:
 	void update() override {
 		if (ih().keyDownEvent()) {
 			assert(collider_ != nullptr);
-			
+			//Parte Horizontal
 			if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
 				collider_->setSpeed(Vector2D(-speed_, 0.0f));
 			}
