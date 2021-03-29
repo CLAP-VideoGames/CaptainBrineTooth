@@ -23,6 +23,8 @@ public:
 
 	void modifyVolume(int volume); // Modificar el volumen
 
+	void setVolume(int volume); // Poner el volumen a cierto nivel especifico
+
 	void playMainMusic() { sdlutils().musics().at(mainMusic).play(); } // Tocar la melodia que tiene seleccionado el sound manager (Sirve como bucle infinito) 
 	
 	void playPauseMusic(); // Detener todo los sonidos y musica del juego principal y tocar la musica del menu de Pausa
@@ -33,15 +35,6 @@ public:
 	
 	void playSoundEffect(std::string effect);
 
-	// Bucle musica
-
-	// Reproducir efecto sonido
-
-	// Pausar musica
-
-	// Retomar musica
-
-	// sound effects map
 
 private:
 	std::string mainMusic;
