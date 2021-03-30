@@ -11,9 +11,9 @@
 
 class PlayerController : public Component {
 public:																
-	PlayerController(const float & speed = 3.0f, const float& forceJ = 5.0f , const float& dashS = 5.0f):
+	PlayerController(const float & speed = 3.0f, const float& forceJ = 5.0f , const float& dashS = 7.0f):
 															//falso				//falso
-		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS){
+		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS), isDashing(false){
 
 	}
 
@@ -40,13 +40,13 @@ public:
 		if (ih().keyDownEvent()) {
 			assert(collider_ != nullptr);
 			//Parte Horizontal
-			if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
+			if (ih().isKeyDown(SDL_SCANCODE_LEFT) && !isDashing) {
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(-speed_, vel.y));
 				snd->playSoundEffect("walk");
 
 			}
-			else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
+			else if (ih().isKeyDown(SDL_SCANCODE_RIGHT) && !isDashing) {
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(speed_, vel.y));
 				snd->playSoundEffect("walk");
@@ -54,7 +54,7 @@ public:
 			}
 			
 			//Parte Vertical
-			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor){
+			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor && !isDashing){
 				isOnFloor = false;
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho m�s
@@ -78,12 +78,28 @@ public:
 				snd->setGeneralVolume(snd->GeneralVolume() + 5);
 			}
 
-			if (ih().isKeyDown(SDLK_LSHIFT)) {
+			if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing) {
+				gravity = collider_->getBody()->GetGravityScale();
+				collider_->getBody()->SetGravityScale(0.0f);
+				collider_->setSpeed(Vector2D(0, 0));
+				isDashing = true;
 				collider_->applyLinearForce(Vector2D(1,0), dashSpeed);
 			}
+
+			
 	
 		}
 
+		if (isDashing) {
+			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+			if (vel.x > 0) {
+				collider_->setSpeed(Vector2D(vel.x - 0.3, 0));
+			}
+			else {
+				collider_->getBody()->SetGravityScale(gravity);
+				isDashing = false;
+			}
+		}
 		//Timer provisional hasta tener los Triggers de colision, para preparar bien el saltos
 		if (sdlutils().currRealTime() - lastTimeJumped >= time)
 		{
@@ -179,6 +195,6 @@ private:
 	int lastTimeJumped; 
 	int time = 1500;
 	float speed_, forceJump_, maxSpeed, dashSpeed;
-	bool isOnFloor, isOnAir;
-
+	bool isOnFloor, isOnAir, isDashing;
+	float gravity;
 };
