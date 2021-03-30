@@ -4,17 +4,16 @@
 
 #include <algorithm>
 
-Manager::Manager() {
+Manager::Manager(b2World* mundo) {
 
-	b2Vec2 gravity(0.0f, 9.8f);
-	world_ = new b2World(gravity);
+	world_ = mundo;
 }
 
 Manager::~Manager() {
 	delete world_;
 
 	for (auto e : entities_) {
-		if(e->isSleeping())delete e;
+		delete e;
 	}
 }
 
@@ -38,11 +37,11 @@ void Manager::refresh() {
 void Manager::update() {
 	auto n = entities_.size();
 	for (auto i = 0u; i < n; i++)
-		if(!entities_[i]->isSleeping())entities_[i]->update();
+		entities_[i]->update();
 }
 
 void Manager::render() {
 	auto n = entities_.size();
 	for (auto i = 0u; i < n; i++)
-		if(!entities_[i]->isSleeping())entities_[i]->render();
+		entities_[i]->render();
 }

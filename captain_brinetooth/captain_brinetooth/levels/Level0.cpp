@@ -175,7 +175,7 @@ void Level0::setCollision() {
 	for (auto tile : tiles_) {
 		auto* mnr = entity_->getMngr();
 
-		auto* t = mnr->addEntity(false);
+		auto* t = mnr->addEntity();
 		t->addComponent<Transform>(Vector2D(tile->x_ + tile_width_/2, tile->y_ + tile_height_/2), Vector2D(), tile_width_, tile_height_, 0.0f);
 		//Tenemos que hacer que pinte los colliders
 		t->addComponent<BoxCollider>();

@@ -4,7 +4,7 @@
 #include "utils/Vector2D.h"
 #include "ecs/Manager.h"
 
-PruebaState::PruebaState(Game* a, Manager* m) : GameState(a,m)
+PruebaState::PruebaState(Game* a ,b2World* mundo) : GameState(a,mundo)
 {
 	//app->createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
 	//auto* player = manager_->getHandler<Player>();
@@ -17,7 +17,7 @@ PruebaState::PruebaState(Game* a, Manager* m) : GameState(a,m)
 }
 
 void PruebaState::addStateEntityPrueba() {
-	auto* e = manager_->addEntity(false);
+	auto* e = manager_->addEntity();
 
 	
 	e->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), 200.0f, 200.0f, 0.0f);

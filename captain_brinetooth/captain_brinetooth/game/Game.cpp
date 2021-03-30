@@ -39,19 +39,20 @@ SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 using namespace ColLayers;
 
 Game::Game() {
-	Manager* a = new Manager();
 	stateMachine = new GameStateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
-	
 
+
+	b2Vec2 gravity(0.0f, 15.8f);
+	world_ = new b2World(gravity);
+
+
+	PruebaState* prueba = new PruebaState(this, world_);
+	stateMachine->pushState(prueba);
+	//Ahora  cuando creemos un nuevo estado hay que hacer un reset del manager del juego poniendo el manager del estado en cuestion
+	Manager* a = stateMachine->currentState()->getMan();
 	mngr_.reset(a);
-	world_ = mngr_->getWorld();
-	MenuState* menu = new MenuState(this,a);
-	stateMachine->pushState(menu);
-
-	/*PruebaState* juego = new PruebaState(this, a);
-	stateMachine->pushState(juego);*/
 }
 
 Game::~Game() {
@@ -188,7 +189,7 @@ void Game::createChain(){
 /// <returns></returns>
 Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation = 0.0f, const Vector2D & vel = Vector2D(0.0f,0.0f))
 {
-	auto* entity_ = mngr_->addEntity(false);
+	auto* entity_ = mngr_->addEntity();
 	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
 
 	return entity_;
@@ -283,7 +284,7 @@ void Game::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotatio
 /// </summary>
 void Game::createLevel0()
 {
-	auto* nivel = mngr_->addEntity(false);
+	auto* nivel = mngr_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, world_);
 
 

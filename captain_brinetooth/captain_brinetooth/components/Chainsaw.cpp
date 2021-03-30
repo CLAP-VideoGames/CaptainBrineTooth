@@ -26,7 +26,7 @@ void Chainsaw::update() {
 				
 
 				//Activate attack trigger
-				trigger = entity_->getMngr()->addEntity(false);
+				trigger = entity_->getMngr()->addEntity();
 				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
 				anim_controller = trigger->addComponent<AnimBlendGraph>();
@@ -44,7 +44,7 @@ void Chainsaw::update() {
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack2;
 
-					trigger = entity_->getMngr()->addEntity(false);
+					trigger = entity_->getMngr()->addEntity();
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
 					anim_controller = trigger->addComponent<AnimBlendGraph>();
@@ -58,7 +58,7 @@ void Chainsaw::update() {
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
 
-					trigger = entity_->getMngr()->addEntity(false);
+					trigger = entity_->getMngr()->addEntity();
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
 					anim_controller = trigger->addComponent<AnimBlendGraph>();

@@ -4,6 +4,7 @@ class Manager;
 class Game;
 class Entity;
 #include <vector>
+#include "box2d.h"
 
 class GameState
 {
@@ -13,7 +14,7 @@ protected:
 	Game* app;
 	std::vector<Entity*> stage;
 
-	GameState(Game* a, Manager* m) { app = a; manager_ = m; };
+	GameState(Game* a, b2World* mundo);
 
 
 
@@ -22,6 +23,7 @@ public:
 	virtual void render() const;
 	virtual void update();
 	virtual void refresh();
+	Manager* getMan();
 	//void setManager(Manager* m) { manager_ = m; };
 };
 

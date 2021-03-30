@@ -13,12 +13,12 @@
 class Manager {
 public:
 
-	Manager();
+	Manager(b2World* mundo);
 	virtual ~Manager();
 
 	// entities
-	Entity* addEntity(bool sleeping) {
-		Entity *e = new Entity(this, world_,sleeping);
+	Entity* addEntity() {
+		Entity *e = new Entity(this, world_);
 		if (e != nullptr) {
 			e->resetGroups();
 			entities_.emplace_back(e);
