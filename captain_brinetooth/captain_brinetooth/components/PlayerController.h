@@ -55,10 +55,10 @@ public:
 			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor){
 				isOnFloor = false;
 
-				//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho más
+				//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho mï¿½s
 				collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
 				
-				//Realizar daño
+				//Realizar daï¿½o
 				//health_->loseLife();
 
 				//Test animacion de salto, Ejemplo de uso
@@ -100,11 +100,11 @@ public:
 		//		rbParent.velocity = Vector2.up * jumpForce;
 		//		isJumping = true;//isInRest se vuelve falso al dejar de tocar el suelo en el OnTriggerExit2D.
 
-		//		anim.SetBool("isJumping", true);//Comienza la animación de salto.
+		//		anim.SetBool("isJumping", true);//Comienza la animaciï¿½n de salto.
 		//		jumpCounter = jumpTime;
 		//	}
 		////Si mantengo el salto, es que he dejado de tocar el suelo y empieza una cuenta regresiva.
-		////Mientras la cuenta no llegue a 0, seguirá subiendo
+		////Mientras la cuenta no llegue a 0, seguirï¿½ subiendo
 		//if (Input.GetButton("Jump") && isJumping)
 		//{
 		//	if (jumpCounter > 0)
@@ -115,15 +115,15 @@ public:
 		//	else
 		//	{
 		//		isJumping = false;
-		//		ReduceXSpeed();//reduzco la velocidad en el aire, solo cuando está cayendo
+		//		ReduceXSpeed();//reduzco la velocidad en el aire, solo cuando estï¿½ cayendo
 		//	}
 		//}
 		////En caso de que suelte el boton de saltar, no podre volver a
-		////saltar hasta que esté en el suelo.
+		////saltar hasta que estï¿½ en el suelo.
 		//if (isJumping && !Input.GetButton("Jump")) //solamente se aplica cuando se ha saltado y dejo de presionar.
 		//{
 		//	isJumping = false;
-		//	ReduceXSpeed();//reduzco la velocidad en el aire, solo cuando está cayendo
+		//	ReduceXSpeed();//reduzco la velocidad en el aire, solo cuando estï¿½ cayendo
 		//}
 
 		//#endregion
@@ -172,7 +172,7 @@ private:
 
 	int lastTimeJumped; 
 	int time = 1500;
-	float speed_, forceJump_;
+	float speed_, forceJump_, maxSpeed;
 	bool isOnFloor, isOnAir;
 
 };

@@ -36,7 +36,7 @@ public:
 	static SDL_Rect camera;
 
 	void createLevel0();
-	void createChain(const int & value);
+	void createChain();
 	void createBackGround(const std::string& spriteId, const int & fils, const int & cols);
 
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);

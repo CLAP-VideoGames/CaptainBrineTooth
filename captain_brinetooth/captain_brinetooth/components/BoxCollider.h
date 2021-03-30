@@ -120,7 +120,6 @@ public:
 	}
 
 	void update() override {
-
 		//if(type == TYPE::DYNAMIC)
 			//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
 
