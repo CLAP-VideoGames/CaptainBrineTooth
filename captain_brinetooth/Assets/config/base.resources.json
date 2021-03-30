@@ -84,65 +84,42 @@
 
 	"musics": [
 		{
-			"id": "drunken",
+			"id": "Menu",
 			"file": "assets/sounds/soundtrack/drunken_sailor.mp3"
 		},
 		{
-			"id": "tale",
+			"id": "FinalBoss",
 			"file": "assets/sounds/soundtrack/olds_man_tale.mp3"
 		},
 		{
-			"id": "adventure",
+			"id": "Nivel3",
 			"file": "assets/sounds/soundtrack/adventure.mp3"
 		},
 		{
-			"id": "celtic",
+			"id": "Nivel1",
 			"file": "assets/sounds/soundtrack/celtic.mp3"
 		},
 		{
-			"id": "danny_boy",
-			"file": "assets/sounds/soundtrack/danny_boy.mp3"
-		},
-		{
-			"id": "folky_armonica",
-			"file": "assets/sounds/soundtrack/folky_armonica.mp3"
-		},
-		{
-			"id": "irish",
-			"file": "assets/sounds/soundtrack/irish.mp3"
-		},
-		{
-			"id": "irish_bar",
-			"file": "assets/sounds/soundtrack/irish_bar.mp3"
-		},
-		{
-			"id": "paddyback",
-			"file": "assets/sounds/soundtrack/paddyback.mp3"
-		},
-		{
-			"id": "the_sailor_song",
+			"id": "Pescando",
 			"file": "assets/sounds/soundtrack/the_sailor_song.mp3"
 		},
 		{
-			"id": "the_sailors_waltz",
+			"id": "Lobby",
 			"file": "assets/sounds/soundtrack/the_sailors_waltz.mp3"
 		},
 		{
-			"id": "travel_cinematic",
+			"id": "Nivel2",
 			"file": "assets/sounds/soundtrack/travel_cinematic.mp3"
 		},
 		{
-			"id": "uplifting_irish",
-			"file": "assets/sounds/soundtrack/uplifting_irish.mp3"
+			"id": "CofreTesoro",
+			"file": "assets/sounds/soundtrack/the_happiness.mp3"
 		},
 		{
-			"id": "whiskey_in_the_jar",
-			"file": "assets/sounds/soundtrack/whiskey_in_the_jar.mp3"
-		},
-		{
-			"id": "whiskey_looped",
-			"file": "assets/sounds/soundtrack/whiskey_looped.mp3"
+			"id": "Creditos",
+			"file": "assets/sounds/soundtrack/wellerman.mp3"
 		}
+
 	],
 
 	"tilesets": [
