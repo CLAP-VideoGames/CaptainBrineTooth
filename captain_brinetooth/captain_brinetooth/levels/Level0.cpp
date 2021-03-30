@@ -8,6 +8,7 @@
 
 
 #include "..//game/Game.h"
+#include <tmxlite\Layer.hpp>
 
 tile::tile(Texture* tset, int x, int y, int tx, int ty, int w, int h) 
 : sheet_(tset), x_(x), y_(y), tx_(tx), ty_(ty), width_(w), height_(h) {}
@@ -129,21 +130,15 @@ void Level0::load(const string& path) {
 		//las coordenadas de los puntos reales son layer_objects.back().getPosition() + layer_objects.back().getPoints()[i]; 
 		points = layer_objects.back().getPoints();
 
-		for (int i = points.size() - 1; i >= 0; i--){
-			points[i].x += layer_objects.back().getPosition().x;
-			points[i].y += layer_objects.back().getPosition().y;
 
-			points[i].x /= sdlutils().getPPM();
-			points[i].y /= sdlutils().getPPM();
+
+		for (tmx::Vector2f& vec : points){
+			vec.x += layer_objects.back().getPosition().x;
+			vec.y += layer_objects.back().getPosition().y;
+
+			vec.x /= sdlutils().getPPM();
+			vec.y /= sdlutils().getPPM();
 		}
-
-		//for (tmx::Vector2f& vec : points){
-		//	vec.x += layer_objects.back().getPosition().x;
-		//	vec.y += layer_objects.back().getPosition().y;
-
-		//	vec.x /= sdlutils().getPPM();
-		//	vec.y /= sdlutils().getPPM();
-		//}
 	}
 
 	//for (auto& layer : map_layers) {

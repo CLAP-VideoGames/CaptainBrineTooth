@@ -11,9 +11,9 @@
 
 class PlayerController : public Component {
 public:																
-	PlayerController(const float & speed = 3.0f, const float& forceJ = 5.0f):
+	PlayerController(const float & speed = 3.0f, const float& forceJ = 5.0f , const float& dashS = 5.0f):
 															//falso				//falso
-		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false){
+		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS){
 
 	}
 
@@ -35,18 +35,20 @@ public:
 		assert(snd!= nullptr);
 	}
 
-
+	//Necesitamos un getter de la velocidad del collider
 	void update() override {
 		if (ih().keyDownEvent()) {
 			assert(collider_ != nullptr);
 			//Parte Horizontal
 			if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
-				collider_->setSpeed(Vector2D(-speed_, 0.0f));
+				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+				collider_->setSpeed(Vector2D(-speed_, vel.y));
 				snd->playSoundEffect("walk");
 
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
-				collider_->setSpeed(Vector2D(speed_, 0.0f));
+				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+				collider_->setSpeed(Vector2D(speed_, vel.y));
 				snd->playSoundEffect("walk");
 
 			}
@@ -54,7 +56,7 @@ public:
 			//Parte Vertical
 			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor){
 				isOnFloor = false;
-
+				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho m�s
 				collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
 				
@@ -75,6 +77,10 @@ public:
 				//snd->ChangeMainMusic("adventure");
 				snd->setGeneralVolume(snd->GeneralVolume() + 5);
 			}
+
+			if (ih().isKeyDown(SDLK_LSHIFT)) {
+				collider_->applyLinearForce(Vector2D(1,0), dashSpeed);
+			}
 	
 		}
 
@@ -89,7 +95,7 @@ public:
 						animController_->setParamValue("NotOnFloor", 0);
 		}
 	}
-
+	//Joseda es tonto
 	void methods()
 	{
 		//#region Vertical
@@ -172,7 +178,7 @@ private:
 
 	int lastTimeJumped; 
 	int time = 1500;
-	float speed_, forceJump_, maxSpeed;
+	float speed_, forceJump_, maxSpeed, dashSpeed;
 	bool isOnFloor, isOnAir;
 
 };
