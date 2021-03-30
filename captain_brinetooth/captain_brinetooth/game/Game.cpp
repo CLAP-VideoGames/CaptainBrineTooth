@@ -27,6 +27,7 @@
 #include "..//components/CameraFollow.h"
 #include "../CollisionLayers.h"
 #include "../components/LoseLife.h"
+#include "../MenuState.h"
 
 //tiledmap
 const Vector2D window(1100, 900);
@@ -42,10 +43,14 @@ Game::Game() {
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
 	
+
 	mngr_.reset(a);
 	world_ = mngr_->getWorld();
-	PruebaState* prueba = new PruebaState(this,a);
-	stateMachine->pushState(prueba);
+	MenuState* menu = new MenuState(this,a);
+	stateMachine->pushState(menu);
+
+	/*PruebaState* juego = new PruebaState(this, a);
+	stateMachine->pushState(juego);*/
 }
 
 Game::~Game() {
@@ -65,8 +70,9 @@ void Game::init() {
 	createBackGround("Square", 11, 11);
 	createLevel0();
 
-	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
-	prueba->addStateEntityPrueba();
+	MenuState* prueba = static_cast<MenuState*>(stateMachine->currentState());
+	prueba->addStateEntityMenu();
+
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
 	//Crea el suelo

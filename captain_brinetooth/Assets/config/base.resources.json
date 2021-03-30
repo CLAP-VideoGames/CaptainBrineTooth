@@ -43,6 +43,10 @@
 		{
 			"id": "fondo",
 			"file": "assets/sprites/redsquare.png"
+		},
+		{
+			"id": "nuevapartida",
+			"file": "assets/sprites/nuevapartida.png"
 		}
 
 	],
