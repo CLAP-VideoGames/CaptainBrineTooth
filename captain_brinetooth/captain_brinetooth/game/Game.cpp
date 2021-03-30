@@ -284,8 +284,19 @@ void Game::createLevel0()
 {
 	auto* nivel = mngr_->addEntity(false);
 	nivel->addComponent<Level0>(MAP_PATH, world_);
-	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
 
+
+	//int alt1 = 2.3f;
+	//int alt2 = 2.0f;
+
+	//b2Vec2* vs = new b2Vec2[4];
+
+	//vs[0] = b2Vec2((sdlutils().width() / 15.0f), (sdlutils().height() / alt1));
+	//vs[1] = b2Vec2((sdlutils().width() / 5.0f), (sdlutils().height() / alt2));
+	//vs[2] = b2Vec2((sdlutils().width() / 0.5f), (sdlutils().height() / alt2));
+	//vs[3] = b2Vec2((sdlutils().width() / 0.1f), (sdlutils().height() / alt1));
+	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
+	//nivel->addComponent<ChainCollider>(vs);
 
 	//nivel->getComponent<Level0>();
 }

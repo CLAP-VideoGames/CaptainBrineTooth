@@ -22,7 +22,7 @@
 class ChainCollider : public Component {
 public:
 	template<class T>
-	ChainCollider(const std::vector<T> vertices, int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
+	ChainCollider(std::vector<T> vertices, int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
 		//type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
@@ -121,7 +121,6 @@ public:
 
 	void update() override {
 		//actRenderPos();
-
 		//tr_->setRot((body->GetAngle() * (180.0f)) / M_PI);
 	}
 
@@ -157,13 +156,13 @@ private:
 	void setVertices(const std::vector<T>& vector){
 		sizeChain = vector.size();
 		vs = new b2Vec2[sizeChain];
-		/*for (int i = sizeChain - 1; i >= 0; i--){
+		for (int i = sizeChain - 1; i >= 0; i--){
+			vs[(sizeChain - 1) - i ] = b2Vec2(vector[i].x, vector[i].y);
+		}
+		
+		/*for (int i = 0; i < sizeChain; i++){
 			vs[i] = b2Vec2(vector[i].x, vector[i].y);
 		}*/
-		
-		for (int i = 0; i < sizeChain; i++){
-			vs[i] = b2Vec2(vector[i].x, vector[i].y);
-		}
 	}
 
 	void example(){

@@ -128,13 +128,22 @@ void Level0::load(const string& path) {
 
 		//las coordenadas de los puntos reales son layer_objects.back().getPosition() + layer_objects.back().getPoints()[i]; 
 		points = layer_objects.back().getPoints();
-		for (tmx::Vector2f& vec : points){
-			vec.x += layer_objects.back().getPosition().x;
-			vec.y += layer_objects.back().getPosition().y;
 
-			vec.x /= sdlutils().getPPM();
-			vec.y /= sdlutils().getPPM();
+		for (int i = points.size() - 1; i >= 0; i--){
+			points[i].x += layer_objects.back().getPosition().x;
+			points[i].y += layer_objects.back().getPosition().y;
+
+			points[i].x /= sdlutils().getPPM();
+			points[i].y /= sdlutils().getPPM();
 		}
+
+		//for (tmx::Vector2f& vec : points){
+		//	vec.x += layer_objects.back().getPosition().x;
+		//	vec.y += layer_objects.back().getPosition().y;
+
+		//	vec.x /= sdlutils().getPPM();
+		//	vec.y /= sdlutils().getPPM();
+		//}
 	}
 
 	//for (auto& layer : map_layers) {
