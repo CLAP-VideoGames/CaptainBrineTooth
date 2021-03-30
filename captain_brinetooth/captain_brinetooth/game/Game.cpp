@@ -33,7 +33,7 @@
 //tiledmap
 const Vector2D window(1100, 900);
 
-const auto MAP_PATH = "assets/maps/level0.tmx";
+const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 
 using namespace ColLayers;
@@ -85,7 +85,7 @@ void Game::init() {
 
 	createChain();
 
-	createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
+	createPlayer(Vector2D(sdlutils().width() / 1.0f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 }
 
 void Game::start() {
@@ -171,39 +171,11 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 1, 1, -1);
 }
 
-/*void Game::createChain(const int& value = 10){
+void Game::createChain(){
 
-	//Podemos usar un vector<b2Vec> para ir haciendo emplace back y una vez finalizado, 
-	//copiar todos esos datos a un  b2Vec2* vs = new b2Vec2[value]; para crear la cadena
-
-	b2BodyDef bdDef;
-	bdDef.type = b2_staticBody;
-
-	b2Body* body = world_->CreateBody(&bdDef);
-
-	b2Vec2* vs = new b2Vec2[value];
-
-	int alt1 = 1.4f;
-	int alt2 = 1.1f;
-
-	vs[0] = b2Vec2((sdlutils().width() / 15.0f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
-	vs[1] = b2Vec2((sdlutils().width() / 5.0f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
-	vs[2] = b2Vec2((sdlutils().width() / 0.5f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
-	vs[3] = b2Vec2((sdlutils().width() / 0.1f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
-
-	b2ChainShape chain;
-	//Vertice fantasmas inicial								//Vertice fantasmas final
-//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f));
-	chain.CreateChain(vs, 4, b2Vec2((sdlutils().width() / 16.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()), b2Vec2((sdlutils().width() / 1.0f)/ sdlutils().getPPM(), (sdlutils().height() / 2.0f)/ sdlutils().getPPM()));
-
-	b2FixtureDef fixtureDef;
-
-	fixtureDef.shape = &chain;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.4f;
-
-	b2Fixture* fix = body->CreateFixture(&fixtureDef);
-}*/
+	//auto* chain = mngr_->addEntity(false);
+	//chain->addComponent<ChainCollider>();
+}
 
 /// <summary>
 /// Crea un entidad b�sica, con el componente Transform
@@ -312,7 +284,10 @@ void Game::createLevel0()
 {
 	auto* nivel = mngr_->addEntity(false);
 	nivel->addComponent<Level0>(MAP_PATH, world_);
-	nivel->getComponent<Level0>()->setCollision();
+	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
+
+
+	//nivel->getComponent<Level0>();
 }
 
 

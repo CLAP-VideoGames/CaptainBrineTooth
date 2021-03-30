@@ -1,9 +1,7 @@
 #include "Level0.h"
 #include "../game/Game.h"
 #include "../assets/assets.h"
-#include "tmxlite/Map.hpp"
-#include "tmxlite/Layer.hpp"
-#include "tmxlite/TileLayer.hpp"
+
 #include <iostream>
 #include <algorithm>
 #include "..//components/AnimBlendGraph.h"
@@ -122,6 +120,23 @@ void Level0::load(const string& path) {
 		}
 	}
 
+	for (auto& layerObj : map_layers){
+		if (layerObj->getType() != tmx::Layer::Type::Object) continue;
+
+		auto* object_layer = dynamic_cast<const tmx::ObjectGroup*>(layerObj.get());
+		auto layer_objects = object_layer->getObjects();
+
+		//las coordenadas de los puntos reales son layer_objects.back().getPosition() + layer_objects.back().getPoints()[i]; 
+		points = layer_objects.back().getPoints();
+		for (tmx::Vector2f& vec : points){
+			vec.x += layer_objects.back().getPosition().x;
+			vec.y += layer_objects.back().getPosition().y;
+
+			vec.x /= sdlutils().getPPM();
+			vec.y /= sdlutils().getPPM();
+		}
+	}
+
 	//for (auto& layer : map_layers) {
 		//comprobamos si es una capa con Objetos en ella.
 		/*if (layer->getType() != tmx::Layer::Type::Object)
@@ -151,7 +166,7 @@ void Level0::load(const string& path) {
 		fixture_ = body_->CreateFixture(&fixture);*/
 	//}
 }
-//Por favor Joseda no me grites
+//Por favor Joseda no me grites. No te grito <3
 void Level0::setCollision() {
 	for (auto tile : tiles_) {
 		auto* mnr = entity_->getMngr();

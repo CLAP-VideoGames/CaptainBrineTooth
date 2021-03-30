@@ -9,6 +9,11 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Component.h"
 
+#include "tmxlite/Map.hpp"
+#include "tmxlite/Layer.hpp"
+#include "tmxlite/TileLayer.hpp"
+#include "tmxlite/Object.hpp"
+
 using namespace std;
 
 typedef int gid;
@@ -29,6 +34,7 @@ struct object {
 	object(float oX, float oY, float oWidth, float oHeight);
 };
 
+
 class Level0 : public Component{
 public:
 	Level0(const string& name, b2World* b2World);
@@ -36,6 +42,10 @@ public:
 	Vector2D getFilsCols() { return Vector2D(fils_, cols_); }
 	Vector2D getTileSize() { return Vector2D(tile_height_, tile_width_); }
 	void setCollision();
+
+	std::vector<tmx::Vector2f> getVerticesList(){
+		return points;
+	}
 private:
 	string name_;
 	int fils_, cols_,		// filas y columnas de 
@@ -47,4 +57,7 @@ private:
 	b2World* b2World_ = nullptr;
 	b2Body* body_ = nullptr;
 	b2Fixture* fixture_ = nullptr;
+
+
+	vector<tmx::Vector2f> points;
 };

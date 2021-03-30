@@ -11,6 +11,8 @@
 #include "../sdlutils/SDLUtils.h"
 #include <vector>
 
+#include "tmxlite/Object.hpp"
+
 
 //1 pixel(X) 0.0002645833 m
 //then n pixels = n * 0.0002645833;
@@ -19,7 +21,8 @@
 
 class ChainCollider : public Component {
 public:
-	ChainCollider(/*const std::vector<b2Vec2> vertices,*//* int typeAux = TYPE::STATIC,*/ const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
+	template<class T>
+	ChainCollider(const std::vector<T> vertices, int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
 		//type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
@@ -30,7 +33,7 @@ public:
 		rotation_ = rotation;
 
 		
-		//setVertices(vertices);
+		setVertices(vertices);
 	}
 
 	virtual ~ChainCollider() {
@@ -64,40 +67,36 @@ public:
 			break;
 		}*/
 		
-		example();
+		//example();
 
-	//	b2BodyDef bdDef;
-	//	bdDef.type = b2_staticBody;
-	//	b2Body* body = world->CreateBody(&bdDef);
-	//	b2Vec2* vs = new b2Vec2[sizeChain];
-	//	int alt1 = 1.4f;
-	//	int alt2 = 1.1f;
+	//	//Podemos usar un vector<b2Vec> para ir haciendo emplace back y una vez finalizado, 
+		//copiar todos esos datos a un  b2Vec2* vs = new b2Vec2[value]; para crear la cadena
+		b2BodyDef bdDef;
+		bdDef.type = b2_staticBody;
+		bdDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
+		b2Body* body = world->CreateBody(&bdDef);
+		//b2Vec2* vs = new b2Vec2[sizeChain];
 
-	//	vs[0] = b2Vec2((sdlutils().width() / 15.0f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
-	//	vs[1] = b2Vec2((sdlutils().width() / 5.0f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
-	//	vs[2] = b2Vec2((sdlutils().width() / 0.5f) / sdlutils().getPPM(), (sdlutils().height() / alt2) / sdlutils().getPPM());
-	//	vs[3] = b2Vec2((sdlutils().width() / 0.1f) / sdlutils().getPPM(), (sdlutils().height() / alt1) / sdlutils().getPPM());
+		b2ChainShape chain;
+		//Vertice fantasmas inicial								//Vertice fantasmas final
+		//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
+		//chain.CreateChain(vs, sizeChain, b2Vec2((vs[0].x) - 30.0f / sdlutils().getPPM(), ((vs[0].y)) / sdlutils().getPPM()), b2Vec2((vs[sizeChain - 1].x) / sdlutils().getPPM(), ((vs[sizeChain - 1].y - 30)) / sdlutils().getPPM()));
+		chain.CreateLoop(vs, sizeChain);
 
-	//	b2ChainShape chain;
-	//	//Vertice fantasmas inicial								//Vertice fantasmas final
-	////chain.CreateLoop(vs, sizeChain/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
-	//	chain.CreateChain(vs, sizeChain, b2Vec2((sdlutils().width() / 16.0f) / sdlutils().getPPM(), (sdlutils().height() / 2.0f) / sdlutils().getPPM()), b2Vec2((sdlutils().width() / 1.0f) / sdlutils().getPPM(), (sdlutils().height() / 2.0f) / sdlutils().getPPM()));
-
-	//	b2FixtureDef fixtureDef;
-
-	//	fixtureDef.shape = &chain;
-	//	fixtureDef.density = 1.0f;
-	//	fixtureDef.friction = 0.4f;
-
-	//	b2Fixture* fix = body->CreateFixture(&fixtureDef);
+		body->SetFixedRotation(fixedRotation_);
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &chain;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 0.4f;
+		fixtureDef.filter.categoryBits = colLay_; // tag para determinar capa de colision
+		fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
+		b2Fixture* fix = body->CreateFixture(&fixtureDef);
 	}
 
-	void setSpeed(Vector2D speed)
-	{
+	void setSpeed(Vector2D speed){
 		b2Vec2 vel = body->GetLinearVelocity();
 		vel.x = speed.getX(); vel.y = speed.getY();
 		body->SetLinearVelocity(vel);
-
 	}
 
 	/// <summary>
@@ -154,12 +153,16 @@ public:
 	}
 
 private:
-
-	void setVertices(const std::vector<b2Vec2>& vector){
+	template<class T>
+	void setVertices(const std::vector<T>& vector){
 		sizeChain = vector.size();
 		vs = new b2Vec2[sizeChain];
+		/*for (int i = sizeChain - 1; i >= 0; i--){
+			vs[i] = b2Vec2(vector[i].x, vector[i].y);
+		}*/
+		
 		for (int i = 0; i < sizeChain; i++){
-			vs[i] = vector[i];
+			vs[i] = b2Vec2(vector[i].x, vector[i].y);
 		}
 	}
 
