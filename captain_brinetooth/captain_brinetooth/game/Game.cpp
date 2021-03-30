@@ -237,9 +237,9 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 4, 5, 20, 24, -1);
-	//anim_controller->addAnimation("run", &sdlutils().images().at("Player_run"), 1, 1, 1, 1, -1);
-	anim_controller->addAnimation("jump", &sdlutils().images().at("Player_jump"), 4, 5, 20, 24, 0);
+	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
+	//anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 1, 1, 1, 1, -1);
+	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 5, 20, 24, 0);
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
 	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada

@@ -5,12 +5,24 @@
 			"file": "assets/sprites/medusa/medusa_anim.png"
 		},
 		{
-			"id": "Player_run",
-			"file": "assets/sprites/player/player_anim.png"
+			"id": "player_run",
+			"file": "assets/sprites/player/player_run.png"
 		},
 		{
-			"id": "Player_jump",
+			"id": "player_jump",
 			"file": "assets/sprites/player/player_jump.png"
+		},
+		{
+			"id": "player_idle",
+			"file": "assets/sprites/player/player_idle.png"
+		},
+		{
+			"id": "player_dash",
+			"file": "assets/sprites/player/player_dash.png"
+		},
+		{
+			"id": "chainsaw_combo",
+			"file": "assets/sprites/player/weapons/chainsaw_combo.png"
 		},
 		{
 			"id": "Square",
