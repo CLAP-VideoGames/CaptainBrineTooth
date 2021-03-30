@@ -243,7 +243,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
 	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
-	anim_controller->addAnimation();
+	//anim_controller->addAnimation();
 
 #pragma endregion
 

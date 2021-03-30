@@ -13,7 +13,7 @@ class PlayerController : public Component {
 public:																
 	PlayerController(const float & speed = 3.0f, const float& forceJ = 5.0f , const float& dashS = 7.0f):
 															//falso				//falso
-		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS), isDashing(false){
+		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS), isDashing(false), canDash(true){
 
 	}
 
@@ -30,6 +30,8 @@ public:
 		animController_ = entity_->getComponent<AnimBlendGraph>();
 
 		lastTimeJumped = sdlutils().currRealTime();
+
+		lasTimeDashed = sdlutils().currRealTime();
 
 		snd = entity_->getComponent<SoundManager>();
 		assert(snd!= nullptr);
@@ -78,12 +80,13 @@ public:
 				snd->setGeneralVolume(snd->GeneralVolume() + 5);
 			}
 
-			if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing) {
+			if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing && canDash) {
 				gravity = collider_->getBody()->GetGravityScale();
 				collider_->getBody()->SetGravityScale(0.0f);
 				collider_->setSpeed(Vector2D(0, 0));
 				isDashing = true;
 				collider_->applyLinearForce(Vector2D(1,0), dashSpeed);
+				canDash = false;
 			}
 
 			
@@ -100,6 +103,12 @@ public:
 				isDashing = false;
 			}
 		}
+
+		if (sdlutils().currRealTime() - lasTimeDashed >= dashCoolDown) {
+			lasTimeDashed = sdlutils().currRealTime();
+			canDash = true;
+		}
+
 		//Timer provisional hasta tener los Triggers de colision, para preparar bien el saltos
 		if (sdlutils().currRealTime() - lastTimeJumped >= time)
 		{
@@ -193,8 +202,8 @@ private:
 
 
 	int lastTimeJumped; 
-	int time = 1500;
-	float speed_, forceJump_, maxSpeed, dashSpeed;
-	bool isOnFloor, isOnAir, isDashing;
-	float gravity;
+	int time = 1500, dashCoolDown = 10000, lasTimeDashed;
+	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;
+	bool isOnFloor, isOnAir, isDashing, canDash;
+	
 };
