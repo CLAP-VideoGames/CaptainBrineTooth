@@ -251,7 +251,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
 	
-	player->addComponent<SoundManager>(75, "Menu", "FinalBoss");
+	player->addComponent<SoundManager>(75, "FinalBoss");
 	//player->getComponent<SoundManager>()->playMainMusic();
 	
 	player->addComponent<PlayerController>();

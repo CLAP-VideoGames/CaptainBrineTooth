@@ -8,13 +8,13 @@
 class SoundManager : public Component {
 public:
 
-	SoundManager(int volume, std::string initMus, std::string pausMus)
+	SoundManager(int volume, std::string initMus)
 	{
 		volumenGeneral = volume;
 		volumenEfectos = volume;
 		volumenMusica = volume;
 		mainMusic = initMus;
-		pauseMusic = pausMus;
+		pauseMusic = initMus+"Pause";
 	}
 	virtual ~SoundManager() {
 
