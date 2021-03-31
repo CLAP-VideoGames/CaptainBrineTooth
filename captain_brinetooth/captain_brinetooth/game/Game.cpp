@@ -9,7 +9,6 @@
 #include "../GameStateMachine.h"
 #include "../GameState.h"
 
-
 #include "../components/Animation.h"
 #include "../components/AnimBlendGraph.h"
 #include "../components/Rotate.h"
