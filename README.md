@@ -58,7 +58,7 @@ En el menú de pausa habrá un glosario que permitirá al jugador revisar cierto
 
 Menú de opciones: Podrás subir o bajar el volumen del juego, ver los créditos del juego y los contactos de los desarrolladores del juego.
 
-Glosario el Monstruoso DIARIO de Monstruos Marinos: Se podrá ver un glosario el cual explica el origen de todos los enemigos, las armas y sus caracteristicas, las mejoras y sus efectos, el arbol de habilidades con cada habilidad explicada
+Glosario el Monstruoso DIARIO de Monstruos Marinos: Se podrá ver un glosario el cual explica el origen de todos los enemigos, las armas y sus características, las mejoras y sus efectos, el árbol de habilidades con cada habilidad explicada
 
   2.2. **Interfaz y control**
 
@@ -72,7 +72,7 @@ Aquí describiremos los distintos apartados que afectan a la jugabilidad del jue
 
 MECÁNICA DE PESCAR
 
-El jugador tiene una cantidad limitada de cebos para pescar. Cada vez que lo intenta, inicia un minijuego (Cambiamos de pantalla) en el que el jugador maneja el gancho de la caña intentando pescar el mejor recurso posible (Peces, Algas, Corales)
+El jugador puede pescar 1 vez por cada pozo que encuentra. Cada vez que lo intenta, inicia un minijuego (Cambiamos de pantalla) en el que el jugador maneja el gancho de la caña intentando pescar el mejor recurso posible (Peces, Algas, Corales)
 
 La caña irá bajando automáticamente y el jugador podrá moverse lateralmente, esquivando obstáculos. Habrá 3 capas de profundidad y cuanto más profundo llegue el jugador, mayor la calidad del recursos que consiga.
 
@@ -84,7 +84,7 @@ Ej Gráfico:
 
 MOVIMIENTO
 
-El jugador puede moverse lateralmente y saltar. Para moverse con más facilidad, podrá hacer un dash (que se ve como un slide). Además podrá equiparse con armas y atacar con ellas.
+El jugador puede moverse lateralmente y realizar un doble salto como máximo. Para moverse con más facilidad, podrá hacer un dash (que se ve como un slide). Además podrá equiparse con armas y atacar con ellas.
 
 SISTEMA DE COMBATE
 
@@ -127,13 +127,13 @@ Pescador gallego en la segunda guerra mundial. Naufragas en una isla la cual est
 
 ![Lobby](readmeImages/lobby.jpg)
 
-En el lobby se podra comprar armas, desbloquear ciertas habilidades del arbol de anzuelos y la siguiente habitacion despues del lobby sera la zona de pescar.
+En el lobby se podrá comprar armas, desbloquear ciertas habilidades del árbol de anzuelos y la siguiente habitación después del lobby será la zona de pescar.
 
 - En la primera zona, señalizar DE FORMA EXAGERADA que tiene que pescar
 
   4.3. **Niveles**
 
-El mapa estará conformado por varios bloques separados (en archivos de texto como en el PacMan de TPV), y se encarga de generar un mapa randomizado, uniendo dichos bloques.
+El mapa estará conformado por varios bloques separados, y se encarga de generar un mapa randomizado, uniendo dichos bloques. La generación de estos se formará tal que será linear hasta cierto punto, donde se dividirá en ramas.
 
 Ej Gráfico:
 
@@ -155,7 +155,8 @@ El número de habitaciones de cada nivel se repartirán tal que:
 Las trampas que habrá serán:
 
 - Trampas con restos de barco (la tipica trampa de pinchos)
-- Placas de presion + Ancla (Al posicionarse encima de una placa de presion, suelta un ancla de cierta habitacion [la cual puede hacer insta kill a cualquier enemigo])
+- Placas de presión + Ancla (Al posicionarse encima de una placa de presión, suelta un ancla de cierta habitación [la cual puede hacer insta kill a cualquier enemigo])
+- Piscina de pirañas = Si el jugador está en la piscina más de 2 segundos, empieza a sufrir daño (Cada 1 segundo). Cuando toca otro suelo, se reinicia este timer.
 
 El jugador podrá moverse por todo el escenario en todo momento, independientemente de los enemigos que haya.
 
@@ -297,36 +298,27 @@ Item que restaura X anzuelos de vida. El jugador empezará con 2 usos como máxi
 
 **TIERS**
 
-- S: pez sierra, whalesome(DLC de lanzamiento)
-- A: anguila electrica, BBgloves, ametralladora anchoas
-- B: Escupetintas, escudo, tiburon martillo, pez globo
-- C: pez espada, shuriken
+- S: Pez sierra
+- A: Anguila Eléctrica, Puños Crustáceos, Ametralladora de anchoas
+- B: Escupe Tintas, Tiburón Martillo
+- C: Pez Espada
 
 - TODOS LOS DAÑOS DE LAS ARMAS TIENEN YA APLICADO EL X2 DEL DAÑO
 
-**MINIMAPA/BRÚJULA**
-El jugador podrá ver durante todo momento de la partida, el minimapa (Situada arriba a la derecha de la pantalla). Si no ha explorado X sala o esa sala no tiene nada en especial, aparecerá en blanco. Pero si es una zona de pescar o una habitacion del cofre del tesoro, entonces aparecera marcado
-![Minimapa](readmeImages/minimapa.jpg)
-
 **Armas CUERPO A CUERPO**
 
-| Puños | Pega bofetadas a los enemigos | Coger la animacion cuando el pescador lanza el pez globo solo que sin los peces | DAÑO = 30 x segundo(30 x golpe) | PRECIO = Nulo |
+| Pez Espada | Ataca con dos amplios tajos de espada y finaliza con una serie rápida de estocadas | ![Pez Espada](readmeImages/pezEspada.jpg) | DAÑO = 75 x segundo (50 x golpe) | PRECIO = 500 monedas(1 salas cofre) |
 | --- | --- | --- | --- | --- |
-| Pez Espada | Ataca con estocadas | ![Pez Espada](readmeImages/pezEspada.jpg) | DAÑO = 75 x segundo (50 x golpe) | PRECIO = 500 monedas(1 salas cofre) |
 | Tiburón Martillo | Ataca con un swing lateral, mandando hacia atrás al enemigo ( **KnockBack** ) | ![Tiburon Martillo](readmeImages/tiburonMartillo.jpg) | DAÑO = 150 x golpe(100 x segundo) | PRECIO = 1000 monedas(2 salas cofre) |
-| Pez Sierra | Estilo de combate: 2 swings, 3 giros y luego apuñala con la motosierra. Matar a un enemigo supone un buff de ataque y velocidad. Se puede acumular buffs hasta un límite. Después de X tiempo, se devuelve los stats del jugador a la normalidad (Meter musica Heavy Metal o otro tipo de música mientras se tienen los buffs?) | ![Pez Sierra](readmeImages/pezSierra.jpg) | DAÑO: Swings = 125 x golpe(250 x segundo); Giros = 150 x giro(225 x segundo); Apuñalamiento = 200 x golpe (200 x segundo) | PRECIO =2500 monedas (5 salas cofre) |
-| Escudo Crustáceo | Atacas empujando con el escudo. (Lanzar y que rebote?? [Referencia al Capitán Capitalismo/ América]) | ![Escudo Crustáceo](readmeImages/escudoCrustaceo.jpg) | DAÑOEmpujon = 100 x golpe(100 x segundo); Lanzamiento = 100 x golpe (100 x segundo) | PRECIO =1000 monedas(3 salas cofres) |
-| CraBBoxing Gloves | Atacas a guantazo limpio contra todo el mundo. También puedes agarrar al enemigo y lanzarlo | Guantes de boxeo con forma de pinza de cangrejo | DAÑO50 x golpe (175 x segundo) | PRECIO = 1500 monedas(4 salas cofres) |
+| Pez Sierra | Estilo de combate: 2 swings y una estocada con la sierra que se puede mantener unos instantes. Matar a un enemigo supone un buff de ataque y velocidad. Se puede acumular buffs hasta un límite. Después de X tiempo, se devuelve los stats del jugador a la normalidad | ![Pez Sierra](readmeImages/pezSierra.jpg) | DAÑO: Swings = 125 x golpe(250 x segundo); Apuñalamiento = 200 x golpe (200 x segundo) | PRECIO =2500 monedas (5 salas cofre) |
+| Puños Crustáceos | Atacas dando puñetazos | DAÑOEmpujon = 100 x golpe(100 x segundo) | PRECIO =1000 monedas(3 salas cofres) |
 
 **Armas a DISTANCIA**
 
-| Ametralladora de anchoas | Dispara balas con mucha cadencia | Pez que escupe anchoas | DAÑO = 15-20 x golpe(140 x segundo) | PRECIO = 1500 monedas(4 salas cofres) |
+| Ametralladora de anchoas | Dispara balas con mucha cadencia. Hay una barra de sobrecalentamiento que después de X tiempo, hay que esperar 2 segundos | Pez que escupe anchoas | DAÑO = 15-20 x golpe(140 x segundo) | PRECIO = 1500 monedas(4 salas cofres) |
 | --- | --- | --- | --- | --- |
 | Anguila eléctrica | Pega latigazos y si golpea a un enemigo, lo **electrifica**. Puede golpear a varios enemigos | Un palo con la cola de una anguila eléctrica atada | DAÑO = 150 x golpe (+150 efecto electrico); (230 [golpe normal] x segundo) | PRECIO = 1500 monedas(4 salas cofres) |
-| Bombas Pez Globo | Lanza bombas que explotan y salen disparadas varias espinas. (Usar como ejemplo el ataque basico de Spike de Brawl Stars?) | Peces Globo con un mechero en la boca (??) | DAÑO Explosion = 100 x golpeEspinas = 20 x espina | PRECIO = 1000 monedas(2 salas cofre) |
 | Escupe-Tintas | Ataca con una nube oscura de tinta que envenena y ralentiza. (Una nube hace 3 golpes antes de desaparecer) | Un fuelle de aire con forma de calamar / pulpo?? !![Escupe Tinta](readmeImages/escupeTinta.jpg) | DAÑO: 50 x golpe+10 veneno (175+10 veneno x segundo) | PRECIO = 500 monedas(1 salas cofre) |
-| _Shuriken Estrellado_ | Se lanza un shuriken con forma de estrella que atraviesa enemigos | _Estrellas de mar con una cinta ninja??_ | _DAÑO_50 x golpe(75 x segundo) | PRECIO = 500 monedas(1 salas cofre) |
-| WhaleSome | _Dispara ondas ultrasónicas que hacen daño y noquean hacia atrás a los enemigos. Reduce la velocidad del jugador al cargar con una ballena mórbida_ | **OPCIONAL** | **DAÑO** 150 x golpe(300 x segundo) | PRECIO =2500 monedas (5 salas cofre) |
 
 **TIPOS DE EFECTOS**
 
@@ -345,26 +337,15 @@ Habrá un árbol de habilidades las cuales se podrán desbloquear de 2 formas:
 
 Habrá 4 ramas principales
 
-- Rama del boss (Desbloqueable únicamente con logros)
 - Rama de utilidad
 - Rama defensiva
 - Rama ofensiva
 
 Algunas de las habilidades son:
 
-- Dash: un corto dash horizontal hacia donde esté mirando el jugador. ¿El jugador es inmune a todo tipo de daño mientras lo hace?
-- Doble salto
-- Escudo: un escudo que anula un golpe. Cuando para un ataque se desactiva durante 30 segundos.
-- Counter: si el jugador pulsa una tecla y recibe un golpe durante un cierto periodo de tiempo pequeño, bloquea el ataque (anulando el daño) y le hace un daño fijo de **XXXXXXXXXXXXXXX**
-  - El pescador esconde las armas, bloquea el ataque con el brazo, y pega una patada al enemigo
-  - El pescador esconde las armas, bloquea el ataque con un salmón random y pega un BITCH SLAP (con la mano o con un salmon)
-- Infección de anémonas: Matar a un enemigo, recupera 0.1 de un anzuelo (Solo se suma al total cuando llega al 0.5, lo que significa que tiene que matar 5 enemigos para que se aplique)
-- Special Counter: Si el counter tiene éxito entonces se aplica uno de estos efectos además del counter:
-  - Si el enemigo está en un rango cercano, entonces el efecto es **KNOCKBACK**
-  - Si el enemigo está lejos, entonces su velocidad de ataque se **RALENTIZA**
-- Dientes de piraña: se aplica sólo al daño base, no a los efectos (veneno, electrificar, malla de espinas, etc)
+- Dientes de piraña: x2 de daño a las armas
 - Armas en salmuera (Aumenta la rapidez con la que ataca)
-- Golpe de Arpón: 20% de realizar un crítico (crítico = +25% daño total)
+- Infección de anémonas: Matar a un enemigo, recupera 0.1 de un anzuelo (Solo se suma al total cuando llega al 0.5, lo que significa que tiene que matar 5 enemigos para que se aplique)
 - Kit de anzuelos: el jugador consigue 2 anzuelos extras de vida (Equivalente a 4 golpes)
 - Agua potable: aumenta el número de usos de la cantimplora y se podrá usar un total de 3 veces.
 - Escamas de Arapaima: si el jugador recibe daño, el enemigo recibe 100 de daño.
@@ -404,7 +385,7 @@ _OJO, muchas estimaciones pueden variar dependiendo de el rango, rapidez y caden
     - +1-2 Golpes x habitacion con trampas
     - TOTAL = 3.5 golpes x enemigo x habitacion
   - 2º Nivel
-    - Lo mas probable es que no llegue, o se quede a principios de nivel
+    - Lo más probable es que no llegue, o se quede a principios de nivel
   - 3º Nivel
     - No llega ni Jesucristo armado con agua bendita purificando a estos sucios nazis
 - Varias Partidas (Conocimiento de enemigos de 1º nivel y parcial del segundo nivel, Ahorros suficientes como para comprar de vez en cuando un arma, puede pescar hasta la capa amarilla rozando la roja, manejo basico de controles, sabe usar bien las armas básicas del juego, sabe usar la cantimplora pero no usarlo en el momento correcto, sabe que existen mejoras y un arbol de habilidades pero no lo entiende muy bien)
@@ -506,3 +487,9 @@ _OJO, muchas estimaciones pueden variar dependiendo de el rango, rapidez y caden
 - _Hollow Knight_
 - _Enter The Gungeon_
 - _Binding of Isaac_
+- _Metroidvania_
+- _Cave Story_
+- _Movilidad del Celeste_
+- _Flashback diseño del nivel_
+- _Rogue Legacy_
+- _Diseño de nivel brutal Yoshi Island_
