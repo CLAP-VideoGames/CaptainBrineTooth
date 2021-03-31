@@ -21,6 +21,7 @@ class PlayerController;
 class CameraFollow;
 class SoundManager;
 class LoseLife;
+class Button;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -40,7 +41,8 @@ class LoseLife;
 	ChainCollider,\
 	CameraFollow,\
 	SoundManager,\
-	LoseLife
+	LoseLife ,\
+	Button
 
 // groups
 

@@ -154,6 +154,7 @@
     <ClInclude Include="components\AnimBlendGraph.h" />
     <ClInclude Include="components\Bounce.h" />
     <ClInclude Include="components\BoxCollider.h" />
+    <ClInclude Include="components\Button.h" />
     <ClInclude Include="components\CameraFollow.h" />
     <ClInclude Include="components\ChainCollider.h" />
     <ClInclude Include="components\Chainsaw.h" />
@@ -205,6 +206,7 @@
   <ItemGroup>
     <ClCompile Include="assets\assets.cpp" />
     <ClCompile Include="components\Armas_HUD.cpp" />
+    <ClCompile Include="components\Button.cpp" />
     <ClCompile Include="components\CameraFollow.cpp" />
     <ClCompile Include="components\Chainsaw.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
