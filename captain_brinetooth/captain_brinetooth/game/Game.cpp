@@ -29,6 +29,7 @@
 #include "../components/LoseLife.h"
 #include "../MenuState.h"
 #include "..//components/Sword.h"
+#include "..//components/Hammer.h"
 
 //tiledmap
 const Vector2D window(1100, 900);
@@ -259,7 +260,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
-	player->addComponent<Sword>();
+	player->addComponent<Hammer>();
 	
 	player->addComponent<LoseLife>();
 

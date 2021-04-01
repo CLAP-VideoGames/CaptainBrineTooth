@@ -240,6 +240,9 @@
     <ClInclude Include="components\Sword.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
+    <ClInclude Include="components\Hammer.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -346,6 +349,9 @@
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="components\Sword.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Hammer.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>

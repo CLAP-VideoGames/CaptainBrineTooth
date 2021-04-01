@@ -24,6 +24,7 @@ class LoseLife;
 class FringeHeadAtack;
 class Button;
 class Sword;
+class Hammer;
 
 
 #define _CMPS_LIST_  \
@@ -47,7 +48,8 @@ class Sword;
 	LoseLife,\
 	FringeHeadAtack,\
 	Button,\
-	Sword
+	Sword,\
+	Hammer
 
 // groups
 

@@ -161,6 +161,7 @@
     <ClInclude Include="components\DamageCollisionCallbacks.h" />
     <ClInclude Include="components\enemyMovement.h" />
     <ClInclude Include="components\framework.h" />
+    <ClInclude Include="components\Hammer.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
     <ClInclude Include="components\LoseLife.h" />
     <ClInclude Include="components\PlayerController.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="components\CameraFollow.cpp" />
     <ClCompile Include="components\Chainsaw.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
+    <ClCompile Include="components\Hammer.cpp" />
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
