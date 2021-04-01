@@ -24,11 +24,12 @@ public:
 	//IMPORTANTE: debe de ser estatico
 	static void LoseLifeMethod(b2Contact* contact) {
 		//Llamar a otro metodo
-		Entity* cosaA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		Entity* cosaB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 
-		if (cosaA != nullptr)
-			if (cosaA->getComponent<Player_Health>() != nullptr)
-				cosaA->getComponent<Player_Health>()->loseLife();
+		if (cosaB != nullptr)
+			if (cosaB->getComponent<Player_Health>() != nullptr)
+				cosaB->getComponent<Player_Health>()->loseLife();
+			else //Si el cosa es un enemigo que tiene el componente vida, quitar vida
 
 		std::cout << "OHHH NOOO Perdió vida\n";
 	}

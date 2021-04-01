@@ -120,9 +120,18 @@ public:
 		collisionMethod = method;
 	}
 
+	void setEndCollisionMethod(CallBackCollision* method) {
+		collisionEndMethod = method;
+	}
+
 	void playCollisionMethod(b2Contact* contact) {
 		if(collisionMethod != nullptr)
 			collisionMethod(contact);
+	}
+
+	void playEndCollisionMethod(b2Contact* contact) {
+		if (collisionEndMethod != nullptr)
+			collisionEndMethod(contact);
 	}
 
 	void update() {
@@ -150,5 +159,6 @@ private:
 	std::bitset<ecs::maxGroup> groups_;
 
 	CallBackCollision* collisionMethod;
+	CallBackCollision* collisionEndMethod;
 };
 
