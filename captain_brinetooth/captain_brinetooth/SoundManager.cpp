@@ -56,7 +56,6 @@ void SoundManager::ChangeMainMusic(std::string newMusic)
 
 void SoundManager::playPauseMusic()
 {
-	sdlutils().musics().at(mainMusic).pauseMusic();
 	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
 	while (it != sdlutils().soundEffects().end())
 	{
@@ -64,7 +63,9 @@ void SoundManager::playPauseMusic()
 		++it;
 	}
 
-	sdlutils().musics().at(pauseMusic).play();
+
+
+//	sdlutils().musics().at(pauseMusic).playPause(sdlutils().musics().at(mainMusic).getPosition(Ticks o algo por el estilo));
 }
 
 void SoundManager::resumeMainMusic()

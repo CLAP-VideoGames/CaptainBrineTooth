@@ -104,28 +104,56 @@
 			"file": "assets/sounds/soundtrack/olds_man_tale.mp3"
 		},
 		{
+			"id": "FinalBossPausa",
+			"file": "assets/sounds/soundtrack/olds_man_tale_underwater.mp3"
+		},
+		{
 			"id": "Nivel3",
 			"file": "assets/sounds/soundtrack/adventure.mp3"
+		},
+		{
+			"id": "Nivel3Pausa",
+			"file": "assets/sounds/soundtrack/adventure_underwater.mp3"
 		},
 		{
 			"id": "Nivel1",
 			"file": "assets/sounds/soundtrack/celtic.mp3"
 		},
 		{
+			"id": "Nivel1Pausa",
+			"file": "assets/sounds/soundtrack/celtic_underwater.mp3"
+		},
+		{
 			"id": "Pescando",
 			"file": "assets/sounds/soundtrack/the_sailor_song.mp3"
+		},
+		{
+			"id": "PescandoPausa",
+			"file": "assets/sounds/soundtrack/the_sailor_song_underwater.mp3"
 		},
 		{
 			"id": "Lobby",
 			"file": "assets/sounds/soundtrack/the_sailors_waltz.mp3"
 		},
 		{
+			"id": "LobbyPausa",
+			"file": "assets/sounds/soundtrack/the_sailors_waltz_underwater.mp3"
+		},
+		{
 			"id": "Nivel2",
 			"file": "assets/sounds/soundtrack/travel_cinematic.mp3"
 		},
 		{
+			"id": "Nivel2Pausa",
+			"file": "assets/sounds/soundtrack/travel_cinematic_underwater.mp3"
+		},
+		{
 			"id": "CofreTesoro",
 			"file": "assets/sounds/soundtrack/the_happiness.mp3"
+		},
+		{
+			"id": "CofreTesoroPausa",
+			"file": "assets/sounds/soundtrack/the_happiness_underwater.mp3"
 		},
 		{
 			"id": "Creditos",

@@ -39,6 +39,12 @@ public:
 		Mix_PlayMusic(music_, loops);
 	}
 
+	inline void playPause(double posicion ,int loops = -1) const {
+		assert(loops >= -1 && music_ != nullptr);
+		Mix_SetMusicPosition(posicion);
+		Mix_PlayMusic(music_, loops);
+	}
+
 	inline static int setMusicVolume(int volume) {
 		assert(volume >= 0 && volume <= 128);
 		return Mix_VolumeMusic(volume);
