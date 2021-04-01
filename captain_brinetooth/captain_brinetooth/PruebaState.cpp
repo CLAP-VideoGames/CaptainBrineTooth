@@ -3,6 +3,12 @@
 #include "game/Game.h"
 #include "utils/Vector2D.h"
 #include "ecs/Manager.h"
+#include "components/Transform.h"
+#include "components/BoxCollider.h"
+#include "CollisionLayers.h"
+#include "components/AnimBlendGraph.h"
+#include "FringeHeadAtack.h"
+using namespace ColLayers;
 
 PruebaState::PruebaState(Game* a ,b2World* mundo) : GameState(a,mundo)
 {
@@ -17,9 +23,27 @@ PruebaState::PruebaState(Game* a ,b2World* mundo) : GameState(a,mundo)
 }
 
 void PruebaState::addStateEntityPrueba() {
-	auto* e = manager_->addEntity();
+	
+	//Añadir el enemigo 
+
+	//auto* enemy = app->createBasicEntity(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(50.0f, 50.0f),0.0f, Vector2D(0,0));
+	//Vector2D pos, Vector2D vel, float width, float height,float rotation
+
+	auto* enemy = manager_->addEntity();
+	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
+	enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
+	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("Square"), 1, 1, 1, 1, 1);
+	enemy->addComponent<FringeHeadAtack>();
 
 	
-	e->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), 200.0f, 200.0f, 0.0f);
-	//e->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
+	//Creacion de un componente que tenga un metodo estatico para asignarselo a la colision del trigger del enemigo con el jugador 
+
+
+	// if(tiempo pasado + tiempo minimo < tiempo actual)
+	// Generar la bala
+	// tiempo pasado = tiempo actual
+	//
+
+
 }

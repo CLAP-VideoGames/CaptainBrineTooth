@@ -21,6 +21,8 @@ class PlayerController;
 class CameraFollow;
 class SoundManager;
 class LoseLife;
+class FringeHeadAtack;
+
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -40,7 +42,8 @@ class LoseLife;
 	ChainCollider,\
 	CameraFollow,\
 	SoundManager,\
-	LoseLife
+	LoseLife,\
+    FringeHeadAtack
 
 // groups
 

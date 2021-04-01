@@ -176,6 +176,7 @@
     <ClInclude Include="ecs\Manager.h" />
     <ClInclude Include="ecs\mpl.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="FringeHeadAtack.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="game\ecs_defs.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
+    <ClCompile Include="FringeHeadAtack.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="game\Game.cpp" />

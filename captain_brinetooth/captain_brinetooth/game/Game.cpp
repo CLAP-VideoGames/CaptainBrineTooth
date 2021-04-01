@@ -72,8 +72,8 @@ void Game::init() {
 	createBackGround("Square", 11, 11);
 	createLevel0();
 
-	MenuState* prueba = static_cast<MenuState*>(stateMachine->currentState());
-	prueba->addStateEntityMenu();
+	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
+	prueba->addStateEntityPrueba();
 
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
@@ -87,6 +87,7 @@ void Game::init() {
 	//createChain();
 
 	createPlayer(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
+
 }
 
 void Game::start() {
