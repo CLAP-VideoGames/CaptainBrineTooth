@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-
 #include "box2d.h"
 #include <cmath>
 

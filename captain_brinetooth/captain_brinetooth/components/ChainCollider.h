@@ -82,7 +82,7 @@ public:
 		//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
 		//chain.CreateChain(vs, sizeChain, b2Vec2((vs[0].x) - 30.0f / sdlutils().getPPM(), ((vs[0].y)) / sdlutils().getPPM()), b2Vec2((vs[sizeChain - 1].x) / sdlutils().getPPM(), ((vs[sizeChain - 1].y - 30)) / sdlutils().getPPM()));
 		chain.CreateLoop(vs, sizeChain);
-
+		
 		body->SetFixedRotation(fixedRotation_);
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &chain;
