@@ -12,10 +12,10 @@ class DamageCollisionCallbacks : public b2ContactListener
 
         //Llamamos a su metodo de colision, el cual debe de asinarse mediante un componente en la entidad
         //(Ver LoseLife para un ejemplo de componente de colision)
-        cosaA->playCollisionMethod();
+        cosaA->playCollisionMethod(contact);
 
         Entity* cosaB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-        cosaB->playCollisionMethod();
+        cosaB->playCollisionMethod(contact);
     }
 
     void EndContact(b2Contact* contact) {

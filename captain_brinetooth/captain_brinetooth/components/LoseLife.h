@@ -2,6 +2,7 @@
 
 #include "../ecs/Component.h"
 #include "../ecs/Entity.h"
+#include "../components/Player_Health.h"
 #include <iostream>
 
 
@@ -21,7 +22,14 @@ public:
 
 	//Metodo de ejemplo que se llama al colisionar
 	//IMPORTANTE: debe de ser estatico
-	static void LoseLifeMethod() {
+	static void LoseLifeMethod(b2Contact* contact) {
+		//Llamar a otro metodo
+		Entity* cosaA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+
+		if (cosaA != nullptr)
+			if (cosaA->getComponent<Player_Health>() != nullptr)
+				cosaA->getComponent<Player_Health>()->loseLife();
+
 		std::cout << "OHHH NOOO Perdió vida\n";
 	}
 };

@@ -169,6 +169,7 @@
     <ClInclude Include="components\Rectangle.h" />
     <ClInclude Include="components\Rotate.h" />
     <ClInclude Include="components\SoundManager.h" />
+    <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\Transform.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
+    <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="FringeHeadAtack.cpp" />

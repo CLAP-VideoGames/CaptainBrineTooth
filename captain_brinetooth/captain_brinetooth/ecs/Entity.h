@@ -14,7 +14,7 @@
 
 class Manager;
 
-using CallBackCollision = void();
+using CallBackCollision = void(b2Contact* contact);
 
 class Entity {
 	friend Manager;
@@ -120,9 +120,9 @@ public:
 		collisionMethod = method;
 	}
 
-	void playCollisionMethod() {
+	void playCollisionMethod(b2Contact* contact) {
 		if(collisionMethod != nullptr)
-			collisionMethod();
+			collisionMethod(contact);
 	}
 
 	void update() {

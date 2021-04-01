@@ -23,6 +23,7 @@ class SoundManager;
 class LoseLife;
 class FringeHeadAtack;
 class Button;
+class Sword;
 
 
 #define _CMPS_LIST_  \
@@ -43,7 +44,10 @@ class Button;
 	ChainCollider,\
 	CameraFollow,\
 	SoundManager,\
-	LoseLife
+	LoseLife,\
+	FringeHeadAtack,\
+	Button,\
+	Sword
 
 // groups
 

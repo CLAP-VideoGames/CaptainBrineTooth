@@ -13,12 +13,12 @@
 #include "AnimBlendGraph.h"
 
 
-class Chainsaw : public Component {
+class Sword : public Component {
 public:
-	Chainsaw() :
+	Sword() :
 		tr_(nullptr) {
 	}
-	virtual ~Chainsaw() {
+	virtual ~Sword() {
 	}
 
 	void init() override;
