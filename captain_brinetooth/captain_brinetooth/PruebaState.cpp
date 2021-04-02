@@ -8,6 +8,7 @@
 #include "CollisionLayers.h"
 #include "components/AnimBlendGraph.h"
 #include "FringeHeadAtack.h"
+#include "Enemy_Health.h"
 using namespace ColLayers;
 
 PruebaState::PruebaState(Game* a ,b2World* mundo) : GameState(a,mundo)
@@ -30,12 +31,12 @@ void PruebaState::addStateEntityPrueba() {
 	//Vector2D pos, Vector2D vel, float width, float height,float rotation
 
 	auto* enemy = manager_->addEntity();
-	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
+	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
 	enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("Square"), 1, 1, 1, 1, 1);
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
 	enemy->addComponent<FringeHeadAtack>();
-
+	//enemy->addComponent<Enemy_Health>();
 	
 	//Creacion de un componente que tenga un metodo estatico para asignarselo a la colision del trigger del enemigo con el jugador 
 

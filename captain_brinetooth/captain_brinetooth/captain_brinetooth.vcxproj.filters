@@ -249,6 +249,18 @@
     <ClInclude Include="PruebaState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
+    <ClInclude Include="ShootDetect.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="DisableOnExit.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactDamage.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Health.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -359,6 +371,18 @@
     </ClCompile>
     <ClCompile Include="PruebaState.cpp">
       <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootDetect.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="DisableOnExit.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactDamage.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Health.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

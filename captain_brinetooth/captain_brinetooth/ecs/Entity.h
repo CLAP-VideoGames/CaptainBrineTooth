@@ -1,4 +1,5 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
+// This file is part of the course TPV2@UCM - Samir Genaim
 
 #pragma once
 
@@ -22,12 +23,12 @@ class Entity {
 public:
 
 	Entity(Manager* mngr, b2World* wrld) :
-			active_(true), //
-			mngr_(mngr), //
-			world_(wrld), //
-			cmpArray_(), //
-			groups_() //
-		   
+		active_(true), //
+		mngr_(mngr), //
+		world_(wrld), //
+		cmpArray_(), //
+		groups_() //
+
 	{
 	}
 
@@ -38,8 +39,8 @@ public:
 	}
 
 	template<typename T, typename ...Ts>
-	T* addComponent(Ts &&... args) {
-		T *c = new T(std::forward<Ts>(args)...);
+	T* addComponent(Ts&&... args) {
+		T* c = new T(std::forward<Ts>(args)...);
 		c->setEntity(this);
 		c->init();
 		constexpr auto id = ecs::cmpIdx<T>;
@@ -58,15 +59,15 @@ public:
 	void removeComponent() {
 		auto id = ecs::cmpIdx<T>;
 		if (cmpArray_[id] != nullptr) {
-			Component *old_cmp = cmpArray_[id];
+			Component* old_cmp = cmpArray_[id];
 			cmpArray_[id] = nullptr;
 			components_.erase( //
-					std::find_if( //
-							components_.begin(), //
-							components_.end(), //
-							[old_cmp](const Component *c) { //
-								return c == old_cmp;
-							}));
+				std::find_if( //
+					components_.begin(), //
+					components_.end(), //
+					[old_cmp](const Component* c) { //
+						return c == old_cmp;
+					}));
 			delete old_cmp;
 		}
 	}
@@ -83,7 +84,7 @@ public:
 		return cmpArray_[id] != nullptr;
 	}
 
-	inline void setMngr(Manager *mngr) {
+	inline void setMngr(Manager* mngr) {
 		mngr_ = mngr;
 	}
 
@@ -150,9 +151,9 @@ public:
 
 private:
 
-	
+
 	bool active_;
-	Manager *mngr_;
+	Manager* mngr_;
 	b2World* world_;
 	std::vector<Component*> components_;
 	std::array<Component*, ecs::maxComponent> cmpArray_;
@@ -161,4 +162,5 @@ private:
 	CallBackCollision* collisionMethod;
 	CallBackCollision* collisionEndMethod;
 };
+
 

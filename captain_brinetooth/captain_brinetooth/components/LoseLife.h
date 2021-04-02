@@ -17,7 +17,7 @@ public:
 
 	void init() override {
 		//Asigna el metodo introducido en la entidad para que se pueda utilizar mediante el metodo PlayCollisionMethod
-		entity_->setCollisionMethod(LoseLifeMethod);
+		//entity_->setCollisionMethod(LoseLifeMethod(this));
 	}
 
 	//Metodo de ejemplo que se llama al colisionar
@@ -31,6 +31,6 @@ public:
 				cosaB->getComponent<Player_Health>()->loseLife();
 			else //Si el cosa es un enemigo que tiene el componente vida, quitar vida
 
-		std::cout << "OHHH NOOO Perdió vida\n";
+		std::cout << "OHHH NOOO Perdiï¿½ vida\n";
 	}
 };

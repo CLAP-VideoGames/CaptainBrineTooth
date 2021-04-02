@@ -172,12 +172,15 @@
     <ClInclude Include="components\SoundManager.h" />
     <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\Transform.h" />
+    <ClInclude Include="ContactDamage.h" />
+    <ClInclude Include="DisableOnExit.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />
     <ClInclude Include="ecs\ecs_defs_example.h" />
     <ClInclude Include="ecs\Entity.h" />
     <ClInclude Include="ecs\Manager.h" />
     <ClInclude Include="ecs\mpl.h" />
+    <ClInclude Include="Enemy_Health.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FringeHeadAtack.h" />
     <ClInclude Include="GameState.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="sdlutils\SoundEffect.h" />
     <ClInclude Include="sdlutils\Texture.h" />
     <ClInclude Include="sdlutils\VirtualTimer.h" />
+    <ClInclude Include="ShootDetect.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="utils\Collisions.h" />
     <ClInclude Include="utils\Singleton.h" />
@@ -218,8 +222,11 @@
     <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="components\Sword.cpp" />
+    <ClCompile Include="ContactDamage.cpp" />
+    <ClCompile Include="DisableOnExit.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
+    <ClCompile Include="Enemy_Health.cpp" />
     <ClCompile Include="FringeHeadAtack.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
@@ -236,6 +243,7 @@
     <ClCompile Include="sdlutils\sdlutils_demo.cpp" />
     <ClCompile Include="sdlutils\SoundEffect.cpp" />
     <ClCompile Include="sdlutils\Texture.cpp" />
+    <ClCompile Include="ShootDetect.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="utils\Collisions.cpp" />
     <ClCompile Include="utils\Vector2D.cpp" />

@@ -25,6 +25,10 @@ class FringeHeadAtack;
 class Button;
 class Sword;
 class Hammer;
+class ShootDetect;
+class DisableOnExit;
+class ContactDamage;
+class Enemy_Health;
 
 
 #define _CMPS_LIST_  \
@@ -49,6 +53,10 @@ class Hammer;
 	FringeHeadAtack,\
 	Button,\
 	Sword,\
+    ShootDetect,\
+    DisableOnExit,\
+    ContactDamage,\
+    Enemy_Health,\
 	Hammer
 
 // groups
