@@ -2,12 +2,14 @@
 
 #include <iostream>
 #include "../CollisionLayers.h"
+#include "AnimBlendGraph.h"
 
 using namespace ColLayers;
 
 void Chainsaw::init() {
 	tr_ = entity_->getComponent<Transform>();
 	assert(tr_ != nullptr);
+	anim_ = entity_->getComponent<AnimBlendGraph>();
 }
 
 void Chainsaw::update() {
@@ -16,14 +18,15 @@ void Chainsaw::update() {
 
 			//Player not attacking or in combo
 			if (CURRENT_STATUS == STATUS::Iddle && stoppedAttackingTime + timeBeforeNextAttackStarts < sdlutils().currRealTime()) {
-				std::cout << "Sword attack\n";
+				std::cout << "Attack 1 Initiated\n";
 
 				//Set player as sawing
 				CURRENT_STATUS = STATUS::OnAnimationLock;
 				CURRENT_ATTACK = ATTACKS::Attack1;
 
 				//Activate attack animation + sawing on attack
-
+				if(anim_->searchParamValue("chainsaw_att") != -1)
+					anim_->setParamValue("chainsaw_att", 1);
 
 				//Activate attack trigger
 				trigger = entity_->getMngr()->addEntity();
@@ -32,7 +35,7 @@ void Chainsaw::update() {
 				anim_controller = trigger->addComponent<AnimBlendGraph>();
 				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
 				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-
+				
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
 			}
@@ -43,6 +46,10 @@ void Chainsaw::update() {
 					std::cout << "Attack 2 Initiated\n";
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack2;
+
+					//
+					if (anim_->searchParamValue("chainsaw_att") != -1)
+						anim_->setParamValue("chainsaw_att", 2);
 
 					trigger = entity_->getMngr()->addEntity();
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
@@ -57,6 +64,9 @@ void Chainsaw::update() {
 					std::cout << "Attack 3 Initiated\n";
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
+
+					if (anim_->searchParamValue("chainsaw_att") != -1)
+						anim_->setParamValue("chainsaw_att", 3);
 
 					sawActivationTime = sdlutils().currRealTime();
 					break;
@@ -74,6 +84,9 @@ void Chainsaw::update() {
 		CURRENT_STATUS = STATUS::OnAnimationLock;
 
 		stoppedSawTime = sdlutils().currRealTime();
+
+		if (anim_->searchParamValue("chainsaw_att") != -1)
+			anim_->setParamValue("chainsaw_att", 0);
 	}
 	else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
 		//Deactivate animation lock
@@ -94,6 +107,9 @@ void Chainsaw::update() {
 		CURRENT_ATTACK = ATTACKS::NotAttacking;
 
 		stoppedAttackingTime = sdlutils().currRealTime();
+
+		if (anim_->searchParamValue("chainsaw_att") != -1)
+			anim_->setParamValue("chainsaw_att", 0);
 	}
 
 	//Updating the trigger's position

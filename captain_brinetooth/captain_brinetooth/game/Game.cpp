@@ -240,14 +240,35 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
+#pragma region run & jump
+	//-run & jump---------------------------------------------------------------------------------------------------
 	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
-	//anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 1, 1, 1, 1, -1);
 	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 5, 20, 24, 0);
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
 	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
-	//anim_controller->addAnimation();
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
+#pragma region Weapons
+	//-WEAPONS------------------------------------------------------------------------------------------------------
+#pragma region Chainsaw
+	//---CHAINSAW---------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 47, 24, 0, 1, 8);
+	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 47, 24, 0, 9, 18);
+	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 47, 24, -1, 19, 46);
 
+	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
+	anim_controller->addTransition("chainsaw_attack1", "run", "chainsaw_att", 0, true);
+	anim_controller->addTransition("chainsaw_attack1", "chainsaw_attack2", "chainsaw_att", 2, true);
+	anim_controller->addTransition("chainsaw_attack2", "run", "chainsaw_att", 0, true);
+	anim_controller->addTransition("chainsaw_attack2", "chainsaw_attack3", "chainsaw_att", 3, true);
+	anim_controller->addTransition("chainsaw_attack3", "run", "chainsaw_att", 0, false);
+
+	anim_controller->setParamValue("chainsaw_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
 #pragma endregion
 
 	player->addComponent<BoxCollider>(DYNAMIC, PLAYER, PLAYER_MASK, false, friction, fixedRotation, rotation);
@@ -260,7 +281,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
-	player->addComponent<Hammer>();
+	player->addComponent<Chainsaw>();
 	
 	player->addComponent<LoseLife>();
 
