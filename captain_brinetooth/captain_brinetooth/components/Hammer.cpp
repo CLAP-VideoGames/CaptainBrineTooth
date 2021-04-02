@@ -31,8 +31,8 @@ void Hammer::update() {
 				trigger = entity_->getMngr()->addEntity();
 				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
+				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
+				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 
 				//Time control variables
@@ -52,8 +52,8 @@ void Hammer::update() {
 				trigger = entity_->getMngr()->addEntity();
 				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
+				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
+				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 
 				stoppedSawTime = sdlutils().currRealTime();
@@ -67,14 +67,14 @@ void Hammer::update() {
 
 				//Activate attack animation + sawing on attack
 				if (anim_->searchParamValue("hammer_att") != -1)
-					anim_->setParamValue("hammer_att", 3);
+					anim_->setParamValue("hammer_att", 1);
 
 				//Activate attack trigger
 				trigger = entity_->getMngr()->addEntity();
 				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
+				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
+				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 
 				//Time control variables
@@ -93,15 +93,15 @@ void Hammer::update() {
 			trigger->setActive(false);
 			trigger = nullptr;
 		}
+
+		if (anim_->searchParamValue("hammer_att") != -1)
+			anim_->setParamValue("hammer_att", 0);
 	}
 	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
 		//Deactivate combo availability
 		std::cout << "STOPPED COMBO\n";
 		CURRENT_STATUS = STATUS::Iddle;
 		CURRENT_ATTACK = ATTACKS::NotAttacking;
-
-		if (anim_->searchParamValue("hammer_att") != -1)
-			anim_->setParamValue("hammer_att", 0);
 	}
 
 	//Updating the trigger's position

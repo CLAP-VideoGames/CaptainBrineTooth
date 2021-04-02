@@ -260,8 +260,10 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("chainsaw_attack1", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack1", "chainsaw_attack2", "chainsaw_att", 2, true);
+	anim_controller->addTransition("run", "chainsaw_attack2", "chainsaw_att", 2, false);
 	anim_controller->addTransition("chainsaw_attack2", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack2", "chainsaw_attack3", "chainsaw_att", 3, true);
+	anim_controller->addTransition("run", "chainsaw_attack3", "chainsaw_att", 3, false);
 	anim_controller->addTransition("chainsaw_attack3", "run", "chainsaw_att", 0, false);
 	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack1", "chainsaw_att", 4, true);
 
@@ -271,16 +273,19 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 
 #pragma region Sword
 	//---SWORD------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 1, 11);
-	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 12, 22);
-	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, -1, 23, 47);
+	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 1, 9);
+	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 12, 20);
+	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, -1, 27, 44);
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("sword_attack1", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack1", "sword_attack2", "sword_att", 2, true);
+	anim_controller->addTransition("run", "sword_attack2", "sword_att", 2, false);
 	anim_controller->addTransition("sword_attack2", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack2", "sword_attack3", "sword_att", 3, true);
+	anim_controller->addTransition("run", "sword_attack3", "sword_att", 3, false);
 	anim_controller->addTransition("sword_attack3", "run", "sword_att", 0, false);
+	anim_controller->addTransition("sword_attack3", "sword_attack1", "sword_att", 4, true);
 
 	anim_controller->setParamValue("sword_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -294,8 +299,9 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("hammer_attack1", "run", "hammer_att", 0, true);
 	anim_controller->addTransition("hammer_attack1", "hammer_attack2", "hammer_att", 2, true);
+	anim_controller->addTransition("run", "hammer_attack2", "hammer_att", 2, false);
 	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, true);
-	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 3, true);
+	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 1, false);
 
 	anim_controller->setParamValue("hammer_att", 0);
 	//--------------------------------------------------------------------------------------------------------------

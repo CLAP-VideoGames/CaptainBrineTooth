@@ -45,7 +45,7 @@ private:
 
 	//Cooldown variables (should be able to be changed as you see fit)
 	float maxHoldTime = 3000;	//Time player is sawing
-	float animationLockTime = 1000;		//Counted after one attack is stopped to avoid animation clipping
+	float animationLockTime = 500;		//Counted after one attack is stopped to avoid animation clipping
 	float maxComboPanningTime = 2000;	//Counted after animation lock is released
 	float timeBetweenStabs = 1000;
 	float stabTriggerTime = 500;
