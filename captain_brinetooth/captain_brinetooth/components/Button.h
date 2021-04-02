@@ -21,7 +21,7 @@ public:
 	}
 
 	void render();
-	bool handleEvent(SDL_Event& event); 
+	bool handleEvent(); 
 
 protected:
 	CallBackOnClick* cboq;

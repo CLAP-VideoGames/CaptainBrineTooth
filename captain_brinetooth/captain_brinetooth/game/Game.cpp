@@ -62,8 +62,8 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
 
-	//auto* soundController = mngr_->addEntity(false);
-	//soundController->addComponent<SoundManager>(75, "drunken", "tale");
+	auto* soundController = mngr_->addEntity();
+	soundController->addComponent<SoundManager>(75, "Menu");
 	/*soundController->getComponent<SoundManager>()->playMainMusic();
 	soundController->getComponent<SoundManager>()->playPauseMusic();
 	soundController->getComponent<SoundManager>()->modifyVolume(-70);*/
@@ -74,6 +74,7 @@ void Game::init() {
 	//createLevel0();
 
 	MenuState* prueba = static_cast<MenuState*>(stateMachine->currentState());
+	prueba->setSoundManager(soundController->getComponent<SoundManager>());
 	prueba->addStateEntityMenu();
 
 	//Caja para hacer testeo con movimiento

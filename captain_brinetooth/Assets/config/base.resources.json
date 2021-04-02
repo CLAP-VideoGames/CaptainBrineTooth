@@ -65,8 +65,24 @@
 			"file": "assets/sprites/redsquare.png"
 		},
 		{
-			"id": "boton",
-			"file": "assets/sprites/boton_inutil.png"
+			"id": "fondoMenu",
+			"file": "assets/sprites/fondo.png"
+		},
+		{
+			"id": "titulo",
+			"file": "assets/sprites/botones/title.png"
+		},
+		{
+			"id": "jugar",
+			"file": "assets/sprites/botones/jugar.png"
+		},
+		{
+			"id": "opciones",
+			"file": "assets/sprites/botones/opciones.png"
+		},
+		{
+			"id": "salir",
+			"file": "assets/sprites/botones/salir.png"
 		},
 		{
 			"id": "nuevapartida",
@@ -99,6 +115,10 @@
 		{
 			"id": "chainsaw2",
 			"file": "assets/sounds/weapons/chainsaw2.mp3"
+		},
+		{
+			"id": "gaviota",
+			"file": "assets/sounds/gaviota.mp3"
 		},
 		{
 			"id": "sword_whoosh",
