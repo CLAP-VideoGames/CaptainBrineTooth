@@ -38,6 +38,7 @@ private:
 	float sawActivationTime;
 	float stoppedSawTime;
 	float comboActivationTime;
+	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit) (not changed)
 	float animationLockTime = 1000;		//Counted after one attack is stopped to avoid animation clipping
