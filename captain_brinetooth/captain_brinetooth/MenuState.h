@@ -8,6 +8,7 @@ class MenuState : public GameState
 public:
 	MenuState(Game* a,b2World* mundo);
 	void addStateEntityMenu();
+	static void changeToGame();
 
 };
 

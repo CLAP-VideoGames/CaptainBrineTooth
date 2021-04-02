@@ -8,7 +8,6 @@ void Button::render()
 	SDL_Rect dest = build_sdlrect(aux, t->getW(), t->getH());
 
 	tex->render(dest);
-
 }
 
 bool Button::handleEvent(SDL_Event& event)

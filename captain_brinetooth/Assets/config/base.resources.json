@@ -65,6 +65,10 @@
 			"file": "assets/sprites/redsquare.png"
 		},
 		{
+			"id": "boton",
+			"file": "assets/sprites/boton_inutil.png"
+		},
+		{
 			"id": "nuevapartida",
 			"file": "assets/sprites/nuevapartida.png"
 		}
