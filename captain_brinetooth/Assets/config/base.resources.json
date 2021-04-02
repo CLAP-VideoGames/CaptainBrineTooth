@@ -25,6 +25,14 @@
 			"file": "assets/sprites/player/weapons/chainsaw_combo.png"
 		},
 		{
+			"id": "sword_combo",
+			"file": "assets/sprites/player/weapons/sword_combo.png"
+		},
+		{
+			"id": "hammer_combo",
+			"file": "assets/sprites/player/weapons/hammer_combo.png"
+		},
+		{
 			"id": "Square",
 			"file": "assets/sprites/square.png"
 		},
