@@ -64,6 +64,12 @@
     <Filter Include="Archivos de origen\assets">
       <UniqueIdentifier>{7f891221-4db7-49a4-967f-49222a2f155f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\states">
+      <UniqueIdentifier>{226d9160-b252-44cf-adcb-3a73f0677c2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\states">
+      <UniqueIdentifier>{3831cd03-c2f7-41d4-9f1e-974a967f82f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -204,29 +210,11 @@
     <ClInclude Include="components\PlayerController.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="GameStateMachine.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="PruebaState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="components\CameraFollow.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="components\SoundManager.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\LoseLife.h">
       <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionLayers.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="components\ChainCollider.h">
       <Filter>Archivos de encabezado\components</Filter>
@@ -243,6 +231,24 @@
     <ClInclude Include="components\Hammer.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
+    <ClInclude Include="components\CameraFollow.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateMachine.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionLayers.h">
+      <Filter>Archivos de encabezado\game</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
+    <ClInclude Include="PruebaState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -258,9 +264,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="utils\Collisions.cpp">
       <Filter>Archivos de origen\utils</Filter>
     </ClCompile>
@@ -321,15 +324,6 @@
     <ClCompile Include="components\PlayerController.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="GameStateMachine.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="PruebaState.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="components\CameraFollow.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
@@ -338,9 +332,6 @@
     </ClCompile>
     <ClCompile Include="components\LoseLife.cpp">
       <Filter>Archivos de origen\components</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuState.cpp">
-      <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="FringeHeadAtack.cpp">
       <Filter>Archivos de origen\components</Filter>
@@ -353,6 +344,21 @@
     </ClCompile>
     <ClCompile Include="components\Hammer.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateMachine.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="PruebaState.cpp">
+      <Filter>Archivos de origen\states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
