@@ -267,6 +267,37 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	anim_controller->setParamValue("chainsaw_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
+
+#pragma region Sword
+	//---CHAINSAW---------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 1, 11);
+	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 12, 22);
+	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, -1, 23, 47);
+
+	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
+	anim_controller->addTransition("sword_attack1", "run", "sword_att", 0, true);
+	anim_controller->addTransition("sword_attack1", "sword_attack2", "sword_att", 2, true);
+	anim_controller->addTransition("sword_attack2", "run", "sword_att", 0, true);
+	anim_controller->addTransition("sword_attack2", "sword_attack3", "sword_att", 3, true);
+	anim_controller->addTransition("sword_attack3", "run", "sword_att", 0, false);
+
+	anim_controller->setParamValue("sword_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
+
+#pragma region Hammer
+//---CHAINSAW---------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 24, 0, 1, 16);
+	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 24, 0, 17, 30);
+
+	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
+	anim_controller->addTransition("hammer_attack1", "run", "hammer_att", 0, true);
+	anim_controller->addTransition("hammer_attack1", "hammer_attack2", "hammer_att", 2, true);
+	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, true);
+
+	anim_controller->setParamValue("hammer_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 #pragma endregion
@@ -281,7 +312,7 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
-	player->addComponent<Chainsaw>();
+	player->addComponent<Sword>();
 	
 	player->addComponent<LoseLife>();
 

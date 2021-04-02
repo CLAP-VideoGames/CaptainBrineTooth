@@ -41,6 +41,7 @@ private:
 	float stabActivationTime;
 	bool currentlyStabbing = false;
 	float stoppedAttackingTime = 0;
+	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
 	float maxHoldTime = 3000;	//Time player is sawing

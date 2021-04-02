@@ -32,7 +32,7 @@ bool Button::handleEvent(SDL_Event& event)
 			// P ES RATON Y R EL RECTANGULO DEL BOTON
 			if (SDL_PointInRect(&p, &r) == SDL_TRUE)
 			{
-				cboq(game);
+				cboq();
 				return true;
 			}
 		}

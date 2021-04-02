@@ -2,12 +2,14 @@
 
 #include <iostream>
 #include "../CollisionLayers.h"
+#include "AnimBlendGraph.h"
 
 using namespace ColLayers;
 
 void Sword::init() {
 	tr_ = entity_->getComponent<Transform>();
 	assert(tr_ != nullptr);
+	anim_ = entity_->getComponent<AnimBlendGraph>();
 }
 
 void Sword::update() {
@@ -23,7 +25,8 @@ void Sword::update() {
 				CURRENT_ATTACK = ATTACKS::Attack1;
 
 				//Activate attack animation + sawing on attack
-
+				if (anim_->searchParamValue("sword_att") != -1)
+					anim_->setParamValue("sword_att", 1);
 
 				//Activate attack trigger
 				trigger = entity_->getMngr()->addEntity();
@@ -44,6 +47,9 @@ void Sword::update() {
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack2;
 
+					if (anim_->searchParamValue("sword_att") != -1)
+						anim_->setParamValue("sword_att", 2);
+
 					trigger = entity_->getMngr()->addEntity();
 					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
@@ -57,6 +63,9 @@ void Sword::update() {
 					std::cout << "Attack 3 Initiated\n";
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
+
+					if (anim_->searchParamValue("sword_att") != -1)
+						anim_->setParamValue("sword_att", 3);
 
 					sawActivationTime = sdlutils().currRealTime();
 					break;
@@ -72,6 +81,9 @@ void Sword::update() {
 		//Deactivate chainsaw
 		std::cout << "STOPPED STABBING\n";
 		CURRENT_STATUS = STATUS::OnAnimationLock;
+
+		if (anim_->searchParamValue("sword_att") != -1)
+			anim_->setParamValue("sword_att", 0);
 
 		stoppedSawTime = sdlutils().currRealTime();
 	}
@@ -92,6 +104,9 @@ void Sword::update() {
 		std::cout << "STOPPED COMBO\n";
 		CURRENT_STATUS = STATUS::Iddle;
 		CURRENT_ATTACK = ATTACKS::NotAttacking;
+
+		if (anim_->searchParamValue("sword_att") != -1)
+			anim_->setParamValue("sword_att", 0);
 
 		stoppedAttackingTime = sdlutils().currRealTime();
 	}
