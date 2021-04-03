@@ -1,7 +1,7 @@
 #include "Hammer.h"
 
 #include <iostream>
-#include "../CollisionLayers.h"
+#include "../game/CollisionLayers.h"
 
 using namespace ColLayers;
 

@@ -207,9 +207,6 @@
     <ClInclude Include="components\DamageCollisionCallbacks.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\PlayerController.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\SoundManager.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
@@ -217,9 +214,6 @@
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\ChainCollider.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="FringeHeadAtack.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\Button.h">
@@ -234,38 +228,44 @@
     <ClInclude Include="components\CameraFollow.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Archivos de encabezado\states</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStateMachine.h">
-      <Filter>Archivos de encabezado\states</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionLayers.h">
-      <Filter>Archivos de encabezado\game</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuState.h">
-      <Filter>Archivos de encabezado\states</Filter>
-    </ClInclude>
-    <ClInclude Include="PruebaState.h">
-      <Filter>Archivos de encabezado\states</Filter>
-    </ClInclude>
-    <ClInclude Include="ShootDetect.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="DisableOnExit.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="ContactDamage.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy_Health.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\Map.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="components\WeaponDamageDetection.h">
       <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ContactDamage.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\DisableOnExit.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Enemy_Health.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\FringeHeadAtack.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="states\GameState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
+    <ClInclude Include="states\GameStateMachine.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
+    <ClInclude Include="states\MenuState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
+    <ClInclude Include="states\PruebaState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
+    <ClInclude Include="components\PlayerController.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ShootDetect.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="game\CollisionLayers.h">
+      <Filter>Archivos de encabezado\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -339,9 +339,6 @@
     <ClCompile Include="components\Chainsaw.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="components\PlayerController.cpp">
-      <Filter>Archivos de origen\components</Filter>
-    </ClCompile>
     <ClCompile Include="components\CameraFollow.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
@@ -349,9 +346,6 @@
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="components\LoseLife.cpp">
-      <Filter>Archivos de origen\components</Filter>
-    </ClCompile>
-    <ClCompile Include="FringeHeadAtack.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="components\Button.cpp">
@@ -363,31 +357,31 @@
     <ClCompile Include="components\Hammer.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Archivos de origen\states</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStateMachine.cpp">
-      <Filter>Archivos de origen\states</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
-    <ClCompile Include="MenuState.cpp">
-      <Filter>Archivos de origen\states</Filter>
-    </ClCompile>
-    <ClCompile Include="PruebaState.cpp">
-      <Filter>Archivos de origen\states</Filter>
-    </ClCompile>
-    <ClCompile Include="ShootDetect.cpp">
+    <ClCompile Include="components\ContactDamage.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="DisableOnExit.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="ContactDamage.cpp">
+    <ClCompile Include="components\Enemy_Health.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy_Health.cpp">
+    <ClCompile Include="components\FringeHeadAtack.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="states\GameState.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="states\GameStateMachine.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="states\MenuState.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="states\PruebaState.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ShootDetect.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>

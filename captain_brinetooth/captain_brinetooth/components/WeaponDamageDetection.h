@@ -2,7 +2,7 @@
 
 #include "../ecs/Component.h"
 #include "../ecs/Entity.h"
-#include "../Enemy_Health.h"
+#include "Enemy_Health.h"
 #include <iostream>
 
 

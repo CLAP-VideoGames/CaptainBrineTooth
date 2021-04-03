@@ -1,7 +1,7 @@
 #pragma once
-#include "ecs/Component.h"
+#include "../ecs/Component.h"
 #include "box2d.h"
-#include"components/Transform.h"
+#include"Transform.h"
 
 class ShootDetect : public Component
 {

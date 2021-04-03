@@ -1,11 +1,11 @@
 #include "MenuState.h"
-#include "ecs/Entity.h"
-#include "game/Game.h"
-#include "utils/Vector2D.h"
-#include "ecs/Manager.h"
-#include "components/Animation.h"
-#include "components/AnimBlendGraph.h"
-#include "components/Button.h"
+#include "../ecs/Entity.h"
+#include "../game/Game.h"
+#include "../utils/Vector2D.h"
+#include "../ecs/Manager.h"
+#include "../components/Animation.h"
+#include "../components/AnimBlendGraph.h"
+#include "../components/Button.h"
 
 MenuState::MenuState(Game* a, b2World* mundo) : GameState(a, mundo)
 {

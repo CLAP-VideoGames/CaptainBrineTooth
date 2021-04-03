@@ -1,8 +1,8 @@
 #include "ContactDamage.h"
-#include "ecs/Entity.h"
-#include "utils/Vector2D.h"
-#include "ecs/Manager.h"
-#include "components/Player_Health.h"
+#include "../ecs/Entity.h"
+#include "../utils/Vector2D.h"
+#include "../ecs/Manager.h"
+#include "Player_Health.h"
 
 
 

@@ -1,8 +1,8 @@
 #include "FringeHeadAtack.h"
-#include "components/BoxCollider.h"
-#include "ecs/Manager.h"
-#include "CollisionLayers.h"
-#include "components/AnimBlendGraph.h"
+#include "BoxCollider.h"
+#include "../ecs/Manager.h"
+#include "../game/CollisionLayers.h"
+#include "AnimBlendGraph.h"
 #include "ShootDetect.h"
 using namespace ColLayers;
 

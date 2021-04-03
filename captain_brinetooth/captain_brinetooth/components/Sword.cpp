@@ -1,7 +1,7 @@
 #include "Sword.h"
 
 #include <iostream>
-#include "../CollisionLayers.h"
+#include "../game/CollisionLayers.h"
 #include "AnimBlendGraph.h"
 
 using namespace ColLayers;

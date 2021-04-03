@@ -1,5 +1,5 @@
 #pragma once
-#include "ecs/Component.h"
+#include "../ecs/Component.h"
 class Enemy_Health : public Component
 {
 public:

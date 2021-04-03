@@ -1,5 +1,5 @@
 #include "GameState.h"
-#include "ecs/Manager.h"
+#include "../ecs/Manager.h"
 
 
 GameState::GameState(Game* a, b2World* mundo)

@@ -1,9 +1,9 @@
 #pragma once
-#include  "ecs/Component.h"
-#include"components/Transform.h"
-#include "ecs/Entity.h"
-#include "utils/Vector2D.h"
-#include "sdlutils/SDLUtils.h"
+#include "../ecs/Component.h"
+#include "Transform.h"
+#include "../ecs/Entity.h"
+#include "../utils/Vector2D.h"
+#include "../sdlutils/SDLUtils.h"
 
 class DisableOnExit : public Component
 {

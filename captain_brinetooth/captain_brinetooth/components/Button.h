@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "../GameState.h"
-#include "../GameStateMachine.h"
+#include "../states/GameState.h"
+#include "../states/GameStateMachine.h"
 #include "Transform.h"
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"

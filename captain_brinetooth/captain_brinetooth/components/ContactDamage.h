@@ -1,5 +1,5 @@
 #pragma once
-#include "ecs/Component.h"
+#include "../ecs/Component.h"
 #include "box2d.h"
 
 class ContactDamage : public Component
