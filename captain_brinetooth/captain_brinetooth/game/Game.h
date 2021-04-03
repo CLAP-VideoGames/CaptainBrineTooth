@@ -25,6 +25,7 @@ class Manager;
 
 class Game {
 public:
+
 	Game();
 	virtual ~Game();
 	void init();
@@ -55,5 +56,6 @@ private:
 	//Control de los estados en los que esta el juego 
 	GameStateMachine* stateMachine;
 
+	
 };
 

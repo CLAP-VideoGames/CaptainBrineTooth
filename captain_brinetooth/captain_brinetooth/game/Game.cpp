@@ -50,6 +50,7 @@ Game::Game() {
 
 
 	MenuState* prueba = new MenuState(this, world_);
+
 	stateMachine->pushState(prueba);
 	//Ahora  cuando creemos un nuevo estado hay que hacer un reset del manager del juego poniendo el manager del estado en cuestion
 	Manager* a = stateMachine->currentState()->getMan();
@@ -62,8 +63,7 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
 
-	auto* soundController = mngr_->addEntity();
-	soundController->addComponent<SoundManager>(75, "Menu");
+
 	/*soundController->getComponent<SoundManager>()->playMainMusic();
 	soundController->getComponent<SoundManager>()->playPauseMusic();
 	soundController->getComponent<SoundManager>()->modifyVolume(-70);*/
@@ -73,9 +73,9 @@ void Game::init() {
 	//createBackGround("Square", 11, 11);
 	//createLevel0();
 
-	MenuState* prueba = static_cast<MenuState*>(stateMachine->currentState());
-	prueba->setSoundManager(soundController->getComponent<SoundManager>());
-	prueba->addStateEntityMenu();
+
+	MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
+	aux->addStateEntityMenu();
 
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
