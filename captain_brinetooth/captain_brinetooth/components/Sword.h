@@ -11,6 +11,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
 #include "AnimBlendGraph.h"
+#include "WeaponDamageDetection.h"
 
 
 class Sword : public Component {
@@ -45,11 +46,11 @@ private:
 
 	//Cooldown variables (should be able to be changed as you see fit)
 	float maxHoldTime = 3000;	//Time player is sawing
-	float animationLockTime = 500;		//Counted after one attack is stopped to avoid animation clipping
+	float animationLockTime = 666;		//Counted after one attack is stopped to avoid animation clipping
 	float maxComboPanningTime = 2000;	//Counted after animation lock is released
-	float timeBetweenStabs = 1000;
-	float stabTriggerTime = 500;
-	float timeBeforeNextAttackStarts = 1000;
+	float timeBetweenStabs = 333;
+	float stabTriggerTime = 200;
+	float timeBeforeNextAttackStarts = 666;
 
 	//Variables related to ChainsawTriggerPosition
 	int triggerOffSetX = -60;

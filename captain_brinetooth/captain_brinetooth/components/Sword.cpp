@@ -35,6 +35,7 @@ void Sword::update() {
 				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+				trigger->addComponent<WeaponDamageDetection>(50);
 
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
@@ -56,6 +57,7 @@ void Sword::update() {
 					/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+					trigger->addComponent<WeaponDamageDetection>(50);
 
 					stoppedSawTime = sdlutils().currRealTime();
 					break;
@@ -87,6 +89,7 @@ void Sword::update() {
 					/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+					trigger->addComponent<WeaponDamageDetection>(50);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -157,6 +160,7 @@ void Sword::update() {
 		/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 		anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 		trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+		trigger->addComponent<WeaponDamageDetection>(20);
 
 		stabActivationTime = sdlutils().currRealTime();
 		currentlyStabbing = true;

@@ -35,6 +35,7 @@ void Chainsaw::update() {
 				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+				trigger->addComponent<WeaponDamageDetection>(125);
 				
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
@@ -57,6 +58,7 @@ void Chainsaw::update() {
 					/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+					trigger->addComponent<WeaponDamageDetection>(125);
 
 					stoppedSawTime = sdlutils().currRealTime();
 					break;
@@ -158,6 +160,7 @@ void Chainsaw::update() {
 		/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 		anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 		trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+		trigger->addComponent<WeaponDamageDetection>(200);
 
 		stabActivationTime = sdlutils().currRealTime();
 		currentlyStabbing = true;
