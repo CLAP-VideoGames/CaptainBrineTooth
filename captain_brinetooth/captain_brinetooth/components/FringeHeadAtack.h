@@ -8,11 +8,10 @@ class FringeHeadAtack : public Component
 {
 public:
 	FringeHeadAtack();
-	virtual ~FringeHeadAtack() {};
+	virtual ~FringeHeadAtack() { trigger->setActive(false); };
 	void init() override;
 	void update() override {};
 	void render() override {};
-	Entity* getTrigger() { return trigger; }
 
 protected:
 	Transform* tr;
