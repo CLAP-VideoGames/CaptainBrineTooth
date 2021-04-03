@@ -28,14 +28,8 @@ void Sword::update() {
 				if (anim_->searchParamValue("sword_att") != -1)
 					anim_->setParamValue("sword_att", 1);
 
-				//Activate attack trigger
-				trigger = entity_->getMngr()->addEntity();
-				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-				trigger->addComponent<WeaponDamageDetection>(50);
+				//
+				creaTrigger(50);
 
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
@@ -51,13 +45,8 @@ void Sword::update() {
 					if (anim_->searchParamValue("sword_att") != -1)
 						anim_->setParamValue("sword_att", 2);
 
-					trigger = entity_->getMngr()->addEntity();
-					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-					/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-					trigger->addComponent<WeaponDamageDetection>(50);
+					//
+					creaTrigger(50);
 
 					stoppedSawTime = sdlutils().currRealTime();
 					break;
@@ -82,14 +71,8 @@ void Sword::update() {
 					if (anim_->searchParamValue("sword_att") != -1)
 						anim_->setParamValue("sword_att", 1);
 
-					//Activate attack trigger
-					trigger = entity_->getMngr()->addEntity();
-					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-					/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-					trigger->addComponent<WeaponDamageDetection>(50);
+					//
+					creaTrigger(50);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -154,15 +137,21 @@ void Sword::update() {
 	if (CURRENT_STATUS == Sawing && stabActivationTime + timeBetweenStabs < sdlutils().currRealTime()) {
 		std::cout << "Stab\n";
 
-		trigger = entity_->getMngr()->addEntity();
-		trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-			Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-		/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-		anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-		trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-		trigger->addComponent<WeaponDamageDetection>(20);
+		//
+		creaTrigger(20);
 
 		stabActivationTime = sdlutils().currRealTime();
 		currentlyStabbing = true;
 	}
+}
+
+void Sword::creaTrigger(int damage) {
+	//Activate attack trigger
+	trigger = entity_->getMngr()->addEntity();
+	trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
+	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+	trigger->addComponent<WeaponDamageDetection>(damage);
 }

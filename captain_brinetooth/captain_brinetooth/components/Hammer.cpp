@@ -27,14 +27,8 @@ void Hammer::update() {
 				if (anim_->searchParamValue("hammer_att") != -1)
 					anim_->setParamValue("hammer_att", 1);
 
-				//Activate attack trigger
-				trigger = entity_->getMngr()->addEntity();
-				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-				trigger->addComponent<WeaponDamageDetection>(150);
+				//
+				creaTrigger(150);
 
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
@@ -50,13 +44,8 @@ void Hammer::update() {
 				if (anim_->searchParamValue("hammer_att") != -1)
 					anim_->setParamValue("hammer_att", 2);
 
-				trigger = entity_->getMngr()->addEntity();
-				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-				trigger->addComponent<WeaponDamageDetection>(150);
+				//
+				creaTrigger(150);
 
 				stoppedSawTime = sdlutils().currRealTime();
 			}
@@ -71,14 +60,8 @@ void Hammer::update() {
 				if (anim_->searchParamValue("hammer_att") != -1)
 					anim_->setParamValue("hammer_att", 1);
 
-				//Activate attack trigger
-				trigger = entity_->getMngr()->addEntity();
-				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-				trigger->addComponent<WeaponDamageDetection>(150);
+				//
+				creaTrigger(150);
 
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
@@ -112,4 +95,14 @@ void Hammer::update() {
 		trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 	}
+}
+
+void Hammer::creaTrigger(int damage) {
+	trigger = entity_->getMngr()->addEntity();
+	trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
+	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+	trigger->addComponent<WeaponDamageDetection>(damage);
 }

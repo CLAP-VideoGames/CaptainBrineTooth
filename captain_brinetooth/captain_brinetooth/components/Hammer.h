@@ -25,6 +25,7 @@ public:
 	void init() override;
 
 	void update() override;
+	void creaTrigger(int damage);
 
 private:
 	enum STATUS { Iddle, OnAnimationLock, OnCombo };

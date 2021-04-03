@@ -28,14 +28,8 @@ void Chainsaw::update() {
 				if(anim_->searchParamValue("chainsaw_att") != -1)
 					anim_->setParamValue("chainsaw_att", 1);
 
-				//Activate attack trigger
-				trigger = entity_->getMngr()->addEntity();
-				trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-					Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-				/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-				anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-				trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-				trigger->addComponent<WeaponDamageDetection>(125);
+				//
+				creaTrigger(125);
 				
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
@@ -52,13 +46,8 @@ void Chainsaw::update() {
 					if (anim_->searchParamValue("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 2);
 
-					trigger = entity_->getMngr()->addEntity();
-					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-					/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-					trigger->addComponent<WeaponDamageDetection>(125);
+					//
+					creaTrigger(125);
 
 					stoppedSawTime = sdlutils().currRealTime();
 					break;
@@ -83,13 +72,8 @@ void Chainsaw::update() {
 					if (anim_->searchParamValue("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 1);
 
-					//Activate attack trigger
-					trigger = entity_->getMngr()->addEntity();
-					trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-						Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-					/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-					anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-					trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+					//
+					creaTrigger(125);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -154,15 +138,20 @@ void Chainsaw::update() {
 	if (CURRENT_STATUS == Sawing && stabActivationTime + timeBetweenStabs < sdlutils().currRealTime()) {
 		std::cout << "Saw\n";
 
-		trigger = entity_->getMngr()->addEntity();
-		trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-			Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-		/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-		anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
-		trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-		trigger->addComponent<WeaponDamageDetection>(200);
+		creaTrigger(200);
 
 		stabActivationTime = sdlutils().currRealTime();
 		currentlyStabbing = true;
 	}
+}
+
+void Chainsaw::creaTrigger(int damage) {
+	//Activate attack trigger
+	trigger = entity_->getMngr()->addEntity();
+	trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
+	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+	trigger->addComponent<WeaponDamageDetection>(damage);
 }
