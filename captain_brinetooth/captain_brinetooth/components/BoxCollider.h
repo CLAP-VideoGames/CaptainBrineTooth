@@ -30,7 +30,7 @@ public:
 	}
 
 	virtual ~BoxCollider() {
-		
+		body->SetEnabled(false);
 	}
 
 	void init() override {

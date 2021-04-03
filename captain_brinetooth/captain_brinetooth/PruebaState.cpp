@@ -32,11 +32,11 @@ void PruebaState::addStateEntityPrueba() {
 
 	auto* enemy = manager_->addEntity();
 	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
-	enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
+	enemy->addComponent<BoxCollider>(DYNAMIC, ENEMY, ENEMY_MASK);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("iddle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
 	enemy->addComponent<FringeHeadAtack>();
-	//enemy->addComponent<Enemy_Health>();
+	enemy->addComponent<Enemy_Health>(300);
 	
 	//Creacion de un componente que tenga un metodo estatico para asignarselo a la colision del trigger del enemigo con el jugador 
 

@@ -11,6 +11,7 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
 #include "AnimBlendGraph.h"
+#include "WeaponDamageDetection.h"
 
 
 class Hammer : public Component {

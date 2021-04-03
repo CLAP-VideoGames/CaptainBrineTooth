@@ -29,6 +29,7 @@ class ShootDetect;
 class DisableOnExit;
 class ContactDamage;
 class Enemy_Health;
+class WeaponDamageDetection;
 
 
 #define _CMPS_LIST_  \
@@ -57,7 +58,8 @@ class Enemy_Health;
     DisableOnExit,\
     ContactDamage,\
     Enemy_Health,\
-	Hammer
+	Hammer,\
+	WeaponDamageDetection
 
 // groups
 

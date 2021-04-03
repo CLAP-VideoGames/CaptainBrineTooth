@@ -3,17 +3,12 @@
 class Enemy_Health : public Component
 {
 public:
-	Enemy_Health() {};
-	virtual ~Enemy_Health() ;
-	void init() override {lifes = 10;};
-	void update() override {};
-	void render() override {};
+	Enemy_Health(int health) : lifes(health) {};
+	virtual ~Enemy_Health() {};
 	void loseLife(int damage);
 
 
 protected:
 	int lifes;
-
-
 };
 

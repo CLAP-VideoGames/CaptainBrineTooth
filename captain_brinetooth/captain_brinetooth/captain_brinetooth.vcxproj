@@ -173,6 +173,7 @@
     <ClInclude Include="components\SoundManager.h" />
     <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\Transform.h" />
+    <ClInclude Include="components\WeaponDamageDetection.h" />
     <ClInclude Include="ContactDamage.h" />
     <ClInclude Include="DisableOnExit.h" />
     <ClInclude Include="ecs\Component.h" />
