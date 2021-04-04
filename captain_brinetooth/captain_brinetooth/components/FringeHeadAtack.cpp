@@ -8,7 +8,6 @@ using namespace ColLayers;
 
 FringeHeadAtack::FringeHeadAtack()
 {
-	enemytr = tr;
 	
 
 	//Damos un tamaño al trigger de la zona de ataque 

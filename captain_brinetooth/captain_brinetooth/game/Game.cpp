@@ -73,6 +73,7 @@ void Game::init() {
 	createBackGround("Square", 11, 11);
 	createLevel0();
 
+
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 

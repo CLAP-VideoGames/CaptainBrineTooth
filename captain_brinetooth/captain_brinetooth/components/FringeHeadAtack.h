@@ -16,8 +16,7 @@ public:
 protected:
 	Transform* tr;
 	Entity* trigger; //ACordarme de hacer un metodo para obtener el trigger para destruirlo cuando elñ enemigo pierda toda la vida 
-	Vector2D triggersize; //Para el tamaño del trigger 
-	Transform* enemytr;
+	Vector2D triggersize; Transform* enemytr;
 
 };
 

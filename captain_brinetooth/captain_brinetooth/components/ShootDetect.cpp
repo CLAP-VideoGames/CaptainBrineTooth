@@ -13,10 +13,14 @@ using namespace ColLayers;
 
 void ShootDetect::init()
 {
+	//Gestion de tiempo de disparo de balas 
 	minTime = 4000;
 	passedTime = 0;
+
 	entity_->setCollisionMethod(shoot);
 	entity_->setEndCollisionMethod(unShoot);
+
+
 	shootenabled = false;
 	offsetbala = 8.0f;
 	velocity = 1;
@@ -55,10 +59,6 @@ void ShootDetect::unShoot(b2Contact* contact) {
 }
 void ShootDetect::setShootFalse() { shootenabled = false; }
 
-//if(tiempo pasado + tiempo minimo < tiempo actual)
-// Generar la bala
-// tiempo pasado = tiempo actual
-//
 void ShootDetect::createBullet()
 {
 	Entity* bullet = entity_->getMngr()->addEntity();//Añadimos una bala 
@@ -72,15 +72,18 @@ void ShootDetect::createBullet()
 
 	Vector2D bulletvel= (playertransform->getPos()-enemytransform->getPos());
 	bulletvel= bulletvel.normalize();
-	//Si el player esta a la derecha 
+	
+
 
 
 	//Dotamos a la bala de todos los componentes 
 	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 10.0f, 10.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("iddle", &sdlutils().images().at("Square"), 1, 1, 1, 1, 1);
+	//No hace falta crear un animation graph
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel,velocity);
 	bullet->addComponent<ContactDamage>();
+
 }
