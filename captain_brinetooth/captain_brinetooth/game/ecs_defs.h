@@ -30,7 +30,7 @@ class DisableOnExit;
 class ContactDamage;
 class Enemy_Health;
 class WeaponDamageDetection;
-
+class DestroyOnCollision;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -59,7 +59,8 @@ class WeaponDamageDetection;
     ContactDamage,\
     Enemy_Health,\
 	Hammer,\
-	WeaponDamageDetection
+	WeaponDamageDetection,\
+	DestroyOnCollision
 
 // groups
 

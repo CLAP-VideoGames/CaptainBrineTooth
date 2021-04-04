@@ -159,6 +159,7 @@
     <ClInclude Include="components\Chainsaw.h" />
     <ClInclude Include="components\ContactDamage.h" />
     <ClInclude Include="components\DamageCollisionCallbacks.h" />
+    <ClInclude Include="components\DestroyOnCollision.h" />
     <ClInclude Include="components\DisableOnExit.h" />
     <ClInclude Include="components\enemyMovement.h" />
     <ClInclude Include="components\Enemy_Health.h" />

@@ -117,21 +117,23 @@ public:
 	}
 
 	void setCollisionMethod(CallBackCollision* method) {
-		collisionMethod = method;
+		collisionMethod.push_back(method);
 	}
 
 	void setEndCollisionMethod(CallBackCollision* method) {
-		collisionEndMethod = method;
+		collisionEndMethod.push_back(method);
 	}
 
 	void playCollisionMethod(b2Contact* contact) {
-		if(collisionMethod != nullptr)
-			collisionMethod(contact);
+		for (CallBackCollision* c : collisionMethod) {
+			if (c != nullptr) c(contact);
+		}
 	}
 
 	void playEndCollisionMethod(b2Contact* contact) {
-		if (collisionEndMethod != nullptr)
-			collisionEndMethod(contact);
+		for (CallBackCollision* c : collisionEndMethod) {
+			if (c != nullptr) c(contact);
+		}
 	}
 
 	void update() {
@@ -158,8 +160,8 @@ private:
 	std::array<Component*, ecs::maxComponent> cmpArray_;
 	std::bitset<ecs::maxGroup> groups_;
 
-	CallBackCollision* collisionMethod;
-	CallBackCollision* collisionEndMethod;
+	std::vector<CallBackCollision*> collisionMethod;
+	std::vector<CallBackCollision*> collisionEndMethod;
 };
 
 

@@ -8,6 +8,7 @@
 #include "DisableOnExit.h"
 #include "../game/CollisionLayers.h"
 #include "ContactDamage.h"
+#include "DestroyOnCollision.h"
 using namespace ColLayers;
 
 
@@ -85,5 +86,5 @@ void ShootDetect::createBullet()
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel,velocity);
 	bullet->addComponent<ContactDamage>();
-
+	bullet->addComponent<DestroyOnCollision>();
 }

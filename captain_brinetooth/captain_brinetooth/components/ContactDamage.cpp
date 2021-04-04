@@ -18,5 +18,4 @@ void ContactDamage::callDamage(b2Contact* contact)
 void ContactDamage::makeDamage()
 {
 	entity_->getMngr()->getHandler<Player>()->getComponent<Player_Health>()->loseLife(); //El jugador pierde una vida
-	entity_->setActive(false);
 }
