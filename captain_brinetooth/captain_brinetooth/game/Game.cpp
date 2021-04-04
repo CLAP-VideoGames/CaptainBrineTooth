@@ -39,6 +39,7 @@ SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 
 using namespace ColLayers;
 
+//Comentario para probar un commit
 Game::Game() {
 	stateMachine = new GameStateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
