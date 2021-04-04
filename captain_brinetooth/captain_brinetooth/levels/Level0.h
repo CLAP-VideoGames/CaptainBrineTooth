@@ -42,6 +42,9 @@ public:
 	Vector2D getFilsCols() { return Vector2D(fils_, cols_); }
 	Vector2D getTileSize() { return Vector2D(tile_height_, tile_width_); }
 	void setCollision();
+	void load(const string& path);
+
+	std::array<bool, 4> returnRoomCons() { return Cons; }
 
 	std::vector<tmx::Vector2f> getVerticesList(){
 		return points;
@@ -53,11 +56,10 @@ private:
 	vector<tile*> tiles_;			// tiles a dibujar en pantalla
 	vector<object*> objects_;		// objetos (colisiones) en la capa de Tiled Map
 	map<gid, Texture*> tilesets_;	// tilesets usados para dibujar el Tiled Map
-	void load(const string& path);
 	b2World* b2World_ = nullptr;
 	b2Body* body_ = nullptr;
 	b2Fixture* fixture_ = nullptr;
 
-
+	std::array<bool, 4> Cons;
 	vector<tmx::Vector2f> points;
 };

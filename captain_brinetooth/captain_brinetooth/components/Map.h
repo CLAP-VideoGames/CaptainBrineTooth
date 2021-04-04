@@ -67,7 +67,7 @@ private:
 		}
 		Room* r = new Room();
 
-		//Creo que lo mejor es un mapa, para poder descartar los que no queramos, en su dfecto, podemos tener un array de un struct que hagamos
+		//Selección aleatoria de la habitación
 		int tile = sdlutils().rand().teCuoto(0, nRoomNames + 1);
 
 		//Buscamos hasta encontrar uno que no hayamos usado, quizás podamos hacer divide y vencerás p marcas, como en eda
@@ -86,18 +86,22 @@ private:
 
 		//if(rConnections[0] == true) r->conections[0] = initializeRoom(i++);
 		//Etc..
-
+		rooms.push_back(r);
 		
 	}
 
 	void initRoomNames() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < nRoomNames; i++) {
 			//Opción de Struct
 			roomNames[i].name = "Tile" + i;
 			roomNames[i].used = false;
 		}
 	}
 
+	//0 = N, 1 = E, 2 = S, 3 = W
+	void nextRoom(int dir) {
+		//lvl->load(actualRoom->conections[dir]->level);
+	}
 protected:
 
 	int nRooms, nRoomNames = 10;
@@ -106,9 +110,11 @@ protected:
 	std::array<RoomNames, 10> roomNames;
 
 	//Opcion con mapa
-	std::map<string, bool> roomsNams;
+	//std::map<string, bool> roomsNams;
 
 	std::vector<Room*> rooms;
 
 	Level0* lvl;
+
+	Room* actualRoom;
 };
