@@ -6,7 +6,8 @@
 
 //Le metearimos el componente al GM
 class MapProcedural : public Component {
-
+	const string ruta = "assets/maps/";
+	const std::array<char, 4> cardinals = {'N','E','S','W'};
 public:
 	MapProcedural(int nR) {
 		nRooms = nR;
@@ -20,14 +21,11 @@ public:
 
 	//0 = N, 1 = E, 2 = S, 3 = W
 	void TravelNextRoom(int partida) {
-		//Variable auxiliar
-		Room* part = actualRoom;
-
 		//Nueva habitación a la que hemos ido
 		actualRoom = actualRoom->conections[partida];
 
 		//Cargamos nuevo mapa
-		lvl->load(part->conections[partida]->level);
+		lvl->load(actualRoom->level);
 
 		//Cogemos sus conexiones
 		std::array<bool, 4>rConnections = lvl->returnRoomCons();
@@ -35,13 +33,15 @@ public:
 
 
 		//Creamos habitaciones en función de las conexiones que tiene
-		if (rConnections[0] == true) actualRoom->conections[0] = initializeRoom(actualRoom);
+		/*if (rConnections[0] == true) actualRoom->conections[0] = initializeRoom(actualRoom, 0);
 
-		if (rConnections[1] == true) actualRoom->conections[1] = initializeRoom(actualRoom);
+		if (rConnections[1] == true) actualRoom->conections[1] = initializeRoom(actualRoom, 1);
 
-		if (rConnections[2] == true) actualRoom->conections[1] = initializeRoom(actualRoom);
+		if (rConnections[2] == true) actualRoom->conections[1] = initializeRoom(actualRoom, 2);
 
-		if (rConnections[3] == true) actualRoom->conections[1] = initializeRoom(actualRoom);
+		if (rConnections[3] == true) actualRoom->conections[1] = initializeRoom(actualRoom, 3);*/
+
+		CreateConnections(actualRoom, rConnections);
 
 	}
 
@@ -68,7 +68,7 @@ private:
 	};
 
 
-	//Lo mismo pero en recursión(La i es el número de habitaciones que llevamos inicializadas)
+	//Primera sala
 	Room* initializeNewRoom(const string& path) {
 
 		Room* r = new Room();
@@ -80,18 +80,24 @@ private:
 
 
 		//Creamos habitaciones en función de las conexiones que tiene
-		if(rConnections[0] == true) r->conections[0] = initializeRoom(r);
+		/*if(rConnections[0] == true) r->conections[0] = initializeRoom(r, 0);
 
-		if (rConnections[1] == true) r->conections[1] = initializeRoom(r);
+		if (rConnections[1] == true) r->conections[1] = initializeRoom(r, 1);
 
-		if (rConnections[2] == true) r->conections[2] = initializeRoom(r);
+		if (rConnections[2] == true) r->conections[2] = initializeRoom(r, 2);
 
-		if (rConnections[3] == true) r->conections[3] = initializeRoom(r);
-
+		if (rConnections[3] == true) r->conections[3] = initializeRoom(r, 3);*/
+		CreateConnections(r, rConnections);
 
 	}
 
-	Room* initializeRoom(Room* partida) {
+	void CreateConnections(Room* r, const std::array<bool, 4>& rConnections) {
+		for (int i = 0; i < 4; i++) {
+			if (rConnections[i] == true) r->conections[i] = initializeRoom(r, i);
+		}
+	}
+
+	Room* initializeRoom(Room* partida, int dir) {
 		if (roomsExplored == nRooms) return nullptr;
 		//Tenemos que reconocer donde están los extremos, para poder poner habitaciones limítrofes
 		//Y también deberíamos crear los colliders desde level, btw
@@ -101,20 +107,25 @@ private:
 
 		Room* r = new Room();
 
+		//Seleccionaría aquí uno que tenga una entrada por el cardinal opuesto
 		int tile = sdlutils().rand().teCuoto(0, nRoomNames + 1);
 
 
 		//Buscamos hasta encontrar uno que no hayamos usado, quizás podamos hacer divide y vencerás p marcas, como en eda
 		while (roomNames[tile].used) tile = sdlutils().rand().teCuoto(0, nRoomNames + 1);
 
+		r->level = ruta + roomNames[tile].name;
+
+
+		return r;
 		//Si la habitación tiene una conexión, la del otro lado tiene que tener conexión opuesta
-		if (partida->conections[0] != nullptr) r->level = "assets/maps/S/" + tile;
+		/*if (partida->conections[0] != nullptr) r->level = "assets/maps/" + tile;
 		
-		if (partida->conections[1] != nullptr) r->level = "assets/maps/W/" + tile;
+		if (partida->conections[1] != nullptr) r->level = "assets/maps/" + tile;
 
-		if (partida->conections[2] != nullptr) r->level = "assets/maps/N/" + tile;
+		if (partida->conections[2] != nullptr) r->level = "assets/maps" + tile;
 
-		if (partida->conections[3] != nullptr) r->level = "assets/maps/E/" + tile;
+		if (partida->conections[3] != nullptr) r->level = "assets/maps/" + tile;*/
 	}
 
 	void initRoomNames() {

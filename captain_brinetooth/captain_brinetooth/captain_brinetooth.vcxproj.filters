@@ -228,9 +228,6 @@
     <ClInclude Include="components\CameraFollow.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\Map.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="components\WeaponDamageDetection.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
@@ -268,6 +265,12 @@
       <Filter>Archivos de encabezado\game</Filter>
     </ClInclude>
     <ClInclude Include="components\DestroyOnCollision.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\MapProcedural.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Map.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
   </ItemGroup>
