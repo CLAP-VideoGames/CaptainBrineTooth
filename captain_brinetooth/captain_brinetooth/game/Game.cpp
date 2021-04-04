@@ -83,13 +83,9 @@ void Game::init() {
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
 	//Crea el suelo
-	//createBoxTest2(Vector2D(sdlutils().width() / 2.0f, 700), Vector2D(), Vector2D(sdlutils().width()/1.2f, 80.0f), 2.0f, STATIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
-
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
 	//sdlutils().musics().at(mainMusic).setMusicVolume(volumen++);
-
-	//createChain();
 
 	//createPlayer(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 
@@ -167,21 +163,11 @@ void Game::ShakeCamera(int time){
 
 void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols){
 	auto* bg = createBasicEntity(Vector2D(300, 300), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
-
-	//bg->addComponent<BoxCollider>(STATIC, 1, false, 1.0f, false, 0.0f);
 	auto* anim_controller = bg->addComponent<AnimBlendGraph>();
-
-	//bg->addComponent<FixedCameraPosition>();
 
 	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
 	//anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 121, 24, -1, 0, 119);
 	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 1, 1, -1);
-}
-
-void Game::createChain(){
-
-	//auto* chain = mngr_->addEntity(false);
-	//chain->addComponent<ChainCollider>();
 }
 
 /// <summary>
@@ -197,7 +183,6 @@ Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, con
 {
 	auto* entity_ = mngr_->addEntity();
 	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
-
 	return entity_;
 }
 
@@ -222,20 +207,6 @@ void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vect
 
 	if(physicType == 1 || physicType == 2)
 		box->addComponent<KeyBoardCtrl>();
-}
-
-void Game::createBoxTest2(const Vector2D& pos, const  Vector2D& vel, const Vector2D& size, const float& friction, const TYPE physicType, const bool& isTrigger, const uint16& col, const uint16& colMask, const bool& fixedRotation, const float& rotation)
-{
-	auto* box = createBasicEntity(pos, size, rotation, vel);
-
-	auto* anim_controller = box->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
-
-	box->addComponent<BoxCollider>(physicType, col, colMask, isTrigger, friction, fixedRotation, rotation);
-	//box->addComponent<CameraFollow>(box->getComponent<Transform>());
-
-	//if (physicType == 1 || physicType == 2)
-	//	box->addComponent<KeyBoardCtrl>();
 }
 
 void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector2D & size, const float & friction, const bool & fixedRotation, const float& rotation)
@@ -352,21 +323,7 @@ void Game::createLevel0()
 {
 	auto* nivel = mngr_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, world_);
-
-
-	//int alt1 = 2.3f;
-	//int alt2 = 2.0f;
-
-	//b2Vec2* vs = new b2Vec2[4];
-
-	//vs[0] = b2Vec2((sdlutils().width() / 15.0f), (sdlutils().height() / alt1));
-	//vs[1] = b2Vec2((sdlutils().width() / 5.0f), (sdlutils().height() / alt2));
-	//vs[2] = b2Vec2((sdlutils().width() / 0.5f), (sdlutils().height() / alt2));
-	//vs[3] = b2Vec2((sdlutils().width() / 0.1f), (sdlutils().height() / alt1));
 	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
-	//nivel->addComponent<ChainCollider>(vs);
-
-	//nivel->getComponent<Level0>();
 }
 
 
