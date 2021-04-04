@@ -41,16 +41,17 @@ using namespace ColLayers;
 
 //Comentario para probar un commit
 Game::Game() {
+
 	stateMachine = new GameStateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
 
-
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = new b2World(gravity);
+	SoundManager* sndProvisional = new SoundManager(75, "Menu");
 
+	MenuState* prueba = new MenuState(this, world_, sndProvisional);
 
-	PruebaState* prueba = new PruebaState(this, world_);
 	stateMachine->pushState(prueba);
 	//Ahora  cuando creemos un nuevo estado hay que hacer un reset del manager del juego poniendo el manager del estado en cuestion
 	Manager* a = stateMachine->currentState()->getMan();
@@ -61,22 +62,23 @@ Game::~Game() {
 }
 
 void Game::init() {
-	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
-
-	//auto* soundController = mngr_->addEntity(false);
-	//soundController->addComponent<SoundManager>(75, "drunken", "tale");
-	/*soundController->getComponent<SoundManager>()->playMainMusic();
-	soundController->getComponent<SoundManager>()->playPauseMusic();
-	soundController->getComponent<SoundManager>()->modifyVolume(-70);*/
+	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY(), "assets/config/base.resources.json");
 
 	world_->SetContactListener(&collisionListener);
 
-	createBackGround("Square", 11, 11);
-	createLevel0();
+	auto* soundController = mngr_->addEntity();
+	soundController->addComponent<SoundManager>(75, "Menu");
 
 
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
+	//createBackGround("Square", 11, 11);
+	//createLevel0();
+
+
+	MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
+	aux->addStateEntityMenu();
+	aux->setSoundController(soundController->getComponent<SoundManager>());
 
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
@@ -89,7 +91,7 @@ void Game::init() {
 
 	//createChain();
 
-	createPlayer(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
+	//createPlayer(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 
 }
 

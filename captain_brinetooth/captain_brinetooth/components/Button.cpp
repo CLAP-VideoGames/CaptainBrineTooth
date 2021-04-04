@@ -4,38 +4,30 @@ void Button::render()
 {
 	Transform* t = entity_->getComponent<Transform>();
 
-	Vector2D aux = Vector2D(150, 60);
-	SDL_Rect dest = build_sdlrect(aux, t->getW(), t->getH());
+	Vector2D aux = t->getPos();
+	SDL_Rect dest = build_sdlrect(aux, t->getW()/2, t->getH()/2);
 
 	tex->render(dest);
 }
 
-bool Button::handleEvent(SDL_Event& event)
+bool Button::handleEvent()
 {
-	if (ih().keyDownEvent())
+	if (ih().mouseButtonEvent())
 	{
-		if (ih().isKeyDown(SDL_MOUSEBUTTONDOWN))
+		Transform* t = entity_->getComponent<Transform>();
+		std::pair<Sint32, Sint32> pos = ih().getMousePos();
+
+		if (pos.first >= t->getPos().getX() && pos.first < t->getPos().getX() + t->getW()
+			&& pos.second >= t->getPos().getY() && pos.second < t->getPos().getY() + t->getH()
+			)
 		{
-			SDL_Point p;
-			p.x = event.button.x;
-			p.y = event.button.y;
-
-			Transform* t = entity_->getComponent<Transform>();
-
-			SDL_Rect r;
-			r.x = t->getPos().getX();
-			r.y = t->getPos().getY();
-
-			r.w = t->getW();
-			r.h = t->getH();
-
-			// P ES RATON Y R EL RECTANGULO DEL BOTON
-			if (SDL_PointInRect(&p, &r) == SDL_TRUE)
-			{
-				cboq();
-				return true;
-			}
+			cboq(game,soundController);
+			return true;
 		}
-		return false;
+
+		// Cambiar textura
+
 	}
+	return false;
+
 }

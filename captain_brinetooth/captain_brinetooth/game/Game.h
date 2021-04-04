@@ -25,6 +25,7 @@ class Manager;
 
 class Game {
 public:
+
 	Game();
 	virtual ~Game();
 	void init();
@@ -44,6 +45,8 @@ public:
 
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
+
+	GameStateMachine* getGameStateMachine() { return stateMachine; }
 	
 	//update (Juan: Si esta en Mayusculas pq es una constante) Joseda: asi es gente, lo que sea en mayus tiene que ser constante
 	//const Uint32 TICKS = 60;
@@ -55,5 +58,6 @@ private:
 	//Control de los estados en los que esta el juego 
 	GameStateMachine* stateMachine;
 
+	
 };
 

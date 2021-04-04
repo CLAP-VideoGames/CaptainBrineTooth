@@ -82,3 +82,8 @@ void SoundManager::resumeMainMusic()
 
 }
 
+void SoundManager::stopMusic()
+{
+	sdlutils().musics().at(mainMusic).haltMusic();
+}
+
