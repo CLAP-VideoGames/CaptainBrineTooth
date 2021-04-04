@@ -31,6 +31,7 @@ class ContactDamage;
 class Enemy_Health;
 class WeaponDamageDetection;
 class DestroyOnCollision;
+class Button;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -60,7 +61,8 @@ class DestroyOnCollision;
     Enemy_Health,\
 	Hammer,\
 	WeaponDamageDetection,\
-	DestroyOnCollision
+	DestroyOnCollision, \
+	Button
 
 // groups
 

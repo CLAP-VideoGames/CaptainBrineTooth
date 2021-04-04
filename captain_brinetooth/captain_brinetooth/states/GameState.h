@@ -5,7 +5,7 @@ class Game;
 class Entity;
 #include <vector>
 #include "box2d.h"
-#include "components/SoundManager.h"
+#include "../components/SoundManager.h"
 
 
 class GameState
