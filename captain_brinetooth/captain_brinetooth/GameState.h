@@ -5,6 +5,8 @@ class Game;
 class Entity;
 #include <vector>
 #include "box2d.h"
+#include "components/SoundManager.h"
+
 
 class GameState
 {
@@ -12,9 +14,10 @@ protected:
 	
 	Manager* manager_;
 	Game* app;
+	SoundManager* soundController;
 	std::vector<Entity*> stage;
 
-	GameState(Game* a, b2World* mundo);
+	GameState(Game* a, b2World* mundo, SoundManager* snd);
 
 
 

@@ -13,7 +13,7 @@
 
 using namespace ColLayers;
 
-PruebaState::PruebaState(Game* a ,b2World* mundo) : GameState(a,mundo)
+PruebaState::PruebaState(Game* a ,b2World* mundo, SoundManager* snd) : GameState(a,mundo,snd)
 {
 	auto* soundController = manager_->addEntity();
 	soundController->addComponent<SoundManager>(75, "Menu");

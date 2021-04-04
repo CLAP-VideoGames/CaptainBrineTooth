@@ -1,6 +1,5 @@
 #pragma once
 #include "GameState.h"
-#include "components/SoundManager.h"
 #include "box2d.h"
 
 class Entity;
@@ -9,11 +8,11 @@ class MenuState : public GameState
 {
 public:
 
-	MenuState(Game* game,b2World* mundo);
+	MenuState(Game* a, b2World* mundo, SoundManager* snd);
 	void addStateEntityMenu();
-	static void changeToGame(Game* game);
-	static void PlayGaviota();
+	static void changeToGame(Game* game, SoundManager* snd);
 	void update();
+	void setSoundController(SoundManager* snd) { soundController = snd; }
 
 private:
 	SDL_Rect cam;

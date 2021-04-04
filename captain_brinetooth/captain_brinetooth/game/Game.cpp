@@ -40,16 +40,16 @@ SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 using namespace ColLayers;
 
 Game::Game() {
+
 	stateMachine = new GameStateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
 
-
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = new b2World(gravity);
+	SoundManager* sndProvisional = new SoundManager(75, "Menu");
 
-
-	MenuState* prueba = new MenuState(this, world_);
+	MenuState* prueba = new MenuState(this, world_, sndProvisional);
 
 	stateMachine->pushState(prueba);
 	//Ahora  cuando creemos un nuevo estado hay que hacer un reset del manager del juego poniendo el manager del estado en cuestion
@@ -61,9 +61,12 @@ Game::~Game() {
 }
 
 void Game::init() {
-	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
+	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY(), "assets/config/base.resources.json");
 
 	world_->SetContactListener(&collisionListener);
+
+	auto* soundController = mngr_->addEntity();
+	soundController->addComponent<SoundManager>(75, "Menu");
 
 	//createBackGround("Square", 11, 11);
 	//createLevel0();
@@ -71,6 +74,7 @@ void Game::init() {
 
 	MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
 	aux->addStateEntityMenu();
+	aux->setSoundController(soundController->getComponent<SoundManager>());
 
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);

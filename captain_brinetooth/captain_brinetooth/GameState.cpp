@@ -2,10 +2,11 @@
 #include "ecs/Manager.h"
 
 
-GameState::GameState(Game* a, b2World* mundo)
+GameState::GameState(Game* a, b2World* mundo, SoundManager* snd)
 {
 	app = a;
 	manager_ = new Manager(mundo); 
+	soundController = snd;
 }
 GameState::~GameState() {
 	//Para borrar las entidades , se pueden poner a todas las entidades del juego a dormir para que el manager 

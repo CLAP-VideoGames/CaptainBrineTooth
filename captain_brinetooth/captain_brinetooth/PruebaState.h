@@ -7,7 +7,7 @@ class PruebaState :public GameState
 {
 public:
 
-	PruebaState(Game* a, b2World* mundo);
+	PruebaState(Game* a, b2World* mundo, SoundManager* snd);
 	void addStateEntityPrueba();
 
 };

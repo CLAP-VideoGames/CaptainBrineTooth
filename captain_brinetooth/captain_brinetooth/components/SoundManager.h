@@ -40,6 +40,7 @@ public:
 	
 	void playSoundEffect(std::string effect) {sdlutils().soundEffects().at(effect).play();}
 
+	void stopMusic();
 
 private:
 	std::string mainMusic;
