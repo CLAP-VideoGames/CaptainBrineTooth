@@ -15,9 +15,6 @@ using namespace ColLayers;
 
 PruebaState::PruebaState(Game* a ,b2World* mundo, SoundManager* snd) : GameState(a,mundo,snd)
 {
-	auto* soundController = manager_->addEntity();
-	soundController->addComponent<SoundManager>(75, "Menu");
-
 	addStateEntityPrueba();
 	/*app->createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
 	auto* player = manager_->getHandler<Player>();
