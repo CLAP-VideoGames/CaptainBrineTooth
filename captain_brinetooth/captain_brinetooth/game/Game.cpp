@@ -63,11 +63,6 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY (), "assets/config/base.resources.json");
 
-
-	/*soundController->getComponent<SoundManager>()->playMainMusic();
-	soundController->getComponent<SoundManager>()->playPauseMusic();
-	soundController->getComponent<SoundManager>()->modifyVolume(-70);*/
-
 	world_->SetContactListener(&collisionListener);
 
 	//createBackGround("Square", 11, 11);

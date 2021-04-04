@@ -21,7 +21,7 @@ bool Button::handleEvent()
 			&& pos.second >= t->getPos().getY() && pos.second < t->getPos().getY() + t->getH()
 			)
 		{
-			cboq();
+			cboq(game);
 			return true;
 		}
 

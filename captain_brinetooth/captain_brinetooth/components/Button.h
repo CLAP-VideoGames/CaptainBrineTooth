@@ -8,13 +8,14 @@
 #include "../sdlutils/InputHandler.h"
 #include "../ecs/Entity.h"
 
-using CallBackOnClick = void();
+using CallBackOnClick = void(Game* g);
 
 class Button : public Component {
 public:
-	Button(Texture* t, CallBackOnClick* c) : tex(t)
+	Button(Texture* t, CallBackOnClick* c, Game* g) : tex(t)
 	{
 		cboq = c;
+		game = g;
 	}
 
 	virtual ~Button() {
@@ -28,5 +29,6 @@ protected:
 
 private:
 	Texture* tex;
+	Game* game;
 
 };

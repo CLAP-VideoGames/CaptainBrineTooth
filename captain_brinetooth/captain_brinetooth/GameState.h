@@ -24,6 +24,5 @@ public:
 	virtual void update();
 	virtual void refresh();
 	Manager* getMan();
-	//void setManager(Manager* m) { manager_ = m; };
 };
 
