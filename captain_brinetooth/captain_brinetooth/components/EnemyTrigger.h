@@ -17,13 +17,13 @@ public:
 	EnemyTrigger(Vector2D triggersize = Vector2D(500.0f, 500.0f)) :triggersize_(triggersize) {};
 	virtual ~EnemyTrigger() {};
 	void init() override {
-		trigger = entity_->getMngr()->addEntity(); //TRIGGER DEL ENEMIGO (rango de deteccion)
 		entitytr_ = entity_->getComponent<Transform>();
 		assert(entitytr_ != nullptr);
 		//Inicializamos las componentes del trigger
+		trigger = entity_->getMngr()->addEntity(); //TRIGGER DEL ENEMIGO (rango de deteccion)
 		Vector2D triggerpos = entitytr_->getPos();
 		trigger->addComponent<Transform>(triggerpos, Vector2D(0, 0), triggersize_.getX(), triggersize_.getY(), 0.0f);
-		trigger->addComponent<BoxCollider>(STATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
+		trigger->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 		trigger->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
 		trigger->addComponent<ElfSharkAttack>(entity_);	//Necesario crear un template para anadir componentes
 	}; 

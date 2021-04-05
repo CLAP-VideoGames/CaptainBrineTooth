@@ -26,7 +26,7 @@ private:
 	Vector2D triggerSize_;
 	//Atributos de ataque 
 	bool entity_in_range_;
-	float speed_ = 2.0f;
+	float speed_ = 1.0f;
 	float attack_anticipation_ = 0;	//offset del ataque que permite atacar al player un poco antes de que este a rango del ataque
 	Vector2D attackTriggerSize_ = Vector2D(180.0f, 90.0f);
 	Entity* attackTrigger_;

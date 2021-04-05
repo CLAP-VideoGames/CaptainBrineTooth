@@ -49,6 +49,7 @@ void PruebaState::addStateEntityPrueba() {
 	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
 	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
 	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
+	elf1->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
 	elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	elf1->addComponent<Enemy_Health>(300);
 #pragma endregion

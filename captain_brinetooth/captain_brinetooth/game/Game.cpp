@@ -34,7 +34,7 @@
 
 //tiledmap
 const Vector2D window(1100, 900);
-const float camera_Zoom = 1.0f;	//Zoom de la camara si asi soy, lo siento Joseda
+const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 
@@ -121,7 +121,7 @@ void Game::start() {
 		stateMachine->currentState()->refresh();
 
 		sdlutils().clearRenderer();
-		SDL_RenderSetLogicalSize(sdlutils().renderer(), window.getX() * camera_Zoom, window.getY()*camera_Zoom);
+		SDL_RenderSetLogicalSize(sdlutils().renderer(), window.getX() * camera_Zoom_Out, window.getY()* camera_Zoom_Out);
 		mngr_->render();
 		//stateMachine->currentState()->render();
 		sdlutils().presentRenderer();

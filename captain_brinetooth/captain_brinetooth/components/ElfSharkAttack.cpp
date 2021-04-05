@@ -26,7 +26,7 @@ void ElfSharkAttack::init()
 
 void ElfSharkAttack::update() {
 	//Actualiza la posicion del trigger
-	//entity_->getComponent<Transform>()->getPos().set(entitytr_->getPos());
+	//Joseda por favor dime que hacer aqui que no se pone donde le digo
 	//El player ha entrado
 	if (entity_in_range_) {
 		//A rango de ataque
@@ -51,7 +51,21 @@ void ElfSharkAttack::update() {
 		}
 		else { move(); }
 	}
-	else{ entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0))); }
+	else{ 
+		//Desactiva el trigger del ataque al acabar la animacion
+		if (attackTrigger_ != nullptr) {
+			if (entity_Parent_->getComponent<AnimBlendGraph>()->isComplete()) {
+				//Desactiva el trigger
+				attackTrigger_->setActive(false);
+				attackTrigger_ = nullptr;
+				//Llama al cambio de estado de animacion
+				entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
+			}
+		}
+		entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
+		//Actualizar posicion
+		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, 0)));
+	}
 }
 
 bool ElfSharkAttack::canAttack() {
@@ -81,7 +95,10 @@ void ElfSharkAttack::entityOutRange() { entity_in_range_ = false; }
 void ElfSharkAttack::attack() {
 	//Player Transform
 	Transform* playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
-	entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));//no se mueve
+	//no se mueve
+	entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
+	//Actualizar posicion
+	entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
 	//Offset
 	float offsetY = (entitytr_->getH() - attackTriggerSize_.getY()) * 0.5f;
 	float offsetX;
@@ -90,7 +107,7 @@ void ElfSharkAttack::attack() {
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(true);
 	}
 	else{	//drcha
-		offsetX = attackTriggerSize_.getX() + entitytr_->getW();
+		offsetX = attackTriggerSize_.getX();
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(false);
 	}
 	//Crea trigger de ataque
@@ -112,10 +129,14 @@ void ElfSharkAttack::move() {
 		//Se mueve hacia la izquierda
 		entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(-speed_, vel.y)));
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(true);
+		//Actualizar posicion
+		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(-speed_, vel.y)));
 	}
 	else {
 		//Se mueve hacia la derecha
 		entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(speed_, vel.y)));
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(false);
+		//Actualizar posicion
+		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(speed_, vel.y)));
 	}
 }
