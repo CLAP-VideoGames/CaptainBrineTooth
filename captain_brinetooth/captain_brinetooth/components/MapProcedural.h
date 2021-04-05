@@ -73,12 +73,14 @@ private:
 
 		Room* r = new Room();
 
+		r->level = path;
+
 		lvl->load(r->level);
 
 		//Opcion 1
 		std::array<bool, 4>rConnections = lvl->returnRoomCons();
 
-
+		
 		//Creamos habitaciones en función de las conexiones que tiene
 		/*if(rConnections[0] == true) r->conections[0] = initializeRoom(r, 0);
 
@@ -110,15 +112,26 @@ private:
 		//Seleccionaría aquí uno que tenga una entrada por el cardinal opuesto
 		int tile = sdlutils().rand().teCuoto(0, nRoomNames + 1);
 
-
+		
 		//Buscamos hasta encontrar uno que no hayamos usado, quizás podamos hacer divide y vencerás p marcas, como en eda
 		while (roomNames[tile].used) tile = sdlutils().rand().teCuoto(0, nRoomNames + 1);
 
 		r->level = ruta + roomNames[tile].name;
 
 
-		return r;
+		//Cogemos la posición opuesta
+		int opositeDir = dir + 2;
+
+		if (opositeDir >= 4) opositeDir = opositeDir - 4;
+
 		//Si la habitación tiene una conexión, la del otro lado tiene que tener conexión opuesta
+		//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa dirección que pareces tonto
+		for (int i = 0; i < 4 && roomNames[tile].used; i++) {
+			for (int j = 0; j < 4 && roomNames[tile].used; j++) {
+				if (roomNames[tile].name[opositeDir] == cardinals[j] && !roomNames[tile].used) roomNames[tile].used = true;
+			}
+		}
+
 		/*if (partida->conections[0] != nullptr) r->level = "assets/maps/" + tile;
 		
 		if (partida->conections[1] != nullptr) r->level = "assets/maps/" + tile;
@@ -126,6 +139,7 @@ private:
 		if (partida->conections[2] != nullptr) r->level = "assets/maps" + tile;
 
 		if (partida->conections[3] != nullptr) r->level = "assets/maps/" + tile;*/
+		return r;
 	}
 
 	void initRoomNames() {
