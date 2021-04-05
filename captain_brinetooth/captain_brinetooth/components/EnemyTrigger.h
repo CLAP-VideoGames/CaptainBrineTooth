@@ -25,11 +25,14 @@ public:
 		trigger->addComponent<Transform>(triggerpos, Vector2D(0, 0), triggersize_.getX(), triggersize_.getY(), 0.0f);
 		trigger->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 		trigger->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
-		trigger->addComponent<ElfSharkAttack>(entity_);	//Necesario crear un template para anadir componentes
 	}; 
 
-
 	Entity* getParent() { return entity_; }	//Metodo para obtener las componentes del padre en las colisiones
+
+	//Anade cualquier componente necesario al trigger Entity
+	template<typename T, typename ...Ts>
+	void addTriggerComponent(Ts&&... args) { trigger->addComponent<T>(std::forward<Ts>(args)...); }
+
 protected:
 	Entity* trigger;
 	Vector2D triggersize_;
