@@ -1,10 +1,6 @@
 {
 	"images": [
 		{
-			"id": "Medusa",
-			"file": "assets/sprites/medusa/medusa_anim.png"
-		},
-		{
 			"id": "player_run",
 			"file": "assets/sprites/player/player_run.png"
 		},
@@ -35,6 +31,14 @@
 		{
 			"id": "Square",
 			"file": "assets/sprites/square.png"
+		},
+		{
+			"id": "Medusa",
+			"file": "assets/sprites/medusa/medusa_anim.png"
+		},
+		{
+			"id": "Elf_Shark",
+			"file": "assets/sprites/elf_shark/elf_shark.png"
 		},
 		{
 			"id": "fullvida",

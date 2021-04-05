@@ -22,6 +22,7 @@ class CameraFollow;
 class SoundManager;
 class LoseLife;
 class FringeHeadAtack;
+class ElfSharkAttack;
 class Button;
 class Sword;
 class Hammer;
@@ -29,6 +30,7 @@ class ShootDetect;
 class DisableOnExit;
 class ContactDamage;
 class Enemy_Health;
+class EnemyTrigger;
 class WeaponDamageDetection;
 class DestroyOnCollision;
 class Button;
@@ -52,7 +54,9 @@ class Button;
 	CameraFollow,\
 	SoundManager,\
 	LoseLife,\
+	EnemyTrigger,\
 	FringeHeadAtack,\
+	ElfSharkAttack,\
 	Button,\
 	Sword,\
     ShootDetect,\

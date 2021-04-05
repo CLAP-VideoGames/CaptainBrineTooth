@@ -27,6 +27,6 @@ void FringeHeadAtack::init()
 	trigger->addComponent<BoxCollider>(STATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK,true);
 	trigger->addComponent<ShootDetect>(tr);
 	AnimBlendGraph* anim_controller = trigger->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("Square"), 1, 1, 1, 1, 1);
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
    
 }

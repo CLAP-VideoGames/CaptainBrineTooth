@@ -48,12 +48,15 @@ public:
 		waitOnComplete = false;
 		currentAnim_ = nullptr;
 		defaultAnim_ = nullptr;
+		flip_horizontal_ = false;
 	}
 
 	void render() override {
 		updateAnim();
-		if(currentAnim_ != nullptr)
+		if (currentAnim_ != nullptr) {
+			currentAnim_->anim_->flipX(flip_horizontal_);
 			currentAnim_->anim_->render();
+		}
 	}
 
 	void updateAnim() {
@@ -172,6 +175,12 @@ public:
 
 	void play() { if(currentAnim_ != nullptr)currentAnim_->anim_->play(); };
 	void stop() { if (currentAnim_ != nullptr)currentAnim_->anim_->stop(); };
+	void flipX(bool state) { flip_horizontal_ = state; };
+	bool isComplete() { 
+		if (currentAnim_->anim_->getState() == Complete) return true;
+		else return false;
+	}
+	const bool& isFlipX() { return flip_horizontal_; }
 	
 	friend class Animation;
 
@@ -182,4 +191,5 @@ protected:
 	std::vector<AnimState*> animStates_;
 	AnimState *currentAnim_, *nextAnim_, *defaultAnim_;
 	bool waitOnComplete;
+	bool flip_horizontal_;
 };

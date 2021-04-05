@@ -2,7 +2,7 @@
 #include "..//game/Game.h"
 
 #include "../sdlutils/SDLUtils.h"
-
+#include "AnimBlendGraph.h"
 
 #include <list>
 #include <iostream>
@@ -31,13 +31,20 @@ void CameraFollow::update(){
 }
 
 void CameraFollow::actPos(){
-	Game::camera.x = entityT->getPos().getX() - (Game::camera.w / 2.0f) + offset.getX();
-	Game::camera.y = entityT->getPos().getY() - (Game::camera.h / 2.0f) + offset.getY();
+	Game::camera.x = entityT->getPos().getX() - (Game::camera.w / 2.0f) + offset_.getX();
+	Game::camera.y = entityT->getPos().getY() - (Game::camera.h / 2.0f) + offset_.getY();
 }
 
 void CameraFollow::actPosAdvanced(){
-	int x = entityT->getPos().getX() - (Game::camera.w / 2.0f) + offset.getX();
-	int y = entityT->getPos().getY() - (Game::camera.h / 2.0f) + offset.getY();
+	//Flip del offset.x en funcion del flip del sprite 
+	Vector2D offset = Vector2D(0, offset_.getY());
+	if (entity_->getComponent<AnimBlendGraph>()->isFlipX())
+		offset.setX(offset_.getX());//mira derecha
+	else
+		offset.setX(-offset_.getX());//mira izquierda
+
+	int x = entityT->getPos().getX()+(entityT->getW() /2.0f) - (Game::camera.w / 2.0f) + offset.getX();
+	int y = entityT->getPos().getY()+(entityT->getH() /2.0f) - (Game::camera.h / 2.0f) + offset.getY();
 
 	lastDiff.setX(sdlutils().lerpPrecise(lastDiff.getX(), x, percentage));
 	differenceX += (lastDiff.getX() - (differenceX));

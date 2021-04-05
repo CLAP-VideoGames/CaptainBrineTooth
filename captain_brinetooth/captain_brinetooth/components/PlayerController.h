@@ -46,13 +46,15 @@ public:
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(-speed_, vel.y));
 				snd->playSoundEffect("walk");
-
+				animController_->setParamValue("Speed", 1);
+				animController_->flipX(false);
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_RIGHT) && !isDashing) {
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(speed_, vel.y));
 				snd->playSoundEffect("walk");
-
+				animController_->setParamValue("Speed", 1);
+				animController_->flipX(true);
 			}
 			
 			//Parte Vertical
@@ -65,10 +67,7 @@ public:
 				//Realizar da�o
 				//health_->loseLife();
 
-				//Test animacion de salto, Ejemplo de uso
-				if(animController_ != nullptr )
-					if(animController_->searchParamValue("NotOnFloor") != -1)
-						animController_->setParamValue("NotOnFloor", 1);
+				animController_->setParamValue("NotOnFloor", 1);
 				snd->playSoundEffect("player_jump");
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_X)) {
@@ -89,8 +88,10 @@ public:
 				canDash = false;
 			}
 
-			
-	
+		}
+
+		if(collider_->getBody()->GetLinearVelocity().x == 0){
+			animController_->setParamValue("Speed", 0);
 		}
 
 		if (isDashing) {
@@ -115,9 +116,7 @@ public:
 			isOnFloor = true;
 			lastTimeJumped = sdlutils().currRealTime();
 
-			if (animController_ != nullptr)
-				if (animController_->searchParamValue("NotOnFloor") != -1)
-						animController_->setParamValue("NotOnFloor", 0);
+			animController_->setParamValue("NotOnFloor", 0);
 		}
 	}
 	//Joseda es tonto

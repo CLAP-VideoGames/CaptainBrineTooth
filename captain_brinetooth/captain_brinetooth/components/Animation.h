@@ -42,6 +42,7 @@ public:
 		actfr_ = startfr_;	//1er frame es el inicial
 		state_ = Playing;		//No empieza la animacion de base
 		lastUpdateTime = sdlutils().currRealTime();
+		flip_horizontal_ = false;
 	}
 
 	void render() override {
@@ -57,7 +58,10 @@ public:
 		//Construccion de los rectangulos fuente(textura) y destino (entidad)
 		SDL_Rect src = build_sdlrect(framepos_[actfr_].getX() * framewidth_, framepos_[actfr_].getY() * frameheight_, framewidth_, frameheight_);
 		SDL_Rect dest = build_sdlrect(tr_->getPos().getX() - Game::camera.x, tr_->getPos().getY() - Game::camera.y, tr_->getW(), tr_->getH());
-		tex_->render(src, dest, tr_->getRot());
+		SDL_RendererFlip flip;
+		if (flip_horizontal_) { flip = SDL_FLIP_HORIZONTAL; }
+		else { flip = SDL_FLIP_NONE; }
+		tex_->render(src, dest, tr_->getRot(),nullptr,flip);
 	}
 
 	void nextFrame() { 
@@ -79,6 +83,7 @@ public:
 	void stop() { if(state_ != Complete) state_ = Stop; }
 	void play() {state_ = Playing; }
 	void reset() { actfr_ = startfr_; }
+	void flipX(bool state) { flip_horizontal_ = state; }
 	const State& getState() const { return state_; }
 	const std::string& getID() const { return id_; }
 
@@ -93,5 +98,6 @@ protected:
 	Uint32 framerate_;	
 	int repeat_;
 	Uint32 lastUpdateTime;
+	bool flip_horizontal_;
 };
 

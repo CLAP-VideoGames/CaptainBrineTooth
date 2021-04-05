@@ -7,7 +7,9 @@
 #include "../components/BoxCollider.h"
 #include "../game/CollisionLayers.h"
 #include "../components/AnimBlendGraph.h"
+#include "../components/EnemyTrigger.h"
 #include "../components/FringeHeadAtack.h"
+#include "../components/ElfSharkAttack.h"
 #include "../components/Enemy_Health.h"
 using namespace ColLayers;
 
@@ -29,15 +31,27 @@ void PruebaState::addStateEntityPrueba() {
 
 	//auto* enemy = app->createBasicEntity(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(50.0f, 50.0f),0.0f, Vector2D(0,0));
 	//Vector2D pos, Vector2D vel, float width, float height,float rotation
-
-	auto* enemy = manager_->addEntity();
+#pragma region FringeHead
+	/*auto* enemy = manager_->addEntity();
 	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
 	enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
+	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
 	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(300);
-	
+	enemy->addComponent<Enemy_Health>(200);*/
+#pragma endregion
+#pragma region ElfShark
+	auto* elf1 = manager_->addEntity();
+	Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.55f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
+	elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
+	AnimBlendGraph* elf1_anim_controller = elf1->addComponent<AnimBlendGraph>();
+	elf1_anim_controller->addAnimation("idle", &sdlutils().images().at("Elf_Shark"), 1, 3, 1, 1, -1);
+	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
+	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
+	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
+	elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
+	elf1->addComponent<Enemy_Health>(300);
+#pragma endregion
 	//Creacion de un componente que tenga un metodo estatico para asignarselo a la colision del trigger del enemigo con el jugador 
 
 

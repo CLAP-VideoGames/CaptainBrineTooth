@@ -30,10 +30,11 @@
 #include "../states/MenuState.h"
 #include "..//components/Sword.h"
 #include "..//components/Hammer.h"
+#include "../components/ElfSharkAttack.h"
 
 //tiledmap
 const Vector2D window(1100, 900);
-
+const float camera_Zoom = 1.0f;	//Zoom de la camara si asi soy, lo siento Joseda
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 
@@ -73,12 +74,12 @@ void Game::init() {
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//createBackGround("Square", 11, 11);
-	//createLevel0();
+	createLevel0();
 
 
-	MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
+	/*MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
 	aux->addStateEntityMenu();
-	aux->setSoundController(soundController->getComponent<SoundManager>());
+	aux->setSoundController(soundController->getComponent<SoundManager>());*/
 
 	//Caja para hacer testeo con movimiento
 	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
@@ -87,7 +88,7 @@ void Game::init() {
 
 	//sdlutils().musics().at(mainMusic).setMusicVolume(volumen++);
 
-	//createPlayer(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
+	createPlayer(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
 
 }
 
@@ -111,20 +112,21 @@ void Game::start() {
 		world_->Step(1.0f / 60.0f, 6, 2);
 		  
 
-
+		mngr_->update();
+		mngr_->refresh();
 		//Los estados son capaces de actualizar todo lo suyo gracias a la referencia del manager
-		//mngr_->update();
 		stateMachine->currentState()->update();
 		//No tengo muy claro que la camara se actualize en base al juego , en base a cada estado individual
 		//O en base a cualquier estado
 		stateMachine->currentState()->refresh();
 
 		sdlutils().clearRenderer();
-		stateMachine->currentState()->render();
+		SDL_RenderSetLogicalSize(sdlutils().renderer(), window.getX() * camera_Zoom, window.getY()*camera_Zoom);
+		mngr_->render();
+		//stateMachine->currentState()->render();
 		sdlutils().presentRenderer();
 		
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
-
 
 		if (frameTime < 20)
 			SDL_Delay(20 - frameTime);
@@ -215,13 +217,21 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
-#pragma region run & jump
-	//-run & jump---------------------------------------------------------------------------------------------------
+#pragma region idle, run & jump
+	//-idle, run & jump---------------------------------------------------------------------------------------------------
+	//Animations
+	anim_controller->addAnimation("idle", &sdlutils().images().at("player_idle"), 4, 6, 24, 24, -1);
 	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
 	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 5, 20, 24, 0);
+	//Transitions
+	anim_controller->addTransition("idle", "run", "Speed", 1, false);
+	anim_controller->addTransition("run", "idle", "Speed", 0, false);
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
 	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
+	anim_controller->addTransition("idle", "jump", "NotOnFloor", 1, false);
+	anim_controller->addTransition("jump", "idle", "NotOnFloor", 0, true);
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
+	anim_controller->setParamValue("Speed", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 #pragma region Weapons
@@ -288,13 +298,14 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 	player->addComponent<BoxCollider>(DYNAMIC, PLAYER, PLAYER_MASK, false, friction, fixedRotation, rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
+	player->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
 	
 	player->addComponent<SoundManager>(75, "FinalBoss");
 	//player->getComponent<SoundManager>()->playMainMusic();
 	
 	player->addComponent<PlayerController>();
 
-	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(0.0f, -300), 0.035f);
+	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Hammer>();
 	
 	player->addComponent<LoseLife>();
