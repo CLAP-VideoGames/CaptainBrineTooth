@@ -78,4 +78,12 @@ void MenuState::changeToGame(Game* g, SoundManager* snd)
 	snd->playSoundEffect("gaviota");
 	PruebaState* mainGame = new PruebaState(g, world_, snd);
 	g->getGameStateMachine()->pushState(mainGame);
+
+	PruebaState* prueba = static_cast<PruebaState*>(g->getGameStateMachine()->currentState());
+	prueba->addStateEntityPrueba();
+}
+
+void MenuState::salirMenu(Game* game, SoundManager* snd)
+{
+	game->exitGame();
 }

@@ -7,9 +7,10 @@
 
 class Armas_HUD : public Component {
 public:
-	Armas_HUD(Texture* weapon1, Texture* weapon2) :
+	Armas_HUD(Texture* weapon1, Texture* weapon2, Game* game) :
 		mainWeapon(weapon1),
-		secondWeapon(weapon2)
+		secondWeapon(weapon2),
+		g(game)
 	{
 	}
 	virtual ~Armas_HUD() {}
@@ -25,5 +26,6 @@ public:
 private:
 	Texture* mainWeapon;
 	Texture* secondWeapon;
+	Game* g;
 };
 

@@ -25,6 +25,7 @@ class Manager;
 
 class Game {
 public:
+	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda
 
 	Game();
 	virtual ~Game();
@@ -45,6 +46,7 @@ public:
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
 
 	GameStateMachine* getGameStateMachine() { return stateMachine; }
+	void exitGame() { exit = true; }
 	
 	//update (Juan: Si esta en Mayusculas pq es una constante) Joseda: asi es gente, lo que sea en mayus tiene que ser constante
 	//const Uint32 TICKS = 60;
@@ -55,6 +57,8 @@ private:
 	std::unique_ptr<Manager> mngr_;
 	//Control de los estados en los que esta el juego 
 	GameStateMachine* stateMachine;
+
+	bool exit = false;
 
 	
 };

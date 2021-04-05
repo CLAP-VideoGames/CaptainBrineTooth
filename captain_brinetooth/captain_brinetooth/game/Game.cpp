@@ -34,7 +34,6 @@
 
 //tiledmap
 const Vector2D window(1100, 900);
-const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 
@@ -297,11 +296,10 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 
 	player->addComponent<BoxCollider>(DYNAMIC, PLAYER, PLAYER_MASK, false, friction, fixedRotation, rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
-	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"));
+	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), this);
 	player->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
 	
 	player->addComponent<SoundManager>(75, "FinalBoss");
-	//player->getComponent<SoundManager>()->playMainMusic();
 	
 	player->addComponent<PlayerController>();
 
