@@ -33,7 +33,7 @@
 #include "../components/ElfSharkAttack.h"
 
 //tiledmap
-const Vector2D window(1100, 900);
+
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
 
@@ -69,26 +69,42 @@ void Game::init() {
 	auto* soundController = mngr_->addEntity();
 	soundController->addComponent<SoundManager>(75, "Menu");
 
-
 	PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	prueba->addStateEntityPrueba();
 	//createBackGround("Square", 11, 11);
 	createLevel0();
-
 
 	/*MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
 	aux->addStateEntityMenu();
 	aux->setSoundController(soundController->getComponent<SoundManager>());*/
 
 	//Caja para hacer testeo con movimiento
-	//createBoxTest(Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f), Vector2D(), Vector2D(150.0f, 80.0f), 0.5f, DYNAMIC, false, DEFAULT, DEFAULT_MASK, false, 0.0f);
+	Config boxConfig {};
+	boxConfig.pos = Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f);
+	boxConfig.vel = Vector2D();
+	boxConfig.size = Vector2D(150.0f, 80.0f);
+	boxConfig.friction = 0.5f;
+	boxConfig.fixedRotation = false;
+	boxConfig.isTrigger = false;
+	boxConfig.rotation = 0.0f;
+	boxConfig.physicType = DYNAMIC;
+	boxConfig.col= DEFAULT;
+	boxConfig.col= DEFAULT_MASK;
+	createBoxTest(boxConfig);
 	//Crea el suelo
 	//createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
 
 	//sdlutils().musics().at(mainMusic).setMusicVolume(volumen++);
 
-	createPlayer(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, true, 0.0f);
+	Config playerConfig {};
+	playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
+	playerConfig.vel = Vector2D(0,0);
+	playerConfig.size = Vector2D(200.0f, 200.0f);
+	playerConfig.friction = 0.2f;
+	playerConfig.fixedRotation = true;
+	playerConfig.rotation = 0.0f;
 
+	createPlayer(playerConfig);
 }
 
 void Game::start() {
@@ -196,24 +212,25 @@ Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, con
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="physicType">Determina el tipo f�sico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
-void Game::createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vector2D & size, const float & friction, const TYPE physicType, const bool & isTrigger, const uint16& col, const uint16& colMask, const bool & fixedRotation, const float & rotation)
+void Game::createBoxTest(const Config& entityConfig)
 {
-	auto* box = createBasicEntity(pos, size, rotation, vel);
+	auto* box = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 
 	auto* anim_controller = box->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 
-	box->addComponent<BoxCollider>(physicType, col, colMask, isTrigger, friction, fixedRotation, rotation);
+	box->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
 	box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
-	if(physicType == 1 || physicType == 2)
+	if (entityConfig.physicType == 1 || entityConfig.physicType == 2)
 		box->addComponent<KeyBoardCtrl>();
 }
 
-void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector2D & size, const float & friction, const bool & fixedRotation, const float& rotation)
+void Game::createPlayer(const Config& playerConfig)
 {
-	auto* player = createBasicEntity(pos, size, rotation, vel);
-#pragma region Animations
+	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
+
+	#pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
 #pragma region idle, run & jump
@@ -294,20 +311,19 @@ void Game::createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector
 #pragma endregion
 #pragma endregion
 
-	player->addComponent<BoxCollider>(DYNAMIC, PLAYER, PLAYER_MASK, false, friction, fixedRotation, rotation);
+	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, this);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), this);
 	player->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
-	
+
 	player->addComponent<SoundManager>(75, "FinalBoss");
-	
+
 	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Hammer>();
-	
-	player->addComponent<LoseLife>();
 
+	player->addComponent<LoseLife>();
 
 	//Seteamos al Player como MainHandler
 	mngr_->setHandler<Player>(player);

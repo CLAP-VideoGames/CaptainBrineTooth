@@ -17,15 +17,27 @@
 
 class GameState;
 class GameStateMachine;
-
-
+const Vector2D window(1100, 900);
 // when you are not using the methods of a class, just
 // say that it exists, that saves time when parsing files
 class Manager;
 
+struct Config{
+	Vector2D pos, vel, size;
+	float friction, rotation;
+	bool fixedRotation, isTrigger;
+	TYPE physicType;
+	std::string spriteId;
+	int filsSprite, colsSprite;
+	uint16 col, colMask;
+
+	Config(): pos(), vel(), size(), friction(), rotation(), filsSprite(), colsSprite(), col(), colMask(), physicType(STATIC), spriteId(), isTrigger(), fixedRotation(){
+	}
+};
+
 class Game {
 public:
-	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda
+	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qué me tomais por un dictador, que no soy Ángel.
 
 	Game();
 	virtual ~Game();
@@ -39,8 +51,8 @@ public:
 	void createBackGround(const std::string& spriteId, const int & fils, const int & cols);
 
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
-	void createPlayer(const Vector2D & pos, const Vector2D & vel, const Vector2D & size, const float & friction, const bool & fixedRotation, const float& rotation);
-	void createBoxTest(const Vector2D & pos, const  Vector2D & vel, const Vector2D & size, const float & friction, const TYPE physicType, const bool & isTrigger, const uint16& col, const uint16& colMask, const bool & fixedRotation, const float & rotation);
+	void createPlayer(const Config & playerConfig);
+	void createBoxTest(const Config& entityConfig);
 
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
