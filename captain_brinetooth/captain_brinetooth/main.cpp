@@ -2,15 +2,28 @@
 
 #include <iostream>
 #include <memory>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "game/Game.h"
 
+void readDirectoryNames(){
+	std::string path = "assets/maps";
+	for (const auto& entry : fs::directory_iterator(path))
+		std::cout << entry.path() << std::endl;
+}
+
 void start() {
+
+	readDirectoryNames();
+
 	Game g;
 
 	g.init();
 	g.start();
 }
+
+
 
 
 int main(int, char**) {
