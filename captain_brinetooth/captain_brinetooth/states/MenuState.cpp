@@ -55,7 +55,7 @@ void MenuState::addStateEntityMenu() {
 	// Boton de salir
 	auto salir = manager_->addEntity();
 	salir->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt / 1.25), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
-	salir->addComponent<Button>(&sdlutils().images().at("salir"), changeToGame, app, soundController);
+	salir->addComponent<Button>(&sdlutils().images().at("salir"), salirMenu, app, soundController);
 }
 
 void MenuState::update()
