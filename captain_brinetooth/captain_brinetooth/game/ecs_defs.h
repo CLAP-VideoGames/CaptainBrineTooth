@@ -34,6 +34,7 @@ class EnemyTrigger;
 class WeaponDamageDetection;
 class DestroyOnCollision;
 class Button;
+class MapProcedural;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -66,6 +67,7 @@ class Button;
 	Hammer,\
 	WeaponDamageDetection,\
 	DestroyOnCollision, \
+	MapProcedural, \
 	Button
 
 // groups

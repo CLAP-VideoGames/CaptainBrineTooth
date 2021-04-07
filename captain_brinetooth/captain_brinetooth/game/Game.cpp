@@ -32,6 +32,7 @@
 #include "..//components/Hammer.h"
 #include "../components/ElfSharkAttack.h"
 #include "../components/EnemyTrigger.h"
+#include "..//components/MapProcedural.h"
 
 //tiledmap
 
@@ -352,6 +353,8 @@ void Game::createLevel0()
 	auto* nivel = mngr_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, world_);
 	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
+	nivel->addComponent<MapProcedural>(10);
+	nivel->getComponent<MapProcedural>()->debug();
 }
 
 
