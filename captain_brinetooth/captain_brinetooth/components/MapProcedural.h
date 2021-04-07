@@ -167,17 +167,21 @@ private:
 
 		if (opositeDir >= 4) opositeDir = opositeDir - 4;
 
-		bool concuerda = false;
-		while (roomNames[tile].used && !concuerda) {
+		bool concuerda = (roomNames[tile].name[opositeDir] == cardinals[opositeDir]);
+		while (roomNames[tile].used || !concuerda) {
 			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
 
-			if (roomNames[tile].name[opositeDir] == cardinals[opositeDir])concuerda = true;
+			int i = 0;
+			//Comprobamos que tiene conexión por el cardinal opuesto
+			while (i < 4 && roomNames[tile].name[i] != cardinals[opositeDir]) i++;
+			
+			if (i < 4) concuerda = true;
 		}
 		//Si la habitaci�n tiene una conexi�n, la del otro lado tiene que tener conexi�n opuesta
 		//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcci�n que pareces tonto
 
 
-		r->level = roomNames[tile].path;
+ 		r->level = roomNames[tile].path;
 
 		/*if (partida->conections[0] != nullptr) r->level = "assets/maps/" + tile;
 		
