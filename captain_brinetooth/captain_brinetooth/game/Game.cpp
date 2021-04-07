@@ -322,7 +322,7 @@ void Game::createPlayer(const Config& playerConfig)
 
 	player->addComponent<SoundManager>(75, "FinalBoss");
 
-	player->addComponent<PlayerController>();
+	player->addComponent<KeyBoardCtrl>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Hammer>();
@@ -354,7 +354,8 @@ void Game::createLevel0()
 	nivel->addComponent<Level0>(MAP_PATH, world_);
 	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
 	nivel->addComponent<MapProcedural>(10);
-	nivel->getComponent<MapProcedural>()->debug();
+	nivel->getComponent<MapProcedural>();
+	
 }
 
 

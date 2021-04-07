@@ -28,7 +28,7 @@ PruebaState::PruebaState(Game* a ,b2World* mundo, SoundManager* snd) : GameState
 	playerConfig.vel = Vector2D(0,0);
 	playerConfig.size = Vector2D(200.0f, 200.0f);
 	playerConfig.friction = 0.2f;
-	playerConfig.physicType = DYNAMIC;
+	playerConfig.physicType = KINEMATIC;
 	playerConfig.fixedRotation = true;
 	playerConfig.rotation = 0.0f;
 

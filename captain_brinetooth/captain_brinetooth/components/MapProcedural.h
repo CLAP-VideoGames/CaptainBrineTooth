@@ -59,9 +59,6 @@ public:
 		roomNames[tile].used = true;
 	}
 
-	void debug() {
-		string samirVaLoco = "Si va";
-	}
 
 private:
 	void ReadDirectory(const string& p, int& roomsRead) {
@@ -77,11 +74,10 @@ private:
 
 			//Encontramos donde está la división con el nombre
 			int puntoCorte = entry.path().string().find_last_of("\\");
-			int length = ruta.length(); //Final del string
 
+			ruta[puntoCorte] = '/';
 			//Nombre real del nivel
-			string nombrecito = ruta.substr(puntoCorte + 1, length);
-			roomNames[roomsRead].name = nombrecito;
+			roomNames[roomsRead].name = entry.path().filename().string();
 			roomsRead++;
 		}
 	}
