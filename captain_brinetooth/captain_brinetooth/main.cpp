@@ -7,14 +7,9 @@
 
 namespace fs = std::filesystem;
 
-void readDirectoryNames(){
-	std::string path = "assets/maps";
-	for (const auto& entry : fs::directory_iterator(path))
-		std::cout << entry.path() << std::endl;
-}
+
 
 void start() {
-	readDirectoryNames();
 
 	Game g;
 

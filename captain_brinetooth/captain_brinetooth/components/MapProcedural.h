@@ -2,8 +2,11 @@
 #include "../ecs/Component.h"
 #include "../levels/Level0.h"
 #include "../ecs/Entity.h"
+#include <filesystem>
 #include <map>
 
+
+namespace fs = std::filesystem;
 //Le metearimos el componente al GM
 class MapProcedural : public Component {
 	const string ruta = "assets/maps/";
@@ -46,6 +49,15 @@ public:
 	}
 
 private:
+	void readDirectoryNames() {
+		std::string path = "assets/maps/level_starts";
+		int i = 0;
+		for (const auto& entry : fs::directory_iterator(path)) {
+			roomNames[i].name = entry.path();
+			roomNames[i].used = false;
+		}
+	}
+
 	void init() {
 		lvl = entity_->getComponent<Level0>();
 		initRoomNames();
@@ -65,6 +77,8 @@ private:
 	struct RoomNames {
 		string name;
 		bool used;
+
+		int tipo; //0 inicio   1 intermedio   2 finales
 	};
 
 
