@@ -17,6 +17,10 @@
 			"file": "assets/sprites/player/player_dash.png"
 		},
 		{
+			"id": "fists_combo",
+			"file": "assets/sprites/player/weapons/fists_combo.png"
+		},
+		{
 			"id": "chainsaw_combo",
 			"file": "assets/sprites/player/weapons/chainsaw_combo.png"
 		},
