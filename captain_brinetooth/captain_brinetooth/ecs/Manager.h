@@ -12,7 +12,6 @@
 
 class Manager {
 public:
-
 	Manager(b2World* mundo);
 	virtual ~Manager();
 
@@ -39,6 +38,10 @@ public:
 
 	inline const std::vector<Entity*>& getEnteties() {
 		return entities_;
+	}
+
+	inline void desactiveEnteties(){
+		for (auto e : entities_) e->setActive(false);
 	}
 
 	inline b2World* getWorld() {

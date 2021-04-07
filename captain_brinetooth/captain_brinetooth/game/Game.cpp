@@ -41,7 +41,6 @@ using namespace ColLayers;
 
 //Comentario para probar un commit
 Game::Game() {
-
 	stateMachine = new GameStateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
@@ -71,9 +70,9 @@ void Game::init() {
 	auto* soundController = mngr_->addEntity();
 	soundController->addComponent<SoundManager>(75, "Menu");
 
-	///*PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
-	//prueba->addStateEntityPrueba();*/
-	////createBackGround("Square", 11, 11);
+	//PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
+	//prueba->addStateEntityPrueba();
+	//createBackGround("Square", 11, 11);
 	//createLevel0();
 
 	///*MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
@@ -228,6 +227,7 @@ void Game::createBoxTest(const Config& entityConfig)
 		box->addComponent<KeyBoardCtrl>();
 }
 
+
 void Game::createPlayer(const Config& playerConfig)
 {
 	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
@@ -375,4 +375,23 @@ void Game::createJointMedusa(Entity* ground)
 	//b2joint->localAnchorB.Set(2, 0);
 	//// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
 	//world_->CreateJoint(b2joint);
+}
+
+void Game::createElfShark(const Config& entityConfig) {
+#pragma region ElfShark
+	auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	//auto* elf1 = manager_->addEntity();
+	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
+	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
+	elf1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	AnimBlendGraph* elf1_anim_controller = elf1->addComponent<AnimBlendGraph>();
+	elf1_anim_controller->addAnimation("idle", &sdlutils().images().at("Elf_Shark"), 1, 3, 1, 1, -1);
+	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
+	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
+	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
+	elf1->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
+	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
+	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
+	elf1->addComponent<Enemy_Health>(300);
+#pragma endregion
 }

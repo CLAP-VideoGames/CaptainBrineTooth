@@ -27,11 +27,9 @@ void MenuState::init() {
 
 	soundController->playMainMusic();
 
-
 	// Titulo
 	auto* title = manager_->addEntity();
 	title->addComponent<Transform>(Vector2D((cam.w / 3.1) - 50, 80), Vector2D(0, 0), cam.w - (cam.w / 9), cam.h - (cam.h / 2), 0.0f);
-
 
 	title->addComponent<Button>(&sdlutils().images().at("titulo"), changeToGame, app, soundController);
 
@@ -63,8 +61,7 @@ void MenuState::init() {
 	salir->addComponent<Button>(&sdlutils().images().at("salir"), salirMenu, app, soundController);
 }
 
-void MenuState::update()
-{
+void MenuState::update() {
 	for (Entity* b : manager_->getEnteties())
 	{
 		Button* but = b->getComponent<Button>();
@@ -81,14 +78,18 @@ void MenuState::changeToGame(Game* g, SoundManager* snd)
 	b2World* world_ = new b2World(gravity);
 	snd->stopMusic();
 	snd->playSoundEffect("gaviota");
+
+
+	g->getGameStateMachine()->popState();
 	PruebaState* mainGame = new PruebaState(g, world_, snd);
 	g->getGameStateMachine()->pushState(mainGame);
 
-	PruebaState* prueba = static_cast<PruebaState*>(g->getGameStateMachine()->currentState());
-	prueba->init();
+	mainGame->init();
+
+	//PruebaState* prueba = static_cast<PruebaState*>(g->getGameStateMachine()->currentState());
+	//prueba->init();
 }
 
-void MenuState::salirMenu(Game* game, SoundManager* snd)
-{
+void MenuState::salirMenu(Game* game, SoundManager* snd){
 	game->exitGame();
 }

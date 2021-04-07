@@ -3,9 +3,9 @@
 #include <iostream>
 #include <memory>
 #include <filesystem>
-namespace fs = std::filesystem;
-
 #include "game/Game.h"
+
+namespace fs = std::filesystem;
 
 void readDirectoryNames(){
 	std::string path = "assets/maps";
@@ -14,7 +14,6 @@ void readDirectoryNames(){
 }
 
 void start() {
-
 	readDirectoryNames();
 
 	Game g;

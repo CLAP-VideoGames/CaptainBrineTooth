@@ -22,21 +22,23 @@ const Vector2D window(1100, 900);
 // say that it exists, that saves time when parsing files
 class Manager;
 
-struct Config{
-	Vector2D pos, vel, size;
-	float friction, rotation;
-	bool fixedRotation, isTrigger;
-	TYPE physicType;
-	std::string spriteId;
-	int filsSprite, colsSprite;
-	uint16 col, colMask;
-
-	Config(): pos(), vel(), size(), friction(), rotation(), filsSprite(), colsSprite(), col(), colMask(), physicType(STATIC), spriteId(), isTrigger(), fixedRotation(){
-	}
-};
 
 class Game {
 public:
+
+	struct Config{
+		Vector2D pos, vel, size;
+		float friction, rotation;
+		bool fixedRotation, isTrigger;
+		TYPE physicType;
+		std::string spriteId;
+		int filsSprite, colsSprite;
+		uint16 col, colMask;
+
+		Config(): pos(), vel(), size(), friction(), rotation(), filsSprite(), colsSprite(), col(), colMask(), physicType(STATIC), spriteId(), isTrigger(), fixedRotation(){
+		}
+	};
+
 	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qué me tomais por un dictador, que no soy Ángel.
 
 	Game();
@@ -53,6 +55,8 @@ public:
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
 	void createPlayer(const Config & playerConfig);
 	void createBoxTest(const Config& entityConfig);
+
+	void createElfShark(const Config& playerConfig);
 
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
