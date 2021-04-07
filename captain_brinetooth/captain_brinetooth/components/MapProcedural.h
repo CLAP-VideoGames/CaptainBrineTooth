@@ -24,7 +24,7 @@ public:
 
 	//0 = N, 1 = E, 2 = S, 3 = W
 	void TravelNextRoom(int dir) {
-		//Nueva habitación a la que hemos ido
+		//Nueva habitaciï¿½n a la que hemos ido
 		actualRoom = actualRoom->conections[dir];
 
 		//Cargamos nuevo mapa
@@ -34,7 +34,7 @@ public:
 		getCons(actualRoom->getName(), actualRoom->cons);
 
 
-		//Creamos habitaciones en función de las conexiones que tiene
+		//Creamos habitaciones en funciï¿½n de las conexiones que tiene
 		CreateConnections(actualRoom, actualRoom->cons);
 
 	}
@@ -66,13 +66,14 @@ private:
 
 		for (const auto& entry : fs::directory_iterator(path)) {
 			//Cogemos toda la ruta
-			string ruta = entry.path().string();
+			string ruta = entry.path().u8string();
+			//string ruta = entry.path();
 
 			roomNames[roomsRead].path = ruta; //Se la asignamos al path
-			roomNames[roomsRead].used = false;	//No se ha usado la habitación
+			roomNames[roomsRead].used = false;	//No se ha usado la habitaciï¿½n
 			roomNames[roomsRead].tipo = 1;		//Tipo start
 
-			//Encontramos donde está la división con el nombre
+			//Encontramos donde estï¿½ la divisiï¿½n con el nombre
 			int puntoCorte = entry.path().string().find_last_of("\\");
 
 			ruta[puntoCorte] = '/';
@@ -99,11 +100,11 @@ private:
 		std::array<bool, 4> cons; //Array para crear las conexiones
 	};
 
-	//Opción con struct
+	//Opciï¿½n con struct
 	struct RoomNames {
 		string name; //Nombre para comparar las conexiones
-		string path; //Dirección desde la que cargarlo
-		bool used;	 //Booleano que se usa para comprobar que la habitación ya ha salido
+		string path; //Direcciï¿½n desde la que cargarlo
+		bool used;	 //Booleano que se usa para comprobar que la habitaciï¿½n ya ha salido
 
 		int tipo; //0 inicio   1 intermedio   2 finales
 	};
@@ -122,7 +123,7 @@ private:
 		getCons(tag.name, r->cons);
 
 		
-		//Creamos habitaciones en función de las conexiones que tiene
+		//Creamos habitaciones en funciï¿½n de las conexiones que tiene
 		/*if(rConnections[0] == true) r->conections[0] = initializeRoom(r, 0);
 
 		if (rConnections[1] == true) r->conections[1] = initializeRoom(r, 1);
@@ -143,23 +144,23 @@ private:
 
 	Room* initializeRoom(Room* partida, int dir) {
 		if (roomsExplored == nRooms) return nullptr;
-		//Tenemos que reconocer donde están los extremos, para poder poner habitaciones limítrofes
-		//Y también deberíamos crear los colliders desde level, btw
+		//Tenemos que reconocer donde estï¿½n los extremos, para poder poner habitaciones limï¿½trofes
+		//Y tambiï¿½n deberï¿½amos crear los colliders desde level, btw
 		if (roomsExplored == nRooms - 1) {
-			//Habitación final
+			//Habitaciï¿½n final
 		}
 
 		Room* r = new Room();
 
-		//Seleccionaría aquí uno que tenga una entrada por el cardinal opuesto
+		//Seleccionarï¿½a aquï¿½ uno que tenga una entrada por el cardinal opuesto
 		int tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
 
 		
-		//Buscamos hasta encontrar uno que no hayamos usado, quizás podamos hacer divide y vencerás p marcas, como en eda
+		//Buscamos hasta encontrar uno que no hayamos usado, quizï¿½s podamos hacer divide y vencerï¿½s p marcas, como en eda
 
 
 
-		//Cogemos la posición opuesta
+		//Cogemos la posiciï¿½n opuesta
 		int opositeDir = dir + 2;
 
 		if (opositeDir >= 4) opositeDir = opositeDir - 4;
@@ -170,8 +171,8 @@ private:
 
 			if (roomNames[tile].name[opositeDir] == cardinals[opositeDir])concuerda = true;
 		}
-		//Si la habitación tiene una conexión, la del otro lado tiene que tener conexión opuesta
-		//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa dirección que pareces tonto
+		//Si la habitaciï¿½n tiene una conexiï¿½n, la del otro lado tiene que tener conexiï¿½n opuesta
+		//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcciï¿½n que pareces tonto
 
 
 		r->level = roomNames[tile].path;
@@ -207,6 +208,6 @@ protected:
 
 	Room* actualRoom;
 
-	//División entre tipos de salas
+	//Divisiï¿½n entre tipos de salas
 	std::array<int, 2> fronteras;
 };
