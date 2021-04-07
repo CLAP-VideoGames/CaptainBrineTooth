@@ -9,7 +9,7 @@ class MenuState : public GameState
 public:
 
 	MenuState(Game* a, b2World* mundo, SoundManager* snd);
-	void addStateEntityMenu();
+	virtual void init();
 	static void changeToGame(Game* game, SoundManager* snd);
 	static void salirMenu(Game* game, SoundManager* snd);
 	void update();

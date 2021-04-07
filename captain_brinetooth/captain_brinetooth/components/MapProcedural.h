@@ -155,7 +155,7 @@ protected:
 	int nRooms, nRoomNames = 10;
 
 	//Opcion con struct
-	std::array<RoomNames, 10> roomNames;
+	std::array<RoomNames, 20> roomNames;
 
 	int roomsExplored = 0;
 

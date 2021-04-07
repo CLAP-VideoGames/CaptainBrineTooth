@@ -13,7 +13,7 @@ MenuState::MenuState(Game* a, b2World* mundo, SoundManager* snd) : GameState(a, 
 	cam = a->camera;
 }
 
-void MenuState::addStateEntityMenu() {
+void MenuState::init() {
 	auto* newP = manager_->addEntity();
 	newP->addComponent<Transform>(Vector2D(0, 0), Vector2D(0, 0), cam.w, cam.h, 0.0f);
 	auto* anim_controller = newP->addComponent<AnimBlendGraph>();
@@ -80,7 +80,7 @@ void MenuState::changeToGame(Game* g, SoundManager* snd)
 	g->getGameStateMachine()->pushState(mainGame);
 
 	PruebaState* prueba = static_cast<PruebaState*>(g->getGameStateMachine()->currentState());
-	prueba->addStateEntityPrueba();
+	prueba->init();
 }
 
 void MenuState::salirMenu(Game* game, SoundManager* snd)
