@@ -31,6 +31,7 @@
 #include "..//components/Sword.h"
 #include "..//components/Hammer.h"
 #include "../components/ElfSharkAttack.h"
+#include "../components/EnemyTrigger.h"
 
 //tiledmap
 
@@ -379,9 +380,9 @@ void Game::createJointMedusa(Entity* ground)
 
 void Game::createElfShark(const Config& entityConfig) {
 #pragma region ElfShark
-	auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	//auto* elf1 = manager_->addEntity();
-	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
+	//auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	auto* elf1 = mngr_->addEntity();
+	Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
 	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
 	elf1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	AnimBlendGraph* elf1_anim_controller = elf1->addComponent<AnimBlendGraph>();
