@@ -76,6 +76,6 @@ private:
 
 	bool exit = false;
 
-	
+	MapProcedural* map;
 };
 

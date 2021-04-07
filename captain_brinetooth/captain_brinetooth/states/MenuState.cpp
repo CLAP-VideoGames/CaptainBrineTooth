@@ -77,7 +77,7 @@ void MenuState::changeToGame(Game* g, SoundManager* snd)
 	b2Vec2 gravity(0.0f, 9.8f);
 	b2World* world_ = new b2World(gravity);
 	snd->stopMusic();
-	snd->playSoundEffect("gaviota");
+	//snd->playSoundEffect("gaviota");
 
 
 	g->getGameStateMachine()->popState();

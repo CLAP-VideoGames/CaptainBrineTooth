@@ -49,6 +49,8 @@ public:
 	std::vector<tmx::Vector2f> getVerticesList(){
 		return points;
 	}
+
+	void clearTileset();
 private:
 	string name_;
 	int fils_, cols_,		// filas y columnas de 

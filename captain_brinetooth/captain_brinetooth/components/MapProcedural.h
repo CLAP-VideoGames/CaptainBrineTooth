@@ -24,12 +24,14 @@ public:
 
 	//0 = N, 1 = E, 2 = S, 3 = W
 	void TravelNextRoom(int dir) {
+
 		//Nueva habitaci�n a la que hemos ido
 		actualRoom = actualRoom->conections[dir];
 
+		//lvl->clearTileset();
 		//Cargamos nuevo mapa
 		lvl->load(actualRoom->level);
-
+		cout << actualRoom->getName();
 		//Cogemos sus conexiones	
 		getCons(actualRoom->getName(), actualRoom->cons);
 
@@ -112,7 +114,7 @@ private:
 
 	//Primera sala
 	Room* initializeNewRoom(const RoomNames& tag) {
-
+		cout << tag.name;
 		Room* r = new Room();
 
 		r->level = tag.path;
@@ -190,7 +192,9 @@ private:
 	void getCons(const string& name, std::array<bool,4>& cons) {
 
 		for (int i = 0; i < 4; i++) {
-			if (name[i] == cardinals[i]) cons[i] = true;
+			for (int j = 0; j < 4; j++) {
+				if (name[i] == cardinals[j]) cons[i] = true;
+			}		
 		}
 
 	}

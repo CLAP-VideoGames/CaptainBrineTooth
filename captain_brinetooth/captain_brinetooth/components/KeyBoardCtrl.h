@@ -10,14 +10,15 @@
 #include "../ecs/Entity.h"
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
+#include "..//components/MapProcedural.h"
 
 //#include "Player_Health.h"
 
 
 class KeyBoardCtrl: public Component {
 public:
-	KeyBoardCtrl() :
-			tr_(nullptr), speed_(3.0)  {
+	KeyBoardCtrl(MapProcedural* m) :
+			tr_(nullptr), speed_(3.0), mapa(m)  {
 	}
 	virtual ~KeyBoardCtrl() {
 	}
@@ -57,6 +58,19 @@ public:
 			} else if (ih().isKeyDown(SDL_SCANCODE_X)) {
 				animController_->setParamValue("NotOnFloor", 0);
 			}
+
+			if (ih().isKeyDown(SDL_SCANCODE_I)) {
+				mapa->TravelNextRoom(0);
+			}
+			else if (ih().isKeyDown(SDL_SCANCODE_L)) {
+				mapa->TravelNextRoom(1);
+			}
+			if (ih().isKeyDown(SDL_SCANCODE_K)) {
+				mapa->TravelNextRoom(2);
+			}
+			if (ih().isKeyDown(SDL_SCANCODE_J)) {
+				mapa->TravelNextRoom(3);
+			}
 		}
 
 
@@ -67,6 +81,10 @@ private:
 	BoxCollider* collider_;
 	AnimBlendGraph* animController_;
 	float speed_;
+
+
+	//Debug
+	MapProcedural* mapa;
 }
 ;
 

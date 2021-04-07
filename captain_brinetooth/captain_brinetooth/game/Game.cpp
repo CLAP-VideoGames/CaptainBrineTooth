@@ -226,7 +226,7 @@ void Game::createBoxTest(const Config& entityConfig)
 	box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
 	if (entityConfig.physicType == 1 || entityConfig.physicType == 2)
-		box->addComponent<KeyBoardCtrl>();
+		box->addComponent<KeyBoardCtrl>(map);
 }
 
 
@@ -322,7 +322,7 @@ void Game::createPlayer(const Config& playerConfig)
 
 	player->addComponent<SoundManager>(75, "FinalBoss");
 
-	player->addComponent<KeyBoardCtrl>();
+	player->addComponent<KeyBoardCtrl>(map);
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Hammer>();
@@ -353,8 +353,9 @@ void Game::createLevel0()
 	auto* nivel = mngr_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, world_);
 	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
-	nivel->addComponent<MapProcedural>(10);
+	map = nivel->addComponent<MapProcedural>(10);
 	nivel->getComponent<MapProcedural>();
+	
 	
 }
 
