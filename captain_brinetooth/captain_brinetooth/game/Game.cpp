@@ -64,6 +64,7 @@ Game::~Game() {
 void Game::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY(), "assets/config/base.resources.json");
 
+
 	stateMachine->currentState()->init();
 	world_->SetContactListener(&collisionListener);
 

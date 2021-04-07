@@ -11,6 +11,11 @@
 MenuState::MenuState(Game* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
 	cam = a->camera;
+
+
+	//No tengo ni idea pero si no es chikito
+	cam.w = cam.w * 2;
+	cam.h = cam.h * 2;
 }
 
 void MenuState::init() {
