@@ -21,6 +21,10 @@
 			"file": "assets/sprites/player/weapons/fists_combo.png"
 		},
 		{
+			"id": "crab_combo",
+			"file": "assets/sprites/player/weapons/crab_combo.png"
+		},
+		{
 			"id": "chainsaw_combo",
 			"file": "assets/sprites/player/weapons/chainsaw_combo.png"
 		},
