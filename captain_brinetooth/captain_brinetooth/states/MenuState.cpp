@@ -1,11 +1,5 @@
-#include "../states/MenuState.h"
-#include "../ecs/Entity.h"
-#include "../game/App.h"
-#include "../utils/Vector2D.h"
-#include "../ecs/Manager.h"
-#include "../components/Animation.h"
-#include "../components/AnimBlendGraph.h"
-#include "../components/Button.h"
+#include "MenuState.h"
+
 #include "../states/TestZoneState.h"
 
 MenuState::MenuState(App* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)

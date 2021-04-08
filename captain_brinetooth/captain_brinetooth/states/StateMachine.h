@@ -1,6 +1,5 @@
 #pragma once
 #include <stack>
-#include <list>
 class GameState;
 using namespace std;
 

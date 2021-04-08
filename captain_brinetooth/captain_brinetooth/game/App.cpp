@@ -3,37 +3,11 @@
 #include "App.h"
 
 #include "../levels/Level0.h"
-#include "tmxlite/Map.hpp"
-#include "tmxlite/Layer.hpp"
-#include "tmxlite/TileLayer.hpp"
+
 #include "../states/StateMachine.h"
 #include "../states/GameState.h"
-
-#include "../components/Animation.h"
-#include "../components/AnimBlendGraph.h"
-#include "../components/Rotate.h"
-#include "../components/ChainCollider.h"
-#include "../components/Bounce.h"
-#include "../components/Armas_HUD.h"
-#include "../components/Transform.h"
-#include "../components/Rectangle.h"
-#include "../components/KeyBoardCtrl.h"
-#include "../components/Player_Health.h"
-#include "../components/enemyMovement.h"
-#include "../components/PlayerController.h"
-#include "../components/SoundManager.h"
-#include "../components/Chainsaw.h"
 #include "../states/TestZoneState.h"
-#include "../components/CameraFollow.h"
-#include "CollisionLayers.h"
-#include "../components/LoseLife.h"
 #include "../states/MenuState.h"
-#include "../components/Sword.h"
-#include "../components/Hammer.h"
-#include "../components/ElfSharkAttack.h"
-#include "../components/EnemyTrigger.h"
-#include "../components/MapProcedural.h"
-
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";

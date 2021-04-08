@@ -1,6 +1,7 @@
 #include "GameState.h"
-#include "../ecs/Manager.h"
+#include "../ecs/Manager.h" //Manager ya incluye Entity
 #include "../game/App.h"
+#include "../utils/Vector2D.h"
 
 GameState::GameState(App* a, b2World* mundo, SoundManager* snd) {
 	app = a;

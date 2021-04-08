@@ -1,16 +1,5 @@
 #include "TestZoneState.h"
-#include "../ecs/Entity.h"
-#include "../game/App.h"
-#include "../utils/Vector2D.h"
-#include "../ecs/Manager.h"
-#include "../components/Transform.h"
-#include "../components/BoxCollider.h"
-#include "../game/CollisionLayers.h"
-#include "../components/AnimBlendGraph.h"
-#include "../components/EnemyTrigger.h"
-#include "../components/FringeHeadAtack.h"
-#include "../components/ElfSharkAttack.h"
-#include "../components/Enemy_Health.h"
+
 using namespace ColLayers;
 
 TestZoneState::TestZoneState(App* a ,b2World* mundo, SoundManager* snd) : GameState(a,mundo,snd)
