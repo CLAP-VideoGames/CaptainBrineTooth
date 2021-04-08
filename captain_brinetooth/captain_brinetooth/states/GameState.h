@@ -1,11 +1,12 @@
 
 #pragma once
-class Manager;
-class App;
-class Entity;
 #include <vector>
 #include "box2d.h"
 #include "../components/SoundManager.h"
+
+class Manager;
+class App;
+class Entity;
 
 
 class GameState
@@ -17,11 +18,11 @@ protected:
 	SoundManager* soundController;
 	std::vector<Entity*> stage;
 
-	GameState(App* a, b2World* mundo, SoundManager* snd);
 
 
 
 public:
+	GameState(App* a, b2World* mundo, SoundManager* snd);
 	virtual ~GameState();
 	virtual void render() const;
 	virtual void update();

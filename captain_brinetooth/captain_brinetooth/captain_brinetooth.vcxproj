@@ -212,6 +212,8 @@
     <ClInclude Include="sdlutils\Texture.h" />
     <ClInclude Include="sdlutils\VirtualTimer.h" />
     <ClInclude Include="states\GameState.h" />
+    <ClInclude Include="states\PasueState.h" />
+    <ClInclude Include="states\PlayState.h" />
     <ClInclude Include="states\StateMachine.h" />
     <ClInclude Include="states\MenuState.h" />
     <ClInclude Include="states\PruebaState.h" />
@@ -235,6 +237,7 @@
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="components\ShootDetect.cpp" />
+    <ClCompile Include="components\SoundManager.cpp" />
     <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
@@ -249,8 +252,9 @@
     <ClCompile Include="sdlutils\sdlutils_demo.cpp" />
     <ClCompile Include="sdlutils\SoundEffect.cpp" />
     <ClCompile Include="sdlutils\Texture.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="states\GameState.cpp" />
+    <ClCompile Include="states\PauseState.cpp" />
+    <ClCompile Include="states\PlayState.cpp" />
     <ClCompile Include="states\StateMachine.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
     <ClCompile Include="states\PruebaState.cpp" />

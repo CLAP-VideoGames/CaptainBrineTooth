@@ -1,5 +1,4 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
-
 #include <iostream>
 #include <memory>
 #include "game/App.h"

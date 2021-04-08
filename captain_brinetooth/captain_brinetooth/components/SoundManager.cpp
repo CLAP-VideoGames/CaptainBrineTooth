@@ -1,14 +1,11 @@
-#include "components/SoundManager.h"
-#include "sdlutils/SDLUtils.h"
+#include "SoundManager.h"
+#include "../sdlutils/SDLUtils.h"
 
-void SoundManager::setGeneralVolume(int volume)
-{
-
+void SoundManager::setGeneralVolume(int volume){
 	volumenGeneral = volume;
 
 	setMusicVolume(volumenGeneral);
 	setEffectsVolume(volumenGeneral);
-
 }
 
 void SoundManager::setMusicVolume(int volume)
@@ -23,7 +20,7 @@ void SoundManager::setMusicVolume(int volume)
 		if (volumenMusica < 0) { volumenMusica = 0; }
 		else if (volumenMusica >= 128) { volumenMusica = 127; }
 	}
-}  
+}
 
 void SoundManager::setEffectsVolume(int volume)
 {
@@ -42,13 +39,13 @@ void SoundManager::setEffectsVolume(int volume)
 		if (volumenEfectos < 0) { volumenEfectos = 0; }
 		else if (volumenEfectos >= 128) { volumenEfectos = 127; }
 	}
-	
-	
+
+
 }
 
 void SoundManager::ChangeMainMusic(std::string newMusic)
 {
-	sdlutils().musics().at(mainMusic).haltMusic(); 
+	sdlutils().musics().at(mainMusic).haltMusic();
 
 	mainMusic = newMusic;
 	playMainMusic();
@@ -62,10 +59,7 @@ void SoundManager::playPauseMusic()
 		it->second.pauseChannel();
 		++it;
 	}
-
-
-
-//	sdlutils().musics().at(pauseMusic).playPause(sdlutils().musics().at(mainMusic).getPosition(Ticks o algo por el estilo));
+	//	sdlutils().musics().at(pauseMusic).playPause(sdlutils().musics().at(mainMusic).getPosition(Ticks o algo por el estilo));
 }
 
 void SoundManager::resumeMainMusic()
