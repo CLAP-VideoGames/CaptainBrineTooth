@@ -16,14 +16,14 @@
 #include "../components/BoxCollider.h"
 
 class GameState;
-class GameStateMachine;
+class StateMachine;
 const Vector2D window(1100, 900);
 // when you are not using the methods of a class, just
 // say that it exists, that saves time when parsing files
 class Manager;
 
 
-class Game {
+class App {
 public:
 
 	struct Config{
@@ -41,8 +41,8 @@ public:
 
 	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qué me tomais por un dictador, que no soy Ángel.
 
-	Game();
-	virtual ~Game();
+	App();
+	virtual ~App();
 	void init();
 	void start();
 	void ShakeCamera(int time);
@@ -61,7 +61,7 @@ public:
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
 
-	GameStateMachine* getGameStateMachine() { return stateMachine; }
+	StateMachine* getGameStateMachine() { return stateMachine; }
 	void exitGame() { exit = true; }
 	
 	//update (Juan: Si esta en Mayusculas pq es una constante) Joseda: asi es gente, lo que sea en mayus tiene que ser constante
@@ -72,7 +72,7 @@ private:
 	DamageCollisionCallbacks collisionListener;
 	std::unique_ptr<Manager> mngr_;
 	//Control de los estados en los que esta el juego 
-	GameStateMachine* stateMachine;
+	StateMachine* stateMachine;
 
 	bool exit = false;
 

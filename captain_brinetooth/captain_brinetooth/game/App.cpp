@@ -1,12 +1,12 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
-#include "Game.h"
+#include "App.h"
 
 #include "../levels/Level0.h"
 #include "tmxlite/Map.hpp"
 #include "tmxlite/Layer.hpp"
 #include "tmxlite/TileLayer.hpp"
-#include "../states/GameStateMachine.h"
+#include "../states/StateMachine.h"
 #include "../states/GameState.h"
 
 #include "../components/Animation.h"
@@ -37,13 +37,13 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-SDL_Rect Game::camera = {0 ,0,window.getX(),window.getY()};
+SDL_Rect App::camera = {0 ,0,window.getX(),window.getY()};
 
 using namespace ColLayers;
 
 //Comentario para probar un commit
-Game::Game() {
-	stateMachine = new GameStateMachine();
+App::App() {
+	stateMachine = new StateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
 
@@ -59,10 +59,10 @@ Game::Game() {
 	mngr_.reset(a);
 }
 
-Game::~Game() {
+App::~App() {
 }
 
-void Game::init() {
+void App::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY(), "assets/config/base.resources.json");
 
 
@@ -110,7 +110,7 @@ void Game::init() {
 	//createPlayer(playerConfig);
 }
 
-void Game::start() {
+void App::start() {
 	// a boolean to exit the loop
 	exit = false;
 	SDL_Event event;
@@ -153,7 +153,7 @@ void Game::start() {
 }
 //Metodos propios de game 
 
-void Game::ShakeCamera(int time){
+void App::ShakeCamera(int time){
 	int aux = 0;
 	SDL_Rect aux2 = camera;
 	int slow = 0;
@@ -181,7 +181,7 @@ void Game::ShakeCamera(int time){
 	camera = aux2;
 }
 
-void Game::createBackGround(const std::string& spriteId, const int & fils, const int & cols){
+void App::createBackGround(const std::string& spriteId, const int & fils, const int & cols){
 	auto* bg = createBasicEntity(Vector2D(300, 300), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
 	auto* anim_controller = bg->addComponent<AnimBlendGraph>();
 
@@ -199,7 +199,7 @@ void Game::createBackGround(const std::string& spriteId, const int & fils, const
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="vel">Velocidad (por defecto es cero)</param>
 /// <returns></returns>
-Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation = 0.0f, const Vector2D & vel = Vector2D(0.0f,0.0f))
+Entity* App::createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation = 0.0f, const Vector2D & vel = Vector2D(0.0f,0.0f))
 {
 	auto* entity_ = mngr_->addEntity();
 	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
@@ -215,7 +215,7 @@ Entity* Game::createBasicEntity(const Vector2D & pos, const Vector2D & size, con
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="physicType">Determina el tipo f�sico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
-void Game::createBoxTest(const Config& entityConfig)
+void App::createBoxTest(const Config& entityConfig)
 {
 	auto* box = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 
@@ -230,7 +230,7 @@ void Game::createBoxTest(const Config& entityConfig)
 }
 
 
-void Game::createPlayer(const Config& playerConfig)
+void App::createPlayer(const Config& playerConfig)
 {
 	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
 
@@ -333,7 +333,7 @@ void Game::createPlayer(const Config& playerConfig)
 	mngr_->setHandler<Player>(player);
 }
 
-void Game::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation)
+void App::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation)
 {
 	auto* enemy1 = createBasicEntity(pos, size, rotation, vel);
 
@@ -348,7 +348,7 @@ void Game::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotatio
 /// <summary>
 /// Crea el tile nivel 0 con f�sicas
 /// </summary>
-void Game::createLevel0()
+void App::createLevel0()
 {
 	auto* nivel = mngr_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, world_);
@@ -360,7 +360,7 @@ void Game::createLevel0()
 }
 
 
-void Game::createJointMedusa(Entity* ground)
+void App::createJointMedusa(Entity* ground)
 {
 	////Creacion de una medusa fisica que va a estar anclada al techo
 	//auto* physBody = mngr_->addEntity(false);
@@ -383,7 +383,7 @@ void Game::createJointMedusa(Entity* ground)
 	//world_->CreateJoint(b2joint);
 }
 
-void Game::createElfShark(const Config& entityConfig) {
+void App::createElfShark(const Config& entityConfig) {
 #pragma region ElfShark
 	//auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	auto* elf1 = mngr_->addEntity();

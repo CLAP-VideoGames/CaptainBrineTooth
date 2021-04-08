@@ -1,6 +1,6 @@
 #include "PruebaState.h"
 #include "../ecs/Entity.h"
-#include "../game/Game.h"
+#include "../game/App.h"
 #include "../utils/Vector2D.h"
 #include "../ecs/Manager.h"
 #include "../components/Transform.h"
@@ -13,7 +13,7 @@
 #include "../components/Enemy_Health.h"
 using namespace ColLayers;
 
-PruebaState::PruebaState(Game* a ,b2World* mundo, SoundManager* snd) : GameState(a,mundo,snd)
+PruebaState::PruebaState(App* a ,b2World* mundo, SoundManager* snd) : GameState(a,mundo,snd)
 {
 	//app->createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
 	//auto* player = manager_->getHandler<Player>();
@@ -23,7 +23,7 @@ PruebaState::PruebaState(Game* a ,b2World* mundo, SoundManager* snd) : GameState
 	//app->createBackGround("Square", 11, 11);
 	app->createLevel0();
 
-	Game::Config playerConfig {};
+	App::Config playerConfig {};
 	playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
 	playerConfig.vel = Vector2D(0,0);
 	playerConfig.size = Vector2D(200.0f, 200.0f);
@@ -52,7 +52,7 @@ void PruebaState::init() {
 
 	//Creacion de un componente que tenga un metodo estatico para asignarselo a la colision del trigger del enemigo con el jugador 
 
-	Game::Config elfShark{};
+	App::Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
 	elfShark.size = Vector2D(180.0f, 180.0f);

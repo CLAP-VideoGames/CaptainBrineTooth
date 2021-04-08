@@ -2,23 +2,14 @@
 
 #include <iostream>
 #include <memory>
-#include <filesystem>
-#include "game/Game.h"
-
-namespace fs = std::filesystem;
-
-
+#include "game/App.h"
 
 void start() {
-
-	Game g;
+	App g;
 
 	g.init();
 	g.start();
 }
-
-
-
 
 int main(int, char**) {
 	try {

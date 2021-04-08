@@ -1,6 +1,6 @@
 #include "../states/MenuState.h"
 #include "../ecs/Entity.h"
-#include "../game/Game.h"
+#include "../game/App.h"
 #include "../utils/Vector2D.h"
 #include "../ecs/Manager.h"
 #include "../components/Animation.h"
@@ -8,7 +8,7 @@
 #include "../components/Button.h"
 #include "../states/PruebaState.h"
 
-MenuState::MenuState(Game* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
+MenuState::MenuState(App* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
 	cam = a->camera;
 
@@ -72,7 +72,7 @@ void MenuState::update() {
 	}
 }
 
-void MenuState::changeToGame(Game* g, SoundManager* snd)
+void MenuState::changeToGame(App* g, SoundManager* snd)
 {
 	b2Vec2 gravity(0.0f, 9.8f);
 	b2World* world_ = new b2World(gravity);
@@ -90,6 +90,6 @@ void MenuState::changeToGame(Game* g, SoundManager* snd)
 	//prueba->init();
 }
 
-void MenuState::salirMenu(Game* game, SoundManager* snd){
+void MenuState::salirMenu(App* game, SoundManager* snd){
 	game->exitGame();
 }

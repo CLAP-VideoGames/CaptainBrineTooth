@@ -195,7 +195,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="game\CollisionLayers.h" />
     <ClInclude Include="game\ecs_defs.h" />
-    <ClInclude Include="game\Game.h" />
+    <ClInclude Include="game\App.h" />
     <ClInclude Include="json\JSON.h" />
     <ClInclude Include="json\JSONValue.h" />
     <ClInclude Include="json\simplejson_demo.h" />
@@ -212,7 +212,7 @@
     <ClInclude Include="sdlutils\Texture.h" />
     <ClInclude Include="sdlutils\VirtualTimer.h" />
     <ClInclude Include="states\GameState.h" />
-    <ClInclude Include="states\GameStateMachine.h" />
+    <ClInclude Include="states\StateMachine.h" />
     <ClInclude Include="states\MenuState.h" />
     <ClInclude Include="states\PruebaState.h" />
     <ClInclude Include="targetver.h" />
@@ -238,7 +238,7 @@
     <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
-    <ClCompile Include="game\Game.cpp" />
+    <ClCompile Include="game\App.cpp" />
     <ClCompile Include="json\JSON.cpp" />
     <ClCompile Include="json\JSONValue.cpp" />
     <ClCompile Include="json\somplejson_demo.cpp" />
@@ -251,7 +251,7 @@
     <ClCompile Include="sdlutils\Texture.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="states\GameState.cpp" />
-    <ClCompile Include="states\GameStateMachine.cpp" />
+    <ClCompile Include="states\StateMachine.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
     <ClCompile Include="states\PruebaState.cpp" />
     <ClCompile Include="utils\Collisions.cpp" />

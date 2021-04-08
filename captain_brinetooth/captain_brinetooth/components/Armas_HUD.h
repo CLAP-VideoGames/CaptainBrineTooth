@@ -2,12 +2,12 @@
 
 #include "../ecs/Component.h"
 #include "../sdlutils/Texture.h"
-#include "../game/Game.h"
+#include "../game/App.h"
 
 
 class Armas_HUD : public Component {
 public:
-	Armas_HUD(Texture* weapon1, Texture* weapon2, Game* game) :
+	Armas_HUD(Texture* weapon1, Texture* weapon2, App* game) :
 		mainWeapon(weapon1),
 		secondWeapon(weapon2),
 		g(game)
@@ -26,6 +26,6 @@ public:
 private:
 	Texture* mainWeapon;
 	Texture* secondWeapon;
-	Game* g;
+	App* g;
 };
 

@@ -4,13 +4,13 @@
 class GameState;
 using namespace std;
 
-class GameStateMachine
+class StateMachine
 {
 private:
 	stack<GameState*> states;
 public:
-	GameStateMachine() {};
-	~GameStateMachine();
+	StateMachine() {};
+	~StateMachine();
 	GameState* currentState();
 	void changeState(GameState* gameState);
 	void popState();

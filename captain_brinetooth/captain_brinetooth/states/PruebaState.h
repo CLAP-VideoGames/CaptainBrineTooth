@@ -7,7 +7,7 @@ class PruebaState :public GameState
 {
 public:
 
-	PruebaState(Game* a, b2World* mundo, SoundManager* snd);
+	PruebaState(App* a, b2World* mundo, SoundManager* snd);
 	virtual void init();
 
 };

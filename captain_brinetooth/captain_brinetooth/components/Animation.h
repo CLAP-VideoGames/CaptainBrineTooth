@@ -7,7 +7,7 @@
 #include "Transform.h"
 
 
-#include "..//game/Game.h"
+#include "../game/App.h"
 
 
 enum State { Complete, Playing, Stop };	//Estado de la animacion
@@ -57,7 +57,7 @@ public:
 		
 		//Construccion de los rectangulos fuente(textura) y destino (entidad)
 		SDL_Rect src = build_sdlrect(framepos_[actfr_].getX() * framewidth_, framepos_[actfr_].getY() * frameheight_, framewidth_, frameheight_);
-		SDL_Rect dest = build_sdlrect(tr_->getPos().getX() - Game::camera.x, tr_->getPos().getY() - Game::camera.y, tr_->getW(), tr_->getH());
+		SDL_Rect dest = build_sdlrect(tr_->getPos().getX() - App::camera.x, tr_->getPos().getY() - App::camera.y, tr_->getW(), tr_->getH());
 		SDL_RendererFlip flip;
 		if (flip_horizontal_) { flip = SDL_FLIP_HORIZONTAL; }
 		else { flip = SDL_FLIP_NONE; }

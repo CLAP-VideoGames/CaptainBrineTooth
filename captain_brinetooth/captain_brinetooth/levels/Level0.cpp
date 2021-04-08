@@ -1,13 +1,12 @@
-#include "Level0.h"
-#include "../game/Game.h"
-#include "../assets/assets.h"
-
 #include <iostream>
 #include <algorithm>
+
+
+#include "Level0.h"
+#include "../game/App.h"
+#include "../assets/assets.h"
 #include "..//components/AnimBlendGraph.h"
 
-
-#include "..//game/Game.h"
 #include <tmxlite\Layer.hpp>
 
 tile::tile(Texture* tset, int x, int y, int tx, int ty, int w, int h) 
@@ -24,7 +23,7 @@ void tile::draw() {
 	// Para que el tileset no siga a la cámara, hay que restarle la posición de la misma.
 	// Para agrandar el tiledmap, hay que hacerlo manualmente en el propio TiledMapEditor, aumentando los píxeles por tile.
 	SDL_Rect dest;
-	dest.x = x_ - Game::camera.x; dest.y = y_ - Game::camera.y;
+	dest.x = x_ - App::camera.x; dest.y = y_ - App::camera.y;
 	dest.w = src.w; dest.h = src.h;
 
 	sheet_->render(src, dest);

@@ -2,7 +2,7 @@
 
 
 #include "../states/GameState.h"
-#include "../states/GameStateMachine.h"
+#include "../states/StateMachine.h"
 #include "Transform.h"
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"
@@ -10,11 +10,11 @@
 #include "../components/SoundManager.h"
 
 
-using CallBackOnClick = void(Game* g, SoundManager* snd);
+using CallBackOnClick = void(App* g, SoundManager* snd);
 
 class Button : public Component {
 public:
-	Button(Texture* t, CallBackOnClick* c, Game* g, SoundManager* snd) : tex(t)
+	Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd) : tex(t)
 	{
 		cboq = c;
 		game = g;
@@ -33,6 +33,6 @@ protected:
 private:
 	Texture* tex;
 	SoundManager* soundController;
-	Game* game;
+	App* game;
 
 };

@@ -3,7 +3,7 @@
 #include "Transform.h"
 #include "..//ecs/Entity.h"
 
-class Game;
+class App;
 
 class CameraFollow : public Component 
 {

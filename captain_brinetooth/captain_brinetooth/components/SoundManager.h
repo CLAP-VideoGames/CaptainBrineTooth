@@ -2,7 +2,7 @@
 
 #include "../ecs/Component.h"
 #include "../sdlutils/SDLUtils.h"
-#include "../game/Game.h"
+#include "../game/App.h"
 #include "../sdlutils/Music.h"
 
 class SoundManager : public Component {

@@ -1,7 +1,7 @@
 #include "GameState.h"
 #include "../ecs/Manager.h"
 
-GameState::GameState(Game* a, b2World* mundo, SoundManager* snd) {
+GameState::GameState(App* a, b2World* mundo, SoundManager* snd) {
 	app = a;
 	manager_ = new Manager(mundo); 
 	soundController = snd;

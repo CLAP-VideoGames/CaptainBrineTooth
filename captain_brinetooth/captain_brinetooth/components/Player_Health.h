@@ -3,13 +3,13 @@
 #include "../ecs/Component.h"
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/SDLUtils.h"
-#include "../game/Game.h"
+#include "../game/App.h"
 
 
 
 class Player_Health : public Component {
 public:
-	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, Game* game) : fVida(tex), hVida(tex2),vVida(tex3) , time(0), g(game)
+	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game) : fVida(tex), hVida(tex2),vVida(tex3) , time(0), g(game)
 	{
 		frame = Vector2D(0, 15);
 		auto w = fVida->width() / 8;
@@ -43,7 +43,7 @@ private:
 	SDL_Rect src; //Rectangulo que se renderiza
 	Uint32 time; // Tiempo inicial
 
-	Game* g;
+	App* g;
 	float tiempoanimacion; // Tiempo entre frame y frame
 	int nFrame = 0;
 };

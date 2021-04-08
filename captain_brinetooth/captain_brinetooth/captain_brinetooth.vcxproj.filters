@@ -135,7 +135,7 @@
     <ClInclude Include="game\ecs_defs.h">
       <Filter>Archivos de encabezado\game</Filter>
     </ClInclude>
-    <ClInclude Include="game\Game.h">
+    <ClInclude Include="game\App.h">
       <Filter>Archivos de encabezado\game</Filter>
     </ClInclude>
     <ClInclude Include="ecs\Component.h">
@@ -246,7 +246,7 @@
     <ClInclude Include="states\GameState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
-    <ClInclude Include="states\GameStateMachine.h">
+    <ClInclude Include="states\StateMachine.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
     <ClInclude Include="states\MenuState.h">
@@ -324,7 +324,7 @@
     <ClCompile Include="json\somplejson_demo.cpp">
       <Filter>Archivos de origen\json</Filter>
     </ClCompile>
-    <ClCompile Include="game\Game.cpp">
+    <ClCompile Include="game\App.cpp">
       <Filter>Archivos de origen\game</Filter>
     </ClCompile>
     <ClCompile Include="ecs\Entity.cpp">
@@ -384,7 +384,7 @@
     <ClCompile Include="states\GameState.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
-    <ClCompile Include="states\GameStateMachine.cpp">
+    <ClCompile Include="states\StateMachine.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
     <ClCompile Include="states\MenuState.cpp">

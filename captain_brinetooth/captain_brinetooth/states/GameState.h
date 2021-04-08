@@ -1,7 +1,7 @@
 
 #pragma once
 class Manager;
-class Game;
+class App;
 class Entity;
 #include <vector>
 #include "box2d.h"
@@ -13,11 +13,11 @@ class GameState
 protected:
 	
 	Manager* manager_;
-	Game* app;
+	App* app;
 	SoundManager* soundController;
 	std::vector<Entity*> stage;
 
-	GameState(Game* a, b2World* mundo, SoundManager* snd);
+	GameState(App* a, b2World* mundo, SoundManager* snd);
 
 
 
