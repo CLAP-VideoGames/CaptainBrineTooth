@@ -6,7 +6,7 @@
 #include "../components/Animation.h"
 #include "../components/AnimBlendGraph.h"
 #include "../components/Button.h"
-#include "../states/PruebaState.h"
+#include "../states/TestZoneState.h"
 
 MenuState::MenuState(App* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
@@ -62,8 +62,7 @@ void MenuState::init() {
 }
 
 void MenuState::update() {
-	for (Entity* b : manager_->getEnteties())
-	{
+	for (Entity* b : manager_->getEnteties()){
 		Button* but = b->getComponent<Button>();
 		if (but != nullptr && but->handleEvent())
 		{
@@ -81,7 +80,7 @@ void MenuState::changeToGame(App* g, SoundManager* snd)
 
 
 	g->getGameStateMachine()->popState();
-	PruebaState* mainGame = new PruebaState(g, world_, snd);
+	TestZoneState* mainGame = new TestZoneState(g, world_, snd);
 	g->getGameStateMachine()->pushState(mainGame);
 
 	mainGame->init();

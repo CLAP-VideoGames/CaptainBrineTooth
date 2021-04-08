@@ -1,4 +1,4 @@
-#include "PruebaState.h"
+#include "TestZoneState.h"
 #include "../ecs/Entity.h"
 #include "../game/App.h"
 #include "../utils/Vector2D.h"
@@ -13,7 +13,7 @@
 #include "../components/Enemy_Health.h"
 using namespace ColLayers;
 
-PruebaState::PruebaState(App* a ,b2World* mundo, SoundManager* snd) : GameState(a,mundo,snd)
+TestZoneState::TestZoneState(App* a ,b2World* mundo, SoundManager* snd) : GameState(a,mundo,snd)
 {
 	//app->createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
 	//auto* player = manager_->getHandler<Player>();
@@ -35,7 +35,7 @@ PruebaState::PruebaState(App* a ,b2World* mundo, SoundManager* snd) : GameState(
 	app->createPlayer(playerConfig);
 }
 
-void PruebaState::init() {
+void TestZoneState::init() {
 	//Añadir el enemigo 
 
 	//auto* enemy = app->createBasicEntity(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(50.0f, 50.0f),0.0f, Vector2D(0,0));

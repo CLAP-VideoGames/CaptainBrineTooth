@@ -216,7 +216,7 @@
     <ClInclude Include="states\PlayState.h" />
     <ClInclude Include="states\StateMachine.h" />
     <ClInclude Include="states\MenuState.h" />
-    <ClInclude Include="states\PruebaState.h" />
+    <ClInclude Include="states\TestZoneState.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="utils\Collisions.h" />
     <ClInclude Include="utils\Singleton.h" />
@@ -253,11 +253,11 @@
     <ClCompile Include="sdlutils\SoundEffect.cpp" />
     <ClCompile Include="sdlutils\Texture.cpp" />
     <ClCompile Include="states\GameState.cpp" />
-    <ClCompile Include="states\PauseState.cpp" />
+    <ClCompile Include="states\PasueState.cpp" />
     <ClCompile Include="states\PlayState.cpp" />
     <ClCompile Include="states\StateMachine.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
-    <ClCompile Include="states\PruebaState.cpp" />
+    <ClCompile Include="states\TestZoneState.cpp" />
     <ClCompile Include="utils\Collisions.cpp" />
     <ClCompile Include="utils\Vector2D.cpp" />
   </ItemGroup>

@@ -23,7 +23,7 @@
 #include "../components/PlayerController.h"
 #include "../components/SoundManager.h"
 #include "../components/Chainsaw.h"
-#include "../states/PruebaState.h"
+#include "../states/TestZoneState.h"
 #include "../components/CameraFollow.h"
 #include "CollisionLayers.h"
 #include "../components/LoseLife.h"

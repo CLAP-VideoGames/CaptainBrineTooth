@@ -3,11 +3,11 @@
 #include "box2d.h"
 class Entity;
 
-class PruebaState :public GameState
+class TestZoneState :public GameState
 {
 public:
 
-	PruebaState(App* a, b2World* mundo, SoundManager* snd);
+	TestZoneState(App* a, b2World* mundo, SoundManager* snd);
 	virtual void init();
 
 };
