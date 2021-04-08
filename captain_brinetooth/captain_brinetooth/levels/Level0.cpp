@@ -41,6 +41,8 @@ Level0::Level0(const string &name, b2World* b2World)
 //Donde carguemos los enemigos hay que extraerlo en un método que nos devuelva la lista
 //A las salas hay que meterles un atributo que sean las salidas, preferiblemente un bool
 void Level0::load(const string& path) {
+	tiles_.clear();
+	tilesets_.clear();
 	//carga el mapa con TMXLite
 	tmx::Map tiled_map;
 
