@@ -1,11 +1,10 @@
 #include "MenuState.h"
 
-#include "../states/TestZoneState.h"
+#include "../states/PlayState.h"
 
 MenuState::MenuState(App* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
 	cam = a->camera;
-
 
 	//No tengo ni idea pero si no es chikito
 	cam.w = cam.w * 2;
@@ -56,6 +55,9 @@ void MenuState::init() {
 }
 
 void MenuState::update() {
+
+	GameState::update();
+
 	for (Entity* b : manager_->getEnteties()){
 		Button* but = b->getComponent<Button>();
 		if (but != nullptr && but->handleEvent())
@@ -63,21 +65,18 @@ void MenuState::update() {
 			break;
 		}
 	}
+
 }
 
-void MenuState::changeToGame(App* g, SoundManager* snd)
-{
+void MenuState::changeToGame(App* app, SoundManager* snd) {
 	b2Vec2 gravity(0.0f, 9.8f);
 	b2World* world_ = new b2World(gravity);
 	snd->stopMusic();
 	//snd->playSoundEffect("gaviota");
 
+	app->getGameStateMachine()->changeState(new PlayState(app, world_, snd));
 
-	g->getGameStateMachine()->popState();
-	TestZoneState* mainGame = new TestZoneState(g, world_, snd);
-	g->getGameStateMachine()->pushState(mainGame);
-
-	mainGame->init();
+	app->getGameStateMachine()->currentState()->init();
 
 	//PruebaState* prueba = static_cast<PruebaState*>(g->getGameStateMachine()->currentState());
 	//prueba->init();

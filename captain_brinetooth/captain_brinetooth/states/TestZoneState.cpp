@@ -10,18 +10,18 @@ TestZoneState::TestZoneState(App* a ,b2World* mundo, SoundManager* snd) : GameSt
 	
 	//e->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
 	//app->createBackGround("Square", 11, 11);
-	app->createLevel0();
+	//app->createLevel0();
 
-	App::Config playerConfig {};
-	playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
-	playerConfig.vel = Vector2D(0,0);
-	playerConfig.size = Vector2D(200.0f, 200.0f);
-	playerConfig.friction = 0.2f;
-	playerConfig.physicType = KINEMATIC;
-	playerConfig.fixedRotation = true;
-	playerConfig.rotation = 0.0f;
+	//App::Config playerConfig {};
+	//playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
+	//playerConfig.vel = Vector2D(0,0);
+	//playerConfig.size = Vector2D(200.0f, 200.0f);
+	//playerConfig.friction = 0.2f;
+	//playerConfig.physicType = KINEMATIC;
+	//playerConfig.fixedRotation = true;
+	//playerConfig.rotation = 0.0f;
 
-	app->createPlayer(playerConfig);
+	//app->createPlayer(playerConfig);
 }
 
 void TestZoneState::init() {
@@ -41,18 +41,18 @@ void TestZoneState::init() {
 
 	//Creacion de un componente que tenga un metodo estatico para asignarselo a la colision del trigger del enemigo con el jugador 
 
-	App::Config elfShark{};
-	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
-	elfShark.vel = Vector2D(0, 0);
-	elfShark.size = Vector2D(180.0f, 180.0f);
-	elfShark.friction = 0.2f;
-	elfShark.physicType = KINEMATIC;
-	elfShark.fixedRotation = true;
-	elfShark.rotation = 0.0f;
-	elfShark.col = ENEMY;
-	elfShark.colMask = ENEMY_MASK;
+	//App::Config elfShark{};
+	//elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
+	//elfShark.vel = Vector2D(0, 0);
+	//elfShark.size = Vector2D(180.0f, 180.0f);
+	//elfShark.friction = 0.2f;
+	//elfShark.physicType = KINEMATIC;
+	//elfShark.fixedRotation = true;
+	//elfShark.rotation = 0.0f;
+	//elfShark.col = ENEMY;
+	//elfShark.colMask = ENEMY_MASK;
 
-	app->createElfShark(elfShark);
+	//app->createElfShark(elfShark);
 
 
 	// if(tiempo pasado + tiempo minimo < tiempo actual)

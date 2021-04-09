@@ -14,6 +14,13 @@ GameState::~GameState() {
 	manager_->desactiveEnteties();
 	//delete manager_;
 }
+
+Entity* GameState::createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel){
+	auto* entity_ = manager_->addEntity();
+	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
+	return entity_;
+}
+
 void GameState::render() const {
 	manager_->render();
 }
@@ -23,4 +30,4 @@ void GameState::update() {
 void GameState::refresh() {
 	manager_->refresh();
 }
-Manager* GameState::getMan() { return manager_; }
+Manager* GameState::getMngr() { return manager_; }
