@@ -35,6 +35,7 @@ class WeaponDamageDetection;
 class DestroyOnCollision;
 class Button;
 class MapProcedural;
+class Image;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -68,7 +69,8 @@ class MapProcedural;
 	WeaponDamageDetection,\
 	DestroyOnCollision, \
 	MapProcedural, \
-	Button
+	Button ,\
+	Image
 
 // groups
 

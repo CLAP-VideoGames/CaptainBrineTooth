@@ -97,6 +97,18 @@
 			"file": "assets/sprites/botones/salir.png"
 		},
 		{
+			"id": "jugar2",
+			"file": "assets/sprites/botones/jugar2.png"
+		},
+		{
+			"id": "opciones2",
+			"file": "assets/sprites/botones/opciones2.png"
+		},
+		{
+			"id": "salir2",
+			"file": "assets/sprites/botones/salir2.png"
+		},
+		{
 			"id": "nuevapartida",
 			"file": "assets/sprites/nuevapartida.png"
 		}
