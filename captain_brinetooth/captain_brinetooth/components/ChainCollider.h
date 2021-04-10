@@ -40,12 +40,6 @@ public:
 	}
 
 	void init() override {
-		//tr_ = entity_->getComponent<Transform>();
-		//assert(tr_ != nullptr);
-
-		//pos = tr_->getPos();
-
-		//size = Vector2D(tr_->getW() / sdlutils().getPPM(), tr_->getH() / sdlutils().getPPM());
 		world = entity_->getWorld();
 
 		/*b2BodyDef bodyDef;
@@ -66,31 +60,14 @@ public:
 			bodyDef.type = b2_staticBody;
 			break;
 		}*/
-		
-		//example();
 
-	//	//Podemos usar un vector<b2Vec> para ir haciendo emplace back y una vez finalizado, 
-		//copiar todos esos datos a un  b2Vec2* vs = new b2Vec2[value]; para crear la cadena
 		b2BodyDef bdDef;
 		bdDef.type = b2_staticBody;
 		bdDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
-		b2Body* body = world->CreateBody(&bdDef);
-		//b2Vec2* vs = new b2Vec2[sizeChain];
-
-		b2ChainShape chain;
-		//Vertice fantasmas inicial								//Vertice fantasmas final
-		//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
-		//chain.CreateChain(vs, sizeChain, b2Vec2((vs[0].x) - 30.0f / sdlutils().getPPM(), ((vs[0].y)) / sdlutils().getPPM()), b2Vec2((vs[sizeChain - 1].x) / sdlutils().getPPM(), ((vs[sizeChain - 1].y - 30)) / sdlutils().getPPM()));
-		chain.CreateLoop(vs, sizeChain);
-		
+		body = world->CreateBody(&bdDef);
 		body->SetFixedRotation(fixedRotation_);
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &chain;
-		fixtureDef.density = 1.0f;
-		fixtureDef.friction = 0.4f;
-		fixtureDef.filter.categoryBits = colLay_; // tag para determinar capa de colision
-		fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
-		b2Fixture* fix = body->CreateFixture(&fixtureDef);
+
+		createChainFixture();
 	}
 
 	void setSpeed(Vector2D speed){
@@ -99,6 +76,26 @@ public:
 		body->SetLinearVelocity(vel);
 	}
 
+	void createChainFixture(){
+		b2ChainShape chain;
+									//Vertice fantasmas inicial								//Vertice fantasmas final
+		//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
+		//chain.CreateChain(vs, sizeChain, b2Vec2((vs[0].x) - 30.0f / sdlutils().getPPM(), ((vs[0].y)) / sdlutils().getPPM()), b2Vec2((vs[sizeChain - 1].x) / sdlutils().getPPM(), ((vs[sizeChain - 1].y - 30)) / sdlutils().getPPM()));
+		chain.CreateLoop(vs, sizeChain);
+		
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &chain;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 0.4f;
+		fixtureDef.filter.categoryBits = colLay_; // tag para determinar capa de colision
+		fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
+		fixture = body->CreateFixture(&fixtureDef);
+	}
+
+
+	void deleteChainFixture() {
+		delete fixture; fixture = nullptr;
+	}
 	/// <summary>
 	/// Aplica una fuerza gradual en la direccion indicada
 	/// </summary>
@@ -151,22 +148,23 @@ public:
 		tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f));
 	}
 
-private:
 	template<class T>
 	void setVertices(const std::vector<T>& vector){
 		sizeChain = vector.size();
 		vs = new b2Vec2[sizeChain];
 
 		//este es el que deberiamos usar para el resto de Tiles
-		/*for (int i = 0; i < sizeChain; i++) {
+		for (int i = 0; i < sizeChain; i++) {
 			vs[i] = b2Vec2(vector[i].x, vector[i].y);
-		}*/
+		}
 
 		//este es el que deberiamos usar para el TileMapTest.tmx
-		for (int i = sizeChain - 1; i >= 0; i--){
+		/*for (int i = sizeChain - 1; i >= 0; i--){
 			vs[(sizeChain - 1) - i ] = b2Vec2(vector[i].x, vector[i].y);
-		}
+		}*/
 	}
+
+private:
 
 	void example(){
 		//Podemos usar un vector<b2Vec> para ir haciendo emplace back y una vez finalizado, 

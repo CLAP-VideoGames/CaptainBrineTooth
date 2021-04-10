@@ -1,6 +1,6 @@
 ﻿#include "PlayState.h"
 
-const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
+const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
 PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mundo, snd)
 {
@@ -17,12 +17,12 @@ PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mu
 	createPlayer(playerConfig);
 
 	//Testing floor
-	auto suelo = manager_->addEntity();
-	suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
-	auto anim = suelo->addComponent<AnimBlendGraph>();
-	anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
+	//auto suelo = manager_->addEntity();
+	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
+	//auto anim = suelo->addComponent<AnimBlendGraph>();
+	//anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
 
-	suelo->addComponent<BoxCollider>();
+	//suelo->addComponent<BoxCollider>();
 }
 
 void PlayState::init()
@@ -46,9 +46,7 @@ void PlayState::init()
 void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
-	//map = nivel->addComponent<MapProcedural>(10, 1);
-	//nivel->getComponent<MapProcedural>();
+	map = nivel->addComponent<MapProcedural>(10, 1);
 }
 
 void PlayState::createPlayer(const Config& playerConfig){

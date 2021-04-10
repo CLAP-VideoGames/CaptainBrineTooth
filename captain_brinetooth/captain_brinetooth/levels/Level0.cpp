@@ -34,7 +34,7 @@ object::object(float oX, float oY, float oWidth, float oHeight)
 
 Level0::Level0(const string &name, b2World* b2World)
 	: name_(name), fils_(0), cols_(0), b2World_(b2World) {
-	load(name);
+	//load(name);
 }
 
 //Donde carguemos los enemigos hay que extraerlo en un método que nos devuelva la lista
@@ -171,16 +171,21 @@ void Level0::load(const string& path) {
 		fixture_ = body_->CreateFixture(&fixture);*/
 	//}
 }
+
 void Level0::clearTileset()
 {
 	tilesets_.clear();
 	tiles_.clear();
 }
-//Por favor Joseda no me grites. No te grito <3
+
+void Level0::render() {
+	for (auto tile : tiles_)
+		tile->draw();
+
+}
 void Level0::setCollision() {
 	for (auto tile : tiles_) {
 		auto* mnr = entity_->getMngr();
-
 		auto* t = mnr->addEntity();
 		t->addComponent<Transform>(Vector2D(tile->x_ + tile_width_/2, tile->y_ + tile_height_/2), Vector2D(), tile_width_, tile_height_, 0.0f);
 		//Tenemos que hacer que pinte los colliders
@@ -188,9 +193,4 @@ void Level0::setCollision() {
 		auto* anim_controller = t->addComponent<AnimBlendGraph>();
 		anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
 	}
-}
-
-void Level0::render() {
-	for (auto tile : tiles_)
-		tile->draw();
 }

@@ -2,12 +2,15 @@
 #include "../ecs/Component.h"
 #include "../levels/Level0.h"
 #include "../ecs/Entity.h"
+#include "ChainCollider.h"
 #include <filesystem>
 #include <map>
-
+//Los mapas, los vertices de colision tienen que ser en sentido horario
 
 namespace fs = std::filesystem;
-//Le metearimos el componente al GM
+/// <summary>
+/// Crea las habitaciones del mapa y controla sus conexiones. Aplica el componente ChainCollider para el manejo de colisiones
+/// </summary>
 class MapProcedural : public Component {
 	const string ruta = "assets/maps/";
 	const std::array<char, 4> cardinals = {'N','E','S','W'};
@@ -15,35 +18,15 @@ public:
 	MapProcedural(int nR, int f) {
 		nRooms = nR;
 		lvl = nullptr;
-
 		fase = f;
 	}
 
 	~MapProcedural() {
-
+		if (chainCollider != nullptr) entity_->removeComponent<ChainCollider>();
 		delete actualRoom;
 	}
 
 	//0 = N, 1 = E, 2 = S, 3 = W
-	void TravelNextRoom(int dir) {
-
-		//Nueva habitaci�n a la que hemos ido
-		actualRoom = actualRoom->conections[dir];
-
-		//lvl->clearTileset();
-		//Cargamos nuevo mapa
-		lvl->load(actualRoom->level);
-		lvl->setCollision();
-		cout << actualRoom->getName();
-		//Cogemos sus conexiones	
-		getCons(actualRoom->getName(), actualRoom->cons);
-
-
-		//Creamos habitaciones en funci�n de las conexiones que tiene
-		CreateConnections(actualRoom, actualRoom->cons);
-
-	}
-
 	void init() {
 		//Cuando estén las distintas zonas, podemos ordenar con un array y así puedo hacer zona[fase]
 		//Leeemos los distintos directorios
@@ -57,7 +40,6 @@ public:
 		//Cacheamos el componente Level
 		lvl = entity_->getComponent<Level0>();
 
-
 		int tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 
 		actualRoom = initializeNewRoom(roomNames[tile]);
@@ -65,6 +47,23 @@ public:
 		roomNames[tile].used = true;
 	}
 
+	void TravelNextRoom(int dir) {
+		//Nueva habitaci�n a la que hemos ido
+		actualRoom = actualRoom->conections[dir];
+		//lvl->clearTileset();
+		//Cargamos nuevo mapa
+		lvl->load(actualRoom->level);
+		//Setteamos los nuevos vertices para la creacion del cuerpo Collider
+		chainCollider->setVertices(lvl->getVerticesList());
+		chainCollider->deleteChainFixture();
+		chainCollider->createChainFixture();
+
+		cout << actualRoom->getName();
+		//Cogemos sus conexiones	
+		getConec(actualRoom->getName(), actualRoom->cons);
+		//Creamos habitaciones en funci�n de las conexiones que tiene
+		CreateConnections(actualRoom, actualRoom->cons);
+	}
 
 private:
 	void ReadDirectory(const string& p, int& roomsRead) {
@@ -89,16 +88,13 @@ private:
 		}
 	}
 
-
 	struct Room {
 
 		string getName() {
 			int puntoCorte = level.find_last_of("\\");
 			int length = level.length(); //Final del string
-
-			string nombrecito = level.substr(puntoCorte + 1, length);
-
-			return nombrecito;
+			string namePath = level.substr(puntoCorte + 1, length);
+			return namePath;
 		}
 
 		string level;	//Nombre del tileMap
@@ -111,7 +107,6 @@ private:
 		string name; //Nombre para comparar las conexiones
 		string path; //Direcci�n desde la que cargarlo
 		bool used;	 //Booleano que se usa para comprobar que la habitaci�n ya ha salido
-
 		int tipo; //0 inicio   1 intermedio   2 finales
 	};
 
@@ -124,10 +119,11 @@ private:
 		r->level = tag.path;
 
 		lvl->load(r->level);
-		lvl->setCollision();
+		
+		chainCollider = entity_->addComponent<ChainCollider>(lvl->getVerticesList());
+		
 		//Opcion 1
-		getCons(tag.name, r->cons);
-
+		getConec(tag.name, r->cons);
 		
 		//Creamos habitaciones en funci�n de las conexiones que tiene
 		/*if(rConnections[0] == true) r->conections[0] = initializeRoom(r, 0);
@@ -164,8 +160,6 @@ private:
 
 		Room* r = new Room();
 
-
-
 		//Cogemos la posici�n opuesta
 		int opositeDir = dir + 2;
 
@@ -185,7 +179,7 @@ private:
 		//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcci�n que pareces tonto
 
 
- 		r->level = roomNames[tile].path;
+		r->level = roomNames[tile].path;
 
 		/*if (partida->conections[0] != nullptr) r->level = "assets/maps/" + tile;
 		
@@ -197,32 +191,32 @@ private:
 		return r;
 	}
 
-	void getCons(const string& name, std::array<bool,4>& cons) {
-
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+	void getConec(const string& name, std::array<bool,4>& cons) {
+		for (int i = 0; i < 4; i++) 
+			for (int j = 0; j < 4; j++) 
 				if (name[i] == cardinals[j]) cons[j] = true;
-			}		
-		}
-
 	}
 
-protected:
+	
 
+protected:
 	int nRooms, nRoomNames = 10;
 
 	//Opcion con struct
 	std::array<RoomNames, 20> roomNames;
 
+	//Numero de habitaciones exploradas
 	int roomsExplored = 0;
 
-	Level0* lvl;
-
+	//Habitacion actual
 	Room* actualRoom;
 
 	//Divisi�n entre tipos de salas
 	std::array<int, 2> fronteras;
 
+	Level0* lvl;
+
 	int fase;
 	MapProcedural* nextMap;
+	ChainCollider* chainCollider;
 };
