@@ -30,6 +30,7 @@ bool Button::handleEvent()
 		
 		tex2->render(dest);
 		sdlutils().presentRenderer();*/
+		
 
 		if (ih().mouseButtonEvent())
 		{
