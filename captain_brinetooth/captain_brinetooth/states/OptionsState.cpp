@@ -74,8 +74,8 @@ void OptionsState::subirVolumen(App* app, SoundManager* snd)
 
 void OptionsState::bajarVolumen(App* app, SoundManager* snd)
 {
-	snd->setGeneralVolume(snd->GeneralVolume() - 5);
-
+	//snd->setGeneralVolume(snd->GeneralVolume() - 5);
+	snd->setGeneralVolume(0);
 }
 
 void OptionsState::volverMenu(App* app, SoundManager* snd)
