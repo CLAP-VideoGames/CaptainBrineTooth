@@ -133,8 +133,6 @@ void Level0::load(const string& path) {
 		//las coordenadas de los puntos reales son layer_objects.back().getPosition() + layer_objects.back().getPoints()[i]; 
 		points = layer_objects.back().getPoints();
 
-
-
 		for (tmx::Vector2f& vec : points){
 			vec.x += layer_objects.back().getPosition().x;
 			vec.y += layer_objects.back().getPosition().y;

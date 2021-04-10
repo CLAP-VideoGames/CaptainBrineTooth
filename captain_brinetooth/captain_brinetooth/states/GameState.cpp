@@ -25,7 +25,6 @@ void GameState::render() const {
 	manager_->render();
 }
 void GameState::update() {
-
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	manager_->update();
 }

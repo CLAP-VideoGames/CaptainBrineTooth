@@ -11,7 +11,7 @@ PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mu
 	playerConfig.vel = Vector2D(0, 0);
 	playerConfig.size = Vector2D(200.0f, 200.0f);
 	playerConfig.friction = 0.2f;
-	playerConfig.physicType = KINEMATIC;
+	playerConfig.physicType = DYNAMIC;
 	playerConfig.fixedRotation = true;
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
@@ -39,8 +39,8 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
 	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
-	map = nivel->addComponent<MapProcedural>(10);
-	nivel->getComponent<MapProcedural>();
+	//map = nivel->addComponent<MapProcedural>(10);
+	//nivel->getComponent<MapProcedural>();
 }
 
 void PlayState::createPlayer(const Config& playerConfig){
@@ -134,7 +134,7 @@ void PlayState::createPlayer(const Config& playerConfig){
 
 	player->addComponent<SoundManager>(75, "FinalBoss");
 
-	player->addComponent<KeyBoardCtrl>(map);
+	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Hammer>();

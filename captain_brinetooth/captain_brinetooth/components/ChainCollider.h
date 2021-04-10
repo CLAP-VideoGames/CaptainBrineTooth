@@ -156,13 +156,16 @@ private:
 	void setVertices(const std::vector<T>& vector){
 		sizeChain = vector.size();
 		vs = new b2Vec2[sizeChain];
+
+		//este es el que deberiamos usar para el resto de Tiles
+		/*for (int i = 0; i < sizeChain; i++) {
+			vs[i] = b2Vec2(vector[i].x, vector[i].y);
+		}*/
+
+		//este es el que deberiamos usar para el TileMapTest.tmx
 		for (int i = sizeChain - 1; i >= 0; i--){
 			vs[(sizeChain - 1) - i ] = b2Vec2(vector[i].x, vector[i].y);
 		}
-		
-		/*for (int i = 0; i < sizeChain; i++){
-			vs[i] = b2Vec2(vector[i].x, vector[i].y);
-		}*/
 	}
 
 	void example(){
