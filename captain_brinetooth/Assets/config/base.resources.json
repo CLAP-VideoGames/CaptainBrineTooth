@@ -123,6 +123,10 @@
 		{
 			"id": "volverMenu",
 			"file": "assets/sprites/botones/volver.png"
+		},
+		{
+			"id": "barra",
+			"file": "assets/sprites/botones/ocean.png"
 		}
 
 	],

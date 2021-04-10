@@ -291,6 +291,9 @@
     <ClInclude Include="states\OptionsState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
+    <ClInclude Include="components\Image.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">

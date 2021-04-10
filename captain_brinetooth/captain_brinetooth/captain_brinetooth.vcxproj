@@ -172,6 +172,7 @@
     <ClInclude Include="components\framework.h" />
     <ClInclude Include="components\FringeHeadAtack.h" />
     <ClInclude Include="components\Hammer.h" />
+    <ClInclude Include="components\Image.h" />
     <ClInclude Include="components\KeyBoardCtrl.h" />
     <ClInclude Include="components\LoseLife.h" />
     <ClInclude Include="components\Map.h" />

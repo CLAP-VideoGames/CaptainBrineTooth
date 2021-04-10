@@ -23,7 +23,7 @@ App::App() {
 
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = new b2World(gravity);
-	SoundManager* sndProvisional = new SoundManager(75, "Menu");
+	SoundManager* sndProvisional = new SoundManager(0, "Menu");
 
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 }
