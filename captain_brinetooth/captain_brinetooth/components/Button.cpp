@@ -15,8 +15,8 @@ bool Button::handleEvent()
 	Transform* t = entity_->getComponent<Transform>();
 	std::pair<Sint32, Sint32> pos = ih().getMousePos();
 
-	if (pos.first >= t->getPos().getX() && pos.first < t->getPos().getX() + t->getW()
-		&& pos.second >= t->getPos().getY() && pos.second < t->getPos().getY() + t->getH()
+	if (pos.first >= t->getPos().getX() && pos.first < t->getPos().getX() + t->getW() - (t->getW() / 2)
+		&& pos.second >= t->getPos().getY() && pos.second < t->getPos().getY() + t->getH() - (t->getH() / 2)
 		)
 	{
 

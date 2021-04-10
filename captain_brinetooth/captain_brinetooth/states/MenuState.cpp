@@ -1,5 +1,5 @@
 #include "MenuState.h"
-
+#include "../states/OptionsState.h"
 #include "../states/PlayState.h"
 
 MenuState::MenuState(App* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
@@ -18,7 +18,7 @@ void MenuState::init() {
 
 	anim_controller->addAnimation("waves", &sdlutils().images().at("fondoMenu"), 11, 11, 1, 1, -1);
 
-	//soundController->playMainMusic();
+	soundController->playMainMusic();
 
 
 	// Titulo
@@ -43,7 +43,7 @@ void MenuState::init() {
 	// Opciones
 	auto opciones = manager_->addEntity();
 	opciones->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt / 1.25), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
-	opciones->addComponent<Button>(&sdlutils().images().at("opciones"), changeToGame, app, soundController);
+	opciones->addComponent<Button>(&sdlutils().images().at("opciones"), changeToOptions, app, soundController);
 
 	// Ajuste de la posicion y altura auxiliar para el siguiente boton
 	pos = opciones->getComponent<Transform>()->getPos();
@@ -79,8 +79,17 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 
 	app->getGameStateMachine()->currentState()->init();
 
-	//PruebaState* prueba = static_cast<PruebaState*>(g->getGameStateMachine()->currentState());
-	//prueba->init();
+}
+
+void MenuState::changeToOptions(App* app, SoundManager* snd) {
+	b2Vec2 gravity(0.0f, 9.8f);
+	b2World* world_ = new b2World(gravity);
+	snd->stopMusic();
+	snd->playSoundEffect("gaviota");
+
+	app->getGameStateMachine()->changeState(new OptionsState(app, world_, snd));
+	app->getGameStateMachine()->currentState()->init();
+
 }
 
 void MenuState::salirMenu(App* game, SoundManager* snd){

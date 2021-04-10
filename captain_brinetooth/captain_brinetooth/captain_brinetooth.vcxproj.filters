@@ -288,6 +288,9 @@
     <ClInclude Include="components\Crab.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
+    <ClInclude Include="states\OptionsState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -416,6 +419,9 @@
     </ClCompile>
     <ClCompile Include="components\Crab.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="states\OptionsState.cpp">
+      <Filter>Archivos de origen\states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

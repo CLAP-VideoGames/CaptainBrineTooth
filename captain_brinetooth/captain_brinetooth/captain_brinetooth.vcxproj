@@ -213,6 +213,7 @@
     <ClInclude Include="sdlutils\Texture.h" />
     <ClInclude Include="sdlutils\VirtualTimer.h" />
     <ClInclude Include="states\GameState.h" />
+    <ClInclude Include="states\OptionsState.h" />
     <ClInclude Include="states\PasueState.h" />
     <ClInclude Include="states\PlayState.h" />
     <ClInclude Include="states\StateMachine.h" />
@@ -255,6 +256,7 @@
     <ClCompile Include="sdlutils\SoundEffect.cpp" />
     <ClCompile Include="sdlutils\Texture.cpp" />
     <ClCompile Include="states\GameState.cpp" />
+    <ClCompile Include="states\OptionsState.cpp" />
     <ClCompile Include="states\PasueState.cpp" />
     <ClCompile Include="states\PlayState.cpp" />
     <ClCompile Include="states\StateMachine.cpp" />

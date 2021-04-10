@@ -111,6 +111,18 @@
 		{
 			"id": "nuevapartida",
 			"file": "assets/sprites/nuevapartida.png"
+		},
+		{
+			"id": "flecha+",
+			"file": "assets/sprites/botones/Flecha+.png"
+		},
+		{
+			"id": "flecha-",
+			"file": "assets/sprites/botones/Flecha-.png"
+		},
+		{
+			"id": "volverMenu",
+			"file": "assets/sprites/botones/volver.png"
 		}
 
 	],
