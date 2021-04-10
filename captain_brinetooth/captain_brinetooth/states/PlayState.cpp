@@ -15,6 +15,14 @@ PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mu
 	playerConfig.fixedRotation = true;
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
+
+	//Testing floor
+	auto suelo = manager_->addEntity();
+	suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
+	auto anim = suelo->addComponent<AnimBlendGraph>();
+	anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
+
+	suelo->addComponent<BoxCollider>();
 }
 
 void PlayState::init()
@@ -75,12 +83,15 @@ void PlayState::createPlayer(const Config& playerConfig){
 	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 47, 24, -1, 19, 46); // provisional, habria que hacer una de mantener
 
 	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
+	anim_controller->addTransition("idle", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("chainsaw_attack1", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack1", "chainsaw_attack2", "chainsaw_att", 2, true);
 	anim_controller->addTransition("run", "chainsaw_attack2", "chainsaw_att", 2, false);
+	anim_controller->addTransition("idle", "chainsaw_attack2", "chainsaw_att", 2, false);
 	anim_controller->addTransition("chainsaw_attack2", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack2", "chainsaw_attack3", "chainsaw_att", 3, true);
 	anim_controller->addTransition("run", "chainsaw_attack3", "chainsaw_att", 3, false);
+	anim_controller->addTransition("idle", "chainsaw_attack3", "chainsaw_att", 3, false);
 	anim_controller->addTransition("chainsaw_attack3", "run", "chainsaw_att", 0, false);
 	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack1", "chainsaw_att", 4, true);
 
@@ -95,12 +106,15 @@ void PlayState::createPlayer(const Config& playerConfig){
 	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, -1, 27, 44);
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
+	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("sword_attack1", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack1", "sword_attack2", "sword_att", 2, true);
 	anim_controller->addTransition("run", "sword_attack2", "sword_att", 2, false);
+	anim_controller->addTransition("idle", "sword_attack2", "sword_att", 2, false);
 	anim_controller->addTransition("sword_attack2", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack2", "sword_attack3", "sword_att", 3, true);
 	anim_controller->addTransition("run", "sword_attack3", "sword_att", 3, false);
+	anim_controller->addTransition("idle", "sword_attack3", "sword_att", 3, false);
 	anim_controller->addTransition("sword_attack3", "run", "sword_att", 0, false);
 	anim_controller->addTransition("sword_attack3", "sword_attack1", "sword_att", 4, true);
 
@@ -114,10 +128,12 @@ void PlayState::createPlayer(const Config& playerConfig){
 	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 24, 0, 17, 30);
 
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
-	anim_controller->addTransition("hammer_attack1", "run", "hammer_att", 0, true);
+	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);
+	anim_controller->addTransition("hammer_attack1", "run", "hammer_att", 0, false);
 	anim_controller->addTransition("hammer_attack1", "hammer_attack2", "hammer_att", 2, true);
 	anim_controller->addTransition("run", "hammer_attack2", "hammer_att", 2, false);
-	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, true);
+	anim_controller->addTransition("idle", "hammer_attack2", "hammer_att", 2, false);
+	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, false);
 	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 1, false);
 
 	anim_controller->setParamValue("hammer_att", 0);
