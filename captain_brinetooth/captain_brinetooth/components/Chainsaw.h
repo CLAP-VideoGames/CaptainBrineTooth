@@ -12,6 +12,7 @@
 #include "../ecs/Manager.h"
 #include "AnimBlendGraph.h"
 #include "WeaponDamageDetection.h"
+#include "PlayerController.h"
 
 
 class Chainsaw : public Component {

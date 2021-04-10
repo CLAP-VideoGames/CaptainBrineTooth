@@ -92,17 +92,21 @@ void Hammer::update() {
 
 	//Updating the trigger's position
 	if (trigger != nullptr) {
-		trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+		if (entity_->getComponent<PlayerController>()->getFlip()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX + entity_->getComponent<Transform>()->getW())) / sdlutils().getPPM(),
+			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 	}
 }
 
 void Hammer::creaTrigger(int damage) {
 	trigger = entity_->getMngr()->addEntity();
-	trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+	if (entity_->getComponent<PlayerController>()->getFlip()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX + entity_->getComponent<Transform>()->getW(), triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
+	else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+	anim_controller = trigger->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	trigger->addComponent<WeaponDamageDetection>(damage);
 }

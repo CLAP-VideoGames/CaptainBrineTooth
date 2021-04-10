@@ -13,7 +13,7 @@ class PlayerController : public Component {
 public:																
 	PlayerController(const float & speed = 3.0f, const float& forceJ = 5.0f , const float& dashS = 7.0f):
 															//falso				//falso
-		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS), isDashing(false), canDash(true){
+		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS), isDashing(false), canDash(true), isFlip(false){
 
 	}
 
@@ -48,6 +48,7 @@ public:
 				snd->playSoundEffect("walk");
 				animController_->setParamValue("Speed", 1);
 				animController_->flipX(false);
+				isFlip = false;
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_RIGHT) && !isDashing) {
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
@@ -55,6 +56,7 @@ public:
 				snd->playSoundEffect("walk");
 				animController_->setParamValue("Speed", 1);
 				animController_->flipX(true);
+				isFlip = true;
 			}
 			
 			//Parte Vertical
@@ -119,6 +121,9 @@ public:
 			animController_->setParamValue("NotOnFloor", 0);
 		}
 	}
+
+	bool getFlip() { return isFlip; }
+
 	//Joseda es tonto
 	void methods()
 	{
@@ -203,6 +208,6 @@ private:
 	int lastTimeJumped; 
 	int time = 1500, dashCoolDown = 10000, lasTimeDashed;
 	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;
-	bool isOnFloor, isOnAir, isDashing, canDash;
+	bool isOnFloor, isOnAir, isDashing, canDash, isFlip;
 	
 };
