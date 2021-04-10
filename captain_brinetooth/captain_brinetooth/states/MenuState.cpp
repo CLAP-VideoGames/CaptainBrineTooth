@@ -18,7 +18,7 @@ void MenuState::init() {
 
 	anim_controller->addAnimation("waves", &sdlutils().images().at("fondoMenu"), 11, 11, 1, 1, -1);
 
-	soundController->playMainMusic();
+	//soundController->playMainMusic();
 
 
 	// Titulo
