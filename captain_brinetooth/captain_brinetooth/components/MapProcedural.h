@@ -12,9 +12,11 @@ class MapProcedural : public Component {
 	const string ruta = "assets/maps/";
 	const std::array<char, 4> cardinals = {'N','E','S','W'};
 public:
-	MapProcedural(int nR) {
+	MapProcedural(int nR, int f) {
 		nRooms = nR;
 		lvl = nullptr;
+
+		fase = f;
 	}
 
 	~MapProcedural() {
@@ -31,6 +33,7 @@ public:
 		//lvl->clearTileset();
 		//Cargamos nuevo mapa
 		lvl->load(actualRoom->level);
+		lvl->setCollision();
 		cout << actualRoom->getName();
 		//Cogemos sus conexiones	
 		getCons(actualRoom->getName(), actualRoom->cons);
@@ -42,6 +45,7 @@ public:
 	}
 
 	void init() {
+		//Cuando estén las distintas zonas, podemos ordenar con un array y así puedo hacer zona[fase]
 		//Leeemos los distintos directorios
 		int roomsRead = 0;
 		ReadDirectory("assets/maps/level_starts",roomsRead);
@@ -120,7 +124,7 @@ private:
 		r->level = tag.path;
 
 		lvl->load(r->level);
-
+		lvl->setCollision();
 		//Opcion 1
 		getCons(tag.name, r->cons);
 
@@ -145,20 +149,20 @@ private:
 	}
 
 	Room* initializeRoom(Room* partida, int dir) {
+		int tile;
 		if (roomsExplored == nRooms) return nullptr;
 		//Tenemos que reconocer donde est�n los extremos, para poder poner habitaciones lim�trofes
 		//Y tambi�n deber�amos crear los colliders desde level, btw
 		if (roomsExplored == nRooms - 1) {
 			//Habitaci�n final
+			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size()+1);
+		}
+		else {
+			//Habitación intermedia
+			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
 		}
 
 		Room* r = new Room();
-
-		//Seleccionar�a aqu� uno que tenga una entrada por el cardinal opuesto
-		int tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
-
-		
-		//Buscamos hasta encontrar uno que no hayamos usado, quiz�s podamos hacer divide y vencer�s p marcas, como en eda
 
 
 
@@ -218,4 +222,7 @@ protected:
 
 	//Divisi�n entre tipos de salas
 	std::array<int, 2> fronteras;
+
+	int fase;
+	MapProcedural* nextMap;
 };

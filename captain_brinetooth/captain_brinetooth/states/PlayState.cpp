@@ -47,7 +47,7 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
 	nivel->addComponent<ChainCollider>(nivel->getComponent<Level0>()->getVerticesList());
-	//map = nivel->addComponent<MapProcedural>(10);
+	//map = nivel->addComponent<MapProcedural>(10, 1);
 	//nivel->getComponent<MapProcedural>();
 }
 
