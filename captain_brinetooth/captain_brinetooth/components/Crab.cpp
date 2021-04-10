@@ -29,7 +29,7 @@ void Crab::update() {
 					anim_->setParamValue("crab_att", 1);
 
 				//
-				creaTrigger(50);
+				creaTrigger(100);
 
 				//Time control variables
 				stoppedSawTime = sdlutils().currRealTime();
@@ -57,12 +57,12 @@ void Crab::update() {
 						anim_->setParamValue("crab_att", 3);
 
 					//
-					creaTrigger(50);
+					creaTrigger(100);
 
 					stoppedSawTime = sdlutils().currRealTime();
 					break;
 				case ATTACKS::Attack3:
-					std::cout << "Sword attack\n";
+					std::cout << "Crab attack\n";
 
 					//Set player as sawing
 					CURRENT_STATUS = STATUS::OnAnimationLock;
@@ -73,7 +73,7 @@ void Crab::update() {
 						anim_->setParamValue("crab_att", 1);
 
 					//
-					creaTrigger(50);
+					creaTrigger(100);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -122,7 +122,9 @@ void Crab::update() {
 
 	//Updating the trigger's position
 	if (trigger != nullptr) {
-		trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+		if (entity_->getComponent<PlayerController>()->getFlip()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX + entity_->getComponent<Transform>()->getW())) / sdlutils().getPPM(),
+			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 	}
 
@@ -139,7 +141,7 @@ void Crab::update() {
 		std::cout << "Crab Punch\n";
 
 		//
-		creaTrigger(20);
+		creaTrigger(100);
 
 		stabActivationTime = sdlutils().currRealTime();
 		currentlyStabbing = true;
@@ -149,10 +151,12 @@ void Crab::update() {
 void Crab::creaTrigger(int damage) {
 	//Activate attack trigger
 	trigger = entity_->getMngr()->addEntity();
-	trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+	if (entity_->getComponent<PlayerController>()->getFlip()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX + entity_->getComponent<Transform>()->getW(), triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-	anim_controller = trigger->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);
+	else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	trigger->addComponent<WeaponDamageDetection>(damage);
 }
