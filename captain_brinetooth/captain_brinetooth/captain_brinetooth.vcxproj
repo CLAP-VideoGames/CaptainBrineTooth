@@ -178,6 +178,7 @@
     <ClInclude Include="components\MapProcedural.h" />
     <ClInclude Include="components\PlayerController.h" />
     <ClInclude Include="components\Player_Health.h" />
+    <ClInclude Include="components\Crab.h" />
     <ClInclude Include="components\RayCast.h" />
     <ClInclude Include="components\Rectangle.h" />
     <ClInclude Include="components\Rotate.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="components\Hammer.cpp" />
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
+    <ClCompile Include="components\Crab.cpp" />
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\SoundManager.cpp" />
     <ClCompile Include="components\Sword.cpp" />

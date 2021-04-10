@@ -139,6 +139,29 @@ void PlayState::createPlayer(const Config& playerConfig){
 	anim_controller->setParamValue("hammer_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
+
+#pragma region Crab
+//---CRAB---------------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, 0, 1, 8);
+	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, -1, 8, 25);
+	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, 0, 27, 38);
+
+	anim_controller->addTransition("run", "crab_attack1", "crab_att", 1, false);
+	anim_controller->addTransition("idle", "crab_attack1", "crab_att", 1, false);
+	anim_controller->addTransition("crab_attack1", "run", "crab_att", 0, true);
+	anim_controller->addTransition("crab_attack1", "crab_attack2", "crab_att", 2, true);
+	anim_controller->addTransition("run", "crab_attack2", "crab_att", 2, false);
+	anim_controller->addTransition("idle", "crab_attack2", "crab_att", 2, false);
+	anim_controller->addTransition("crab_attack2", "run", "crab_att", 0, false);
+	anim_controller->addTransition("crab_attack2", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("run", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("idle", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("crab_attack3", "run", "crab_att", 0, false);
+	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 4, true);
+
+	anim_controller->setParamValue("crab_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 #pragma endregion
@@ -153,7 +176,7 @@ void PlayState::createPlayer(const Config& playerConfig){
 	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<Hammer>();
+	player->addComponent<Crab>();
 
 	player->addComponent<LoseLife>();
 

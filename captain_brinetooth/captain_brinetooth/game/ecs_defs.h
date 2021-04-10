@@ -36,6 +36,7 @@ class DestroyOnCollision;
 class Button;
 class MapProcedural;
 class Image;
+class Crab;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -70,7 +71,8 @@ class Image;
 	DestroyOnCollision, \
 	MapProcedural, \
 	Button ,\
-	Image
+	Image,\
+	Crab
 
 // groups
 

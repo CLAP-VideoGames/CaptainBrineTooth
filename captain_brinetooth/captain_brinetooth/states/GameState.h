@@ -30,6 +30,7 @@
 #include "../components/ElfSharkAttack.h"
 #include "../components/FringeHeadAtack.h"
 #include "../components/PlayerController.h"
+#include "../components/Crab.h"
 
 class Manager;
 class App;
