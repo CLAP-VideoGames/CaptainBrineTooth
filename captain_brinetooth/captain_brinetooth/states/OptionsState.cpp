@@ -18,7 +18,8 @@ void OptionsState::init()
 	auto* anim_controller = newP->addComponent<AnimBlendGraph>();
 
 	anim_controller->addAnimation("waves", &sdlutils().images().at("fondoMenu"), 11, 11, 1, 1, -1);
-	soundController->ChangeMainMusic("FinalBoss");
+	
+	//soundController->ChangeMainMusic("FinalBoss");
 
 
 	auto* subirV = manager_->addEntity();
@@ -33,6 +34,21 @@ void OptionsState::init()
 	volver->addComponent<Transform>(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(0, 0), cam.w - (cam.w / 1.5), cam.h - (cam.h / 1.5), 0.0f);
 	volver->addComponent<Button>(&sdlutils().images().at("volverMenu"), volverMenu, app, soundController);
 
+
+}
+
+
+void OptionsState::update() {
+
+	GameState::update();
+
+	for (Entity* b : manager_->getEnteties()) {
+		Button* but = b->getComponent<Button>();
+		if (but != nullptr && but->handleEvent())
+		{
+			break;
+		}
+	}
 
 }
 

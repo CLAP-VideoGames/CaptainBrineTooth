@@ -87,7 +87,7 @@ void MenuState::changeToOptions(App* app, SoundManager* snd) {
 	snd->stopMusic();
 	snd->playSoundEffect("gaviota");
 
-	app->getGameStateMachine()->changeState(new OptionsState(app, world_, snd));
+	app->getGameStateMachine()->pushState(new OptionsState(app, world_, snd));
 	app->getGameStateMachine()->currentState()->init();
 
 }

@@ -15,7 +15,7 @@ public:
 	static void volverMenu(App* app, SoundManager* snd);
 
 
-	void update() {};
+	void update();
 	void setSoundController(SoundManager* snd) { soundController = snd; }
 
 private:
