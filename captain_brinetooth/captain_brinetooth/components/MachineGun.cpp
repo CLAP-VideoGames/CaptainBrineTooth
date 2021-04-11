@@ -59,8 +59,12 @@ void MachineGun::update() {
 			anim_->setParamValue("chainsaw_att", 0);
 	}
 	else if (CURRENT_STATUS == STATUS::Shooting && overheatSpikeTime + timeBetweenOverheatSpikes < sdlutils().currRealTime()) {
-		std::cout << "Building overheat\n";
+		
 		overheat++;
+
+		std::cout << overheat << "\n";
+
+		overheatSpikeTime = sdlutils().currRealTime();
 	}
 	else if (CURRENT_STATUS == STATUS::Reloading && startedReloading + reloadingTime < sdlutils().currRealTime()) {
 		//Deactivate animation lock
@@ -71,6 +75,14 @@ void MachineGun::update() {
 			anim_->setParamValue("chainsaw_att", 0);
 
 		overheat = 0;
+	}
+
+	//Decrementamos el overheat
+	if (CURRENT_STATUS == STATUS::Iddle && overheat > 0 && decreaseOverheatSpikeTime + timeBetweenOverheatSpikes < sdlutils().currRealTime()) {
+		overheat--;
+
+		std::cout << overheat << "\n";
+		decreaseOverheatSpikeTime = sdlutils().currRealTime();
 	}
 
 	//Comprobamos si hay que disparar una bala

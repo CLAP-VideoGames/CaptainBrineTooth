@@ -40,11 +40,12 @@ private:
 	bool currentlyShooting = false;
 	float overheat;
 	float overheatSpikeTime;
+	float decreaseOverheatSpikeTime;
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
 	float reloadingTime = 2000;		//Counted after one attack is stopped to avoid animation clipping
 	float timeBetweenShots = 333;
 	float timeBetweenOverheatSpikes = 100;
-	float maxOverheat = 200;
+	float maxOverheat = 30;
 };
