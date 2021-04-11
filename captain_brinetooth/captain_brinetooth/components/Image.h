@@ -17,6 +17,16 @@ public:
 		tex_->render(dest);
 	}
 
+	void actualizar(SDL_Rect d)
+	{
+		dest = d;
+	}
+
+	Texture* tex()
+	{
+		return tex_;
+	}
+
 private:
 	SDL_Rect dest;
 	Texture* tex_;

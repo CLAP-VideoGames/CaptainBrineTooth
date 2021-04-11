@@ -32,6 +32,7 @@
 #include "../components/PlayerController.h"
 #include "../components/Crab.h"
 #include "../components/MachineGun.h"
+#include "../components/Image.h"
 
 class Manager;
 class App;

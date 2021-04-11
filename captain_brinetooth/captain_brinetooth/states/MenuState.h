@@ -15,8 +15,6 @@ public:
 	static void changeToOptions(App* app, SoundManager* snd);
 
 	void update();
-	void setSoundController(SoundManager* snd) { soundController = snd; }
-
 private:
 	SDL_Rect cam;
 	

@@ -16,8 +16,6 @@ public:
 
 
 	void update();
-	void setSoundController(SoundManager* snd) { soundController = snd; }
-
 private:
 	SDL_Rect cam;
 };

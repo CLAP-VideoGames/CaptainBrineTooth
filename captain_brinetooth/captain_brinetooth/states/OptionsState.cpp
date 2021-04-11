@@ -1,7 +1,7 @@
 #include "../states/OptionsState.h"
 #include "../states/MenuState.h"
 #include "../states/PlayState.h"
-#include "../components/Image.h"
+
 
 OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
@@ -14,11 +14,15 @@ OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager*
 
 void OptionsState::init()
 {
-	auto* newP = manager_->addEntity();
-	newP->addComponent<Transform>(Vector2D(0, 0), Vector2D(0, 0), cam.w, cam.h, 0.0f);
-	auto* anim_controller = newP->addComponent<AnimBlendGraph>();
+	auto* fondo = manager_->addEntity();
 
-	anim_controller->addAnimation("waves", &sdlutils().images().at("fondoMenu"), 11, 11, 1, 1, -1);
+	SDL_Rect posImage;
+	posImage.x = 0;
+	posImage.y = 0;
+	posImage.w = cam.w;
+	posImage.h = cam.h;
+
+	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage);
 	
 	soundController->ChangeMainMusic("FinalBoss");
 
@@ -44,10 +48,19 @@ void OptionsState::init()
 	posBarra.y = pos.getY() + h/10;
 
 	posBarra.h = cam.h - (cam.h / 1.05);
-	posBarra.w = soundController->GeneralVolume() + cam.w / 4;
+	posBarra.w = soundController->GeneralVolume() * cam.w / 260;
 
 	auto* barraVolumen = manager_->addEntity();
 	barraVolumen->addComponent<Image>(&sdlutils().images().at("barra"), posBarra);
+
+	posBarra.x += posBarra.w - posBarra.w / 1.5;
+	posBarra.y -= posBarra.h * 1.5;
+
+	posBarra.w = cam.w / 10;
+	posBarra.h = cam.h / 10;
+
+	auto* barco = manager_->addEntity();
+	barco->addComponent<Image>(&sdlutils().images().at("barco"), posBarra);
 	
 
 }

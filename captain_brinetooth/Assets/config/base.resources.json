@@ -127,6 +127,14 @@
 		{
 			"id": "barra",
 			"file": "assets/sprites/botones/ocean.png"
+		},
+		{
+			"id": "barco",
+			"file": "assets/sprites/botones/ship.png"
+		},
+		{
+			"id": "fondoOpciones",
+			"file": "assets/sprites/botones/fondoOpciones.jpg"
 		}
 
 	],

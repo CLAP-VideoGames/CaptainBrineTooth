@@ -12,12 +12,16 @@ MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) 
 }
 
 void MenuState::init() {
-	auto* newP = manager_->addEntity();
-	newP->addComponent<Transform>(Vector2D(0, 0), Vector2D(0, 0), cam.w, cam.h, 0.0f);
-	auto* anim_controller = newP->addComponent<AnimBlendGraph>();
+	auto* fondo = manager_->addEntity();
+	SDL_Rect posImage;
+	posImage.x = 0;
+	posImage.y = 0;
+	posImage.w = cam.w;
+	posImage.h = cam.h;
 
-	anim_controller->addAnimation("waves", &sdlutils().images().at("fondoMenu"), 11, 11, 1, 1, -1);
+	fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), posImage);
 
+	soundController->setGeneralVolume(63.5);
 	soundController->playMainMusic();
 
 
