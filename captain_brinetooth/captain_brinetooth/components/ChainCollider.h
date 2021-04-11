@@ -19,6 +19,19 @@
 
 //enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
+
+struct bodyChain {
+	//Tamaño del array de vertices del cuerpo
+	int sizeVs;
+	//Definicion de vertices del cuerpo
+	b2Vec2* vs;
+	//Cuerpo
+	b2Body* body_;
+	//Fixture del cuerpo
+	b2Fixture* fixt_;
+
+};
+
 class ChainCollider : public Component {
 public:
 	template<class T>
@@ -69,17 +82,26 @@ public:
 	}
 
 	void createChainFixture(){
-		for (int i = 0;  i < vs.size(); i++){
-			b2Body* b = world->CreateBody(&bdDef);
-			bodies.push_back(b);
-			b->SetFixedRotation(fixedRotation_);
+
+		std::cout << "VERTICES FIXTURE" << std::endl;
+		for (int i = 0;  i < bodies_.size(); i++){
+			//Creamos el nuevo cuerpo
+			bodies_[i].body_ = world->CreateBody(&bdDef);
+			bodies_[i].body_->SetFixedRotation(fixedRotation_);
 
 			b2ChainShape chain;
 			//Vertice fantasmas inicial								//Vertice fantasmas final
 			//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
 			//chain.CreateChain(vs, sizeChain, b2Vec2((vs[0].x) - 30.0f / sdlutils().getPPM(), ((vs[0].y)) / sdlutils().getPPM()), b2Vec2((vs[sizeChain - 1].x) / sdlutils().getPPM(), ((vs[sizeChain - 1].y - 30)) / sdlutils().getPPM()));
 			
-			chain.CreateLoop(vs[i], sizeVerticesChain);
+			for (int j = 0; j < bodies_[i].sizeVs; j++){
+				std::cout << bodies_[i].vs[j].x << " " << bodies_[i].vs[j].y << std::endl;
+			}
+
+			std::cout << "---" << std::endl;
+
+			//le pasamos los vertices del cuerpo
+			chain.CreateLoop(bodies_[i].vs, bodies_[i].sizeVs);
 
 			b2FixtureDef fixtureDef;
 			fixtureDef.shape = &chain;
@@ -87,49 +109,42 @@ public:
 			fixtureDef.friction = 0.4f;
 			fixtureDef.filter.categoryBits = colLay_; // tag para determinar capa de colision
 			fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
-			b2Fixture* fixt = b->CreateFixture(&fixtureDef);
-			fixtures.push_back(fixt);
+			//Inicializamos la fixture del cuerpo
+			bodies_[i].fixt_ = bodies_[i].body_->CreateFixture(&fixtureDef);
 		}
-
 	}
 
-	void deleteChainFixture() {
-		for (auto& fixt : fixtures) {
-			delete fixt; fixt = nullptr;
-		}
+	void deleteChains() {
 
-		for (auto& bod : bodies)
-			world->DestroyBody(bod);
+		//for (auto& fixt : fixtures) {
+		//	delete fixt; fixt = nullptr;
+		//}
+
+		//for (auto& bod : bodies)
+		//	world->DestroyBody(bod);
 	}
 
 	template<class T>
-	void setVertices(const std::vector<vector<T>>& vector){
-		sizeVerticesChain = vector.size();
-
-		for (int i = 0; i < sizeVerticesChain; i++){
-			int sizeVertices = vector[i].size();
-			b2Vec2* vertices = new b2Vec2[sizeVertices];
-			for (int j = 0; j < sizeVertices; j++){
-				vertices[j] = b2Vec2(vector[i][j].x, vector[i][j].y);
+	void setVertices(const std::vector<vector<T>>& verticesVector){
+		//Para cada definicion del lista de vertices, las introducimos en el vector de cuerpos
+		for (int i = 0; i < verticesVector.size(); i++){
+			bodyChain newBody;
+			//Inicializamos el tamaño de la lista de vertices
+			newBody.sizeVs = verticesVector[i].size();
+			//Creamos un nuevo array para la lista de vectores
+			newBody.vs = new b2Vec2[newBody.sizeVs];
+			//Copiamos cada uno de los valores en cada una de las posiciones del array
+			for (int j = 0; j < newBody.sizeVs; j++) {
+				std::cout << verticesVector[i][j].x << " " << verticesVector[i][j].y << std::endl;
+				newBody.vs[j] = b2Vec2(verticesVector[i][j].x, verticesVector[i][j].y);
 			}
-			vs.push_back(vertices);
+
+			std::cout << "---" << std::endl;
+
+			//Introducimos el cuerpo en el vector
+			bodies_.push_back(newBody);
 		}
-		//for (int i = 0; i < sizeVerticesChain; i++) {
-		//	//Nuevo array de vertices
-		//	int sizeVertices = vector[i].size();
-		//	b2Vec2* vertices = new b2Vec2[sizeVertices];
-		//	for (int j = 0; j < sizeVertices; j++)
-		//		vertices[i] = b2Vec2(vector[i][j].x, vector[i][j].y);
-
-		//	for (int j = 0; j < sizeVertices; j++)
-		//		std::cout << vertices[j].x << " " << vertices[j].y << std::endl;
-
-		//	vs.push_back(vertices);
-		//}
-		//Por si por algun motivo los vertices se han puesto en sentido Antihorario
-		/*for (int i = sizeChain - 1; i >= 0; i--){
-			vs[(sizeChain - 1) - i ] = b2Vec2(vector[i].x, vector[i].y);
-		}*/
+		//Por si por algun motivo los vertices se han puesto en sentido Antihorario : vs[(sizeChain - 1) - i ]
 	}
 
 private:
@@ -152,7 +167,7 @@ private:
 
 		b2ChainShape chain;
 		//Vertice fantasmas inicial								//Vertice fantasmas final
-	//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
+		//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
 		chain.CreateChain(vs, 4, b2Vec2((sdlutils().width() / 16.0f) / sdlutils().getPPM(), (sdlutils().height() / 2.0f) / sdlutils().getPPM()), b2Vec2((sdlutils().width() / 1.0f) / sdlutils().getPPM(), (sdlutils().height() / 2.0f) / sdlutils().getPPM()));
 
 		body->SetFixedRotation(fixedRotation_);
@@ -176,8 +191,8 @@ private:
 	b2BodyDef bdDef;
 
 	b2World* world = nullptr;
-	std::vector<b2Vec2*> vs;
-	std::vector<b2Body*> bodies;
-	std::vector<b2Fixture*> fixtures;
+
+	//Vector de cuerpos
+	std::vector<bodyChain> bodies_;
 };
 

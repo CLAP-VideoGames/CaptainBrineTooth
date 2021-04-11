@@ -41,6 +41,8 @@ public:
 		lvl = entity_->getComponent<Level0>();
 
 		int tile = sdlutils().rand().teCuoto(0, fronteras[0]);
+		//Testing
+		//int tile = 0;
 
 		actualRoom = initializeNewRoom(roomNames[tile]);
 
@@ -55,7 +57,7 @@ public:
 		lvl->load(actualRoom->level);
 		//Setteamos los nuevos vertices para la creacion del cuerpo Collider
 		chainCollider->setVertices(lvl->getVerticesList());
-		chainCollider->deleteChainFixture();
+		chainCollider->deleteChains();
 		chainCollider->createChainFixture();
 
 		cout << actualRoom->getName();

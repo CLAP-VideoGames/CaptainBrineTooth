@@ -126,56 +126,26 @@ void Level0::load(const string& path) {
 
 	for (auto& layerObj : map_layers){
 		if (layerObj->getType() != tmx::Layer::Type::Object) continue;
-
 		auto* object_layer = dynamic_cast<const tmx::ObjectGroup*>(layerObj.get());
 		auto layer_objects = object_layer->getObjects();
 
 		//las coordenadas de los puntos reales son layer_objects.back().getPosition() + layer_objects.back().getPoints()[i];
-
+		int j = 0;
 		for (auto& object : layer_objects){
 			points.push_back(object.getPoints());
-			int i = 0;
-			for (tmx::Vector2f& vec : points[i]) {
-				vec.x += object.getPosition().x;
-				vec.y += object.getPosition().y;
 
-				vec.x /= sdlutils().getPPM();
-				vec.y /= sdlutils().getPPM(); 
-				i++;
+			for (int i = 0; i < points[j].size(); i++){
+				points[j][i].x += object.getPosition().x;
+				points[j][i].y += object.getPosition().y;
+
+				points[j][i].x /= sdlutils().getPPM();
+				points[j][i].y /= sdlutils().getPPM();
 			}
 
+			j++;
 
 		}
 	}
-
-	//for (auto& layer : map_layers) {
-		//comprobamos si es una capa con Objetos en ella.
-		/*if (layer->getType() != tmx::Layer::Type::Object)
-			continue;
-
-		auto* object_layer = dynamic_cast<const tmx::ObjectGroup*>(layer.get());
-		auto layer_objects = object_layer->getObjects();
-
-		objects_.push_back(new object(layer_objects.back().getPosition().x,
-									  layer_objects.back().getPosition().y, 
-									  layer_objects.back().getAABB().width,
-									  layer_objects.back().getAABB().height));
-
-		Vector2D size((int)layer_objects.back().getAABB().width / 200, (int)layer_objects.back().getAABB().height / 200);
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_staticBody;
-		bodyDef.position.Set((int)layer_objects.back().getPosition().x / 200, (int)layer_objects.back().getPosition().y / 200);
-		body_ = b2World_->CreateBody(&bodyDef);
-
-		b2PolygonShape shape;
-		shape.SetAsBox(size.getX() / 2.0f, size.getY() / 2.0f);
-
-		b2FixtureDef fixture;
-		fixture.shape = &shape;
-		fixture.density = 1.0f;
-		fixture.friction = 0.1f;
-		fixture_ = body_->CreateFixture(&fixture);*/
-	//}
 }
 
 void Level0::clearTileset()
