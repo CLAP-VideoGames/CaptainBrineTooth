@@ -210,7 +210,7 @@
     <ClInclude Include="components\LoseLife.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\ChainCollider.h">
+    <ClInclude Include="components\MapCollider.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\Button.h">

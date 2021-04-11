@@ -16,7 +16,7 @@ class Armas_HUD;
 class EnemyMovement;
 class Level0;
 class Chainsaw;
-class ChainCollider;
+class MapCollider;
 class PlayerController;
 class CameraFollow;
 class SoundManager;
@@ -54,7 +54,7 @@ class MachineGun;
 	PlayerController, \
 	Level0, \
 	Chainsaw,\
-	ChainCollider,\
+	MapCollider,\
 	CameraFollow,\
 	SoundManager,\
 	LoseLife,\

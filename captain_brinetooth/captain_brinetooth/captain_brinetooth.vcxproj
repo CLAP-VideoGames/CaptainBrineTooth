@@ -159,7 +159,7 @@
     <ClInclude Include="components\BoxCollider.h" />
     <ClInclude Include="components\Button.h" />
     <ClInclude Include="components\CameraFollow.h" />
-    <ClInclude Include="components\ChainCollider.h" />
+    <ClInclude Include="components\MapCollider.h" />
     <ClInclude Include="components\Chainsaw.h" />
     <ClInclude Include="components\ContactDamage.h" />
     <ClInclude Include="components\DamageCollisionCallbacks.h" />

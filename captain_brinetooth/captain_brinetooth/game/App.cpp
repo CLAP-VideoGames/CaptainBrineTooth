@@ -95,7 +95,8 @@ void App::start() {
 			exit = true;
 			continue;
 		}
-  
+	
+		world_->Step(1.0f / 60.0f, 6, 2);
 		stateMachine->currentState()->update();
 		stateMachine->currentState()->refresh();
 

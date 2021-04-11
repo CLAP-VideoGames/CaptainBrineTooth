@@ -22,7 +22,7 @@
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Enemy_Health.h"
 #include "../components/SoundManager.h"
-#include "../components/ChainCollider.h"
+#include "../components/MapCollider.h"
 #include "../components/Player_Health.h"
 #include "../components/enemyMovement.h"
 #include "../components/MapProcedural.h"
@@ -63,11 +63,10 @@ public:
 
 	Entity* createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel);
 
-
 	virtual void render() const;
 	virtual void update();
 	virtual void refresh();
 	virtual void init() {};
-	Manager* getMngr();
+	Manager* getMngr() { return manager_; };
 };
 

@@ -2,14 +2,14 @@
 #include "../ecs/Component.h"
 #include "../levels/Level0.h"
 #include "../ecs/Entity.h"
-#include "ChainCollider.h"
+#include "MapCollider.h"
 #include <filesystem>
 #include <map>
 //Los mapas, los vertices de colision tienen que ser en sentido horario
 
 namespace fs = std::filesystem;
 /// <summary>
-/// Crea las habitaciones del mapa y controla sus conexiones. Aplica el componente ChainCollider para el manejo de colisiones
+/// Crea las habitaciones del mapa y controla sus conexiones. Aplica el componente MapCollider para el manejo de colisiones
 /// </summary>
 class MapProcedural : public Component {
 	const string ruta = "assets/maps/";
@@ -22,7 +22,7 @@ public:
 	}
 
 	~MapProcedural() {
-		if (chainCollider != nullptr) entity_->removeComponent<ChainCollider>();
+		if (chainCollider != nullptr) entity_->removeComponent<MapCollider>();
 		delete actualRoom;
 	}
 
@@ -122,7 +122,7 @@ private:
 
 		lvl->load(r->level);
 		
-		chainCollider = entity_->addComponent<ChainCollider>(lvl->getVerticesList());
+		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
 		
 		//Opcion 1
 		getConec(tag.name, r->cons);
@@ -220,5 +220,5 @@ protected:
 
 	int fase;
 	MapProcedural* nextMap;
-	ChainCollider* chainCollider;
+	MapCollider* chainCollider;
 };

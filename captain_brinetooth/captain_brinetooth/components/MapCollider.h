@@ -18,8 +18,6 @@
 //then n pixels = n * 0.0002645833;
 
 //enum TYPE { STATIC, DYNAMIC, KINEMATIC };
-
-
 struct bodyChain {
 	//Tamaño del array de vertices del cuerpo
 	int sizeVs;
@@ -32,10 +30,10 @@ struct bodyChain {
 
 };
 
-class ChainCollider : public Component {
+class MapCollider : public Component {
 public:
 	template<class T>
-	ChainCollider(std::vector<vector<T>> vertices, int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
+	MapCollider(std::vector<vector<T>> vertices, int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
 		//type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
@@ -49,7 +47,7 @@ public:
 		setVertices(vertices);
 	}
 
-	virtual ~ChainCollider() {
+	virtual ~MapCollider() {
 	}
 
 	void init() override {
