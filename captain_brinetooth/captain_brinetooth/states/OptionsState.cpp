@@ -53,7 +53,7 @@ void OptionsState::init()
 	auto* barraVolumen = manager_->addEntity();
 	barraVolumen->addComponent<Image>(&sdlutils().images().at("barra"), posBarra);
 
-	posBarra.x += posBarra.w - posBarra.w / 1.5;
+	posBarra.x += posBarra.w - cam.w/12 ;
 	posBarra.y -= posBarra.h * 1.5;
 
 	posBarra.w = cam.w / 10;
@@ -82,13 +82,33 @@ void OptionsState::update() {
 
 void OptionsState::subirVolumen(App* app, SoundManager* snd)
 {
-	snd->setGeneralVolume(snd->GeneralVolume() + 5);
+	float vol = snd->GeneralVolume();
+
+	if (vol < 128)
+	{
+		vol += 12.7;
+		snd->setGeneralVolume(vol);
+		if (vol >= 128)
+		{
+			snd->setGeneralVolume(127);
+		}
+	}
 }
 
 void OptionsState::bajarVolumen(App* app, SoundManager* snd)
 {
-	//snd->setGeneralVolume(snd->GeneralVolume() - 5);
-	snd->setGeneralVolume(0);
+	float vol = snd->GeneralVolume();
+
+	if (vol > 0)
+	{
+		vol -= 12.7;
+		snd->setGeneralVolume(vol);
+		if (vol < 0)
+		{
+			snd->setGeneralVolume(0);
+		}
+	}
+
 }
 
 void OptionsState::volverMenu(App* app, SoundManager* snd)
