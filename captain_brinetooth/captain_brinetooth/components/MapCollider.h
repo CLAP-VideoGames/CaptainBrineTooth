@@ -188,7 +188,7 @@ private:
 	//bool entra = 0;
 	b2BodyDef bdDef;
 
-	b2World* world = nullptr;
+	std::shared_ptr<b2World> world = nullptr;
 
 	//Vector de cuerpos
 	std::vector<bodyChain> bodies_;

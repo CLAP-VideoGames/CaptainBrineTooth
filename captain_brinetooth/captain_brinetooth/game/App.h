@@ -25,9 +25,6 @@ class Manager;
 
 class App {
 public:
-
-	
-
 	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qué me tomais por un dictador, que no soy Ángel.
 
 	App();
@@ -54,8 +51,8 @@ public:
 	//const Uint32 MILLISECS_PER_TICK = 1000 / TICKS;
 private:
 
-	//std::shared_ptr<b2World>
-	b2World* world_;
+	std::shared_ptr<b2World> world_;
+	//b2World* world_;
 	DamageCollisionCallbacks collisionListener;
 	std::unique_ptr<Manager> mngr_;
 	//Control de los estados en los que esta el juego 

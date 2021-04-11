@@ -8,7 +8,7 @@ class OptionsState : public GameState
 {
 public:
 
-	OptionsState(App* app, b2World* mundo, SoundManager* snd);
+	OptionsState(App* app, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual void init();
 	static void subirVolumen(App* app, SoundManager* snd);
 	static void bajarVolumen(App* app, SoundManager* snd);

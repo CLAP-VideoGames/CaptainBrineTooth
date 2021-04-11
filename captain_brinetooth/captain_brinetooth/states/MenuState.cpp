@@ -2,7 +2,7 @@
 #include "../states/OptionsState.h"
 #include "../states/PlayState.h"
 
-MenuState::MenuState(App* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
+MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
 	cam = a->camera;
 

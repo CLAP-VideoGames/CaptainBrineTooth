@@ -45,7 +45,7 @@ protected:
 	SoundManager* soundController;
 	std::vector<Entity*> stage;
 public:
-	GameState(App* a, b2World* mundo, SoundManager* snd);
+	GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual ~GameState();
 
 	struct Config {

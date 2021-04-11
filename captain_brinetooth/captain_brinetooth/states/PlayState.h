@@ -5,7 +5,7 @@ class Entity;
 class PlayState : public GameState
 {
 public:
-	PlayState(App* a, b2World* mundo, SoundManager* snd);
+	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual void init();
 
 	void createLevel0();

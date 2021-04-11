@@ -3,7 +3,7 @@
 #include "../game/App.h"
 #include "../utils/Vector2D.h"
 
-GameState::GameState(App* a, b2World* mundo, SoundManager* snd) {
+GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) {
 	app = a;
 	manager_ = new Manager(mundo); 
 	soundController = snd;

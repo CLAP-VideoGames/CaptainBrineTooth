@@ -22,7 +22,7 @@ App::App() {
 	//Hariamos un push del menu
 
 	b2Vec2 gravity(0.0f, 9.8f);
-	world_ = new b2World(gravity);
+	world_ = make_shared<b2World>(gravity);
 	SoundManager* sndProvisional = new SoundManager(0, "Menu");
 
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));

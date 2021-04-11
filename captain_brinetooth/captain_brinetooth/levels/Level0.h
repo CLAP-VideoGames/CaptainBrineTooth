@@ -37,7 +37,7 @@ struct object {
 
 class Level0 : public Component{
 public:
-	Level0(const string& name, b2World* b2World);
+	Level0(const string& name, std::shared_ptr<b2World> b2World);
 	void render() override;
 	Vector2D getFilsCols() { return Vector2D(fils_, cols_); }
 	Vector2D getTileSize() { return Vector2D(tile_height_, tile_width_); }
@@ -58,7 +58,7 @@ private:
 	vector<tile*> tiles_;			// tiles a dibujar en pantalla
 	vector<object*> objects_;		// objetos (colisiones) en la capa de Tiled Map
 	map<gid, Texture*> tilesets_;	// tilesets usados para dibujar el Tiled Map
-	b2World* b2World_ = nullptr;
+	std::shared_ptr<b2World> b2World_ = nullptr;
 	b2Body* body_ = nullptr;
 	b2Fixture* fixture_ = nullptr;
 

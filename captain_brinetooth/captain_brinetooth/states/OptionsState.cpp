@@ -3,7 +3,7 @@
 #include "../states/PlayState.h"
 #include "../components/Image.h"
 
-OptionsState::OptionsState(App* a, b2World* mundo, SoundManager* snd) : GameState(a, mundo, snd)
+OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
 	cam = a->camera;
 

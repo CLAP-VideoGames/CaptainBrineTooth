@@ -21,7 +21,7 @@ class Entity {
 
 public:
 
-	Entity(Manager* mngr, b2World* wrld) :
+	Entity(Manager* mngr, std::shared_ptr<b2World> wrld) :
 		active_(true), //
 		mngr_(mngr), //
 		world_(wrld), //
@@ -91,7 +91,7 @@ public:
 		return mngr_;
 	}
 
-	inline b2World* getWorld() {
+	inline std::shared_ptr<b2World> getWorld() {
 		return world_;
 	}
 
@@ -155,7 +155,7 @@ private:
 
 	bool active_;
 	Manager* mngr_;
-	b2World* world_;
+	std::shared_ptr<b2World> world_;
 	std::vector<Component*> components_;
 	std::array<Component*, ecs::maxComponent> cmpArray_;
 	std::bitset<ecs::maxGroup> groups_;

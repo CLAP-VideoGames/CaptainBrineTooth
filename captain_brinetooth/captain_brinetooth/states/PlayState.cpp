@@ -2,7 +2,7 @@
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
-PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mundo, snd)
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd): GameState(a, mundo, snd)
 {
 	createLevel0();
 

@@ -4,14 +4,12 @@
 
 #include <algorithm>
 
-Manager::Manager(b2World* mundo) {
+Manager::Manager(std::shared_ptr<b2World> mundo) {
 
 	world_ = mundo;
 }
 
 Manager::~Manager() {
-	delete world_;
-
 	for (auto e : entities_) {
 		delete e;
 	}

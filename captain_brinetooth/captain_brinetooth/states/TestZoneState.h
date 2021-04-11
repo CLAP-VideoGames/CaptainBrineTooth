@@ -7,7 +7,7 @@ class TestZoneState :public GameState
 {
 public:
 
-	TestZoneState(App* a, b2World* mundo, SoundManager* snd);
+	TestZoneState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual void init();
 
 };

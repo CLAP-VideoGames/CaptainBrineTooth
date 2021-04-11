@@ -32,7 +32,7 @@ void tile::draw() {
 object::object(float oX, float oY, float oWidth, float oHeight)
 : oX_(oX), oY_(oY), oWidth_(oWidth), oHeight_(oHeight) {}
 
-Level0::Level0(const string &name, b2World* b2World)
+Level0::Level0(const string &name, std::shared_ptr<b2World> b2World)
 	: name_(name), fils_(0), cols_(0), b2World_(b2World) {
 	//load(name);
 }

@@ -8,7 +8,7 @@ class MenuState : public GameState
 {
 public:
 
-	MenuState(App* app, b2World* mundo, SoundManager* snd);
+	MenuState(App* app, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual void init();
 	static void changeToGame(App* app, SoundManager* snd);
 	static void salirMenu(App* app, SoundManager* snd);

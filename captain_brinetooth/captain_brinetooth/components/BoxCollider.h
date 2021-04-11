@@ -179,7 +179,7 @@ private:
 
 	//bool entra = 0;
 	bool fixedRotation_;
-	b2World* world = nullptr;
+	std::shared_ptr<b2World> world = nullptr;
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
 
