@@ -4,12 +4,12 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
 PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mundo, snd)
 {
-	//createLevel0();
+	createLevel0();
 
 	Config playerConfig{};
 	playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
 	playerConfig.vel = Vector2D(0, 0);
-	playerConfig.size = Vector2D(200.0f, 200.0f);
+	playerConfig.size = Vector2D(100.0f, 100.0f);
 	playerConfig.friction = 0.2f;
 	playerConfig.physicType = DYNAMIC;
 	playerConfig.fixedRotation = true;
@@ -17,12 +17,12 @@ PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mu
 	createPlayer(playerConfig);
 
 	//Testing floor
-	auto suelo = manager_->addEntity();
-	suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
-	auto anim = suelo->addComponent<AnimBlendGraph>();
-	anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
+	//auto suelo = manager_->addEntity();
+	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
+	//auto anim = suelo->addComponent<AnimBlendGraph>();
+	//anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
 
-	suelo->addComponent<BoxCollider>();
+	//suelo->addComponent<BoxCollider>();
 }
 
 void PlayState::init()
@@ -171,7 +171,8 @@ void PlayState::createPlayer(const Config& playerConfig){
 
 	player->addComponent<SoundManager>(75, "FinalBoss");
 
-	player->addComponent<PlayerController>();
+	if(playerConfig.physicType != KINEMATIC) player->addComponent<PlayerController>();
+	else player->addComponent<KeyBoardCtrl>(map);
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<MachineGun>();

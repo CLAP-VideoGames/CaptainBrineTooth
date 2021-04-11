@@ -82,6 +82,6 @@ void OptionsState::volverMenu(App* app, SoundManager* snd)
 {
 	snd->playSoundEffect("gaviota");
 	snd->ChangeMainMusic("Menu");
-	app->getGameStateMachine()->popState();
+	app->getStateMachine()->popState();
 	
 }

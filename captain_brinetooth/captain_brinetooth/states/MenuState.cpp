@@ -70,26 +70,22 @@ void MenuState::update() {
 }
 
 void MenuState::changeToGame(App* app, SoundManager* snd) {
-	b2Vec2 gravity(0.0f, 9.8f);
-	b2World* world_ = new b2World(gravity);
 	snd->stopMusic();
 	//snd->playSoundEffect("gaviota");
 
-	app->getGameStateMachine()->changeState(new PlayState(app, world_, snd));
-
-	app->getGameStateMachine()->currentState()->init();
+	StateMachine* sM = app->getStateMachine();
+	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd));
+	sM->currentState()->init();
 
 }
 
 void MenuState::changeToOptions(App* app, SoundManager* snd) {
-	b2Vec2 gravity(0.0f, 9.8f);
-	b2World* world_ = new b2World(gravity);
 	snd->stopMusic();
 	snd->playSoundEffect("gaviota");
 
-	app->getGameStateMachine()->pushState(new OptionsState(app, world_, snd));
-	app->getGameStateMachine()->currentState()->init();
-
+	StateMachine* sM = app->getStateMachine();
+	sM->pushState(new OptionsState(app, sM->currentState()->getMngr()->getWorld(), snd));
+	sM->currentState()->init();
 }
 
 void MenuState::salirMenu(App* game, SoundManager* snd){
