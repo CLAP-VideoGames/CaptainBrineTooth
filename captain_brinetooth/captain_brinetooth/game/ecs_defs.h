@@ -37,6 +37,7 @@ class Button;
 class MapProcedural;
 class Image;
 class Crab;
+class MachineGun;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -72,7 +73,8 @@ class Crab;
 	MapProcedural, \
 	Button ,\
 	Image,\
-	Crab
+	Crab,\
+	MachineGun
 
 // groups
 

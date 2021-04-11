@@ -31,6 +31,7 @@
 #include "../components/FringeHeadAtack.h"
 #include "../components/PlayerController.h"
 #include "../components/Crab.h"
+#include "../components/MachineGun.h"
 
 class Manager;
 class App;

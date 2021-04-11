@@ -4,7 +4,7 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
 PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mundo, snd)
 {
-	createLevel0();
+	//createLevel0();
 
 	Config playerConfig{};
 	playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
@@ -17,12 +17,12 @@ PlayState::PlayState(App* a, b2World* mundo, SoundManager* snd): GameState(a, mu
 	createPlayer(playerConfig);
 
 	//Testing floor
-	//auto suelo = manager_->addEntity();
-	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
-	//auto anim = suelo->addComponent<AnimBlendGraph>();
-	//anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
+	auto suelo = manager_->addEntity();
+	suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
+	auto anim = suelo->addComponent<AnimBlendGraph>();
+	anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
 
-	//suelo->addComponent<BoxCollider>();
+	suelo->addComponent<BoxCollider>();
 }
 
 void PlayState::init()
@@ -174,7 +174,7 @@ void PlayState::createPlayer(const Config& playerConfig){
 	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<Crab>();
+	player->addComponent<MachineGun>();
 
 	player->addComponent<LoseLife>();
 
