@@ -130,15 +130,21 @@ void Level0::load(const string& path) {
 		auto* object_layer = dynamic_cast<const tmx::ObjectGroup*>(layerObj.get());
 		auto layer_objects = object_layer->getObjects();
 
-		//las coordenadas de los puntos reales son layer_objects.back().getPosition() + layer_objects.back().getPoints()[i]; 
-		points = layer_objects.back().getPoints();
+		//las coordenadas de los puntos reales son layer_objects.back().getPosition() + layer_objects.back().getPoints()[i];
 
-		for (tmx::Vector2f& vec : points){
-			vec.x += layer_objects.back().getPosition().x;
-			vec.y += layer_objects.back().getPosition().y;
+		for (auto& object : layer_objects){
+			points.push_back(object.getPoints());
+			int i = 0;
+			for (tmx::Vector2f& vec : points[i]) {
+				vec.x += object.getPosition().x;
+				vec.y += object.getPosition().y;
 
-			vec.x /= sdlutils().getPPM();
-			vec.y /= sdlutils().getPPM();
+				vec.x /= sdlutils().getPPM();
+				vec.y /= sdlutils().getPPM(); 
+				i++;
+			}
+
+
 		}
 	}
 

@@ -46,7 +46,7 @@ public:
 
 	std::array<bool, 4> returnRoomCons() { return Cons; }
 
-	std::vector<tmx::Vector2f> getVerticesList(){
+	std::vector<vector<tmx::Vector2f>> getVerticesList(){
 		return points;
 	}
 
@@ -63,5 +63,6 @@ private:
 	b2Fixture* fixture_ = nullptr;
 
 	std::array<bool, 4> Cons;
-	vector<tmx::Vector2f> points;
+
+	vector<vector<tmx::Vector2f>> points;
 };
