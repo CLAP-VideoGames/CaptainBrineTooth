@@ -2,6 +2,7 @@
 #include "../ecs/Component.h"
 #include "box2d.h"
 #include"Transform.h"
+#include "BoxCollider.h"
 
 class ShootDetect : public Component
 {

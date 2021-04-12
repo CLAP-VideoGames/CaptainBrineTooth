@@ -3,7 +3,6 @@
 #include "App.h"
 
 #include "../levels/Level0.h"
-
 #include "../states/StateMachine.h"
 #include "../states/GameState.h"
 #include "../states/TestZoneState.h"
@@ -45,7 +44,6 @@ void App::init() {
 
 	//PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	//prueba->addStateEntityPrueba();
-	//createBackGround("debug_square", 11, 11);
 	//createLevel0();
 
 	///*MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());

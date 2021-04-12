@@ -24,7 +24,6 @@ public:
 		Vector2D triggerpos = entitytr_->getPos();
 		trigger->addComponent<Transform>(triggerpos, Vector2D(0, 0), triggersize_.getX(), triggersize_.getY(), 0.0f);
 		trigger->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
-		trigger->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	}; 
 
 	Entity* getParent() { return entity_; }	//Metodo para obtener las componentes del padre en las colisiones

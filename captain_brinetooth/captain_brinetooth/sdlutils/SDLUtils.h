@@ -16,7 +16,7 @@
 
 
 const double PPM = 200;
-const bool DEBUG = true;
+const bool DEBUG = false;
 
 class SDLUtils: public Singleton<SDLUtils> {
 

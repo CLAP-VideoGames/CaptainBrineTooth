@@ -198,8 +198,6 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
-	player->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
-
 	player->addComponent<SoundManager>(0, "FinalBoss");
 
 	/*if (playerConfig.physicType != KINEMATIC) */player->addComponent<PlayerController>();
@@ -232,7 +230,6 @@ void TestZoneState::createEnemy1(const Config& enemy1Config)
 	gusano_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
 	gusano_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
 	gusano_anim_controller->setParamValue("Attack", 0);
-	gusano->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
 	gusano->addComponent<Enemy_Health>(300);
@@ -248,7 +245,6 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
 	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
 	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
-	elf1->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
 	elf1->addComponent<Enemy_Health>(300);

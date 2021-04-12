@@ -129,7 +129,6 @@ void ElfSharkAttack::attack() {
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + offsetX, entitytr_->getPos().getY() + offsetY),
 		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
 	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK,true);
-	attackTrigger_->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	//attackTrigger_->addComponent<ContactDamage>();
 	//Llama al cambio de estado de animacion
 	entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 1);

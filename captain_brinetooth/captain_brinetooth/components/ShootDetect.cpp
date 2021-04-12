@@ -9,6 +9,8 @@
 #include "../game/CollisionLayers.h"
 #include "ContactDamage.h"
 #include "DestroyOnCollision.h"
+
+
 using namespace ColLayers;
 
 
@@ -80,7 +82,7 @@ void ShootDetect::createBullet()
 	//Dotamos a la bala de todos los componentes 
 	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 10.0f, 10.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 1);
+	//anim_controller->addAnimation("iddle", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 1);
 	//No hace falta crear un animation graph
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);

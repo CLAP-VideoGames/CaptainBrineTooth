@@ -8,7 +8,7 @@
 #include "../ecs/Entity.h"
 #include "Transform.h"
 #include "../sdlutils/SDLUtils.h"
-
+#include "../game/App.h"
 
 //1 pixel(X) 0.0002645833 m
 //then n pixels = n * 0.0002645833;
@@ -61,14 +61,13 @@ public:
 		}
 		
 		bodyDef.position.Set(pos.getX() / sdlutils().getPPM(), pos.getY() / sdlutils().getPPM());
-		//bodyDef.angle = rotation_;
+		bodyDef.angle = rotation_;
 
 		//Stores the entity in the body for future reference in collisions
 		bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
 
 		//Make the body
 		body = world->CreateBody(&bodyDef);
-
 
 		b2PolygonShape boxShape;
 		boxShape.SetAsBox(size.getX() / 2.0f, size.getY() / 2.0f);
@@ -87,15 +86,25 @@ public:
 		fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
 
 		fixture = body->CreateFixture(&fixtureDef);
-		
 	}
 
-	void setSpeed(Vector2D speed)
-	{
+	void render() override {
+		if (sdlutils().getDebug()){
+			SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
+			float x = round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f) - App::camera.x;
+			float y = round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f) - App::camera.y;
+			SDL_Rect dest = build_sdlrect(x, y, tr_->getW(), tr_->getH());
+
+			SDL_RenderDrawRect(sdlutils().renderer(), &dest);
+		}
+	}
+
+	void setSpeed(Vector2D speed) {
 		b2Vec2 vel = body->GetLinearVelocity();
 		vel.x = speed.getX(); vel.y = speed.getY();
 		body->SetLinearVelocity(vel);
-	
+
+		
 	}
 
 	/// <summary>

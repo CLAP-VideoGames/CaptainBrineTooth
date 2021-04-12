@@ -176,7 +176,6 @@ void Level0::load(const string& path) {
 				con.x /= sdlutils().getPPM();
 				con.y /= sdlutils().getPPM();
 
-
 				connectionPos.push_back(con);
 			}
 		}
@@ -193,15 +192,4 @@ void Level0::render() {
 	for (auto tile : tiles_)
 		tile->draw();
 
-}
-void Level0::setCollision() {
-	for (auto tile : tiles_) {
-		auto* mnr = entity_->getMngr();
-		auto* t = mnr->addEntity();
-		t->addComponent<Transform>(Vector2D(tile->x_ + tile_width_/2, tile->y_ + tile_height_/2), Vector2D(), tile_width_, tile_height_, 0.0f);
-		//Tenemos que hacer que pinte los colliders
-		t->addComponent<BoxCollider>();
-		auto* anim_controller = t->addComponent<AnimBlendGraph>();
-		anim_controller->addAnimation("run", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, -1);
-	}
 }

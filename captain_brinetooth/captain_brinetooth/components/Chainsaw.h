@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <cassert>
 #include "Transform.h"
-#include "BoxCollider.h"
 #include "../ecs/Entity.h"
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"

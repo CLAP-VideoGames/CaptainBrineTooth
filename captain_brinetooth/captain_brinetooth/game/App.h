@@ -13,7 +13,7 @@
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "..//components/DamageCollisionCallbacks.h"
-#include "../components/BoxCollider.h"
+//#include "../components/BoxCollider.h"
 
 class GameState;
 class StateMachine;
