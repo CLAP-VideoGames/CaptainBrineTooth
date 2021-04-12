@@ -135,7 +135,7 @@ void App::ShakeCamera(int time){
 		}
 		slow++;
 		sdlutils().clearRenderer();
-		mngr_->render();
+		stateMachine->currentState()->getMngr()->render();
 		sdlutils().presentRenderer();
 	}
 

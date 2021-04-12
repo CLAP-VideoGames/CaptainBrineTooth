@@ -4,8 +4,6 @@
 #include "../ecs/Manager.h"
 #include "Player_Health.h"
 
-
-
 void ContactDamage::init()
 {
 	entity_->setCollisionMethod(callDamage);
@@ -18,11 +16,16 @@ void ContactDamage::callDamage(b2Contact* contact)
 			bullet->getComponent<ContactDamage>()->makeDamage();
 		else {
 			bullet = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-			if (bullet != nullptr)bullet->getComponent<ContactDamage>()->makeDamage();
+			if (bullet != nullptr)
+				bullet->getComponent<ContactDamage>()->makeDamage();
 		}
 	}
 }
 void ContactDamage::makeDamage()
 {
-	entity_->getMngr()->getHandler<Player>()->getComponent<Player_Health>()->loseLife(); //El jugador pierde una vida
+	Entity* p = entity_->getMngr()->getHandler<Player>();
+
+	Player_Health* pH = p->getComponent<Player_Health>(); //El jugador pierde una vida;
+
+	pH->loseLife();
 }
