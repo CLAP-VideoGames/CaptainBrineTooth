@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="3">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="5">
  <tileset firstgid="1" source="../level0.tsx"/>
  <layer id="1" name="tiles" width="30" height="20">
   <data encoding="csv">
@@ -25,6 +25,15 @@
 6,6,6,7,0,0,0,0,0,0,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6
 </data>
  </layer>
+ <objectgroup id="3" name="conx">
+  <object id="3" name="W" x="64" y="896">
+   <point/>
+  </object>
+  <object id="4" name="S" x="512" y="1216">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="spawns"/>
  <objectgroup id="2" name="collision">
   <object id="1" x="0" y="0">
    <polygon points="0,0 1920,0 1920,1280 640,1280 640,1024 1088,1024 1088,960 1024,960 1024,832 1728,832 1728,640 1792,640 1792,512 1728,512 1728,320 1664,320 1664,256 1280,256 1280,192 1216,192 1216,128 960,128 960,192 640,192 640,256 256,256 256,320 192,320 192,448 128,448 128,512 64,512 64,576 0,576"/>
