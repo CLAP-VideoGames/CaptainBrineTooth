@@ -88,6 +88,19 @@ public:
 		}
 	}
 
+	void update() override {
+		//Hay que hacer esto pero no quiero hacer esto pero hay que hacer esto pero no quiero hacer esto pero aun asi hay que hacerlo	
+		for (bodyChain& bodyC : bodies_) {
+			for (int i = 0; i < bodyC.sizeVs; i++){
+				//Quitamos el valor antiguo aplicado al punto, y le aplicamos el valor actual de la cámara 
+				bodyC.realPoints[i].x = bodyC.realPoints[i].x + camPos.getX() - App::camera.x;
+				bodyC.realPoints[i].y = bodyC.realPoints[i].y + camPos.getY() - App::camera.y;
+			}
+		}
+		//Almacenamos la posicion de la cámara para poder contrarestar el valor a los vertices
+		camPos = Vector2D(App::camera.x, App::camera.y);
+	}
+
 	void createChainFixture(){
 
 		std::cout << "VERTICES FIXTURE" << std::endl;
@@ -213,5 +226,7 @@ private:
 
 	//Vector de cuerpos
 	std::vector<bodyChain> bodies_;
+
+	Vector2D camPos = Vector2D(0,0);
 };
 
