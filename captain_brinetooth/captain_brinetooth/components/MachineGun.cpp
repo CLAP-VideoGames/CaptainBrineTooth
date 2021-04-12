@@ -10,6 +10,8 @@ void MachineGun::init() {
 	tr_ = entity_->getComponent<Transform>();
 	assert(tr_ != nullptr);
 	anim_ = entity_->getComponent<AnimBlendGraph>();
+
+	bulletVelocity = 2;
 }
 
 void MachineGun::update() {
@@ -28,7 +30,7 @@ void MachineGun::update() {
 					anim_->setParamValue("chainsaw_att", 1);
 
 				//Shoot
-
+				shoot();
 
 				//Time control variables
 				shotActivationTime = sdlutils().currRealTime();
@@ -89,8 +91,31 @@ void MachineGun::update() {
 	if (CURRENT_STATUS == STATUS::Shooting && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {
 		
 		//Shoot
-
+		shoot();
 
 		shotActivationTime = sdlutils().currRealTime();
 	}
+}
+
+void MachineGun::shoot() {
+	Entity* bullet = entity_->getMngr()->addEntity();
+
+	Vector2D bulletpos; Vector2D bulletvel;
+	if (entity_->getComponent<PlayerController>()->getFlip()) {
+		bulletpos = tr_->getPos() + Vector2D(tr_->getW() + 60, entity_->getComponent<Transform>()->getH() / 2);
+		bulletvel = Vector2D(1, 0);
+	}
+	else {
+		bulletpos = tr_->getPos() + Vector2D(-60, entity_->getComponent<Transform>()->getH() / 2);
+		bulletvel = Vector2D(-1, 0);
+	}
+
+
+	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 10.0f, 10.0f, 0.0f);
+	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("Square"), 1, 1, 1, 1, 1);
+	bullet->addComponent<DisableOnExit>();
+	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
+	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
+	bullet->addComponent<DestroyOnCollision>();
 }

@@ -13,6 +13,8 @@
 #include "AnimBlendGraph.h"
 #include "WeaponDamageDetection.h"
 #include "PlayerController.h"
+#include "DisableOnExit.h"
+#include "DestroyOnCollision.h"
 
 
 class MachineGun : public Component {
@@ -27,6 +29,7 @@ public:
 
 	void update() override;
 
+	void shoot();
 private:
 	enum STATUS {Iddle, Shooting, Reloading};
 
@@ -41,6 +44,7 @@ private:
 	float overheat;
 	float overheatSpikeTime;
 	float decreaseOverheatSpikeTime;
+	float bulletVelocity;
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
