@@ -16,6 +16,7 @@
 
 
 const double PPM = 200;
+const bool DEBUG = false;
 
 class SDLUtils: public Singleton<SDLUtils> {
 
@@ -75,9 +76,12 @@ public:
 	}
 
 	//return the pixels per meter
-	inline int getPPM()
-	{
+	inline int getPPM(){
 		return PPM;
+	}
+
+	inline bool getDebug() {
+		return DEBUG;
 	}
 
 	inline float lerp(float a, float b, float t) {
