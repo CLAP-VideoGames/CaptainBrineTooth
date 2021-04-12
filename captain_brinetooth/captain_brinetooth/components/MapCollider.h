@@ -73,7 +73,7 @@ public:
 		if (sdlutils().getDebug()){
 			//Hay que hacer esto pero no quiero hacer esto pero hay que hacer esto pero no quiero hacer esto pero aun asi hay que hacerlo
 			for (bodyChain& bodyC : bodies_) {
-				for (int i = 0; i < bodyC.sizeVs; i++){
+				for (int i = 0; i < bodyC.sizeVs + 1; i++){
 					//Quitamos el valor antiguo aplicado al punto, y le aplicamos el valor actual de la cámara 
 					bodyC.realPoints[i].x = bodyC.realPoints[i].x + camPos.getX() - App::camera.x;
 					bodyC.realPoints[i].y = bodyC.realPoints[i].y + camPos.getY() - App::camera.y;
