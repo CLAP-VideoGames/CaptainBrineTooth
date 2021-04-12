@@ -128,7 +128,6 @@ void PompeyWormAttack::createTriggerAttack()
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX(), entitytr_->getPos().getY()),
 		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
 	attackTrigger_->addComponent<Animation>("pompey", &sdlutils().images().at("pompey_worm_spit"), 1, 1, 1, 1, 0);
-	attackTrigger_->addComponent<Animation>("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	attackTrigger_->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 	//Posicion del player
 	Vector2D attackdir = (playertr_->getPos() - entitytr_->getPos());
