@@ -20,7 +20,7 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd):
 	//auto suelo = manager_->addEntity();
 	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
 	//auto anim = suelo->addComponent<AnimBlendGraph>();
-	//anim->addAnimation("idle", &sdlutils().images().at("Square"), 1, 1, 1, 24, 0);
+	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
 
 	//suelo->addComponent<BoxCollider>();
 }
@@ -179,7 +179,7 @@ void PlayState::createPlayer(const Config& playerConfig){
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
-	player->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
+	player->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 
 	player->addComponent<SoundManager>(75, "FinalBoss");
 
@@ -208,7 +208,7 @@ void PlayState::createBoxTest(const Config& entityConfig){
 	auto* box = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 
 	auto* anim_controller = box->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
+	anim_controller->addAnimation("run", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, -1);
 
 	box->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
 	box->addComponent<CameraFollow>(box->getComponent<Transform>());
@@ -229,7 +229,7 @@ void PlayState::createElfShark(const Config& entityConfig){
 	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
 	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
 	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
-	elf1->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
+	elf1->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
 	elf1->addComponent<Enemy_Health>(300);

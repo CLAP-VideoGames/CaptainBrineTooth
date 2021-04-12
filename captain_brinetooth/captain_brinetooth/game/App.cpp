@@ -24,8 +24,10 @@ App::App() {
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = make_shared<b2World>(gravity);
 	SoundManager* sndProvisional = new SoundManager(0, "Menu");
-
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//----Inicio por defecto----
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//-----Zona de pruebas------
+	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 }
 
 App::~App() {
@@ -43,7 +45,7 @@ void App::init() {
 
 	//PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
 	//prueba->addStateEntityPrueba();
-	//createBackGround("Square", 11, 11);
+	//createBackGround("debug_square", 11, 11);
 	//createLevel0();
 
 	///*MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());

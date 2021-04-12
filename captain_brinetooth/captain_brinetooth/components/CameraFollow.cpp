@@ -19,13 +19,17 @@ void CameraFollow::update(){
 		actPosAdvanced();
 	}
 
-	if (App::camera.x < 0) 
-		App::camera.x = 0;
-	else if (App::camera.x > App::camera.w) App::camera.x = App::camera.w;
-	 
-	if (App::camera.y < 0) 
-		App::camera.y = 0;
-	else if (App::camera.y > App::camera.h) App::camera.y = App::camera.h;
+	if (!limitless_Horizontal) {
+		if (App::camera.x < 0)
+			App::camera.x = 0;
+		else if (App::camera.x > App::camera.w) App::camera.x = App::camera.w;
+	}
+
+	if (!limitless_Vertical) {
+		if (App::camera.y < 0)
+			App::camera.y = 0;
+		else if (App::camera.y > App::camera.h) App::camera.y = App::camera.h;
+	}
 
 	//std::cout << Game::camera.x << " " << Game::camera.y << std::endl;
 }

@@ -177,7 +177,7 @@ public:
 	void stop() { if (currentAnim_ != nullptr)currentAnim_->anim_->stop(); };
 	void flipX(bool state) { flip_horizontal_ = state; };
 	bool isComplete() { 
-		if (currentAnim_->anim_->getState() == Complete) return true;
+		if (currentAnim_ != nullptr && currentAnim_->anim_->getState() == Complete) return true;
 		else return false;
 	}
 	const bool& isFlipX() { return flip_horizontal_; }

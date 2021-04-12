@@ -23,6 +23,7 @@ class SoundManager;
 class LoseLife;
 class FringeHeadAtack;
 class ElfSharkAttack;
+class PompeyWormAttack;
 class Button;
 class Sword;
 class Hammer;
@@ -62,6 +63,7 @@ class JellyHatBehavior;
 	EnemyTrigger,\
 	FringeHeadAtack,\
 	ElfSharkAttack,\
+	PompeyWormAttack,\
 	Button,\
 	Sword,\
     ShootDetect,\

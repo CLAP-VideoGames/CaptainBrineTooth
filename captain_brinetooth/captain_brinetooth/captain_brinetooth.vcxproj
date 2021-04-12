@@ -182,6 +182,7 @@
     <ClInclude Include="components\PlayerController.h" />
     <ClInclude Include="components\Player_Health.h" />
     <ClInclude Include="components\Crab.h" />
+    <ClInclude Include="components\PompeyWormAttack.h" />
     <ClInclude Include="components\RayCast.h" />
     <ClInclude Include="components\Rectangle.h" />
     <ClInclude Include="components\Rotate.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="components\MachineGun.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="components\Crab.cpp" />
+    <ClCompile Include="components\PompeyWormAttack.cpp" />
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\SoundManager.cpp" />
     <ClCompile Include="components\Sword.cpp" />

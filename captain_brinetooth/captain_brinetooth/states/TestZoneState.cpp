@@ -4,61 +4,253 @@ using namespace ColLayers;
 
 TestZoneState::TestZoneState(App* a , std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a,mundo,snd)
 {
-	//app->createPlayer(Vector2D(sdlutils().width() / 2.0f, sdlutils().height() / 6.0f), Vector2D(0, 0), Vector2D(200.0f, 200.0f), 0.2f, false, 0.0f);
-	//auto* player = manager_->getHandler<Player>();
-	//stage.push_back(player); //Para el manejo de los objetos que se duermen
 	
-	//e->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
-	//app->createBackGround("Square", 11, 11);
-	//app->createLevel0();
-
-	//App::Config playerConfig {};
-	//playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
-	//playerConfig.vel = Vector2D(0,0);
-	//playerConfig.size = Vector2D(200.0f, 200.0f);
-	//playerConfig.friction = 0.2f;
-	//playerConfig.physicType = KINEMATIC;
-	//playerConfig.fixedRotation = true;
-	//playerConfig.rotation = 0.0f;
-
-	//app->createPlayer(playerConfig);
 }
 
 void TestZoneState::init() {
-	//Añadir el enemigo 
+//-----Map-----
+#pragma region Map
+	//---BG----
+	auto* bg = createBasicEntity(Vector2D(-2560,0),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
+	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	//---------
+	Config floor{};
+	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
+	floor.vel = Vector2D(0, 0);
+	floor.size = Vector2D(sdlutils().width() * 4.0f, 100.0f);
+	floor.friction = 0.0f;
+	floor.physicType = STATIC;
+	floor.fixedRotation = true;
+	floor.rotation = 0.0f;
+	floor.col = DEFAULT;
+	floor.colMask = DEFAULT_MASK;
+	createBoxFloor(floor);
+#pragma endregion
+//-----Player-----
+#pragma region Player
+	Config playerConfig{};
+	playerConfig.pos = Vector2D(100, sdlutils().height() * 2.0f -200);
+	playerConfig.vel = Vector2D(0, 0);
+	playerConfig.size = Vector2D(100.0f, 100.0f);
+	playerConfig.friction = 0.2f;
+	playerConfig.physicType = DYNAMIC;
+	playerConfig.fixedRotation = true;
+	playerConfig.rotation = 0.0f;
+	playerConfig.col = PLAYER;
+	playerConfig.colMask = PLAYER_MASK;
+	createPlayer(playerConfig);
+#pragma endregion
+//-----Enemies-----
+#pragma region Enemies
+	#pragma region Enemy1
+	Config Enemy1{};
+	Enemy1.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
+	Enemy1.vel = Vector2D(0, 0);
+	Enemy1.size = Vector2D(100.0f, 100.0f);
+	Enemy1.friction = 0.2f;
+	Enemy1.physicType = DYNAMIC;
+	Enemy1.fixedRotation = true;
+	Enemy1.rotation = 0.0f;
+	Enemy1.col = ENEMY;
+	Enemy1.colMask = ENEMY_MASK;
+	createEnemy1(Enemy1);
+	#pragma endregion
+	#pragma region ElfShark
+	/*Config elfShark{};
+	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
+	elfShark.vel = Vector2D(0, 0);
+	elfShark.size = Vector2D(180.0f, 180.0f);
+	elfShark.friction = 0.2f;
+	elfShark.physicType = DYNAMIC;
+	elfShark.fixedRotation = true;
+	elfShark.rotation = 0.0f;
+	elfShark.col = ENEMY;
+	elfShark.colMask = ENEMY_MASK;
+	createElfShark(elfShark);*/
+	#pragma endregion
+	#pragma region FringeHead
+		/*auto* enemy = manager_->addEntity();
+		Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
+		enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
+		AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
+		anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
+		enemy->addComponent<FringeHeadAtack>();
+		enemy->addComponent<Enemy_Health>(200);*/
+	#pragma endregion
+#pragma endregion
+}
 
-	//auto* enemy = app->createBasicEntity(Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f), Vector2D(50.0f, 50.0f),0.0f, Vector2D(0,0));
-	//Vector2D pos, Vector2D vel, float width, float height,float rotation
-#pragma region FringeHead
-	/*auto* enemy = manager_->addEntity();
-	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
-	enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
-	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
-	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(200);*/
+void TestZoneState::createPlayer(const Config& playerConfig) {
+	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
+
+#pragma region Animations
+	//Plantilla de uso de ANIMATION CONTROLLER
+	auto* anim_controller = player->addComponent<AnimBlendGraph>();
+#pragma region idle, run & jump
+	//-idle, run & jump---------------------------------------------------------------------------------------------------
+	//Animations
+	anim_controller->addAnimation("idle", &sdlutils().images().at("player_idle"), 4, 6, 24, 24, -1);
+	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
+	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 5, 20, 24, 0);
+	//Transitions
+	anim_controller->addTransition("idle", "run", "Speed", 1, false);
+	anim_controller->addTransition("run", "idle", "Speed", 0, false);
+	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
+	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
+	anim_controller->addTransition("idle", "jump", "NotOnFloor", 1, false);
+	anim_controller->addTransition("jump", "idle", "NotOnFloor", 0, true);
+	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
+	anim_controller->setParamValue("Speed", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
+#pragma region Weapons
+	//-WEAPONS------------------------------------------------------------------------------------------------------
+#pragma region Chainsaw
+	//---CHAINSAW---------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 47, 24, 0, 1, 8);
+	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 47, 24, 0, 9, 18);
+	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 47, 24, -1, 19, 46); // provisional, habria que hacer una de mantener
+
+	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
+	anim_controller->addTransition("idle", "chainsaw_attack1", "chainsaw_att", 1, false);
+	anim_controller->addTransition("chainsaw_attack1", "run", "chainsaw_att", 0, true);
+	anim_controller->addTransition("chainsaw_attack1", "chainsaw_attack2", "chainsaw_att", 2, true);
+	anim_controller->addTransition("run", "chainsaw_attack2", "chainsaw_att", 2, false);
+	anim_controller->addTransition("idle", "chainsaw_attack2", "chainsaw_att", 2, false);
+	anim_controller->addTransition("chainsaw_attack2", "run", "chainsaw_att", 0, true);
+	anim_controller->addTransition("chainsaw_attack2", "chainsaw_attack3", "chainsaw_att", 3, true);
+	anim_controller->addTransition("run", "chainsaw_attack3", "chainsaw_att", 3, false);
+	anim_controller->addTransition("idle", "chainsaw_attack3", "chainsaw_att", 3, false);
+	anim_controller->addTransition("chainsaw_attack3", "run", "chainsaw_att", 0, false);
+	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack1", "chainsaw_att", 4, true);
+
+	anim_controller->setParamValue("chainsaw_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 
-	//Creacion de un componente que tenga un metodo estatico para asignarselo a la colision del trigger del enemigo con el jugador 
+#pragma region Sword
+	//---SWORD------------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 1, 9);
+	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 12, 20);
+	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, -1, 27, 44);
 
-	//App::Config elfShark{};
-	//elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
-	//elfShark.vel = Vector2D(0, 0);
-	//elfShark.size = Vector2D(180.0f, 180.0f);
-	//elfShark.friction = 0.2f;
-	//elfShark.physicType = KINEMATIC;
-	//elfShark.fixedRotation = true;
-	//elfShark.rotation = 0.0f;
-	//elfShark.col = ENEMY;
-	//elfShark.colMask = ENEMY_MASK;
+	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
+	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
+	anim_controller->addTransition("sword_attack1", "run", "sword_att", 0, true);
+	anim_controller->addTransition("sword_attack1", "sword_attack2", "sword_att", 2, true);
+	anim_controller->addTransition("run", "sword_attack2", "sword_att", 2, false);
+	anim_controller->addTransition("idle", "sword_attack2", "sword_att", 2, false);
+	anim_controller->addTransition("sword_attack2", "run", "sword_att", 0, true);
+	anim_controller->addTransition("sword_attack2", "sword_attack3", "sword_att", 3, true);
+	anim_controller->addTransition("run", "sword_attack3", "sword_att", 3, false);
+	anim_controller->addTransition("idle", "sword_attack3", "sword_att", 3, false);
+	anim_controller->addTransition("sword_attack3", "run", "sword_att", 0, false);
+	anim_controller->addTransition("sword_attack3", "sword_attack1", "sword_att", 4, true);
 
-	//app->createElfShark(elfShark);
+	anim_controller->setParamValue("sword_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
 
+#pragma region Hammer
+//---HAMMER---------------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 24, 0, 1, 16);
+	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 24, 0, 17, 30);
 
-	// if(tiempo pasado + tiempo minimo < tiempo actual)
-	// Generar la bala
-	// tiempo pasado = tiempo actual
-	//
+	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
+	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);
+	anim_controller->addTransition("hammer_attack1", "run", "hammer_att", 0, false);
+	anim_controller->addTransition("hammer_attack1", "hammer_attack2", "hammer_att", 2, true);
+	anim_controller->addTransition("run", "hammer_attack2", "hammer_att", 2, false);
+	anim_controller->addTransition("idle", "hammer_attack2", "hammer_att", 2, false);
+	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, false);
+	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 1, false);
 
+	anim_controller->setParamValue("hammer_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
+
+#pragma region Crab
+//---CRAB---------------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, 0, 1, 8);
+	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, -1, 8, 25);
+	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, 0, 27, 38);
+
+	anim_controller->addTransition("run", "crab_attack1", "crab_att", 1, false);
+	anim_controller->addTransition("idle", "crab_attack1", "crab_att", 1, false);
+	anim_controller->addTransition("crab_attack1", "run", "crab_att", 0, true);
+	anim_controller->addTransition("crab_attack1", "crab_attack2", "crab_att", 2, true);
+	anim_controller->addTransition("run", "crab_attack2", "crab_att", 2, false);
+	anim_controller->addTransition("idle", "crab_attack2", "crab_att", 2, false);
+	anim_controller->addTransition("crab_attack2", "run", "crab_att", 0, false);
+	anim_controller->addTransition("crab_attack2", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("run", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("idle", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("crab_attack3", "run", "crab_att", 0, false);
+	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 4, true);
+
+	anim_controller->setParamValue("crab_att", 0);
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
+	//--------------------------------------------------------------------------------------------------------------
+#pragma endregion
+#pragma endregion
+
+	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
+	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
+	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
+	player->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+
+	player->addComponent<SoundManager>(0, "FinalBoss");
+
+	/*if (playerConfig.physicType != KINEMATIC) */player->addComponent<PlayerController>();
+	//else player->addComponent<KeyBoardCtrl>(map);
+
+	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<MachineGun>();
+
+	player->addComponent<LoseLife>();
+
+	//Seteamos al Player como MainHandler
+	manager_->setHandler<Player>(player);
+}
+/// <summary>
+/// Crea un suelo Statico
+void TestZoneState::createBoxFloor(const Config& entityConfig) {
+
+	auto* box_Floor = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	box_Floor->addComponent<Animation>("Floor", &sdlutils().images().at("red_square"), 1, 1, 1, 1, 0);
+	box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
+}
+
+void TestZoneState::createEnemy1(const Config& enemy1Config)
+{
+	auto* gusano = createBasicEntity(enemy1Config.pos, enemy1Config.size, enemy1Config.rotation, enemy1Config.vel);
+	gusano->addComponent<BoxCollider>(enemy1Config.physicType, enemy1Config.col, enemy1Config.colMask);
+	AnimBlendGraph* gusano_anim_controller = gusano->addComponent<AnimBlendGraph>();
+	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("Elf_Shark"), 1, 3, 1, 1, -1);
+	gusano_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
+	gusano_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
+	gusano_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
+	gusano_anim_controller->setParamValue("Attack", 0);
+	gusano->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
+	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
+	gusano->addComponent<Enemy_Health>(300);
+}
+void TestZoneState::createElfShark(const Config& entityConfig) {
+	auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	//auto* elf1 = manager_->addEntity();
+	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
+	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
+	elf1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	AnimBlendGraph* elf1_anim_controller = elf1->addComponent<AnimBlendGraph>();
+	elf1_anim_controller->addAnimation("idle", &sdlutils().images().at("Elf_Shark"), 1, 3, 1, 1, -1);
+	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
+	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
+	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
+	elf1->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
+	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
+	elf1->addComponent<Enemy_Health>(300);
 }
 

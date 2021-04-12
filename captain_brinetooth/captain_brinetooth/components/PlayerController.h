@@ -11,13 +11,9 @@
 
 class PlayerController : public Component {
 public:																
-	PlayerController(const float & speed = 3.0f, const float& forceJ = 7.0f , const float& dashS = 7.0f):
+	PlayerController(const float & speed = 3.0f, const float& forceJ = 1.0f , const float& dashS = 7.0f):
 															//falso				//falso
-		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(true), isOnAir(false), dashSpeed(dashS), isDashing(false), canDash(true), isFlip(false){
-
-	}
-
-	virtual ~PlayerController() {
+		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(false), isOnAir(false), dashSpeed(dashS), isDashing(false), canDash(true), isFlip(false){
 
 	}
 
@@ -58,7 +54,6 @@ public:
 				animController_->flipX(true);
 				isFlip = true;
 			}
-			
 			//Parte Vertical
 			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor && !isDashing){
 				isOnFloor = false;
@@ -91,9 +86,18 @@ public:
 			}
 
 		}
-
+		//---Para la velocidad X
+		if ((ih().isKeyUp(SDL_SCANCODE_RIGHT) && ih().isKeyUp(SDL_SCANCODE_LEFT) && !isDashing)) {
+			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
+		}
+		//--No vel en x
 		if(collider_->getBody()->GetLinearVelocity().x == 0){
 			animController_->setParamValue("Speed", 0);
+		}
+		//--No vel en Y
+		if (collider_->getBody()->GetLinearVelocity().y == 0) {
+			isOnFloor = true;
+			animController_->setParamValue("NotOnFloor", 0);
 		}
 
 		if (isDashing) {
@@ -112,14 +116,6 @@ public:
 			canDash = true;
 		}
 
-		//Timer provisional hasta tener los Triggers de colision, para preparar bien el saltos
-		if (sdlutils().currRealTime() - lastTimeJumped >= time)
-		{
-			isOnFloor = true;
-			lastTimeJumped = sdlutils().currRealTime();
-
-			animController_->setParamValue("NotOnFloor", 0);
-		}
 	}
 
 	bool getFlip() { return isFlip; }

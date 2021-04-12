@@ -165,6 +165,6 @@ void Level0::setCollision() {
 		//Tenemos que hacer que pinte los colliders
 		t->addComponent<BoxCollider>();
 		auto* anim_controller = t->addComponent<AnimBlendGraph>();
-		anim_controller->addAnimation("run", &sdlutils().images().at("Square"), 1, 1, 1, 1, -1);
+		anim_controller->addAnimation("run", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, -1);
 	}
 }

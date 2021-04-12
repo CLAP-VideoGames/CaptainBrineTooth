@@ -12,8 +12,15 @@ void ContactDamage::init()
 }
 void ContactDamage::callDamage(b2Contact* contact)
 {
-	Entity* bullet = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	if (bullet != nullptr)bullet->getComponent<ContactDamage>()->makeDamage();
+	Entity* bullet = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	if (bullet != nullptr) {
+		if (bullet->getComponent<ContactDamage>() != nullptr)
+			bullet->getComponent<ContactDamage>()->makeDamage();
+		else {
+			bullet = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (bullet != nullptr)bullet->getComponent<ContactDamage>()->makeDamage();
+		}
+	}
 }
 void ContactDamage::makeDamage()
 {

@@ -62,9 +62,9 @@ void ElfSharkAttack::update() {
 				entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
 			}
 		}
-		entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
+		entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
 		//Actualizar posicion
-		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, 0)));
+		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
 	}
 }
 
@@ -80,13 +80,27 @@ bool ElfSharkAttack::canAttack() {
 }
 
 void ElfSharkAttack::hasEnter(b2Contact* contact) {
-	Entity* body = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	if (body != nullptr)body->getComponent<ElfSharkAttack>()->entityInRange();
+	Entity* body = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	if (body != nullptr) {
+		if (body->getComponent<ElfSharkAttack>() != nullptr)
+			body->getComponent<ElfSharkAttack>()->entityInRange();
+		else {
+			body = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (body != nullptr)body->getComponent<ElfSharkAttack>()->entityInRange();
+		}
+	}
 }
 
 void ElfSharkAttack::hasExit(b2Contact* contact) {
-	Entity* body = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	if (body != nullptr)body->getComponent<ElfSharkAttack>()->entityOutRange();
+	Entity* body = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	if (body != nullptr) {
+		if(body->getComponent<ElfSharkAttack>() != nullptr)
+			body->getComponent<ElfSharkAttack>()->entityOutRange();
+		else {
+			body = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if(body != nullptr)body->getComponent<ElfSharkAttack>()->entityOutRange();
+		}
+	}
 }
 
 void ElfSharkAttack::entityInRange() { entity_in_range_ = true; }
@@ -95,7 +109,7 @@ void ElfSharkAttack::entityOutRange() { entity_in_range_ = false; }
 void ElfSharkAttack::attack() {
 	//Player Transform
 	Transform* playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
-	//no se mueve
+	//No se mueve
 	entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
 	//Actualizar posicion
 	entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
@@ -115,8 +129,8 @@ void ElfSharkAttack::attack() {
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + offsetX, entitytr_->getPos().getY() + offsetY),
 		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
 	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK,true);
-	attackTrigger_->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
-	attackTrigger_->addComponent<ContactDamage>();
+	attackTrigger_->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	//attackTrigger_->addComponent<ContactDamage>();
 	//Llama al cambio de estado de animacion
 	entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 1);
 }
