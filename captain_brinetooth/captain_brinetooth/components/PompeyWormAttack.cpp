@@ -134,5 +134,5 @@ void PompeyWormAttack::createTriggerAttack()
 	Vector2D attackdir = (playertr_->getPos() - entitytr_->getPos());
 	attackdir = attackdir.normalize();
 	attackTrigger_->getComponent<BoxCollider>()->applyForce(attackdir, attack_force);
-	//attackTrigger_->addComponent<ContactDamage>();
+	attackTrigger_->addComponent<ContactDamage>();
 }
