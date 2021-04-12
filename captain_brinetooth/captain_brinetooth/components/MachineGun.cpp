@@ -113,7 +113,7 @@ void MachineGun::shoot() {
 
 	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 10.0f, 10.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("Square"), 1, 1, 1, 1, 1);
+	anim_controller->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 1);
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);

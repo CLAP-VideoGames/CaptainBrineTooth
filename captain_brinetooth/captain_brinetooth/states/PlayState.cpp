@@ -240,7 +240,7 @@ void PlayState::createFlowerJellyHat(const Config& entityConfig) {
 	auto* fjh1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
-	fjh1->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
+	fjh1->addComponent<Animation>("1", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	fjh1->addComponent<Enemy_Health>(300);
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
