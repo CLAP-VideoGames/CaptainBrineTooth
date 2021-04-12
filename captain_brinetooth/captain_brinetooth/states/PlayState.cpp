@@ -38,6 +38,18 @@ void PlayState::init()
 	elfShark.col = ENEMY;
 	elfShark.colMask = ENEMY_MASK;
 	createElfShark(elfShark);
+
+	Config flowerJellyHat{};
+	flowerJellyHat.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
+	flowerJellyHat.vel = Vector2D(0, 0);
+	flowerJellyHat.size = Vector2D(200.0f, 200.0f);
+	flowerJellyHat.friction = 0.2f;
+	flowerJellyHat.physicType = KINEMATIC;
+	flowerJellyHat.fixedRotation = true;
+	flowerJellyHat.rotation = 0.0f;
+	flowerJellyHat.col = ENEMY;
+	flowerJellyHat.colMask = ENEMY_MASK;
+	createFlowerJellyHat(flowerJellyHat);
 }
 
 /// <summary>
@@ -222,5 +234,14 @@ void PlayState::createElfShark(const Config& entityConfig){
 	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
 	elf1->addComponent<Enemy_Health>(300);
 #pragma endregion
+}
+
+void PlayState::createFlowerJellyHat(const Config& entityConfig) {
+	auto* fjh1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
+	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
+	fjh1->addComponent<Animation>("1", &sdlutils().images().at("Square"), 1, 1, 1, 1, 0);
+	fjh1->addComponent<Enemy_Health>(300);
+	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
 

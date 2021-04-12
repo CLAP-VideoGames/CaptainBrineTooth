@@ -6,6 +6,8 @@ public:
 	Enemy_Health(int health) : lifes(health) {};
 	virtual ~Enemy_Health() {};
 	void loseLife(int damage);
+	void setHealth(int health) { lifes = health; };
+	int getHealth() { return lifes; };
 
 
 protected:

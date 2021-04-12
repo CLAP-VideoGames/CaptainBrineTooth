@@ -33,6 +33,7 @@
 #include "../components/Crab.h"
 #include "../components/MachineGun.h"
 #include "../components/Image.h"
+#include "../components/JellyHatBehavior.h"
 
 class Manager;
 class App;

@@ -38,6 +38,7 @@ class MapProcedural;
 class Image;
 class Crab;
 class MachineGun;
+class JellyHatBehavior;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -74,7 +75,8 @@ class MachineGun;
 	Button ,\
 	Image,\
 	Crab,\
-	MachineGun
+	MachineGun,\
+	JellyHatBehavior
 
 // groups
 

@@ -12,6 +12,7 @@ public:
 	void createPlayer(const Config& playerConfig);
 	void createBoxTest(const Config& entityConfig);
 	void createElfShark(const Config& entityConfig);
+	void createFlowerJellyHat(const Config& entityConfig);
 
 private:
 	SDL_Rect cam;
