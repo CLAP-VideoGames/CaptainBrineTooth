@@ -143,6 +143,43 @@ void Level0::load(const string& path) {
 				j++;
 			}
 		}
+
+		if (object_layer->getName() == "spawns") {
+			auto layer_objects = object_layer->getObjects();
+
+			for (auto& spawn : layer_objects) {
+				if (spawn.getName() == "Player")
+				{
+					playerPos = spawn.getPosition();
+
+					playerPos.x /= sdlutils().getPPM();
+					playerPos.y /= sdlutils().getPPM();
+				}
+				else {
+					tmx::Vector2f spa = spawn.getPosition();
+
+					spa.x /= sdlutils().getPPM();
+					spa.y /= sdlutils().getPPM();
+
+					enemiePos.push_back(spa);	
+				}
+			}
+		}
+
+		if (object_layer->getName() == "conx") {
+			auto layer_objects = object_layer->getObjects();
+
+			for (auto& c : layer_objects) {
+
+				tmx::Vector2f con = c.getPosition();
+
+				con.x /= sdlutils().getPPM();
+				con.y /= sdlutils().getPPM();
+
+
+				connectionPos.push_back(con);
+			}
+		}
 	}
 }
 

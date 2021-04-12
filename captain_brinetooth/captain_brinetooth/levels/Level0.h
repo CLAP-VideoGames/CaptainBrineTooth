@@ -65,4 +65,9 @@ private:
 	std::array<bool, 4> Cons;
 
 	vector<vector<tmx::Vector2f>> points;
+
+	tmx::Vector2f playerPos;
+	vector<tmx::Vector2f> enemiePos;
+
+	vector<tmx::Vector2f> connectionPos;
 };
