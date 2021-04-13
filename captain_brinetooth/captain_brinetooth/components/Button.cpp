@@ -13,13 +13,15 @@ void Button::render()
 bool Button::handleEvent()
 {
 	Transform* t = entity_->getComponent<Transform>();
-	std::pair<Sint32, Sint32> pos = ih().getMousePos();
 
-	if (pos.first >= t->getPos().getX() && pos.first < t->getPos().getX() + t->getW() - (t->getW() / 2)
-		&& pos.second >= t->getPos().getY() && pos.second < t->getPos().getY() + t->getH() - (t->getH() / 2)
-		)
-	{
+	SDL_Point mouseP = { ih().getMousePos().first, ih().getMousePos().second};
+	SDL_Rect dest = build_sdlrect(t->getPos(), t->getW(), t->getH());
 
+	//if (pos.first >= t->getPos().getX() && pos.first < t->getPos().getX() + t->getW() - (t->getW() / 2)
+	//	&& pos.second >= t->getPos().getY() && pos.second < t->getPos().getY() + t->getH() - (t->getH() / 2)
+	//	)
+	//Así no queda tan feo :D, no me grites David Please
+	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE){
 		// Cambiar textura y renderizar
 		Transform* t = entity_->getComponent<Transform>();
 

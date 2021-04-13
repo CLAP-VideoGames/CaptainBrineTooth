@@ -10,6 +10,7 @@ public:
 	virtual void render() const;
 	virtual void update();
 
+	static void backToGame(App* app, SoundManager* snd);
 	GameState* stRend;
 
 private:
