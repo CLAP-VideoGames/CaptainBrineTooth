@@ -72,5 +72,6 @@ public:
 	virtual void refresh();
 	virtual void init() {};
 	Manager* getMngr() { return manager_; };
+	SoundManager* getSndMngr() { return soundController; };
 };
 

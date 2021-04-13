@@ -7,6 +7,7 @@ class PlayState : public GameState
 public:
 	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual void init();
+	virtual void update();
 
 	void createLevel0();
 	void createPlayer(const Config& playerConfig);

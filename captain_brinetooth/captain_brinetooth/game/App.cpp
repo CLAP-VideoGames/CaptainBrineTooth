@@ -6,6 +6,7 @@
 #include "../states/StateMachine.h"
 #include "../states/GameState.h"
 #include "../states/TestZoneState.h"
+#include "../states/PasueState.h"
 #include "../states/MenuState.h"
 //tiledmap
 
@@ -24,9 +25,9 @@ App::App() {
 	world_ = make_shared<b2World>(gravity);
 	SoundManager* sndProvisional = new SoundManager(0, "Menu");
 	//----Inicio por defecto----
-	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
-	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 }
 
 App::~App() {
@@ -96,7 +97,7 @@ void App::start() {
 			continue;
 		}
 	
-		world_->Step(1.0f / 60.0f, 6, 2);
+		
 		stateMachine->currentState()->update();
 		stateMachine->currentState()->refresh();
 

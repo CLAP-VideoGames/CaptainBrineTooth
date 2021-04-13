@@ -1,5 +1,5 @@
 ﻿#include "PlayState.h"
-
+#include "PasueState.h"
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
 PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd): GameState(a, mundo, snd)
@@ -50,6 +50,21 @@ void PlayState::init()
 	flowerJellyHat.col = ENEMY;
 	flowerJellyHat.colMask = ENEMY_MASK;
 	createFlowerJellyHat(flowerJellyHat);
+}
+
+void PlayState::update(){
+	//Queremos que, en el estado que hayan objetos físicos, se actualicen las físicas
+	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
+
+	if (ih().keyDownEvent()) {
+		if (ih().isKeyDown(SDLK_p)) {
+			StateMachine* sM = app->getStateMachine();
+			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getSndMngr()));
+			sM->currentState()->init();
+		}
+	}
+
+	GameState::update();
 }
 
 /// <summary>
