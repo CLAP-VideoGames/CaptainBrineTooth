@@ -116,5 +116,6 @@ void MachineGun::shoot() {
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
-	bullet->addComponent<DestroyOnCollision>();
+	bullet->addComponent<WeaponDamageDetection>(20);
+	// bullet->addComponent<DestroyOnCollision>(); // esto da problemas si no se hacen bien las capas de colision?
 }
