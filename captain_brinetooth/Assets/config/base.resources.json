@@ -141,6 +141,14 @@
 			"file": "assets/sprites/botones/ship.png"
 		},
 		{
+			"id": "volumen",
+			"file": "assets/sprites/botones/volumen.png"
+		},
+		{
+			"id": "brillo",
+			"file": "assets/sprites/botones/brillo.png"
+		},
+		{
 			"id": "fondoOpciones",
 			"file": "assets/sprites/botones/fondoOpciones.jpg"
 		},

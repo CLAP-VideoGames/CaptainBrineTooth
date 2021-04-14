@@ -13,10 +13,13 @@ public:
 	static void subirVolumen(App* app, SoundManager* snd);
 	static void bajarVolumen(App* app, SoundManager* snd);
 	static void volverMenu(App* app, SoundManager* snd);
+	static void bajarBrillo(App* app, SoundManager* snd);
+	static void subirBrillo(App* app, SoundManager* snd);
 
 
 	void update();
 private:
 	SDL_Rect cam;
+	SDL_Window* window;
 };
 

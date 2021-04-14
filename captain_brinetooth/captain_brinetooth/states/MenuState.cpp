@@ -19,7 +19,7 @@ void MenuState::init() {
 	posImage.w = cam.w;
 	posImage.h = cam.h;
 
-	fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), posImage);
+	fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), posImage, "fondoMenu");
 
 	soundController->setGeneralVolume(63.5);
 	soundController->playMainMusic();

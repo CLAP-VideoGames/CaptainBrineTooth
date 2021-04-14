@@ -14,7 +14,7 @@ void PauseState::init(){
 
 	SDL_Rect posImage = build_sdlrect(0,0, cam.w, cam.h);
 
-	fondo->addComponent<Image>(&sdlutils().images().at("debug_square"), posImage);
+	fondo->addComponent<Image>(&sdlutils().images().at("debug_square"), posImage, "pausa");
 
 	auto* subirV = createBasicEntity(Vector2D((cam.w / 3.1) + 25, cam.h*0.5 ), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
 	subirV->addComponent<Button>(&sdlutils().images().at("volverMenu"), backToGame, app, soundController);

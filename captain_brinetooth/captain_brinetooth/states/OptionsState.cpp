@@ -22,21 +22,25 @@ void OptionsState::init()
 	posImage.w = cam.w;
 	posImage.h = cam.h;
 
-	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage);
-	
+	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
+
 	soundController->ChangeMainMusic("FinalBoss");
 
-
-	auto* subirV = createBasicEntity(Vector2D((cam.w / 1.1), 300), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0,0));
+	// Boton de subir el volumen
+	auto* subirV = createBasicEntity(Vector2D((cam.w / 1.1), cam.h - cam.h / 1.2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0,0));
 	subirV->addComponent<Button>(&sdlutils().images().at("flecha+"), subirVolumen, app, soundController);
 
-	auto* bajarV = createBasicEntity(Vector2D((cam.w / 3), 300), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
+	// Boton de bajar el volumen
+	auto* bajarV = createBasicEntity(Vector2D((cam.w / 3), cam.h - cam.h / 1.2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
 	bajarV->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarVolumen, app, soundController);
 
+	// Boton de volver al menu
 	auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.5), cam.h - (cam.h / 1.5)), 0.0f, Vector2D(0, 0));
 	volver->addComponent<Button>(&sdlutils().images().at("volverMenu"), volverMenu, app, soundController);
 
+	// Vector y SDL_Rect para colocar las siguientes imagenes
 	Vector2D pos = bajarV->getComponent<Transform>()->getPos();
+	pos.setY(pos.getY() - pos.getY() / 100);
 	float w = bajarV->getComponent<Transform>()->getW();
 	float h = bajarV->getComponent<Transform>()->getH();
 
@@ -48,18 +52,75 @@ void OptionsState::init()
 	posBarra.w = soundController->GeneralVolume() * cam.w / 260;
 
 	auto* barraVolumen = manager_->addEntity();
-	barraVolumen->addComponent<Image>(&sdlutils().images().at("barra"), posBarra);
+	barraVolumen->addComponent<Image>(&sdlutils().images().at("barra"), posBarra, "bVolumen");
 
-	posBarra.x += posBarra.w - cam.w/12 ;
-	posBarra.y -= posBarra.h * 1.5;
+	SDL_Rect posBarco1 = posBarra;
+	posBarco1.x += posBarco1.w - cam.w / 12;
+	posBarco1.y -= posBarco1.h * 1.5;
 
-	posBarra.w = cam.w / 10;
-	posBarra.h = cam.h / 10;
+	posBarco1.w = cam.w / 10;
+	posBarco1.h = cam.h / 10;
 
-	auto* barco = manager_->addEntity();
-	barco->addComponent<Image>(&sdlutils().images().at("barco"), posBarra);
+	// Barco al final de la barra de volumen
+	auto* barco1 = manager_->addEntity();
+	barco1->addComponent<Image>(&sdlutils().images().at("barco"), posBarco1, "barco1");
 	
+	// Titulo Volumen
+	SDL_Rect posVolumen;
+	posVolumen.x = pos.getX() - pos.getX() / 1.1;
+	posVolumen.y = pos.getY() - pos.getX() / 5;
+	posVolumen.h = cam.h - (cam.h / 1.25);
+	posVolumen.w = cam.w - cam.w / 1.4;
 
+	auto* volumen = manager_->addEntity();
+	volumen->addComponent<Image>(&sdlutils().images().at("volumen"), posVolumen, "volumen");
+
+
+	//---------------------------------------------------------------------------
+
+	auto* subirB = createBasicEntity(Vector2D((cam.w / 1.1), cam.h - cam.h / 2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
+	subirB->addComponent<Button>(&sdlutils().images().at("flecha+"), subirBrillo, app, soundController);
+
+	auto* bajarB = createBasicEntity(Vector2D((cam.w / 3), cam.h - cam.h / 2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
+	bajarB->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarBrillo, app, soundController);
+
+	pos = bajarB->getComponent<Transform>()->getPos();
+	pos.setY(pos.getY() - pos.getY() / 100);
+	w = bajarB->getComponent<Transform>()->getW();
+	h = bajarB->getComponent<Transform>()->getH();
+
+	SDL_Rect posBrillo;
+	posBrillo.x = pos.getX() + w / 2;
+	posBrillo.y = pos.getY() + h / 10;
+
+	posBrillo.h = cam.h - (cam.h / 1.05);
+
+	posBrillo.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
+
+	auto* brillo = manager_->addEntity();
+	brillo->addComponent<Image>(&sdlutils().images().at("barra"), posBrillo, "bBrillo");
+
+	SDL_Rect posBarco2 = posBrillo;
+	posBarco2.x += posBarco2.w - cam.w / 12;
+	posBarco2.y -= posBarco2.h * 1.5;
+
+	posBarco2.w = cam.w / 10;
+	posBarco2.h = cam.h / 10;
+
+	// Barco al final de la barra de volumen
+	auto* barco2 = manager_->addEntity();
+	barco2->addComponent<Image>(&sdlutils().images().at("barco"), posBarco2, "barco2");
+
+	// Titulo Volumen
+	SDL_Rect posTituloBrillo;
+	pos = bajarB->getComponent<Transform>()->getPos();
+	posTituloBrillo.x = pos.getX() - pos.getX() / 1.1;
+	posTituloBrillo.y = pos.getY() - pos.getX() / 5;
+	posTituloBrillo.h = cam.h - (cam.h / 1.25);
+	posTituloBrillo.w = cam.w - cam.w / 1.4;
+
+	auto* tituloBrillo = manager_->addEntity();
+	tituloBrillo->addComponent<Image>(&sdlutils().images().at("brillo"), posTituloBrillo, "brillo");
 }
 
 
@@ -69,9 +130,54 @@ void OptionsState::update() {
 
 	for (Entity* b : manager_->getEnteties()) {
 		Button* but = b->getComponent<Button>();
+
+		// Si se hace click al boton y ocurren cosas
 		if (but != nullptr && but->handleEvent())
 		{
-			break;
+
+			// En este punto el OptionsState ya esta destruido
+
+			OptionsState* state = dynamic_cast<OptionsState*>(app->getStateMachine()->currentState());
+
+			if (this != nullptr)
+			{
+				SDL_Rect aux;
+				// Actualizamos todos los elementos de volumen y brillo
+				for (Entity* b : manager_->getEnteties()) {
+					Image* but = b->getComponent<Image>();
+					if (but != nullptr)
+					{
+						if (but->compareTag("bVolumen"))
+						{
+							SDL_Rect newPosBarra = but->destino();
+							newPosBarra.w = soundController->GeneralVolume() * cam.w / 260;
+							aux = newPosBarra;
+							but->actualizar(newPosBarra);
+						}
+						else if (but->compareTag("barco1") || but->compareTag("barco2"))
+						{
+							SDL_Rect newPosBarco = but->destino();
+							newPosBarco.x = aux.x + aux.w - cam.w / 10;
+							if (aux.w > 100)
+							{
+								but->actualizar(newPosBarco);
+							}
+						}
+						else if (but->compareTag("bBrillo"))
+						{
+							SDL_Rect newPosBarra = but->destino();
+							newPosBarra.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
+							aux = newPosBarra;
+							but->actualizar(newPosBarra);
+						}
+					}
+				}
+				break;
+			}
+			else
+			{
+				break;
+			}
 		}
 	}
 
@@ -105,7 +211,24 @@ void OptionsState::bajarVolumen(App* app, SoundManager* snd)
 			snd->setGeneralVolume(0);
 		}
 	}
+}
 
+void OptionsState::bajarBrillo(App* app, SoundManager* snd)
+{
+	SDL_Window* window = sdlutils().window();
+	if (SDL_SetWindowBrightness(window, SDL_GetWindowBrightness(window) - 0.02f) != 0)
+	{
+	std:cout << "El brillo baja mas";
+	}
+}
+
+void OptionsState::subirBrillo(App* app, SoundManager* snd)
+{
+	SDL_Window* window = sdlutils().window();
+	if (SDL_SetWindowBrightness(window, SDL_GetWindowBrightness(window) + 0.02f) != 0)
+	{
+	std:cout << "El brillo no sube mas";
+	}
 }
 
 void OptionsState::volverMenu(App* app, SoundManager* snd)

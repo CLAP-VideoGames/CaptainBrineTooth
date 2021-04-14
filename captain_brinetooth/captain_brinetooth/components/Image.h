@@ -5,9 +5,10 @@
 
 class Image : public Component {
 public:
-	Image(Texture* tex, SDL_Rect d) :
+	Image(Texture* tex, SDL_Rect d, std::string t) :
 		dest(d), //
-		tex_(tex) //
+		tex_(tex), //
+		tag(t)
 	{
 	}
 	virtual ~Image() {
@@ -27,7 +28,18 @@ public:
 		return tex_;
 	}
 
+	bool compareTag(std::string t)
+	{
+		return (tag == t);
+	}
+
+	SDL_Rect destino()
+	{
+		return dest;
+	}
+
 private:
 	SDL_Rect dest;
 	Texture* tex_;
+	std::string tag;
 };
