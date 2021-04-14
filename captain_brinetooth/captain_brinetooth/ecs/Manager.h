@@ -12,7 +12,7 @@
 
 class Manager {
 public:
-	Manager(std::shared_ptr<b2World> mundo);
+	Manager(std::shared_ptr<b2World> mundo, bool& pop);
 	virtual ~Manager();
 
 	// entities
@@ -54,7 +54,7 @@ public:
 
 private:
 
-
+	bool* popped;
 	std::shared_ptr<b2World> world_;
 	std::vector<Entity*> entities_;
 	std::array<Entity*, ecs::maxHdlr> hdlrs_;

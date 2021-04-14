@@ -43,11 +43,6 @@ class Entity;
 
 class GameState
 {
-protected:
-	Manager* manager_;
-	App* app;
-	SoundManager* soundController;
-	std::vector<Entity*> stage;
 public:
 	GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual ~GameState();
@@ -73,5 +68,15 @@ public:
 	virtual void init() {};
 	Manager* getMngr() { return manager_; };
 	SoundManager* getSndMngr() { return soundController; };
+
+	void popState() { popped = true; };
+	bool isPopped() { return popped; };
+
+protected:
+	Manager* manager_;
+	App* app;
+	SoundManager* soundController;
+	std::vector<Entity*> stage;
+	bool popped;
 };
 

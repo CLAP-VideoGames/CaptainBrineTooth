@@ -5,7 +5,8 @@
 
 GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) {
 	app = a;
-	manager_ = new Manager(mundo); 
+	manager_ = new Manager(mundo, popped);
+	popped = false;
 	soundController = snd;
 }
 GameState::~GameState() {

@@ -2,8 +2,17 @@
 #include "PasueState.h"
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
-PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd): GameState(a, mundo, snd)
-{
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd): GameState(a, mundo, snd){
+	//Testing floor
+	//auto suelo = manager_->addEntity();
+	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
+	//auto anim = suelo->addComponent<AnimBlendGraph>();
+	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
+
+	//suelo->addComponent<BoxCollider>();
+}
+
+void PlayState::init() {
 	createLevel0();
 
 	Config playerConfig{};
@@ -16,17 +25,6 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd):
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
 
-	//Testing floor
-	//auto suelo = manager_->addEntity();
-	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
-	//auto anim = suelo->addComponent<AnimBlendGraph>();
-	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
-
-	//suelo->addComponent<BoxCollider>();
-}
-
-void PlayState::init()
-{
 	Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
@@ -60,22 +58,17 @@ void PlayState::update(){
 		if (ih().isKeyDown(SDLK_p)) {
 			StateMachine* sM = app->getStateMachine();
 			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getSndMngr()));
-			sM->currentState()->init();
 		}
 	}
 
 	GameState::update();
-}
-
-void PlayState::update()
-{
-	if (map->zoneCompleted()) {
+	/*if (map->zoneCompleted()) {
 		int nextZone = map->zone() + 1;
 
 		delete map;
 
 		map = new MapProcedural(10, nextZone);
-	}
+	}*/
 }
 
 /// <summary>

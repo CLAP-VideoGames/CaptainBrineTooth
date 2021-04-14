@@ -35,9 +35,8 @@ App::~App() {
 
 void App::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY(), "assets/config/base.resources.json");
-
-
-	stateMachine->currentState()->init();
+	//Refrescamos los estados pusheados
+	stateMachine->refreshStates();
 	world_->SetContactListener(&collisionListener);
 
 	//auto* soundController = mngr_->addEntity();
@@ -99,6 +98,8 @@ void App::start() {
 	
 		
 		stateMachine->currentState()->update();
+
+		stateMachine->refreshStates();
 		stateMachine->currentState()->refresh();
 
 		sdlutils().clearRenderer();

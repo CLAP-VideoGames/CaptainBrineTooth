@@ -179,9 +179,9 @@ void Level0::load(const string& path) {
 
 				connectionPos.push_back(con);
 
-
-				auto* connectTrigger = entity_->getMngr()->addEntity();
-				connectTrigger->addComponent<BoxCollider>();
+				//Te lo he comentado porque no compilaba <3 ptd: Joseda
+				//auto* connectTrigger = entity_->getMngr()->addEntity();
+				//connectTrigger->addComponent<BoxCollider>();
 			}
 		}
 	}

@@ -130,54 +130,41 @@ void OptionsState::update() {
 
 	for (Entity* b : manager_->getEnteties()) {
 		Button* but = b->getComponent<Button>();
-
 		// Si se hace click al boton y ocurren cosas
-		if (but != nullptr && but->handleEvent())
-		{
-
+		if (but != nullptr && but->handleEvent()){
 			// En este punto el OptionsState ya esta destruido
-
-			OptionsState* state = dynamic_cast<OptionsState*>(app->getStateMachine()->currentState());
-
-			if (this != nullptr)
-			{
-				SDL_Rect aux;
-				// Actualizamos todos los elementos de volumen y brillo
-				for (Entity* b : manager_->getEnteties()) {
-					Image* but = b->getComponent<Image>();
-					if (but != nullptr)
+			SDL_Rect aux;
+			// Actualizamos todos los elementos de volumen y brillo
+			for (Entity* b : manager_->getEnteties()) {
+				Image* but = b->getComponent<Image>();
+				if (but != nullptr)
+				{
+					if (but->compareTag("bVolumen"))
 					{
-						if (but->compareTag("bVolumen"))
+						SDL_Rect newPosBarra = but->destino();
+						newPosBarra.w = soundController->GeneralVolume() * cam.w / 260;
+						aux = newPosBarra;
+						but->actualizar(newPosBarra);
+					}
+					else if (but->compareTag("barco1") || but->compareTag("barco2"))
+					{
+						SDL_Rect newPosBarco = but->destino();
+						newPosBarco.x = aux.x + aux.w - cam.w / 10;
+						if (aux.w > 100)
 						{
-							SDL_Rect newPosBarra = but->destino();
-							newPosBarra.w = soundController->GeneralVolume() * cam.w / 260;
-							aux = newPosBarra;
-							but->actualizar(newPosBarra);
-						}
-						else if (but->compareTag("barco1") || but->compareTag("barco2"))
-						{
-							SDL_Rect newPosBarco = but->destino();
-							newPosBarco.x = aux.x + aux.w - cam.w / 10;
-							if (aux.w > 100)
-							{
-								but->actualizar(newPosBarco);
-							}
-						}
-						else if (but->compareTag("bBrillo"))
-						{
-							SDL_Rect newPosBarra = but->destino();
-							newPosBarra.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
-							aux = newPosBarra;
-							but->actualizar(newPosBarra);
+							but->actualizar(newPosBarco);
 						}
 					}
+					else if (but->compareTag("bBrillo"))
+					{
+						SDL_Rect newPosBarra = but->destino();
+						newPosBarra.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
+						aux = newPosBarra;
+						but->actualizar(newPosBarra);
+					}
 				}
-				break;
 			}
-			else
-			{
-				break;
-			}
+			break;
 		}
 	}
 
