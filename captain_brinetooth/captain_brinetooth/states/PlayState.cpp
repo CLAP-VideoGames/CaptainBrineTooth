@@ -67,6 +67,17 @@ void PlayState::update(){
 	GameState::update();
 }
 
+void PlayState::update()
+{
+	if (map->zoneCompleted()) {
+		int nextZone = map->zone() + 1;
+
+		delete map;
+
+		map = new MapProcedural(10, nextZone);
+	}
+}
+
 /// <summary>
 /// Crea el tile nivel 0 con f�sicas
 /// </summary>

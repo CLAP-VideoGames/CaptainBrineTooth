@@ -44,6 +44,8 @@ public:
 	void setCollision();
 	void load(const string& path);
 
+	void setPlayerPos();
+
 	std::array<bool, 4> returnRoomCons() { return Cons; }
 
 	std::vector<vector<tmx::Vector2f>> getVerticesList(){
@@ -51,6 +53,7 @@ public:
 	}
 
 	void clearTileset();
+
 private:
 	string name_;
 	int fils_, cols_,		// filas y columnas de 

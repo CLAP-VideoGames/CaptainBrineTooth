@@ -15,6 +15,7 @@ public:
 	void createElfShark(const Config& entityConfig);
 	void createFlowerJellyHat(const Config& entityConfig);
 
+
 private:
 	SDL_Rect cam;
 	MapProcedural* map;

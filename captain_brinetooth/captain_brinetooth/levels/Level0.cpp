@@ -162,6 +162,7 @@ void Level0::load(const string& path) {
 					spa.y /= sdlutils().getPPM();
 
 					enemiePos.push_back(spa);	
+
 				}
 			}
 		}
@@ -177,9 +178,22 @@ void Level0::load(const string& path) {
 				con.y /= sdlutils().getPPM();
 
 				connectionPos.push_back(con);
+
+
+				auto* connectTrigger = entity_->getMngr()->addEntity();
+				connectTrigger->addComponent<BoxCollider>();
 			}
 		}
 	}
+}
+
+void Level0::setPlayerPos()
+{
+	auto* p = entity_->getMngr()->getHandler<Player>();
+
+	Vector2D plaPos(playerPos.x, playerPos.y);
+
+	p->getComponent<Transform>()->getPos().set(plaPos);
 }
 
 void Level0::clearTileset()

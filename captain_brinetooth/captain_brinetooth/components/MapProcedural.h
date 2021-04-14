@@ -28,14 +28,34 @@ public:
 
 	//0 = N, 1 = E, 2 = S, 3 = W
 	void init() {
-		//Cuando estén las distintas zonas, podemos ordenar con un array y así puedo hacer zona[fase]
+		//NECESITO SABER LA DIRECCION DE MEMORIA
+		//Igual puedo meter los directorios en un array
 		//Leeemos los distintos directorios
-		int roomsRead = 0;
-		ReadDirectory("assets/maps/level_starts",roomsRead);
-		fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-		ReadDirectory("assets/maps/level_rooms", roomsRead);
-		fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-		ReadDirectory("assets/maps/level_ends", roomsRead);
+		if (fase == 0) {
+			int roomsRead = 0;
+			ReadDirectory("assets/maps/level_starts",roomsRead);
+			fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+			ReadDirectory("assets/maps/level_rooms", roomsRead);
+			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+			ReadDirectory("assets/maps/level_ends", roomsRead);
+
+		}
+		else if (fase == 1) {
+			int roomsRead = 0;
+			ReadDirectory("assets/maps/level_starts", roomsRead);
+			fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+			ReadDirectory("assets/maps/level_rooms", roomsRead);
+			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+			ReadDirectory("assets/maps/level_ends", roomsRead);
+		}
+		else {
+			int roomsRead = 0;
+			ReadDirectory("assets/maps/level_starts", roomsRead);
+			fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+			ReadDirectory("assets/maps/level_rooms", roomsRead);
+			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+			ReadDirectory("assets/maps/level_ends", roomsRead);
+		}
 
 		//Cacheamos el componente Level
 		lvl = entity_->getComponent<Level0>();
@@ -67,6 +87,9 @@ public:
 		CreateConnections(actualRoom, actualRoom->cons);
 	}
 
+	bool zoneCompleted() { return roomsExplored = nRooms; }
+
+	int zone() { return fase; }
 private:
 	void ReadDirectory(const string& p, int& roomsRead) {
 		std::string path = p;
@@ -199,10 +222,11 @@ private:
 				if (name[i] == cardinals[j]) cons[j] = true;
 	}
 
-	
+	//Devuelve si se han explorado todas las habitaciones de la zona
 
 protected:
 	int nRooms, nRoomNames = 10;
+	int fase;		//Número de la zona en la que está el player
 
 	//Opcion con struct
 	std::array<RoomNames, 20> roomNames;
@@ -218,7 +242,5 @@ protected:
 
 	Level0* lvl;
 
-	int fase;
-	MapProcedural* nextMap;
 	MapCollider* chainCollider;
 };
