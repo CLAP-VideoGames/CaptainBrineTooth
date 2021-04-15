@@ -159,6 +159,7 @@
     <ClInclude Include="components\BoxCollider.h" />
     <ClInclude Include="components\Button.h" />
     <ClInclude Include="components\CameraFollow.h" />
+    <ClInclude Include="components\Inventory.h" />
     <ClInclude Include="components\JellyHatBehavior.h" />
     <ClInclude Include="components\MapCollider.h" />
     <ClInclude Include="components\Chainsaw.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="components\Enemy_Health.cpp" />
     <ClCompile Include="components\FringeHeadAtack.cpp" />
     <ClCompile Include="components\Hammer.cpp" />
+    <ClCompile Include="components\Inventory.cpp" />
     <ClCompile Include="components\JellyHatBehavior.cpp" />
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\MachineGun.cpp" />
