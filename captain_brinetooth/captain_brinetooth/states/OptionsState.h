@@ -16,6 +16,17 @@ public:
 	static void bajarBrillo(App* app, SoundManager* snd);
 	static void subirBrillo(App* app, SoundManager* snd);
 
+	Entity* barraVolumen(Transform* e);
+	Entity* barcoVolumen(SDL_Rect posBarra);
+	Entity* flechasVolumen();
+	Entity* tituloVolumen(Transform* pos);
+
+	Entity* barraBrillo(Transform* e);
+	Entity* barcoBrillo(SDL_Rect posBarra);
+	Entity* flechasBrillo();
+	Entity* tituloBrillo(Transform* pos);
+
+	Entity* botonVolver();
 
 	void update();
 private:
