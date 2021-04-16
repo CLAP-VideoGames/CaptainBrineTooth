@@ -39,12 +39,12 @@ void OptionsState::init()
 	tituloBrillo(bajarB->getComponent<Transform>());
 
 
-	/*Entity* slider = manager_->addEntity();
+	Entity* slider = manager_->addEntity();
 	Vector2D pos = Vector2D(Vector2D((cam.w * 0.9), cam.h * 0.3));
 	std::pair<Vector2D, Vector2D> size = {Vector2D(500, 50), Vector2D(50, 60)};
 	Texture* textues[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
-	float m = 0.4f;*/
-	//slider->addComponent<Slider>(pos, size, textues, controlVolume, m);
+	float m = 0.4f;
+	slider->addComponent<Slider>(pos, size, textues, controlVolume);
 
 	botonVolver();
 }
@@ -290,8 +290,10 @@ void OptionsState::subirBrillo(App* app, SoundManager* snd)
 	}
 }
 
-void OptionsState::controlVolume(float& value){
+void OptionsState::controlVolume(float value){
 
+
+	std::cout << value << std::endl;
 	/*SoundManager* snd = ent->getMngr().
 	float vol = snd->GeneralVolume();
 

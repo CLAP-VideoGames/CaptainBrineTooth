@@ -25,6 +25,8 @@ void Slider::init(){
 	Vector2D posSlide = Vector2D(pos.getX()* 1.1f, pos.getY());
 	SDL_Rect slideRect = build_sdlrect(posSlide, sizes.second.getX(), sizes.second.getY());
 	background->addComponent<Image>(textures[1], backgroundPos, "fondo");
+	float m = 3.4f;
+	callback_(m);
 }
 
 void Slider::update()

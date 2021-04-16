@@ -16,7 +16,7 @@ public:
 	static void bajarBrillo(App* app, SoundManager* snd);
 	static void subirBrillo(App* app, SoundManager* snd);
 	
-	static void controlVolume(float& value);
+	static void controlVolume(float value);
 
 
 	Entity* barraVolumen(Transform* e);
