@@ -189,7 +189,6 @@
     <ClInclude Include="components\Rotate.h" />
     <ClInclude Include="components\ShootDetect.h" />
     <ClInclude Include="components\Slider.h" />
-    <ClInclude Include="components\SoundManager.h" />
     <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\Transform.h" />
     <ClInclude Include="components\WeaponDamageDetection.h" />
@@ -199,6 +198,7 @@
     <ClInclude Include="ecs\Entity.h" />
     <ClInclude Include="ecs\Manager.h" />
     <ClInclude Include="ecs\mpl.h" />
+    <ClInclude Include="ecs\SoundManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="game\CollisionLayers.h" />
     <ClInclude Include="game\ecs_defs.h" />
@@ -251,10 +251,10 @@
     <ClCompile Include="components\PompeyWormAttack.cpp" />
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\Slider.cpp" />
-    <ClCompile Include="components\SoundManager.cpp" />
     <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
+    <ClCompile Include="ecs\SoundManager.cpp" />
     <ClCompile Include="game\App.cpp" />
     <ClCompile Include="json\JSON.cpp" />
     <ClCompile Include="json\JSONValue.cpp" />

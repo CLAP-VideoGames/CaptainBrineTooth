@@ -22,7 +22,7 @@
 #include "../components/EnemyTrigger.h"
 #include "../components/KeyBoardCtrl.h"
 #include "../components/Enemy_Health.h"
-#include "../components/SoundManager.h"
+#include "../ecs/SoundManager.h"
 #include "../components/MapCollider.h"
 #include "../components/Player_Health.h"
 #include "../components/enemyMovement.h"
@@ -68,9 +68,6 @@ public:
 	virtual void refresh();
 	virtual void init() {};
 	Manager* getMngr() { return manager_; };
-	SoundManager* getSndMngr() { return soundController; };
-
-
 
 	void popState() { popped = true; };
 	bool isPopped() { return popped; };
@@ -78,7 +75,6 @@ public:
 protected:
 	Manager* manager_;
 	App* app;
-	SoundManager* soundController;
 	std::vector<Entity*> stage;
 	bool popped;
 };

@@ -282,9 +282,6 @@
     <ClInclude Include="states\PasueState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
-    <ClInclude Include="components\SoundManager.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\Crab.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
@@ -308,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="components\Slider.h">
       <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="ecs\SoundManager.h">
+      <Filter>Archivos de encabezado\ecs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -429,9 +429,6 @@
     <ClCompile Include="states\PlayState.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
-    <ClCompile Include="components\SoundManager.cpp">
-      <Filter>Archivos de origen\components</Filter>
-    </ClCompile>
     <ClCompile Include="components\Crab.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
@@ -455,6 +452,9 @@
     </ClCompile>
     <ClCompile Include="components\Slider.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="ecs\SoundManager.cpp">
+      <Filter>Archivos de origen\ecs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

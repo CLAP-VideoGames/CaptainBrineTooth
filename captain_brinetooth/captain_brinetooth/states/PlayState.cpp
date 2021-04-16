@@ -57,7 +57,7 @@ void PlayState::update(){
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDLK_p)) {
 			StateMachine* sM = app->getStateMachine();
-			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getSndMngr()));
+			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
 		}
 	}
 
@@ -198,7 +198,7 @@ void PlayState::createPlayer(const Config& playerConfig){
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
-	player->addComponent<SoundManager>(75, "FinalBoss");
+	//player->addComponent<SoundManager>(75, "FinalBoss");
 
 	if(playerConfig.physicType != KINEMATIC) player->addComponent<PlayerController>();
 	else player->addComponent<KeyBoardCtrl>(map);

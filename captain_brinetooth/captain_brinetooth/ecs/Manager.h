@@ -9,10 +9,11 @@
 #include "ecs.h"
 #include "Entity.h"
 #include "box2d.h"
+#include "../ecs/SoundManager.h"
 
 class Manager {
 public:
-	Manager(std::shared_ptr<b2World> mundo, bool& pop);
+	Manager(std::shared_ptr<b2World> mundo, SoundManager* snd, bool& pop);
 	virtual ~Manager();
 
 	// entities
@@ -48,6 +49,11 @@ public:
 		return world_;
 	}
 
+	inline SoundManager* getSoundMngr()
+	{
+		return snd;
+	}
+
 	void update();
 	void render();
 	void refresh();
@@ -58,6 +64,7 @@ private:
 	std::shared_ptr<b2World> world_;
 	std::vector<Entity*> entities_;
 	std::array<Entity*, ecs::maxHdlr> hdlrs_;
+	SoundManager* snd;
 
 };
 

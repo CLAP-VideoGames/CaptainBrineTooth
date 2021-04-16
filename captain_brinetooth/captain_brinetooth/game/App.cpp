@@ -23,6 +23,8 @@ App::App() {
 
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = make_shared<b2World>(gravity);
+
+
 	SoundManager* sndProvisional = new SoundManager(0, "Menu");
 	//----Inicio por defecto----
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));

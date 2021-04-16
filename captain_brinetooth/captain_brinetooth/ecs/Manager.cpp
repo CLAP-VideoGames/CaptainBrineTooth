@@ -4,8 +4,8 @@
 
 #include <algorithm>
 
-Manager::Manager(std::shared_ptr<b2World> mundo, bool& pop) {
-
+Manager::Manager(std::shared_ptr<b2World> mundo, SoundManager* snd_, bool& pop) {
+	snd = snd_;
 	world_ = mundo;
 }
 

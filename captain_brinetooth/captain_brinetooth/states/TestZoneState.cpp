@@ -198,7 +198,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
-	player->addComponent<SoundManager>(0, "FinalBoss");
+	//player->addComponent<SoundManager>(0, "FinalBoss");
 
 	/*if (playerConfig.physicType != KINEMATIC) */player->addComponent<PlayerController>();
 	//else player->addComponent<KeyBoardCtrl>(map);

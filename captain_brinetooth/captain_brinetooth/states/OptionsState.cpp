@@ -24,7 +24,7 @@ void OptionsState::init()
 
 	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
 
-	soundController->ChangeMainMusic("FinalBoss");
+	manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
 
 	// VOLUMEN
 	Entity* BajarV = flechasVolumen();
@@ -45,6 +45,8 @@ void OptionsState::init()
 	Texture* textues[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	float m = 0.4f;
 	slider->addComponent<Slider>(pos, size, textues, controlVolume);
+	
+	
 
 	botonVolver();
 }
@@ -53,7 +55,7 @@ Entity* OptionsState::botonVolver()
 {
 	// Boton de volver al menu
 	auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.5), cam.h - (cam.h / 1.5)), 0.0f, Vector2D(0, 0));
-	volver->addComponent<Button>(&sdlutils().images().at("volverMenu"), volverMenu, app, soundController);
+	volver->addComponent<Button>(&sdlutils().images().at("volverMenu"), volverMenu, app, manager_->getSoundMngr());
 	
 	return volver;
 }
@@ -62,11 +64,11 @@ Entity* OptionsState::flechasVolumen()
 {
 	// Boton de subir el volumen
 	auto* subirV = createBasicEntity(Vector2D((cam.w / 1.1), cam.h - cam.h / 1.2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	subirV->addComponent<Button>(&sdlutils().images().at("flecha+"), subirVolumen, app, soundController);
+	subirV->addComponent<Button>(&sdlutils().images().at("flecha+"), subirVolumen, app, manager_->getSoundMngr());
 
 	// Boton de bajar el volumen
 	auto* bajarV = createBasicEntity(Vector2D((cam.w / 3), cam.h - cam.h / 1.2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	bajarV->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarVolumen, app, soundController);
+	bajarV->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarVolumen, app, manager_->getSoundMngr());
 
 	return bajarV;
 }
@@ -88,7 +90,7 @@ Entity* OptionsState::barraVolumen(Transform* e)
 
 	// La altura es la misma y la anchura de la barra depende del volumen
 	posBarra.h = cam.h - (cam.h / 1.05);
-	posBarra.w = soundController->GeneralVolume() * cam.w / 260;
+	posBarra.w = manager_->getSoundMngr()->GeneralVolume() * cam.w / 260;
 
 	auto* barraVolumen = manager_->addEntity();
 	barraVolumen->addComponent<Image>(&sdlutils().images().at("barra"), posBarra, "bVolumen");
@@ -132,10 +134,10 @@ Entity* OptionsState::tituloVolumen(Transform* pos)
 Entity* OptionsState::flechasBrillo()
 {
 	auto* subirB = createBasicEntity(Vector2D((cam.w / 1.1), cam.h - cam.h / 2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	subirB->addComponent<Button>(&sdlutils().images().at("flecha+"), subirBrillo, app, soundController);
+	subirB->addComponent<Button>(&sdlutils().images().at("flecha+"), subirBrillo, app, manager_->getSoundMngr());
 
 	auto* bajarB = createBasicEntity(Vector2D((cam.w / 3), cam.h - cam.h / 2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	bajarB->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarBrillo, app, soundController);
+	bajarB->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarBrillo, app, manager_->getSoundMngr());
 
 	return bajarB;
 }
@@ -214,7 +216,7 @@ void OptionsState::update() {
 					if (but->compareTag("bVolumen"))
 					{
 						SDL_Rect newPosBarra = but->destino();
-						newPosBarra.w = soundController->GeneralVolume() * cam.w / 260;
+						newPosBarra.w = manager_->getSoundMngr()->GeneralVolume() * cam.w / 260;
 						aux = newPosBarra;
 						but->actualizar(newPosBarra);
 					}
@@ -284,6 +286,7 @@ void OptionsState::bajarBrillo(App* app, SoundManager* snd)
 void OptionsState::subirBrillo(App* app, SoundManager* snd)
 {
 	SDL_Window* window = sdlutils().window();
+
 	if (SDL_SetWindowBrightness(window, SDL_GetWindowBrightness(window) + 0.02f) != 0)
 	{
 	std:cout << "El brillo no sube mas";
@@ -292,9 +295,8 @@ void OptionsState::subirBrillo(App* app, SoundManager* snd)
 
 void OptionsState::controlVolume(float value){
 
-
-	std::cout << value << std::endl;
-	/*SoundManager* snd = ent->getMngr().
+	/*std::cout << value << std::endl;
+	SoundManager* snd = ent->getMngr().
 	float vol = snd->GeneralVolume();
 
 	if (vol < 128)

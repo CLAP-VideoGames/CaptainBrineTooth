@@ -7,7 +7,7 @@
 #include "../ecs/Component.h"
 #include "../sdlutils/InputHandler.h"
 
-#include "SoundManager.h"
+#include "../ecs/SoundManager.h"
 
 class PlayerController : public Component {
 public:																
@@ -28,8 +28,8 @@ public:
 		lastTimeJumped = sdlutils().currRealTime();
 
 		lasTimeDashed = sdlutils().currRealTime();
+		snd = entity_->getMngr()->getSoundMngr();
 
-		snd = entity_->getComponent<SoundManager>();
 		assert(snd!= nullptr);
 	}
 

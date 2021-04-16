@@ -7,7 +7,7 @@
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"
 #include "../ecs/Entity.h"
-#include "../components/SoundManager.h"
+#include "../ecs/SoundManager.h"
 
 
 using CallBackOnClick = void(App* g, SoundManager* snd);

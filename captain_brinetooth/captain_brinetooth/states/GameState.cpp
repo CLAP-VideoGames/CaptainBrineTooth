@@ -5,9 +5,8 @@
 
 GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) {
 	app = a;
-	manager_ = new Manager(mundo, popped);
+	manager_ = new Manager(mundo, snd, popped);
 	popped = false;
-	soundController = snd;
 }
 GameState::~GameState() {
 	//Para borrar las entidades , se pueden poner a todas las entidades del juego a dormir para que el manager 
