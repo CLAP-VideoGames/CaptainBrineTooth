@@ -8,6 +8,7 @@
 #include "../sdlutils/InputHandler.h"
 #include "../ecs/Entity.h"
 #include "../ecs/SoundManager.h"
+#include "../sdlutils/SDLUtils.h"
 
 
 using CallBackOnClick = void(App* g, SoundManager* snd);
@@ -24,7 +25,7 @@ public:
 	virtual ~Button() {
 	}
 
-	void render();
+	void render() override;
 	bool handleEvent(); 
 
 protected:

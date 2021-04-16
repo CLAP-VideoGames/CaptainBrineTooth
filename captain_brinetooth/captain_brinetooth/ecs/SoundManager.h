@@ -4,6 +4,9 @@
 #include "../game/App.h"
 #include "../sdlutils/Music.h"
 
+const int MAX_VOL = 127;
+const int MIN_VOL = 0;
+
 class SoundManager{
 public:
 
@@ -38,6 +41,10 @@ public:
 	void playSoundEffect(std::string effect) { sdlutils().soundEffects().at(effect).play(); }
 
 	void stopMusic();
+
+	inline int getMaxVol() { return MAX_VOL; }
+
+	inline int getMinVol() { return MIN_VOL; }
 
 private:
 	std::string mainMusic;

@@ -14,34 +14,34 @@ OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager*
 
 void OptionsState::init()
 {
-	auto* fondo = manager_->addEntity();
+	//auto* fondo = manager_->addEntity();
 
-	SDL_Rect posImage;
-	posImage.x = 0;
-	posImage.y = 0;
-	posImage.w = cam.w;
-	posImage.h = cam.h;
+	//SDL_Rect posImage;
+	//posImage.x = 0;
+	//posImage.y = 0;
+	//posImage.w = cam.w;
+	//posImage.h = cam.h;
 
-	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
+	//fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
 
-	manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
+	//manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
 
-	// VOLUMEN
-	Entity* BajarV = flechasVolumen();
-	Entity* bVolumen = barraVolumen(BajarV->getComponent<Transform>());	
-	barcoVolumen(bVolumen->getComponent<Image>()->destino());
-	tituloVolumen(BajarV->getComponent<Transform>());
+	//// VOLUMEN
+	//Entity* BajarV = flechasVolumen();
+	//Entity* bVolumen = barraVolumen(BajarV->getComponent<Transform>());	
+	//barcoVolumen(bVolumen->getComponent<Image>()->destino());
+	//tituloVolumen(BajarV->getComponent<Transform>());
 
-	// BRILLO
-	Entity* bajarB = flechasBrillo();
-	Entity* bBrillo = barraVolumen(bajarB->getComponent<Transform>());
-	barcoBrillo(bBrillo->getComponent<Image>()->destino());
-	tituloBrillo(bajarB->getComponent<Transform>());
+	//// BRILLO
+	//Entity* bajarB = flechasBrillo();
+	//Entity* bBrillo = barraVolumen(bajarB->getComponent<Transform>());
+	//barcoBrillo(bBrillo->getComponent<Image>()->destino());
+	//tituloBrillo(bajarB->getComponent<Transform>());
 
 
 	Entity* slider = manager_->addEntity();
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.9), cam.h * 0.3));
-	std::pair<Vector2D, Vector2D> size = {Vector2D(500, 50), Vector2D(50, 60)};
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.3));
+	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 50), Vector2D(100, 100)};
 	Texture* textues[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	float m = 0.4f;
 	slider->addComponent<Slider>(pos, size, textues, controlVolume);
@@ -293,19 +293,21 @@ void OptionsState::subirBrillo(App* app, SoundManager* snd)
 	}
 }
 
-void OptionsState::controlVolume(float value){
+void OptionsState::controlVolume(float value, Entity* ent)
+{
+	std::cout << value << std::endl;
+	SoundManager* snd = ent->getMngr()->getSoundMngr();
 
-	/*std::cout << value << std::endl;
-	SoundManager* snd = ent->getMngr().
 	float vol = snd->GeneralVolume();
 
+	//Esta dividido en 10 en 10
 	if (vol < 128)
 	{
 		vol += 12.7;
 		snd->setGeneralVolume(vol);
 		if (vol >= 128)
 		{
-			snd->setGeneralVolume(127);
+			snd->setGeneralVolume(snd->getMaxVol());
 		}
 	}
 	else if(vol > 0)
@@ -314,9 +316,9 @@ void OptionsState::controlVolume(float value){
 		snd->setGeneralVolume(vol);
 		if (vol < 0)
 		{
-			snd->setGeneralVolume(0);
+			snd->setGeneralVolume(snd->getMinVol());
 		}
-	}*/
+	}
 }
 
 void OptionsState::volverMenu(App* app, SoundManager* snd)

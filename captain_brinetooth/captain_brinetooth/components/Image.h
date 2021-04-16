@@ -2,6 +2,7 @@
 
 #include "../ecs/Component.h"
 #include "../sdlutils/Texture.h"
+#include "../sdlutils/SDLUtils.h"
 
 class Image : public Component {
 public:
@@ -15,7 +16,12 @@ public:
 	}
 
 	void render() override {
+
 		tex_->render(dest);
+		if (sdlutils().getDebug()){
+			SDL_SetRenderDrawColor(sdlutils().renderer(), 255, 0, 0, 255);
+			SDL_RenderDrawRect(sdlutils().renderer(), &dest);
+		}
 	}
 
 	void actualizar(SDL_Rect d)
