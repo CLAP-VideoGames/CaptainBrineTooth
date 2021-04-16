@@ -15,11 +15,16 @@ public:
 	static void volverMenu(App* app, SoundManager* snd);
 	static void bajarBrillo(App* app, SoundManager* snd);
 	static void subirBrillo(App* app, SoundManager* snd);
+	
+	static void controlVolume(float& value);
+
 
 	Entity* barraVolumen(Transform* e);
 	Entity* barcoVolumen(SDL_Rect posBarra);
 	Entity* flechasVolumen();
 	Entity* tituloVolumen(Transform* pos);
+
+
 
 	Entity* barraBrillo(Transform* e);
 	Entity* barcoBrillo(SDL_Rect posBarra);

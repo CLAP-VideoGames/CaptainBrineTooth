@@ -39,6 +39,13 @@ void OptionsState::init()
 	tituloBrillo(bajarB->getComponent<Transform>());
 
 
+	/*Entity* slider = manager_->addEntity();
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.9), cam.h * 0.3));
+	std::pair<Vector2D, Vector2D> size = {Vector2D(500, 50), Vector2D(50, 60)};
+	Texture* textues[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
+	float m = 0.4f;*/
+	//slider->addComponent<Slider>(pos, size, textues, controlVolume, m);
+
 	botonVolver();
 }
 
@@ -281,6 +288,31 @@ void OptionsState::subirBrillo(App* app, SoundManager* snd)
 	{
 	std:cout << "El brillo no sube mas";
 	}
+}
+
+void OptionsState::controlVolume(float& value){
+
+	/*SoundManager* snd = ent->getMngr().
+	float vol = snd->GeneralVolume();
+
+	if (vol < 128)
+	{
+		vol += 12.7;
+		snd->setGeneralVolume(vol);
+		if (vol >= 128)
+		{
+			snd->setGeneralVolume(127);
+		}
+	}
+	else if(vol > 0)
+	{
+		vol -= 12.7;
+		snd->setGeneralVolume(vol);
+		if (vol < 0)
+		{
+			snd->setGeneralVolume(0);
+		}
+	}*/
 }
 
 void OptionsState::volverMenu(App* app, SoundManager* snd)

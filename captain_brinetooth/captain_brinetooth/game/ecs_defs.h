@@ -37,6 +37,7 @@ class DestroyOnCollision;
 class Button;
 class MapProcedural;
 class Image;
+class Slider;
 class Crab;
 class MachineGun;
 class JellyHatBehavior;
@@ -67,6 +68,7 @@ class JellyHatBehavior;
 	Button,\
 	Sword,\
     ShootDetect,\
+    Slider,\
     DisableOnExit,\
     ContactDamage,\
     Enemy_Health,\

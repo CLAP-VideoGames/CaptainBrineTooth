@@ -36,6 +36,7 @@
 #include "../components/MachineGun.h"
 #include "../components/Image.h"
 #include "../components/JellyHatBehavior.h"
+#include "../components/Slider.h"
 
 class Manager;
 class App;
@@ -68,6 +69,8 @@ public:
 	virtual void init() {};
 	Manager* getMngr() { return manager_; };
 	SoundManager* getSndMngr() { return soundController; };
+
+
 
 	void popState() { popped = true; };
 	bool isPopped() { return popped; };
