@@ -8,6 +8,7 @@
 //Los mapas, los vertices de colision tienen que ser en sentido horario
 
 namespace fs = std::filesystem;
+const int NUM_TILEMAPS = 25;
 /// <summary>
 /// Crea las habitaciones del mapa y controla sus conexiones. Aplica el componente MapCollider para el manejo de colisiones
 /// </summary>
@@ -229,7 +230,7 @@ protected:
 	int fase;		//Número de la zona en la que está el player
 
 	//Opcion con struct
-	std::array<RoomNames, 20> roomNames;
+	std::array<RoomNames, NUM_TILEMAPS> roomNames;
 
 	//Numero de habitaciones exploradas
 	int roomsExplored = 0;

@@ -79,8 +79,6 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd));
-	sM->currentState()->init();
-
 }
 
 void MenuState::changeToOptions(App* app, SoundManager* snd) {
