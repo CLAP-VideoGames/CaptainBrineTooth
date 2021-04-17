@@ -25,8 +25,6 @@ public:
 	Entity* flechasVolumen();
 	Entity* tituloVolumen(Transform* pos);
 
-
-
 	Entity* barraBrillo(Transform* e);
 	Entity* barcoBrillo(SDL_Rect posBarra);
 	Entity* flechasBrillo();

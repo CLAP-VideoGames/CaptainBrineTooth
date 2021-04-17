@@ -12,8 +12,12 @@ void StateMachine::changeState(GameState* gameState) {
 	pushState(gameState);
 }
 void StateMachine::popState() {
-	states.top()->popState();
-	
+	//Si el estado no ha sido declarado como Poped, lo asignamos
+	if(!states.top()->isPopped())
+		states.top()->popState();
+	else{ //Si ya se ha asignado, significa que el estado de debjo de Top tambien será popped
+		timesToPop++;
+	}
 }
 
 void StateMachine::pushState(GameState* gameState) {
@@ -29,6 +33,12 @@ void StateMachine::popState_(){
 	if (!states.empty() && states.top()->isPopped()) {
 		delete states.top();
 		states.pop();
+		//Si la lista no está vacia y se quieren poppear más estados
+		while (!states.empty() && timesToPop > 0){
+			delete states.top();
+			states.pop();
+			timesToPop--;
+		}
 	}
 }
 

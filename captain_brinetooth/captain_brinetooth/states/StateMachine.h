@@ -18,6 +18,7 @@ private:
 	stack<GameState*> states;
 	void popState_();
 	void pushState_();
-
 	GameState* stateToPush;
+
+	int timesToPop = 0;
 };
