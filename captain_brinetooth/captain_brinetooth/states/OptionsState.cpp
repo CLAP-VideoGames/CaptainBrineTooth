@@ -14,17 +14,17 @@ OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager*
 
 void OptionsState::init()
 {
-	//auto* fondo = manager_->addEntity();
+	auto* fondo = manager_->addEntity();
 
-	//SDL_Rect posImage;
-	//posImage.x = 0;
-	//posImage.y = 0;
-	//posImage.w = cam.w;
-	//posImage.h = cam.h;
+	SDL_Rect posImage;
+	posImage.x = 0;
+	posImage.y = 0;
+	posImage.w = cam.w;
+	posImage.h = cam.h;
 
-	//fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
+	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
 
-	//manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
+	manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
 
 	//// VOLUMEN
 	//Entity* BajarV = flechasVolumen();
@@ -212,37 +212,37 @@ void OptionsState::update() {
 		// Si se hace click al boton y ocurren cosas
 		if (but != nullptr && but->handleEvent()){
 			// En este punto el OptionsState ya esta destruido
-			SDL_Rect aux;
-			// Actualizamos todos los elementos de volumen y brillo
-			for (Entity* b : manager_->getEnteties()) {
-				Image* but = b->getComponent<Image>();
-				if (but != nullptr)
-				{
-					if (but->compareTag("bVolumen"))
-					{
-						//SDL_Rect newPosBarra = but->getDestRect();
-						//newPosBarra.w = manager_->getSoundMngr()->GeneralVolume() * cam.w / 260;
-						//aux = newPosBarra;
-						//but->actRect(newPosBarra);
-					}
-					else if (but->compareTag("barco1") || but->compareTag("barco2"))
-					{
-						//SDL_Rect newPosBarco = but->getDestRect();
-						//newPosBarco.x = aux.x + aux.w - cam.w / 10;
-						//if (aux.w > 100)
-						//{
-							//but->actRect(newPosBarco);
-						//}
-					}
-					else if (but->compareTag("bBrillo"))
-					{
-						//SDL_Rect newPosBarra = but->getDestRect();
-						//newPosBarra.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
-						//aux = newPosBarra;
-						//but->actRect(newPosBarra);
-					}
-				}
-			}
+			//SDL_Rect aux;
+			//// Actualizamos todos los elementos de volumen y brillo
+			//for (Entity* b : manager_->getEnteties()) {
+			//	Image* but = b->getComponent<Image>();
+			//	if (but != nullptr)
+			//	{
+			//		if (but->compareTag("bVolumen"))
+			//		{
+			//			//SDL_Rect newPosBarra = but->getDestRect();
+			//			//newPosBarra.w = manager_->getSoundMngr()->GeneralVolume() * cam.w / 260;
+			//			//aux = newPosBarra;
+			//			//but->actRect(newPosBarra);
+			//		}
+			//		else if (but->compareTag("barco1") || but->compareTag("barco2"))
+			//		{
+			//			//SDL_Rect newPosBarco = but->getDestRect();
+			//			//newPosBarco.x = aux.x + aux.w - cam.w / 10;
+			//			//if (aux.w > 100)
+			//			//{
+			//				//but->actRect(newPosBarco);
+			//			//}
+			//		}
+			//		else if (but->compareTag("bBrillo"))
+			//		{
+			//			//SDL_Rect newPosBarra = but->getDestRect();
+			//			//newPosBarra.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
+			//			//aux = newPosBarra;
+			//			//but->actRect(newPosBarra);
+			//		}
+			//	}
+			//}
 			break;
 		}
 	}
