@@ -307,8 +307,9 @@ void OptionsState::controlVolume(float value, Entity* ent){
 
 void OptionsState::controlBrightness(float value, Entity* ent){
 	SDL_Window* window = sdlutils().window();
-	float newValue = value * (1 - 0.4);
-	if (SDL_SetWindowBrightness(window, newValue) != 0)
+	float newValue = value * (1 - 0.26);
+	//Pongo 0.26 porque apartir de ese numero no baja más
+	if (SDL_SetWindowBrightness(window, newValue + 0.26) != 0)
 	{
 		std:cout << "Can't lower the brightness";
 	}
