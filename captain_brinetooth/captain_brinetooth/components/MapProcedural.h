@@ -141,7 +141,7 @@ private:
 	Room* initializeNewRoom(const RoomNames& tag) {
 		cout << tag.name;
 		Room* r = new Room();
-
+		std::string test = "assets/maps/level_starts/Stile10.tmx";
 		r->level = tag.path;
 
 		lvl->load(r->level);

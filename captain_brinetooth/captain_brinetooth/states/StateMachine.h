@@ -1,7 +1,6 @@
 #pragma once
 #include <stack>
 class GameState;
-using namespace std;
 
 class StateMachine
 {
@@ -15,7 +14,7 @@ public:
 	void refreshStates();
 
 private:
-	stack<GameState*> states;
+	std::stack<GameState*> states;
 	void popState_();
 	void pushState_();
 	GameState* stateToPush;
