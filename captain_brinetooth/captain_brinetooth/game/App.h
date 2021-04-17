@@ -61,5 +61,7 @@ private:
 	bool exit = false;
 
 	MapProcedural* map;
+
+	float brightness = 0;
 };
 

@@ -17,6 +17,7 @@ using namespace ColLayers;
 
 //Comentario para probar un commit
 App::App() {
+	
 	stateMachine = new StateMachine();
 	//Creariamos el menu y hariamos un setManager dandole el valor a 
 	//Hariamos un push del menu
@@ -33,10 +34,13 @@ App::App() {
 }
 
 App::~App() {
+	SDL_SetWindowBrightness(sdlutils().window(), brightness);
 }
 
 void App::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY(), "assets/config/base.resources.json");
+	brightness = SDL_GetWindowBrightness(sdlutils().window());
+	
 	//Refrescamos los estados pusheados
 	stateMachine->refreshStates();
 	world_->SetContactListener(&collisionListener);

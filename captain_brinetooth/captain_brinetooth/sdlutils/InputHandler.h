@@ -99,6 +99,18 @@ public:
 		return mbState_[b];
 	}
 
+	inline bool getMouseButtonHeld(){
+		return isMouseButtonHeldDown_;
+	}
+
+	inline bool getRightMouseButtonPressed() {
+		return isRightMousePressed_;
+	}
+	
+	inline bool getLeftMouseButtonPressed() {
+		return isLeftMousePressed_;
+	}
+
 	// TODO add support for Joystick, see Chapter 4 of
 	// the book 'SDL Game Development'
 
@@ -120,20 +132,22 @@ private:
 		isMouseMotionEvent_ = true;
 		mousePos_.first = event.motion.x;
 		mousePos_.second = event.motion.y;
-
 	}
 
 	inline void onMouseButtonChange(const SDL_Event &event, bool isDown) {
 		isMouseButtonEvent_ = true;
+		isMouseButtonHeldDown_ = isDown;
 		switch (event.button.button) {
 		case SDL_BUTTON_LEFT:
 			mbState_[LEFT] = isDown;
+			isLeftMousePressed_ = isDown;
 			break;
 		case SDL_BUTTON_MIDDLE:
 			mbState_[MIDDLE] = isDown;
 			break;
 		case SDL_BUTTON_RIGHT:
 			mbState_[RIGHT] = isDown;
+			isRightMousePressed_ = isDown;
 			break;
 		default:
 			break;
@@ -144,6 +158,10 @@ private:
 	bool isKeyDownEvent_;
 	bool isMouseMotionEvent_;
 	bool isMouseButtonEvent_;
+	//Esto es para ver que se sigue pulsando
+	bool isMouseButtonHeldDown_;
+	bool isRightMousePressed_;
+	bool isLeftMousePressed_;
 	std::pair<Sint32, Sint32> mousePos_;
 	std::array<bool, 3> mbState_;
 	const Uint8 *kbState_;

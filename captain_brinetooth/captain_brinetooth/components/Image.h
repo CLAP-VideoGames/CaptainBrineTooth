@@ -24,9 +24,14 @@ public:
 		}
 	}
 
-	void actualizar(SDL_Rect d)
+	void actRect(SDL_Rect d)
 	{
 		dest = d;
+	}
+
+	void moveRect(const int& x, const int& y){
+		dest.x = x;
+		dest.y = y;
 	}
 
 	Texture* tex()
@@ -39,13 +44,17 @@ public:
 		return (tag == t);
 	}
 
-	SDL_Rect destino()
+	SDL_Rect* getDestRect()
 	{
-		return dest;
+		return &dest;
 	}
+
+
 
 private:
 	SDL_Rect dest;
 	Texture* tex_;
 	std::string tag;
+
+	
 };

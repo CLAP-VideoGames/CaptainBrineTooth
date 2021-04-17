@@ -39,12 +39,17 @@ void OptionsState::init()
 	//tituloBrillo(bajarB->getComponent<Transform>());
 
 
-	Entity* slider = manager_->addEntity();
+	Entity* sliderVolume = manager_->addEntity();
 	Vector2D pos = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.3));
 	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 50), Vector2D(100, 100)};
 	Texture* textues[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
-	float m = 0.4f;
-	slider->addComponent<Slider>(pos, size, textues, controlVolume);
+	sliderVolume->addComponent<Slider>(pos, size, textues, controlVolume);
+	
+	Entity* sliderBrightness = manager_->addEntity();
+	Vector2D pos2 = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.5));
+	std::pair<Vector2D, Vector2D> size2 = {Vector2D(900, 50), Vector2D(100, 100)};
+	Texture* textues2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
+	sliderBrightness->addComponent<Slider>(pos2, size2, textues2, controlBrightness);
 	
 	
 
@@ -215,26 +220,26 @@ void OptionsState::update() {
 				{
 					if (but->compareTag("bVolumen"))
 					{
-						SDL_Rect newPosBarra = but->destino();
-						newPosBarra.w = manager_->getSoundMngr()->GeneralVolume() * cam.w / 260;
-						aux = newPosBarra;
-						but->actualizar(newPosBarra);
+						//SDL_Rect newPosBarra = but->getDestRect();
+						//newPosBarra.w = manager_->getSoundMngr()->GeneralVolume() * cam.w / 260;
+						//aux = newPosBarra;
+						//but->actRect(newPosBarra);
 					}
 					else if (but->compareTag("barco1") || but->compareTag("barco2"))
 					{
-						SDL_Rect newPosBarco = but->destino();
-						newPosBarco.x = aux.x + aux.w - cam.w / 10;
-						if (aux.w > 100)
-						{
-							but->actualizar(newPosBarco);
-						}
+						//SDL_Rect newPosBarco = but->getDestRect();
+						//newPosBarco.x = aux.x + aux.w - cam.w / 10;
+						//if (aux.w > 100)
+						//{
+							//but->actRect(newPosBarco);
+						//}
 					}
 					else if (but->compareTag("bBrillo"))
 					{
-						SDL_Rect newPosBarra = but->destino();
-						newPosBarra.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
-						aux = newPosBarra;
-						but->actualizar(newPosBarra);
+						//SDL_Rect newPosBarra = but->getDestRect();
+						//newPosBarra.w = SDL_GetWindowBrightness(sdlutils().window()) * cam.w / 8.5;
+						//aux = newPosBarra;
+						//but->actRect(newPosBarra);
 					}
 				}
 			}
@@ -293,31 +298,19 @@ void OptionsState::subirBrillo(App* app, SoundManager* snd)
 	}
 }
 
-void OptionsState::controlVolume(float value, Entity* ent)
-{
-	std::cout << value << std::endl;
+void OptionsState::controlVolume(float value, Entity* ent){
 	SoundManager* snd = ent->getMngr()->getSoundMngr();
+	//Está mmmuy alto
+	int newVol = value * (float)(snd->getMaxVol()/2);
+	snd->setGeneralVolume(newVol);
+}
 
-	float vol = snd->GeneralVolume();
-
-	//Esta dividido en 10 en 10
-	if (vol < 128)
+void OptionsState::controlBrightness(float value, Entity* ent){
+	SDL_Window* window = sdlutils().window();
+	float newValue = value * (1 - 0.4);
+	if (SDL_SetWindowBrightness(window, newValue) != 0)
 	{
-		vol += 12.7;
-		snd->setGeneralVolume(vol);
-		if (vol >= 128)
-		{
-			snd->setGeneralVolume(snd->getMaxVol());
-		}
-	}
-	else if(vol > 0)
-	{
-		vol -= 12.7;
-		snd->setGeneralVolume(vol);
-		if (vol < 0)
-		{
-			snd->setGeneralVolume(snd->getMinVol());
-		}
+		std:cout << "Can't lower the brightness";
 	}
 }
 
@@ -326,5 +319,4 @@ void OptionsState::volverMenu(App* app, SoundManager* snd)
 	snd->playSoundEffect("gaviota");
 	snd->ChangeMainMusic("Menu");
 	app->getStateMachine()->popState();
-	
 }
