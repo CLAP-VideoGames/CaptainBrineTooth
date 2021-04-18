@@ -63,8 +63,8 @@ void PlayState::update(){
 			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
 		}
 	}
-
 	GameState::update();
+
 	/*if (map->zoneCompleted()) {
 		int nextZone = map->zone() + 1;
 

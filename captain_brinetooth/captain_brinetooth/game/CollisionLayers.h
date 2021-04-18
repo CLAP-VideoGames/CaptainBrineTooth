@@ -14,7 +14,8 @@ namespace ColLayers {
 		PLAYER = 0x0002,
 		PLAYER_ATTACK = 0x0004,
 		ENEMY = 0x0008,
-		ENEMY_ATTACK = 0x0010
+		ENEMY_ATTACK = 0x0010,
+		PLAYER_DETECTION = 0x0020
 	};
 
 	//Collision masks. Decide what each collision layer can collide with
@@ -23,4 +24,5 @@ namespace ColLayers {
 	const uint16 PLAYER_ATTACK_MASK = DEFAULT | ENEMY;
 	const uint16 ENEMY_MASK = DEFAULT | PLAYER | PLAYER_ATTACK;
 	const uint16 ENEMY_ATTACK_MASK = DEFAULT | PLAYER;
+	const uint16 PLAYER_DETECTION_MASK = DEFAULT | PLAYER;
 }

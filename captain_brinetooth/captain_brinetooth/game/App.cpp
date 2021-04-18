@@ -101,7 +101,6 @@ void App::start() {
 			exit = true;
 			continue;
 		}
-	
 		
 		stateMachine->currentState()->update();
 

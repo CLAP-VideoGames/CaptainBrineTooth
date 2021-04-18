@@ -9,6 +9,7 @@
 
 #include <tmxlite\Layer.hpp>
 
+
 tile::tile(Texture* tset, int x, int y, int tx, int ty, int w, int h) 
 : sheet_(tset), x_(x), y_(y), tx_(tx), ty_(ty), width_(w), height_(h) {}
 
@@ -24,7 +25,7 @@ void tile::draw() {
 	// Para agrandar el tiledmap, hay que hacerlo manualmente en el propio TiledMapEditor, aumentando los píxeles por tile.
 	SDL_Rect dest;
 	dest.x = x_ - App::camera.x; dest.y = y_ - App::camera.y;
-	dest.w = src.w; dest.h = src.h;
+	dest.w = src.w ; dest.h = src.h;
 
 	sheet_->render(src, dest);
 }
@@ -40,8 +41,13 @@ Level0::Level0(const string &name, std::shared_ptr<b2World> b2World)
 //Donde carguemos los enemigos hay que extraerlo en un método que nos devuelva la lista
 //A las salas hay que meterles un atributo que sean las salidas, preferiblemente un bool
 void Level0::load(const string& path) {
-	tiles_.clear();
-	tilesets_.clear();
+	if (tiles_.size() > 0){
+		for (tile* tile__ : tiles_) delete tile__; 
+		tiles_.clear();
+	}
+
+	if(tilesets_.size() > 0) tilesets_.clear();
+	
 	//carga el mapa con TMXLite
 	tmx::Map tiled_map;
 
@@ -119,7 +125,6 @@ void Level0::load(const string& path) {
 				
 				tiles_.push_back(new tile(tilesets_[tset_gid], x_pos, y_pos, region_x, region_y, tile_width_, tile_height_));
 				//No podemos usar entity_ aquí porque todavía no se ha seteado
-
 			}
 		}
 	}

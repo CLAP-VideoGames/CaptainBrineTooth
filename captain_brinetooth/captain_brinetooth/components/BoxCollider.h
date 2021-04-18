@@ -45,6 +45,7 @@ public:
 
 	virtual ~BoxCollider() {
 		body->GetWorld()->DestroyBody(body);
+		int m = 10;
 	}
 
 	void init() override {

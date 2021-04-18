@@ -55,10 +55,6 @@ public:
 	void init() override {
 		world = entity_->getWorld();
 
-		bdDef;
-		bdDef.type = b2_staticBody;
-		bdDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
-
 		createChainFixture();
 	}
 
@@ -87,10 +83,13 @@ public:
 	}
 
 	void createChainFixture(){
+		bdDef.type = b2_staticBody;
+		bdDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
 
 		std::cout << "VERTICES FIXTURE" << std::endl;
 		for (int i = 0;  i < bodies_.size(); i++){
 			//Creamos el nuevo cuerpo
+
 			bodies_[i].body_ = world->CreateBody(&bdDef);
 			bodies_[i].body_->SetFixedRotation(fixedRotation_);
 
@@ -122,8 +121,11 @@ public:
 	void deleteChains() {
 		for (auto& bodyC : bodies_) {
 			bodyC.fixt_ = nullptr;
-			world->DestroyBody(bodyC.body_);
+			bodyC.body_->GetWorld()->DestroyBody(bodyC.body_);
+			int m = 10;
 		}
+
+		bodies_.clear();
 	}
 
 	template<class T>

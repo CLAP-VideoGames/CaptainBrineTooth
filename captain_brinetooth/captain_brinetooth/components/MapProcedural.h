@@ -17,6 +17,7 @@ class MapProcedural : public Component {
 	const string ruta = "assets/maps/";
 	const std::array<char, 4> cardinals = {'N','E','S','W'};
 public:
+
 	MapProcedural(int nR, int f) {
 		nRooms = nR;
 		lvl = nullptr;
@@ -28,7 +29,7 @@ public:
 	}
 
 	//0 = N, 1 = E, 2 = S, 3 = W
-	void init() {
+	void init() override {
 		//NECESITO SABER LA DIRECCION DE MEMORIA
 		//Igual puedo meter los directorios en un array
 		//Leeemos los distintos directorios
@@ -68,7 +69,20 @@ public:
 		actualRoom = initializeNewRoom(roomNames[tile]);
 
 		roomNames[tile].used = true;
+	}
 
+	void setTravel(const bool travel, int dir){
+		gonTotravel = travel;
+		nextDir = dir;
+	}
+
+
+	void update() override{
+		if (gonTotravel){
+			TravelNextRoom(nextDir);
+			nextDir = -1;
+			gonTotravel = !gonTotravel;
+		}
 	}
 
 	void TravelNextRoom(int dir) {
@@ -78,12 +92,19 @@ public:
 		//Cargamos nuevo mapa
 		lvl->load(actualRoom->level);
 		//Setteamos los nuevos vertices para la creacion del cuerpo Collider
-		chainCollider->deleteChains();
-		chainCollider->setVertices(lvl->getVerticesList());
-		triggers.clear();
-		chainCollider->createChainFixture();
 
-		cout << actualRoom->getName();
+		entity_->removeComponent<MapCollider>();
+
+		Entity* player = entity_->getMngr()->getHandler<Player>();
+
+		player->getComponent<BoxCollider>()->actPhyscialPos(-300,-30);
+
+		for (Entity* ent : triggers) ent->setActive(false);
+		triggers.clear();
+
+		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
+
+		//cout << actualRoom->getName();
 		//Cogemos sus conexiones	
 		getConec(actualRoom->getName(), actualRoom->cons);
 		//Creamos habitaciones en funci�n de las conexiones que tiene
@@ -94,8 +115,13 @@ public:
 
 	int zone() { return fase; }
 private:
+
 	static void travel(b2Contact* contact) {
 		Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+		
+		if(trigger == trigger->getMngr()->getHandler<Player>()){
+			trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		}
 
 		auto* m = trigger->getMngr()->getHandler<Map>();
 
@@ -108,7 +134,7 @@ private:
 		else if (d == "S") dir = 2;
 		else dir = 3;
 
-		m->getComponent<MapProcedural>()->TravelNextRoom(dir);
+		m->getComponent<MapProcedural>()->setTravel(true, dir);
 	}
 
 
@@ -276,7 +302,8 @@ private:
 protected:
 	int nRooms, nRoomNames = 10;
 	int fase;		//Número de la zona en la que está el player
-
+	bool gonTotravel = false;
+	int nextDir = -1;
 	//Opcion con struct
 	std::array<RoomNames, NUM_TILEMAPS> roomNames;
 
