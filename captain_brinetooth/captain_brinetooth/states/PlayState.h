@@ -6,6 +6,8 @@ class PlayState : public GameState
 {
 public:
 	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
+	virtual ~PlayState();
+
 	virtual void init();
 	virtual void update();
 

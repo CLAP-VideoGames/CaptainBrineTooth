@@ -1,5 +1,11 @@
 #include "Button.h"
 
+void Button::update()
+{
+
+
+}
+
 void Button::render()
 {
 	Transform* t = entity_->getComponent<Transform>();

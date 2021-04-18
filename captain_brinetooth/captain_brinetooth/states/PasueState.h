@@ -11,6 +11,7 @@ public:
 	virtual void update();
 
 	static void backToGame(App* app, SoundManager* snd);
+	static void backToMenu(App* app, SoundManager* snd);
 	GameState* stRend;
 
 private:

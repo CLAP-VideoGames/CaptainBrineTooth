@@ -48,6 +48,8 @@ public:
 	}
 
 	virtual ~MapCollider() {
+		//Destruimos todos los cuerpos 
+		deleteChains();
 	}
 
 	void init() override {
@@ -118,13 +120,10 @@ public:
 	}
 
 	void deleteChains() {
-
-		//for (auto& fixt : fixtures) {
-		//	delete fixt; fixt = nullptr;
-		//}
-
-		//for (auto& bod : bodies)
-		//	world->DestroyBody(bod);
+		for (auto& bodyC : bodies_) {
+			bodyC.fixt_ = nullptr;
+			world->DestroyBody(bodyC.body_);
+		}
 	}
 
 	template<class T>

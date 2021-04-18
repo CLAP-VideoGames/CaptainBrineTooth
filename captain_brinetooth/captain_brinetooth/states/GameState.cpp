@@ -9,10 +9,8 @@ GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) 
 	popped = false;
 }
 GameState::~GameState() {
-	//Para borrar las entidades , se pueden poner a todas las entidades del juego a dormir para que el manager 
-	//Se encargue de borrarlas , el unico problema seria que por ejemplo cada vez que accedes al menu deberia de ser uno nuevo 
-	manager_->desactiveEnteties();
-	//delete manager_;
+	//Se tiene que borrar el manager de cada Estado
+	delete manager_;
 }
 
 Entity* GameState::createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel){

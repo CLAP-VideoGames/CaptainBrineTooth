@@ -23,7 +23,6 @@ public:
 	}
 
 	~MapProcedural() {
-		if (chainCollider != nullptr) entity_->removeComponent<MapCollider>();
 		delete actualRoom;
 	}
 

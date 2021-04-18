@@ -25,6 +25,7 @@ public:
 	virtual ~Button() {
 	}
 
+	void update() override;
 	void render() override;
 	bool handleEvent(); 
 

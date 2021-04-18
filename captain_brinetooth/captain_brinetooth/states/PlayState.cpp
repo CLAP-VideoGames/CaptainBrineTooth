@@ -12,6 +12,9 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd):
 	//suelo->addComponent<BoxCollider>();
 }
 
+PlayState::~PlayState(){
+}
+
 void PlayState::init() {
 	createLevel0();
 

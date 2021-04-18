@@ -67,7 +67,9 @@ public:
 	virtual void update();
 	virtual void refresh();
 	virtual void init() {};
+
 	Manager* getMngr() { return manager_; };
+	App* getApp() { return app; };
 
 	void popState() { popped = true; };
 	bool isPopped() { return popped; };

@@ -30,7 +30,7 @@ public:
 	}
 
 	virtual ~BoxCollider() {
-		body->SetEnabled(false);
+		body->GetWorld()->DestroyBody(body);
 	}
 
 	void init() override {
@@ -88,6 +88,22 @@ public:
 		fixture = body->CreateFixture(&fixtureDef);
 	}
 
+	void update() override {
+		actRenderPos();
+		tr_->setRot((body->GetAngle() * (180.0f)) / M_PI);
+
+		/*�Custom method to detect collisions and delete a body
+		b2ContactEdge* b;
+
+		b = body->GetContactList();
+
+		if (b != nullptr && entra == false) {
+			std::cout << "Collided";
+			world->DestroyBody(b->contact->GetFixtureA()->GetBody());
+			entra = 1;
+		}*/
+	}
+
 	void render() override {
 		if (sdlutils().getDebug()){
 			SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
@@ -127,23 +143,6 @@ public:
 		body->ApplyLinearImpulse(b2Vec2(dir.getX()* force, dir.getY()* force) , body->GetWorldCenter(), true);
 	}
 
-	void update() override {
-		actRenderPos();
-		tr_->setRot((body->GetAngle() * (180.0f)) / M_PI);
-
-		/*�Custom method to detect collisions and delete a body
-		b2ContactEdge* b;
-
-		b = body->GetContactList();
-
-		if (b != nullptr && entra == false) {
-			std::cout << "Collided";
-			world->DestroyBody(b->contact->
-			A()->GetBody());
-			entra = 1;
-		}*/
-
-	}
 
 	inline b2Body* getBody() const {
 		return body;
