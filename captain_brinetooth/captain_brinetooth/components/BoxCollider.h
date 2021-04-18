@@ -128,16 +128,12 @@ public:
 	}
 
 	void update() override {
-		//if(type == TYPE::DYNAMIC)
-			//std::cout << body->GetPosition().x << " " << body->GetPosition().y << " " << body->GetAngle() << " " << tr_->getRot() << std::endl;
-
 		actRenderPos();
+		tr_->setRot((body->GetAngle() * (180.0f)) / M_PI);
 
-		tr_->setRot((body->GetAngle() * (180.0f))/ M_PI);
-		
 		/*�Custom method to detect collisions and delete a body
 		b2ContactEdge* b;
-		
+
 		b = body->GetContactList();
 
 		if (b != nullptr && entra == false) {
@@ -148,25 +144,42 @@ public:
 
 	}
 
-	inline b2Body* getBody() const{
+	inline b2Body* getBody() const {
 		return body;
 	}
 
-	inline b2Fixture* getFixture() const{
+	inline b2Fixture* getFixture() const {
 		return fixture;
 	}
 
 	/// <summary>
-	/// Actualiza las coordenadas físicas de un cuerpo
+	/// Actualiza las coordenadas físicas de un cuerpo en base a las actuales
 	/// </summary>
 	/// <param name="x">in pixels</param>
 	/// <param name="y">in pixels</param>
-	inline void actPhyscialPos(int x, int y){
+	inline void actPhyscialPos(int x, int y) {
 		int x_ = x / sdlutils().getPPM();
 		int y_ = y / sdlutils().getPPM();
 
 		b2Vec2 toMove(x_, y_);
 		body->SetTransform(body->GetPosition() + toMove, body->GetAngle());
+
+		actRenderPos();
+	}
+
+	/// <summary>
+	/// Cambia las coordenadas físicas de un cuerpo y su rotación
+	/// </summary>
+	/// <param name="x">in pixels</param>
+	/// <param name="y">in pixels</param>
+	/// <param name="rotation">in degrees</param>
+	inline void setPhysicalTransform(int x, int y, float degrees) {
+		int x_ = x / sdlutils().getPPM();
+		int y_ = y / sdlutils().getPPM();
+		float newRot = (degrees * M_PI) / (180.0f);
+
+		b2Vec2 toMove(x_, y_);
+		body->SetTransform(toMove, newRot);
 
 		actRenderPos();
 	}
