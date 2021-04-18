@@ -74,6 +74,7 @@ public:
 	template<typename T>
 	inline T* getComponent() {
 		auto id = ecs::cmpIdx<T>;
+
 		return static_cast<T*>(cmpArray_[id]);
 	}
 
