@@ -10,14 +10,14 @@ const int MIN_VOL = 0;
 class SoundManager{
 public:
 
-	SoundManager(int volume, std::string initMus)
-	{
+	SoundManager(int volume, std::string initMus){
 		volumenGeneral = volume;
 		volumenEfectos = volume;
 		volumenMusica = volume;
 		mainMusic = initMus;
 		pauseMusic = initMus + "Pause";
 	}
+
 	virtual ~SoundManager() {
 
 	}
@@ -50,6 +50,5 @@ private:
 	std::string mainMusic;
 	std::string pauseMusic;
 	int volumenGeneral, volumenMusica, volumenEfectos;
-
 };
 

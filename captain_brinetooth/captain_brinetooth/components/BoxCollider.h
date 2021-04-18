@@ -17,8 +17,19 @@ enum TYPE { STATIC, DYNAMIC, KINEMATIC };
 
 class BoxCollider : public Component {
 public:
-	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f)
-	{
+	/// <summary>
+	/// Crea un Collider en forma de caja
+	/// </summary>
+	/// <param name="typeAux">tipo físco del cuerpo</param>
+	/// <param name="collisionLayer">Capa de colision </param>
+	/// <param name="collisionMask">Capa de colision para ignorar</param>
+	/// <param name="isTriggerAux"> determinar si es trigger</param>
+	/// <param name="friction"> coeficiente de fricción</param>
+	/// <param name="fixedRotation"> determinar si la rotación es fija</param>
+	/// <param name="rotation"> rotacion en grados</param>
+	/// <param name="pos_"> posición en caso de que no exista el componente Transform. Por defecto (0,0)</param>
+	/// <param name="size_">tamaño en caso de que no exista el componente Transform. Por defecto (10,10)</param>
+	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& pos_ = Vector2D(0,0), const Vector2D& size_ = Vector2D(10, 10)){
 		type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
@@ -27,6 +38,9 @@ public:
 		colMask_ = collisionMask;
 		fixedRotation_ = fixedRotation;
 		rotation_ = rotation;
+
+		pos = pos_;
+		size = size_;
 	}
 
 	virtual ~BoxCollider() {
@@ -36,9 +50,17 @@ public:
 	void init() override {
 		tr_ = entity_->getComponent<Transform>();
 		assert(tr_ != nullptr);
-		pos = tr_->getPos();
+		//Actualizamos la posicion en caso de que tenga un componente Transform
+		if(tr_ != nullptr)  
+		{
+			pos = tr_->getPos();
+			size = Vector2D(tr_->getW() / sdlutils().getPPM(), tr_->getH() / sdlutils().getPPM());
+		}
+		else{
+			//Pasamos el tamaño a medidas de box2d
+			size = Vector2D(size.getX() / sdlutils().getPPM() , size.getY() / sdlutils().getPPM());
+		}
 
-		size = Vector2D(tr_->getW() / sdlutils().getPPM() , tr_->getH() / sdlutils().getPPM());
 		world = entity_->getWorld();
 
 		b2BodyDef bodyDef;
@@ -90,7 +112,9 @@ public:
 
 	void update() override {
 		actRenderPos();
-		tr_->setRot((body->GetAngle() * (180.0f)) / M_PI);
+
+		if(tr_ != nullptr)
+			tr_->setRot((body->GetAngle() * (180.0f)) / M_PI);
 
 		/*�Custom method to detect collisions and delete a body
 		b2ContactEdge* b;
@@ -107,9 +131,15 @@ public:
 	void render() override {
 		if (sdlutils().getDebug()){
 			SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
-			float x = round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f) - App::camera.x;
-			float y = round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f) - App::camera.y;
-			SDL_Rect dest = build_sdlrect(x, y, tr_->getW(), tr_->getH());
+
+			int w = (tr_ != nullptr) ? tr_->getW() : size.getX();
+			int h = (tr_ != nullptr) ? tr_->getH() :size.getY();
+
+			//Ya que la posición de un objeto físico es el centro de la masa, tenemos que llevar el punto a la parte superior izquierda
+			//Le restamos la posición de la cámara
+			float x = round((body->GetPosition().x * sdlutils().getPPM()) - w / 2.0f) - App::camera.x;
+			float y = round((body->GetPosition().y * sdlutils().getPPM()) - w / 2.0f) - App::camera.y;
+			SDL_Rect dest = build_sdlrect(x, y, w, h);
 
 			SDL_RenderDrawRect(sdlutils().renderer(), &dest);
 		}
@@ -119,8 +149,6 @@ public:
 		b2Vec2 vel = body->GetLinearVelocity();
 		vel.x = speed.getX(); vel.y = speed.getY();
 		body->SetLinearVelocity(vel);
-
-		
 	}
 
 	/// <summary>
@@ -196,8 +224,17 @@ public:
 		return position;
 	}
 
+	/// <summary>
+	/// Actualiza los valores de la posición en funcion de la posición del cuerpo físico.
+	/// </summary>
 	inline void actRenderPos(){
-		tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f));
+		//Actualizamos la posición difereciando entre si es del Transform o sólo del parámetro Pos
+		if (tr_ != nullptr){
+			tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f));
+		}
+		else{
+			pos.set(round((body->GetPosition().x * sdlutils().getPPM()) - size.getX() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - size.getY() / 2.0f));
+		}
 	}
 
 
@@ -206,10 +243,8 @@ private:
 	Vector2D pos, size;
 	int type;
 	bool isTrigger;
-	float rotation_;
-	float friction_;
-	uint16 colLay_;
-	uint16 colMask_;
+	float rotation_, friction_;
+	uint16 colLay_, colMask_;
 
 	//bool entra = 0;
 	bool fixedRotation_;
