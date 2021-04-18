@@ -38,6 +38,7 @@ class Button;
 class MapProcedural;
 class Image;
 class Slider;
+class Reward;
 class Crab;
 class MachineGun;
 class JellyHatBehavior;
@@ -59,6 +60,7 @@ class JellyHatBehavior;
 	Chainsaw,\
 	MapCollider,\
 	CameraFollow,\
+	Reward,\
 	SoundManager,\
 	LoseLife,\
 	EnemyTrigger,\

@@ -29,9 +29,9 @@ void Reward::baitCollision(b2Contact* contact)
 }
 void Reward::baitCatched(Entity* hook)
 {
-	//Vector2D hookpos = hook->getComponent<BoxCollider>()->getPhysicalPos();
-	//entity_->getComponent<BoxCollider>()->setSpeed(0);
+	Vector2D hookpos = hook->getComponent<BoxCollider>()->getPhysicalPos();
+	entity_->getComponent<BoxCollider>()->setSpeed(0);
 	//Modificamos la posicion de la entidad para que se situe donde esta el gancho 
-	//entity_->getComponent<BoxCollider>()->setPhysicalTransform(hookpos.getX(), hookpos.getY(), 0);
+	entity_->getComponent<BoxCollider>()->setPhysicalTransform(hookpos.getX(), hookpos.getY(), 0);
 }
 
