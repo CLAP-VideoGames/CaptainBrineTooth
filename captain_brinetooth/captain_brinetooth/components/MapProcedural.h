@@ -285,7 +285,7 @@ private:
 
 			t->addComponent<Transform>(pos, Vector2D(0, 0), size.getX(), size.getY(), 0);
 
-			t->addComponent<BoxCollider>(STATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true, 0, true, 0.0);
+			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
 			t->addComponent<Connections>(names[i]);
 
