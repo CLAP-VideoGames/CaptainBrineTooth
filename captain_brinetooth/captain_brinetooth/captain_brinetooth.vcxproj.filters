@@ -309,6 +309,12 @@
     <ClInclude Include="ecs\SoundManager.h">
       <Filter>Archivos de encabezado\ecs</Filter>
     </ClInclude>
+    <ClInclude Include="Gancho.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Reward.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -455,6 +461,12 @@
     </ClCompile>
     <ClCompile Include="ecs\SoundManager.cpp">
       <Filter>Archivos de origen\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="Gancho.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Reward.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@
 
 #include "box2d.h"
 #include <cmath>
-
+#include "../utils/Vector2D.h"
 #include "../ecs/Component.h"
 #include "../ecs/Entity.h"
 #include "Transform.h"
@@ -138,7 +138,8 @@ public:
 
 		if (b != nullptr && entra == false) {
 			std::cout << "Collided";
-			world->DestroyBody(b->contact->GetFixtureA()->GetBody());
+			world->DestroyBody(b->contact->
+			A()->GetBody());
 			entra = 1;
 		}*/
 
@@ -180,10 +181,16 @@ public:
 
 		b2Vec2 toMove(x_, y_);
 		body->SetTransform(toMove, newRot);
-
+		
 		actRenderPos();
 	}
-
+	inline Vector2D getPhysicalPos()
+	{
+		b2Vec2 physpos= body->GetPosition();
+		Vector2D position;
+		position.set(Vector2D(physpos.x, pos.getY));
+		return position;
+	}
 	inline void actRenderPos(){
 		tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f));
 	}

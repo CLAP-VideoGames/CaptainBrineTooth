@@ -186,6 +186,7 @@
     <ClInclude Include="components\PompeyWormAttack.h" />
     <ClInclude Include="components\RayCast.h" />
     <ClInclude Include="components\Rectangle.h" />
+    <ClInclude Include="components\Reward.h" />
     <ClInclude Include="components\Rotate.h" />
     <ClInclude Include="components\ShootDetect.h" />
     <ClInclude Include="components\Slider.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="game\CollisionLayers.h" />
     <ClInclude Include="game\ecs_defs.h" />
     <ClInclude Include="game\App.h" />
+    <ClInclude Include="Gancho.h" />
     <ClInclude Include="json\JSON.h" />
     <ClInclude Include="json\JSONValue.h" />
     <ClInclude Include="json\simplejson_demo.h" />
@@ -249,6 +251,7 @@
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="components\Crab.cpp" />
     <ClCompile Include="components\PompeyWormAttack.cpp" />
+    <ClCompile Include="components\Reward.cpp" />
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
@@ -256,6 +259,7 @@
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />
     <ClCompile Include="game\App.cpp" />
+    <ClCompile Include="Gancho.cpp" />
     <ClCompile Include="json\JSON.cpp" />
     <ClCompile Include="json\JSONValue.cpp" />
     <ClCompile Include="json\somplejson_demo.cpp" />

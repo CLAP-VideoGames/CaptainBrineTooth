@@ -40,7 +40,7 @@ void Gancho::contactWithSomething(b2Contact* contact)
 	{
 		//Here we need to check if its the top of the rod (It Would have a Rod component name or handler) or the floor
 		//If it is on floor , speed= -speed 
-		//If its on top of the rod -> moveTime = sdlutils().currRealTime(); 7/speed 0 for witing timetoMove in order to start again mvement 
+		//If its on top of the rod -> moveTime = sdlutils().currRealTime(); and  set speed to 0 for waiting timetoMove in order to start again movement 
 	
 	}
 
@@ -49,4 +49,5 @@ void Gancho::contactWithSomething(b2Contact* contact)
 void Gancho::hookMovement()
 {
 	//Speed has now a value in order to move again 
+	
 }
