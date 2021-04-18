@@ -14,6 +14,8 @@
 #include "tmxlite/TileLayer.hpp"
 #include "tmxlite/Object.hpp"
 
+//#include "../components/BoxCollider.h"
+
 using namespace std;
 
 typedef int gid;
@@ -47,12 +49,16 @@ public:
 
 	std::array<bool, 4> returnRoomCons() { return Cons; }
 
+	vector<tmx::Vector2f> getConPos() { return connectionPos; }
+
 	std::vector<vector<tmx::Vector2f>> getVerticesList(){
 		return points;
 	}
 
 	void clearTileset();
 
+	
+	vector<std::string> getConNames() {return connectionsNames; }
 private:
 	string name_;
 	int fils_, cols_,		// filas y columnas de 
@@ -72,4 +78,6 @@ private:
 	vector<tmx::Vector2f> enemiePos;
 
 	vector<tmx::Vector2f> connectionPos;
+
+	vector<std::string> connectionsNames;
 };

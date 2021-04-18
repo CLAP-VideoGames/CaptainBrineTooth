@@ -49,7 +49,7 @@ public:
 
 	void init() override {
 		tr_ = entity_->getComponent<Transform>();
-		assert(tr_ != nullptr);
+		//assert(tr_ != nullptr);
 		//Actualizamos la posicion en caso de que tenga un componente Transform
 		if(tr_ != nullptr)  
 		{

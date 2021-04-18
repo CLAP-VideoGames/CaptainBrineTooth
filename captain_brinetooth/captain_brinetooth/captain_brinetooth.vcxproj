@@ -159,6 +159,7 @@
     <ClInclude Include="components\BoxCollider.h" />
     <ClInclude Include="components\Button.h" />
     <ClInclude Include="components\CameraFollow.h" />
+    <ClInclude Include="components\Connections.h" />
     <ClInclude Include="components\Inventory.h" />
     <ClInclude Include="components\JellyHatBehavior.h" />
     <ClInclude Include="components\MapCollider.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="components\Button.cpp" />
     <ClCompile Include="components\CameraFollow.cpp" />
     <ClCompile Include="components\Chainsaw.cpp" />
+    <ClCompile Include="components\Connections.cpp" />
     <ClCompile Include="components\ContactDamage.cpp" />
     <ClCompile Include="components\ElfSharkAttack.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />

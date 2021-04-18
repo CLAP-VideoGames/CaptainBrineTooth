@@ -1,5 +1,6 @@
 #pragma once
 #include "../ecs/Component.h"
+#include "Animation.h"
 class Enemy_Health : public Component
 {
 public:
@@ -12,5 +13,7 @@ public:
 
 protected:
 	int lifes;
+
+	Animation* bar;
 };
 

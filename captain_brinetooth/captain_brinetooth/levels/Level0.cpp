@@ -174,14 +174,21 @@ void Level0::load(const string& path) {
 
 				tmx::Vector2f con = c.getPosition();
 
-				con.x /= sdlutils().getPPM();
-				con.y /= sdlutils().getPPM();
+				/*con.x += c.getPosition().x;
+				con.y += c.getPosition().y;*/
+
+				/*con.x /= sdlutils().getPPM();
+				con.y /= sdlutils().getPPM();*/
 
 				connectionPos.push_back(con);
 
+				connectionsNames.push_back(c.getName());
+
 				//Te lo he comentado porque no compilaba <3 ptd: Joseda
-				//auto* connectTrigger = entity_->getMngr()->addEntity();
-				//connectTrigger->addComponent<BoxCollider>();
+				/*auto* connectTrigger = entity_->getMngr()->addEntity();
+				connectTrigger->addComponent<Transform>(Vector2D(con.x,con.y), Vector2D(0,0), 200, 200, 0);
+				connectTrigger->addComponent<BoxCollider>();*/
+				//connectTrigger->setCollisionMethod()
 			}
 		}
 	}

@@ -42,6 +42,7 @@ class Reward;
 class Crab;
 class MachineGun;
 class JellyHatBehavior;
+class Connections;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -82,6 +83,7 @@ class JellyHatBehavior;
 	Image,\
 	Crab,\
 	MachineGun,\
+	Connections,\
 	JellyHatBehavior
 
 // groups
@@ -91,4 +93,6 @@ struct Group_1;
 
 // handlers
 struct Player;
-#define _HDLRS_LIST_ Player
+struct Map;
+#define _HDLRS_LIST_ Player, \
+					Map

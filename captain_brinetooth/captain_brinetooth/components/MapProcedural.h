@@ -5,6 +5,7 @@
 #include "MapCollider.h"
 #include <filesystem>
 #include <map>
+#include "../components/Connections.h"
 //Los mapas, los vertices de colision tienen que ser en sentido horario
 
 namespace fs = std::filesystem;
@@ -67,6 +68,7 @@ public:
 		actualRoom = initializeNewRoom(roomNames[tile]);
 
 		roomNames[tile].used = true;
+
 	}
 
 	void TravelNextRoom(int dir) {
@@ -91,6 +93,27 @@ public:
 
 	int zone() { return fase; }
 private:
+	static void travel(b2Contact* contact) {
+		std::cout << "DIOS QUE PUTO ASCO OJALÁ SE CAIGA EL INTERNET DEL TODO EL MUNDO Y CAGARME EN LA PUTA MADRE DE CARLOS LEÓN \n";
+
+
+		Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+
+		auto* m = trigger->getMngr()->getHandler<Map>();
+
+		std::string d= trigger->getComponent<Connections>()->getDir();
+		int dir = -1;
+
+
+		if (d == "N") dir = 0;
+		else if (d == "E") dir = 1;
+		else if (d == "S") dir = 2;
+		else dir = 3;
+
+		m->getComponent<MapProcedural>()->TravelNextRoom(dir);
+	}
+
+
 	void ReadDirectory(const string& p, int& roomsRead) {
 		std::string path = p;
 
@@ -166,7 +189,9 @@ private:
 	void CreateConnections(Room* r, const std::array<bool, 4>& rConnections) {
 		for (int i = 0; i < 4; i++) {
 			if (rConnections[i] == true) r->conections[i] = initializeRoom(r, i);
+
 		}
+		createConnectionTriggers();
 	}
 
 	Room* initializeRoom(Room* partida, int dir) {
@@ -222,6 +247,28 @@ private:
 				if (name[i] == cardinals[j]) cons[j] = true;
 	}
 
+
+	void createConnectionTriggers() {
+		vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
+		vector<std::string> names = lvl->getConNames();
+
+
+		for (int i = 0; i < positions.size(); i++) {	
+			auto* t = entity_->getMngr()->addEntity();
+
+			Vector2D size(200, 200);
+			Vector2D pos(positions[i].x, positions[i].y);
+
+			t->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, pos, size);
+
+			t->addComponent<Connections>(names[i]);
+
+			t->setCollisionMethod(travel);
+
+			//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
+
+		}
+	}
 	//Devuelve si se han explorado todas las habitaciones de la zona
 
 protected:
