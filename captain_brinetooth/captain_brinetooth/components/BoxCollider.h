@@ -58,7 +58,7 @@ public:
 		}
 		else{
 			//Pasamos el tamaño a medidas de box2d
-			size = Vector2D(size.getX() / sdlutils().getPPM() , size.getY() / sdlutils().getPPM());
+			pos = Vector2D(pos.getX() / sdlutils().getPPM() , pos.getY() / sdlutils().getPPM());
 		}
 
 		world = entity_->getWorld();

@@ -80,6 +80,7 @@ public:
 		//Setteamos los nuevos vertices para la creacion del cuerpo Collider
 		chainCollider->setVertices(lvl->getVerticesList());
 		chainCollider->deleteChains();
+		triggers.clear();
 		chainCollider->createChainFixture();
 
 		cout << actualRoom->getName();
@@ -94,9 +95,6 @@ public:
 	int zone() { return fase; }
 private:
 	static void travel(b2Contact* contact) {
-		std::cout << "DIOS QUE PUTO ASCO OJALÁ SE CAIGA EL INTERNET DEL TODO EL MUNDO Y CAGARME EN LA PUTA MADRE DE CARLOS LEÓN \n";
-
-
 		Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 
 		auto* m = trigger->getMngr()->getHandler<Map>();
@@ -256,15 +254,19 @@ private:
 		for (int i = 0; i < positions.size(); i++) {	
 			auto* t = entity_->getMngr()->addEntity();
 
-			Vector2D size(200, 200);
+			Vector2D size(400, 400);
 			Vector2D pos(positions[i].x, positions[i].y);
 
-			t->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, pos, size);
+			t->addComponent<Transform>(pos, Vector2D(0, 0), size.getX(), size.getY(), 0);
+
+			t->addComponent<BoxCollider>(STATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true, 0, true, 0.0);
 
 			t->addComponent<Connections>(names[i]);
 
 			t->setCollisionMethod(travel);
 
+
+			triggers.push_back(t);
 			//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
 
 		}
@@ -290,4 +292,6 @@ protected:
 	Level0* lvl;
 
 	MapCollider* chainCollider;
+
+	vector<Entity*> triggers;
 };
