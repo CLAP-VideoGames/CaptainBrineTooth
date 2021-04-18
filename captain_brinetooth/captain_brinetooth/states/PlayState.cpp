@@ -28,7 +28,7 @@ void PlayState::init() {
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
 
-	Config elfShark{};
+	/*Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
 	elfShark.size = Vector2D(180.0f, 180.0f);
@@ -50,7 +50,7 @@ void PlayState::init() {
 	flowerJellyHat.rotation = 0.0f;
 	flowerJellyHat.col = ENEMY;
 	flowerJellyHat.colMask = ENEMY_MASK;
-	createFlowerJellyHat(flowerJellyHat);
+	createFlowerJellyHat(flowerJellyHat);*/
 }
 
 void PlayState::update(){

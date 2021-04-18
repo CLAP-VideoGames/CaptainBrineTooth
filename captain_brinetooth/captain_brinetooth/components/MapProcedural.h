@@ -78,8 +78,8 @@ public:
 		//Cargamos nuevo mapa
 		lvl->load(actualRoom->level);
 		//Setteamos los nuevos vertices para la creacion del cuerpo Collider
-		chainCollider->setVertices(lvl->getVerticesList());
 		chainCollider->deleteChains();
+		chainCollider->setVertices(lvl->getVerticesList());
 		triggers.clear();
 		chainCollider->createChainFixture();
 
