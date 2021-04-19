@@ -1,9 +1,7 @@
 #include "Button.h"
 
-void Button::update()
-{
-
-
+void Button::update(){
+	handleEvent();
 }
 
 void Button::render()
@@ -25,17 +23,14 @@ bool Button::handleEvent(){
 	Transform* t = entity_->getComponent<Transform>();
 	SDL_Point mouseP = { ih().getMousePos().first, ih().getMousePos().second};
 	SDL_Rect dest = build_sdlrect(t->getPos(), t->getW() / 2, t->getH() / 2);
-
 	//Así no queda tan feo :D, no me grites David Please
 	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE){
-		if (ih().mouseButtonEvent())
-		{
+		if (ih().mouseButtonEvent()){
+			//game->getStateMachine()->currentState()->getMngr()->getSoundMngr();
 			cboq(game, soundController);
 			return true;
 		}
 
 	}
-	
 	return false;
-
 }

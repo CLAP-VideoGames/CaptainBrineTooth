@@ -46,6 +46,8 @@ public:
 	StateMachine* getStateMachine() { return stateMachine; }
 	void exitGame() { exit = true; }
 	
+	inline float getCameraZooOut() const { return camera_Zoom_Out; }
+
 	//update (Juan: Si esta en Mayusculas pq es una constante) Joseda: asi es gente, lo que sea en mayus tiene que ser constante
 	//const Uint32 TICKS = 60;
 	//const Uint32 MILLISECS_PER_TICK = 1000 / TICKS;

@@ -289,9 +289,23 @@
 			"size": 16
 		},
 		{
-			"id": "BackerStreet24",
+			"id": "BackerStreet64",
 			"file": "assets/fonts/BakerStreet-Black.ttf",
-			"size": 24
+			"size": 64
+		}
+	],
+	"messages" : [
+		{
+			"id": "Volume",
+			"text": "Volume",
+			"font": "BackerStreet64",
+			"color": "0x00ffffff"
+		},
+		{
+			"id": "Brightness",
+			"text": "Brightness",
+			"font": "BackerStreet64",
+			"color": "0x00ffffff"
 		}
 	]
 }

@@ -7,8 +7,8 @@ MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) 
 	cam = a->camera;
 
 	//No tengo ni idea pero si no es chikito
-	cam.w = cam.w * 2;
-	cam.h = cam.h * 2;
+	cam.w = cam.w * a->getCameraZooOut();
+	cam.h = cam.h * a->getCameraZooOut();
 }
 
 void MenuState::init() {
@@ -63,14 +63,7 @@ void MenuState::update() {
 
 	GameState::update();
 
-	for (Entity* b : manager_->getEnteties()){
-		Button* but = b->getComponent<Button>();
-		if (but != nullptr && but->handleEvent())
-		{
-			break;
-		}
-	}
-
+	
 }
 
 void MenuState::changeToGame(App* app, SoundManager* snd) {

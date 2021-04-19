@@ -34,6 +34,7 @@ App::App() {
 }
 
 App::~App() {
+	//Setteamos de nuevo el brillo por defecto
 	SDL_SetWindowBrightness(sdlutils().window(), brightness);
 }
 
@@ -101,15 +102,21 @@ void App::start() {
 			exit = true;
 			continue;
 		}
-		
+		//Procesamos la entrada del usuario y cualquier cambio de entidad
 		stateMachine->currentState()->update();
-
+		//Refrescamos la máquina de estados
 		stateMachine->refreshStates();
+		//Refrescamos las entidades
 		stateMachine->currentState()->refresh();
+
+
+
 
 		sdlutils().clearRenderer();
 		SDL_RenderSetLogicalSize(sdlutils().renderer(), window.getX() * camera_Zoom_Out, window.getY()* camera_Zoom_Out);
+		//Renderizamos las entidades
 		stateMachine->currentState()->render();
+		
 		sdlutils().presentRenderer();
 		
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;

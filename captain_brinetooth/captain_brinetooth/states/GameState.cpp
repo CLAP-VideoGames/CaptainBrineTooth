@@ -21,9 +21,11 @@ Entity* GameState::createBasicEntity(const Vector2D& pos, const Vector2D& size, 
 
 void GameState::render() const {
 	manager_->render();
+	
 }
 void GameState::update() {
 	manager_->update();
+	
 }
 void GameState::refresh() {
 	manager_->refresh();

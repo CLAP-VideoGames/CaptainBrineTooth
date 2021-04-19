@@ -2,20 +2,20 @@
 
 #include <iostream>
 
-Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void(*callback)(float, Entity*)){
+Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void(*callback)(float, Entity*), const std::string& s = "Slider"){
 	pos = pos_;
 	sizes = sizes_;
 	for (int i = 0; i < NUM_TEXTURES; i++) textures[i] = texts[i];
 
 	callback_ = callback;
-
+	text = s;
 }
 
-Slider::~Slider()
-{
+Slider::~Slider(){
 }
 
 void Slider::init(){
+	textureText = &sdlutils().msgs().at(text);
 	mngr = entity_->getMngr();
 
 	background = mngr->addEntity();
@@ -45,6 +45,7 @@ void Slider::update(){
 					//Actualizamos la posición del Slider
 					sliderImage->moveRect(newPos, Sliderdest->y);
 					//Calculamos el valor con respecto al tamaño total del Slider
+					//Cancelamos la posicion de la mitad de la imagen
 					int value = newPos - backgroundSlideRct.x + (Sliderdest->w / 2);
 					float valuePercentage = (float)value/(float)backgroundSlideRct.w;
 					callback_(valuePercentage, entity_);
@@ -52,5 +53,20 @@ void Slider::update(){
 			}
 		}
 	}
+}
+
+/// <summary>
+/// Posicion el slider dado un valor de 0 a 1
+/// </summary>
+/// <param name="value"> de 0 a 1</param>
+void Slider::setSlider(float& value){
+	int valor = backgroundSlideRct.w * value;
+	int newPos = backgroundSlideRct.x + valor - (Sliderdest->w / 2);
+
+	sliderImage->moveRect(newPos, Sliderdest->y);
+}
+
+void Slider::render(){
+	textureText->render((backgroundSlideRct.x - textureText->width() - 200), backgroundSlideRct.y);
 }
 
