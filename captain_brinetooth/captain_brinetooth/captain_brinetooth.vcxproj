@@ -160,6 +160,7 @@
     <ClInclude Include="components\Button.h" />
     <ClInclude Include="components\CameraFollow.h" />
     <ClInclude Include="components\Connections.h" />
+    <ClInclude Include="components\Gancho.h" />
     <ClInclude Include="components\GetAWeaponOnCollision.h" />
     <ClInclude Include="components\Inventory.h" />
     <ClInclude Include="components\JellyHatBehavior.h" />
@@ -206,7 +207,6 @@
     <ClInclude Include="game\CollisionLayers.h" />
     <ClInclude Include="game\ecs_defs.h" />
     <ClInclude Include="game\App.h" />
-    <ClInclude Include="Gancho.h" />
     <ClInclude Include="json\JSON.h" />
     <ClInclude Include="json\JSONValue.h" />
     <ClInclude Include="json\simplejson_demo.h" />
@@ -246,6 +246,7 @@
     <ClCompile Include="components\enemyMovement.cpp" />
     <ClCompile Include="components\Enemy_Health.cpp" />
     <ClCompile Include="components\FringeHeadAtack.cpp" />
+    <ClCompile Include="components\Gancho.cpp" />
     <ClCompile Include="components\Hammer.cpp" />
     <ClCompile Include="components\Inventory.cpp" />
     <ClCompile Include="components\JellyHatBehavior.cpp" />
@@ -262,7 +263,6 @@
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />
     <ClCompile Include="game\App.cpp" />
-    <ClCompile Include="Gancho.cpp" />
     <ClCompile Include="json\JSON.cpp" />
     <ClCompile Include="json\JSONValue.cpp" />
     <ClCompile Include="json\somplejson_demo.cpp" />

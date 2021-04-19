@@ -1,6 +1,7 @@
 #include "MenuState.h"
 #include "../states/OptionsState.h"
 #include "../states/PlayState.h"
+#include "../states/TestZoneState.h"
 
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
@@ -72,6 +73,10 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd));
+
+	//----------
+	/*StateMachine* sM = app->getStateMachine();
+	sM->changeState(new TestZoneState(app, sM->currentState()->getMngr()->getWorld(), snd));*/
 }
 
 void MenuState::changeToOptions(App* app, SoundManager* snd) {

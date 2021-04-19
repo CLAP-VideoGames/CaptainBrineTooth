@@ -13,6 +13,7 @@ public:
 	void createBoxFloor(const Config& entityConfig);
 	void createEnemy1(const Config& enemy1Config);
 	void createElfShark(const Config& entityConfig);
+	void createPesca(const Config& entityConfig);
 protected:
 	SDL_Rect cam;
 };

@@ -14,6 +14,20 @@ void TestZoneState::init() {
 	auto* bg = createBasicEntity(Vector2D(-2560,0),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
+
+	Config gancho{};
+	gancho.pos = Vector2D(200, sdlutils().height() / 2);
+	gancho.vel = Vector2D(0, -221);
+	gancho.size = Vector2D(100.0f, 100.0f);
+	gancho.friction = 0.0f;
+	gancho.physicType = DYNAMIC;
+	gancho.fixedRotation = true;
+	gancho.rotation = 0.0f;
+	gancho.col = DEFAULT;
+	gancho.colMask = DEFAULT_MASK;
+	createPesca(gancho);
+
+	/*
 	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
@@ -248,5 +262,13 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
 	elf1->addComponent<Enemy_Health>(300);
+}
+
+void TestZoneState::createPesca(const Config& entityConfig) {
+	auto* gancho = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	AnimBlendGraph* gancho_anim_controller = gancho->addComponent<AnimBlendGraph>();
+	gancho_anim_controller->addAnimation("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
+	gancho->addComponent<Gancho>();
 }
 

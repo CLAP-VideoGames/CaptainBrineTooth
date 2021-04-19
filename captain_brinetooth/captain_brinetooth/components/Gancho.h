@@ -1,8 +1,8 @@
 #pragma once
-#include "ecs/Component.h"
-#include "utils/Vector2D.h"
-#include "components/BoxCollider.h"
-#include "ecs/Entity.h"
+#include "../ecs/Component.h"
+#include "../utils/Vector2D.h"
+#include "./BoxCollider.h"
+#include "../ecs/Entity.h"
 
 class Gancho : public Component
 {
@@ -24,7 +24,7 @@ private:
 	static void contactWithSomething(b2Contact* contact);
 	void hookMovement();   //Check contacts at time
 	void checkForBait(); //In order to find ait to obtain points /weapons...etc
-	void setSpeed(int amount) { speed* amount; }
-	void getBaitReference(Entity* b)
+	void setSpeed(int amount) { speed* amount; };
+	void getBaitReference(Entity* b);
 };
 

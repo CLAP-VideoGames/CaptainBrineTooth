@@ -1,5 +1,5 @@
 #include "Gancho.h"
-#include "sdlutils/SDLUtils.h"
+#include "../sdlutils/SDLUtils.h"
 Gancho::Gancho()
 {
 
@@ -17,10 +17,11 @@ void  Gancho::init()
 
 	//Here we should give an amount of speed that applied when timeTomove Passes
 	//speed= X
+	
 }
 void Gancho::update()
 {
-		hookMovement();
+	hookMovement();
 }
 void Gancho::contactWithSomething(b2Contact* contact)
 {
@@ -38,5 +39,5 @@ void Gancho::contactWithSomething(b2Contact* contact)
 void Gancho::hookMovement()
 {
 	//Speed has now a value in order to move again 
-	
+	hookBody->applyForce(Vector2D(0, 1), 10.0f);
 }

@@ -17,6 +17,14 @@
 			"file": "assets/sprites/player/player_dash.png"
 		},
 		{
+			"id": "player_cana",
+			"file": "assets/sprites/player/playercana.png"
+		},
+		{
+			"id": "cuerda",
+			"file": "assets/sprites/player/cuerda.png"
+		},
+		{
 			"id": "fists_combo",
 			"file": "assets/sprites/player/weapons/fists_combo.png"
 		},

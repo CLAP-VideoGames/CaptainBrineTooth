@@ -39,6 +39,7 @@
 #include "../components/Slider.h"
 #include "../components/Inventory.h"
 #include "../components/GetAWeaponOnCollision.h"
+#include "../components/Gancho.h"
 
 class Manager;
 class App;
