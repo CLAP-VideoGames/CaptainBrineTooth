@@ -23,7 +23,7 @@ class DamageCollisionCallbacks : public b2ContactListener
 
     void EndContact(b2Contact* contact) {
         //Debugg
-        if (sdlutils().getDebug()) std::cout << "STOPPED TOUCHING\n";
+        if (sdlutils().getConsoleDebug()) std::cout << "STOPPED TOUCHING\n";
 
         //Codigo de ejemplo para obtener la entidad de los cuerpos que colisionan
         Entity* cosaA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;

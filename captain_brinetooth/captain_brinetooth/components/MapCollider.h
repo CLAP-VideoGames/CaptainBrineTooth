@@ -141,17 +141,22 @@ public:
 			newBody.realPoints = new SDL_Point[newBody.sizeVs + 1];
 			//Copiamos cada uno de los valores en cada una de las posiciones del array
 			int j;
-			for (j = 0; j < newBody.sizeVs; j++) {
-				std::cout << verticesVector[i][j].x << " " << verticesVector[i][j].y << std::endl;
-				newBody.vs[j] = b2Vec2(verticesVector[i][j].x, verticesVector[i][j].y);
 
+			
+
+			for (j = 0; j < newBody.sizeVs; j++) {
+				if (sdlutils().getConsoleDebug())
+					std::cout << verticesVector[i][j].x << " " << verticesVector[i][j].y << std::endl;
+
+				newBody.vs[j] = b2Vec2(verticesVector[i][j].x, verticesVector[i][j].y);
 				SDL_Point point = {verticesVector[i][j].x * sdlutils().getPPM(), verticesVector[i][j].y * sdlutils().getPPM()};
 				newBody.realPoints[j] = point;
 			}
 			//Para que conecte con el del final. No es Loop.
 			newBody.realPoints[j] = newBody.realPoints[0];
 
-			std::cout << "---" << std::endl;
+			if (sdlutils().getConsoleDebug())
+				std::cout << "---" << std::endl;
 
 			//Introducimos el cuerpo en el vector
 			bodies_.push_back(newBody);
