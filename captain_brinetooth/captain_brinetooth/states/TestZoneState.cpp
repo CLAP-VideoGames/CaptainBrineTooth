@@ -7,19 +7,24 @@ TestZoneState::TestZoneState(App* a , std::shared_ptr<b2World> mundo, SoundManag
 	
 }
 
+void TestZoneState::update() {
+	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
+	GameState::update();
+}
+
 void TestZoneState::init() {
 //-----Map-----
 #pragma region Map
 	//---BG----
-	auto* bg = createBasicEntity(Vector2D(-2560,0),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
-	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	//auto* bg = createBasicEntity(Vector2D(-2560,0),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
+	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
 
 	Config gancho{};
-	gancho.pos = Vector2D(200, sdlutils().height() / 2);
-	gancho.vel = Vector2D(0, -221);
+	gancho.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
+	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
-	gancho.friction = 0.0f;
+	gancho.friction = 0.2f;
 	gancho.physicType = DYNAMIC;
 	gancho.fixedRotation = true;
 	gancho.rotation = 0.0f;
@@ -266,9 +271,9 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 
 void TestZoneState::createPesca(const Config& entityConfig) {
 	auto* gancho = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	AnimBlendGraph* gancho_anim_controller = gancho->addComponent<AnimBlendGraph>();
 	gancho_anim_controller->addAnimation("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
+	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	gancho->addComponent<Gancho>();
 }
 

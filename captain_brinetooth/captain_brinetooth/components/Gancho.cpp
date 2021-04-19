@@ -10,8 +10,8 @@ void  Gancho::init()
 {
 	hookBody = entity_->getComponent<BoxCollider>();
 	assert(hookBody != nullptr);
+	//hookBody->getBody()->SetGravityScale(0.0f);
 	//No se Exactamente donde va para poder hacer el timer
-	moveTime = sdlutils().currRealTime();
 
 	entity_->setCollisionMethod(contactWithSomething);
 
@@ -35,9 +35,13 @@ void Gancho::contactWithSomething(b2Contact* contact)
 	}
 
 }
+bool Gancho::hasBaitRef()
+{
+	if (baitRef != nullptr) return true;
+}
 
 void Gancho::hookMovement()
 {
 	//Speed has now a value in order to move again 
-	hookBody->applyForce(Vector2D(0, 1), 10.0f);
+	hookBody->setSpeed(Vector2D(0, 0.5F));
 }

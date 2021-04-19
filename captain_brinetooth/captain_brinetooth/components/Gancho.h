@@ -11,12 +11,14 @@ public :
 	virtual ~Gancho() {};
 	void init() override;
 	void update() override;
+	bool hasBaitRef();
+	void setBaitReference(Entity* b) { baitRef = b; }
 	
 
 private:
 
 	float moveTime;         //CurrRealTime
-	float timetoMove=300;       //Definded time 
+	float timetoMove = 300;       //Definded time 
 	BoxCollider* hookBody;
 	Vector2D speed;      //Movement in Y 
 	Entity* baitRef;
@@ -24,7 +26,7 @@ private:
 	static void contactWithSomething(b2Contact* contact);
 	void hookMovement();   //Check contacts at time
 	void checkForBait(); //In order to find ait to obtain points /weapons...etc
-	void setSpeed(int amount) { speed* amount; };
 	void getBaitReference(Entity* b);
+	void setSpeed(int amount) { speed* amount; }
 };
 

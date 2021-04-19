@@ -8,6 +8,7 @@ class TestZoneState :public GameState
 public:
 	TestZoneState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
 	virtual void init();
+	virtual void update();
 
 	void createPlayer(const Config& playerConfig);
 	void createBoxFloor(const Config& entityConfig);
