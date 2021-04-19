@@ -38,20 +38,15 @@ void OptionsState::init()
 	//barcoBrillo(bBrillo->getComponent<Image>()->destino());
 	//tituloBrillo(bajarB->getComponent<Transform>());
 
-
-	Entity* sliderVolume = manager_->addEntity();
 	Vector2D pos = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.3));
 	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 50), Vector2D(100, 100)};
-	Texture* textues[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
-	sliderVolume->addComponent<Slider>(pos, size, textues, controlVolume);
-	
-	Entity* sliderBrightness = manager_->addEntity();
-	Vector2D pos2 = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.5));
-	std::pair<Vector2D, Vector2D> size2 = {Vector2D(900, 50), Vector2D(100, 100)};
-	Texture* textues2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
-	sliderBrightness->addComponent<Slider>(pos2, size2, textues2, controlBrightness);
-	
-	
+	Texture* textures[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
+	Entity* sliderVolume = createVolume(manager_, pos, size, textures);
+
+	pos = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.5));
+	size = {Vector2D(900, 50), Vector2D(100, 100)};
+	Texture* textures2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
+	Entity* sliderBrightness = createBrightness(manager_, pos, size, textures2); 
 
 	botonVolver();
 }
@@ -76,6 +71,18 @@ Entity* OptionsState::flechasVolumen()
 	bajarV->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarVolumen, app, manager_->getSoundMngr());
 
 	return bajarV;
+}
+
+Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2]){
+	Entity* sliderVolume = mngr->addEntity();
+	sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume);
+	return sliderVolume;
+}
+
+Entity* OptionsState::createBrightness(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2]){
+	Entity* sliderBrightness = mngr->addEntity();
+	sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness);
+	return sliderBrightness;
 }
 
 Entity* OptionsState::barraVolumen(Transform* e)
@@ -247,55 +254,6 @@ void OptionsState::update() {
 		}
 	}
 
-}
-
-void OptionsState::subirVolumen(App* app, SoundManager* snd)
-{
-	float vol = snd->GeneralVolume();
-
-	if (vol < 128)
-	{
-		vol += 12.7;
-		snd->setGeneralVolume(vol);
-		if (vol >= 128)
-		{
-			snd->setGeneralVolume(127);
-		}
-	}
-}
-
-void OptionsState::bajarVolumen(App* app, SoundManager* snd)
-{
-	float vol = snd->GeneralVolume();
-
-	if (vol > 0)
-	{
-		vol -= 12.7;
-		snd->setGeneralVolume(vol);
-		if (vol < 0)
-		{
-			snd->setGeneralVolume(0);
-		}
-	}
-}
-
-void OptionsState::bajarBrillo(App* app, SoundManager* snd)
-{
-	SDL_Window* window = sdlutils().window();
-	if (SDL_SetWindowBrightness(window, SDL_GetWindowBrightness(window) - 0.02f) != 0)
-	{
-	std:cout << "El brillo baja mas";
-	}
-}
-
-void OptionsState::subirBrillo(App* app, SoundManager* snd)
-{
-	SDL_Window* window = sdlutils().window();
-
-	if (SDL_SetWindowBrightness(window, SDL_GetWindowBrightness(window) + 0.02f) != 0)
-	{
-	std:cout << "El brillo no sube mas";
-	}
 }
 
 void OptionsState::controlVolume(float value, Entity* ent){

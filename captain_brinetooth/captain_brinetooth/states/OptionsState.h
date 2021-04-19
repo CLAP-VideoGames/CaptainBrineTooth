@@ -19,7 +19,10 @@ public:
 	static void controlVolume(float value, Entity* ent);
 	static void controlBrightness(float value, Entity* ent);
 
-
+	Entity* createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textues2[2]);
+	Entity* createBrightness(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textues2[2]);
+	Entity* botonVolver();
+	
 	Entity* barraVolumen(Transform* e);
 	Entity* barcoVolumen(SDL_Rect posBarra);
 	Entity* flechasVolumen();
@@ -30,7 +33,6 @@ public:
 	Entity* flechasBrillo();
 	Entity* tituloBrillo(Transform* pos);
 
-	Entity* botonVolver();
 
 	void update();
 private:
