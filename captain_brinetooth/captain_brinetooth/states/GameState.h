@@ -37,6 +37,8 @@
 #include "../components/Image.h"
 #include "../components/JellyHatBehavior.h"
 #include "../components/Slider.h"
+#include "../components/Inventory.h"
+#include "../components/GetAWeaponOnCollision.h"
 
 class Manager;
 class App;

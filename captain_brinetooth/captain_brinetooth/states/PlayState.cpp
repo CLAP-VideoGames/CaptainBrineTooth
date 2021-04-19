@@ -28,6 +28,42 @@ void PlayState::init() {
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
 
+	Config swordGiverConfig{};
+	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
+	swordGiverConfig.vel = Vector2D();
+	swordGiverConfig.size = Vector2D(50, 50);
+	swordGiverConfig.friction = 0.2f;
+	swordGiverConfig.physicType = STATIC;
+	swordGiverConfig.fixedRotation = true;
+	swordGiverConfig.rotation = 0.0f;
+	swordGiverConfig.spriteId = "espada";
+	int swordNumber = 0;
+	createWeaponGiver(swordGiverConfig, swordNumber);
+
+	Config hammerGiverConfig{};
+	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height());
+	hammerGiverConfig.vel = Vector2D();
+	hammerGiverConfig.size = Vector2D(50, 50);
+	hammerGiverConfig.friction = 0.2f;
+	hammerGiverConfig.physicType = STATIC;
+	hammerGiverConfig.fixedRotation = true;
+	hammerGiverConfig.rotation = 0.0f;
+	hammerGiverConfig.spriteId = "martillo";
+	int hammerNumber = 1;
+	createWeaponGiver(hammerGiverConfig, hammerNumber);
+
+	Config chainsawGiverConfig{};
+	chainsawGiverConfig.pos = Vector2D(sdlutils().width(), sdlutils().height());
+	chainsawGiverConfig.vel = Vector2D();
+	chainsawGiverConfig.size = Vector2D(50, 50);
+	chainsawGiverConfig.friction = 0.2f;
+	chainsawGiverConfig.physicType = STATIC;
+	chainsawGiverConfig.fixedRotation = true;
+	chainsawGiverConfig.rotation = 0.0f;
+	chainsawGiverConfig.spriteId = "sierra";
+	int chainsawNumber = 1;
+	createWeaponGiver(chainsawGiverConfig, chainsawNumber);
+
 	/*Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
@@ -209,12 +245,21 @@ void PlayState::createPlayer(const Config& playerConfig){
 	else player->addComponent<KeyBoardCtrl>(map);
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<MachineGun>();
+	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();
 
 	//Seteamos al Player como MainHandler
 	manager_->setHandler<Player>(player);
+}
+
+void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
+	auto* weaponGiver = createBasicEntity(weaponGiverConfig.pos, weaponGiverConfig.size, weaponGiverConfig.rotation, weaponGiverConfig.vel);
+
+	auto* anim_controller = weaponGiver->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("idle", &sdlutils().images().at(weaponGiverConfig.spriteId), 1, 1, 1, 24, 1);
+	weaponGiver->addComponent<BoxCollider>(weaponGiverConfig.physicType, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true);
+	weaponGiver->addComponent<GetAWeaponOnCollision>(weaponType);
 }
 
 /// <summary>

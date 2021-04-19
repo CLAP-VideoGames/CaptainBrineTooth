@@ -21,6 +21,12 @@ public:
 		tr_(nullptr) {
 	}
 	virtual ~Sword() {
+		if (anim_->searchParamValue("sword_att") != -1)
+			anim_->setParamValue("sword_att", 0);
+		if (trigger != nullptr) {
+			trigger->setActive(false);
+			trigger = nullptr;
+		}
 	}
 
 	void init() override;

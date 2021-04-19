@@ -23,6 +23,8 @@ public:
 		tr_(nullptr) {
 	}
 	virtual ~MachineGun() {
+		if (anim_->searchParamValue("chainsaw_att") != -1)
+			anim_->setParamValue("chainsaw_att", 0);
 	}
 
 	void init() override;

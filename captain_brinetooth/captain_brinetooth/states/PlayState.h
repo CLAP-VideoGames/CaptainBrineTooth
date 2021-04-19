@@ -13,6 +13,7 @@ public:
 
 	void createLevel0();
 	void createPlayer(const Config& playerConfig);
+	void createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType);
 	void createBoxTest(const Config& entityConfig);
 	void createElfShark(const Config& entityConfig);
 	void createFlowerJellyHat(const Config& entityConfig);

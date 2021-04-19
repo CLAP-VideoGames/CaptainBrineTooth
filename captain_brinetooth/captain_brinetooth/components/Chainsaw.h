@@ -20,6 +20,12 @@ public:
 		tr_(nullptr) {
 	}
 	virtual ~Chainsaw() {
+		if (anim_->searchParamValue("chainsaw_att") != -1)
+			anim_->setParamValue("chainsaw_att", 0);
+		if (trigger != nullptr) {
+			trigger->setActive(false);
+			trigger = nullptr;
+		}
 	}
 
 	void init() override;

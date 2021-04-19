@@ -64,24 +64,24 @@ Entity* OptionsState::flechasVolumen()
 {
 	// Boton de subir el volumen
 	auto* subirV = createBasicEntity(Vector2D((cam.w / 1.1), cam.h - cam.h / 1.2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	subirV->addComponent<Button>(&sdlutils().images().at("flecha+"), subirVolumen, app, manager_->getSoundMngr());
+	//subirV->addComponent<Button>(&sdlutils().images().at("flecha+"), subirVolumen, app, manager_->getSoundMngr());
 
 	// Boton de bajar el volumen
 	auto* bajarV = createBasicEntity(Vector2D((cam.w / 3), cam.h - cam.h / 1.2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	bajarV->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarVolumen, app, manager_->getSoundMngr());
+	//bajarV->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarVolumen, app, manager_->getSoundMngr());
 
 	return bajarV;
 }
 
 Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2]){
 	Entity* sliderVolume = mngr->addEntity();
-	sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume);
+	//sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume);
 	return sliderVolume;
 }
 
 Entity* OptionsState::createBrightness(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2]){
 	Entity* sliderBrightness = mngr->addEntity();
-	sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness);
+	//sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness);
 	return sliderBrightness;
 }
 
@@ -146,10 +146,10 @@ Entity* OptionsState::tituloVolumen(Transform* pos)
 Entity* OptionsState::flechasBrillo()
 {
 	auto* subirB = createBasicEntity(Vector2D((cam.w / 1.1), cam.h - cam.h / 2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	subirB->addComponent<Button>(&sdlutils().images().at("flecha+"), subirBrillo, app, manager_->getSoundMngr());
+	//subirB->addComponent<Button>(&sdlutils().images().at("flecha+"), subirBrillo, app, manager_->getSoundMngr());
 
 	auto* bajarB = createBasicEntity(Vector2D((cam.w / 3), cam.h - cam.h / 2), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	bajarB->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarBrillo, app, manager_->getSoundMngr());
+	//bajarB->addComponent<Button>(&sdlutils().images().at("flecha-"), bajarBrillo, app, manager_->getSoundMngr());
 
 	return bajarB;
 }

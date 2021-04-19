@@ -7,6 +7,7 @@
 #include "Hammer.h"
 #include "Chainsaw.h"
 #include "MachineGun.h"
+#include "Armas_HUD.h"
 
 
 class Inventory : public Component {
@@ -19,12 +20,16 @@ public:
 	void addWeapon(int weapToAdd);
 	void switchSelectedWeapon();
 	virtual void init() override;
+	virtual void update() override;
 
 private:
 	enum PosibleWeapons {TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk};
 
 	void addWeaponById(int weapToAdd);
 	void removeWeaponById(int weapToRemove);
+	Texture* textureById(int weapToAdd);
+
+	Armas_HUD* hud;
 
 	int currentWeaponNumber;
 	const int maxWeaponNumber = 2;

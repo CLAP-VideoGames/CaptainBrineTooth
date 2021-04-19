@@ -318,6 +318,9 @@
     <ClInclude Include="components\Connections.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
+    <ClInclude Include="components\GetAWeaponOnCollision.h">
+      <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">

@@ -43,6 +43,8 @@ class Crab;
 class MachineGun;
 class JellyHatBehavior;
 class Connections;
+class Inventory;
+class GetAWeaponOnCollision;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -84,7 +86,9 @@ class Connections;
 	Crab,\
 	MachineGun,\
 	Connections,\
-	JellyHatBehavior
+	JellyHatBehavior,\
+	Inventory,\
+	GetAWeaponOnCollision
 
 // groups
 

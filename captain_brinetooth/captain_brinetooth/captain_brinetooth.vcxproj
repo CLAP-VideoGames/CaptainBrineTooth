@@ -160,6 +160,7 @@
     <ClInclude Include="components\Button.h" />
     <ClInclude Include="components\CameraFollow.h" />
     <ClInclude Include="components\Connections.h" />
+    <ClInclude Include="components\GetAWeaponOnCollision.h" />
     <ClInclude Include="components\Inventory.h" />
     <ClInclude Include="components\JellyHatBehavior.h" />
     <ClInclude Include="components\MapCollider.h" />
