@@ -43,7 +43,6 @@ public:
 		fixedRotation_ = fixedRotation;
 		rotation_ = rotation;
 
-		
 		setVertices(vertices);
 	}
 
@@ -86,7 +85,8 @@ public:
 		bdDef.type = b2_staticBody;
 		bdDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
 
-		std::cout << "VERTICES FIXTURE" << std::endl;
+		if (sdlutils().getConsoleDebug()) std::cout << "VERTICES FIXTURE" << std::endl;
+
 		for (int i = 0;  i < bodies_.size(); i++){
 			//Creamos el nuevo cuerpo
 
@@ -97,13 +97,13 @@ public:
 			//Vertice fantasmas inicial								//Vertice fantasmas final
 			//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
 			//chain.CreateChain(vs, sizeChain, b2Vec2((vs[0].x) - 30.0f / sdlutils().getPPM(), ((vs[0].y)) / sdlutils().getPPM()), b2Vec2((vs[sizeChain - 1].x) / sdlutils().getPPM(), ((vs[sizeChain - 1].y - 30)) / sdlutils().getPPM()));
-			
-			for (int j = 0; j < bodies_[i].sizeVs; j++){
-				std::cout << bodies_[i].vs[j].x << " " << bodies_[i].vs[j].y << std::endl;
+			//Posicion de los vertices para debuggear
+			if (sdlutils().getConsoleDebug()) {
+				for (int j = 0; j < bodies_[i].sizeVs; j++) {
+					std::cout << bodies_[i].vs[j].x << " " << bodies_[i].vs[j].y << std::endl;
+				}
+				std::cout << "---" << std::endl;
 			}
-
-			std::cout << "---" << std::endl;
-
 			//le pasamos los vertices del cuerpo
 			chain.CreateLoop(bodies_[i].vs, bodies_[i].sizeVs);
 

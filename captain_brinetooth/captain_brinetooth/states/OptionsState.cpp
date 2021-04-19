@@ -51,7 +51,7 @@ Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std
 	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().msgs().at("Volume"));
 
 	//Est� mmmuy alto
-	float newVol = (float)volume / (float)(manager_->getSoundMngr()->getMaxVol()/2);
+	float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol()/2);
 	slider->setSlider(newVol);
 
 	return sliderVolume;

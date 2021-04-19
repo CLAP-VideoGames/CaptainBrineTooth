@@ -1,11 +1,12 @@
 #include "box2d.h"
 #include "iostream"
+#include "../sdlutils/SDLUtils.h"
 
 class DamageCollisionCallbacks : public b2ContactListener
 {
     void BeginContact(b2Contact* contact) {
         //Debugg
-        std::cout << "TOUCHED WITH BEGIN CONTACT\n";
+        if(sdlutils().getConsoleDebug()) std::cout << "TOUCHED WITH BEGIN CONTACT\n";
 
         //Codigo de ejemplo para obtener la entidad de los cuerpos que colisionan
         Entity* cosaA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
@@ -22,7 +23,7 @@ class DamageCollisionCallbacks : public b2ContactListener
 
     void EndContact(b2Contact* contact) {
         //Debugg
-        std::cout << "STOPPED TOUCHING\n";
+        if (sdlutils().getDebug()) std::cout << "STOPPED TOUCHING\n";
 
         //Codigo de ejemplo para obtener la entidad de los cuerpos que colisionan
         Entity* cosaA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
