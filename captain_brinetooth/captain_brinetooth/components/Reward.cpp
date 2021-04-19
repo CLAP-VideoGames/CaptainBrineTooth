@@ -24,7 +24,7 @@ void Reward::update()
 
 
 }
-void Reward::baitCollision(b2Contact* contact)
+/*void Reward::baitCollision(b2Contact* contact)
 {
 	Entity* bait = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	if (bait != nullptr)
@@ -33,7 +33,7 @@ void Reward::baitCollision(b2Contact* contact)
 		if (!hook->getComponent<Gancho>()->hasBaitRef()) bait->getComponent<Reward>()->baitCatched((Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer);
 		//if true, hook already has catched bait so we ignore collision
 	}
-}
+}*/
 void Reward::baitCatched(Entity* hook)
 {
 
