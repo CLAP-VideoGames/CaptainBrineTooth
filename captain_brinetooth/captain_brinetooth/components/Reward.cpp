@@ -4,7 +4,7 @@
 
 Reward::Reward()
 {
-
+	catched = false;
 }
 void Reward::init()
 {
@@ -33,5 +33,6 @@ void Reward::baitCatched(Entity* hook)
 	entity_->getComponent<BoxCollider>()->setSpeed(0);
 	//Modificamos la posicion de la entidad para que se situe donde esta el gancho 
 	entity_->getComponent<BoxCollider>()->setPhysicalTransform(hookpos.getX(), hookpos.getY(), 0);
+	//
 }
 

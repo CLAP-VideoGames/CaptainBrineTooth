@@ -39,6 +39,7 @@ class MapProcedural;
 class Image;
 class Slider;
 class Reward;
+class Gancho;
 class Crab;
 class MachineGun;
 class JellyHatBehavior;
@@ -64,7 +65,8 @@ class GetAWeaponOnCollision;
 	MapCollider,\
 	CameraFollow,\
 	Reward,\
-	SoundManager,\
+    Gancho,\
+    SoundManager,\
 	LoseLife,\
 	EnemyTrigger,\
 	FringeHeadAtack,\

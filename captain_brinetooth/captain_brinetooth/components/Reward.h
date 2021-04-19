@@ -15,6 +15,7 @@ public:
 
 private:
 
+	bool catched;
 	Transform* tr_;
 	Vector2D speed;
 	void checkLimits();
