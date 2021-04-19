@@ -88,17 +88,17 @@ void PlayState::init() {
 	elfShark.colMask = ENEMY_MASK;
 	createElfShark(elfShark);*/
 
-	Config flowerJellyHat{};
-	flowerJellyHat.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
-	flowerJellyHat.vel = Vector2D(0, 0);
-	flowerJellyHat.size = Vector2D(100.0f, 100.0f);
-	flowerJellyHat.friction = 0.2f;
-	flowerJellyHat.physicType = DYNAMIC;
-	flowerJellyHat.fixedRotation = true;
-	flowerJellyHat.rotation = 0.0f;
-	flowerJellyHat.col = ENEMY;
-	flowerJellyHat.colMask = ENEMY_MASK;
-	createFlowerJellyHat(flowerJellyHat);
+	//Config flowerJellyHat{};
+	//flowerJellyHat.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
+	//flowerJellyHat.vel = Vector2D(0, 0);
+	//flowerJellyHat.size = Vector2D(100.0f, 100.0f);
+	//flowerJellyHat.friction = 0.2f;
+	//flowerJellyHat.physicType = DYNAMIC;
+	//flowerJellyHat.fixedRotation = true;
+	//flowerJellyHat.rotation = 0.0f;
+	//flowerJellyHat.col = ENEMY;
+	//flowerJellyHat.colMask = ENEMY_MASK;
+	//createFlowerJellyHat(flowerJellyHat);
 }
 
 void PlayState::update(){
@@ -127,7 +127,7 @@ void PlayState::update(){
 void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(10, 1);
+	map = nivel->addComponent<MapProcedural>(4, 0);
 	getMngr()->setHandler<Map>(nivel);
 }
 

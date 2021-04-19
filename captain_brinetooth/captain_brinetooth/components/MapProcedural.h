@@ -116,6 +116,10 @@ public:
 		getConec(actualRoom->getName(), actualRoom->cons);
 		//Creamos habitaciones en funci�n de las conexiones que tiene
 		CreateConnections(actualRoom, actualRoom->cons, dir);
+
+		roomsExplored++;
+
+		std::cout << roomsExplored << "\n";
 	}
 
 	bool zoneCompleted() { return roomsExplored = nRooms; }
@@ -220,12 +224,13 @@ private:
 
 	Room* initializeRoom(Room* partida, int dir) {
 		int tile;
-		if (roomsExplored == nRooms) return nullptr;
+		if (roomsExplored == nRooms) 
+			std::cout << "Mi nombre es el Bts";
 		//Tenemos que reconocer donde est�n los extremos, para poder poner habitaciones lim�trofes
 		//Y tambi�n deber�amos crear los colliders desde level, btw
 		if (roomsExplored == nRooms - 1) {
 			//Habitaci�n final
-			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size()+1);
+			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
 		}
 		else {
 			//Habitación intermedia
@@ -240,7 +245,10 @@ private:
 		if (opositeDir >= 4) opositeDir = opositeDir - 4;
 
 		bool concuerda = (roomNames[tile].name[opositeDir] == cardinals[opositeDir]);
-		while (roomNames[tile].used || !concuerda) {
+
+
+		//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
+		while (!concuerda) {
 			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
 
 			int i = 0;
@@ -252,7 +260,7 @@ private:
 		//Si la habitaci�n tiene una conexi�n, la del otro lado tiene que tener conexi�n opuesta
 		//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcci�n que pareces tonto
 
-
+		roomNames[tile].used = true;
 		r->level = roomNames[tile].path;
 
 		/*if (partida->conections[0] != nullptr) r->level = "assets/maps/" + tile;
@@ -266,9 +274,10 @@ private:
 	}
 
 	void getConec(const string& name, std::array<bool,4>& cons) {
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) 
 				if (name[i] == cardinals[j]) cons[j] = true;
+		}
 	}
 
 
@@ -335,7 +344,7 @@ protected:
 	std::array<RoomNames, NUM_TILEMAPS> roomNames;
 
 	//Numero de habitaciones exploradas
-	int roomsExplored = 0;
+	int roomsExplored = 1;
 
 	//Habitacion actual
 	Room* actualRoom;
