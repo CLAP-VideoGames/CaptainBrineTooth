@@ -57,6 +57,7 @@ public:
 
 	void clearTileset();
 
+	tmx::Vector2f getPlayerPos() { return playerPos; }
 	
 	vector<std::string> getConNames() {return connectionsNames; }
 private:

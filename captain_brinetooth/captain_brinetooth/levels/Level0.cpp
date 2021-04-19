@@ -158,12 +158,12 @@ void Level0::load(const string& path) {
 			auto layer_objects = object_layer->getObjects();
 
 			for (auto& spawn : layer_objects) {
-				if (spawn.getName() == "Player")
+				if (spawn.getName() == "player")
 				{
 					playerPos = spawn.getPosition();
 
-					playerPos.x /= sdlutils().getPPM();
-					playerPos.y /= sdlutils().getPPM();
+					//playerPos.x /= sdlutils().getPPM();
+					//playerPos.y /= sdlutils().getPPM();
 				}
 				else {
 					tmx::Vector2f spa = spawn.getPosition();

@@ -19,7 +19,7 @@ void PlayState::init() {
 	createLevel0();
 
 	Config playerConfig{};
-	playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
+	playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
 	playerConfig.vel = Vector2D(0, 0);
 	playerConfig.size = Vector2D(100.0f, 100.0f);
 	playerConfig.friction = 0.2f;

@@ -76,6 +76,13 @@ public:
 		nextDir = dir;
 	}
 
+	Vector2D getPlayerPos() {
+		tmx::Vector2f s = lvl->getPlayerPos();
+
+		Vector2D spawn (s.x, s.y);
+
+		return spawn;
+	}
 
 	void update() override{
 		if (gonTotravel){
@@ -108,7 +115,7 @@ public:
 		//Cogemos sus conexiones	
 		getConec(actualRoom->getName(), actualRoom->cons);
 		//Creamos habitaciones en funci�n de las conexiones que tiene
-		CreateConnections(actualRoom, actualRoom->cons);
+		CreateConnections(actualRoom, actualRoom->cons, dir);
 	}
 
 	bool zoneCompleted() { return roomsExplored = nRooms; }
@@ -197,25 +204,18 @@ private:
 		//Opcion 1
 		getConec(tag.name, r->cons);
 		
-		//Creamos habitaciones en funci�n de las conexiones que tiene
-		/*if(rConnections[0] == true) r->conections[0] = initializeRoom(r, 0);
 
-		if (rConnections[1] == true) r->conections[1] = initializeRoom(r, 1);
-
-		if (rConnections[2] == true) r->conections[2] = initializeRoom(r, 2);
-
-		if (rConnections[3] == true) r->conections[3] = initializeRoom(r, 3);*/
-		CreateConnections(r, r->cons);
+		CreateConnections(r, r->cons, -1);
 
 		return r;
 	}
 
-	void CreateConnections(Room* r, const std::array<bool, 4>& rConnections) {
+	void CreateConnections(Room* r, const std::array<bool, 4>& rConnections, int dir) {
 		for (int i = 0; i < 4; i++) {
 			if (rConnections[i] == true) r->conections[i] = initializeRoom(r, i);
 
 		}
-		createConnectionTriggers();
+		createConnectionTriggers(dir);
 	}
 
 	Room* initializeRoom(Room* partida, int dir) {
@@ -272,10 +272,31 @@ private:
 	}
 
 
-	void createConnectionTriggers() {
+	void createConnectionTriggers(int dir) {
 		vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
 		vector<std::string> names = lvl->getConNames();
+		std::string oppDir = "";
 
+		if (dir != -1) {
+
+			switch (dir)
+		{
+		case 0:
+			oppDir = "S";
+			break;
+		case 1:
+			oppDir = "W";
+			break;
+		case 2:
+			oppDir = "N";
+			break;
+		case 3:
+			oppDir = "E";
+			break;
+		default:
+			break;
+		}
+		}
 
 		for (int i = 0; i < positions.size(); i++) {	
 			auto* t = entity_->getMngr()->addEntity();
@@ -283,16 +304,22 @@ private:
 			Vector2D size(400, 400);
 			Vector2D pos(positions[i].x, positions[i].y);
 
-			t->addComponent<Transform>(pos, Vector2D(0, 0), size.getX(), size.getY(), 0);
+			if (names[i] == oppDir) {
+				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY(), 0);
+			}
+			else {
+				t->addComponent<Transform>(pos, Vector2D(0, 0), size.getX(), size.getY(), 0);
 
-			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+				t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
-			t->addComponent<Connections>(names[i]);
+				t->addComponent<Connections>(names[i]);
 
-			t->setCollisionMethod(travel);
+				t->setCollisionMethod(travel);
+
+				triggers.push_back(t);
+			}
 
 
-			triggers.push_back(t);
 			//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
 
 		}
