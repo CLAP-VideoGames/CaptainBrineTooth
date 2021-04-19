@@ -2,7 +2,6 @@
 #include "../states/MenuState.h"
 #include "../states/PlayState.h"
 
-
 OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd)
 {
 	cam = a->camera;
@@ -12,8 +11,7 @@ OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager*
 	cam.h = cam.h * a->getCameraZooOut();
 }
 
-void OptionsState::init()
-{
+void OptionsState::init(){
 	auto* fondo = manager_->addEntity();
 
 	SDL_Rect posImage;

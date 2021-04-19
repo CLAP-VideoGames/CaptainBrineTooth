@@ -37,4 +37,6 @@ private:
 	Texture* textureText = nullptr;
 
 	Image* sliderImage;
+
+	bool selected = true;
 };

@@ -10,6 +10,8 @@ Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_
 	callback_ = callback;
 
 	textureText = text_;
+
+	selected = false;
 }
 
 Slider::~Slider(){
@@ -21,7 +23,6 @@ void Slider::init(){
 	background = mngr->addEntity();
 	backgroundSlideRct = build_sdlrect(pos, sizes.first.getX(), sizes.first.getY());
 	background->addComponent<Image>(textures[0], backgroundSlideRct, "fondo");
-
 
 	slide = mngr->addEntity();
 	Vector2D posSlide = Vector2D(pos.getX()* 1.1f, pos.getY() - (sizes.second.getY()*0.5f));
@@ -39,18 +40,25 @@ void Slider::update(){
 			//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
 			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().getLeftMouseButtonPressed()){
 				//std::cout << "pressed" << std::endl;
-				int newPos = mouseP.x - (Sliderdest->w/2);
-
-				if (newPos >= backgroundSlideRct.x - (Sliderdest->w / 2) && newPos <= backgroundSlideRct.x + backgroundSlideRct.w - (Sliderdest->w / 2)){
-					//Actualizamos la posición del Slider
-					sliderImage->moveRect(newPos, Sliderdest->y);
-					//Calculamos el valor con respecto al tamaño total del Slider
-					//Cancelamos la posicion de la mitad de la imagen
-					int value = newPos - backgroundSlideRct.x + (Sliderdest->w / 2);
-					float valuePercentage = (float)value/(float)backgroundSlideRct.w;
-					callback_(valuePercentage, entity_);
-				}
+				//Necesito esto para saber en qué momento selecciona la imagen del Slider
+				selected = true;
 			}
+		}
+		
+	}
+
+	//Compruebo que ha soltado el boton y que si se ha seleccionado la imagen
+	if (!ih().getLeftMouseButtonPressed() && selected) selected = false;
+	else if(selected) { //No me sirve con verificar que sólo mantiene el boton izquierdo presionado. Necesito comprobar que también la imagen sigue seleccionada
+		int newPos = mouseP.x - (Sliderdest->w / 2);
+		if (newPos >= backgroundSlideRct.x - (Sliderdest->w / 2) && newPos <= backgroundSlideRct.x + backgroundSlideRct.w - (Sliderdest->w / 2)) {
+			//Actualizamos la posición del Slider
+			sliderImage->moveRect(newPos, Sliderdest->y);
+			//Calculamos el valor con respecto al tamaño total del Slider
+			//Cancelamos la posicion de la mitad de la imagen
+			int value = newPos - backgroundSlideRct.x + (Sliderdest->w / 2);
+			float valuePercentage = (float)value / (float)backgroundSlideRct.w;
+			callback_(valuePercentage, entity_);
 		}
 	}
 }
@@ -62,7 +70,6 @@ void Slider::update(){
 void Slider::setSlider(float& value){
 	int valor = backgroundSlideRct.w * value;
 	int newPos = backgroundSlideRct.x + valor - (Sliderdest->w / 2);
-
 	sliderImage->moveRect(newPos, Sliderdest->y);
 }
 
