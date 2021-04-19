@@ -104,7 +104,6 @@ void PlayState::init() {
 void PlayState::update(){
 	//Queremos que, en el estado que hayan objetos físicos, se actualicen las físicas
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
-
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDLK_p)) {
 			StateMachine* sM = app->getStateMachine();
@@ -129,7 +128,6 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
 	map = nivel->addComponent<MapProcedural>(10, 1);
-
 	getMngr()->setHandler<Map>(nivel);
 }
 

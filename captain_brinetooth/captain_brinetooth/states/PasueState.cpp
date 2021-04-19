@@ -1,14 +1,12 @@
 #include "PasueState.h"
-
+#include "OptionsState.h"
 #include "MenuState.h"
 
 PauseState::PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
-	cam = a->camera;
-
-
-	cam.w = cam.w * 2;
-	cam.h = cam.h * 2;
 	stRend = stateToRender;
+	cam = a->camera;
+	cam.w = cam.w * a->getCameraZooOut();
+	cam.h = cam.h * a->getCameraZooOut();
 }
 
 void PauseState::init(){
@@ -18,11 +16,21 @@ void PauseState::init(){
 
 	fondo->addComponent<Image>(&sdlutils().images().at("debug_square"), posImage, "pausa");
 
-	auto* backGame = createBasicEntity(Vector2D(cam.w * 0.5f, cam.h*0.5 ), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	backGame->addComponent<Button>(&sdlutils().images().at("volverMenu"), backToGame, app, manager_->getSoundMngr());
+	Vector2D size = Vector2D(700, 300);
+	Vector2D pos = Vector2D((cam.w * 0.5f) - (size.getX()/ (2 * getApp()->getCameraZooOut())), cam.h * 0.8);
+	auto* backGame = createBasicEntity(pos, size, 0.0f, Vector2D(0, 0));
+	backGame->addComponent<Button>(&sdlutils().msgs().at("BackMenu"), backToMenu, app, manager_->getSoundMngr());
 	
-	auto* backMenu = createBasicEntity(Vector2D(cam.w * 0.2, cam.h*0.8 ), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
-	backMenu->addComponent<Button>(&sdlutils().images().at("volverMenu"), backToMenu, app, manager_->getSoundMngr());
+	size = Vector2D(500, 300);
+	pos = Vector2D((cam.w * 0.5f) - (size.getX() / (2 * getApp()->getCameraZooOut())), cam.h * 0.5);
+	auto* backMenu = createBasicEntity(pos, size, 0.0f, Vector2D(0, 0));
+	backMenu->addComponent<Button>(&sdlutils().msgs().at("Options"), backToMenu, app, manager_->getSoundMngr());
+	
+	size = Vector2D(700, 300);
+	pos = Vector2D((cam.w * 0.5f) - (size.getX()/ (2 * getApp()->getCameraZooOut())), cam.h * 0.2);
+	auto* resume = createBasicEntity(pos, size, 0.0f, Vector2D(0, 0));
+	resume->addComponent<Button>(&sdlutils().msgs().at("Resume"), backToGame, app, manager_->getSoundMngr());
+	//backMenu->addComponent<Button>(&sdlutils().images().at("volverMenu"), backToMenu, app, manager_->getSoundMngr());
 }
 
 void PauseState::render() const {
@@ -32,14 +40,6 @@ void PauseState::render() const {
 
 void PauseState::update() {
 	GameState::update();
-
-	for (Entity* b : manager_->getEnteties()) {
-		Button* but = b->getComponent<Button>();
-		if (but != nullptr && but->handleEvent())
-		{
-			break;
-		}
-	}
 }
 
 void PauseState::backToGame(App* app, SoundManager* snd){
@@ -52,4 +52,9 @@ void PauseState::backToMenu(App* app, SoundManager* snd){
 	Manager* mngr = sM->currentState()->getMngr();
 	sM->popState();
 	sM->changeState(new MenuState(app, mngr->getWorld(), mngr->getSoundMngr()));
+}
+
+void PauseState::clearPanel(){
+	for (Entity* ent : panel) ent->setActive(false);
+	panel.clear();
 }

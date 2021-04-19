@@ -4,12 +4,11 @@ void Button::update(){
 	handleEvent();
 }
 
-void Button::render()
-{
+void Button::render(){
 	Transform* t = entity_->getComponent<Transform>();
 
 	Vector2D aux = t->getPos();
-	SDL_Rect dest = build_sdlrect(aux, t->getW()/2, t->getH()/2);
+	SDL_Rect dest = build_sdlrect(aux, t->getW() / game->getCameraZooOut(), t->getH() / game->getCameraZooOut());
 
 	tex->render(dest);
 
@@ -22,7 +21,7 @@ void Button::render()
 bool Button::handleEvent(){
 	Transform* t = entity_->getComponent<Transform>();
 	SDL_Point mouseP = { ih().getMousePos().first, ih().getMousePos().second};
-	SDL_Rect dest = build_sdlrect(t->getPos(), t->getW() / 2, t->getH() / 2);
+	SDL_Rect dest = build_sdlrect(t->getPos(), t->getW()/ game->getCameraZooOut(), t->getH() / game->getCameraZooOut());
 	//Así no queda tan feo :D, no me grites David Please
 	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE){
 		if (ih().mouseButtonEvent()){

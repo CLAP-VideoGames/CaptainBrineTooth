@@ -38,8 +38,7 @@ void OptionsState::init(){
 	botonVolver();
 }
 
-Entity* OptionsState::botonVolver()
-{
+Entity* OptionsState::botonVolver(){
 	// Boton de volver al menu
 	auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.5), cam.h - (cam.h / 1.5)), 0.0f, Vector2D(0, 0));
 	volver->addComponent<Button>(&sdlutils().images().at("volverMenu"), volverMenu, app, manager_->getSoundMngr());

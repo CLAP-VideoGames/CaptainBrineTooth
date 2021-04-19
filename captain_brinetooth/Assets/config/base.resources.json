@@ -326,6 +326,25 @@
 			"text": "Brightness",
 			"font": "BackerStreet6100",
 			"color": "0xffffffff"
+		},
+		{
+			"id": "Resume",
+			"text": "Resume",
+			"font": "BackerStreet6100",
+			"color": "0xffffffff"
+		},
+		{
+			"id": "BackMenu",
+			"text": "Back To Menu",
+			"font": "BackerStreet6100",
+			"color": "0xffffffff"
+		},
+		{
+			"id": "Options",
+			"text": "Options",
+			"font": "BackerStreet6100",
+			"color": "0xffffffff"
 		}
+
 	]
 }

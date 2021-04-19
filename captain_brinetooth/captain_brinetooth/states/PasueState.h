@@ -1,6 +1,8 @@
 #pragma once
 #include "GameState.h"
 #include "box2d.h"
+
+
 class Entity;
 
 class PauseState :public GameState {
@@ -15,5 +17,8 @@ public:
 	GameState* stRend;
 
 private:
+
+	void clearPanel();
+	std::vector<Entity*> panel;
 	SDL_Rect cam;
 };
