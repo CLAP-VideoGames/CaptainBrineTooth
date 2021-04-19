@@ -81,7 +81,8 @@ public:
 				collider_->getBody()->SetGravityScale(0.0f);
 				collider_->setSpeed(Vector2D(0, 0));
 				isDashing = true;
-				collider_->applyLinearForce(Vector2D(1,0), dashSpeed);
+				if(isFlip)collider_->applyLinearForce(Vector2D(1,0), dashSpeed);
+				else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
 				canDash = false;
 			}
 

@@ -224,8 +224,6 @@ private:
 
 	Room* initializeRoom(Room* partida, int dir) {
 		int tile;
-		if (roomsExplored == nRooms) 
-			std::cout << "Mi nombre es el Bts";
 		//Tenemos que reconocer donde est�n los extremos, para poder poner habitaciones lim�trofes
 		//Y tambi�n deber�amos crear los colliders desde level, btw
 		if (roomsExplored == nRooms - 1) {
