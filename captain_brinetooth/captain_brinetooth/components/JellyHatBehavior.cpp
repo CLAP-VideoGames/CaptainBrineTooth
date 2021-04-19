@@ -21,15 +21,21 @@ void JellyHatBehavior::init()
 
 	playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
 	assert(playertr_ != nullptr);
+
+	entitycollider_ = entity_Parent_->getComponent<BoxCollider>();
+	assert(entitycollider_ != nullptr);
 }
 
 void JellyHatBehavior::update() {
 	Vector2D distJugador = entitytr_->getPos() - playertr_->getPos();
 	
-	float newSize = 500 - (abs(distJugador.getX()) + abs(distJugador.getY()));
+	float newSize = 100 - ((abs(distJugador.getX()) + abs(distJugador.getY())) * 0.1);
 	if (newSize > 0) {
 		entitytr_->setH(iniH + newSize);
 		entitytr_->setW(iniW + newSize);
 		entityhealth_->setHealth(iniHealth + newSize);
+	}
+	if (entitycollider_->getBody()->GetLinearVelocity().y == 0) {
+		entitycollider_->applyForce(Vector2D(0, -1), 60.0f);
 	}
 }

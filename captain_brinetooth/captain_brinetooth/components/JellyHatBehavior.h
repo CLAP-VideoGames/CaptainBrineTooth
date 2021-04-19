@@ -26,6 +26,7 @@ private:
 	Entity* entity_Parent_;
 	Transform* entitytr_;
 	Enemy_Health* entityhealth_;
+	BoxCollider* entitycollider_;
 
 	Transform* playertr_;
 	float iniH;
