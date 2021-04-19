@@ -7,6 +7,7 @@
 #include "Hammer.h"
 #include "Chainsaw.h"
 #include "MachineGun.h"
+#include "Crab.h"
 #include "Armas_HUD.h"
 
 

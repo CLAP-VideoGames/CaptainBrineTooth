@@ -31,7 +31,11 @@ public:
 			if (cosaA->getComponent<Inventory>() != nullptr) {
 				cosaB->getComponent<GetAWeaponOnCollision>()->GiveAWeapon(cosaA);
 				cosaB->setActive(false);
-			}	
+			}
+			else if (cosaB->getComponent<Inventory>() != nullptr) {
+				cosaA->getComponent<GetAWeaponOnCollision>()->GiveAWeapon(cosaA);
+				cosaA->setActive(false);
+			}
 	}
 private:
 	void GiveAWeapon(Entity* player) {

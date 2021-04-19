@@ -65,6 +65,10 @@
 			"file": "assets/sprites/player/HUD/medioanzuelo_sheet.png"
 		},
 		{
+			"id": "crab",
+			"file": "assets/sprites/armas/punosCrustaceo.png"
+		},
+		{
 			"id": "sierra",
 			"file": "assets/sprites/armas/pez_sierra.png"
 		},

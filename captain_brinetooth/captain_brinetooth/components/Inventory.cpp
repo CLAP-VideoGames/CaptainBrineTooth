@@ -61,6 +61,9 @@ void Inventory::addWeaponById(int weapToAdd) {
 	case PosibleWeapons::TypeChainsaw:
 		entity_->addComponent<Chainsaw>();
 		break;
+	case PosibleWeapons::TypeCrab:
+		entity_->addComponent<Crab>();
+		break;
 	case PosibleWeapons::TypeMachineGun:
 		entity_->addComponent<MachineGun>();
 		break;
@@ -82,6 +85,9 @@ Texture* Inventory::textureById(int weapToAdd) {
 	case PosibleWeapons::TypeChainsaw:
 		return &sdlutils().images().at("sierra");
 		break;
+	case PosibleWeapons::TypeCrab:
+		return &sdlutils().images().at("crab");
+		break;
 	case PosibleWeapons::TypeMachineGun:
 		return &sdlutils().images().at("sierra");
 		break;
@@ -102,6 +108,9 @@ void Inventory::removeWeaponById(int weapToAdd) {
 		break;
 	case PosibleWeapons::TypeChainsaw:
 		entity_->removeComponent<Chainsaw>();
+		break;
+	case PosibleWeapons::TypeCrab:
+		entity_->removeComponent<Crab>();
 		break;
 	case PosibleWeapons::TypeMachineGun:
 		entity_->removeComponent<MachineGun>();
