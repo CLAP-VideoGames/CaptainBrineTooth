@@ -13,7 +13,7 @@ void SoundManager::setMusicVolume(int volume)
 	volumenMusica = volume;
 	if (volumenMusica >= 0 && volumenMusica < 128)
 	{
-		sdlutils().musics().at(mainMusic).setMusicVolume(volumenMusica);
+		sdlutils().musics().at(mainMusic).setChannelVolume(volumenMusica);
 	}
 	else
 	{
@@ -45,39 +45,36 @@ void SoundManager::setEffectsVolume(int volume)
 
 void SoundManager::ChangeMainMusic(std::string newMusic)
 {
-	sdlutils().musics().at(mainMusic).haltMusic();
+	sdlutils().musics().at(mainMusic).haltChannel();
+	sdlutils().musics().at(pauseMusic).haltChannel();
 
 	mainMusic = newMusic;
+	pauseMusic = newMusic + "Pausa";
+
 	playMainMusic();
 }
 
 void SoundManager::playPauseMusic()
 {
-	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
-	while (it != sdlutils().soundEffects().end())
-	{
-		it->second.pauseChannel();
-		++it;
-	}
-	//	sdlutils().musics().at(pauseMusic).playPause(sdlutils().musics().at(mainMusic).getPosition(Ticks o algo por el estilo));
+	//sdlutils().musics().at(mainMusic).pauseChannel();
+	sdlutils().musics().at(mainMusic).setChannelVolume(0);
+	//sdlutils().musics().at(mainMusic).resumeChannel();
+
+	
+	sdlutils().musics().at(pauseMusic).setChannelVolume(volumenGeneral);
+	//sdlutils().musics().at(pauseMusic).pauseChannel();
+	//sdlutils().musics().at(pauseMusic).resumeChannel();
+
 }
 
 void SoundManager::resumeMainMusic()
 {
-	sdlutils().musics().at(pauseMusic).haltMusic();
-	sdlutils().musics().at(mainMusic).resumeMusic();
-	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
-	while (it != sdlutils().soundEffects().end())
-	{
-		it->second.resumeChannel();
-		++it;
-
-	}
-
+	sdlutils().musics().at(pauseMusic).setChannelVolume(0);
+	sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
 }
 
 void SoundManager::stopMusic()
 {
-	sdlutils().musics().at(mainMusic).haltMusic();
+	sdlutils().musics().at(mainMusic).haltChannel();
 }
 

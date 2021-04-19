@@ -205,7 +205,7 @@ void SDLUtils::loadReasources(std::string filename) {
 					JSONObject vObj = v->AsObject();
 					std::string key = vObj["id"]->AsString();
 					std::string file = vObj["file"]->AsString();
-					musics_.emplace(key, Music(file));
+					musics_.emplace(key, SoundEffect(file));
 				} else {
 					throw "'musics' array in '" + filename
 							+ "' includes and invalid value";

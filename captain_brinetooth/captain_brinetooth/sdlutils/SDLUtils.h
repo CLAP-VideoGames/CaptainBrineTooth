@@ -136,7 +136,7 @@ public:
 	}
 
 	// musics maps
-	inline sdl_resource_table<Music>& musics() {
+	inline sdl_resource_table<SoundEffect>& musics() {
 		return musics_;
 	}
 
@@ -186,7 +186,7 @@ private:
 	sdl_resource_table<Texture> images_; // textures map (string -> texture)
 	sdl_resource_table<Texture> msgs_; // textures map (string -> texture)
 	sdl_resource_table<SoundEffect> sounds_; // sounds map (string -> sound)
-	sdl_resource_table<Music> musics_; // musics map (string -> music)
+	sdl_resource_table<SoundEffect> musics_; // musics map (string -> music)
 	sdl_resource_table<Texture> tilesets_;
 
 	RandomNumberGenerator random_; // (pseudo) random numbers generator

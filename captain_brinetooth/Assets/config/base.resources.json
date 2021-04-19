@@ -204,6 +204,10 @@
 			"file": "assets/sounds/soundtrack/drunken_sailor.mp3"
 		},
 		{
+			"id": "MenuPausa",
+			"file": "assets/sounds/soundtrack/drunken_sailor.mp3"
+		},
+		{
 			"id": "FinalBoss",
 			"file": "assets/sounds/soundtrack/olds_man_tale.mp3"
 		},
@@ -261,6 +265,10 @@
 		},
 		{
 			"id": "Creditos",
+			"file": "assets/sounds/soundtrack/wellerman.mp3"
+		},
+		{
+			"id": "CreditosPausa",
 			"file": "assets/sounds/soundtrack/wellerman.mp3"
 		}
 

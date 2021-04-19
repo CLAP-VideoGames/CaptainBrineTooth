@@ -15,7 +15,7 @@ public:
 		volumenEfectos = volume;
 		volumenMusica = volume;
 		mainMusic = initMus;
-		pauseMusic = initMus + "Pause";
+		pauseMusic = initMus + "Pausa";
 	}
 
 	virtual ~SoundManager() {
@@ -30,7 +30,13 @@ public:
 	void setMusicVolume(int volume); // Poner el volumen de la MUSICA a cierto nivel especifico
 	void setEffectsVolume(int volume); // Poner el volumen de los EFECTOS a cierto nivel especifico
 
-	void playMainMusic() { sdlutils().musics().at(mainMusic).play(); } // Tocar la melodia que tiene seleccionado el sound manager (Sirve como bucle infinito) 
+	void playMainMusic() { 
+		sdlutils().musics().at(pauseMusic).setChannelVolume(0);
+		sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
+
+		sdlutils().musics().at(mainMusic).playforMusic();
+		sdlutils().musics().at(pauseMusic).playforMusic();
+	} // Tocar la melodia que tiene seleccionado el sound manager (Sirve como bucle infinito) 
 
 	void playPauseMusic(); // Detener todo los sonidos y musica del juego principal y tocar la musica del menu de Pausa
 

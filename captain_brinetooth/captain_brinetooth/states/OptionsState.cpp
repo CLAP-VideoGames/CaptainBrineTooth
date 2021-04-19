@@ -22,7 +22,8 @@ void OptionsState::init(){
 
 	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
 
-	manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
+	//manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
+	manager_->getSoundMngr()->playPauseMusic();
 
 	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 50), Vector2D(100, 100)};
 	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.3));
@@ -88,6 +89,7 @@ void OptionsState::controlBrightness(float value, Entity* ent){
 
 void OptionsState::volverMenu(App* app, SoundManager* snd){
 	snd->playSoundEffect("gaviota");
-	snd->ChangeMainMusic("Menu");
+	//snd->ChangeMainMusic("Menu");
+	snd->resumeMainMusic();
 	app->getStateMachine()->popState();
 }

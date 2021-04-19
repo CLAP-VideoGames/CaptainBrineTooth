@@ -44,6 +44,12 @@ public:
 		return Mix_PlayChannel(channel, chunk_, loops);
 	}
 
+	inline int playforMusic(int loops = 0, int channel = -1) const {
+		_CHECK_CHANNEL_(channel);
+		assert(loops >= -1);
+		return Mix_PlayChannel(channel, chunk_, -1);
+	}
+
 	// static methods for sound effects
 	//
 	inline static void pauseChannel(int channel = -1) {
@@ -61,10 +67,9 @@ public:
 		Mix_HaltChannel(channel);
 	}
 
-	inline static int setChannelVolume(int volume, int channel = -1) {
-		_CHECK_CHANNEL_(channel);
+	inline int setChannelVolume(int volume, int channel = -1) {
 		assert(volume >= 0 && volume <= 128);
-		return Mix_Volume(channel, volume);
+		return Mix_VolumeChunk(chunk_, volume);
 	}
 
 	inline static int setNumberofChannels(int n) {
