@@ -64,7 +64,6 @@ private:
 	int fils_, cols_,		// filas y columnas de 
 		tile_width_, tile_height_;
 	vector<tile*> tiles_;			// tiles a dibujar en pantalla
-	vector<object*> objects_;		// objetos (colisiones) en la capa de Tiled Map
 	map<gid, Texture*> tilesets_;	// tilesets usados para dibujar el Tiled Map
 	std::shared_ptr<b2World> b2World_ = nullptr;
 	b2Body* body_ = nullptr;
