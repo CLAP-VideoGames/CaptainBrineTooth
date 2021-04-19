@@ -20,18 +20,7 @@ void  Gancho::init()
 }
 void Gancho::update()
 {
-
-
-	if (moveTime + timetoMove > sdlutils().currRealTime())
-	{
-	
 		hookMovement();
-		
-	}
-
-
-
-
 }
 void Gancho::contactWithSomething(b2Contact* contact)
 {
@@ -40,7 +29,7 @@ void Gancho::contactWithSomething(b2Contact* contact)
 	{
 		//Here we need to check if its the top of the rod (It Would have a Rod component name or handler) or the floor
 		//If it is on floor , speed= -speed 
-		//If its on top of the rod -> moveTime = sdlutils().currRealTime(); and  set speed to 0 for waiting timetoMove in order to start again movement 
+		//If its on top of the rod -> Check if bool catched = true , 
 	
 	}
 
