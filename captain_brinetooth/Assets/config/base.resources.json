@@ -65,6 +65,10 @@
 			"file": "assets/sprites/player/HUD/medioanzuelo_sheet.png"
 		},
 		{
+			"id": "weaponSelection",
+			"file": "assets/sprites/weaponSelection.png"
+		},
+		{
 			"id": "crab",
 			"file": "assets/sprites/armas/punosCrustaceo.png"
 		},

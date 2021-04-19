@@ -10,7 +10,8 @@ public:
 	Armas_HUD(Texture* weapon1, Texture* weapon2, App* game) :
 		mainWeapon(nullptr),
 		secondWeapon(nullptr),
-		g(game)
+		g(game),
+		weaponFrame(&sdlutils().images().at("weaponSelection"))
 	{
 	}
 	virtual ~Armas_HUD() {}
@@ -23,9 +24,15 @@ public:
 
 	void actualizarNewWeapon(int opcion, Texture* newWeapon);
 
+	void changeWeaponSelected() { currentSelectedWeapon = !currentSelectedWeapon; };
+
 private:
 	Texture* mainWeapon;
 	Texture* secondWeapon;
+	Texture* weaponFrame;
+
+	bool currentSelectedWeapon = 0;
+
 	App* g;
 };
 

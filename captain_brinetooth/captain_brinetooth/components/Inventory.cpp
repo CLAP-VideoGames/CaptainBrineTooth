@@ -43,6 +43,7 @@ void Inventory::switchSelectedWeapon() {
 		removeWeaponById(weapArray_[currentSelectedWeapon]);
 		currentSelectedWeapon = !currentSelectedWeapon;
 		addWeaponById(weapArray_[currentSelectedWeapon]);
+		hud->changeWeaponSelected();
 	}
 }
 
