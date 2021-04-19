@@ -249,7 +249,9 @@ private:
 
 		//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
 		while (!concuerda) {
-			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
+
+			if (roomsExplored == nRooms - 1) tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size()); 
+			else tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
 
 			int i = 0;
 			//Comprobamos que tiene conexión por el cardinal opuesto
