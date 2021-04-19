@@ -2,20 +2,20 @@
 
 #include <iostream>
 
-Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void(*callback)(float, Entity*), const std::string& s = "Slider"){
+Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void(*callback)(float, Entity*), Texture* text_){
 	pos = pos_;
 	sizes = sizes_;
 	for (int i = 0; i < NUM_TEXTURES; i++) textures[i] = texts[i];
 
 	callback_ = callback;
-	text = s;
+
+	textureText = text_;
 }
 
 Slider::~Slider(){
 }
 
 void Slider::init(){
-	textureText = &sdlutils().msgs().at(text);
 	mngr = entity_->getMngr();
 
 	background = mngr->addEntity();
@@ -67,6 +67,6 @@ void Slider::setSlider(float& value){
 }
 
 void Slider::render(){
-	textureText->render((backgroundSlideRct.x - textureText->width() - 200), backgroundSlideRct.y);
+	textureText->render(((backgroundSlideRct.x + (backgroundSlideRct.w/2)) - (textureText->width()/2)), backgroundSlideRct.y - 200);
 }
 

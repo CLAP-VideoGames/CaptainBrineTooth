@@ -26,13 +26,13 @@ void OptionsState::init()
 
 	manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
 
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.3));
 	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 50), Vector2D(100, 100)};
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.3));
 	Texture* textures[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->GeneralVolume());
 
-	pos = Vector2D(Vector2D((cam.w * 0.45), cam.h * 0.5));
 	size = {Vector2D(900, 50), Vector2D(100, 100)};
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.5));
 	Texture* textures2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()));
 
@@ -50,7 +50,7 @@ Entity* OptionsState::botonVolver()
 
 Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume){
 	Entity* sliderVolume = mngr->addEntity();
-	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume, "Volume");
+	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().msgs().at("Volume"));
 
 	//Est� mmmuy alto
 	float newVol = (float)volume / (float)(manager_->getSoundMngr()->getMaxVol()/2);
@@ -61,7 +61,7 @@ Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std
 
 Entity* OptionsState::createBrightness(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const float& brightness){
 	Entity* sliderBrightness = mngr->addEntity();
-	Slider* slider = sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness, "Brightness");
+	Slider* slider = sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness, &sdlutils().msgs().at("Brightness"));
 
 	float value = brightness;
 	slider->setSlider(value);

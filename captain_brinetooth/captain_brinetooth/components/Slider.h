@@ -16,7 +16,7 @@ public:
 	/// <param name="sizes_">tamaño en pixeles del slider y su barra </param>
 	/// <param name="texts">texturas del slider y su barra</param>
 	/// <param name="callback">tarea que realizar al mover el slider que recibe un valor de 0 a 1 y la entidad</param>
-	Slider(const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void (*callback)(float, Entity*), const std::string& s);
+	Slider(const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void (*callback)(float, Entity*), Texture* t);
 	~Slider();
 
 	void init() override;
@@ -28,7 +28,6 @@ private:
 	Vector2D pos;
 	Manager* mngr;
 	Entity* background, *slide;
-	std::string text;
 	std::pair<Vector2D, Vector2D> sizes;
 	std::function<void(float, Entity*)> callback_;
 	SDL_Rect backgroundSlideRct = {};
