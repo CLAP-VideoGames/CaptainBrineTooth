@@ -10,8 +10,8 @@
 #include <tmxlite\Layer.hpp>
 
 
-tile::tile(Texture* tset, int x, int y, int tx, int ty, int w, int h) 
-: sheet_(tset), x_(x), y_(y), tx_(tx), ty_(ty), width_(w), height_(h) {}
+tile::tile(Texture* tset, int x, int y, int tx, int ty, int w, int h)
+	: sheet_(tset), x_(x), y_(y), tx_(tx), ty_(ty), width_(w), height_(h) {}
 
 void tile::draw() {
 	if (!sheet_)
@@ -25,15 +25,15 @@ void tile::draw() {
 	// Para agrandar el tiledmap, hay que hacerlo manualmente en el propio TiledMapEditor, aumentando los píxeles por tile.
 	SDL_Rect dest;
 	dest.x = x_ - App::camera.x; dest.y = y_ - App::camera.y;
-	dest.w = src.w ; dest.h = src.h;
+	dest.w = src.w; dest.h = src.h;
 
 	sheet_->render(src, dest);
 }
 
 object::object(float oX, float oY, float oWidth, float oHeight)
-: oX_(oX), oY_(oY), oWidth_(oWidth), oHeight_(oHeight) {}
+	: oX_(oX), oY_(oY), oWidth_(oWidth), oHeight_(oHeight) {}
 
-Level0::Level0(const string &name, std::shared_ptr<b2World> b2World)
+Level0::Level0(const string& name, std::shared_ptr<b2World> b2World)
 	: name_(name), fils_(0), cols_(0), b2World_(b2World) {
 	//load(name);
 }
@@ -41,13 +41,18 @@ Level0::Level0(const string &name, std::shared_ptr<b2World> b2World)
 //Donde carguemos los enemigos hay que extraerlo en un método que nos devuelva la lista
 //A las salas hay que meterles un atributo que sean las salidas, preferiblemente un bool
 void Level0::load(const string& path) {
-	if (tiles_.size() > 0){
-		for (tile* tile__ : tiles_) delete tile__; 
+	if (tiles_.size() > 0) {
+		for (tile* tile__ : tiles_) delete tile__;
 		tiles_.clear();
 	}
 
-	if(tilesets_.size() > 0) tilesets_.clear();
-	
+	if (tilesets_.size() > 0) tilesets_.clear();
+	if (connectionsNames.size() > 0)connectionsNames.clear();
+	if (enemiePos.size() > 0)enemiePos.clear();
+	if (connectionPos.size() > 0)connectionPos.clear();
+	if (points.size() > 0)points.clear();
+
+
 	//carga el mapa con TMXLite
 	tmx::Map tiled_map;
 
@@ -80,7 +85,7 @@ void Level0::load(const string& path) {
 		auto* tile_layer = dynamic_cast<const tmx::TileLayer*>(layer.get());
 		//se obtienen todos los tiles de esta capa
 		auto& layer_tiles = tile_layer->getTiles();
-		
+
 		//recorremos cada coordenada buscando d�nde hay tiles
 		for (auto y = 0; y < fils_; y++) {
 			for (auto x = 0; x < cols_; x++) {
@@ -117,19 +122,19 @@ void Level0::load(const string& path) {
 
 				//area dentro de la tile sheet de la que dibujar
 				auto region_x = (cur_gid % (ts_width / tile_width_)) * tile_width_,
-				     region_y = (cur_gid / (ts_width / tile_width_)) * tile_height_;
+					region_y = (cur_gid / (ts_width / tile_width_)) * tile_height_;
 
 				//posicion en el mundo del tile.
 				auto x_pos = x * tile_width_,
-				     y_pos = y * tile_height_;
-				
+					y_pos = y * tile_height_;
+
 				tiles_.push_back(new tile(tilesets_[tset_gid], x_pos, y_pos, region_x, region_y, tile_width_, tile_height_));
 				//No podemos usar entity_ aquí porque todavía no se ha seteado
 			}
 		}
 	}
 
-	for (auto& layerObj : map_layers){
+	for (auto& layerObj : map_layers) {
 		if (layerObj->getType() != tmx::Layer::Type::Object) continue;
 		auto* object_layer = dynamic_cast<const tmx::ObjectGroup*>(layerObj.get());
 		if (object_layer->getName() == "collision") {
@@ -166,7 +171,7 @@ void Level0::load(const string& path) {
 					spa.x /= sdlutils().getPPM();
 					spa.y /= sdlutils().getPPM();
 
-					enemiePos.push_back(spa);	
+					enemiePos.push_back(spa);
 
 				}
 			}
