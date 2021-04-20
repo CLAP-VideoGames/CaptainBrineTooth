@@ -22,16 +22,19 @@ void OptionsState::init(){
 
 	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
 
-	//manager_->getSoundMngr()->ChangeMainMusic("FinalBoss");
 	manager_->getSoundMngr()->playPauseMusic();
 
-	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 50), Vector2D(100, 100)};
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.3));
+	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 100), Vector2D(200, 200)};
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.2));
 	Texture* textures[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume());
 
-	size = {Vector2D(900, 50), Vector2D(100, 100)};
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.5));
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.5));
+	Texture* textures1[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
+	createEffects(manager_, pos, size, textures1, manager_->getSoundMngr()->EffectsVolume());
+
+
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.75));
 	Texture* textures2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()));
 
@@ -48,7 +51,7 @@ Entity* OptionsState::botonVolver(){
 
 Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume){
 	Entity* sliderVolume = mngr->addEntity();
-	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().msgs().at("Volume"));
+	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().images().at("volumen"));
 
 	//Est� mmmuy alto
 	float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol()/2);
@@ -57,9 +60,19 @@ Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std
 	return sliderVolume;
 }
 
+Entity* OptionsState::createEffects(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume) {
+	Entity* sliderVolume = mngr->addEntity();
+	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlEffects, &sdlutils().images().at("efectos"));
+
+	float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol() / 2);
+	slider->setSlider(newVol);
+
+	return sliderVolume;
+}
+
 Entity* OptionsState::createBrightness(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const float& brightness){
 	Entity* sliderBrightness = mngr->addEntity();
-	Slider* slider = sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness, &sdlutils().msgs().at("Brightness"));
+	Slider* slider = sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness, &sdlutils().images().at("brillo"));
 
 	float value = brightness;
 	slider->setSlider(value);
@@ -77,6 +90,14 @@ void OptionsState::controlVolume(float value, Entity* ent){
 	snd->setMusicVolume(newVol);
 }
 
+void OptionsState::controlEffects(float value, Entity* ent) {
+	SoundManager* snd = ent->getMngr()->getSoundMngr();
+
+	int newVol = value * (float)(snd->getMaxVol() / 2);
+	snd->setEffectsVolume(newVol);
+}
+
+
 void OptionsState::controlBrightness(float value, Entity* ent){
 	SDL_Window* window = sdlutils().window();
 	float newValue = value * (1 - 0.26);
@@ -88,7 +109,6 @@ void OptionsState::controlBrightness(float value, Entity* ent){
 
 void OptionsState::volverMenu(App* app, SoundManager* snd){
 	snd->playSoundEffect("gaviota");
-	//snd->ChangeMainMusic("Menu");
 	snd->resumeMainMusic();
 	app->getStateMachine()->popState();
 }

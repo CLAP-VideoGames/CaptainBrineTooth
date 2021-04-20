@@ -14,10 +14,12 @@ public:
 	static void volverMenu(App* app, SoundManager* snd);
 	static void controlVolume(float value, Entity* ent);
 	static void controlBrightness(float value, Entity* ent);
+	static void controlEffects(float value, Entity* ent);
 
 	//Son estaticos porque los necesito usar en otras clases
 	static Entity* createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textues2[2], const int& volume);
 	static Entity* createBrightness(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textues2[2], const float& brightness);
+	static Entity* createEffects(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume);
 	Entity* botonVolver();
 	
 private:

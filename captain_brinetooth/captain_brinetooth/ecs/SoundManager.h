@@ -12,6 +12,7 @@ public:
 
 	SoundManager(int volume, std::string initMus){
 		volumenGeneral = volume;
+		volumenEfectos = volume;
 		volumenPausa = 0;
 		mainMusic = initMus;
 		pauseMusic = initMus + "Pausa";
@@ -25,6 +26,7 @@ public:
 	//int EffectsVolume() { return volumenEfectos; }
 	int GeneralVolume() { return volumenGeneral; }
 	int PauseVolume() { return volumenPausa; }
+	int EffectsVolume() { return volumenEfectos; }
 
 	void setGeneralVolume(int volume); // Poner el volumen GENERAL a cierto nivel especifico
 	void setMusicVolume(int volume); // Poner el volumen de la MUSICA a cierto nivel especifico
@@ -49,6 +51,6 @@ public:
 private:
 	std::string mainMusic;
 	std::string pauseMusic;
-	int volumenGeneral, volumenPausa;
+	int volumenGeneral, volumenPausa, volumenEfectos;
 };
 

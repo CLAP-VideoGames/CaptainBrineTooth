@@ -161,6 +161,10 @@
 			"file": "assets/sprites/botones/volumen.png"
 		},
 		{
+			"id": "efectos",
+			"file": "assets/sprites/botones/efectos.png"
+		},
+		{
 			"id": "brillo",
 			"file": "assets/sprites/botones/brillo.png"
 		},

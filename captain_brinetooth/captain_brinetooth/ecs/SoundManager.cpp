@@ -5,6 +5,7 @@ void SoundManager::setGeneralVolume(int volume){
 	volumenGeneral = volume;
 
 	setMusicVolume(volumenGeneral);
+	setEffectsVolume(volumenGeneral);
 }
 
 void SoundManager::playMainMusic()
@@ -45,6 +46,23 @@ void SoundManager::setMusicVolume(int volume)
 		}
 	}
 	
+}
+
+void SoundManager::setEffectsVolume(int volume)
+{
+	volumenEfectos = volume;
+
+	std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
+	while (it != sdlutils().soundEffects().end())
+	{
+		it->second.setChannelVolume(volumenEfectos);
+		++it;
+	}
+
+	sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
+	sdlutils().musics().at(pauseMusic).setChannelVolume(volumenPausa);
+
+
 }
 
 void SoundManager::ChangeMainMusic(std::string newMusic)
