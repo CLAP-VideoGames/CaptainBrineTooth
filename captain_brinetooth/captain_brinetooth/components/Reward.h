@@ -4,7 +4,7 @@
 #include "box2d.h"
 #include "../ecs/Entity.h"
 
-class Reward :Component
+class Reward : public Component
 {
 public:
 	Reward();
@@ -21,6 +21,7 @@ private:
 	Entity* rightlimit;
 	bool catched;
 	Transform* tr_;
+	BoxCollider* collider_;
 	Vector2D speed;
 	void baitMovement();
 

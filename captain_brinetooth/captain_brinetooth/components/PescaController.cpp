@@ -8,10 +8,10 @@ void PescaController::init() {
 void PescaController::update() {
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
-			collider_->setSpeed(Vector2D(-1, collider_->getBody()->GetLinearVelocity().y));
+			collider_->setSpeed(Vector2D(-2, collider_->getBody()->GetLinearVelocity().y));
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
-			collider_->setSpeed(Vector2D(1, collider_->getBody()->GetLinearVelocity().y));
+			collider_->setSpeed(Vector2D(2, collider_->getBody()->GetLinearVelocity().y));
 		}
 	}
 }

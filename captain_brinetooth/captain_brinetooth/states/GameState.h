@@ -41,6 +41,7 @@
 #include "../components/GetAWeaponOnCollision.h"
 #include "../components/Gancho.h"
 #include "../components/Cuerda.h"
+#include "../components/Reward.h"
 #include "../components/PescaController.h"
 
 class Manager;
