@@ -44,6 +44,7 @@ public:
 			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
 			ReadDirectory("assets/maps/level_ends", roomsRead);
 
+			lvl = entity_->getComponent<Level0>();
 		}
 		else if (fase == 1) {
 			int roomsRead = 0;
@@ -63,7 +64,6 @@ public:
 		}
 
 		//Cacheamos el componente Level
-		lvl = entity_->getComponent<Level0>();
 
 		int tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 		//Testing
@@ -88,23 +88,39 @@ public:
 	}
 
 	void update() override{
+
+		//Cambia de habitación
 		if (gonTotravel){
 			TravelNextRoom(nextDir);
 			nextDir = -1;
 			gonTotravel = !gonTotravel;
 		}
 		
-	/*	if (zoneCompleted()) { 
-			init();
+		//Cambia de zona
+		if (travelZone) { 
 			setFase(fase + 1);
 			setNumRooms(10);
+			init();
+
+			entity_->removeComponent<MapCollider>();
+
+			for (Entity* ent : triggers) ent->setActive(false);
+			triggers.clear();
+
+			chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
 
 			Entity* player = entity_->getMngr()->getHandler<Player>();
 
 			tmx::Vector2f pos = lvl->getPlayerPos();
 
-			player->getComponent<BoxCollider>()->actPhyscialPos(pos.x, pos.y);
-		}*/
+			player->getComponent<BoxCollider>()->setPhysicalTransform(pos.x, pos.y, 0);
+
+			roomsExplored = 0;
+
+			travelZone = false;
+
+			lvl->traveled();
+		}
 	}
 
 	void TravelNextRoom(int dir) {
@@ -142,17 +158,7 @@ public:
 	int zone() { return fase; }
 
 	void travelNextZone() {
-		init();
-		setFase(fase + 1);
-		setNumRooms(10);
-
-		Entity* player = entity_->getMngr()->getHandler<Player>();
-
-		tmx::Vector2f pos = lvl->getPlayerPos();
-
-		player->getComponent<BoxCollider>()->actPhyscialPos(pos.x, pos.y);
-
-		roomsExplored = 0;
+		travelZone = true;
 	}
 private:
 
@@ -402,7 +408,7 @@ private:
 protected:
 	int nRooms, nRoomNames = 10;
 	int fase;		//Número de la zona en la que está el player
-	bool gonTotravel = false;
+	bool gonTotravel = false, travelZone = false;
 	int nextDir = -1;
 	//Opcion con struct
 	std::array<RoomNames, NUM_TILEMAPS> roomNames;

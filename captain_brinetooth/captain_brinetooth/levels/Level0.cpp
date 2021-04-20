@@ -183,8 +183,6 @@ void Level0::load(const string& path) {
 
 			for (auto& c : layer_objects) {
 				
-
-
 				tmx::Vector2f size(c.getAABB().width, c.getAABB().height);
 				//Obtenemos el tamaño del Trigger
 				connectionSize.push_back(size); 

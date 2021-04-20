@@ -67,6 +67,8 @@ public:
 	tmx::Vector2f getEnd() { return end; }
 
 	bool finalRoom() { return finalR; }
+
+	void traveled() { finalR = false; }
 	
 private:
 	string name_;

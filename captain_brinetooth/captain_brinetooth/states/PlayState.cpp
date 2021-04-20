@@ -140,7 +140,7 @@ void PlayState::update(){
 void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(4, 0);
+	map = nivel->addComponent<MapProcedural>(2, 0);
 	getMngr()->setHandler<Map>(nivel);
 }
 
