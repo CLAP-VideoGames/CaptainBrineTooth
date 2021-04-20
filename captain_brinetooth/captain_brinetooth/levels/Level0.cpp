@@ -45,12 +45,13 @@ void Level0::load(const string& path) {
 		for (tile* tile__ : tiles_) delete tile__;
 		tiles_.clear();
 	}
-
+	//Limpiamos todos los vectores.
 	if (tilesets_.size() > 0) tilesets_.clear();
-	if (connectionsNames.size() > 0)connectionsNames.clear();
 	if (enemiePos.size() > 0)enemiePos.clear();
-	if (connectionPos.size() > 0)connectionPos.clear();
 	if (points.size() > 0)points.clear();
+	if (connectionPos.size() > 0)connectionPos.clear();
+	if (connectionSize.size() > 0)connectionSize.clear();
+	if (connectionsNames.size() > 0)connectionsNames.clear();
 
 
 	//carga el mapa con TMXLite
@@ -160,9 +161,6 @@ void Level0::load(const string& path) {
 			for (auto& spawn : layer_objects) {
 				if (spawn.getName() == "player"){
 					playerPos = spawn.getPosition();
-
-					//playerPos.x /= sdlutils().getPPM();
-					//playerPos.y /= sdlutils().getPPM();
 				}
 				else {
 					tmx::Vector2f spa = spawn.getPosition();
@@ -180,28 +178,17 @@ void Level0::load(const string& path) {
 			auto layer_objects = object_layer->getObjects();
 
 			for (auto& c : layer_objects) {
-
-				tmx::Vector2f con = c.getPosition();
-
-				/*con.x += c.getPosition().x;
-				con.y += c.getPosition().y;*/
-
-				/*con.x /= sdlutils().getPPM();
-				con.y /= sdlutils().getPPM();*/
-
-				connectionPos.push_back(con);
-
-				connectionsNames.push_back(c.getName());
-
 				tmx::Vector2f size(c.getAABB().width, c.getAABB().height);
-
-
-				connectionSize.push_back(size);
-				//Te lo he comentado porque no compilaba <3 ptd: Joseda
-				/*auto* connectTrigger = entity_->getMngr()->addEntity();
-				connectTrigger->addComponent<Transform>(Vector2D(con.x,con.y), Vector2D(0,0), 200, 200, 0);
-				connectTrigger->addComponent<BoxCollider>();*/
-				//connectTrigger->setCollisionMethod()
+				//Obtenemos el tamaño del Trigger
+				connectionSize.push_back(size); 
+				//Al parecer el Trasform si que funciona apartir del punto central
+				// Asi que hay que posicionar el objeto sumandole la mitad de sus ejes
+				tmx::Vector2f con = c.getPosition();
+				con.x += (size.x/2);
+				con.y += (size.y/2);
+				connectionPos.push_back(con);
+				//Se obtiene el nombre de la capa
+				connectionsNames.push_back(c.getName());
 			}
 		}
 	}

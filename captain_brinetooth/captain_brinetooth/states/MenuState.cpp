@@ -69,12 +69,12 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 	//snd->playSoundEffect("gaviota");
 
 	StateMachine* sM = app->getStateMachine();
-	//sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd));
+	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd));
 
 	//----------
 	/*StateMachine* sM = app->getStateMachine();*/
 	
-	sM->changeState(new TestZoneState(app, sM->currentState()->getMngr()->getWorld(), snd));
+	//sM->changeState(new TestZoneState(app, sM->currentState()->getMngr()->getWorld(), snd));
 }
 
 void MenuState::changeToOptions(App* app, SoundManager* snd) {

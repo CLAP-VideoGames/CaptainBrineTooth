@@ -210,9 +210,9 @@ private:
 	Room* initializeNewRoom(const RoomNames& tag) {
 		cout << tag.name;
 		Room* r = new Room();
-		std::string test = "assets/maps/level_starts/Stile10.tmx";
+		/*std::string test = "assets/maps/level_rooms/NSWtile6.tmx";
+		lvl->load(test);*/
 		r->level = tag.path;
-
 		lvl->load(r->level);
 		
 		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
@@ -303,22 +303,22 @@ private:
 		if (dir != -1) {
 
 			switch (dir)
-		{
-		case 0:
-			oppDir = "S";
-			break;
-		case 1:
-			oppDir = "W";
-			break;
-		case 2:
-			oppDir = "N";
-			break;
-		case 3:
-			oppDir = "E";
-			break;
-		default:
-			break;
-		}
+			{
+			case 0:
+				oppDir = "S";
+				break;
+			case 1:
+				oppDir = "W";
+				break;
+			case 2:
+				oppDir = "N";
+				break;
+			case 3:
+				oppDir = "E";
+				break;
+			default:
+				break;
+			}
 		}
 
 		for (int i = 0; i < positions.size(); i++) {	

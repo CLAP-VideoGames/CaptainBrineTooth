@@ -16,7 +16,27 @@ PlayState::~PlayState(){
 }
 
 void PlayState::init() {
+
 	createLevel0();
+
+
+	/*float w = 252.63f;
+	float h = 101.48f;
+	Config floor{};
+	floor.pos = Vector2D(1064 + (w/2), 1086 + (h + (h/2)));
+	floor.vel = Vector2D(0, 0);
+	floor.size = Vector2D(w, h);
+	floor.friction = 0.0f;
+	floor.physicType = STATIC;
+	floor.fixedRotation = true;
+	floor.rotation = 0.0f;
+	floor.col = DEFAULT;
+	floor.colMask = DEFAULT_MASK;
+
+	auto* box_Floor = createBasicEntity(floor.pos, floor.size, floor.rotation, floor.vel);
+	box_Floor->addComponent<BoxCollider>(floor.physicType, floor.col, floor.colMask, floor.isTrigger, floor.friction, floor.fixedRotation, floor.rotation);*/
+
+
 
 	Config playerConfig{};
 	playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();

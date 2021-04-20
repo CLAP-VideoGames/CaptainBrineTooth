@@ -138,8 +138,8 @@ public:
 
 			//Ya que la posición de un objeto físico es el centro de la masa, tenemos que llevar el punto a la parte superior izquierda
 			//Le restamos la posición de la cámara
-			float x = round((body->GetPosition().x * sdlutils().getPPM()) - w / 2.0f) - App::camera.x;
-			float y = round((body->GetPosition().y * sdlutils().getPPM()) - w / 2.0f) - App::camera.y;
+			float x = round((body->GetPosition().x * sdlutils().getPPM()) - (w / 2.0f)) - App::camera.x;
+			float y = round((body->GetPosition().y * sdlutils().getPPM()) - (h / 2.0f)) - App::camera.y;
 			SDL_Rect dest = build_sdlrect(x, y, w, h);
 
 			SDL_RenderDrawRect(sdlutils().renderer(), &dest);

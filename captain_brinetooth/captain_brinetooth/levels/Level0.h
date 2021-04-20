@@ -69,22 +69,26 @@ private:
 	string name_;
 	int fils_, cols_,		// filas y columnas de 
 		tile_width_, tile_height_;
-	vector<tile*> tiles_;			// tiles a dibujar en pantalla
-	map<gid, Texture*> tilesets_;	// tilesets usados para dibujar el Tiled Map
 	std::shared_ptr<b2World> b2World_ = nullptr;
-	b2Body* body_ = nullptr;
-	b2Fixture* fixture_ = nullptr;
+
 
 	std::array<bool, 4> Cons;
-
-	vector<vector<tmx::Vector2f>> points;
-
+	//Posición base del player
 	tmx::Vector2f playerPos;
+
+	map<gid, Texture*> tilesets_;	// tilesets usados para dibujar el Tiled Map
+	vector<tile*> tiles_;			// tiles a dibujar en pantalla
+
+	//Puntos para las colisiones del mapa
+	vector<vector<tmx::Vector2f>> points;
+	//Enemigos
 	vector<tmx::Vector2f> enemiePos;
 
+	//Conexiones
 	vector<tmx::Vector2f> connectionPos;
+
+	vector<std::string> connectionsNames;
 
 	vector<tmx::Vector2f> connectionSize;
 
-	vector<std::string> connectionsNames;
 };
