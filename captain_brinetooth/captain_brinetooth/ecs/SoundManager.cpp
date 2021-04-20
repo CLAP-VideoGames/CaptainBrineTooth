@@ -5,42 +5,46 @@ void SoundManager::setGeneralVolume(int volume){
 	volumenGeneral = volume;
 
 	setMusicVolume(volumenGeneral);
-	setEffectsVolume(volumenGeneral);
+}
+
+void SoundManager::playMainMusic()
+{
+	sdlutils().musics().at(pauseMusic).setChannelVolume(0);
+	sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
+
+	sdlutils().musics().at(mainMusic).playforMusic();
+	sdlutils().musics().at(pauseMusic).playforMusic();
 }
 
 void SoundManager::setMusicVolume(int volume)
 {
-	volumenMusica = volume;
-	if (volumenMusica >= 0 && volumenMusica < 128)
+	if (volumenGeneral > volumenPausa)
 	{
-		sdlutils().musics().at(mainMusic).setChannelVolume(volumenMusica);
-	}
-	else
-	{
-		if (volumenMusica < 0) { volumenMusica = 0; }
-		else if (volumenMusica >= 128) { volumenMusica = 127; }
-	}
-}
-
-void SoundManager::setEffectsVolume(int volume)
-{
-	volumenEfectos = volume;
-	if (volumenEfectos >= 0 && volumenEfectos < 128)
-	{
-		std::map<std::string, SoundEffect>::iterator it = sdlutils().soundEffects().begin();
-		while (it != sdlutils().soundEffects().end())
+		volumenGeneral = volume;
+		if (volumenGeneral >= 0 && volumenGeneral < 128)
 		{
-			it->second.setChannelVolume(volumenEfectos);
-			++it;
+			sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
+		}
+		else
+		{
+			if (volumenGeneral < 0) { volumenGeneral = 0; }
+			else if (volumenGeneral >= 128) { volumenGeneral = 127; }
 		}
 	}
 	else
 	{
-		if (volumenEfectos < 0) { volumenEfectos = 0; }
-		else if (volumenEfectos >= 128) { volumenEfectos = 127; }
+		volumenPausa = volume;
+		if (volumenPausa >= 0 && volumenPausa < 128)
+		{
+			sdlutils().musics().at(pauseMusic).setChannelVolume(volumenPausa);
+		}
+		else
+		{
+			if (volumenPausa < 0) { volumenPausa = 0; }
+			else if (volumenPausa >= 128) { volumenPausa = 127; }
+		}
 	}
-
-
+	
 }
 
 void SoundManager::ChangeMainMusic(std::string newMusic)
@@ -56,19 +60,19 @@ void SoundManager::ChangeMainMusic(std::string newMusic)
 
 void SoundManager::playPauseMusic()
 {
-	//sdlutils().musics().at(mainMusic).pauseChannel();
+	volumenPausa = volumenGeneral;
+	volumenGeneral = 0;
 	sdlutils().musics().at(mainMusic).setChannelVolume(0);
-	//sdlutils().musics().at(mainMusic).resumeChannel();
 
 	
-	sdlutils().musics().at(pauseMusic).setChannelVolume(volumenGeneral);
-	//sdlutils().musics().at(pauseMusic).pauseChannel();
-	//sdlutils().musics().at(pauseMusic).resumeChannel();
-
+	sdlutils().musics().at(pauseMusic).setChannelVolume(volumenPausa);
 }
 
 void SoundManager::resumeMainMusic()
 {
+	volumenGeneral = volumenPausa;
+	volumenPausa = 0;
+
 	sdlutils().musics().at(pauseMusic).setChannelVolume(0);
 	sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
 }
