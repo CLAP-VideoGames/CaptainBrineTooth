@@ -39,6 +39,15 @@ inline SDL_Rect build_sdlrect(float x, float y, float w, float h) {
 	};
 }
 
+inline SDL_Color build_sdlcolor(int r, int g, int b , int a) {
+	return
+	{
+	 static_cast<Uint8>(r),
+	 static_cast<Uint8>(g),
+	 static_cast<Uint8>(b),
+	 static_cast<Uint8>(a)
+	};
+}
 /*
  * COLOR(hexnum)
  *
@@ -64,6 +73,7 @@ inline SDL_Color build_sdlcolor(unsigned long num) {
 inline SDL_Color build_sdlcolor(std::string strnum) {
 	return build_sdlcolor(stoul(strnum.erase(0, 2), nullptr, 16));
 }
+
 
 /*
  * COLOREXP(color)

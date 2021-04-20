@@ -96,7 +96,7 @@ void PlayState::init() {
 	int crabNumber = 3;
 	createWeaponGiver(crabGiverConfig, crabNumber);
 
-	/*Config elfShark{};
+	Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
 	elfShark.size = Vector2D(180.0f, 180.0f);
@@ -106,7 +106,7 @@ void PlayState::init() {
 	elfShark.rotation = 0.0f;
 	elfShark.col = ENEMY;
 	elfShark.colMask = ENEMY_MASK;
-	createElfShark(elfShark);*/
+	createElfShark(elfShark);
 
 	//Config flowerJellyHat{};
 	//flowerJellyHat.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
@@ -332,7 +332,7 @@ void PlayState::createElfShark(const Config& entityConfig){
 	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
 	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
-	elf1->addComponent<Enemy_Health>(300);
+	elf1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 #pragma endregion
 }
 
@@ -340,7 +340,7 @@ void PlayState::createFlowerJellyHat(const Config& entityConfig) {
 	auto* fjh1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
-	fjh1->addComponent<Enemy_Health>(300);
+	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }

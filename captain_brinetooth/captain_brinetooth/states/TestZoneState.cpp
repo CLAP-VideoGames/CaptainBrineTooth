@@ -248,7 +248,7 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 	gusano_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
-	gusano->addComponent<Enemy_Health>(300);
+	gusano->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 }
 void TestZoneState::createElfShark(const Config& entityConfig) {
 	auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
@@ -263,7 +263,7 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
 	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
-	elf1->addComponent<Enemy_Health>(300);
+	elf1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 }
 
 void TestZoneState::createPesca(const Config& entityConfig) {

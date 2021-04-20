@@ -33,9 +33,8 @@ public:
 		SDL_Rect rect = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
 
 		SDL_RenderFillRect(sdlutils().renderer(), &rect);
-
 	}
 private:
-	SDL_Color color_;
+	SDL_Color color_ = SDL_Color();
 	Transform *tr_;
 };

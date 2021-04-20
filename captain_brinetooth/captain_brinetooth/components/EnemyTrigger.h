@@ -28,6 +28,8 @@ public:
 
 	Entity* getParent() { return entity_; }	//Metodo para obtener las componentes del padre en las colisiones
 
+	Entity* getTriggerEntity() { return trigger; }	//Metodo para obtener el propio trigger
+	
 	//Anade cualquier componente necesario al trigger Entity
 	template<typename T, typename ...Ts>
 	void addTriggerComponent(Ts&&... args) { trigger->addComponent<T>(std::forward<Ts>(args)...); }
