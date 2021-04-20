@@ -69,11 +69,11 @@ public:
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_X)) {
 				//snd->ChangeMainMusic("adventure");
-				snd->setGeneralVolume(snd->GeneralVolume() - 5);
+				snd->setMusicVolume(snd->GeneralVolume() - 5);
 			}
 			else if (ih().isKeyDown(SDL_SCANCODE_Z)) {
 				//snd->ChangeMainMusic("adventure");
-				snd->setGeneralVolume(snd->GeneralVolume() + 5);
+				snd->setMusicVolume(snd->GeneralVolume() + 5);
 			}
 
 			//Para juego final añadir && canDash

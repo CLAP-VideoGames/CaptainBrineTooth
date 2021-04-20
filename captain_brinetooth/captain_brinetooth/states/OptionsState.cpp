@@ -28,7 +28,7 @@ void OptionsState::init(){
 	std::pair<Vector2D, Vector2D> size = {Vector2D(900, 50), Vector2D(100, 100)};
 	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.3));
 	Texture* textures[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
-	createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->GeneralVolume());
+	createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume());
 
 	size = {Vector2D(900, 50), Vector2D(100, 100)};
 	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.5));
@@ -74,7 +74,7 @@ void OptionsState::controlVolume(float value, Entity* ent){
 	SoundManager* snd = ent->getMngr()->getSoundMngr();
 	//Est� mmmuy alto
 	int newVol = value * (float)(snd->getMaxVol()/2);
-	snd->setGeneralVolume(newVol);
+	snd->setMusicVolume(newVol);
 }
 
 void OptionsState::controlBrightness(float value, Entity* ent){
