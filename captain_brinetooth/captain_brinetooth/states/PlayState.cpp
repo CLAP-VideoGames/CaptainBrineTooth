@@ -155,7 +155,7 @@ void PlayState::createPlayer(const Config& playerConfig){
 	//Animations
 	anim_controller->addAnimation("idle", &sdlutils().images().at("player_idle"), 4, 6, 24, 24, -1);
 	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
-	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 5, 20, 24, 0);
+	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 6, 24, 24, 0);
 	//Transitions
 	anim_controller->addTransition("idle", "run", "Speed", 1, false);
 	anim_controller->addTransition("run", "idle", "Speed", 0, false);

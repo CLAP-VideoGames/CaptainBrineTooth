@@ -2,11 +2,6 @@
 
 using namespace ColLayers;
 
-TestZoneState::TestZoneState(App* a , std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a,mundo,snd)
-{
-	
-}
-
 void TestZoneState::update() {
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	GameState::update();
@@ -16,11 +11,11 @@ void TestZoneState::init() {
 //-----Map-----
 #pragma region Map
 	//---BG----
-	//auto* bg = createBasicEntity(Vector2D(-2560,0),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
-	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	auto* bg = createBasicEntity(Vector2D(-2560,0),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
+	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
 
-	Config gancho{};
+	/*Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
@@ -30,9 +25,9 @@ void TestZoneState::init() {
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);
+	createPesca(gancho);*/
 
-	/*
+	
 	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
@@ -61,18 +56,18 @@ void TestZoneState::init() {
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
-	#pragma region Enemy1
-	Config Enemy1{};
-	Enemy1.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
-	Enemy1.vel = Vector2D(0, 0);
-	Enemy1.size = Vector2D(100.0f, 100.0f);
-	Enemy1.friction = 0.2f;
-	Enemy1.physicType = DYNAMIC;
-	Enemy1.fixedRotation = true;
-	Enemy1.rotation = 0.0f;
-	Enemy1.col = ENEMY;
-	Enemy1.colMask = ENEMY_MASK;
-	createEnemy1(Enemy1);
+	/*#pragma region PompeyWorm
+	Config pompeyWorm{};
+	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
+	pompeyWorm.vel = Vector2D(0, 0);
+	pompeyWorm.size = Vector2D(100.0f, 100.0f);
+	pompeyWorm.friction = 0.2f;
+	pompeyWorm.physicType = DYNAMIC;
+	pompeyWorm.fixedRotation = true;
+	pompeyWorm.rotation = 0.0f;
+	pompeyWorm.col = ENEMY;
+	pompeyWorm.colMask = ENEMY_MASK;
+	createPompeyWorm(pompeyWorm);
 	#pragma endregion
 	#pragma region ElfShark
 	/*Config elfShark{};
@@ -110,7 +105,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//Animations
 	anim_controller->addAnimation("idle", &sdlutils().images().at("player_idle"), 4, 6, 24, 24, -1);
 	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
-	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 5, 20, 24, 0);
+	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 6, 24, 24, 0);
 	//Transitions
 	anim_controller->addTransition("idle", "run", "Speed", 1, false);
 	anim_controller->addTransition("run", "idle", "Speed", 0, false);
@@ -223,7 +218,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<MachineGun>();
+	player->addComponent<Chainsaw>();
 
 	player->addComponent<LoseLife>();
 
@@ -239,7 +234,7 @@ void TestZoneState::createBoxFloor(const Config& entityConfig) {
 	box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
 }
 
-void TestZoneState::createEnemy1(const Config& enemy1Config)
+void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 {
 	auto* gusano = createBasicEntity(enemy1Config.pos, enemy1Config.size, enemy1Config.rotation, enemy1Config.vel);
 	gusano->addComponent<BoxCollider>(enemy1Config.physicType, enemy1Config.col, enemy1Config.colMask);
