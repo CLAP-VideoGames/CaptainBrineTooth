@@ -70,6 +70,24 @@
     <Filter Include="Archivos de origen\states">
       <UniqueIdentifier>{3831cd03-c2f7-41d4-9f1e-974a967f82f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\components\Enemies">
+      <UniqueIdentifier>{95417fce-c189-44f4-a969-002c61321aa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\components\Weapons">
+      <UniqueIdentifier>{a2b4b006-5cbf-4c31-8481-278fab6199b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\components\HUD">
+      <UniqueIdentifier>{047b30e5-b128-4459-8dfc-d74dadcf0d20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\components\Map">
+      <UniqueIdentifier>{2b1e3850-4fcb-497b-badc-807814fa9862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\components\Physics">
+      <UniqueIdentifier>{8770b328-6141-4fe6-ba1f-774f7a5bd095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\components\SpritesControl">
+      <UniqueIdentifier>{7e36d4be-af1f-40cf-9c11-7516ad694a7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,22 +180,13 @@
     <ClInclude Include="components\KeyBoardCtrl.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\Rectangle.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\Rotate.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\Transform.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\BoxCollider.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\Player_Health.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Armas_HUD.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\framework.h">
@@ -186,58 +195,16 @@
     <ClInclude Include="components\enemyMovement.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\RayCast.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="assets\assets.h">
       <Filter>Archivos de encabezado\assets</Filter>
     </ClInclude>
     <ClInclude Include="levels\Level0.h">
       <Filter>Archivos de encabezado\levels</Filter>
     </ClInclude>
-    <ClInclude Include="components\Chainsaw.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Animation.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\AnimBlendGraph.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\DamageCollisionCallbacks.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\LoseLife.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
-    <ClInclude Include="components\MapCollider.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Button.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Sword.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Hammer.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\CameraFollow.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\WeaponDamageDetection.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\ContactDamage.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\DisableOnExit.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="components\Enemy_Health.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\FringeHeadAtack.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="states\GameState.h">
@@ -261,61 +228,19 @@
     <ClInclude Include="game\CollisionLayers.h">
       <Filter>Archivos de encabezado\game</Filter>
     </ClInclude>
-    <ClInclude Include="components\DestroyOnCollision.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\MapProcedural.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Map.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\ElfSharkAttack.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\EnemyTrigger.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="states\PlayState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
     <ClInclude Include="states\PasueState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
-    <ClInclude Include="components\Crab.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
     <ClInclude Include="states\OptionsState.h">
       <Filter>Archivos de encabezado\states</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Image.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\MachineGun.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\JellyHatBehavior.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\PompeyWormAttack.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Inventory.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Slider.h">
-      <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="ecs\SoundManager.h">
       <Filter>Archivos de encabezado\ecs</Filter>
     </ClInclude>
     <ClInclude Include="components\Reward.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\Connections.h">
-      <Filter>Archivos de encabezado\components</Filter>
-    </ClInclude>
-    <ClInclude Include="components\GetAWeaponOnCollision.h">
       <Filter>Archivos de encabezado\components</Filter>
     </ClInclude>
     <ClInclude Include="components\Gancho.h">
@@ -326,6 +251,99 @@
     </ClInclude>
     <ClInclude Include="components\PescaController.h">
       <Filter>Archivos de encabezado\components</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ElfSharkAttack.h">
+      <Filter>Archivos de encabezado\components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="components\EnemyTrigger.h">
+      <Filter>Archivos de encabezado\components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="components\FringeHeadAtack.h">
+      <Filter>Archivos de encabezado\components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="components\JellyHatBehavior.h">
+      <Filter>Archivos de encabezado\components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Crab.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Chainsaw.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Hammer.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="components\MachineGun.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Sword.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Armas_HUD.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Button.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="components\CameraFollow.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Inventory.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Slider.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Map.h">
+      <Filter>Archivos de encabezado\components\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="components\MapCollider.h">
+      <Filter>Archivos de encabezado\components\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="components\MapProcedural.h">
+      <Filter>Archivos de encabezado\components\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Connections.h">
+      <Filter>Archivos de encabezado\components\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="components\DestroyOnCollision.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\DamageCollisionCallbacks.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\ContactDamage.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\BoxCollider.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\DisableOnExit.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\RayCast.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\WeaponDamageDetection.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\GetAWeaponOnCollision.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Animation.h">
+      <Filter>Archivos de encabezado\components\SpritesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="components\AnimBlendGraph.h">
+      <Filter>Archivos de encabezado\components\SpritesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Image.h">
+      <Filter>Archivos de encabezado\components\SpritesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Rectangle.h">
+      <Filter>Archivos de encabezado\components\SpritesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="components\PompeyWormAttack.h">
+      <Filter>Archivos de encabezado\components\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
