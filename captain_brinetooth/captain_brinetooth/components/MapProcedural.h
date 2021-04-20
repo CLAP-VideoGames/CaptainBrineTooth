@@ -98,9 +98,7 @@ public:
 		
 		//Cambia de zona
 		if (travelZone) { 
-			setFase(fase + 1);
-			setNumRooms(10);
-			init();
+			lvl->traveled();
 
 			entity_->removeComponent<MapCollider>();
 
@@ -108,6 +106,11 @@ public:
 			triggers.clear();
 
 			chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
+
+			setFase(fase + 1);
+			setNumRooms(10);
+			init();
+
 
 			Entity* player = entity_->getMngr()->getHandler<Player>();
 
@@ -119,7 +122,6 @@ public:
 
 			travelZone = false;
 
-			lvl->traveled();
 		}
 	}
 
