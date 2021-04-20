@@ -295,7 +295,9 @@ private:
 
 	void createConnectionTriggers(int dir) {
 		vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
+		vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
 		vector<std::string> names = lvl->getConNames();
+		
 		std::string oppDir = "";
 
 		if (dir != -1) {
@@ -322,19 +324,19 @@ private:
 		for (int i = 0; i < positions.size(); i++) {	
 			auto* t = entity_->getMngr()->addEntity();
 
-			Vector2D size;
+			//Vector2D size;
 			Vector2D pos(positions[i].x, positions[i].y);
 
 			//Tamaño en función de posición
-			if (names[i] == "N" || names[i] == "S") size.set(400, 50);
-			else size.set(50, 400);
+			/*if (names[i] == "N" || names[i] == "S") size.set(400, 50);
+			else size.set(50, 400);*/
 
 
 			if (names[i] == oppDir) {
 				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY(), 0);
 			}
 			else {
-				t->addComponent<Transform>(pos, Vector2D(0, 0), size.getX(), size.getY(), 0);
+				t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
 
 				t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 

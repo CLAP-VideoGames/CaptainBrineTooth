@@ -51,6 +51,9 @@ public:
 
 	vector<tmx::Vector2f> getConPos() { return connectionPos; }
 
+
+	vector<tmx::Vector2f> getConSize() { return connectionSize; }
+
 	std::vector<vector<tmx::Vector2f>> getVerticesList(){
 		return points;
 	}
@@ -60,6 +63,8 @@ public:
 	tmx::Vector2f getPlayerPos() { return playerPos; }
 	
 	vector<std::string> getConNames() {return connectionsNames; }
+
+	
 private:
 	string name_;
 	int fils_, cols_,		// filas y columnas de 
@@ -78,6 +83,8 @@ private:
 	vector<tmx::Vector2f> enemiePos;
 
 	vector<tmx::Vector2f> connectionPos;
+
+	vector<tmx::Vector2f> connectionSize;
 
 	vector<std::string> connectionsNames;
 };
