@@ -10,7 +10,7 @@
 //La clase más monstruosa que he hecho en mi vida, no quiero volver a saber nada de ella nunca, no me hago responsable
 //Del daño que le cause a otras personas, pido perdon a la raza humana por crear este monstruo
 namespace fs = std::filesystem;
-const int NUM_TILEMAPS = 25;
+const int NUM_TILEMAPS = 40;
 /// <summary>
 /// Crea las habitaciones del mapa y controla sus conexiones. Aplica el componente MapCollider para el manejo de colisiones
 /// </summary>
