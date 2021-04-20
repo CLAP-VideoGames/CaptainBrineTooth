@@ -109,9 +109,6 @@ void App::start() {
 		//Refrescamos las entidades
 		stateMachine->currentState()->refresh();
 
-
-
-
 		sdlutils().clearRenderer();
 		SDL_RenderSetLogicalSize(sdlutils().renderer(), window.getX() * camera_Zoom_Out, window.getY()* camera_Zoom_Out);
 		//Renderizamos las entidades

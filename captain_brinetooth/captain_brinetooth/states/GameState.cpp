@@ -5,8 +5,8 @@
 
 GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) {
 	app = a;
-	manager_ = new Manager(mundo, snd, popped);
 	popped = false;
+	manager_ = new Manager(mundo, snd, &popped);
 }
 GameState::~GameState() {
 	//Se tiene que borrar el manager de cada Estado
