@@ -13,7 +13,7 @@
 
 class Manager {
 public:
-	Manager(std::shared_ptr<b2World> mundo, SoundManager* snd, bool& pop);
+	Manager(std::shared_ptr<b2World> mundo, SoundManager* snd, bool* pop);
 	virtual ~Manager();
 
 	// entities

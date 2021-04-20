@@ -4,9 +4,10 @@
 
 #include <algorithm>
 
-Manager::Manager(std::shared_ptr<b2World> mundo, SoundManager* snd_, bool& pop) {
+Manager::Manager(std::shared_ptr<b2World> mundo, SoundManager* snd_, bool* pop) {
 	snd = snd_;
 	world_ = mundo;
+	popped = pop;
 }
 
 Manager::~Manager() {
@@ -36,7 +37,7 @@ void Manager::refresh() {
 
 void Manager::update() {
 	auto n = entities_.size();
-	for (auto i = 0u; i < n && !popped; i++)
+	for (auto i = 0u; i < n && !(*popped); i++)
 		entities_[i]->update();
 }
 

@@ -142,8 +142,6 @@ public:
 			//Copiamos cada uno de los valores en cada una de las posiciones del array
 			int j;
 
-			
-
 			for (j = 0; j < newBody.sizeVs; j++) {
 				if (sdlutils().getConsoleDebug())
 					std::cout << verticesVector[i][j].x << " " << verticesVector[i][j].y << std::endl;
