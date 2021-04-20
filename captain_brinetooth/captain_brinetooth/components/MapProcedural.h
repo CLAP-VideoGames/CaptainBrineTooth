@@ -33,6 +33,8 @@ public:
 		//NECESITO SABER LA DIRECCION DE MEMORIA
 		//Igual puedo meter los directorios en un array
 		//Leeemos los distintos directorios
+		
+
 		if (fase == 0) {
 			int roomsRead = 0;
 			ReadDirectory("assets/maps/level_starts",roomsRead);
@@ -90,6 +92,12 @@ public:
 			nextDir = -1;
 			gonTotravel = !gonTotravel;
 		}
+
+		if (zoneCompleted()) { 
+			init();
+			setFase(fase + 1);
+			setNumRooms(10);
+		}
 	}
 
 	void TravelNextRoom(int dir) {
@@ -116,12 +124,20 @@ public:
 		getConec(actualRoom->getName(), actualRoom->cons);
 		//Creamos habitaciones en funci�n de las conexiones que tiene
 		CreateConnections(actualRoom, actualRoom->cons, dir);
+
+		roomsExplored++;
+
+		std::cout << roomsExplored << "\n";
 	}
 
-	bool zoneCompleted() { return roomsExplored = nRooms; }
+	bool zoneCompleted() { return roomsExplored == nRooms; }
 
 	int zone() { return fase; }
 private:
+
+	void setFase(int f) { fase = f; }
+
+	void setNumRooms(int nR) { nRooms = nR; }
 
 	static void travel(b2Contact* contact) {
 		Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
@@ -220,12 +236,11 @@ private:
 
 	Room* initializeRoom(Room* partida, int dir) {
 		int tile;
-		if (roomsExplored == nRooms) return nullptr;
 		//Tenemos que reconocer donde est�n los extremos, para poder poner habitaciones lim�trofes
 		//Y tambi�n deber�amos crear los colliders desde level, btw
 		if (roomsExplored == nRooms - 1) {
 			//Habitaci�n final
-			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size()+1);
+			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
 		}
 		else {
 			//Habitación intermedia
@@ -240,8 +255,13 @@ private:
 		if (opositeDir >= 4) opositeDir = opositeDir - 4;
 
 		bool concuerda = (roomNames[tile].name[opositeDir] == cardinals[opositeDir]);
-		while (roomNames[tile].used || !concuerda) {
-			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
+
+
+		//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
+		while (!concuerda) {
+
+			if (roomsExplored == nRooms - 1) tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size()); 
+			else tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
 
 			int i = 0;
 			//Comprobamos que tiene conexión por el cardinal opuesto
@@ -252,7 +272,7 @@ private:
 		//Si la habitaci�n tiene una conexi�n, la del otro lado tiene que tener conexi�n opuesta
 		//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcci�n que pareces tonto
 
-
+		roomNames[tile].used = true;
 		r->level = roomNames[tile].path;
 
 		/*if (partida->conections[0] != nullptr) r->level = "assets/maps/" + tile;
@@ -266,15 +286,18 @@ private:
 	}
 
 	void getConec(const string& name, std::array<bool,4>& cons) {
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) 
 				if (name[i] == cardinals[j]) cons[j] = true;
+		}
 	}
 
 
 	void createConnectionTriggers(int dir) {
 		vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
+		vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
 		vector<std::string> names = lvl->getConNames();
+		
 		std::string oppDir = "";
 
 		if (dir != -1) {
@@ -301,14 +324,19 @@ private:
 		for (int i = 0; i < positions.size(); i++) {	
 			auto* t = entity_->getMngr()->addEntity();
 
-			Vector2D size(400, 400);
+			//Vector2D size;
 			Vector2D pos(positions[i].x, positions[i].y);
+
+			//Tamaño en función de posición
+			/*if (names[i] == "N" || names[i] == "S") size.set(400, 50);
+			else size.set(50, 400);*/
+
 
 			if (names[i] == oppDir) {
 				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY(), 0);
 			}
 			else {
-				t->addComponent<Transform>(pos, Vector2D(0, 0), size.getX(), size.getY(), 0);
+				t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
 
 				t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
@@ -335,7 +363,7 @@ protected:
 	std::array<RoomNames, NUM_TILEMAPS> roomNames;
 
 	//Numero de habitaciones exploradas
-	int roomsExplored = 0;
+	int roomsExplored = 1;
 
 	//Habitacion actual
 	Room* actualRoom;

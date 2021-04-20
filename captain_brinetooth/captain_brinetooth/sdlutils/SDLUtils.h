@@ -17,6 +17,7 @@
 
 const double PPM = 200;
 const bool DEBUG = true;
+const bool CONSOLE_DEBUG = false;
 
 class SDLUtils: public Singleton<SDLUtils> {
 
@@ -82,6 +83,10 @@ public:
 
 	inline bool getDebug() {
 		return DEBUG;
+	}
+	
+	inline bool getConsoleDebug() {
+		return CONSOLE_DEBUG;
 	}
 
 	inline float lerp(float a, float b, float t) {

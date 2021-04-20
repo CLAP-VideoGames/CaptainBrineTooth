@@ -61,10 +61,7 @@ void MenuState::init() {
 }
 
 void MenuState::update() {
-
 	GameState::update();
-
-	
 }
 
 void MenuState::changeToGame(App* app, SoundManager* snd) {

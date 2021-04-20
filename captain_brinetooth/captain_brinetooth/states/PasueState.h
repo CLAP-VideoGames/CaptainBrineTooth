@@ -12,13 +12,19 @@ public:
 	virtual void render() const;
 	virtual void update();
 
+	//CallBacks
 	static void backToGame(App* app, SoundManager* snd);
 	static void backToMenu(App* app, SoundManager* snd);
-	GameState* stRend;
+	static void pushOptionsPanel(App* app, SoundManager* snd);
+	static void pushPausePanel(App* app, SoundManager* snd);
+	//Creacion de Paneles
+	void createButton(Texture* t, float& multiplier, Vector2D& pos,void(*callback)(App*, SoundManager*));
+	void createOptionPanel();
+	void createBasePanel();
 
 private:
-
 	void clearPanel();
 	std::vector<Entity*> panel;
 	SDL_Rect cam;
+	GameState* stRend;
 };

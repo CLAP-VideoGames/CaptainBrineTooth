@@ -158,8 +158,7 @@ void Level0::load(const string& path) {
 			auto layer_objects = object_layer->getObjects();
 
 			for (auto& spawn : layer_objects) {
-				if (spawn.getName() == "player")
-				{
+				if (spawn.getName() == "player"){
 					playerPos = spawn.getPosition();
 
 					//playerPos.x /= sdlutils().getPPM();
@@ -194,6 +193,10 @@ void Level0::load(const string& path) {
 
 				connectionsNames.push_back(c.getName());
 
+				tmx::Vector2f size(c.getAABB().width, c.getAABB().height);
+
+
+				connectionSize.push_back(size);
 				//Te lo he comentado porque no compilaba <3 ptd: Joseda
 				/*auto* connectTrigger = entity_->getMngr()->addEntity();
 				connectTrigger->addComponent<Transform>(Vector2D(con.x,con.y), Vector2D(0,0), 200, 200, 0);
