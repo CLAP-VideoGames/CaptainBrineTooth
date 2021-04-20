@@ -33,6 +33,8 @@ public:
 		//NECESITO SABER LA DIRECCION DE MEMORIA
 		//Igual puedo meter los directorios en un array
 		//Leeemos los distintos directorios
+		
+
 		if (fase == 0) {
 			int roomsRead = 0;
 			ReadDirectory("assets/maps/level_starts",roomsRead);
@@ -90,6 +92,12 @@ public:
 			nextDir = -1;
 			gonTotravel = !gonTotravel;
 		}
+
+		if (zoneCompleted()) { 
+			init();
+			setFase(fase + 1);
+			setNumRooms(10);
+		}
 	}
 
 	void TravelNextRoom(int dir) {
@@ -122,10 +130,14 @@ public:
 		std::cout << roomsExplored << "\n";
 	}
 
-	bool zoneCompleted() { return roomsExplored = nRooms; }
+	bool zoneCompleted() { return roomsExplored == nRooms; }
 
 	int zone() { return fase; }
 private:
+
+	void setFase(int f) { fase = f; }
+
+	void setNumRooms(int nR) { nRooms = nR; }
 
 	static void travel(b2Contact* contact) {
 		Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;

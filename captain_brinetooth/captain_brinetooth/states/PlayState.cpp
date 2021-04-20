@@ -112,13 +112,6 @@ void PlayState::update(){
 	}
 	GameState::update();
 
-	/*if (map->zoneCompleted()) {
-		int nextZone = map->zone() + 1;
-
-		delete map;
-
-		map = new MapProcedural(10, nextZone);
-	}*/
 }
 
 /// <summary>

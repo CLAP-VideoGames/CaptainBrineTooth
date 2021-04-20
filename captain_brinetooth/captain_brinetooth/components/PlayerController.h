@@ -76,7 +76,8 @@ public:
 				snd->setGeneralVolume(snd->GeneralVolume() + 5);
 			}
 
-			if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing && canDash) {
+			//Para juego final añadir && canDash
+			if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing ) {
 				gravity = collider_->getBody()->GetGravityScale();
 				collider_->getBody()->SetGravityScale(0.0f);
 				collider_->setSpeed(Vector2D(0, 0));
