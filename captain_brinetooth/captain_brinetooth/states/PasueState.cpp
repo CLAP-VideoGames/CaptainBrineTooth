@@ -26,11 +26,13 @@ void PauseState::update() {
 }
 
 void PauseState::backToGame(App* app, SoundManager* snd) {
+	snd->resumeMainMusic();
 	StateMachine* sM = app->getStateMachine();
 	sM->popState();
 }
 
 void PauseState::backToMenu(App* app, SoundManager* snd) {
+	snd->ChangeMainMusic("Menu");
 	StateMachine* sM = app->getStateMachine();
 	Manager* mngr = sM->currentState()->getMngr();
 	sM->popState();
@@ -46,22 +48,33 @@ void PauseState::pushOptionsPanel(App* app, SoundManager* snd) {
 }
 
 void PauseState::createOptionPanel() {
-	std::pair<Vector2D, Vector2D> size = { Vector2D(900, 50), Vector2D(100, 100) };
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.3));
+	// Volumen
+	std::pair<Vector2D, Vector2D> size = { Vector2D(900, 100), Vector2D(200, 200) };
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.2));
 	Texture* textures[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 
-	Entity* volume = OptionsState::createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->GeneralVolume());
+	Entity* volume = OptionsState::createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume());
 	panel.push_back(volume);
 
-	size = { Vector2D(900, 50), Vector2D(100, 100) };
+	// Efectos de sonido
+	size = { Vector2D(900, 100), Vector2D(200, 200) };
 	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.5));
+	Texture* textures1[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
+
+	Entity* effects = OptionsState::createEffects(manager_, pos, size, textures, manager_->getSoundMngr()->EffectsVolume());
+	panel.push_back(effects);
+
+	// Brillo
+	size = { Vector2D(900, 100), Vector2D(200, 200) };
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.75));
 	Texture* textures2[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 	Entity* brightness = OptionsState::createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()));
 	panel.push_back(brightness);
 
+	// Boton Volver
 	Texture* t = &sdlutils().msgs().at("Return");
 	float multiplier = 2;
-	pos = Vector2D((cam.w * 0.5f), cam.h * 0.8);
+	pos = Vector2D((cam.w * 0.2f), cam.h * 0.8);
 	createButton(t, multiplier, pos, pushPausePanel);
 }
 

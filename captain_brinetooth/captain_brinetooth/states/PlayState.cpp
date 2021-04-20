@@ -126,6 +126,7 @@ void PlayState::update(){
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDLK_p)) {
+			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
 			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
 		}

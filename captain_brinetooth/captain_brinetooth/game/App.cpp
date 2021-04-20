@@ -26,7 +26,7 @@ App::App() {
 	world_ = make_shared<b2World>(gravity);
 
 
-	SoundManager* sndProvisional = new SoundManager(0, "FinalBoss");
+	SoundManager* sndProvisional = new SoundManager(0, "Menu");
 	//----Inicio por defecto----
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
