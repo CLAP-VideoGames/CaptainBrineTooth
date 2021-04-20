@@ -7,7 +7,8 @@
 #include <map>
 #include "../components/Connections.h"
 //Los mapas, los vertices de colision tienen que ser en sentido horario
-
+//La clase más monstruosa que he hecho en mi vida, no quiero volver a saber nada de ella nunca, no me hago responsable
+//Del daño que le cause a otras personas, pido perdon a la raza humana por crear este monstruo
 namespace fs = std::filesystem;
 const int NUM_TILEMAPS = 25;
 /// <summary>
@@ -92,12 +93,18 @@ public:
 			nextDir = -1;
 			gonTotravel = !gonTotravel;
 		}
-
-		if (zoneCompleted()) { 
+		
+	/*	if (zoneCompleted()) { 
 			init();
 			setFase(fase + 1);
 			setNumRooms(10);
-		}
+
+			Entity* player = entity_->getMngr()->getHandler<Player>();
+
+			tmx::Vector2f pos = lvl->getPlayerPos();
+
+			player->getComponent<BoxCollider>()->actPhyscialPos(pos.x, pos.y);
+		}*/
 	}
 
 	void TravelNextRoom(int dir) {
@@ -112,7 +119,7 @@ public:
 
 		Entity* player = entity_->getMngr()->getHandler<Player>();
 
-		player->getComponent<BoxCollider>()->actPhyscialPos(-300,-30);
+		//player->getComponent<BoxCollider>()->actPhyscialPos(-300,-30);
 
 		for (Entity* ent : triggers) ent->setActive(false);
 		triggers.clear();
@@ -133,6 +140,20 @@ public:
 	bool zoneCompleted() { return roomsExplored == nRooms; }
 
 	int zone() { return fase; }
+
+	void travelNextZone() {
+		init();
+		setFase(fase + 1);
+		setNumRooms(10);
+
+		Entity* player = entity_->getMngr()->getHandler<Player>();
+
+		tmx::Vector2f pos = lvl->getPlayerPos();
+
+		player->getComponent<BoxCollider>()->actPhyscialPos(pos.x, pos.y);
+
+		roomsExplored = 0;
+	}
 private:
 
 	void setFase(int f) { fase = f; }
@@ -160,6 +181,17 @@ private:
 		m->getComponent<MapProcedural>()->setTravel(true, dir);
 	}
 
+	static void travelNextZone(b2Contact* contact) {
+		Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+
+		if (trigger == trigger->getMngr()->getHandler<Player>()) {
+			trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		}
+
+		auto* m = trigger->getMngr()->getHandler<Map>();
+
+		m->getComponent<MapProcedural>()->travelNextZone();
+	}
 
 	void ReadDirectory(const string& p, int& roomsRead) {
 		std::string path = p;
@@ -292,7 +324,7 @@ private:
 		}
 	}
 
-
+	//Que sea lo que Dios quiera
 	void createConnectionTriggers(int dir) {
 		vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
 		vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
@@ -327,10 +359,6 @@ private:
 			//Vector2D size;
 			Vector2D pos(positions[i].x, positions[i].y);
 
-			//Tamaño en función de posición
-			/*if (names[i] == "N" || names[i] == "S") size.set(400, 50);
-			else size.set(50, 400);*/
-
 
 			if (names[i] == oppDir) {
 				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY(), 0);
@@ -349,6 +377,23 @@ private:
 
 
 			//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
+
+		}
+
+		if (lvl->finalRoom()) {
+			auto end = lvl->getEnd();
+
+			auto* t = entity_->getMngr()->addEntity();
+
+			Vector2D pos(end.x, end.y);
+
+			t->addComponent<Transform>(pos, Vector2D(0, 0), 200, 200, 0);
+
+			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+
+			t->setCollisionMethod(travelNextZone);
+
+			triggers.push_back(t);
 
 		}
 	}

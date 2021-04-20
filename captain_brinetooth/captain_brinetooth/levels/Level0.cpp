@@ -162,6 +162,10 @@ void Level0::load(const string& path) {
 				if (spawn.getName() == "player"){
 					playerPos = spawn.getPosition();
 				}
+				else if (spawn.getName() == "end") {
+					end = spawn.getPosition();
+					finalR = true;
+				}
 				else {
 					tmx::Vector2f spa = spawn.getPosition();
 
@@ -178,6 +182,9 @@ void Level0::load(const string& path) {
 			auto layer_objects = object_layer->getObjects();
 
 			for (auto& c : layer_objects) {
+				
+
+
 				tmx::Vector2f size(c.getAABB().width, c.getAABB().height);
 				//Obtenemos el tamaño del Trigger
 				connectionSize.push_back(size); 

@@ -29,7 +29,7 @@
   <object id="6" name="E" x="1833.2" y="557.085" width="71.2551" height="341.161"/>
  </objectgroup>
  <objectgroup id="4" name="spawns">
-  <object id="4" name="end" x="384" y="512">
+  <object id="4" name="end" x="427.185" y="462.337">
    <point/>
   </object>
  </objectgroup>

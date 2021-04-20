@@ -64,6 +64,9 @@ public:
 	
 	vector<std::string> getConNames() {return connectionsNames; }
 
+	tmx::Vector2f getEnd() { return end; }
+
+	bool finalRoom() { return finalR; }
 	
 private:
 	string name_;
@@ -91,4 +94,7 @@ private:
 
 	vector<tmx::Vector2f> connectionSize;
 
+
+	tmx::Vector2f end;
+	bool finalR = false;
 };
