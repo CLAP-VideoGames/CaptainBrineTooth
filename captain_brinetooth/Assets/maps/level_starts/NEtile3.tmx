@@ -26,10 +26,10 @@
 </data>
  </layer>
  <objectgroup id="3" name="conx">
-  <object id="13" name="N" x="1152" y="64">
+  <object id="13" name="N" x="1171.43" y="124.459">
    <point/>
   </object>
-  <object id="14" name="E" x="1856" y="768">
+  <object id="14" name="E" x="1858.16" y="714.019">
    <point/>
   </object>
  </objectgroup>

@@ -322,8 +322,13 @@ private:
 		for (int i = 0; i < positions.size(); i++) {	
 			auto* t = entity_->getMngr()->addEntity();
 
-			Vector2D size(400, 400);
+			Vector2D size;
 			Vector2D pos(positions[i].x, positions[i].y);
+
+			//Tamaño en función de posición
+			if (names[i] == "N" || names[i] == "S") size.set(400, 50);
+			else size.set(50, 400);
+
 
 			if (names[i] == oppDir) {
 				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY(), 0);
