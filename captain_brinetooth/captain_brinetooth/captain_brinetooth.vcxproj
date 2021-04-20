@@ -160,6 +160,7 @@
     <ClInclude Include="components\Button.h" />
     <ClInclude Include="components\CameraFollow.h" />
     <ClInclude Include="components\Connections.h" />
+    <ClInclude Include="components\Cuerda.h" />
     <ClInclude Include="components\Gancho.h" />
     <ClInclude Include="components\GetAWeaponOnCollision.h" />
     <ClInclude Include="components\Inventory.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="components\MachineGun.h" />
     <ClInclude Include="components\Map.h" />
     <ClInclude Include="components\MapProcedural.h" />
+    <ClInclude Include="components\PescaController.h" />
     <ClInclude Include="components\PlayerController.h" />
     <ClInclude Include="components\Player_Health.h" />
     <ClInclude Include="components\Crab.h" />
@@ -242,6 +244,7 @@
     <ClCompile Include="components\Chainsaw.cpp" />
     <ClCompile Include="components\Connections.cpp" />
     <ClCompile Include="components\ContactDamage.cpp" />
+    <ClCompile Include="components\Cuerda.cpp" />
     <ClCompile Include="components\ElfSharkAttack.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
     <ClCompile Include="components\Enemy_Health.cpp" />
@@ -252,6 +255,7 @@
     <ClCompile Include="components\JellyHatBehavior.cpp" />
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\MachineGun.cpp" />
+    <ClCompile Include="components\PescaController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="components\Crab.cpp" />
     <ClCompile Include="components\PompeyWormAttack.cpp" />

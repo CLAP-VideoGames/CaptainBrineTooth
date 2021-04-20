@@ -40,6 +40,8 @@
 #include "../components/Inventory.h"
 #include "../components/GetAWeaponOnCollision.h"
 #include "../components/Gancho.h"
+#include "../components/Cuerda.h"
+#include "../components/PescaController.h"
 
 class Manager;
 class App;

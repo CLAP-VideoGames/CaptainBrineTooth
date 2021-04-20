@@ -21,7 +21,7 @@ void TestZoneState::init() {
 	//---------
 
 	Config gancho{};
-	gancho.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
+	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
 	gancho.friction = 0.2f;
@@ -270,10 +270,38 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 }
 
 void TestZoneState::createPesca(const Config& entityConfig) {
+	
+
+	auto* floor = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() * 2), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
+	AnimBlendGraph* floor_anim_controller = floor->addComponent<AnimBlendGraph>();
+	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
+
+	auto* floor2 = createBasicEntity(Vector2D(sdlutils().width(), 0), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
+	AnimBlendGraph* floor2_anim_controller = floor2->addComponent<AnimBlendGraph>();
+	floor2_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	floor2->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
+	
+
+	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15,-30), Vector2D(16, 16), 0.0f, Vector2D(0, 0));
+	AnimBlendGraph* cuerda_anim_controller = cuerda->addComponent<AnimBlendGraph>();
+	cuerda_anim_controller->addAnimation("cuerda", &sdlutils().images().at("cuerda"), 1, 1, 1, 1, 0);
+	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
+	cuerda->addComponent<Cuerda>();
+	cuerda->addComponent<PescaController>();
+
+	auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
+	AnimBlendGraph* player_anim_controller = player->addComponent<AnimBlendGraph>();
+	player_anim_controller->addAnimation("player", &sdlutils().images().at("player_cana"), 1, 1, 1, 1, 0);
+	BoxCollider* playercollider_ = player->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
+	playercollider_->getFixture()->SetSensor(true);
+	player->addComponent<PescaController>();
+
 	auto* gancho = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* gancho_anim_controller = gancho->addComponent<AnimBlendGraph>();
 	gancho_anim_controller->addAnimation("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
 	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	gancho->addComponent<Gancho>();
+	gancho->addComponent<PescaController>();
 }
 

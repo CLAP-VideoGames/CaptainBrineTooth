@@ -43,5 +43,5 @@ bool Gancho::hasBaitRef()
 void Gancho::hookMovement()
 {
 	//Speed has now a value in order to move again 
-	hookBody->setSpeed(Vector2D(0, 0.5F));
+	hookBody->setSpeed(Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0.65f));
 }

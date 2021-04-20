@@ -46,6 +46,8 @@ class JellyHatBehavior;
 class Connections;
 class Inventory;
 class GetAWeaponOnCollision;
+class Cuerda;
+class PescaController;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -90,7 +92,9 @@ class GetAWeaponOnCollision;
 	Connections,\
 	JellyHatBehavior,\
 	Inventory,\
-	GetAWeaponOnCollision
+	GetAWeaponOnCollision,\
+	Cuerda,\
+	PescaController
 
 // groups
 
