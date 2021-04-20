@@ -14,6 +14,7 @@ void Reward::init()
 
 	collider_ = entity_->getComponent<BoxCollider>();
 	assert(collider_ != nullptr);
+
 	collider_->getBody()->SetGravityScale(0.0f);
 	collider_->setSpeed(Vector2D(-2, 0));
 	collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
@@ -67,4 +68,9 @@ void Reward::giveReward()
 {
 	//We should make a component to give reward
 	//Player gets the object 
+
+	//entity_->GetComponent<Premio>()->giveObjecttoPlayer()
+	//{
+	// return objetAssociated;
+	//}
 }

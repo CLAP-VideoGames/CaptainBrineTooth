@@ -283,12 +283,7 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	floor2->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 	
 
-	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15,-30), Vector2D(16, 16), 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* cuerda_anim_controller = cuerda->addComponent<AnimBlendGraph>();
-	cuerda_anim_controller->addAnimation("cuerda", &sdlutils().images().at("cuerda"), 1, 1, 1, 1, 0);
-	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
-	cuerda->addComponent<Cuerda>();
-	cuerda->addComponent<PescaController>();
+
 
 	auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* player_anim_controller = player->addComponent<AnimBlendGraph>();
@@ -309,5 +304,16 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 	reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	reward0->addComponent<Reward>();
+
+
+	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15, -30), Vector2D(16, 16), 0.0f, Vector2D(0, 0));
+	AnimBlendGraph* cuerda_anim_controller = cuerda->addComponent<AnimBlendGraph>();
+	cuerda_anim_controller->addAnimation("cuerda", &sdlutils().images().at("cuerda"), 1, 1, 1, 1, 0);
+	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
+	cuerda->addComponent<Cuerda>(gancho);
+	cuerda->addComponent<PescaController>();
+	cuerda->getMngr()->setHandler<Rod>(cuerda);
+
+
 }
 

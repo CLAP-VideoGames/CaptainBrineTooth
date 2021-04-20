@@ -103,6 +103,8 @@ struct Group_1;
 
 // handlers
 struct Player;
+struct Rod;
 struct Map;
 #define _HDLRS_LIST_ Player, \
-					Map
+					Map,\
+                    Rod

@@ -4,6 +4,7 @@
 #include "./BoxCollider.h"
 #include "../ecs/Entity.h"
 
+
 class Gancho : public Component
 {
 public :
@@ -13,10 +14,12 @@ public :
 	void update() override;
 	bool hasBaitRef();
 	void setBaitReference(Entity* b) { baitRef = b; }
-	
+	int getContactId() { return contactid; } //In order to know wether  has contact with the top of the rod or with the down floor
 
 private:
 
+	int contactid;  // 1- Floor //2- Top of the rod //0- is in movement
+	bool move;
 	float moveTime;         //CurrRealTime
 	float timetoMove = 300;       //Definded time 
 	BoxCollider* hookBody;
@@ -25,8 +28,7 @@ private:
 	//Collision check with top and floor
 	static void contactWithSomething(b2Contact* contact);
 	void hookMovement();   //Check contacts at time
-	void checkForBait(); //In order to find ait to obtain points /weapons...etc
-	void getBaitReference(Entity* b);
+	void collisionAnswer(Entity* contactedfloor); //In order to find ait to obtain points /weapons...etc
 	void setSpeed(int amount) { speed* amount; }
 };
 

@@ -6,14 +6,15 @@
 #include "BoxCollider.h"
 class Cuerda : public Component {
 public:
-	Cuerda();
+	Cuerda(Entity* h);
 	virtual ~Cuerda() {};
 	void init() override;
 	void update() override;
 
-	void cuerdaMovement();
-
+	void cuerdaDownMovement();
+	void cuerdaUpMovement();
 private:
 	Transform* tr_ = nullptr;
 	BoxCollider* collider_ = nullptr;
+	Entity* hook;
 };
