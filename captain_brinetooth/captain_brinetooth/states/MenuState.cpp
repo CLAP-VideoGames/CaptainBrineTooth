@@ -14,13 +14,13 @@ MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) 
 
 void MenuState::init() {
 	auto* fondo = manager_->addEntity();
-	SDL_Rect posImage;
-	posImage.x = 0;
-	posImage.y = 0;
-	posImage.w = cam.w;
-	posImage.h = cam.h;
+	SDL_Rect rectPos;
+	rectPos.x = 0;
+	rectPos.y = 0;
+	rectPos.w = cam.w;
+	rectPos.h = cam.h;
 
-	fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), posImage, "fondoMenu");
+	fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), rectPos, "fondoMenu");
 
 	manager_->getSoundMngr()->setGeneralVolume(63.5);
 	manager_->getSoundMngr()->playMainMusic();
@@ -28,9 +28,13 @@ void MenuState::init() {
 
 	// Titulo
 	auto* title = manager_->addEntity();
-	title->addComponent<Transform>(Vector2D((cam.w / 3.1) - 50, 80), Vector2D(0, 0), cam.w - (cam.w / 9), cam.h - (cam.h / 2), 0.0f);
+	title->addComponent<Transform>(Vector2D((cam.w / 3.1) - 50, 80), Vector2D(0, 0), cam.w - (cam.w / 9), cam.h - (cam.h / 2.5), 0.0f);
+	rectPos.x = (cam.w / 4) - 50;
+	rectPos.y = 80;
+	rectPos.w = cam.w - (cam.w / 2.5);
+	rectPos.h = cam.h - (cam.h / 1.5);
+	title->addComponent<Image>(&sdlutils().images().at("titulo"), rectPos, "titulo");
 
-	title->addComponent<Button>(&sdlutils().images().at("titulo"), changeToGame, app, manager_->getSoundMngr());
 
 	// Posicion y altura del titulo para ajustar la posicion del siguiente boton
 	Vector2D pos = title->getComponent<Transform>()->getPos();
