@@ -7,6 +7,8 @@
 #include "../ecs/Component.h"
 #include "../ecs/Entity.h"
 #include "Transform.h"
+#include "Animation.h"
+#include "AnimBlendGraph.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../game/App.h"
 
@@ -29,19 +31,9 @@ public:
 	/// <param name="rotation"> rotacion en grados</param>
 	/// <param name="pos_"> posición en caso de que no exista el componente Transform. Por defecto (0,0)</param>
 	/// <param name="size_">tamaño en caso de que no exista el componente Transform. Por defecto (10,10)</param>
-	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& pos_ = Vector2D(0,0), const Vector2D& size_ = Vector2D(10, 10)){
-		type = typeAux;
-		isTrigger = isTriggerAux;
-		friction_ = friction;
-		tr_ = nullptr;
-		colLay_ = collisionLayer;
-		colMask_ = collisionMask;
-		fixedRotation_ = fixedRotation;
-		rotation_ = rotation;
-
-		pos = pos_;
-		size = size_;
-	}
+	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& pos = Vector2D(0, 0), const Vector2D& size = Vector2D(10, 10)) :
+		type(typeAux), isTrigger(isTriggerAux), friction_(friction), colLay_(collisionLayer), 
+		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), pos_(pos), size_(size){}
 
 	virtual ~BoxCollider() {
 		body->GetWorld()->DestroyBody(body);
@@ -50,16 +42,23 @@ public:
 
 	void init() override {
 		tr_ = entity_->getComponent<Transform>();
+		
 		//assert(tr_ != nullptr);
 		//Actualizamos la posicion en caso de que tenga un componente Transform
 		if(tr_ != nullptr)  
 		{
-			pos = tr_->getPos();
-			size = Vector2D(tr_->getW() / sdlutils().getPPM(), tr_->getH() / sdlutils().getPPM());
+			if (entity_->getComponent<AnimBlendGraph>() != nullptr) {
+				Vector2D anchorPoint = entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->anchor();
+				pos_ = Vector2D(tr_->getPos().getX() - (size_.getX() * anchorPoint.getX()), tr_->getPos().getY() - (size_.getY() * anchorPoint.getY()));
+			}
+			else {
+				pos_ = tr_->getPos();
+			}
+				size_ = Vector2D(tr_->getW() / sdlutils().getPPM(), tr_->getH() / sdlutils().getPPM());
 		}
 		else{
 			//Pasamos el tamaño a medidas de box2d
-			pos = Vector2D(pos.getX() / sdlutils().getPPM() , pos.getY() / sdlutils().getPPM());
+			pos_ = Vector2D(pos_.getX() / sdlutils().getPPM() , pos_.getY() / sdlutils().getPPM());
 		}
 
 		world = entity_->getWorld();
@@ -83,7 +82,7 @@ public:
 			break;
 		}
 		
-		bodyDef.position.Set(pos.getX() / sdlutils().getPPM(), pos.getY() / sdlutils().getPPM());
+		bodyDef.position.Set(pos_.getX() / sdlutils().getPPM(), pos_.getY() / sdlutils().getPPM());
 		bodyDef.angle = rotation_;
 
 		//Stores the entity in the body for future reference in collisions
@@ -93,7 +92,7 @@ public:
 		body = world->CreateBody(&bodyDef);
 
 		b2PolygonShape boxShape;
-		boxShape.SetAsBox(size.getX() / 2.0f, size.getY() / 2.0f);
+		boxShape.SetAsBox(size_.getX() / 2.0f, size_.getY() / 2.0f);
 
 		b2FixtureDef fixtureDef;
 		//Que el cubo real tenga la misma forma que la definicion
@@ -133,8 +132,8 @@ public:
 		if (sdlutils().getDebug()){
 			SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
 
-			int w = (tr_ != nullptr) ? tr_->getW() : size.getX();
-			int h = (tr_ != nullptr) ? tr_->getH() :size.getY();
+			int w = (tr_ != nullptr) ? tr_->getW() : size_.getX();
+			int h = (tr_ != nullptr) ? tr_->getH() : size_.getY();
 
 			//Ya que la posición de un objeto físico es el centro de la masa, tenemos que llevar el punto a la parte superior izquierda
 			//Le restamos la posición de la cámara
@@ -231,17 +230,24 @@ public:
 	inline void actRenderPos(){
 		//Actualizamos la posición difereciando entre si es del Transform o sólo del parámetro Pos
 		if (tr_ != nullptr){
-			tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM()) - tr_->getW() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - tr_->getH() / 2.0f));
+			if (entity_->getComponent<AnimBlendGraph>() != nullptr) {
+				Vector2D anchorPoint = entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->anchor();
+				tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM())),
+								  round((body->GetPosition().y )* sdlutils().getPPM()));
+			}
+			else {
+				tr_->getPos().set(round(body->GetPosition().x * sdlutils().getPPM()), round(body->GetPosition().y * sdlutils().getPPM()));
+			}
 		}
 		else{
-			pos.set(round((body->GetPosition().x * sdlutils().getPPM()) - size.getX() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - size.getY() / 2.0f));
+			pos_.set(round((body->GetPosition().x * sdlutils().getPPM()) - size_.getX() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - size_.getY() / 2.0f));
 		}
 	}
 
 
 private:
 	Transform* tr_;
-	Vector2D pos, size;
+	Vector2D pos_, size_;
 	int type;
 	bool isTrigger;
 	float rotation_, friction_;

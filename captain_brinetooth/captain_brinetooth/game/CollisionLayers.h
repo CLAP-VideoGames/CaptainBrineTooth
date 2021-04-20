@@ -2,7 +2,7 @@
 
 #include "b2_types.h"
 
-//Thisç namespace sets the different physic layers of the game
+//ThisEnamespace sets the different physic layers of the game
 
 namespace ColLayers {
 

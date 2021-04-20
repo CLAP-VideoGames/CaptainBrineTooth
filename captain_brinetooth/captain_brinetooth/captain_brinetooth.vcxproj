@@ -238,6 +238,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="assets\assets.cpp" />
+    <ClCompile Include="components\Animation.cpp" />
+    <ClCompile Include="components\AnimBlendGraph.cpp" />
     <ClCompile Include="components\Armas_HUD.cpp" />
     <ClCompile Include="components\Button.cpp" />
     <ClCompile Include="components\CameraFollow.cpp" />
