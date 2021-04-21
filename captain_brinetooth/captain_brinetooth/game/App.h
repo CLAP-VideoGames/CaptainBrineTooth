@@ -26,33 +26,23 @@ class Manager;
 class App {
 public:
 	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por quÅEme tomais por un dictador, que no soy ¡ngel.
+	static SDL_Rect camera;
 
 	App();
 	virtual ~App();
 	void init();
 	void start();
 	void ShakeCamera(int time);
-
-	static SDL_Rect camera;
-
-	//void createLevel0();
 	void createBackGround(const std::string& spriteId, const int & fils, const int & cols);
-
-	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
-
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
-
-	StateMachine* getStateMachine() { return stateMachine; }
 	void exitGame() { exit = true; }
-	
+
+	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
+	StateMachine* getStateMachine() { return stateMachine; }
 	inline float getCameraZooOut() const { return camera_Zoom_Out; }
 
-	//update (Juan: Si esta en Mayusculas pq es una constante) Joseda: asi es gente, lo que sea en mayus tiene que ser constante
-	//const Uint32 TICKS = 60;
-	//const Uint32 MILLISECS_PER_TICK = 1000 / TICKS;
 private:
-
 	std::shared_ptr<b2World> world_;
 	//b2World* world_;
 	DamageCollisionCallbacks collisionListener;
@@ -66,4 +56,3 @@ private:
 
 	float brightness = 0;
 };
-

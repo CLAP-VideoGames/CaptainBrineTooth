@@ -32,168 +32,55 @@ public:
 	/// <param name="pos_"> posición en caso de que no exista el componente Transform. Por defecto (0,0)</param>
 	/// <param name="size_">tamaño en caso de que no exista el componente Transform. Por defecto (10,10)</param>
 	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& pos = Vector2D(0, 0), const Vector2D& size = Vector2D(10, 10)) :
-		type(typeAux), isTrigger(isTriggerAux), friction_(friction), colLay_(collisionLayer), 
-		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), pos_(pos), size_(size){}
+		type(typeAux), isTrigger(isTriggerAux), friction_(friction), colLay_(collisionLayer),
+		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), pos_(pos), size_(size) {};
 
-	virtual ~BoxCollider() {
-		body->GetWorld()->DestroyBody(body);
-		int m = 10;
-	}
+	virtual ~BoxCollider();
 
-	void init() override {
-		tr_ = entity_->getComponent<Transform>();
-		
-		//assert(tr_ != nullptr);
-		//Actualizamos la posicion en caso de que tenga un componente Transform
-		if(tr_ != nullptr)  
-		{
-			if (entity_->getComponent<AnimBlendGraph>() != nullptr) {
-				Vector2D anchorPoint = entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->anchor();
-				pos_ = Vector2D(tr_->getPos().getX() - (size_.getX() * anchorPoint.getX()), tr_->getPos().getY() - (size_.getY() * anchorPoint.getY()));
-			}
-			else {
-				pos_ = tr_->getPos();
-			}
-				size_ = Vector2D(tr_->getW() / sdlutils().getPPM(), tr_->getH() / sdlutils().getPPM());
-		}
-		else{
-			//Pasamos el tamaño a medidas de box2d
-			pos_ = Vector2D(pos_.getX() / sdlutils().getPPM() , pos_.getY() / sdlutils().getPPM());
-		}
+	void init() override;
 
-		world = entity_->getWorld();
+	void update() override;
 
-		b2BodyDef bodyDef;
-		switch (type) {
-		case TYPE::STATIC:
-			bodyDef.type = b2_staticBody;
-			break;
+	void render() override;
 
-		case TYPE::DYNAMIC:
-			bodyDef.type = b2_dynamicBody;
-			break;
-
-		case TYPE::KINEMATIC:
-			bodyDef.type = b2_kinematicBody;
-			break;
-
-		default:
-			bodyDef.type = b2_staticBody;
-			break;
-		}
-		
-		bodyDef.position.Set(pos_.getX() / sdlutils().getPPM(), pos_.getY() / sdlutils().getPPM());
-		bodyDef.angle = rotation_;
-
-		//Stores the entity in the body for future reference in collisions
-		bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
-
-		//Make the body
-		body = world->CreateBody(&bodyDef);
-
-		b2PolygonShape boxShape;
-		boxShape.SetAsBox(size_.getX() / 2.0f, size_.getY() / 2.0f);
-
-		b2FixtureDef fixtureDef;
-		//Que el cubo real tenga la misma forma que la definicion
-		fixtureDef.shape = &boxShape;
-		//No puede ser la densidad 0 para un objeto dinamico
-		fixtureDef.density = 1.0f;
-		fixtureDef.friction = friction_;
-		fixtureDef.isSensor = isTrigger;
-
-		body->SetFixedRotation(fixedRotation_);
-		
-		fixtureDef.filter.categoryBits = colLay_; // tag para determinar capa de colision
-		fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
-
-		fixture = body->CreateFixture(&fixtureDef);
-	}
-
-	void update() override {
-		actRenderPos();
-
-		if(tr_ != nullptr)
-			tr_->setRot((body->GetAngle() * (180.0f)) / M_PI);
-
-		/*�Custom method to detect collisions and delete a body
-		b2ContactEdge* b;
-
-		b = body->GetContactList();
-
-		if (b != nullptr && entra == false) {
-			std::cout << "Collided";
-			world->DestroyBody(b->contact->GetFixtureA()->GetBody());
-			entra = 1;
-		}*/
-	}
-
-	void render() override {
-		if (sdlutils().getDebug()){
-			SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
-
-			int w = (tr_ != nullptr) ? tr_->getW() : size_.getX();
-			int h = (tr_ != nullptr) ? tr_->getH() : size_.getY();
-
-			//Ya que la posición de un objeto físico es el centro de la masa, tenemos que llevar el punto a la parte superior izquierda
-			//Le restamos la posición de la cámara
-			float x = round((body->GetPosition().x * sdlutils().getPPM()) - (w / 2.0f)) - App::camera.x;
-			float y = round((body->GetPosition().y * sdlutils().getPPM()) - (h / 2.0f)) - App::camera.y;
-			SDL_Rect dest = build_sdlrect(x, y, w, h);
-
-			SDL_RenderDrawRect(sdlutils().renderer(), &dest);
-		}
-	}
-
-	void setSpeed(Vector2D speed) {
-		b2Vec2 vel = body->GetLinearVelocity();
-		vel.x = speed.getX(); vel.y = speed.getY();
-		body->SetLinearVelocity(vel);
-	}
+	/// <summary>
+	/// Aplica una velocidad dado un Vector2D dirección
+	/// </summary>
+	/// <param name="speed"></param>
+	void setSpeed(Vector2D speed);
 
 	/// <summary>
 	/// Aplica una fuerza gradual en la direccion indicada
 	/// </summary>
 	/// <param name="dir">Vector2D de dirección</param>
 	/// <param name="force">Fuerza aplicada</param>
-	void applyForce(Vector2D dir, float force = 1.0f){
-		dir.normalize();
-		body->ApplyForce(b2Vec2(dir.getX() * force, dir.getY() * force), body->GetWorldCenter(), true);
-	}
+	void applyForce(Vector2D dir, float force = 1.0f);
 
 	/// <summary>
 	/// Aplica una fuerza inmediata en la direccion indicada
 	/// </summary>
 	/// <param name="dir">Vector2D de dirección</param>
 	/// <param name="force">Fuerza aplicada</param>
-	void applyLinearForce(Vector2D dir, float force = 1.0f){
-		dir.normalize();
-		body->ApplyLinearImpulse(b2Vec2(dir.getX()* force, dir.getY()* force) , body->GetWorldCenter(), true);
-	}
+	void applyLinearForce(Vector2D dir, float force = 1.0f);
 
+	/// <summary>
+	/// Devuelve el cuerpo físico
+	/// </summary>
+	/// <returns></returns>
+	inline b2Body* getBody() const;
 
-	inline b2Body* getBody() const {
-		return body;
-	}
-
-	inline b2Fixture* getFixture() const {
-		return fixture;
-	}
+	/// <summary>
+	/// Devuelve la fixtura (rigidBody) del cuerpo físico
+	/// </summary>
+	/// <returns>b2Fixture*</returns>
+	inline b2Fixture* getFixture() const;
 
 	/// <summary>
 	/// Actualiza las coordenadas físicas de un cuerpo en base a las actuales
 	/// </summary>
 	/// <param name="x">in pixels</param>
 	/// <param name="y">in pixels</param>
-	inline void actPhyscialPos(int x, int y) {
-		int x_ = x / sdlutils().getPPM();
-		int y_ = y / sdlutils().getPPM();
-
-		b2Vec2 toMove(x_, y_);
-		body->SetTransform(body->GetPosition() + toMove, body->GetAngle());
-
-		actRenderPos();
-	}
+	inline void actPhyscialPos(int x, int y);
 
 	/// <summary>
 	/// Cambia las coordenadas físicas de un cuerpo y su rotación
@@ -201,63 +88,27 @@ public:
 	/// <param name="x">in pixels</param>
 	/// <param name="y">in pixels</param>
 	/// <param name="rotation">in degrees</param>
-	inline void setPhysicalTransform(int x, int y, float degrees) {
-		int x_ = x / sdlutils().getPPM();
-		int y_ = y / sdlutils().getPPM();
-		float newRot = (degrees * M_PI) / (180.0f);
-
-		b2Vec2 toMove(x_, y_);
-		body->SetTransform(toMove, newRot);
-		
-		actRenderPos();
-	}
+	inline void setPhysicalTransform(int x, int y, float degrees);
 
 	/// <summary>
 	/// Devuelve la posición físicas en metros
 	/// </summary>
 	/// <returns></returns>
-	inline Vector2D getPhysicalPos()
-	{
-		b2Vec2 physpos= body->GetPosition();
-		Vector2D position;
-		position.set(Vector2D(physpos.x, physpos.y));
-		return position;
-	}
-
+	inline Vector2D getPhysicalPos();
 	/// <summary>
 	/// Actualiza los valores de la posición en funcion de la posición del cuerpo físico.
 	/// </summary>
-	inline void actRenderPos(){
-		//Actualizamos la posición difereciando entre si es del Transform o sólo del parámetro Pos
-		if (tr_ != nullptr){
-			if (entity_->getComponent<AnimBlendGraph>() != nullptr) {
-				Vector2D anchorPoint = entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->anchor();
-				tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM())),
-								  round((body->GetPosition().y )* sdlutils().getPPM()));
-			}
-			else {
-				tr_->getPos().set(round(body->GetPosition().x * sdlutils().getPPM()), round(body->GetPosition().y * sdlutils().getPPM()));
-			}
-		}
-		else{
-			pos_.set(round((body->GetPosition().x * sdlutils().getPPM()) - size_.getX() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - size_.getY() / 2.0f));
-		}
-	}
-
+	inline void actRenderPos();
 
 private:
+	int type;
+	bool isTrigger, fixedRotation_;
+	float rotation_, friction_;
 	Transform* tr_;
 	Vector2D pos_, size_;
-	int type;
-	bool isTrigger;
-	float rotation_, friction_;
 	uint16 colLay_, colMask_;
-
-	//bool entra = 0;
-	bool fixedRotation_;
 	std::shared_ptr<b2World> world = nullptr;
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
-
 };
 

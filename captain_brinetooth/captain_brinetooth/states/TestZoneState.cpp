@@ -8,7 +8,7 @@ void TestZoneState::update() {
 }
 
 void TestZoneState::init() {
-//-----Map-----
+	//-----Map-----
 #pragma region Map
 	//---BG----
 	auto* bg = createBasicEntity(Vector2D(0,1440),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
@@ -25,8 +25,7 @@ void TestZoneState::init() {
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);*/
-
+	createPesca(gancho);
 	
 	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
@@ -83,13 +82,13 @@ void TestZoneState::init() {
 	createElfShark(elfShark);*/
 	#pragma endregion
 	#pragma region FringeHead
-		/*auto* enemy = manager_->addEntity();
-		Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
-		enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
-		AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
-		anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
-		enemy->addComponent<FringeHeadAtack>();
-		enemy->addComponent<Enemy_Health>(200);*/
+	/*auto* enemy = manager_->addEntity();
+	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
+	enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
+	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
+	enemy->addComponent<FringeHeadAtack>();
+	enemy->addComponent<Enemy_Health>(200);*/
 	#pragma endregion
 #pragma endregion
 }
