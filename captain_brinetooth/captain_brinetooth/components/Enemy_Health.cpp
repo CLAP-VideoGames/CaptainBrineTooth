@@ -35,16 +35,16 @@ void Enemy_Health::render(){
 	//Barra fondo
 	SDL_SetRenderDrawColor(sdlutils().renderer(), COLOREXP(baseColor));
 	//Centramos la barra con respecto a la entidad
-	float x = trParent_->getPos().getX() + (trParent_->getW() / 2) - (initBarSize.getX() / 2) - App::camera.x;
-	float y = trParent_->getPos().getY() - offsetY_ - App::camera.y;
+	float x = trParent_->getPos().getX() - (initBarSize.getX() / 2) - App::camera.x;
+	float y = trParent_->getPos().getY() - (trParent_->getH() / 2) - offsetY_ - App::camera.y;
 	Vector2D pos = Vector2D(x, y);
 	base = build_sdlrect(pos, initBarSize.getX(), initBarSize.getY());
 	SDL_RenderFillRect(sdlutils().renderer(), &base);
 	//Barra vida
 	SDL_SetRenderDrawColor(sdlutils().renderer(), COLOREXP(barColor));
 	//Centramos la barra con respecto a la entidad, su width va a variar a lo largo del juego, usamos initBarSize
-	x = trParent_->getPos().getX() + (trParent_->getW() / 2) - (initBarSize.getX() / 2) - App::camera.x;
-	y = trParent_->getPos().getY() - offsetY_ - App::camera.y;
+	x = trParent_->getPos().getX() - (initBarSize.getX() / 2) - App::camera.x;
+	y = trParent_->getPos().getY() - (trParent_->getH() / 2) - offsetY_ - App::camera.y;
 	pos = Vector2D(x, y);
 	bar = build_sdlrect(pos, barSize.getX(), barSize.getY());
 	SDL_RenderFillRect(sdlutils().renderer(), &bar);

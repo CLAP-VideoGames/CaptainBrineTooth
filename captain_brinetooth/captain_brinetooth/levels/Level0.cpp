@@ -59,6 +59,8 @@ void Level0::load(const string& path) {
 
 	tiled_map.load(path);
 
+	auto n = tiled_map.getTemplateTilesets();
+
 	//dimensiones del mapa en tiles
 	auto map_dimensions = tiled_map.getTileCount();
 	fils_ = map_dimensions.y;
@@ -72,7 +74,8 @@ void Level0::load(const string& path) {
 	//carga todo los tilesets y los guarda en un 'map'
 	auto& map_tilesets = tiled_map.getTilesets();
 	for (auto& tset : map_tilesets) {
-		Texture* tex = &sdlutils().tilesets().find("level0")->second;
+		string nameTileSet = tset.getName();
+		Texture* tex = &sdlutils().tilesets().at(nameTileSet);
 		tilesets_.insert(pair<gid, Texture*>(tset.getFirstGID(), tex));
 	}
 
@@ -147,6 +150,11 @@ void Level0::load(const string& path) {
 				for (int i = 0; i < points[j].size(); i++) {
 					points[j][i].x += object.getPosition().x;
 					points[j][i].y += object.getPosition().y;
+
+					if (points[j][i].x > maxCoordenate.getX()) 
+						maxCoordenate.setX(points[j][i].x);
+					if (points[j][i].y > maxCoordenate.getY()) 
+						maxCoordenate.setY(points[j][i].y);
 
 					points[j][i].x /= sdlutils().getPPM();
 					points[j][i].y /= sdlutils().getPPM();

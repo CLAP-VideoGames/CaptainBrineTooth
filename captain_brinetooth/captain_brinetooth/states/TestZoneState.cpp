@@ -219,7 +219,8 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	/*if (playerConfig.physicType != KINEMATIC) */player->addComponent<PlayerController>();
 	//else player->addComponent<KeyBoardCtrl>(map);
 
-	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO
+	//player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Chainsaw>();
 
 	player->addComponent<LoseLife>();

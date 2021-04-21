@@ -25,7 +25,7 @@ class Manager;
 
 class App {
 public:
-	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por quÅEme tomais por un dictador, que no soy ¡ngel.
+	const float camera_Zoom_Out = 1.5f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por quÅEme tomais por un dictador, que no soy ¡ngel.
 
 	App();
 	virtual ~App();

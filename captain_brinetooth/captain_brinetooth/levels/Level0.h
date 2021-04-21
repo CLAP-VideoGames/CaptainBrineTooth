@@ -69,6 +69,8 @@ public:
 	bool finalRoom() { return finalR; }
 
 	void traveled() { finalR = false; }
+
+	Vector2D getMaxCoordenates() const { return (&maxCoordenate); }
 	
 private:
 	string name_;
@@ -99,4 +101,6 @@ private:
 
 	tmx::Vector2f end;
 	bool finalR = false;
+
+	Vector2D maxCoordenate = Vector2D(0,0);
 };

@@ -294,6 +294,18 @@
 		{
 			"id": "level0",
 			"file": "assets/tileset/level0.png"
+		},
+		{
+			"id": "tileset2",
+			"file": "assets/tileset/tileset2.png"
+		},
+		{
+			"id": "tileset3",
+			"file": "assets/tileset/tileset3.png"
+		},
+		{
+			"id": "tileset4",
+			"file": "assets/tileset/tileset4.png"
 		}
 	],
 	"fonts": [

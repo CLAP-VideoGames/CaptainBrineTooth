@@ -17,6 +17,7 @@ PlayState::~PlayState(){
 
 void PlayState::init() {
 
+	//SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
 	createLevel0();
 
 
@@ -140,9 +141,10 @@ void PlayState::update(){
 /// </summary>
 void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
-	nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
+	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
 	map = nivel->addComponent<MapProcedural>(2, 0);
 	getMngr()->setHandler<Map>(nivel);
+	camLimits = levelTile->getMaxCoordenates();
 }
 
 void PlayState::createPlayer(const Config& playerConfig){
@@ -279,7 +281,10 @@ void PlayState::createPlayer(const Config& playerConfig){
 	if(playerConfig.physicType != KINEMATIC) player->addComponent<PlayerController>();
 	else player->addComponent<KeyBoardCtrl>(map);
 
-	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	int x = camLimits.getX();
+	int y = camLimits.getY();
+
+	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f, false, false, &x, &y); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();
@@ -312,7 +317,7 @@ void PlayState::createBoxTest(const Config& entityConfig){
 	auto* anim_controller = box->addComponent<AnimBlendGraph>();
 
 	box->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
-	box->addComponent<CameraFollow>(box->getComponent<Transform>());
+	//box->addComponent<CameraFollow>(box->getComponent<Transform>());
 
 	if (entityConfig.physicType == 1 || entityConfig.physicType == 2)
 		box->addComponent<KeyBoardCtrl>(map);

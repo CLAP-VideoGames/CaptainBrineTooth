@@ -22,4 +22,5 @@ public:
 private:
 	SDL_Rect cam;
 	MapProcedural* map;
+	Vector2D camLimits;
 };

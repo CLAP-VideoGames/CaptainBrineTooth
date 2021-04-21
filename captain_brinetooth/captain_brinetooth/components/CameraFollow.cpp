@@ -1,5 +1,4 @@
 #include "CameraFollow.h"
-#include "..//game/App.h"
 
 #include "../sdlutils/SDLUtils.h"
 #include "AnimBlendGraph.h"
@@ -22,13 +21,17 @@ void CameraFollow::update(){
 	if (!limitless_Horizontal) {
 		if (App::camera.x < 0)
 			App::camera.x = 0;
-		else if (App::camera.x > App::camera.w) App::camera.x = App::camera.w;
+		else if (App::camera.x + App::camera.w > (*wLimit))
+			App::camera.x = (*wLimit);
 	}
+
+	std::cout << App::camera.x << " " << App::camera.y << std::endl;
 
 	if (!limitless_Vertical) {
 		if (App::camera.y < 0)
 			App::camera.y = 0;
-		else if (App::camera.y > App::camera.h) App::camera.y = App::camera.h;
+		else if (App::camera.y + App::camera.h > (*hLimit))
+			App::camera.y = (*hLimit);
 	}
 
 	//std::cout << Game::camera.x << " " << Game::camera.y << std::endl;
