@@ -19,11 +19,12 @@ private:
 
 	Entity* leftlimit;
 	Entity* rightlimit;
+	Entity* hook;
 	bool catched;
 	Transform* tr_;
 	BoxCollider* collider_;
 	Vector2D speed;
-	void baitMovement();
+	void adjustIfLimits();
 
 	static void baitCollision(b2Contact* contact);
 	void baitCatched(Entity* hook); // Metodo para la colision con el gancho en el que la velocidad se pone a cero y el cebo se pone donde esta el gancho(Cambio de animacion)

@@ -1,6 +1,8 @@
 #include "Gancho.h"
 #include "../sdlutils/SDLUtils.h"
 #include "Reward.h"
+#include "PescaController.h"
+
 Gancho::Gancho()
 {
 
@@ -15,14 +17,24 @@ void  Gancho::init()
 	//hookBody->getBody()->SetGravityScale(0.0f);
 	//No se Exactamente donde va para poder hacer el timer
 
-	
+
 	speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0.65f);
 	hookMovement();
 	entity_->setCollisionMethod(contactWithSomething);
+	baitRef = nullptr; //No ref of cattched bait 
 }
 void Gancho::update()
 {
-	//if (move)hookMovement();
+	if (baitRef != nullptr)
+	{
+		//Si ha tocado con el tope de la cuerda
+		if (contactid != 3)
+		{
+			speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, -0.65f);
+			hookMovement();
+		}
+	
+	}
 }
 void Gancho::contactWithSomething(b2Contact* contact)
 {
@@ -33,17 +45,22 @@ void Gancho::contactWithSomething(b2Contact* contact)
 		}
 		else {
 			hook = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-			if(hook != nullptr) hook->getComponent<Gancho>()->collisionAnswer((Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+			if (hook != nullptr) hook->getComponent<Gancho>()->collisionAnswer((Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer);
 		}
 	}
-	
-	
+
+
 
 }
 bool Gancho::hasBaitRef()
 {
-	if (baitRef != NULL) return true;
+	if (baitRef != nullptr)
+	{
+		contactid = 2; //Movimiento hacia arriba de la cuerda
+		return true;
+	}
 	else return false;
+	
 }
 
 void Gancho::hookMovement()
@@ -60,27 +77,24 @@ void Gancho::collisionAnswer(Entity* contactedfloor)
 
 	//If we contact with the top of the rod we give reward to the player , using other component that has the ObjectReward
 
-
-
-	if (entity_->getMngr()->getHandler<Rod>() != contactedfloor)
+	if (entity_->getMngr()->getHandler<Rod>() == contactedfloor)// Si con lo que se ha colisionado es el tope de la cuerda 
 	{
-		contactid++;
-		if (contactid == 3) {
-			speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0);
-			hookMovement();
+		contactid = 3; //Paramos el movimiento de la cuerda
+		speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0);
+		hookMovement();
+		if (hasBaitRef())
+		{
+			baitRef->getComponent<Reward>()->giveReward();
 		}
-		else {
-			speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, -0.65f);
-			hookMovement();
-		}
-		
 
 	}
-	/*else {
-		move = false;
-		if (hasBaitRef())baitRef->getComponent<Reward>()->giveReward();
-		//Wee need to turn of all this components , stop the action of fishing 
-	}*/ 
+	else if (contactedfloor->getComponent<PescaController>() == nullptr) //Esto es para que solo detecte el suelo 
+	{
+		contactid = 2; //Movimiento hacia arriba de la cuerda
+		speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, -0.65f);
+		hookMovement();
+	}
+
 
 
 }

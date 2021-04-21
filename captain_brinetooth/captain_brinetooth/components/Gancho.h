@@ -18,7 +18,7 @@ public :
 
 private:
 
-	int contactid;  // 1- Floor //2- Top of the rod //0- is in movement
+	int contactid;  // 1 DownMovement //2 UpMovement  //3 Top of the Rod
 	bool move;
 	float moveTime;         //CurrRealTime
 	float timetoMove = 300;       //Definded time 

@@ -280,6 +280,7 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	floor2_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	floor2->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	floor2->addComponent<PescaController>();
+	floor2->getMngr()->setHandler<Rod>(floor2); //Para deteccion de colision con el gancho 
 	
 
 
@@ -311,7 +312,7 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	cuerda->addComponent<Cuerda>(gancho);
 	cuerda->addComponent<PescaController>();
-	cuerda->getMngr()->setHandler<Rod>(cuerda);
+	
 
 
 }
