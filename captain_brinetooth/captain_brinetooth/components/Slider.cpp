@@ -77,3 +77,8 @@ void Slider::render(){
 	textureText->render(((backgroundSlideRct.x + (backgroundSlideRct.w/2)) - (textureText->width()/2)), backgroundSlideRct.y - 200);
 }
 
+void Slider::desactivateSlider(){
+	background->setActive(false);
+	slide->setActive(false);
+}
+

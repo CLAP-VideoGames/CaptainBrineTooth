@@ -117,6 +117,11 @@ void PauseState::createButton(Texture* t, float& multiplier, Vector2D& pos_, voi
 }
 
 void PauseState::clearPanel() {
-	for (Entity* ent : panel) ent->setActive(false);
+	for (Entity* ent : panel){
+		Slider* slider = ent->getComponent<Slider>();
+		//Desactivamos las entidades auxiliares del Slider, en caso de serlo.
+		if (slider != nullptr) slider->desactivateSlider();
+		ent->setActive(false);
+	}
 	panel.clear();
 }
