@@ -17,4 +17,5 @@ private:
 	Transform* tr_ = nullptr;
 	BoxCollider* collider_ = nullptr;
 	Entity* hook;
+	AnimBlendGraph* anims_;
 };

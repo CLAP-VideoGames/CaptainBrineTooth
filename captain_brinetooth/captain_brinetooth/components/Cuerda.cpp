@@ -8,6 +8,8 @@ void Cuerda::init() {
 	collider_ = entity_->getComponent<BoxCollider>();
 	assert(collider_ != nullptr);
 	collider_->getFixture()->SetSensor(true);
+	anims_ = entity_->getComponent<AnimBlendGraph>();
+	assert(anims_ != nullptr);
 	
 }
 void Cuerda::update() {
@@ -16,15 +18,20 @@ void Cuerda::update() {
 	else if (hook->getComponent<Gancho>()->getContactId() == 2)cuerdaUpMovement(); //When we have collided with floor
 	else //When we reach top of the road 
 	{
-		collider_->setSpeed(Vector2D(0, 0));
+		collider_->setSpeed(Vector2D(collider_->getBody()->GetLinearVelocity().x, 0));
 	}
 
 }
 void Cuerda::cuerdaDownMovement() {
-	collider_->setSpeed(Vector2D(collider_->getBody()->GetLinearVelocity().x, 0.33f));
-	tr_->setH(tr_->getH() + 2.2f);
+	collider_->setSpeed(Vector2D(collider_->getBody()->GetLinearVelocity().x, 0.3225f));
+	tr_->setH(tr_->getH() + 2.15f);
+	anims_->keepProportion("cuerda", Vector2D(tr_->getW(), tr_->getH()));
+	anims_->scaleAnimation();
+	
 }
 void Cuerda::cuerdaUpMovement() {
-	collider_->setSpeed(Vector2D(collider_->getBody()->GetLinearVelocity().x, -0.33f));
-	tr_->setH(tr_->getH() - 2.2f);
+	collider_->setSpeed(Vector2D(collider_->getBody()->GetLinearVelocity().x, -0.3225f));
+	tr_->setH(tr_->getH() - 2.15f);
+	anims_->keepProportion("cuerda", Vector2D(tr_->getW(), tr_->getH()));
+	anims_->scaleAnimation();
 }

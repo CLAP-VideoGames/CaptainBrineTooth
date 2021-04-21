@@ -15,20 +15,20 @@ void TestZoneState::init() {
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
 
-	/*Config gancho{};
+	Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
-	gancho.friction = 0.2f;
+	gancho.friction = 0.0f;
 	gancho.physicType = DYNAMIC;
 	gancho.fixedRotation = true;
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);*/
+	createPesca(gancho);
 
 	
-	Config floor{};
+	/*Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
 	floor.size = Vector2D(sdlutils().width() * 4.0f, 100.0f);
@@ -52,7 +52,7 @@ void TestZoneState::init() {
 	playerConfig.rotation = 0.0f;
 	playerConfig.col = PLAYER;
 	playerConfig.colMask = PLAYER_MASK;
-	createPlayer(playerConfig);
+	createPlayer(playerConfig);*/
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
@@ -274,20 +274,21 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 
-	auto* floor2 = createBasicEntity(Vector2D(sdlutils().width(), 0), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
+	auto* floor2 = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5), entityConfig.size, 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* floor2_anim_controller = floor2->addComponent<AnimBlendGraph>();
 	floor2_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
-	floor2->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
+	floor2->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
+	floor2->addComponent<PescaController>();
 	
 
 
 
-	auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
+	/*auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* player_anim_controller = player->addComponent<AnimBlendGraph>();
 	player_anim_controller->addAnimation("player", &sdlutils().images().at("player_cana"), 1, 1, 1, 1, 0);
 	BoxCollider* playercollider_ = player->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	playercollider_->getFixture()->SetSensor(true);
-	player->addComponent<PescaController>();
+	player->addComponent<PescaController>();*/
 
 	auto* gancho = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* gancho_anim_controller = gancho->addComponent<AnimBlendGraph>();
@@ -303,7 +304,7 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	reward0->addComponent<Reward>();
 
 
-	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15, -30), Vector2D(16, 16), 0.0f, Vector2D(0, 0));
+	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15, -30), Vector2D(16.0f, 16.0f), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* cuerda_anim_controller = cuerda->addComponent<AnimBlendGraph>();
 	cuerda_anim_controller->addAnimation("cuerda", &sdlutils().images().at("cuerda"), 1, 1, 1, 1, 0);
 	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);

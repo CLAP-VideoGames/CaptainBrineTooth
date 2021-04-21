@@ -15,18 +15,29 @@ void  Gancho::init()
 	//hookBody->getBody()->SetGravityScale(0.0f);
 	//No se Exactamente donde va para poder hacer el timer
 
-	entity_->setCollisionMethod(contactWithSomething);
+	
 	speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0.65f);
+	hookMovement();
+	entity_->setCollisionMethod(contactWithSomething);
 }
 void Gancho::update()
 {
-	if (move)hookMovement();
+	//if (move)hookMovement();
 }
 void Gancho::contactWithSomething(b2Contact* contact)
 {
-	Entity* floor = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	Entity* hook = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-	if (hook != nullptr)hook->getComponent<Gancho>()->collisionAnswer(floor);
+	if (hook != nullptr) {
+		if (hook->getComponent<Gancho>() != nullptr) {
+			hook->getComponent<Gancho>()->collisionAnswer((Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+		}
+		else {
+			hook = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if(hook != nullptr) hook->getComponent<Gancho>()->collisionAnswer((Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+		}
+	}
+	
+	
 
 }
 bool Gancho::hasBaitRef()
@@ -51,13 +62,25 @@ void Gancho::collisionAnswer(Entity* contactedfloor)
 
 
 
-	//if (entity_->getMngr()->getHandler<Rod>() == contactedfloor)
-	//{
-	//	move = false;
-	//	if(hasBaitRef())baitRef->getComponent<Reward>()->giveReward();
-	//	//Wee need to turn of all this components , stop the action of fishing 
-	//}
-	//else speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, -0.65f);
+	if (entity_->getMngr()->getHandler<Rod>() != contactedfloor)
+	{
+		contactid++;
+		if (contactid == 3) {
+			speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0);
+			hookMovement();
+		}
+		else {
+			speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, -0.65f);
+			hookMovement();
+		}
+		
+
+	}
+	/*else {
+		move = false;
+		if (hasBaitRef())baitRef->getComponent<Reward>()->giveReward();
+		//Wee need to turn of all this components , stop the action of fishing 
+	}*/ 
 
 
 }
