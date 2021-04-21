@@ -15,7 +15,7 @@ void TestZoneState::init() {
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
 
-	Config gancho{};
+	/*Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
@@ -25,10 +25,10 @@ void TestZoneState::init() {
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);
+	createPesca(gancho);*/
 
 	
-	/*Config floor{};
+	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
 	floor.size = Vector2D(sdlutils().width() * 4.0f, 100.0f);
@@ -52,7 +52,7 @@ void TestZoneState::init() {
 	playerConfig.rotation = 0.0f;
 	playerConfig.col = PLAYER;
 	playerConfig.colMask = PLAYER_MASK;
-	createPlayer(playerConfig);*/
+	createPlayer(playerConfig);
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
@@ -123,7 +123,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//-WEAPONS------------------------------------------------------------------------------------------------------
 #pragma region Chainsaw
 	//---CHAINSAW---------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 1, 8,Vector2D(0.75,0.72));
+	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 1, 8, Vector2D(0.75,0.72));
 	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 9, 18, Vector2D(0.75, 0.72));
 	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 19, 47, Vector2D(0.75, 0.72)); // provisional, habria que hacer una de mantener
 
@@ -146,9 +146,9 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 #pragma region Sword
 	//---SWORD------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 1, 9);
-	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, 0, 12, 20);
-	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 24, -1, 27, 44);
+	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 1, 9, Vector2D(0.71,0.69));
+	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 12, 20, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, -1, 27, 44, Vector2D(0.71, 0.69));
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
@@ -169,8 +169,8 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 #pragma region Hammer
 //---HAMMER---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 24, 0, 1, 16);
-	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 24, 0, 17, 30);
+	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 1, 16, Vector2D(0.75, 0.69));
+	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 17, 30, Vector2D(0.75, 0.69));
 
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);
@@ -187,9 +187,9 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 #pragma region Crab
 //---CRAB---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, 0, 1, 8);
-	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, -1, 8, 25);
-	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 24, 0, 27, 38);
+	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 1, 8, Vector2D(0.71,0.5));
+	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
 
 	anim_controller->addTransition("run", "crab_attack1", "crab_att", 1, false);
 	anim_controller->addTransition("idle", "crab_attack1", "crab_att", 1, false);
@@ -220,8 +220,9 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO
-	//player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<Chainsaw>();
+	Vector2D mapLimit = Vector2D(2000, 2000);
+	player->addComponent<CameraFollow>(player->getComponent<Transform>(), &mapLimit, Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<Sword>();
 
 	player->addComponent<LoseLife>();
 
