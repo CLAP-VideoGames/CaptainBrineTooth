@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="17">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="19">
  <tileset firstgid="1" source="../level0.tsx"/>
  <layer id="1" name="tiles" width="30" height="20">
   <data encoding="csv">
@@ -26,8 +26,8 @@
 </data>
  </layer>
  <objectgroup id="3" name="conx">
-  <object id="15" name="E" x="1846.67" y="310.667" width="68" height="690.667"/>
-  <object id="16" name="S" x="1110.67" y="1168" width="546.667" height="45.3333"/>
+  <object id="17" name="S" x="1024" y="1216" width="640" height="64"/>
+  <object id="18" name="E" x="1856" y="256" width="64" height="768"/>
  </objectgroup>
  <objectgroup id="4" name="spawns">
   <object id="11" name="player" x="384" y="960">
