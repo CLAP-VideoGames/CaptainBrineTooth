@@ -33,7 +33,7 @@ public:
 	/// <param name="size_">tamaño en caso de que no exista el componente Transform. Por defecto (10,10)</param>
 	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& pos = Vector2D(0, 0), const Vector2D& size = Vector2D(10, 10)) :
 		type(typeAux), isTrigger(isTriggerAux), friction_(friction), colLay_(collisionLayer),
-		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), pos_(pos), size_(size) {};
+		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), pos_(pos), size_(size) {}
 
 	virtual ~BoxCollider();
 
@@ -67,20 +67,20 @@ public:
 	/// Devuelve el cuerpo físico
 	/// </summary>
 	/// <returns></returns>
-	inline b2Body* getBody() const;
+	b2Body* getBody();
 
 	/// <summary>
 	/// Devuelve la fixtura (rigidBody) del cuerpo físico
 	/// </summary>
 	/// <returns>b2Fixture*</returns>
-	inline b2Fixture* getFixture() const;
+	b2Fixture* getFixture();
 
 	/// <summary>
 	/// Actualiza las coordenadas físicas de un cuerpo en base a las actuales
 	/// </summary>
 	/// <param name="x">in pixels</param>
 	/// <param name="y">in pixels</param>
-	inline void actPhyscialPos(int x, int y);
+	 void actPhyscialPos(int x, int y);
 
 	/// <summary>
 	/// Cambia las coordenadas físicas de un cuerpo y su rotación
@@ -88,27 +88,33 @@ public:
 	/// <param name="x">in pixels</param>
 	/// <param name="y">in pixels</param>
 	/// <param name="rotation">in degrees</param>
-	inline void setPhysicalTransform(int x, int y, float degrees);
+	 void setPhysicalTransform(int x, int y, float degrees);
 
 	/// <summary>
 	/// Devuelve la posición físicas en metros
 	/// </summary>
 	/// <returns></returns>
-	inline Vector2D getPhysicalPos();
+	 Vector2D getPhysicalPos();
+
 	/// <summary>
 	/// Actualiza los valores de la posición en funcion de la posición del cuerpo físico.
 	/// </summary>
-	inline void actRenderPos();
+	void actRenderPos();
+
 
 private:
-	int type;
-	bool isTrigger, fixedRotation_;
-	float rotation_, friction_;
 	Transform* tr_;
 	Vector2D pos_, size_;
+	int type;
+	bool isTrigger;
+	float rotation_, friction_;
 	uint16 colLay_, colMask_;
+
+	//bool entra = 0;
+	bool fixedRotation_;
 	std::shared_ptr<b2World> world = nullptr;
 	b2Body* body = nullptr;
 	b2Fixture* fixture = nullptr;
+
 };
 

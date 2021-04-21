@@ -26,13 +26,14 @@ class Manager;
 class App {
 public:
 	const float camera_Zoom_Out = 2.0f;	//Zoom de la camara si asi soy, lo siento Joseda | pero por quÅEme tomais por un dictador, que no soy ¡ngel.
-	static SDL_Rect camera;
+
 
 	App();
 	virtual ~App();
 	void init();
 	void start();
 	void ShakeCamera(int time);
+	static SDL_Rect camera;
 	void createBackGround(const std::string& spriteId, const int & fils, const int & cols);
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);

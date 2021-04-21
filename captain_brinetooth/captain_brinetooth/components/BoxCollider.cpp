@@ -1,6 +1,6 @@
 ﻿#include "BoxCollider.h"
 
-BoxCollider::~BoxCollider(){
+BoxCollider::~BoxCollider() {
 	body->GetWorld()->DestroyBody(body);
 	int m = 10;
 }
@@ -75,7 +75,7 @@ void BoxCollider::init() {
 	fixture = body->CreateFixture(&fixtureDef);
 }
 
-void BoxCollider::update(){
+void BoxCollider::update() {
 	actRenderPos();
 
 	if (tr_ != nullptr)
@@ -93,7 +93,7 @@ void BoxCollider::update(){
 	}*/
 }
 
-void BoxCollider::render(){
+void BoxCollider::render() {
 	if (sdlutils().getDebug()) {
 		SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
 
@@ -110,13 +110,13 @@ void BoxCollider::render(){
 	}
 }
 
-void BoxCollider::setSpeed(Vector2D speed){
+void BoxCollider::setSpeed(Vector2D speed) {
 	b2Vec2 vel = body->GetLinearVelocity();
 	vel.x = speed.getX(); vel.y = speed.getY();
 	body->SetLinearVelocity(vel);
 }
 
-void BoxCollider::applyForce(Vector2D dir, float force){
+void BoxCollider::applyForce(Vector2D dir, float force) {
 	dir.normalize();
 	body->ApplyForce(b2Vec2(dir.getX() * force, dir.getY() * force), body->GetWorldCenter(), true);
 }
@@ -127,15 +127,15 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	body->ApplyLinearImpulse(b2Vec2(dir.getX() * force, dir.getY() * force), body->GetWorldCenter(), true);
 }
 
-inline b2Body* BoxCollider::getBody() const {
+ b2Body* BoxCollider::getBody(){
 	return body;
 }
 
-inline b2Fixture* BoxCollider::getFixture() const{
+ b2Fixture* BoxCollider::getFixture() {
 	return fixture;
 }
 
-inline void BoxCollider::actPhyscialPos(int x, int y)
+ void BoxCollider::actPhyscialPos(int x, int y)
 {
 	int x_ = x / sdlutils().getPPM();
 	int y_ = y / sdlutils().getPPM();
@@ -146,7 +146,7 @@ inline void BoxCollider::actPhyscialPos(int x, int y)
 	actRenderPos();
 }
 
-inline void BoxCollider::setPhysicalTransform(int x, int y, float degrees){
+ void BoxCollider::setPhysicalTransform(int x, int y, float degrees) {
 	int x_ = x / sdlutils().getPPM();
 	int y_ = y / sdlutils().getPPM();
 	float newRot = (degrees * M_PI) / (180.0f);
@@ -157,7 +157,7 @@ inline void BoxCollider::setPhysicalTransform(int x, int y, float degrees){
 	actRenderPos();
 }
 
-inline Vector2D BoxCollider::getPhysicalPos()
+ Vector2D BoxCollider::getPhysicalPos()
 {
 	b2Vec2 physpos = body->GetPosition();
 	Vector2D position;
@@ -165,7 +165,7 @@ inline Vector2D BoxCollider::getPhysicalPos()
 	return position;
 }
 
-inline void BoxCollider::actRenderPos()
+ void BoxCollider::actRenderPos()
 {
 	//Actualizamos la posición difereciando entre si es del Transform o sólo del parámetro Pos
 	if (tr_ != nullptr) {
@@ -182,4 +182,3 @@ inline void BoxCollider::actRenderPos()
 		pos_.set(round((body->GetPosition().x * sdlutils().getPPM()) - size_.getX() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - size_.getY() / 2.0f));
 	}
 }
-

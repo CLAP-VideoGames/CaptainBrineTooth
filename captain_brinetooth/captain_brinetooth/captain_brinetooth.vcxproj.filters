@@ -477,6 +477,9 @@
     <ClCompile Include="components\JellyHatBehavior.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
+    <ClCompile Include="components\PompeyWormAttack.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
     <ClCompile Include="states\PasueState.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
@@ -510,7 +513,7 @@
     <ClCompile Include="components\AnimBlendGraph.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="components\PompeyWormAttack.cpp">
+    <ClCompile Include="components\BoxCollider.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
