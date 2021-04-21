@@ -9,8 +9,8 @@ class App;
 class CameraFollow : public Component 
 {
 public: 
-	CameraFollow(Transform* p, const Vector2D & offS = Vector2D(0.0f, 0.f), const float& percentage_ = 0.0f, 
-		bool limitless_H = false, bool limitless_V = false, int* Wlimit_ = &(App::camera.w), int* Hlimit_ = &(App::camera.h)) : lastDiff(), differenceX(), differenceY(){
+	CameraFollow(Transform* p, const Vector2D& offS = Vector2D(0.0f, 0.f), const float& percentage_ = 0.0f,
+		int* Wlimit_ = &(App::camera.w), int* Hlimit_ = &(App::camera.h), const float zoom_ = 2.0f, bool limitless_H = false, bool limitless_V = false) : lastDiff(), differenceX(), differenceY() {
 		entityT = p;
 		percentage = percentage_;
 		offset_ = offS;
@@ -19,6 +19,8 @@ public:
 
 		wLimit = Wlimit_;
 		hLimit = Hlimit_;
+
+		zoom = zoom_;
 	}
 
 	void init() override;
@@ -38,4 +40,6 @@ protected:
 	//Booleanos de seguimiento ilimitado
 	int *wLimit, *hLimit;
 	bool limitless_Horizontal, limitless_Vertical;
+
+	float zoom = 0;
 };

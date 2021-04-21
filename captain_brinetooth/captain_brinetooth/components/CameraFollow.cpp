@@ -10,6 +10,8 @@ void CameraFollow::init(){
 	entities_ = entity_->getMngr()->getEnteties();
 	//difference = 0;
 	//last = 0;
+
+	std::cout << (*wLimit) << " " << (*hLimit);
 }
 
 void CameraFollow::update(){
@@ -21,11 +23,11 @@ void CameraFollow::update(){
 	if (!limitless_Horizontal) {
 		if (App::camera.x < 0)
 			App::camera.x = 0;
-		else if (App::camera.x + App::camera.w > (*wLimit))
-			App::camera.x = (*wLimit);
+		else if (App::camera.x + (App::camera.w * zoom) > (*wLimit))
+			App::camera.x = (*wLimit) - (App::camera.w * zoom);
 	}
 
-	std::cout << App::camera.x << " " << App::camera.y << std::endl;
+	std::cout << App::camera.x + App::camera.w << " " << App::camera.y << std::endl;
 
 	if (!limitless_Vertical) {
 		if (App::camera.y < 0)
