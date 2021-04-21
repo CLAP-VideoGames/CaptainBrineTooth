@@ -8,10 +8,6 @@
 
 void CameraFollow::init(){
 	entities_ = entity_->getMngr()->getEnteties();
-	//difference = 0;
-	//last = 0;
-
-	std::cout << (*wLimit) << " " << (*hLimit);
 }
 
 void CameraFollow::update(){
@@ -23,20 +19,19 @@ void CameraFollow::update(){
 	if (!limitless_Horizontal) {
 		if (App::camera.x < 0)
 			App::camera.x = 0;
-		else if (App::camera.x + (App::camera.w * zoom) > (*wLimit))
-			App::camera.x = (*wLimit) - (App::camera.w * zoom);
+		else if (App::camera.x + (App::camera.w * zoom) > camLimits->getX())
+			App::camera.x = camLimits->getX() - (App::camera.w * zoom);
 	}
 
-	std::cout << App::camera.x + App::camera.w << " " << App::camera.y << std::endl;
+	if(sdlutils().getConsoleDebug())
+		std::cout << App::camera.x + App::camera.w << " " << App::camera.y << std::endl;
 
 	if (!limitless_Vertical) {
 		if (App::camera.y < 0)
 			App::camera.y = 0;
-		else if (App::camera.y + App::camera.h > (*hLimit))
-			App::camera.y = (*hLimit);
+		else if (App::camera.y + (App::camera.h * zoom) > camLimits->getY())
+			App::camera.y = camLimits->getY() - (App::camera.h * zoom);
 	}
-
-	//std::cout << Game::camera.x << " " << Game::camera.y << std::endl;
 }
 
 void CameraFollow::actPos(){

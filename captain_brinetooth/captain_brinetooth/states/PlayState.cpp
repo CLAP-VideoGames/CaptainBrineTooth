@@ -281,10 +281,7 @@ void PlayState::createPlayer(const Config& playerConfig){
 	if(playerConfig.physicType != KINEMATIC) player->addComponent<PlayerController>();
 	else player->addComponent<KeyBoardCtrl>(map);
 
-	int x = camLimits.getX();
-	int y = camLimits.getY();
-
-	player->addComponent<CameraFollow>(player->getComponent<Transform>(), Vector2D(250.0f, -300.0f), 0.06f, &x, &y, app->getCameraZooOut(), false, false); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<CameraFollow>(player->getComponent<Transform>(), &(manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()), Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), false, false); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();

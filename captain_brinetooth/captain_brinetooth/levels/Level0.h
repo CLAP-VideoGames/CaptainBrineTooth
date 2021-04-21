@@ -70,7 +70,8 @@ public:
 
 	void traveled() { finalR = false; }
 
-	Vector2D getMaxCoordenates() const { return (&maxCoordenate); }
+	//Creo que es para que sea L value. Se lo tengo que preguntar a Samir
+	Vector2D& getMaxCoordenates() { return (maxCoordenate); }
 	
 private:
 	string name_;
