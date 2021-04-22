@@ -18,6 +18,7 @@
 #include "../components/Armas_HUD.h"
 #include "../components/Rectangle.h"
 #include "../components/BoxCollider.h"
+#include "../components/TriggerCollider.h"
 #include "../components/CameraFollow.h"
 #include "../components/EnemyTrigger.h"
 #include "../components/KeyBoardCtrl.h"

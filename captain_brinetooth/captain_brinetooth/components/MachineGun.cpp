@@ -101,7 +101,7 @@ void MachineGun::shoot() {
 	Entity* bullet = entity_->getMngr()->addEntity();
 
 	Vector2D bulletpos; Vector2D bulletvel;
-	if (entity_->getComponent<PlayerController>()->getFlip()) {
+	if (anim_->isFlipX()) {
 		bulletpos = tr_->getPos() + Vector2D(tr_->getW() + 60, entity_->getComponent<Transform>()->getH() / 2);
 		bulletvel = Vector2D(1, 0);
 	}

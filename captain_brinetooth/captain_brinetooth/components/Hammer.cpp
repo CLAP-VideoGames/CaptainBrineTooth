@@ -92,7 +92,7 @@ void Hammer::update() {
 
 	//Updating the trigger's position
 	if (trigger != nullptr) {
-		if (entity_->getComponent<PlayerController>()->getFlip()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX + entity_->getComponent<Transform>()->getW())) / sdlutils().getPPM(),
+		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX + entity_->getComponent<Transform>()->getW())) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
@@ -101,7 +101,7 @@ void Hammer::update() {
 
 void Hammer::creaTrigger(int damage) {
 	trigger = entity_->getMngr()->addEntity();
-	if (entity_->getComponent<PlayerController>()->getFlip()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX + entity_->getComponent<Transform>()->getW(), triggerOffSetY),
+	if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX + entity_->getComponent<Transform>()->getW(), triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
 	else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);

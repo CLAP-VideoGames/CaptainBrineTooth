@@ -33,7 +33,7 @@ struct bodyChain {
 class MapCollider : public Component {
 public:
 	template<class T>
-	MapCollider(std::vector<vector<T>> vertices, int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
+	MapCollider(std::vector<std::vector<T>> vertices, int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f){
 		//type = typeAux;
 		isTrigger = isTriggerAux;
 		friction_ = friction;
@@ -129,7 +129,7 @@ public:
 	}
 
 	template<class T>
-	void setVertices(const std::vector<vector<T>>& verticesVector){
+	void setVertices(const std::vector<std::vector<T>>& verticesVector){
 		//Para cada definicion del lista de vertices, las introducimos en el vector de cuerpos
 		for (int i = 0; i < verticesVector.size(); i++){
 			bodyChain newBody;
@@ -164,6 +164,18 @@ public:
 		//SDL_Log("Mouse position: x=%i y=%i",  //    Print mouse position
 		//	mouse_position.x, mouse_position.y
 		//);
+
+		//Esto lo he metido yo Angel tranquilo no me pegues. Atte. Juan
+		//WIP
+		/// <summary>
+		/// Devuelve el layer de colision 
+		/// </summary>
+		//const uint16& getColLayer()const { return colLay_; };
+
+		/// <summary>
+		/// Devuelve la mascara de colision 
+		/// </summary>
+		//const uint16& getColMask()const { return colMask_; };
 	}
 
 private:

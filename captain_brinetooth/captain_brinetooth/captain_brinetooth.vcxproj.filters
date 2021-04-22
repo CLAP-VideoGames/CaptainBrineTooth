@@ -345,7 +345,7 @@
     <ClInclude Include="components\PompeyWormAttack.h">
       <Filter>Archivos de encabezado\components\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="components\TrigggerCollider.h">
+    <ClInclude Include="components\TriggerCollider.h">
       <Filter>Archivos de encabezado\components\Physics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -519,13 +519,13 @@
     <ClCompile Include="components\BoxCollider.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="components\TriggerCollider.cpp">
+    <ClCompile Include="components\EnemyTrigger.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="components\TrigggerCollider.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="components\PlayerController.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="components\EnemyTrigger.cpp">
+    <ClCompile Include="components\TriggerCollider.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>

@@ -197,7 +197,7 @@
     <ClInclude Include="components\Slider.h" />
     <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\Transform.h" />
-    <ClInclude Include="components\TrigggerCollider.h" />
+    <ClInclude Include="components\TriggerCollider.h" />
     <ClInclude Include="components\WeaponDamageDetection.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />
@@ -261,6 +261,7 @@
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\MachineGun.cpp" />
     <ClCompile Include="components\PescaController.cpp" />
+    <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="components\Crab.cpp" />
     <ClCompile Include="components\PompeyWormAttack.cpp" />
@@ -269,7 +270,6 @@
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="components\TriggerCollider.cpp" />
-    <ClCompile Include="components\TrigggerCollider.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />
