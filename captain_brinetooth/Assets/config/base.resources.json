@@ -181,8 +181,16 @@
 
 	"sounds": [
 		{
-			"id": "player_hurt",
-			"file": "assets/sounds/player/player1.mp3"
+			"id": "player_hurt0",
+			"file": "assets/sounds/player/player_hurt1.wav"
+		},
+		{
+			"id": "player_hurt1",
+			"file": "assets/sounds/player/player_hurt1.wav"
+		},
+		{
+			"id": "player_hurt2",
+			"file": "assets/sounds/player/player_hurt.wav"
 		},
 		{
 			"id": "player_jump",
@@ -192,25 +200,104 @@
 			"id": "walk",
 			"file": "assets/sounds/player/walk.mp3"
 		},
+
+
 		{
-			"id": "punch",
-			"file": "assets/sounds/weapons/boxing_punch.mp3"
+			"id": "sword_whoosh0",
+			"file": "assets/sounds/weapons/sword/sword_whoosh.mp3"
 		},
 		{
-			"id": "chainsaw1",
-			"file": "assets/sounds/weapons/chainsaw1.mp3"
+			"id": "sword_whoosh1",
+			"file": "assets/sounds/weapons/sword/sword_whoosh2.wav"
 		},
 		{
-			"id": "chainsaw2",
-			"file": "assets/sounds/weapons/chainsaw2.mp3"
+			"id": "estocada_espada",
+			"file": "assets/sounds/weapons/sword/estocada.mp3"
 		},
+
+		{
+			"id": "sierra_whoosh0",
+			"file": "assets/sounds/weapons/sierra/sierra1.mp3"
+		},
+		{
+			"id": "sierra_whoosh1",
+			"file": "assets/sounds/weapons/sierra/sierra2.mp3"
+		},
+		{
+			"id": "estocada_sierra",
+			"file": "assets/sounds/weapons/sierra/estoque_sierra.mp3"
+		},
+
+		{
+			"id": "boxing_punch1",
+			"file": "assets/sounds/weapons/punch/boxing_punch1.wav"
+		},
+		{
+			"id": "boxing_punch2",
+			"file": "assets/sounds/weapons/punch/boxing_punch2.wav"
+		},
+		{
+			"id": "normal_punch1",
+			"file": "assets/sounds/weapons/punch/punch.mp3"
+		},
+		{
+			"id": "normal_punch2",
+			"file": "assets/sounds/weapons/punch/punch2.wav"
+		},
+		{
+			"id": "normal_punch3",
+			"file": "assets/sounds/weapons/punch/punch3.wav"
+		},
+
+		{
+			"id": "hammer_down",
+			"file": "assets/sounds/weapons/hammer/hammer_down.wav"
+		},
+		{
+			"id": "hammer_lateral",
+			"file": "assets/sounds/weapons/hammer/hammer_whoosh.mp3"
+		},
+
+		{
+			"id": "anguila_whip",
+			"file": "assets/sounds/weapons/anguila/anguila_whip.mp3"
+		},
+
+		{
+			"id": "disparo_anchoa",
+			"file": "assets/sounds/weapons/anchoas/disparo.mp3"
+		},
+		{
+			"id": "recarga_anchoa",
+			"file": "assets/sounds/weapons/anchoas/recarga.mp3"
+		},
+
+		{
+			"id": "pick_weapon",
+			"file": "assets/sounds/weapons/pick_weapon.mp3"
+		},
+
+
+		{
+			"id": "crecimiento_medusa",
+			"file": "assets/sounds/enemies/crecimiento_medusa.mp3"
+		},
+		{
+			"id": "disparo_fringehead",
+			"file": "assets/sounds/enemies/disparo_fringehead.mp3"
+		},
+		{
+			"id": "enemy_hurt",
+			"file": "assets/sounds/enemies/enemy_hurt.mp3"
+		},
+		{
+			"id": "mordisco_elfshark",
+			"file": "assets/sounds/enemies/mordisco_elfshark.mp3"
+		},
+
 		{
 			"id": "gaviota",
 			"file": "assets/sounds/gaviota.mp3"
-		},
-		{
-			"id": "sword_whoosh",
-			"file": "assets/sounds/weapons/sword_swing_whoosh.mp3"
 		}
 	],
 
