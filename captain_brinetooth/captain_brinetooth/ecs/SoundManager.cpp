@@ -100,3 +100,13 @@ void SoundManager::stopMusic()
 	sdlutils().musics().at(mainMusic).haltChannel();
 }
 
+void SoundManager::playSoundEffect(std::string effect, Uint32 seg)
+{
+	if (timer + seg < SDL_GetTicks())
+	{
+		timer = SDL_GetTicks();
+		sdlutils().soundEffects().at(effect).play();
+	}
+
+}
+

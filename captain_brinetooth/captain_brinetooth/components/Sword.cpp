@@ -24,6 +24,11 @@ void Sword::update() {
 				CURRENT_STATUS = STATUS::OnAnimationLock;
 				CURRENT_ATTACK = ATTACKS::Attack1;
 
+				if (!currentlyStabbing)
+				{
+					entity_->getMngr()->getSoundMngr()->playSoundEffect("sword_whoosh0", 0);
+				}
+
 				//Activate attack animation + sawing on attack
 				if (anim_->searchParamValue("sword_att") != -1)
 					anim_->setParamValue("sword_att", 1);
@@ -41,7 +46,10 @@ void Sword::update() {
 					std::cout << "Attack 2 Initiated\n";
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack2;
-
+					if (!currentlyStabbing)
+					{
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("sword_whoosh1", 0);
+					}
 					if (anim_->searchParamValue("sword_att") != -1)
 						anim_->setParamValue("sword_att", 2);
 
@@ -54,7 +62,7 @@ void Sword::update() {
 					std::cout << "Attack 3 Initiated\n";
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
-
+					
 					if (anim_->searchParamValue("sword_att") != -1)
 						anim_->setParamValue("sword_att", 3);
 
@@ -66,7 +74,7 @@ void Sword::update() {
 					//Set player as sawing
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack1;
-
+					
 					//Activate attack animation + sawing on attack
 					if (anim_->searchParamValue("sword_att") != -1)
 						anim_->setParamValue("sword_att", 1);
@@ -141,7 +149,9 @@ void Sword::update() {
 
 		//
 		creaTrigger(20);
-
+		
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("estocada_espada", 0);
+		
 		stabActivationTime = sdlutils().currRealTime();
 		currentlyStabbing = true;
 	}

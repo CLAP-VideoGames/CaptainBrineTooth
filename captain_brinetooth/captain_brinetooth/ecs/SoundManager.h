@@ -14,6 +14,7 @@ public:
 		volumenGeneral = volume;
 		volumenEfectos = volume;
 		volumenPausa = 0;
+		timer = 0;
 		mainMusic = initMus;
 		pauseMusic = initMus + "Pausa";
 	}
@@ -40,7 +41,7 @@ public:
 
 	void ChangeMainMusic(std::string newMusic); // Cambiar de cancion principal
 
-	void playSoundEffect(std::string effect) { sdlutils().soundEffects().at(effect).play(); }
+	void playSoundEffect(std::string effect, Uint32 seg);
 
 	void stopMusic();
 
@@ -51,6 +52,7 @@ public:
 private:
 	std::string mainMusic;
 	std::string pauseMusic;
+	Uint32 timer;
 	int volumenGeneral, volumenPausa, volumenEfectos;
 };
 

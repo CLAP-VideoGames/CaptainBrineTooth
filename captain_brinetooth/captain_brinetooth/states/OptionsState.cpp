@@ -108,7 +108,7 @@ void OptionsState::controlBrightness(float value, Entity* ent){
 }
 
 void OptionsState::volverMenu(App* app, SoundManager* snd){
-	snd->playSoundEffect("gaviota");
+	snd->playSoundEffect("gaviota",0);
 	snd->resumeMainMusic();
 	app->getStateMachine()->popState();
 }

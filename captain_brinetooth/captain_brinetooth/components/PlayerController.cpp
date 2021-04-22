@@ -49,14 +49,12 @@ void PlayerController::update()
 		if (ih().isKeyDown(SDL_SCANCODE_LEFT) && !isDashing) {
 			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 			collider_->setSpeed(Vector2D(-speed_, vel.y));
-			snd->playSoundEffect("walk");
 			animController_->setParamValue("Speed", 1);
 			animController_->flipX(false);
 		}
 		else if (ih().isKeyDown(SDL_SCANCODE_RIGHT) && !isDashing) {
 			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 			collider_->setSpeed(Vector2D(speed_, vel.y));
-			snd->playSoundEffect("walk");
 			animController_->setParamValue("Speed", 1);
 			animController_->flipX(true);
 		}
@@ -71,7 +69,7 @@ void PlayerController::update()
 			//health_->loseLife();
 
 			animController_->setParamValue("NotOnFloor", 1);
-			snd->playSoundEffect("player_jump");
+			snd->playSoundEffect("player_jump", 300);
 		}
 		else if (ih().isKeyDown(SDL_SCANCODE_X)) {
 			//snd->ChangeMainMusic("adventure");
