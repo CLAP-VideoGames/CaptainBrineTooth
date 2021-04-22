@@ -11,6 +11,7 @@ class Animation;
 class AnimBlendGraph;
 class Rotate;
 class BoxCollider;
+class TriggerCollider;
 class Player_Health;
 class Armas_HUD;
 class EnemyMovement;
@@ -58,6 +59,7 @@ class PescaController;
 	AnimBlendGraph,\
 	Rotate,\
 	BoxCollider,\
+	TriggerCollider,\
 	Player_Health,\
 	Armas_HUD, \
 	EnemyMovement, \

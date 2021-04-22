@@ -182,3 +182,13 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 		pos_.set(round((body->GetPosition().x * sdlutils().getPPM()) - size_.getX() / 2.0f), round((body->GetPosition().y * sdlutils().getPPM()) - size_.getY() / 2.0f));
 	}
 }
+
+ const uint16& BoxCollider::getColLayer() const
+ {
+	 return colLay_;
+ }
+
+ const uint16& BoxCollider::getColMask() const
+ {
+	 return colMask_;
+ }

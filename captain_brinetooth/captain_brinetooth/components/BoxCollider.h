@@ -101,6 +101,15 @@ public:
 	/// </summary>
 	void actRenderPos();
 
+	/// <summary>
+	/// Devuelve el layer de colision 
+	/// </summary>
+	const uint16& getColLayer()const;
+
+	/// <summary>
+	/// Devuelve la mascara de colision 
+	/// </summary>
+	const uint16& getColMask()const;
 
 private:
 	Transform* tr_;

@@ -197,6 +197,7 @@
     <ClInclude Include="components\Slider.h" />
     <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\Transform.h" />
+    <ClInclude Include="components\TrigggerCollider.h" />
     <ClInclude Include="components\WeaponDamageDetection.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="components\Cuerda.cpp" />
     <ClCompile Include="components\ElfSharkAttack.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
+    <ClCompile Include="components\EnemyTrigger.cpp" />
     <ClCompile Include="components\Enemy_Health.cpp" />
     <ClCompile Include="components\FringeHeadAtack.cpp" />
     <ClCompile Include="components\Gancho.cpp" />
@@ -266,6 +268,8 @@
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
+    <ClCompile Include="components\TriggerCollider.cpp" />
+    <ClCompile Include="components\TrigggerCollider.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />

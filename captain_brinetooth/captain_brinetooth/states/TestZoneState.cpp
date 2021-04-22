@@ -25,7 +25,7 @@ void TestZoneState::init() {
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);
+	createPesca(gancho);*/
 	
 	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
@@ -35,14 +35,14 @@ void TestZoneState::init() {
 	floor.physicType = STATIC;
 	floor.fixedRotation = true;
 	floor.rotation = 0.0f;
-	floor.col = DEFAULT;
-	floor.colMask = DEFAULT_MASK;
+	floor.col = GROUND;
+	floor.colMask = GROUND_MASK;
 	createBoxFloor(floor);
 #pragma endregion
 //-----Player-----
 #pragma region Player
 	Config playerConfig{};
-	playerConfig.pos = Vector2D(100, sdlutils().height() * 2.0f -200);
+	playerConfig.pos = Vector2D(100, sdlutils().height() * 1.5f);
 	playerConfig.vel = Vector2D(0, 0);
 	playerConfig.size = Vector2D(100.0f, 100.0f);
 	playerConfig.friction = 0.2f;
@@ -234,7 +234,7 @@ void TestZoneState::createBoxFloor(const Config& entityConfig) {
 
 	auto* box_Floor = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	box_Floor->addComponent<Animation>("Floor", &sdlutils().images().at("red_square"), 1, 1, 1, 1, 0);
-	box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
+	box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
 }
 
 void TestZoneState::createPompeyWorm(const Config& enemy1Config)

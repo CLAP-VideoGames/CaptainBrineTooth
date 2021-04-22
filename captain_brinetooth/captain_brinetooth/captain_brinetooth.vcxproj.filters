@@ -345,6 +345,9 @@
     <ClInclude Include="components\PompeyWormAttack.h">
       <Filter>Archivos de encabezado\components\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="components\TrigggerCollider.h">
+      <Filter>Archivos de encabezado\components\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -514,6 +517,15 @@
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="components\BoxCollider.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\TriggerCollider.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\TrigggerCollider.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="components\EnemyTrigger.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
