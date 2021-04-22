@@ -52,3 +52,23 @@ void Player_Health::render()
 	}
 	
 }
+
+void Player_Health::loseLife() 
+{
+	int x = sdlutils().rand().teCuoto(0, 2);
+
+	switch (x)
+	{
+	case 0:
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_hurt2", 300);
+		break;
+	case 1:
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_hurt1", 300);
+		break;
+	
+	default:
+		break;
+	}
+	vidas -= 0.5f;  g->ShakeCamera(20);
+
+}
