@@ -198,6 +198,7 @@
     <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\Transform.h" />
     <ClInclude Include="components\TriggerCollider.h" />
+    <ClInclude Include="components\VideoPlayer.h" />
     <ClInclude Include="components\WeaponDamageDetection.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="components\TriggerCollider.cpp" />
+    <ClCompile Include="components\VideoPlayer.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />

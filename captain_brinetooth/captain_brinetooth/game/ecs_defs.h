@@ -43,6 +43,7 @@ class Reward;
 class Gancho;
 class Crab;
 class MachineGun;
+class VideoPlayer;
 class JellyHatBehavior;
 class Connections;
 class Inventory;
@@ -92,6 +93,7 @@ class PescaController;
 	Crab,\
 	MachineGun,\
 	Connections,\
+	VideoPlayer,\
 	JellyHatBehavior,\
 	Inventory,\
 	GetAWeaponOnCollision,\

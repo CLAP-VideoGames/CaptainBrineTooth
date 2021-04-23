@@ -44,6 +44,7 @@
 #include "../components/Cuerda.h"
 #include "../components/Reward.h"
 #include "../components/PescaController.h"
+#include "../components/VideoPlayer.h"
 
 class Manager;
 class App;
