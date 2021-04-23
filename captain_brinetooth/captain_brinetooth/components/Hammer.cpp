@@ -23,6 +23,7 @@ void Hammer::update() {
 				CURRENT_STATUS = STATUS::OnAnimationLock;
 				CURRENT_ATTACK = ATTACKS::Attack1;
 
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
 				//Activate attack animation + sawing on attack
 				if (anim_->searchParamValue("hammer_att") != -1)
 					anim_->setParamValue("hammer_att", 1);
@@ -39,6 +40,7 @@ void Hammer::update() {
 
 				CURRENT_STATUS = STATUS::OnAnimationLock;
 				CURRENT_ATTACK = ATTACKS::Attack2;
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
 
 				//
 				if (anim_->searchParamValue("hammer_att") != -1)
@@ -55,6 +57,7 @@ void Hammer::update() {
 				//Set player as sawing
 				CURRENT_STATUS = STATUS::OnAnimationLock;
 				CURRENT_ATTACK = ATTACKS::Attack1;
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
 
 				//Activate attack animation + sawing on attack
 				if (anim_->searchParamValue("hammer_att") != -1)

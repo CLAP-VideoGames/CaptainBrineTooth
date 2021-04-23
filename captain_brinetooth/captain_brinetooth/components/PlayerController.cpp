@@ -71,14 +71,6 @@ void PlayerController::update()
 			animController_->setParamValue("NotOnFloor", 1);
 			snd->playSoundEffect("player_jump", 300);
 		}
-		else if (ih().isKeyDown(SDL_SCANCODE_X)) {
-			//snd->ChangeMainMusic("adventure");
-			snd->setMusicVolume(snd->GeneralVolume() - 5);
-		}
-		else if (ih().isKeyDown(SDL_SCANCODE_Z)) {
-			//snd->ChangeMainMusic("adventure");
-			snd->setMusicVolume(snd->GeneralVolume() + 5);
-		}
 
 		//Para juego final añadir && canDash
 		if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing) {

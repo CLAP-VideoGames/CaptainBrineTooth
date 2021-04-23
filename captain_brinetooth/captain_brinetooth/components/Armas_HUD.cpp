@@ -49,6 +49,8 @@ void Armas_HUD::changeWeapon()
 
 void Armas_HUD::actualizarNewWeapon(int opcion, Texture* newWeapon)
 {
+	entity_->getMngr()->getSoundMngr()->playSoundEffect("pick_weapon", 500);
+
 	if (opcion == 0)
 	{
 		mainWeapon = newWeapon;
