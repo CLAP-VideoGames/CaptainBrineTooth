@@ -31,6 +31,8 @@ public:
 	void actPos();
 	void actPosAdvanced();
 
+	void checkCameraFollow();
+
 protected:
 	Transform* entityT;
 	std::vector<Entity*> entities_;

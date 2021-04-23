@@ -6,6 +6,7 @@
 #include "../game/App.h"
 #include "../assets/assets.h"
 #include "..//components/AnimBlendGraph.h"
+#include "../components/CameraFollow.h"
 
 #include <tmxlite\Layer.hpp>
 
@@ -52,7 +53,8 @@ void Level0::load(const string& path) {
 	if (connectionPos.size() > 0)connectionPos.clear();
 	if (connectionSize.size() > 0)connectionSize.clear();
 	if (connectionsNames.size() > 0)connectionsNames.clear();
-
+	//Reseteamos los limites de la pantalla
+	maxCoordenate.set(0, 0);
 
 	//carga el mapa con TMXLite
 	tmx::Map tiled_map;
@@ -160,6 +162,14 @@ void Level0::load(const string& path) {
 					points[j][i].y /= sdlutils().getPPM();
 				}
 				j++;
+			}
+
+			Entity* player = entity_->getMngr()->getHandler<Player>();
+			if (player != nullptr){
+				CameraFollow* camara = player->getComponent<CameraFollow>();
+				if (camara != nullptr) {
+  					camara->checkCameraFollow();
+				}
 			}
 		}
 

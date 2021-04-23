@@ -94,7 +94,7 @@ public:
 	}	
 	
 	inline float lerpPrecise(float a, float b, float t) {
-		return (1 - t) * a + t * b;
+		return a * (1 - t) + b * t;
 	}
 
 	// toggle to full-screen/window mode

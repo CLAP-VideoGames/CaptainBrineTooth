@@ -8,6 +8,8 @@
 
 void CameraFollow::init(){
 	entities_ = entity_->getMngr()->getEnteties();
+
+	checkCameraFollow();
 }
 
 void CameraFollow::update(){
@@ -59,4 +61,9 @@ void CameraFollow::actPosAdvanced(){
 
 	App::camera.x = differenceX;
 	App::camera.y = differenceY;
+}
+
+void CameraFollow::checkCameraFollow(){
+	if ((App::camera.w * zoom) > camLimits->getX()) limitless_Horizontal = true;
+	if ((App::camera.h * zoom) > camLimits->getY()) limitless_Vertical = true;
 }
