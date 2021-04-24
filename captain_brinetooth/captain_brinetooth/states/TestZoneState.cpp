@@ -286,12 +286,12 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 
 
 
-	/*auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
+	auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* player_anim_controller = player->addComponent<AnimBlendGraph>();
 	player_anim_controller->addAnimation("player", &sdlutils().images().at("player_cana"), 1, 1, 1, 1, 0);
 	BoxCollider* playercollider_ = player->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	playercollider_->getFixture()->SetSensor(true);
-	player->addComponent<PescaController>();*/
+	player->addComponent<PescaController>();
 
 	auto* gancho = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* gancho_anim_controller = gancho->addComponent<AnimBlendGraph>();

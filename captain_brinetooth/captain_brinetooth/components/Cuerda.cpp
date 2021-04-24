@@ -13,7 +13,6 @@ void Cuerda::init() {
 	
 }
 void Cuerda::update() {
-	std::cout << hook->getComponent<Gancho>()->getContactId();
 	if (hook->getComponent<Gancho>()->getContactId() == 1) cuerdaDownMovement(); //When the action of fishing starts 
 	else if (hook->getComponent<Gancho>()->getContactId() == 2)cuerdaUpMovement(); //When we have collided with floor
 	else if(hook->getComponent<Gancho>()->getContactId() == 3) //When we reach top of the road 
