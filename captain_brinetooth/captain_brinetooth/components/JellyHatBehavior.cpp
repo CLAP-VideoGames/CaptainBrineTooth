@@ -34,6 +34,7 @@ void JellyHatBehavior::update() {
 		entitytr_->setH(iniH + newSize);
 		entitytr_->setW(iniW + newSize);
 		entityhealth_->setHealth(iniHealth + newSize);
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("crecimiento_medusa", 5000); // Hay que ajustar este valor
 	}
 	if (entitycollider_->getBody()->GetLinearVelocity().y == 0) {
 		entitycollider_->applyForce(Vector2D(0, -1), 60.0f);

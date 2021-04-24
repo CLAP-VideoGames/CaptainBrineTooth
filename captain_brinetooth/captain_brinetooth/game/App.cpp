@@ -45,45 +45,6 @@ void App::init() {
 	//Refrescamos los estados pusheados
 	stateMachine->refreshStates();
 	world_->SetContactListener(&collisionListener);
-
-	//auto* soundController = mngr_->addEntity();
-	//soundController->addComponent<SoundManager>(75, "Menu");
-
-	//PruebaState* prueba = static_cast<PruebaState*>(stateMachine->currentState());
-	//prueba->addStateEntityPrueba();
-	//createLevel0();
-
-	///*MenuState* aux = static_cast<MenuState*>(stateMachine->currentState());
-	//aux->addStateEntityMenu();
-	//aux->setSoundController(soundController->getComponent<SoundManager>());*/
-
-	////Caja para hacer testeo con movimiento
-	//Config boxConfig {};
-	//boxConfig.pos = Vector2D(sdlutils().width() / 5.5f, sdlutils().height() / 7.0f);
-	//boxConfig.vel = Vector2D();
-	//boxConfig.size = Vector2D(150.0f, 80.0f);
-	//boxConfig.friction = 0.5f;
-	//boxConfig.fixedRotation = false;
-	//boxConfig.isTrigger = false;
-	//boxConfig.rotation = 0.0f;
-	//boxConfig.physicType = DYNAMIC;
-	//boxConfig.col= DEFAULT;
-	//boxConfig.col= DEFAULT_MASK;
-	//createBoxTest(boxConfig);
-	////Crea el suelo
-	////createMedusa(Vector2D(sdlutils().width() / 3.0f - 50.0, sdlutils().height() / 2.0f + 60.0f), Vector2D(), Vector2D(200.0f, 200.0f), 0.0f);
-
-	////sdlutils().musics().at(mainMusic).setMusicVolume(volumen++);
-
-	//Config playerConfig {};
-	//playerConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() / 8.0f);
-	//playerConfig.vel = Vector2D(0,0);
-	//playerConfig.size = Vector2D(200.0f, 200.0f);
-	//playerConfig.friction = 0.2f;
-	//playerConfig.fixedRotation = true;
-	//playerConfig.rotation = 0.0f;
-
-	//createPlayer(playerConfig);
 }
 
 void App::start() {

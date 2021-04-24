@@ -132,6 +132,9 @@ void ElfSharkAttack::attack() {
 	//attackTrigger_->addComponent<ContactDamage>();
 	//Llama al cambio de estado de animacion
 	entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 1);
+
+	// Reproducimos el sonido de mordisco
+	entity_->getMngr()->getSoundMngr()->playSoundEffect("mordisco_elfshark",0);
 }
 
 void ElfSharkAttack::move() {

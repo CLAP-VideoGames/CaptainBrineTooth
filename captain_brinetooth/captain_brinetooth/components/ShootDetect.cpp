@@ -49,7 +49,7 @@ void ShootDetect::update()
 
 			//Instanciar una entidad bala que cuando salga de la pantalla se destruya 
 			createBullet();
-
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("disparo_fringehead", 0);
 			passedTime = sdlutils().currRealTime();
 
 		}

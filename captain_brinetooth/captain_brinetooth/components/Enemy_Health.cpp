@@ -18,6 +18,23 @@ Enemy_Health::Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color&
 
 void Enemy_Health::loseLife(int damage){
 	lifes -= damage;
+
+	// Reproducimos sonido aleatorio de monstruo herido
+	int x = sdlutils().rand().teCuoto(0, 3);
+	switch (x)
+	{
+	case 0:
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt", 200);
+		break;
+	case 1:
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt1", 200);
+		break;
+	case 2:
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 200);
+	default:
+		break;
+	}
+
 	if (lifes <= 0) {
 		entity_->setActive(false);
 		//Tenemos que eliminar el Trigger del enemigo (si tiene)
