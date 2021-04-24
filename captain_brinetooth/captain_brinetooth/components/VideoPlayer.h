@@ -4,18 +4,22 @@
 #include <string>
 #include <vector>
 #include "SDL.h"
+#include <iostream>
+#include "../game/App.h"
 
 //Librerias de ffmpeg
-	#include <iostream>
-	#include <libavcodec/avcodec.h>
+extern "C" {
 	#include <libavformat/avformat.h>
 	#include <libswscale/swscale.h>
 	#include <libavutil/imgutils.h>
+	#include <libavcodec/avcodec.h>
+}
+
 
 class VideoPlayer : public Component
 {
 public:
-	VideoPlayer(const std::string file, bool loop);
+	VideoPlayer(const char* file, bool loop, const Vector2D& size = Vector2D(App::camera.w, App::camera.h));
 	~VideoPlayer();
 
 	void init() override;
@@ -23,11 +27,14 @@ public:
 	void update() override;
 	void render() override;
 
-	void queueVideo(const std::string file, bool loop);
+	void queueVideo(const char* file, bool loop);
+
+	int loadVideo();
 
 private:
-	std::vector<std::pair<std::string, bool>> files;
 
+	std::vector<std::pair<const char*, bool>> files;
+	//Valores para leer los frames del video
 	AVFormatContext* pFormatCtx;
 	AVCodecContext* pCodecCtx;
 	AVCodec* pCodec;
@@ -37,12 +44,20 @@ private:
 	struct SwsContext* img_convert_ctx;
 
 	// sdl stuff
-	//
 	int window_w, window_h;
-	SDL_Window* sdlWindow;
 	SDL_Renderer* sdlRenderer;
 	SDL_Texture* sdlTexture;
 	SDL_Rect sdlRect;
 	SDL_Event event;
+
+
+	//Tiempo entre frame y frame del video
+	Uint32 timePerFrame;
+	Uint32 lastUpdate;
+	//Controlares de decodificación del video
+	int done = 0;
+	int paused = 0;
+	int ret = 0;
+	bool available = false;
 };
 
