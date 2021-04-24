@@ -25,7 +25,7 @@ void Crab::update() {
 				CURRENT_ATTACK = ATTACKS::Attack1;
 				entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch1", 0);
 				//Activate attack animation + sawing on attack
-				if (anim_->searchParamValue("crab_att") != -1)
+				if (anim_->getParamIndex("crab_att") != -1)
 					anim_->setParamValue("crab_att", 1);
 
 				//
@@ -43,7 +43,7 @@ void Crab::update() {
 					CURRENT_ATTACK = ATTACKS::Attack2;
 					entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch3", 0);
 
-					if (anim_->searchParamValue("crab_att") != -1)
+					if (anim_->getParamIndex("crab_att") != -1)
 						anim_->setParamValue("crab_att", 2);
 
 					sawActivationTime = sdlutils().currRealTime();
@@ -55,7 +55,7 @@ void Crab::update() {
 					CURRENT_ATTACK = ATTACKS::Attack3;
 					entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch4", 0);
 
-					if (anim_->searchParamValue("crab_att") != -1)
+					if (anim_->getParamIndex("crab_att") != -1)
 						anim_->setParamValue("crab_att", 3);
 
 					//
@@ -71,7 +71,7 @@ void Crab::update() {
 					CURRENT_ATTACK = ATTACKS::Attack1;
 
 					//Activate attack animation + sawing on attack
-					if (anim_->searchParamValue("crab_att") != -1)
+					if (anim_->getParamIndex("crab_att") != -1)
 						anim_->setParamValue("crab_att", 1);
 
 					//
@@ -93,7 +93,7 @@ void Crab::update() {
 		std::cout << "STOPPED STABBING\n";
 		CURRENT_STATUS = STATUS::OnAnimationLock;
 
-		if (anim_->searchParamValue("crab_att") != -1)
+		if (anim_->getParamIndex("crab_att") != -1)
 			anim_->setParamValue("crab_att", 0);
 
 		stoppedSawTime = sdlutils().currRealTime();
@@ -108,7 +108,7 @@ void Crab::update() {
 			trigger = nullptr;
 		}
 
-		if (anim_->searchParamValue("crab_att") != -1)
+		if (anim_->getParamIndex("crab_att") != -1)
 			anim_->setParamValue("crab_att", 0);
 
 		comboActivationTime = sdlutils().currRealTime();

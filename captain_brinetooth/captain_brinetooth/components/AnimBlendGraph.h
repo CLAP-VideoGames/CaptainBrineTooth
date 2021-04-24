@@ -70,7 +70,7 @@ public:
 	/// </summary>
 	/// <param name="paramName"></param>
 	/// <returns></returns>
-	int searchParamValue(std::string paramName);
+	const int& getParamIndex(std::string paramName);
 	/// <summary>
 	/// Mantiene las proporciones entre animaciones que no comparten el mismo tamaño
 	/// Se necesita el nombre de la animacion por defecto y el tamaño que se quiere representar
@@ -87,6 +87,7 @@ public:
 	void flipX(bool state);
 	bool isComplete();
 	const bool& isFlipX();
+	const int& getParamValue(std::string paramName);
 	const Animation* getCurrentAnimation();
 	
 	friend class Animation;

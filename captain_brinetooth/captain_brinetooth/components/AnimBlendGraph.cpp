@@ -82,7 +82,7 @@ void AnimBlendGraph::addTransition(std::string animsrc_, std::string animdest_, 
 		i++;
 	}
 	//Comprobar si existe un parametro ya existente, si no, lo crea y lo inicializa a -1
-	i = searchParamValue(param->name_);
+	i = getParamIndex(param->name_);
 	if (i == -1) {
 		Parameter* newP = new Parameter({ param->name_, -1 });
 		params_.push_back(newP);
@@ -104,7 +104,7 @@ void AnimBlendGraph::addTransition(std::string animsrc_, std::string animdest_, 
 
 void AnimBlendGraph::setParamValue(std::string paramName, int value)
 {
-	int i = searchParamValue(paramName);
+	int i = getParamIndex(paramName);
 	if (i != -1) {
 		params_[i]->value_ = value;
 		//Comprobar si cambia la animacion
@@ -112,7 +112,7 @@ void AnimBlendGraph::setParamValue(std::string paramName, int value)
 	}
 }
 
-int AnimBlendGraph::searchParamValue(std::string paramName)
+const int& AnimBlendGraph::getParamIndex(std::string paramName)
 {
 	int i = 0;
 	while (i < params_.size() && params_[i]->name_ != paramName) i++; //Busqueda del parametro por su nombre
@@ -175,9 +175,19 @@ const bool& AnimBlendGraph::isFlipX()
 	return flip_horizontal_;
 }
 
+const int& AnimBlendGraph::getParamValue(std::string paramName)
+{
+	int val = -1;
+	if (getParamIndex(paramName) >= 0) {
+		val = params_[getParamIndex(paramName)]->value_;
+	}
+	return val;
+}
+
 const Animation* AnimBlendGraph::getCurrentAnimation() {
 	if (currentAnim_ != nullptr)
 		return currentAnim_->anim_;
 	else
 		return entityAnims_[0];
 }
+

@@ -15,7 +15,7 @@ void TestZoneState::init() {
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
 
-	Config gancho{};
+	/*Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
@@ -25,9 +25,9 @@ void TestZoneState::init() {
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);
+	createPesca(gancho);*/
 	
-	/*Config floor{};
+	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
 	floor.size = Vector2D(sdlutils().width() * 4.0f, 100.0f);
@@ -111,7 +111,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("idle", "run", "Speed", 1, false);
 	anim_controller->addTransition("run", "idle", "Speed", 0, false);
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
-	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
+	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, false);
 	anim_controller->addTransition("idle", "jump", "NotOnFloor", 1, false);
 	anim_controller->addTransition("jump", "idle", "NotOnFloor", 0, true);
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
@@ -210,8 +210,9 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 #pragma endregion
 #pragma endregion
 
-	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
-	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.25), Vector2D(60.0f, 20.0f));
+	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, 
+		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX()*0.6, playerConfig.size.getY()));
+	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.25), Vector2D(50.0f, 20.0f));
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
 	//player->addComponent<SoundManager>(0, "FinalBoss");

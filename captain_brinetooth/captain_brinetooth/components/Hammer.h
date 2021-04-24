@@ -21,7 +21,7 @@ public:
 		tr_(nullptr) {
 	}
 	virtual ~Hammer() {
-		if (anim_->searchParamValue("hammer_att") != -1)
+		if (anim_->getParamIndex("hammer_att") != -1)
 			anim_->setParamValue("hammer_att", 0);
 		if (trigger != nullptr) {
 			trigger->setActive(false);

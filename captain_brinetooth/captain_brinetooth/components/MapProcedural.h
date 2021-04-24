@@ -11,6 +11,7 @@
 //Del daño que le cause a otras personas, pido perdon a la raza humana por crear este monstruo
 namespace fs = std::filesystem;
 const int NUM_TILEMAPS = 40;
+using namespace ColLayers;
 /// <summary>
 /// Crea las habitaciones del mapa y controla sus conexiones. Aplica el componente MapCollider para el manejo de colisiones
 /// </summary>
@@ -105,7 +106,7 @@ public:
 			for (Entity* ent : triggers) ent->setActive(false);
 			triggers.clear();
 
-			chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
+			chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(),STATIC,GROUND,GROUND_MASK);
 
 			setFase(fase + 1);
 			setNumRooms(10);
@@ -142,7 +143,7 @@ public:
 		for (Entity* ent : triggers) ent->setActive(false);
 		triggers.clear();
 
-		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
+		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(),STATIC,GROUND,GROUND_MASK);
 
 		//cout << actualRoom->getName();
 		//Cogemos sus conexiones	
@@ -259,7 +260,7 @@ private:
 		r->level = tag.path;
 		lvl->load(r->level);
 		
-		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList());
+		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(),STATIC,GROUND,GROUND_MASK);
 		
 		//Opcion 1
 		getConec(tag.name, r->cons);

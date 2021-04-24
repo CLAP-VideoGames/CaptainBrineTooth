@@ -13,7 +13,7 @@ class TriggerCollider : public Component
 {
 public:
 	/// <summary>
-	/// BoxTriggerCollider
+	/// BoxTriggerCollider, Dinamico y necesario establecer joint con la entidad padre
 	/// </summary>
 	/// <param name="id"></param>
 	/// <param name="collisionLayer"></param>
@@ -33,6 +33,7 @@ public:
 	/// Identificador del trigger, devuelve un string
 	/// </summary>
 	const std::string& getID();
+
 protected:
 	Entity* trigger;
 	Vector2D offsetTrigger_;

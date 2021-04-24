@@ -31,9 +31,10 @@ public:
 	/// <param name="rotation"> rotacion en grados</param>
 	/// <param name="pos_"> posición en caso de que no exista el componente Transform. Por defecto (0,0)</param>
 	/// <param name="size_">tamaño en caso de que no exista el componente Transform. Por defecto (10,10)</param>
-	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false, float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& pos = Vector2D(0, 0), const Vector2D& size = Vector2D(10, 10)) :
+	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false,
+		float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& size = Vector2D(0, 0), const Vector2D& pos = Vector2D(0, 0)) :
 		type(typeAux), isTrigger(isTriggerAux), friction_(friction), colLay_(collisionLayer),
-		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), pos_(pos), size_(size) {}
+		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), size_(size), pos_(pos) {}
 
 	virtual ~BoxCollider();
 
@@ -101,6 +102,8 @@ public:
 	/// </summary>
 	void actRenderPos();
 
+	void triggerCollide(bool state);
+
 	/// <summary>
 	/// Devuelve el layer de colision 
 	/// </summary>
@@ -111,11 +114,13 @@ public:
 	/// </summary>
 	const uint16& getColMask()const;
 
+	const bool& isTriggerColliding();
+
 private:
 	Transform* tr_;
 	Vector2D pos_, size_;
 	int type;
-	bool isTrigger;
+	bool isTrigger, isTriggerColiding_;
 	float rotation_, friction_;
 	uint16 colLay_, colMask_;
 

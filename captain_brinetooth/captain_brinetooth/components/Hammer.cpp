@@ -25,7 +25,7 @@ void Hammer::update() {
 
 				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
 				//Activate attack animation + sawing on attack
-				if (anim_->searchParamValue("hammer_att") != -1)
+				if (anim_->getParamIndex("hammer_att") != -1)
 					anim_->setParamValue("hammer_att", 1);
 
 				//
@@ -43,7 +43,7 @@ void Hammer::update() {
 				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
 
 				//
-				if (anim_->searchParamValue("hammer_att") != -1)
+				if (anim_->getParamIndex("hammer_att") != -1)
 					anim_->setParamValue("hammer_att", 2);
 
 				//
@@ -60,7 +60,7 @@ void Hammer::update() {
 				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
 
 				//Activate attack animation + sawing on attack
-				if (anim_->searchParamValue("hammer_att") != -1)
+				if (anim_->getParamIndex("hammer_att") != -1)
 					anim_->setParamValue("hammer_att", 1);
 
 				//
@@ -83,7 +83,7 @@ void Hammer::update() {
 			trigger = nullptr;
 		}
 
-		if (anim_->searchParamValue("hammer_att") != -1)
+		if (anim_->getParamIndex("hammer_att") != -1)
 			anim_->setParamValue("hammer_att", 0);
 	}
 	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {

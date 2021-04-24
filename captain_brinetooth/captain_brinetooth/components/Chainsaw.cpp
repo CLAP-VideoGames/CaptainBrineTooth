@@ -28,7 +28,7 @@ void Chainsaw::update() {
 				entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh0", 0);
 
 				//Activate attack animation + sawing on attack
-				if(anim_->searchParamValue("chainsaw_att") != -1)
+				if(anim_->getParamIndex("chainsaw_att") != -1)
 					anim_->setParamValue("chainsaw_att", 1);
 
 				//
@@ -47,7 +47,7 @@ void Chainsaw::update() {
 					entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh1", 0);
 
 					//
-					if (anim_->searchParamValue("chainsaw_att") != -1)
+					if (anim_->getParamIndex("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 2);
 
 					//
@@ -61,7 +61,7 @@ void Chainsaw::update() {
 					CURRENT_ATTACK = ATTACKS::Attack3;
 					//entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh0", 0);
 
-					if (anim_->searchParamValue("chainsaw_att") != -1)
+					if (anim_->getParamIndex("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 3);
 
 					sawActivationTime = sdlutils().currRealTime();
@@ -75,7 +75,7 @@ void Chainsaw::update() {
 					CURRENT_ATTACK = ATTACKS::Attack1;
 
 					//Activate attack animation + sawing on attack
-					if (anim_->searchParamValue("chainsaw_att") != -1)
+					if (anim_->getParamIndex("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 1);
 
 					//
@@ -99,7 +99,7 @@ void Chainsaw::update() {
 
 		stoppedSawTime = sdlutils().currRealTime();
 
-		if (anim_->searchParamValue("chainsaw_att") != -1)
+		if (anim_->getParamIndex("chainsaw_att") != -1)
 			anim_->setParamValue("chainsaw_att", 0);
 	}
 	else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
@@ -112,7 +112,7 @@ void Chainsaw::update() {
 			trigger = nullptr;
 		}
 
-		if (anim_->searchParamValue("chainsaw_att") != -1)
+		if (anim_->getParamIndex("chainsaw_att") != -1)
 			anim_->setParamValue("chainsaw_att", 0);
 
 		comboActivationTime = sdlutils().currRealTime();

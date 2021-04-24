@@ -19,7 +19,10 @@ void BoxCollider::init() {
 		else {
 			pos_ = tr_->getPos();
 		}
-		size_ = Vector2D(tr_->getW() / sdlutils().getPPM(), tr_->getH() / sdlutils().getPPM());
+		if (size_.getX() <= 0 || size_.getY() <= 0)
+			size_ = Vector2D(tr_->getW(), tr_->getH());
+		else
+			size_ = Vector2D(size_.getX(), size_.getY());
 	}
 	else {
 		//Pasamos el tamaño a medidas de box2d
@@ -57,7 +60,7 @@ void BoxCollider::init() {
 	body = world->CreateBody(&bodyDef);
 
 	b2PolygonShape boxShape;
-	boxShape.SetAsBox(size_.getX() / 2.0f, size_.getY() / 2.0f);
+	boxShape.SetAsBox(size_.getX() / sdlutils().getPPM() / 2.0f, size_.getY() / sdlutils().getPPM() / 2.0f);
 
 	b2FixtureDef fixtureDef;
 	//Que el cubo real tenga la misma forma que la definicion
@@ -73,6 +76,8 @@ void BoxCollider::init() {
 	fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
 
 	fixture = body->CreateFixture(&fixtureDef);
+
+	isTriggerColiding_ = false;
 }
 
 void BoxCollider::update() {
@@ -97,8 +102,8 @@ void BoxCollider::render() {
 	if (sdlutils().getDebug()) {
 		SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
 
-		int w = (tr_ != nullptr) ? tr_->getW() : size_.getX();
-		int h = (tr_ != nullptr) ? tr_->getH() : size_.getY();
+		int w = size_.getX();
+		int h = size_.getY();
 
 		//Ya que la posición de un objeto físico es el centro de la masa, tenemos que llevar el punto a la parte superior izquierda
 		//Le restamos la posición de la cámara
@@ -183,6 +188,11 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	}
 }
 
+ void BoxCollider::triggerCollide(bool state)
+ {
+	 isTriggerColiding_ = state;
+ }
+
  const uint16& BoxCollider::getColLayer() const
  {
 	 return colLay_;
@@ -191,4 +201,9 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
  const uint16& BoxCollider::getColMask() const
  {
 	 return colMask_;
+ }
+
+ const bool& BoxCollider::isTriggerColliding()
+ {
+	 return isTriggerColiding_;
  }

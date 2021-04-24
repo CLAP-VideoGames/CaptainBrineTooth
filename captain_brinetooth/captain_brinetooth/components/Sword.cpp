@@ -30,7 +30,7 @@ void Sword::update() {
 				}
 
 				//Activate attack animation + sawing on attack
-				if (anim_->searchParamValue("sword_att") != -1)
+				if (anim_->getParamIndex("sword_att") != -1)
 					anim_->setParamValue("sword_att", 1);
 
 				//
@@ -50,7 +50,7 @@ void Sword::update() {
 					{
 						entity_->getMngr()->getSoundMngr()->playSoundEffect("sword_whoosh1", 0);
 					}
-					if (anim_->searchParamValue("sword_att") != -1)
+					if (anim_->getParamIndex("sword_att") != -1)
 						anim_->setParamValue("sword_att", 2);
 
 					//
@@ -63,7 +63,7 @@ void Sword::update() {
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
 					
-					if (anim_->searchParamValue("sword_att") != -1)
+					if (anim_->getParamIndex("sword_att") != -1)
 						anim_->setParamValue("sword_att", 3);
 
 					sawActivationTime = sdlutils().currRealTime();
@@ -76,7 +76,7 @@ void Sword::update() {
 					CURRENT_ATTACK = ATTACKS::Attack1;
 					
 					//Activate attack animation + sawing on attack
-					if (anim_->searchParamValue("sword_att") != -1)
+					if (anim_->getParamIndex("sword_att") != -1)
 						anim_->setParamValue("sword_att", 1);
 
 					//
@@ -98,7 +98,7 @@ void Sword::update() {
 		std::cout << "STOPPED STABBING\n";
 		CURRENT_STATUS = STATUS::OnAnimationLock;
 
-		if (anim_->searchParamValue("sword_att") != -1)
+		if (anim_->getParamIndex("sword_att") != -1)
 			anim_->setParamValue("sword_att", 0);
 
 		stoppedSawTime = sdlutils().currRealTime();
@@ -113,7 +113,7 @@ void Sword::update() {
 			trigger = nullptr;
 		}
 
-		if (anim_->searchParamValue("sword_att") != -1)
+		if (anim_->getParamIndex("sword_att") != -1)
 			anim_->setParamValue("sword_att", 0);
 
 		comboActivationTime = sdlutils().currRealTime();

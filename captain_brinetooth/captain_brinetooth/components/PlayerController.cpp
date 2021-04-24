@@ -23,23 +23,30 @@ void PlayerController::init()
 
 void PlayerController::update()
 {
+#pragma region States
+	isOnGround();
+	std::cout << "\n" << isOnFloor;
+	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
+#pragma endregion
 #pragma region Animaciones
 	//Esta tocando suelo
-	if(isOnFloor)
+	if (isOnFloor) {
 		animController_->setParamValue("NotOnFloor", 0);
-	else
+	}
+	else {
 		animController_->setParamValue("NotOnFloor", 1);
+	}
 
 	//--No vel en x
 	if (collider_->getBody()->GetLinearVelocity().x == 0) {
 		animController_->setParamValue("Speed", 0);
 	}
 	
-	//--No vel en Y
+	/*//--No vel en Y
 	if (collider_->getBody()->GetLinearVelocity().y == 0) {
 		isOnFloor = true;
 		animController_->setParamValue("NotOnFloor", 0);
-	}
+	}*/
 #pragma endregion
 #pragma region Input
 	//Gestion del input
@@ -67,8 +74,6 @@ void PlayerController::update()
 
 			//Realizar da�o
 			//health_->loseLife();
-
-			animController_->setParamValue("NotOnFloor", 1);
 			snd->playSoundEffect("player_jump", 300);
 		}
 
@@ -114,96 +119,124 @@ void PlayerController::initEntityColliders()
 
 		trigger_->getTriggerEntity()->setCollisionMethod(OnTriggerEnter);
 		trigger_->getTriggerEntity()->setEndCollisionMethod(OnTriggerExit);
+
+		//createJointTrigger(trigger_->getTriggerEntity());
 	}
+}
+
+void PlayerController::createJointTrigger(Entity* trigger)
+{
+	b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();
+	//Asignar a que cuerpos esta asociado el joint 
+	b2joint->bodyA = entity_->getComponent<BoxCollider>()->getBody();
+	b2joint->bodyB = trigger->getComponent<BoxCollider>()->getBody();
+	//Si sus colisiones estan o no estan conectadas 
+	b2joint->collideConnected = true;
+	//No se del todo como van las anclas 
+	b2joint->localAnchorA.Set(0, 0);
+	//Mas o menos en lamitad de su anclaje 
+	b2joint->localAnchorB.Set(0, 0);
+	// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es)
+	entity_->getWorld()->CreateJoint(b2joint);
 }
 
 void PlayerController::OnTriggerEnter(b2Contact* contact)
 {
-	std::cout << "Ha entrado";
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-	//if (bodyA != nullptr) {
-	//	if (bodyA->getParent()->getComponent<PlayerController>() != nullptr) {
-	//		Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	//		//METODO 1
-	//		/*if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-	//			uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
-	//				bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-	//			if(bodyB_Layer == GROUND)
-	//				bodyA->getComponent<PlayerController>()->isOnGround(true);
-	//		}*/
-	//		//METODO 2
-	//		if (bodyB->getComponent<BoxCollider>() != nullptr) {
-	//			if(bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-	//				bodyA->getComponent<PlayerController>()->isOnGround(true);
-	//		}
-	//	}
-	//	else {
-	//		bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	//		if (bodyA != nullptr) {
-	//			if (bodyA->getComponent<PlayerController>() != nullptr) {
-	//				Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	//				//METODO 1
-	//				/*if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-	//					uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
-	//						bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-	//					if(bodyB_Layer == GROUND)
-	//						bodyA->getComponent<PlayerController>()->isOnGround(true);
-	//				}*/
-	//				//METODO 2
-	//				if (bodyB->getComponent<BoxCollider>() != nullptr) {
-	//					if (bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-	//						bodyA->getComponent<PlayerController>()->isOnGround(true);
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
+	if (bodyA != nullptr) {
+		uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr)? 
+			bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
+		if (bodyA_layer == PLAYER) {
+			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			//METODO 1 (Mapa)
+			if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
+				uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+				if(bodyB_Layer == GROUND)
+					bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+			}
+			/*//METODO 2
+			if (bodyB->getComponent<BoxCollider>() != nullptr) {
+				if(bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
+					bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+			}*/
+		}
+		else {
+			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (bodyA != nullptr) {
+				uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
+					bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
+				if (bodyA_layer == PLAYER) {
+					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+					//METODO 1 (Mapa)
+					if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
+						uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+						if(bodyB_Layer == GROUND)
+							bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+					}
+					//METODO 2
+					/*if (bodyB->getComponent<BoxCollider>() != nullptr) {
+						if (bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
+							bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+					}*/
+				}
+			}
+		}
+	}
 }
 
 void PlayerController::OnTriggerExit(b2Contact* contact)
+
 {
-	std::cout << "Ha salido";
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-	//if (bodyA != nullptr) {
-	//	if (bodyA->getComponent<PlayerController>() != nullptr) {
-	//		Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	//		//METODO 1
-	//		/*if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-	//			uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
-	//				bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-	//			if(bodyB_Layer == GROUND)
-	//				bodyA->getComponent<PlayerController>()->isOnGround(false);
-	//		}*/
-	//		//METODO 2
-	//		if (bodyB->getComponent<BoxCollider>() != nullptr) {
-	//			if (bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-	//				bodyA->getComponent<PlayerController>()->isOnGround(false);
-	//		}
-	//	}
-	//	else {
-	//		bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	//		if (bodyA != nullptr) {
-	//			if (bodyA->getComponent<PlayerController>() != nullptr) {
-	//				Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	//				//METODO 1
-	//				/*if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-	//					uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
-	//						bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-	//					if(bodyB_Layer == GROUND)
-	//						bodyA->getComponent<PlayerController>()->isOnGround(false);
-	//				}*/
-	//				//METODO 2
-	//				if (bodyB->getComponent<BoxCollider>() != nullptr) {
-	//					if (bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-	//						bodyA->getComponent<PlayerController>()->isOnGround(false);
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
+	if (bodyA != nullptr) {
+		uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
+			bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
+		if (bodyA_layer == PLAYER) {
+			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			//METODO 1 (Mapa)
+			if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
+				uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+				if (bodyB_Layer == GROUND)
+					bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+			}
+			/*//METODO 2
+			if (bodyB->getComponent<BoxCollider>() != nullptr) {
+				if(bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
+					bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+			}*/
+		}
+		else {
+			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (bodyA != nullptr) {
+				uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
+					bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
+				if (bodyA_layer == PLAYER) {
+					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+					//METODO 1 (Mapa)
+					if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
+						uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+						if (bodyB_Layer == GROUND)
+							bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+					}
+					//METODO 2
+					/*if (bodyB->getComponent<BoxCollider>() != nullptr) {
+						if (bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
+							bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+					}*/
+				}
+			}
+		}
+	}
 }
 
-void PlayerController::isOnGround(bool state)
+void PlayerController::isOnGround()
 {
-	isOnFloor = state;
+	if (trigger_->getTriggerEntity()->getComponent<BoxCollider>()->isTriggerColliding())
+		isOnFloor = true;
+	else
+		isOnFloor = false;
 }

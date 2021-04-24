@@ -165,18 +165,19 @@ public:
 		//	mouse_position.x, mouse_position.y
 		//);
 
-		//Esto lo he metido yo Angel tranquilo no me pegues. Atte. Juan
+		
+	}
+	//Esto lo he metido yo Angel tranquilo no me pegues. Atte. Juan
 		//WIP
 		/// <summary>
 		/// Devuelve el layer de colision 
 		/// </summary>
-		//const uint16& getColLayer()const { return colLay_; };
+	const uint16& getColLayer() { return colLay_; };
 
-		/// <summary>
-		/// Devuelve la mascara de colision 
-		/// </summary>
-		//const uint16& getColMask()const { return colMask_; };
-	}
+	/// <summary>
+	/// Devuelve la mascara de colision 
+	/// </summary>
+	const uint16& getColMask() { return colMask_; };
 
 private:
 

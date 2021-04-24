@@ -21,11 +21,12 @@ public:
 	//Necesitamos un getter de la velocidad del collider
 	void update() override;
 	void initEntityColliders();
+	void createJointTrigger(Entity* trigger);
 
 	static void OnTriggerEnter(b2Contact* contact);
 	static void OnTriggerExit(b2Contact* contact);
 
-	void isOnGround(bool state);
+	void isOnGround();
 
 private:
 	Transform* tr_ = nullptr;

@@ -129,10 +129,9 @@ void PlayState::createLevel0() {
 	camLimits = levelTile->getMaxCoordenates();
 }
 
-void PlayState::createPlayer(const Config& playerConfig){
+void PlayState::createPlayer(const Config& playerConfig) {
 	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
-	//AVISO: Cada spriteSheet tiene su punto de anclaje
-	//En cada animacion hay que colocar un punto de anclaje. Si no se determina, dicho punto de anclaje sera el centro del Sprite
+
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
@@ -148,13 +147,15 @@ void PlayState::createPlayer(const Config& playerConfig){
 	anim_controller->addTransition("idle", "run", "Speed", 1, false);
 	anim_controller->addTransition("run", "idle", "Speed", 0, false);
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
-	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, true);
+	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, false);
 	anim_controller->addTransition("idle", "jump", "NotOnFloor", 1, false);
 	anim_controller->addTransition("jump", "idle", "NotOnFloor", 0, true);
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 	anim_controller->setParamValue("Speed", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
+#pragma region Weapons
+	//-WEAPONS------------------------------------------------------------------------------------------------------
 #pragma region Chainsaw
 	//---CHAINSAW---------------------------------------------------------------------------------------------------
 	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 1, 8, Vector2D(0.75, 0.72));
@@ -245,13 +246,15 @@ void PlayState::createPlayer(const Config& playerConfig){
 #pragma endregion
 #pragma endregion
 
-	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation);
+	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
+		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
+	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.25), Vector2D(50.0f, 20.0f));
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
 	//player->addComponent<SoundManager>(75, "FinalBoss");
 
-	if(playerConfig.physicType != KINEMATIC) player->addComponent<PlayerController>();
-	else player->addComponent<KeyBoardCtrl>(map);
+	/*if(playerConfig.physicType != KINEMATIC)*/ player->addComponent<PlayerController>();
+	//else player->addComponent<KeyBoardCtrl>(map);
 
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), &(manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()), Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), false, false); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();

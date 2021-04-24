@@ -26,7 +26,7 @@ void MachineGun::update() {
 				CURRENT_STATUS = STATUS::Shooting;
 
 				//Activate attack animation + sawing on attack
-				if (anim_->searchParamValue("chainsaw_att") != -1)
+				if (anim_->getParamIndex("chainsaw_att") != -1)
 					anim_->setParamValue("chainsaw_att", 1);
 
 				//Shoot
@@ -57,7 +57,7 @@ void MachineGun::update() {
 
 		startedReloading = sdlutils().currRealTime();
 
-		if (anim_->searchParamValue("chainsaw_att") != -1)
+		if (anim_->getParamIndex("chainsaw_att") != -1)
 			anim_->setParamValue("chainsaw_att", 0);
 	}
 	else if (CURRENT_STATUS == STATUS::Shooting && overheatSpikeTime + timeBetweenOverheatSpikes < sdlutils().currRealTime()) {
@@ -73,7 +73,7 @@ void MachineGun::update() {
 		std::cout << "Stopped reloading\n";
 		CURRENT_STATUS = STATUS::Iddle;
 
-		if (anim_->searchParamValue("chainsaw_att") != -1)
+		if (anim_->getParamIndex("chainsaw_att") != -1)
 			anim_->setParamValue("chainsaw_att", 0);
 
 		overheat = 0;
