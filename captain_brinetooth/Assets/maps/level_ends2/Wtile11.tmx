@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="5">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="10">
  <tileset firstgid="1" source="../tileset4.tsx"/>
  <layer id="1" name="tiles" width="60" height="40">
   <data encoding="csv">
@@ -50,6 +50,21 @@
  </objectgroup>
  <objectgroup id="4" name="spawns">
   <object id="4" name="end" x="2624" y="1920">
+   <point/>
+  </object>
+  <object id="5" x="742.78" y="928.475">
+   <point/>
+  </object>
+  <object id="6" x="1222.13" y="1420.78">
+   <point/>
+  </object>
+  <object id="7" x="1641.03" y="1843.99">
+   <point/>
+  </object>
+  <object id="8" x="2366.53" y="2241.3">
+   <point/>
+  </object>
+  <object id="9" x="2824.29" y="2224.02">
    <point/>
   </object>
  </objectgroup>

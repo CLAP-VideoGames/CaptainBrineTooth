@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="6">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="13">
  <tileset firstgid="1" source="../tileset4.tsx"/>
  <layer id="1" name="tiles" width="40" height="30">
   <data encoding="csv">
@@ -39,7 +39,29 @@
   <object id="4" name="W" x="0" y="1280" width="64" height="384"/>
   <object id="5" name="E" x="2496" y="1280" width="64" height="384"/>
  </objectgroup>
- <objectgroup id="4" name="spawns"/>
+ <objectgroup id="4" name="spawns">
+  <object id="6" x="449.123" y="1594.96">
+   <point/>
+  </object>
+  <object id="7" x="276.383" y="1655.42">
+   <point/>
+  </object>
+  <object id="8" x="1016.28" y="1068.11">
+   <point/>
+  </object>
+  <object id="9" x="1603.6" y="1122.81">
+   <point/>
+  </object>
+  <object id="10" x="1894.38" y="1387.67">
+   <point/>
+  </object>
+  <object id="11" x="2124.7" y="1580.57">
+   <point/>
+  </object>
+  <object id="12" x="702.474" y="1335.85">
+   <point/>
+  </object>
+ </objectgroup>
  <objectgroup id="2" name="collision">
   <object id="1" x="0" y="0">
    <polygon points="0,0 2560,0 2560,1280 2496,1280 2496,1152 2432,1152 2432,1088 2304,1088 2304,896 2240,896 2240,1280 2176,1280 2176,832 2240,832 2240,768 2176,768 2176,704 2048,704 2048,832 1984,832 1984,640 2048,640 2048,576 1920,576 1920,1024 1856,1024 1856,576 1600,576 1600,640 1664,640 1664,704 1536,704 1536,576 1408,576 1408,512 1280,512 1280,448 896,448 896,512 960,512 960,640 896,640 896,768 832,768 832,640 768,640 768,512 640,512 640,576 576,576 576,640 512,640 512,832 576,832 576,960 512,960 512,896 384,896 384,1024 256,1024 256,1152 192,1152 192,1216 128,1216 128,1280 0,1280"/>
