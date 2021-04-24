@@ -38,29 +38,29 @@ public:
 
 		if (fase == 0) {
 			int roomsRead = 0;
-			ReadDirectory("assets/maps/level_starts",roomsRead);
+			ReadDirectory("assets/maps/level_starts0",roomsRead);
 			fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-			ReadDirectory("assets/maps/level_rooms", roomsRead);
+			ReadDirectory("assets/maps/level_rooms0", roomsRead);
 			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-			ReadDirectory("assets/maps/level_ends", roomsRead);
+			ReadDirectory("assets/maps/level_ends0", roomsRead);
 
 			lvl = entity_->getComponent<Level0>();
 		}
 		else if (fase == 1) {
 			int roomsRead = 0;
-			ReadDirectory("assets/maps/level_starts", roomsRead);
+			ReadDirectory("assets/maps/level_starts1", roomsRead);
 			fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-			ReadDirectory("assets/maps/level_rooms", roomsRead);
+			ReadDirectory("assets/maps/level_rooms1", roomsRead);
 			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-			ReadDirectory("assets/maps/level_ends", roomsRead);
+			ReadDirectory("assets/maps/level_ends1", roomsRead);
 		}
 		else {
 			int roomsRead = 0;
-			ReadDirectory("assets/maps/level_starts", roomsRead);
+			ReadDirectory("assets/maps/level_starts2", roomsRead);
 			fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-			ReadDirectory("assets/maps/level_rooms", roomsRead);
+			ReadDirectory("assets/maps/level_rooms2", roomsRead);
 			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-			ReadDirectory("assets/maps/level_ends", roomsRead);
+			ReadDirectory("assets/maps/level_ends2", roomsRead);
 		}
 
 		//Cacheamos el componente Level
@@ -209,16 +209,20 @@ private:
 			string ruta = entry.path().u8string();
 			//string ruta = entry.path();
 
-			roomNames[roomsRead].path = ruta; //Se la asignamos al path
-			roomNames[roomsRead].used = false;	//No se ha usado la habitaci�n
-			roomNames[roomsRead].tipo = 1;		//Tipo start
+			RoomNames rN;
+
+			rN.path = ruta; //Se la asignamos al path
+			rN.used = false;	//No se ha usado la habitaci�n
+			rN.tipo = 1;		//Tipo start
 
 			//Encontramos donde est� la divisi�n con el nombre
 			int puntoCorte = entry.path().string().find_last_of("\\");
 
 			ruta[puntoCorte] = '/';
 			//Nombre real del nivel
-			roomNames[roomsRead].name = entry.path().filename().string();
+			rN.name = entry.path().filename().string();
+
+			roomNames.push_back(rN);
 			roomsRead++;
 		}
 	}
@@ -413,7 +417,7 @@ protected:
 	bool gonTotravel = false, travelZone = false;
 	int nextDir = -1;
 	//Opcion con struct
-	std::array<RoomNames, NUM_TILEMAPS> roomNames;
+	vector<RoomNames> roomNames;
 
 	//Numero de habitaciones exploradas
 	int roomsExplored = 1;
