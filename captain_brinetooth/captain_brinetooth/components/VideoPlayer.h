@@ -6,6 +6,7 @@
 #include "SDL.h"
 #include <iostream>
 #include "../game/App.h"
+#include "../sdlutils/SDLUtils.h"
 
 //Librerias de ffmpeg
 extern "C" {

@@ -102,7 +102,7 @@ int VideoPlayer::loadVideo(){
 
 
 	// Create the SDL Rendered
-	sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, 0);
+	sdlRenderer = SDL_CreateRenderer(sdlutils().window(), -1, 0);
 
 	// Create the Texture to be used to render the frame
 	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_IYUV,
