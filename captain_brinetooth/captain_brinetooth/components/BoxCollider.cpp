@@ -161,7 +161,7 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 {
 	b2Vec2 physpos = body->GetPosition();
 	Vector2D position;
-	position.set(Vector2D(physpos.x, physpos.y));
+	position.set(Vector2D(physpos.x * sdlutils().getPPM(), physpos.y * sdlutils().getPPM()));
 	return position;
 }
 

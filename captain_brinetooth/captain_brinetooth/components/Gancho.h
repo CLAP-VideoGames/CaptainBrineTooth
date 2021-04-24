@@ -19,7 +19,7 @@ public :
 private:
 
 	int contactid;  // 1 DownMovement //2 UpMovement  //3 Top of the Rod
-	bool move;
+	bool move = false;
 	float moveTime;         //CurrRealTime
 	float timetoMove = 300;       //Definded time 
 	BoxCollider* hookBody;

@@ -30,8 +30,12 @@ void Gancho::update()
 		//Si ha tocado con el tope de la cuerda
 		if (contactid != 3)
 		{
-			speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, -0.65f);
-			hookMovement();
+			if (!move) {
+				speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, -0.65f);
+				hookMovement();
+				move = true;
+			}
+			
 		}
 	
 	}
@@ -82,7 +86,7 @@ void Gancho::collisionAnswer(Entity* contactedfloor)
 		contactid = 3; //Paramos el movimiento de la cuerda
 		speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0);
 		hookMovement();
-		if (hasBaitRef())
+		if (baitRef != nullptr)
 		{
 			baitRef->getComponent<Reward>()->giveReward();
 		}

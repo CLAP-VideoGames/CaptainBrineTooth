@@ -15,7 +15,7 @@ void TestZoneState::init() {
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
 
-	/*Config gancho{};
+	Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
@@ -25,9 +25,9 @@ void TestZoneState::init() {
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);*/
+	createPesca(gancho);
 	
-	Config floor{};
+	/*Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
 	floor.size = Vector2D(sdlutils().width() * 4.0f, 100.0f);
