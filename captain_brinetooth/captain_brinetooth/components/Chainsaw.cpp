@@ -25,6 +25,8 @@ void Chainsaw::update() {
 				CURRENT_STATUS = STATUS::OnAnimationLock;
 				CURRENT_ATTACK = ATTACKS::Attack1;
 
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh0", 0);
+
 				//Activate attack animation + sawing on attack
 				if(anim_->searchParamValue("chainsaw_att") != -1)
 					anim_->setParamValue("chainsaw_att", 1);
@@ -42,6 +44,7 @@ void Chainsaw::update() {
 					std::cout << "Attack 2 Initiated\n";
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack2;
+					entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh1", 0);
 
 					//
 					if (anim_->searchParamValue("chainsaw_att") != -1)
@@ -56,6 +59,7 @@ void Chainsaw::update() {
 					std::cout << "Attack 3 Initiated\n";
 					CURRENT_STATUS = STATUS::Sawing;
 					CURRENT_ATTACK = ATTACKS::Attack3;
+					//entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh0", 0);
 
 					if (anim_->searchParamValue("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 3);
@@ -64,6 +68,7 @@ void Chainsaw::update() {
 					break;
 				case ATTACKS::Attack3:
 					std::cout << "Attack 1 Initiated\n";
+					//entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh1", 0);
 
 					//Set player as sawing
 					CURRENT_STATUS = STATUS::OnAnimationLock;
@@ -140,6 +145,7 @@ void Chainsaw::update() {
 	//Comprobamos si hay que spawnear una estocada
 	if (CURRENT_STATUS == Sawing && stabActivationTime + timeBetweenStabs < sdlutils().currRealTime()) {
 		std::cout << "Saw\n";
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("estocada_sierra", 0);
 
 		creaTrigger(200);
 

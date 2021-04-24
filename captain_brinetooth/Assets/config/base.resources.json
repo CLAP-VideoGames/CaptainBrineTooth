@@ -237,6 +237,14 @@
 			"file": "assets/sounds/weapons/punch/boxing_punch2.wav"
 		},
 		{
+			"id": "boxing_punch3",
+			"file": "assets/sounds/weapons/punch/boxing_punch3.mp3"
+		},
+		{
+			"id": "boxing_punch4",
+			"file": "assets/sounds/weapons/punch/boxing_punch4.mp3"
+		},
+		{
 			"id": "normal_punch1",
 			"file": "assets/sounds/weapons/punch/punch.mp3"
 		},
