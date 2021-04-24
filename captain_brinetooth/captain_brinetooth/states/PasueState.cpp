@@ -72,10 +72,9 @@ void PauseState::createOptionPanel() {
 	panel.push_back(brightness);
 
 	// Boton Volver
-	Texture* t = &sdlutils().msgs().at("Return");
 	float multiplier = 2;
-	pos = Vector2D((cam.w * 0.2f), cam.h * 0.8);
-	createButton(t, multiplier, pos, pushPausePanel);
+	pos = Vector2D((cam.w * 0.1f), cam.h * 0.9);
+	createButton(&sdlutils().images().at("volverMenu"), multiplier, pos, pushPausePanel);
 }
 
 void PauseState::pushPausePanel(App* app, SoundManager* snd) {
@@ -87,22 +86,22 @@ void PauseState::pushPausePanel(App* app, SoundManager* snd) {
 }
 
 void PauseState::createBasePanel() {
-	Texture* t;
+	//Texture* t;
 	//BOTON BACKMENU---------
-	t = &sdlutils().msgs().at("BackMenu");
+	//t = &sdlutils().msgs().at("BackMenu");
 	float multiplier = 2;
-	Vector2D pos = Vector2D((cam.w * 0.5f), cam.h * 0.8);
-	createButton(t, multiplier, pos, backToMenu);
+	Vector2D pos = Vector2D((cam.w * 0.2f), cam.h * 0.5);
+	createButton(&sdlutils().images().at("menu"), multiplier, pos, backToMenu);
 	//BOTON OPTIONS---------
-	t = &sdlutils().msgs().at("Options");
+	//t = &sdlutils().msgs().at("Options");opciones
 	multiplier = 2;
-	pos = Vector2D((cam.w * 0.5f), cam.h * 0.5);
-	createButton(t, multiplier, pos, pushOptionsPanel);
+	pos = Vector2D((cam.w * 0.8f), cam.h * 0.5);
+	createButton(&sdlutils().images().at("opciones"), multiplier, pos, pushOptionsPanel);
 	//BOTON RESUME---------
-	t = &sdlutils().msgs().at("Resume");
+	//t = &sdlutils().msgs().at("Resume");
 	multiplier = 2;
 	pos = Vector2D((cam.w * 0.5f), cam.h * 0.2);
-	createButton(t, multiplier, pos, backToGame);
+	createButton(&sdlutils().images().at("continuar"), multiplier, pos, backToGame);
 	//backMenu->addComponent<Button>(&sdlutils().images().at("volverMenu"), backToMenu, app, manager_->getSoundMngr());
 }
 
