@@ -74,6 +74,9 @@ public:
 	Vector2D& getMaxCoordenates() { return (maxCoordenate); }
 	
 private:
+	void spawnEnemies();
+
+
 	string name_;
 	int fils_, cols_,		// filas y columnas de 
 		tile_width_, tile_height_;

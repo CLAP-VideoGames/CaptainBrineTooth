@@ -187,8 +187,8 @@ void Level0::load(const string& path) {
 				else {
 					tmx::Vector2f spa = spawn.getPosition();
 
-					spa.x /= sdlutils().getPPM();
-					spa.y /= sdlutils().getPPM();
+					/*spa.x /= sdlutils().getPPM();
+					spa.y /= sdlutils().getPPM();*/
 
 					enemiePos.push_back(spa);
 
@@ -230,6 +230,13 @@ void Level0::clearTileset()
 {
 	tilesets_.clear();
 	tiles_.clear();
+}
+
+void Level0::spawnEnemies()
+{
+	for (tmx::Vector2f pos : enemiePos) {
+
+	}
 }
 
 void Level0::render() {
