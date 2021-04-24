@@ -50,6 +50,7 @@ class Inventory;
 class GetAWeaponOnCollision;
 class Cuerda;
 class PescaController;
+class EnemyGenerator;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -98,6 +99,7 @@ class PescaController;
 	Inventory,\
 	GetAWeaponOnCollision,\
 	Cuerda,\
+	EnemyGenerator,\
 	PescaController
 
 // groups

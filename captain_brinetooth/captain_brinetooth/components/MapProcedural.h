@@ -43,8 +43,8 @@ public:
 			ReadDirectory("assets/maps/level_rooms0", roomsRead);
 			fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
 			ReadDirectory("assets/maps/level_ends0", roomsRead);
-
 			lvl = entity_->getComponent<Level0>();
+
 		}
 		else if (fase == 1) {
 			int roomsRead = 0;

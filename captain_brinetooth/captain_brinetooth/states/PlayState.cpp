@@ -122,6 +122,7 @@ void PlayState::update(){
 /// </summary>
 void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
+	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
 	map = nivel->addComponent<MapProcedural>(2, 0);
 	getMngr()->setHandler<Map>(nivel);

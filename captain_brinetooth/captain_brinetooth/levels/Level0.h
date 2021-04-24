@@ -13,6 +13,7 @@
 #include "tmxlite/Layer.hpp"
 #include "tmxlite/TileLayer.hpp"
 #include "tmxlite/Object.hpp"
+#include "..//components/EnemyGenerator.h"
 
 //#include "../components/BoxCollider.h"
 
@@ -40,6 +41,7 @@ struct object {
 class Level0 : public Component{
 public:
 	Level0(const string& name, std::shared_ptr<b2World> b2World);
+	virtual void init();
 	void render() override;
 	Vector2D getFilsCols() { return Vector2D(fils_, cols_); }
 	Vector2D getTileSize() { return Vector2D(tile_height_, tile_width_); }
@@ -107,4 +109,6 @@ private:
 	bool finalR = false;
 
 	Vector2D maxCoordenate = Vector2D(0,0);
+
+	EnemyGenerator* generator;
 };

@@ -161,6 +161,7 @@
     <ClInclude Include="components\CameraFollow.h" />
     <ClInclude Include="components\Connections.h" />
     <ClInclude Include="components\Cuerda.h" />
+    <ClInclude Include="components\EnemyGenerator.h" />
     <ClInclude Include="components\Gancho.h" />
     <ClInclude Include="components\GetAWeaponOnCollision.h" />
     <ClInclude Include="components\Inventory.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="components\ContactDamage.cpp" />
     <ClCompile Include="components\Cuerda.cpp" />
     <ClCompile Include="components\ElfSharkAttack.cpp" />
+    <ClCompile Include="components\EnemyGenerator.cpp" />
     <ClCompile Include="components\enemyMovement.cpp" />
     <ClCompile Include="components\EnemyTrigger.cpp" />
     <ClCompile Include="components\Enemy_Health.cpp" />

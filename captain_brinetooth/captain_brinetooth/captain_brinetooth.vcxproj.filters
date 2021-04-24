@@ -88,6 +88,9 @@
     <Filter Include="Archivos de encabezado\components\SpritesControl">
       <UniqueIdentifier>{7e36d4be-af1f-40cf-9c11-7516ad694a7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Map">
+      <UniqueIdentifier>{961de0d7-a2a9-4c9a-a7f0-81061b052169}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -351,6 +354,9 @@
     <ClInclude Include="components\VideoPlayer.h">
       <Filter>Archivos de encabezado\components\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="components\EnemyGenerator.h">
+      <Filter>Archivos de encabezado\components\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -533,6 +539,9 @@
     </ClCompile>
     <ClCompile Include="components\VideoPlayer.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\EnemyGenerator.cpp">
+      <Filter>Archivos de origen\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

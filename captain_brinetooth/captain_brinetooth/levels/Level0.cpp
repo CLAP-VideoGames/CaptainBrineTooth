@@ -39,6 +39,11 @@ Level0::Level0(const string& name, std::shared_ptr<b2World> b2World)
 	//load(name);
 }
 
+void Level0::init()
+{
+	generator = entity_->getComponent<EnemyGenerator>();
+}
+
 //Donde carguemos los enemigos hay que extraerlo en un método que nos devuelva la lista
 //A las salas hay que meterles un atributo que sean las salidas, preferiblemente un bool
 void Level0::load(const string& path) {
@@ -215,6 +220,8 @@ void Level0::load(const string& path) {
 			}
 		}
 	}
+
+	spawnEnemies();
 }
 
 void Level0::setPlayerPos()
@@ -235,7 +242,9 @@ void Level0::clearTileset()
 void Level0::spawnEnemies()
 {
 	for (tmx::Vector2f pos : enemiePos) {
+		Vector2D realPos(pos.x, pos.y);
 
+		generator->generateRandomEnemy(realPos);
 	}
 }
 
