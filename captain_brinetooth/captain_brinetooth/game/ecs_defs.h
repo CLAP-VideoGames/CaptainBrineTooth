@@ -44,6 +44,7 @@ class Gancho;
 class Crab;
 class MachineGun;
 class VideoPlayer;
+class Fade;
 class JellyHatBehavior;
 class Connections;
 class Inventory;
@@ -74,6 +75,7 @@ class EnemyGenerator;
     Gancho,\
     SoundManager,\
 	LoseLife,\
+	Fade,\
 	EnemyTrigger,\
 	FringeHeadAtack,\
 	ElfSharkAttack,\

@@ -223,3 +223,7 @@ int VideoPlayer::loadVideo(){
 	ret = 0;
 	available = false;
 }
+
+SDL_Rect& VideoPlayer::getRect(){
+	return sdlRect;
+}

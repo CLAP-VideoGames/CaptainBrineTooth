@@ -357,6 +357,9 @@
     <ClInclude Include="components\EnemyGenerator.h">
       <Filter>Archivos de encabezado\components\Map</Filter>
     </ClInclude>
+    <ClInclude Include="components\Fade.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -542,6 +545,9 @@
     </ClCompile>
     <ClCompile Include="components\EnemyGenerator.cpp">
       <Filter>Archivos de origen\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Fade.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

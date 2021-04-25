@@ -15,7 +15,13 @@ MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) 
 void MenuState::init() {
 
 	auto* video = manager_->addEntity();
-	video->addComponent<VideoPlayer>("assets/videos/0001-0120.mp4", true);
+	VideoPlayer* compVideo = video->addComponent<VideoPlayer>("assets/videos/0001-0120.mp4", true);
+
+	SDL_Rect videoRect = compVideo->getRect();
+
+	auto* fade = manager_->addEntity();
+	fade->addComponent<Fade>(Vector2D(videoRect.w, videoRect.h),Vector2D(videoRect.x, videoRect.y), 1000, 1000);
+
 	//auto* fondo = manager_->addEntity();
 	//SDL_Rect rectPos;
 	//rectPos.x = 0;

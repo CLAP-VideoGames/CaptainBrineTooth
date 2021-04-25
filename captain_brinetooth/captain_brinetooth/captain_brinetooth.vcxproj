@@ -162,6 +162,7 @@
     <ClInclude Include="components\Connections.h" />
     <ClInclude Include="components\Cuerda.h" />
     <ClInclude Include="components\EnemyGenerator.h" />
+    <ClInclude Include="components\Fade.h" />
     <ClInclude Include="components\Gancho.h" />
     <ClInclude Include="components\GetAWeaponOnCollision.h" />
     <ClInclude Include="components\Inventory.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="components\enemyMovement.cpp" />
     <ClCompile Include="components\EnemyTrigger.cpp" />
     <ClCompile Include="components\Enemy_Health.cpp" />
+    <ClCompile Include="components\Fade.cpp" />
     <ClCompile Include="components\FringeHeadAtack.cpp" />
     <ClCompile Include="components\Gancho.cpp" />
     <ClCompile Include="components\Hammer.cpp" />

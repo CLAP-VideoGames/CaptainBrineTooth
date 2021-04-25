@@ -32,6 +32,8 @@ public:
 
 	int loadVideo();
 
+	SDL_Rect& getRect();
+
 private:
 
 	std::vector<std::pair<const char*, bool>> files;

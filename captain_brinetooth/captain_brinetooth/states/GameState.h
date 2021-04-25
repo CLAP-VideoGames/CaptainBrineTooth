@@ -45,6 +45,7 @@
 #include "../components/Reward.h"
 #include "../components/PescaController.h"
 #include "../components/VideoPlayer.h"
+#include "../components/Fade.h"
 
 class Manager;
 class App;

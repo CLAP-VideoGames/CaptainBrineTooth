@@ -45,6 +45,9 @@ void App::init() {
 	//Refrescamos los estados pusheados
 	stateMachine->refreshStates();
 	world_->SetContactListener(&collisionListener);
+	//Habilitamos el hecho de poder realizar colores de SDL con Alpha. Solo los Colores de SDL
+	//Las texturas ya vienen por defecto configuradas para aceptar alpha
+	SDL_SetRenderDrawBlendMode(sdlutils().renderer(), SDL_BLENDMODE_BLEND);
 }
 
 void App::start() {
