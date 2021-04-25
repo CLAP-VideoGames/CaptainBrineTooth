@@ -34,7 +34,7 @@ App::App() {
 	//----Inicio por defecto----
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
-	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 }
 
 App::~App() {

@@ -3,9 +3,11 @@
 #include "Gancho.h"
 #include "Transform.h"
 #include "AnimBlendGraph.h"
+#include "Inventory.h"
 
-Reward::Reward()
+Reward::Reward(int w)
 {
+	weapontoGive = (PosibleWeapons)w;
 	catched = false;
 	//Falta incializar los limites para tener una referencia cuando el cebo se mueva 
 }
@@ -109,12 +111,19 @@ void Reward::adjustIfLimits()
 }
 void Reward::giveReward()
 {
-	int pollagordamaster; //Comprobacion de que entra en el metodo
-	//We should make a component to give reward
-	//Player gets the object 
+	//Now if a bait has been catched , we give one weapon to Player
+	if ((int)weapontoGive < 10)
+	{
+		//entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addWeapon((int)weapontoGive);
+		//Cambiar animacion de player
 
-	//entity_->GetComponent<Premio>()->giveObjecttoPlayer()
-	//{
-	// return objetAssociated;
-	//}
+	}
+
+
+
+
+
+
+
+
 }

@@ -14,8 +14,27 @@ void TestZoneState::init() {
 	auto* bg = createBasicEntity(Vector2D(0,1440),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
+	auto* floor = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() * 2), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
+	AnimBlendGraph* floor_anim_controller = floor->addComponent<AnimBlendGraph>();
+	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 
-	Config gancho{};
+
+	Config playerConfig{};
+	playerConfig.pos = Vector2D(100, sdlutils().height() * 1.5f);
+	playerConfig.vel = Vector2D(0, 0);
+	playerConfig.size = Vector2D(100.0f, 100.0f);
+	playerConfig.friction = 0.2f;
+	playerConfig.physicType = DYNAMIC;
+	playerConfig.fixedRotation = true;
+	playerConfig.rotation = 0.0f;
+	playerConfig.col = PLAYER;
+	playerConfig.colMask = PLAYER_MASK;
+	createPlayer(playerConfig);
+
+
+
+	/*Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
@@ -25,7 +44,7 @@ void TestZoneState::init() {
 	gancho.rotation = 0.0f;
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);
+	createPesca(gancho);*/
 	
 	/*Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
@@ -41,17 +60,6 @@ void TestZoneState::init() {
 #pragma endregion
 //-----Player-----
 #pragma region Player
-	/*Config playerConfig{};
-	playerConfig.pos = Vector2D(100, sdlutils().height() * 1.5f);
-	playerConfig.vel = Vector2D(0, 0);
-	playerConfig.size = Vector2D(100.0f, 100.0f);
-	playerConfig.friction = 0.2f;
-	playerConfig.physicType = DYNAMIC;
-	playerConfig.fixedRotation = true;
-	playerConfig.rotation = 0.0f;
-	playerConfig.col = PLAYER;
-	playerConfig.colMask = PLAYER_MASK;
-	createPlayer(playerConfig);*/
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
@@ -305,19 +313,19 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
 	reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 	reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	reward0->addComponent<Reward>();
+	reward0->addComponent<Reward>(26);
 
 	auto* reward1 = createBasicEntity(Vector2D(sdlutils().width() / 2, 1000), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* reward1_anim_controller = reward1->addComponent<AnimBlendGraph>();
 	reward1_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
 	reward1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	reward1->addComponent<Reward>();
+	reward1->addComponent<Reward>(1);
 
 	auto* reward2 = createBasicEntity(Vector2D(sdlutils().width() / 2, 1200), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* reward2_anim_controller = reward2->addComponent<AnimBlendGraph>();
 	reward2_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
 	reward2->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	reward2->addComponent<Reward>();
+	reward2->addComponent<Reward>(23);
 
 
 	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15, -30), Vector2D(16.0f, 16.0f), 0.0f, Vector2D(0, 0));

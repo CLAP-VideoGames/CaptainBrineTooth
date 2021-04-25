@@ -4,10 +4,11 @@
 #include "box2d.h"
 #include "../ecs/Entity.h"
 
+enum class PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk };
 class Reward : public Component
 {
 public:
-	Reward();
+	Reward(int w);
 	virtual ~Reward() {};
 	void init() override;
 	void update() override;
@@ -16,7 +17,7 @@ public:
 
 private:
 
-
+	PosibleWeapons weapontoGive; 
 	Entity* leftlimit;
 	Entity* rightlimit;
 	Entity* hook;
