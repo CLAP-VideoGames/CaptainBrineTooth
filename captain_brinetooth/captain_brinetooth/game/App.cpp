@@ -12,6 +12,7 @@
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect App::camera = {0 ,0,window.getX(),window.getY()};
+const float App::camera_Zoom_Out = 1.0f;
 
 using namespace ColLayers;
 
@@ -28,9 +29,9 @@ App::App() {
 
 	SoundManager* sndProvisional = new SoundManager(0, "Menu");
 	//----Inicio por defecto----
-	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
-	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 }
 
 App::~App() {
@@ -82,8 +83,8 @@ void App::start() {
 		
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
-		if (frameTime < 20)
-			SDL_Delay(20 - frameTime);
+		if (frameTime < FPS)
+			SDL_Delay(FPS - frameTime);
 	}
 }
 //Metodos propios de game 

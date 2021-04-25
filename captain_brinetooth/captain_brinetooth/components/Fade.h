@@ -1,9 +1,9 @@
 #pragma once
 #include "../ecs/Component.h"
 #include "../sdlutils/SDLUtils.h"
+#include <math.h>
 
-class Fade : public Component
-{
+class Fade : public Component{
 	enum class STATE_FADE{In, Out};
 
 public:
@@ -14,17 +14,17 @@ public:
 	void render() override;
 	void update() override;
 
-	void setInitState(STATE_FADE state){
+	inline void setInitState(STATE_FADE state){
 		state_ = state;
 	}
 
-	void setColor(const SDL_Color& color){
+	inline void setColor(const SDL_Color& color){
 		colorFade = color;
 	}
 
 private:
-
 	int timeIn_, timeOut_;
+	float percentageIn, percentageOut;
 	SDL_Color colorFade{};
 	SDL_Rect dest{};
 	STATE_FADE state_{};

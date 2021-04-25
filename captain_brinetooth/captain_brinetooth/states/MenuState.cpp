@@ -20,7 +20,7 @@ void MenuState::init() {
 	SDL_Rect videoRect = compVideo->getRect();
 
 	auto* fade = manager_->addEntity();
-	fade->addComponent<Fade>(Vector2D(videoRect.w, videoRect.h),Vector2D(videoRect.x, videoRect.y), 1000, 1000);
+	fade->addComponent<Fade>(Vector2D(videoRect.w, videoRect.h),Vector2D(videoRect.x, videoRect.y), 3000, 3000);
 
 	//auto* fondo = manager_->addEntity();
 	//SDL_Rect rectPos;
