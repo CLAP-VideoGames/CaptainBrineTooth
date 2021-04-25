@@ -56,7 +56,7 @@ void TestZoneState::init() {
 //-----Enemies-----
 #pragma region Enemies
 	#pragma region PompeyWorm
-	Config pompeyWorm{};
+	/*Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
 	pompeyWorm.size = Vector2D(100.0f, 100.0f);

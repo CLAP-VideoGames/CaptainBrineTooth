@@ -40,6 +40,6 @@ private:
 	int time = 1500, dashCoolDown = 10000, lasTimeDashed;
 	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;
 	//Flags
-	bool isOnFloor, isOnAir, isDashing, canDash;
+	bool isOnFloor, isOnAir, isDashing, canDash, moveLeft, moveRight;
 	
 };

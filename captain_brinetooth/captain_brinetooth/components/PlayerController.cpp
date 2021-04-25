@@ -18,52 +18,32 @@ void PlayerController::init()
 
 	lastTimeJumped = sdlutils().currRealTime();
 	lasTimeDashed = sdlutils().currRealTime();
+
+	moveLeft = moveRight = false;
 }
 
 
 void PlayerController::update()
 {
-#pragma region States
-	isOnGround();
-	//std::cout << "\n" << isOnFloor;
-	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
-#pragma endregion
-#pragma region Animaciones
-	//Esta tocando suelo
-	if (isOnFloor) {
-		animController_->setParamValue("NotOnFloor", 0);
-	}
-	else {
-		animController_->setParamValue("NotOnFloor", 1);
-	}
-
-	//--No vel en x
-	if (collider_->getBody()->GetLinearVelocity().x == 0) {
-		animController_->setParamValue("Speed", 0);
-	}
-	
-	/*//--No vel en Y
-	if (collider_->getBody()->GetLinearVelocity().y == 0) {
-		isOnFloor = true;
-		animController_->setParamValue("NotOnFloor", 0);
-	}*/
-#pragma endregion
 #pragma region Input
 	//Gestion del input
-	if (ih().keyDownEvent()) {
-		assert(collider_ != nullptr);
-		//Parte Horizontal
-		if (ih().isKeyDown(SDL_SCANCODE_LEFT) && !isDashing) {
-			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-			collider_->setSpeed(Vector2D(-speed_, vel.y));
-			animController_->setParamValue("Speed", 1);
-			animController_->flipX(false);
+	assert(collider_ != nullptr);
+	if(ih().keyUpEvent()){
+	//---Para la velocidad X
+		if (ih().isKeyUp(SDL_SCANCODE_LEFT)&& !isDashing) {
+			moveLeft = false;
 		}
-		else if (ih().isKeyDown(SDL_SCANCODE_RIGHT) && !isDashing) {
-			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-			collider_->setSpeed(Vector2D(speed_, vel.y));
-			animController_->setParamValue("Speed", 1);
-			animController_->flipX(true);
+		if (ih().isKeyUp(SDL_SCANCODE_RIGHT) && !isDashing) {
+			moveRight = false;
+		}
+	}
+	if (ih().keyDownEvent()) {
+		//Parte Horizontal
+		if (ih().isKeyDown(SDLK_LEFT) && !isDashing) {
+			moveLeft = true;
+		}
+		if (ih().isKeyDown(SDLK_RIGHT) && !isDashing) {
+			moveRight = true;
 		}
 		//Parte Vertical
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor && !isDashing) {
@@ -87,11 +67,49 @@ void PlayerController::update()
 			else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
 			canDash = false;
 		}
-
 	}
-	//---Para la velocidad X
-	if ((ih().isKeyUp(SDL_SCANCODE_RIGHT) && ih().isKeyUp(SDL_SCANCODE_LEFT) && !isDashing)) {
+#pragma endregion
+#pragma region States
+	isOnGround();
+	//std::cout << "\n" << isOnFloor;
+	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
+#pragma endregion
+#pragma region Animaciones
+	//Esta tocando suelo
+	if (isOnFloor) {
+		animController_->setParamValue("NotOnFloor", 0);
+	}
+	else {
+		animController_->setParamValue("NotOnFloor", 1);
+	}
+	//--No vel en x
+	if ((moveLeft && moveRight) || (!moveLeft && !moveRight))
+		animController_->setParamValue("Speed", 0);
+	else
+		animController_->setParamValue("Speed", 1);
+
+	/*//--No vel en Y
+	if (collider_->getBody()->GetLinearVelocity().y == 0) {
+		isOnFloor = true;
+		animController_->setParamValue("NotOnFloor", 0);
+	}*/
+#pragma endregion
+#pragma region Movement
+	//Ambas direcciones o ninguna
+	if ((moveLeft && moveRight) || (!moveLeft && !moveRight)) {
 		collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
+	}
+	else {
+		if (moveLeft) {	//izqda
+			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+			collider_->setSpeed(Vector2D(-speed_, vel.y));
+			animController_->flipX(false);
+		}
+		if (moveRight) {	//drcha
+			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+			collider_->setSpeed(Vector2D(speed_, vel.y));
+			animController_->flipX(true);
+		}
 	}
 #pragma endregion
 
