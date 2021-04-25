@@ -11,7 +11,8 @@ IntroState::~IntroState(){
 void IntroState::init(){
 	video = manager_->addEntity();
 	VideoPlayer* compVideo = video->addComponent<VideoPlayer>("assets/videos/0001-0120.mp4", true);
-
+	manager_->getSoundMngr()->setGeneralVolume(40);
+	manager_->getSoundMngr()->playIntroMusic();
 	SDL_Rect videoRect = compVideo->getRect();
 
 	fade = manager_->addEntity();
@@ -22,6 +23,7 @@ void IntroState::update(){
 	if (ih().mouseButtonEvent()) {
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			fadeComp->setState(Fade::STATE_FADE::Out);
+			manager_->getSoundMngr()->stopIntroMusic();
 		}
 	}
 

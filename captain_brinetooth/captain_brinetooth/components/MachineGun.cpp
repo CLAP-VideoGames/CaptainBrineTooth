@@ -57,6 +57,8 @@ void MachineGun::update() {
 		CURRENT_STATUS = STATUS::Reloading;
 
 		startedReloading = sdlutils().currRealTime();
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("recarga_anchoa", 0);
+
 
 		if (anim_->getParamIndex("machineGun_att") != -1)
 			anim_->setParamValue("machineGun_att", 2);
@@ -113,6 +115,7 @@ void MachineGun::shoot() {
 		bulletvel = Vector2D(-1, 0);
 	}
 
+	entity_->getMngr()->getSoundMngr()->playSoundEffect("disparo_anchoa", 700);
 
 	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 100.0f, 30.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();

@@ -101,6 +101,7 @@ void PompeyWormAttack::attack() {
 	}
 	//Llama al cambio de estado de animacion
 	entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 1);
+	entity_Parent_->getMngr()->getSoundMngr()->playSoundEffect("disparo_fringehead", 0);
 	shot = true;
 }
 

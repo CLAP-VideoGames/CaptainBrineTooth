@@ -334,6 +334,10 @@
 		{
 			"id": "gaviota",
 			"file": "assets/sounds/gaviota.mp3"
+		},
+		{
+			"id": "ola",
+			"file": "assets/sounds/ola.mp3"
 		}
 	],
 
@@ -409,6 +413,10 @@
 		{
 			"id": "CreditosPausa",
 			"file": "assets/sounds/soundtrack/wellerman.mp3"
+		},
+		{
+			"id": "fondo_video",
+			"file": "assets/sounds/fondo_video.mp3"
 		}
 
 	],

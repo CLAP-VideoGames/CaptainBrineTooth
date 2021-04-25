@@ -37,6 +37,18 @@ public:
 
 	void playPauseMusic(); // Detener todo los sonidos y musica del juego principal y tocar la musica del menu de Pausa
 
+	void playIntroMusic() {
+		sdlutils().musics().at("fondo_video").setChannelVolume(volumenGeneral);
+		sdlutils().musics().at("fondo_video").playforMusic();
+	}
+
+	void stopIntroMusic()
+	{
+		sdlutils().musics().at("fondo_video").haltChannel();
+		sdlutils().soundEffects().at("ola").play();
+		sdlutils().soundEffects().at("gaviota").play();
+	}
+
 	void resumeMainMusic(); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
 
 	void ChangeMainMusic(std::string newMusic); // Cambiar de cancion principal
