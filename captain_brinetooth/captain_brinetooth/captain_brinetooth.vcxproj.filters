@@ -363,6 +363,9 @@
     <ClInclude Include="states\IntroState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
+    <ClInclude Include="components\ElectricWhip.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -554,6 +557,9 @@
     </ClCompile>
     <ClCompile Include="states\IntroState.cpp">
       <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ElectricWhip.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
