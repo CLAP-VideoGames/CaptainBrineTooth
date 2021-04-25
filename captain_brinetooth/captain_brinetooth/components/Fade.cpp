@@ -19,21 +19,16 @@ void Fade::init(){
 }
 
 void Fade::update(){
-
-	if (ih().mouseButtonEvent()) {
-		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
-			state_ = STATE_FADE::Out;
-		}
-	}
-
-	if (state_ == STATE_FADE::In){
-		if (colorFade.a > 0)
-			colorFade.a = floor(sdlutils().lerpPrecise(colorFade.a, 0, percentageIn));
+	if (state_ == STATE_FADE::In && !fadeInComplete){
+		colorFade.a = floor(sdlutils().lerpPrecise(colorFade.a, 0, percentageIn));
+		if (colorFade.a <= 0)
+			fadeInComplete = true;
 
 	}
-	else{
-		if (colorFade.a < 255)
-			colorFade.a = ceil(sdlutils().lerpPrecise(colorFade.a, 255, percentageOut));
+	else if(state_ == STATE_FADE::Out && !fadeOutComplete){
+		colorFade.a = ceil(sdlutils().lerpPrecise(colorFade.a, 255, percentageOut));
+		if(colorFade.a >= 255)
+			fadeOutComplete = true;
 	}
 }
 

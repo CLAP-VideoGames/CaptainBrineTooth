@@ -13,7 +13,7 @@
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect App::camera = {0 ,0,window.getX(),window.getY()};
-const float App::camera_Zoom_Out = 1.0f;
+const float App::camera_Zoom_Out = 2.0f;
 
 using namespace ColLayers;
 

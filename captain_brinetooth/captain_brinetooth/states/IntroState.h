@@ -8,8 +8,10 @@ public:
 	~IntroState();
 
 	void init() override;
+	void update() override;
 
 private:
-
+	Entity* video = nullptr, *fade = nullptr;
+	Fade* fadeComp = nullptr;
 };
 

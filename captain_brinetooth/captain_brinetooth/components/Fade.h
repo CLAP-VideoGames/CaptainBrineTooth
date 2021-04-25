@@ -4,9 +4,9 @@
 #include <math.h>
 
 class Fade : public Component{
+public:
 	enum class STATE_FADE{In, Out};
 
-public:
 	Fade(const Vector2D& size, const Vector2D& pos, const int& timeIn, const int& timeOut, STATE_FADE state = STATE_FADE::In);
 	~Fade();
 
@@ -14,7 +14,7 @@ public:
 	void render() override;
 	void update() override;
 
-	inline void setInitState(STATE_FADE state){
+	inline void setState(STATE_FADE state){
 		state_ = state;
 	}
 
@@ -22,9 +22,20 @@ public:
 		colorFade = color;
 	}
 
+	inline bool getFadeInComplete() const {
+		return fadeInComplete;
+	}
+	
+	inline bool getFadeOutComplete() const {
+		return fadeOutComplete;
+	}
+
 private:
 	int timeIn_, timeOut_;
 	float percentageIn, percentageOut;
+
+	bool fadeOutComplete = false, fadeInComplete = false;
+
 	SDL_Color colorFade{};
 	SDL_Rect dest{};
 	STATE_FADE state_{};

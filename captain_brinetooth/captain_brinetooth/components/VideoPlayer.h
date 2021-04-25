@@ -20,7 +20,7 @@ extern "C" {
 class VideoPlayer : public Component
 {
 public:
-	VideoPlayer(const char* file, bool loop, const Vector2D& size = Vector2D(App::camera.w, App::camera.h));
+	VideoPlayer(const char* file, bool loop, const Vector2D& size = Vector2D(App::camera.w * App::camera_Zoom_Out, App::camera.h* App::camera_Zoom_Out));
 	~VideoPlayer();
 
 	void init() override;
