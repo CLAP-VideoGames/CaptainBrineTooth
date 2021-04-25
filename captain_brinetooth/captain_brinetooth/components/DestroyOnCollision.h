@@ -17,7 +17,9 @@ public:
 	}
 	static void destroyOnCollision(b2Contact* contact) {
 		Entity* entity = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-		if(entity != nullptr) entity->setActive(false);
+		if (entity != nullptr) {
+			if (entity->hasComponent<DestroyOnCollision>())
+				entity->setActive(false);
+		}
 	}
-protected:
 };

@@ -11,7 +11,7 @@ void MachineGun::init() {
 	assert(tr_ != nullptr);
 	anim_ = entity_->getComponent<AnimBlendGraph>();
 
-	bulletVelocity = 2;
+	bulletVelocity = 100;
 }
 
 void MachineGun::update() {
@@ -26,8 +26,8 @@ void MachineGun::update() {
 				CURRENT_STATUS = STATUS::Shooting;
 
 				//Activate attack animation + sawing on attack
-				if (anim_->getParamIndex("chainsaw_att") != -1)
-					anim_->setParamValue("chainsaw_att", 1);
+				if (anim_->getParamIndex("machineGun_att") != -1)
+					anim_->setParamValue("machineGun_att", 1);
 
 				//Shoot
 				shoot();
@@ -45,7 +45,8 @@ void MachineGun::update() {
 			CURRENT_STATUS = STATUS::Iddle;
 
 			//Desactivar animacion
-
+			if (anim_->getParamIndex("machineGun_att") != -1)
+				anim_->setParamValue("machineGun_att", 0);
 		}
 	}
 
@@ -57,8 +58,8 @@ void MachineGun::update() {
 
 		startedReloading = sdlutils().currRealTime();
 
-		if (anim_->getParamIndex("chainsaw_att") != -1)
-			anim_->setParamValue("chainsaw_att", 0);
+		if (anim_->getParamIndex("machineGun_att") != -1)
+			anim_->setParamValue("machineGun_att", 2);
 	}
 	else if (CURRENT_STATUS == STATUS::Shooting && overheatSpikeTime + timeBetweenOverheatSpikes < sdlutils().currRealTime()) {
 		
@@ -73,8 +74,10 @@ void MachineGun::update() {
 		std::cout << "Stopped reloading\n";
 		CURRENT_STATUS = STATUS::Iddle;
 
-		if (anim_->getParamIndex("chainsaw_att") != -1)
-			anim_->setParamValue("chainsaw_att", 0);
+		if (!ih().isKeyDown(SDL_SCANCODE_E)) {
+			if (anim_->getParamIndex("machineGun_att") != -1)
+				anim_->setParamValue("machineGun_att", 0);
+		}
 
 		overheat = 0;
 	}
@@ -102,20 +105,21 @@ void MachineGun::shoot() {
 
 	Vector2D bulletpos; Vector2D bulletvel;
 	if (anim_->isFlipX()) {
-		bulletpos = tr_->getPos() + Vector2D(tr_->getW() + 60, entity_->getComponent<Transform>()->getH() / 2);
+		bulletpos = tr_->getPos() + Vector2D(+60, 0);
 		bulletvel = Vector2D(1, 0);
 	}
 	else {
-		bulletpos = tr_->getPos() + Vector2D(-60, entity_->getComponent<Transform>()->getH() / 2);
+		bulletpos = tr_->getPos() + Vector2D(-60, 0);
 		bulletvel = Vector2D(-1, 0);
 	}
 
 
-	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 10.0f, 10.0f, 0.0f);
+	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 100.0f, 30.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("machine_gun_bullet"), 1, 1, 1, 1, 1);
 	bullet->addComponent<DisableOnExit>();
-	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
+	bullet->addComponent<BoxCollider>(DYNAMIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
 	bullet->addComponent<WeaponDamageDetection>(20);
-	//bullet->addComponent<DestroyOnCollision>(); // esto da problemas si no se hacen bien las capas de colision?
+	bullet->addComponent<DestroyOnCollision>(); // esto da problemas si no se hacen bien las capas de colision?
 }

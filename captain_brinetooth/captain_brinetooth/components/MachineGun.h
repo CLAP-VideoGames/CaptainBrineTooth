@@ -50,8 +50,8 @@ private:
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
-	float reloadingTime = 2000;		//Counted after one attack is stopped to avoid animation clipping
-	float timeBetweenShots = 333;
+	float reloadingTime = 400;		//Counted after one attack is stopped to avoid animation clipping
+	float timeBetweenShots = 100;
 	float timeBetweenOverheatSpikes = 100;
 	float maxOverheat = 30;
 };

@@ -29,6 +29,10 @@
 			"file": "assets/sprites/player/weapons/fists_combo.png"
 		},
 		{
+			"id": "machineGun_combo",
+			"file": "assets/sprites/player/weapons/anchovy_gun.png"
+		},
+		{
 			"id": "crab_combo",
 			"file": "assets/sprites/player/weapons/crab_combo.png"
 		},
@@ -75,6 +79,14 @@
 		{
 			"id": "weaponSelection",
 			"file": "assets/sprites/weaponSelection.png"
+		},
+		{
+			"id": "machine_gun",
+			"file": "assets/sprites/armas/machine_gun.png"
+		},
+		{
+			"id": "machine_gun_bullet",
+			"file": "assets/sprites/armas/machine_gun_bullet.png"
 		},
 		{
 			"id": "crab",

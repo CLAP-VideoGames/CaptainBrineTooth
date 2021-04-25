@@ -32,9 +32,7 @@ public:
 				if (entidad != nullptr) {
 					entidad->getComponent<WeaponDamageDetection>()->ApplyDamage(enemy);
 				}
-			}	
-			else //Si el cosa es un enemigo que tiene el componente vida, quitar vida
-				std::cout << "OHHH NOOO Perdi� vida\n";
+			}
 	}
 
 	//Aplica danio al enemigo

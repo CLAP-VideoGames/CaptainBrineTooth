@@ -90,7 +90,7 @@ Texture* Inventory::textureById(int weapToAdd) {
 		return &sdlutils().images().at("crab");
 		break;
 	case PosibleWeapons::TypeMachineGun:
-		return &sdlutils().images().at("sierra");
+		return &sdlutils().images().at("machine_gun");
 		break;
 	}
 }
