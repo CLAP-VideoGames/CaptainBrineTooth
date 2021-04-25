@@ -39,7 +39,7 @@ private:
 	Vector2D attackSpriteSize_ = Vector2D(50.0, 50.0);
 	Vector2D attackTriggerSize_ = Vector2D(20.0, 20.0);
 	Entity* attackTrigger_;
-	float attack_force = 3.0f;
+	float attack_force = 30.0f;
 	bool shot;
 	//Cooldowns
 	float cd_move_time = 100;

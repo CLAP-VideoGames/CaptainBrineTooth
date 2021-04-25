@@ -28,6 +28,7 @@ void Animation::init()
 	state_ = Playing;		//No empieza la animacion de base
 	lastUpdateTime = sdlutils().currRealTime();
 	flip_horizontal_ = false;
+	alpha_ = 255;
 }
 
 void Animation::render()
@@ -51,6 +52,10 @@ void Animation::render()
 		flip = SDL_FLIP_NONE; 
 		anchor_ = anchorPoint_;
 	}
+	//ALPHA
+	if (alpha_ > 255) alpha_ = 255;
+	else if (alpha_ < 0) alpha_ = 0;
+	SDL_SetTextureAlphaMod(tex_->getTexture(), alpha_);
 	//Construccion de los rectangulos fuente(textura) y destino (entidad)
 	Vector2D destPos = Vector2D(tr_->getPos().getX() - (destSize_.getX() * anchor_.getX()), tr_->getPos().getY() - (destSize_.getY() * anchor_.getY()));
 	SDL_Rect src = build_sdlrect(framepos_[actfr_].getX() * framewidth_, framepos_[actfr_].getY() * frameheight_, framewidth_, frameheight_);
@@ -93,6 +98,11 @@ void Animation::reset()
 void Animation::flipX(bool state)
 {
 	flip_horizontal_ = state;
+}
+
+void Animation::setAlpha(Uint8 alpha)
+{
+	alpha_ = alpha;
 }
 
 void Animation::setAnchor(float x, float y)

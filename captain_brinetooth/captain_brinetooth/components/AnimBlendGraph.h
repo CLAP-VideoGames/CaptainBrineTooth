@@ -85,6 +85,7 @@ public:
 	void play();
 	void stop();
 	void flipX(bool state);
+	void setAlpha(Uint8 alpha);
 	bool isComplete();
 	const bool& isFlipX();
 	const int& getParamValue(std::string paramName);

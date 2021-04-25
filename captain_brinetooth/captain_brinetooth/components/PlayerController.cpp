@@ -27,6 +27,7 @@ void PlayerController::update()
 	isOnGround();
 	//std::cout << "\n" << isOnFloor;
 	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
+	animController_->setAlpha(125);
 #pragma endregion
 #pragma region Animaciones
 	//Esta tocando suelo

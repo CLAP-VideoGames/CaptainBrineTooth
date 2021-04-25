@@ -175,6 +175,12 @@ const bool& AnimBlendGraph::isFlipX()
 	return flip_horizontal_;
 }
 
+void AnimBlendGraph::setAlpha(Uint8 alpha)
+{
+	if (currentAnim_ != nullptr)
+	currentAnim_->anim_->setAlpha(alpha);
+}
+
 const int& AnimBlendGraph::getParamValue(std::string paramName)
 {
 	int val = -1;
