@@ -468,6 +468,10 @@ private:
 	b2BodyUserData m_userData;
 };
 
+inline void b2Body::SetType(b2BodyType type) {
+	m_type = type;
+}
+
 inline b2BodyType b2Body::GetType() const
 {
 	return m_type;

@@ -77,7 +77,7 @@ void BoxCollider::init() {
 
 	fixture = body->CreateFixture(&fixtureDef);
 
-	isTriggerColiding_ = false;
+	isTriggerColliding_ = false;
 }
 
 void BoxCollider::update() {
@@ -190,7 +190,7 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 
  void BoxCollider::triggerCollide(bool state)
  {
-	 isTriggerColiding_ = state;
+	 isTriggerColliding_ = state;
  }
 
  const uint16& BoxCollider::getColLayer() const
@@ -205,5 +205,5 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 
  const bool& BoxCollider::isTriggerColliding()
  {
-	 return isTriggerColiding_;
+	 return isTriggerColliding_;
  }

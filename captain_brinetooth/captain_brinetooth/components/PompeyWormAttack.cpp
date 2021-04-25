@@ -1,11 +1,4 @@
 #include "PompeyWormAttack.h"
-#include "../sdlutils/SDLUtils.h"
-#include "../ecs/Manager.h"
-#include "../game/CollisionLayers.h"
-#include "BoxCollider.h"
-#include "AnimBlendGraph.h"
-#include "AnimBlendGraph.h"
-#include "ContactDamage.h"
 using namespace ColLayers;
 
 
@@ -24,12 +17,27 @@ void PompeyWormAttack::init()
 	//Set de los timers
 	move_time = cd_move_time;
 	elapsed_time_lastAttack = 0;
+	lifetime_puddle = 0;
 }
 
 void PompeyWormAttack::update() {
+	//Charco de veneno
+	if (attackTrigger_ != nullptr && attackTrigger_->hasComponent<BoxCollider>()) {
+		if (attackTrigger_->getComponent<BoxCollider>()->isTriggerColliding()) {
+			if (lifetime_puddle >= cd_puddle_lifetime) {
+				attackTrigger_->getComponent<BoxCollider>()->triggerCollide(false);
+				attackTrigger_->setActive(false);
+				attackTrigger_ = nullptr;
+				lifetime_puddle = 0;
+			}
+			else {
+				lifetime_puddle++;
+			}
+		}
+	}
 	//Actualiza la posicion del trigger
 	//El player ha entrado
-	if (entity_in_range_ && elapsed_time_lastAttack + cd_attack_time < sdlutils().currRealTime()) {
+	if (entity_in_range_ && elapsed_time_lastAttack + cd_attack_time < sdlutils().currRealTime() && attackTrigger_ == nullptr) {
 		attack();
 		//Reset cooldown
 		elapsed_time_lastAttack = sdlutils().currRealTime();
@@ -126,12 +134,73 @@ void PompeyWormAttack::createTriggerAttack()
 	//Crea trigger de ataque
 	attackTrigger_ = entity_->getMngr()->addEntity();
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX(), entitytr_->getPos().getY()),
-		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
-	attackTrigger_->addComponent<Animation>("pompey", &sdlutils().images().at("pompey_worm_spit"), 1, 1, 1, 1, 0);
-	attackTrigger_->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
+		Vector2D(0, 0), attackSpriteSize_.getX(), attackSpriteSize_.getY(), 0.0f);
+	Animation* sprite = attackTrigger_->addComponent<Animation>("pompey", &sdlutils().images().at("pompey_worm_spit"), 1, 1, 1, 1, 0);
+	sprite->flipX(true);
+	attackTrigger_->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true, 0.0f, true,0.0f, attackTriggerSize_);
 	//Posicion del player
 	Vector2D attackdir = (playertr_->getPos() - entitytr_->getPos());
 	attackdir = attackdir.normalize();
 	attackTrigger_->getComponent<BoxCollider>()->applyForce(attackdir, attack_force);
 	attackTrigger_->addComponent<ContactDamage>();
+	attackTrigger_->setCollisionMethod(hit);
 }
+
+void PompeyWormAttack::hit(b2Contact* contact)
+{
+	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	if (bodyA != nullptr) {
+		if (bodyA->getComponent<ContactDamage>() != nullptr) {
+			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			//Colision con el player
+			if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
+				bodyA->getComponent<ContactDamage>()->makeDamage();
+				if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+					//Desactiva el trigger
+					bodyA->setActive(false);
+					bodyA = nullptr;
+				}
+			}
+			//Colision con el Mapa
+			else if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
+				uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+				if (bodyB_Layer == GROUND) {
+					auto* collider = bodyA->getComponent<BoxCollider>();
+					collider->setSpeed(Vector2D(0.0, 0.0));
+					collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
+					collider->triggerCollide(true);
+				}
+			}
+		}
+		else {
+			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (bodyA != nullptr) {
+				if (bodyA->getComponent<ContactDamage>() != nullptr) {
+					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+					//Colision con el player
+					if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
+						bodyA->getComponent<ContactDamage>()->makeDamage();
+						if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+							//Desactiva el trigger
+							bodyA->setActive(false);
+							bodyA = nullptr;
+						}
+					}
+					//Colision con el Mapa
+					else if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
+						uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+						if (bodyB_Layer == GROUND) {
+							auto* collider = bodyA->getComponent<BoxCollider>();
+							collider->setSpeed(Vector2D(0.0, 0.0));
+							collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
+							collider->triggerCollide(true);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+

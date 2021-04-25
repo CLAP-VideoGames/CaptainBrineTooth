@@ -2,8 +2,15 @@
 #include "../ecs/Component.h"
 #include "../ecs/Entity.h"
 #include "../utils/Vector2D.h"
+#include "../sdlutils/SDLUtils.h"
+#include "../ecs/Manager.h"
+#include "../game/CollisionLayers.h"
 #include "Transform.h"
 #include "EnemyTrigger.h"
+#include "BoxCollider.h"
+#include "MapCollider.h"
+#include "AnimBlendGraph.h"
+#include "ContactDamage.h"
 class PompeyWormAttack :public Component
 {
 public:
@@ -11,7 +18,6 @@ public:
 	virtual ~PompeyWormAttack() {};
 	void init() override;
 	void update() override; 
-	bool canAttack();
 	static void hasEnter(b2Contact* contact);
 	static void hasExit(b2Contact* contact);
 	void entityInRange();
@@ -19,6 +25,7 @@ public:
 	void attack();
 	void patrol();
 	void createTriggerAttack();
+	static void hit(b2Contact* contact);
 
 private:
 	Entity* entity_Parent_;
@@ -29,12 +36,14 @@ private:
 	float speed_ = 1.0f;
 	float or_;
 	float attack_anticipation_ = 0;	//offset del ataque que permite atacar al player un poco antes de que este a rango del ataque
-	Vector2D attackTriggerSize_ = Vector2D(50.0f, 50.0f);
+	Vector2D attackSpriteSize_ = Vector2D(50.0, 50.0);
+	Vector2D attackTriggerSize_ = Vector2D(20.0, 20.0);
 	Entity* attackTrigger_;
-	float attack_force = 25.0f;
+	float attack_force = 3.0f;
 	bool shot;
-	//Cooldown
+	//Cooldowns
 	float cd_move_time = 100;
-	float cd_attack_time = 2000;
-	float move_time, elapsed_time_lastAttack;
+	float cd_attack_time = 5000;
+	float cd_puddle_lifetime = 150;
+	float move_time, elapsed_time_lastAttack, lifetime_puddle;
 };

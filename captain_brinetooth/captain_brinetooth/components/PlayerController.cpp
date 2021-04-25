@@ -25,7 +25,7 @@ void PlayerController::update()
 {
 #pragma region States
 	isOnGround();
-	std::cout << "\n" << isOnFloor;
+	//std::cout << "\n" << isOnFloor;
 	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
 #pragma endregion
 #pragma region Animaciones
@@ -155,11 +155,6 @@ void PlayerController::OnTriggerEnter(b2Contact* contact)
 				if(bodyB_Layer == GROUND)
 					bodyA->getComponent<BoxCollider>()->triggerCollide(true);
 			}
-			/*//METODO 2
-			if (bodyB->getComponent<BoxCollider>() != nullptr) {
-				if(bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-					bodyA->getComponent<BoxCollider>()->triggerCollide(true);
-			}*/
 		}
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
@@ -175,11 +170,6 @@ void PlayerController::OnTriggerEnter(b2Contact* contact)
 						if(bodyB_Layer == GROUND)
 							bodyA->getComponent<BoxCollider>()->triggerCollide(true);
 					}
-					//METODO 2
-					/*if (bodyB->getComponent<BoxCollider>() != nullptr) {
-						if (bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-							bodyA->getComponent<BoxCollider>()->triggerCollide(true);
-					}*/
 				}
 			}
 		}
@@ -187,7 +177,6 @@ void PlayerController::OnTriggerEnter(b2Contact* contact)
 }
 
 void PlayerController::OnTriggerExit(b2Contact* contact)
-
 {
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (bodyA != nullptr) {
@@ -202,11 +191,6 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 				if (bodyB_Layer == GROUND)
 					bodyA->getComponent<BoxCollider>()->triggerCollide(false);
 			}
-			/*//METODO 2
-			if (bodyB->getComponent<BoxCollider>() != nullptr) {
-				if(bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-					bodyA->getComponent<BoxCollider>()->triggerCollide(false);
-			}*/
 		}
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
@@ -222,11 +206,6 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 						if (bodyB_Layer == GROUND)
 							bodyA->getComponent<BoxCollider>()->triggerCollide(false);
 					}
-					//METODO 2
-					/*if (bodyB->getComponent<BoxCollider>() != nullptr) {
-						if (bodyB->getComponent<BoxCollider>()->getColLayer() == GROUND)
-							bodyA->getComponent<BoxCollider>()->triggerCollide(false);
-					}*/
 				}
 			}
 		}

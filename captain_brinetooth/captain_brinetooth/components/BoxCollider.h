@@ -120,7 +120,7 @@ private:
 	Transform* tr_;
 	Vector2D pos_, size_;
 	int type;
-	bool isTrigger, isTriggerColiding_;
+	bool isTrigger, isTriggerColliding_;
 	float rotation_, friction_;
 	uint16 colLay_, colMask_;
 
