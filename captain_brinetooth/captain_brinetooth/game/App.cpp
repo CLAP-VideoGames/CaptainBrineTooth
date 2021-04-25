@@ -8,6 +8,7 @@
 #include "../states/TestZoneState.h"
 #include "../states/PasueState.h"
 #include "../states/MenuState.h"
+#include "../states/IntroState.h"
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
@@ -28,8 +29,10 @@ App::App() {
 
 
 	SoundManager* sndProvisional = new SoundManager(0, "Menu");
+	//----Inicio de Intro----
+	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 }

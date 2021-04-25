@@ -14,7 +14,6 @@ public:
 	static void salirMenu(App* app, SoundManager* snd);
 	static void changeToOptions(App* app, SoundManager* snd);
 
-	void update();
 private:
 	SDL_Rect cam;
 	
