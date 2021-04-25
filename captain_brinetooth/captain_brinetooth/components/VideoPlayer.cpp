@@ -8,19 +8,124 @@ VideoPlayer::VideoPlayer(const char* file, bool loop, const Vector2D& size){
 }
 
 VideoPlayer::~VideoPlayer(){
+	SDL_DestroyTexture(sdlTexture);
 
+	// free all ffmpeg allocated data, etc.
+	sws_freeContext(img_convert_ctx);
+	av_frame_free(&pFrameYUV);
+	av_frame_free(&pFrame);
+	avcodec_close(pCodecCtx);
+	avformat_close_input(&pFormatCtx);
 }
 
-void VideoPlayer::init()
-{
+void VideoPlayer::init(){
+	loadVideo();
 }
 
-void VideoPlayer::update()
-{
+void VideoPlayer::update(){
+	while (SDL_PollEvent(&event)) {
+		if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_SPACE) {
+				paused = !paused;
+			}
+			else if (event.key.keysym.sym == SDLK_ESCAPE) {
+				done = 1;
+				break;
+			}
+		}
+		else if (event.type == SDL_QUIT) {
+			done = 1;
+			break;
+		}
+	}
+
+	// read (and decode) a frame if no one is available, it is separated
+		// from rendering so it can be done in a thread later
+	int n;
+	if (!done && !available) {
+		// read a frame
+		do {
+			n = av_read_frame(pFormatCtx, packet);
+			if (n < 0) {
+				//Verificamos si se quiere loopear
+				if (files.back().second){
+					if (n == AVERROR_EOF) {
+						auto stream = pFormatCtx->streams[videoIndex];
+						avio_seek(pFormatCtx->pb, 0, SEEK_SET);
+						avformat_seek_file(pFormatCtx, videoIndex, 0, 0, stream->duration, 0);
+						continue;
+					}
+				}
+				else{
+					done = 1;
+					break;
+				}
+			}
+		} while (packet->stream_index != videoIndex); // we just take video, we ignore audio
+
+		// exit if there are no more frame
+		if (done)
+			return;
+
+		if (n == AVERROR_EOF)
+			return;
+
+		// decode
+		avcodec_send_packet(pCodecCtx, packet);
+		if (ret < 0) {
+			std::cout << "Error submitting a packet for decoding "
+				// << av_err2str(ret) 
+				<< std::endl;
+			done = 1;
+			return;
+		}
+
+		ret = avcodec_receive_frame(pCodecCtx, pFrame);
+		if (ret < 0) {
+			// those two return values are special and mean there is no output
+			// frame available, but there were no errors during decoding
+			if (ret == AVERROR_EOF || ret == AVERROR(EAGAIN)) {
+				ret = 0;
+			}
+			else {
+				std::cout << "Error during decoding "
+					//<< av_err2str(ret)
+					<< std::endl;
+			}
+			done = 1;
+			return;
+		}
+
+		// scale the image
+		sws_scale(img_convert_ctx,
+			static_cast<const unsigned char* const*>(pFrame->data),
+			pFrame->linesize, 0, pCodecCtx->height, pFrameYUV->data,
+			pFrameYUV->linesize);
+
+		available = true;
+	}
 }
 
-void VideoPlayer::render()
-{
+void VideoPlayer::render(){
+	if (sdlutils().getDebug()){
+		SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
+		SDL_RenderDrawRect(sdlutils().renderer(), &sdlRect);
+	}
+
+	// show a frame if timePerFrame milliseconds have passed since last update
+	if (!done && !paused && available
+		&& SDL_GetTicks() - lastUpdate >= timePerFrame) {
+		lastUpdate = SDL_GetTicks();
+		available = false;
+		// render the frame
+		SDL_UpdateTexture(sdlTexture, NULL, pFrameYUV->data[0],
+			pFrameYUV->linesize[0]);
+
+		av_frame_unref(pFrame);
+		av_packet_unref(packet);
+	}
+
+	SDL_RenderCopy(sdlutils().renderer(), sdlTexture, NULL, &sdlRect);
 }
 
 
@@ -45,7 +150,7 @@ int VideoPlayer::loadVideo(){
 		std::cout << "Couldn't find stream information.\n" << std::endl;
 		return -1;
 	}
-	int videoIndex = av_find_best_stream(pFormatCtx, AVMEDIA_TYPE_VIDEO, -1, -1,
+	videoIndex = av_find_best_stream(pFormatCtx, AVMEDIA_TYPE_VIDEO, -1, -1,
 		nullptr, 0);
 	if (videoIndex < 0) {
 		std::cout << "Didn't find a video stream.\n" << std::endl;
@@ -100,20 +205,16 @@ int VideoPlayer::loadVideo(){
 	timePerFrame = static_cast<Uint32>(1000.0
 		/ av_q2d(pFormatCtx->streams[videoIndex]->r_frame_rate));
 
-
-	// Create the SDL Rendered
-	sdlRenderer = SDL_CreateRenderer(sdlutils().window(), -1, 0);
-
 	// Create the Texture to be used to render the frame
-	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_IYUV,
+	sdlTexture = SDL_CreateTexture(sdlutils().renderer(), SDL_PIXELFORMAT_IYUV,
 		SDL_TEXTUREACCESS_STREAMING, pCodecCtx->width, pCodecCtx->height);
 
 	// the texture occupies the whole window
-	sdlRect.x = window_w / 4;
-	sdlRect.y = window_h / 4;
+	sdlRect.x = 0;
+	sdlRect.y = 0;
 
-	sdlRect.w = window_w / 2;
-	sdlRect.h = window_h / 2;
+	sdlRect.w = window_w / 1;
+	sdlRect.h = window_h / 1;
 
 	// some auxiliary variables to track frame update, pause state, etc.
 	lastUpdate = SDL_GetTicks();

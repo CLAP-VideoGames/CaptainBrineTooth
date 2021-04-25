@@ -36,22 +36,21 @@ private:
 
 	std::vector<std::pair<const char*, bool>> files;
 	//Valores para leer los frames del video
-	AVFormatContext* pFormatCtx;
-	AVCodecContext* pCodecCtx;
-	AVCodec* pCodec;
-	AVFrame* pFrame, * pFrameYUV;
-	unsigned char* out_buffer;
-	AVPacket* packet;
-	struct SwsContext* img_convert_ctx;
+	AVFormatContext* pFormatCtx = nullptr;
+	AVCodecContext* pCodecCtx = nullptr;
+	AVCodec* pCodec = nullptr;
+	AVFrame* pFrame = nullptr, * pFrameYUV = nullptr;
+	unsigned char* out_buffer = nullptr;
+	AVPacket* packet = nullptr;
+	struct SwsContext* img_convert_ctx = nullptr;
 
 	// sdl stuff
 	int window_w, window_h;
-	SDL_Renderer* sdlRenderer;
-	SDL_Texture* sdlTexture;
+	SDL_Texture* sdlTexture = nullptr;
 	SDL_Rect sdlRect;
 	SDL_Event event;
 
-
+	int videoIndex;
 	//Tiempo entre frame y frame del video
 	Uint32 timePerFrame;
 	Uint32 lastUpdate;
