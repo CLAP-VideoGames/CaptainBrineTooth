@@ -164,14 +164,17 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("idle", "chainsaw_attack1", "chainsaw_att", 1, false);
+	anim_controller->addTransition("jump", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("chainsaw_attack1", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack1", "chainsaw_attack2", "chainsaw_att", 2, true);
 	anim_controller->addTransition("run", "chainsaw_attack2", "chainsaw_att", 2, false);
 	anim_controller->addTransition("idle", "chainsaw_attack2", "chainsaw_att", 2, false);
+	anim_controller->addTransition("jump", "chainsaw_attack2", "chainsaw_att", 2, false);
 	anim_controller->addTransition("chainsaw_attack2", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack2", "chainsaw_attack3", "chainsaw_att", 3, true);
 	anim_controller->addTransition("run", "chainsaw_attack3", "chainsaw_att", 3, false);
 	anim_controller->addTransition("idle", "chainsaw_attack3", "chainsaw_att", 3, false);
+	anim_controller->addTransition("jump", "chainsaw_attack3", "chainsaw_att", 3, false);
 	anim_controller->addTransition("chainsaw_attack3", "run", "chainsaw_att", 0, false);
 	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack1", "chainsaw_att", 4, true);
 
@@ -187,14 +190,17 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
+	anim_controller->addTransition("jump", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("sword_attack1", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack1", "sword_attack2", "sword_att", 2, true);
 	anim_controller->addTransition("run", "sword_attack2", "sword_att", 2, false);
 	anim_controller->addTransition("idle", "sword_attack2", "sword_att", 2, false);
+	anim_controller->addTransition("jump", "sword_attack2", "sword_att", 2, false);
 	anim_controller->addTransition("sword_attack2", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack2", "sword_attack3", "sword_att", 3, true);
 	anim_controller->addTransition("run", "sword_attack3", "sword_att", 3, false);
 	anim_controller->addTransition("idle", "sword_attack3", "sword_att", 3, false);
+	anim_controller->addTransition("jump", "sword_attack3", "sword_att", 3, false);
 	anim_controller->addTransition("sword_attack3", "run", "sword_att", 0, false);
 	anim_controller->addTransition("sword_attack3", "sword_attack1", "sword_att", 4, true);
 
@@ -209,10 +215,12 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);
+	anim_controller->addTransition("jump", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("hammer_attack1", "run", "hammer_att", 0, false);
 	anim_controller->addTransition("hammer_attack1", "hammer_attack2", "hammer_att", 2, true);
 	anim_controller->addTransition("run", "hammer_attack2", "hammer_att", 2, false);
 	anim_controller->addTransition("idle", "hammer_attack2", "hammer_att", 2, false);
+	anim_controller->addTransition("jump", "hammer_attack2", "hammer_att", 2, false);
 	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, false);
 	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 1, false);
 
@@ -228,14 +236,17 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	anim_controller->addTransition("run", "crab_attack1", "crab_att", 1, false);
 	anim_controller->addTransition("idle", "crab_attack1", "crab_att", 1, false);
+	anim_controller->addTransition("jump", "crab_attack1", "crab_att", 1, false);
 	anim_controller->addTransition("crab_attack1", "run", "crab_att", 0, true);
 	anim_controller->addTransition("crab_attack1", "crab_attack2", "crab_att", 2, true);
 	anim_controller->addTransition("run", "crab_attack2", "crab_att", 2, false);
 	anim_controller->addTransition("idle", "crab_attack2", "crab_att", 2, false);
+	anim_controller->addTransition("jump", "crab_attack2", "crab_att", 2, false);
 	anim_controller->addTransition("crab_attack2", "run", "crab_att", 0, false);
 	anim_controller->addTransition("crab_attack2", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("run", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("idle", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("jump", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("crab_attack3", "run", "crab_att", 0, false);
 	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 4, true);
 

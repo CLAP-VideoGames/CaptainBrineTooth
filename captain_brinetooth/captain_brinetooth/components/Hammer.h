@@ -50,14 +50,14 @@ private:
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit) (not changed)
-	float animationLockTime = 1000;		//Counted after one attack is stopped to avoid animation clipping
-	float maxComboPanningTime = 2000;	//Counted after animation lock is released
+	float animationLockTime = 400;		//Counted after one attack is stopped to avoid animation clipping
+	float maxComboPanningTime = 400;	//Counted after animation lock is released
 
 	//Variables related to Hammer (not changed)
 	int triggerOffSetX = -60;
-	int triggerOffSetY = 100;
-	int triggerWidth = 150;
-	int triggerHeight = 150;
+	int triggerOffSetY = -10;
+	int triggerWidth = 120;
+	int triggerHeight = 130;
 
 	Entity* trigger;
 };

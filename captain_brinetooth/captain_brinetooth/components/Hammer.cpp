@@ -82,20 +82,23 @@ void Hammer::update() {
 			trigger->setActive(false);
 			trigger = nullptr;
 		}
-
-		if (anim_->getParamIndex("hammer_att") != -1)
-			anim_->setParamValue("hammer_att", 0);
 	}
 	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
 		//Deactivate combo availability
 		std::cout << "STOPPED COMBO\n";
 		CURRENT_STATUS = STATUS::Iddle;
 		CURRENT_ATTACK = ATTACKS::NotAttacking;
+
+		anim_->setParamValue("hammer_att", 0);
 	}
+
+	/*if (anim_->isComplete() && anim_->getParamIndex("hammer_att") != ATTACKS::NotAttacking && anim_->getParamIndex("hammer_att") == CURRENT_ATTACK) {
+		anim_->setParamValue("hammer_att", 0);
+	}*/
 
 	//Updating the trigger's position
 	if (trigger != nullptr) {
-		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX + entity_->getComponent<Transform>()->getW())) / sdlutils().getPPM(),
+		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
@@ -104,7 +107,7 @@ void Hammer::update() {
 
 void Hammer::creaTrigger(int damage) {
 	trigger = entity_->getMngr()->addEntity();
-	if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX + entity_->getComponent<Transform>()->getW(), triggerOffSetY),
+	if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX, triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
 	else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
