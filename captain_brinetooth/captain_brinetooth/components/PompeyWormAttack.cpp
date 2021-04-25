@@ -22,17 +22,22 @@ void PompeyWormAttack::init()
 
 void PompeyWormAttack::update() {
 	//Charco de veneno
-	if (attackTrigger_ != nullptr && attackTrigger_->hasComponent<BoxCollider>()) {
-		if (attackTrigger_->getComponent<BoxCollider>()->isTriggerColliding()) {
-			if (lifetime_puddle >= cd_puddle_lifetime) {
-				attackTrigger_->getComponent<BoxCollider>()->triggerCollide(false);
-				attackTrigger_->setActive(false);
-				attackTrigger_ = nullptr;
-				lifetime_puddle = 0;
+	if (attackTrigger_ != nullptr) {
+		if (attackTrigger_->isActive() && attackTrigger_->hasComponent<BoxCollider>()) {
+			if (attackTrigger_->getComponent<BoxCollider>()->isTriggerColliding()) {
+				if (lifetime_puddle >= cd_puddle_lifetime) {
+					attackTrigger_->getComponent<BoxCollider>()->triggerCollide(false);
+					attackTrigger_->setActive(false);
+					attackTrigger_ = nullptr;
+					lifetime_puddle = 0;
+				}
+				else {
+					lifetime_puddle++;
+				}
 			}
-			else {
-				lifetime_puddle++;
-			}
+		}
+		else if (!attackTrigger_->isActive()) {
+			attackTrigger_ = nullptr;
 		}
 	}
 	//Actualiza la posicion del trigger
@@ -150,7 +155,7 @@ void PompeyWormAttack::hit(b2Contact* contact)
 {
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (bodyA != nullptr) {
-		if (bodyA->getComponent<ContactDamage>() != nullptr) {
+		if (bodyA->hasComponent<ContactDamage>()) {
 			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			//Colision con el player
 			if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
@@ -158,12 +163,11 @@ void PompeyWormAttack::hit(b2Contact* contact)
 				if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
 					//Desactiva el trigger
 					bodyA->setActive(false);
-					bodyA = nullptr;
 				}
 			}
 			//Colision con el Mapa
-			else if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-				uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+			else if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
+				uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
 					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
 				if (bodyB_Layer == GROUND) {
 					auto* collider = bodyA->getComponent<BoxCollider>();
@@ -176,7 +180,7 @@ void PompeyWormAttack::hit(b2Contact* contact)
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			if (bodyA != nullptr) {
-				if (bodyA->getComponent<ContactDamage>() != nullptr) {
+				if (bodyA->hasComponent<ContactDamage>()) {
 					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 					//Colision con el player
 					if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
@@ -184,12 +188,11 @@ void PompeyWormAttack::hit(b2Contact* contact)
 						if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
 							//Desactiva el trigger
 							bodyA->setActive(false);
-							bodyA = nullptr;
 						}
 					}
 					//Colision con el Mapa
-					else if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-						uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+					else if (bodyB->hasComponent<BoxCollider>()|| bodyB->hasComponent<MapCollider>()) {
+						uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
 							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
 						if (bodyB_Layer == GROUND) {
 							auto* collider = bodyA->getComponent<BoxCollider>();

@@ -27,7 +27,6 @@ void PlayerController::update()
 	isOnGround();
 	//std::cout << "\n" << isOnFloor;
 	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
-	animController_->setAlpha(125);
 #pragma endregion
 #pragma region Animaciones
 	//Esta tocando suelo
@@ -145,13 +144,13 @@ void PlayerController::OnTriggerEnter(b2Contact* contact)
 {
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (bodyA != nullptr) {
-		uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr)? 
+		uint16 bodyA_layer = (bodyA->hasComponent<BoxCollider>())?
 			bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
 		if (bodyA_layer == PLAYER) {
 			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			//METODO 1 (Mapa)
-			if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-				uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+			if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
+				uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
 					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
 				if(bodyB_Layer == GROUND)
 					bodyA->getComponent<BoxCollider>()->triggerCollide(true);
@@ -160,13 +159,13 @@ void PlayerController::OnTriggerEnter(b2Contact* contact)
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			if (bodyA != nullptr) {
-				uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
+				uint16 bodyA_layer = (bodyA->hasComponent<BoxCollider>()) ?
 					bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
 				if (bodyA_layer == PLAYER) {
 					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 					//METODO 1 (Mapa)
-					if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-						uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
+					if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
+						uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
 							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
 						if(bodyB_Layer == GROUND)
 							bodyA->getComponent<BoxCollider>()->triggerCollide(true);
