@@ -13,11 +13,8 @@ void TriggerCollider::init()
 
 void TriggerCollider::update()
 {
-	b2Vec2 speed = entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity();
 	auto& pos = entity_->getComponent<BoxCollider>()->getBody()->GetTransform().p;
 	trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2(pos.x + offsetTrigger_.getX(),pos.y + offsetTrigger_.getY()), 0.0f);
-
-	
 }
 
 Entity* TriggerCollider::getParent()

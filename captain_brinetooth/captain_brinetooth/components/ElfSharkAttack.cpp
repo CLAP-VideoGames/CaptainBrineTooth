@@ -82,7 +82,7 @@ bool ElfSharkAttack::canAttack() {
 void ElfSharkAttack::hasEnter(b2Contact* contact) {
 	Entity* body = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (body != nullptr) {
-		if (body->getComponent<ElfSharkAttack>() != nullptr)
+		if (body->hasComponent<ElfSharkAttack>())
 			body->getComponent<ElfSharkAttack>()->entityInRange();
 		else {
 			body = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
@@ -94,7 +94,7 @@ void ElfSharkAttack::hasEnter(b2Contact* contact) {
 void ElfSharkAttack::hasExit(b2Contact* contact) {
 	Entity* body = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (body != nullptr) {
-		if(body->getComponent<ElfSharkAttack>() != nullptr)
+		if(body->hasComponent<ElfSharkAttack>())
 			body->getComponent<ElfSharkAttack>()->entityOutRange();
 		else {
 			body = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;

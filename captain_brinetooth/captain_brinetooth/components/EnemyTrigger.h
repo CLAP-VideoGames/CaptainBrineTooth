@@ -16,6 +16,7 @@ public:
 	EnemyTrigger(Vector2D triggersize = Vector2D(500.0f, 500.0f)) :triggersize_(triggersize) {};
 	virtual ~EnemyTrigger() {};
 	void init() override; 
+	void update() override;
 
 	Entity* getParent();	//Metodo para obtener las componentes del padre en las colisiones
 

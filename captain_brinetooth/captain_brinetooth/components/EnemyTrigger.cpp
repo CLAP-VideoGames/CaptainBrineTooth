@@ -11,6 +11,12 @@ void EnemyTrigger::init()
 	trigger->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 }
 
+void EnemyTrigger::update()
+{
+	auto& pos = getParent()->getComponent<BoxCollider>()->getBody()->GetTransform().p;
+	trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2(pos.x, pos.y), 0.0f);
+}
+
 Entity* EnemyTrigger::getParent()
 {
 	return entity_;
