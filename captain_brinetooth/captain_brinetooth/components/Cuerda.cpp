@@ -25,6 +25,7 @@ void Cuerda::cuerdaDownMovement() {
 	collider_->setSpeed(Vector2D(collider_->getBody()->GetLinearVelocity().x, 0.3225f));
 	tr_->setH(tr_->getH() + 2.15f);
 	anims_->keepProportion("cuerda", Vector2D(tr_->getW(), tr_->getH()));
+	anims_->render();
 	anims_->scaleAnimation();
 	
 }
@@ -32,5 +33,6 @@ void Cuerda::cuerdaUpMovement() {
 	collider_->setSpeed(Vector2D(collider_->getBody()->GetLinearVelocity().x, -0.3225f));
 	tr_->setH(tr_->getH() - 2.15f);
 	anims_->keepProportion("cuerda", Vector2D(tr_->getW(), tr_->getH()));
+	anims_->render();
 	anims_->scaleAnimation();
 }

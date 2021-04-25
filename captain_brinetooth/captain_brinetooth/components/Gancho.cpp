@@ -61,6 +61,7 @@ bool Gancho::hasBaitRef()
 	if (baitRef != nullptr)
 	{
 		contactid = 2; //Movimiento hacia arriba de la cuerda
+		hookBody->getFixture()->SetSensor(true);
 		return true;
 	}
 	else return false;

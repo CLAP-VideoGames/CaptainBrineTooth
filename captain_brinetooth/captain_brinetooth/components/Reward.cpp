@@ -58,7 +58,7 @@ void Reward::baitCollision(b2Contact* contact)
 			Entity* hook = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 			if (hook->getComponent<Gancho>() != nullptr)
 			{
-				if (!hook->getComponent<Gancho>()->hasBaitRef()) bait->getComponent<Reward>()->baitCatched(hook);
+				if (!hook->getComponent<Gancho>()->hasBaitRef())bait->getComponent<Reward>()->baitCatched(hook);
 			}
 		}
 		else {
