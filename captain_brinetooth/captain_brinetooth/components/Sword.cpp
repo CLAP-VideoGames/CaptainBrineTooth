@@ -75,6 +75,11 @@ void Sword::update() {
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack1;
 					
+					if (!currentlyStabbing)
+					{
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("sword_whoosh0", 0);
+					}
+
 					//Activate attack animation + sawing on attack
 					if (anim_->getParamIndex("sword_att") != -1)
 						anim_->setParamValue("sword_att", 1);

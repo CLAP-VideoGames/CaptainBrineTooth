@@ -70,6 +70,9 @@ void Crab::update() {
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack1;
 
+					entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch1", 0);
+
+
 					//Activate attack animation + sawing on attack
 					if (anim_->getParamIndex("crab_att") != -1)
 						anim_->setParamValue("crab_att", 1);
