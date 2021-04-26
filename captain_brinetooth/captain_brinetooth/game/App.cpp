@@ -35,8 +35,9 @@ App::App() {
 	//----Inicio por defecto----
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
-	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
+
 }
 
 App::~App() {
@@ -50,6 +51,10 @@ void App::init() {
 	
 	//Refrescamos los estados pusheados
 	stateMachine->refreshStates();
+
+	// Iniciamos el juego con X volumen
+	stateMachine->currentState()->getMngr()->getSoundMngr()->setGeneralVolume(10);
+
 	world_->SetContactListener(&collisionListener);
 	//Habilitamos el hecho de poder realizar colores de SDL con Alpha. Solo los Colores de SDL
 	//Las texturas ya vienen por defecto configuradas para aceptar alpha
