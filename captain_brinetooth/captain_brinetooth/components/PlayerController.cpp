@@ -222,7 +222,7 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 				uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
 					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
 				if (bodyB_Layer == GROUND)
-					bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+					bodyA->getComponent<BoxCollider>()->triggerCollide(true);
 			}
 		}
 		else {
@@ -241,7 +241,7 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 						uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
 							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
 						if (bodyB_Layer == GROUND)
-							bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+							bodyA->getComponent<BoxCollider>()->triggerCollide(true);
 					}
 				}
 			}

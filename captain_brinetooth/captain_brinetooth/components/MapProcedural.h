@@ -309,8 +309,10 @@ private:
 		//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
 		while (!concuerda) {
 
-			if (roomsExplored == nRooms - 1) tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size()); 
-			else tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
+			if (roomsExplored == nRooms - 1)
+				tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size()); 
+			else 
+				tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1]);
 
 			int i = 0;
 			//Comprobamos que tiene conexión por el cardinal opuesto
@@ -379,7 +381,7 @@ private:
 
 			if (names[i] == oppDir) {
 																													//Dos sumas completamente arbitarias que me sirven
-				if(oppDir == "S")entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY() - 200, 0);
+				if(oppDir == "S")entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY() - 100, 0);
 				else if(oppDir == "W")entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + 100, pos.getY(), 0);
 				else entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY() - 200, 0);
 			}
