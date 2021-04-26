@@ -22,6 +22,7 @@ void PompeyWormAttack::init()
 
 void PompeyWormAttack::update() {
 	//Charco de veneno
+
 	if (attackTrigger_ != nullptr) {
 		if (attackTrigger_->isActive() && attackTrigger_->hasComponent<BoxCollider>()) {
 			if (attackTrigger_->getComponent<BoxCollider>()->isTriggerColliding()) {
@@ -32,6 +33,7 @@ void PompeyWormAttack::update() {
 					lifetime_puddle = 0;
 				}
 				else {
+					attackTrigger_->getComponent<BoxCollider>()->Resize(Vector2D(300.0, 20.0));	//Obligatorio llamarlo en clases no estaticas
 					lifetime_puddle++;
 				}
 			}
@@ -170,7 +172,7 @@ void PompeyWormAttack::hit(b2Contact* contact)
 			else if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
 				uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
 					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-				if (bodyB_Layer == GROUND) {
+				if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
 					auto* collider = bodyA->getComponent<BoxCollider>();
 					collider->setSpeed(Vector2D(0.0, 0.0));
 					collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
@@ -195,10 +197,10 @@ void PompeyWormAttack::hit(b2Contact* contact)
 					else if (bodyB->hasComponent<BoxCollider>()|| bodyB->hasComponent<MapCollider>()) {
 						uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
 							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-						if (bodyB_Layer == GROUND) {
+						if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
 							auto* collider = bodyA->getComponent<BoxCollider>();
 							collider->setSpeed(Vector2D(0.0, 0.0));
-							collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
+							collider->getBody()->SetType(b2BodyType::b2_kinematicBody); 
 							collider->triggerCollide(true);
 						}
 					}

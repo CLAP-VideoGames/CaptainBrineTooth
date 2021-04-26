@@ -13,13 +13,8 @@ void TestZoneState::init() {
 	//---BG----
 	auto* bg = createBasicEntity(Vector2D(0,1440),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
-	//---------
-	auto* floor = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() * 2), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* floor_anim_controller = floor->addComponent<AnimBlendGraph>();
-	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
-	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 
-
+	//--Player--
 	Config playerConfig{};
 	playerConfig.pos = Vector2D(100, sdlutils().height() * 1.5f);
 	playerConfig.vel = Vector2D(0, 0);
@@ -32,8 +27,6 @@ void TestZoneState::init() {
 	playerConfig.colMask = PLAYER_MASK;
 	createPlayer(playerConfig);
 
-
-
 	/*Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
@@ -45,8 +38,9 @@ void TestZoneState::init() {
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
 	createPesca(gancho);*/
-	
-	/*Config floor{};
+
+	//---SUELO---
+	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
 	floor.size = Vector2D(sdlutils().width() * 4.0f, 100.0f);
@@ -56,7 +50,7 @@ void TestZoneState::init() {
 	floor.rotation = 0.0f;
 	floor.col = GROUND;
 	floor.colMask = GROUND_MASK;
-	createBoxFloor(floor);*/
+	createBoxFloor(floor);
 #pragma endregion
 //-----Player-----
 #pragma region Player
@@ -64,7 +58,7 @@ void TestZoneState::init() {
 //-----Enemies-----
 #pragma region Enemies
 	#pragma region PompeyWorm
-	/*Config pompeyWorm{};
+	Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
 	pompeyWorm.size = Vector2D(100.0f, 100.0f);

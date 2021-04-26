@@ -9,38 +9,36 @@
 
 class Player_Health : public Component {
 public:
-	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game) : fVida(tex), hVida(tex2),vVida(tex3) , time(0), g(game)
-	{
-		frame = Vector2D(0, 15);
-		auto w = fVida->width() / 8;
-		auto h = fVida->height();
+	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game) : fVida(tex), hVida(tex2), vVida(tex3), tiempoanimacion(tanim), g(game)
+	{};
+	virtual ~Player_Health() {};
 
-		src = build_sdlrect(frame, w, h);
-		tiempoanimacion = tanim;
-		frameSize = Vector2D(w, h);
-	}
-	virtual ~Player_Health() {}
-
-	void init() override {}
+	void init() override;
 
 	void render() override;
 
 	void loseLife();
 
-	int getLife(){ return vidas; }
+	int getLife();
 
-	void resetLifes() { vidas = 10; }
+	void resetLifes();
+
+	const bool& getInvulnerable();
 
 private:
-	float vidas = 10;
-	float maxVidas = vidas;
+	float vidas;
+	float maxVidas = 10;
 	Texture* fVida;
 	Texture* hVida;
 	Texture* vVida;
 	Vector2D frame;	// Posicion en x y en y del frame actual
 	Vector2D frameSize; // Ancho y alto de un frame
 	SDL_Rect src; //Rectangulo que se renderiza
-	Uint32 time; // Tiempo inicial
+	Uint32 time_; // Tiempo inicial
+	//Invulnerabilidad
+	bool invulnerability_;
+	float cd_invul_ = 1500;
+	float elpased_time_invul_; 
 
 	App* g;
 	float tiempoanimacion; // Tiempo entre frame y frame
