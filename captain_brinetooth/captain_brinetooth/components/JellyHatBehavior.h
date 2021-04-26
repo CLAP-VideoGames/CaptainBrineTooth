@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "EnemyTrigger.h"
 #include "Enemy_Health.h"
+#include "AnimBlendGraph.h"
 #include <cmath>
 
 class JellyHatBehavior : public Component
@@ -14,23 +15,19 @@ public:
 	virtual ~JellyHatBehavior() {};
 	void init() override;
 	void update() override;
-	/*bool canAttack();
-	static void hasEnter(b2Contact* contact);
-	static void hasExit(b2Contact* contact);
-	void entityInRange();
-	void entityOutRange();
-	void attack();
-	void move();*/
+	static void collisionPlayer(b2Contact* contact);
 
 private:
 	Entity* entity_Parent_;
 	Transform* entitytr_;
 	Enemy_Health* entityhealth_;
 	BoxCollider* entitycollider_;
+	AnimBlendGraph* anims_;
 
 	Transform* playertr_;
 	float iniH;
 	float iniW;
+	float lastJump = 0;
 	int iniHealth;
 };
 

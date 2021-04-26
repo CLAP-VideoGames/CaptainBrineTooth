@@ -19,7 +19,7 @@ void PlayerController::init()
 	lastTimeJumped = sdlutils().currRealTime();
 	lasTimeDashed = sdlutils().currRealTime();
 
-	moveLeft = moveRight = false;
+	moveLeft = moveRight = paralized = false;
 }
 
 
@@ -28,44 +28,52 @@ void PlayerController::update()
 #pragma region Input
 	//Gestion del input
 	assert(collider_ != nullptr);
-	if(ih().keyUpEvent()){
-	//---Para la velocidad X
-		if (ih().isKeyUp(SDL_SCANCODE_LEFT)&& !isDashing) {
-			moveLeft = false;
-		}
-		if (ih().isKeyUp(SDL_SCANCODE_RIGHT) && !isDashing) {
-			moveRight = false;
-		}
+	if (paralized) {
+		timer = sdlutils().currRealTime();
+		paralized = false;
+		moveLeft = false;
+		moveRight = false;
 	}
-	if (ih().keyDownEvent()) {
-		//Parte Horizontal
-		if (ih().isKeyDown(SDLK_LEFT) && !isDashing) {
-			moveLeft = true;
+	if (sdlutils().currRealTime() > timer + 1000) {
+		if (ih().keyUpEvent()) {
+			//---Para la velocidad X
+			if (ih().isKeyUp(SDL_SCANCODE_LEFT) && !isDashing) {
+				moveLeft = false;
+			}
+			if (ih().isKeyUp(SDL_SCANCODE_RIGHT) && !isDashing) {
+				moveRight = false;
+			}
 		}
-		if (ih().isKeyDown(SDLK_RIGHT) && !isDashing) {
-			moveRight = true;
-		}
-		//Parte Vertical
-		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor && !isDashing) {
-			isOnFloor = false;
-			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-			//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho m�s
-			collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
+		if (ih().keyDownEvent()) {
+			//Parte Horizontal
+			if (ih().isKeyDown(SDLK_LEFT) && !isDashing) {
+				moveLeft = true;
+			}
+			if (ih().isKeyDown(SDLK_RIGHT) && !isDashing) {
+				moveRight = true;
+			}
+			//Parte Vertical
+			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor && !isDashing) {
+				isOnFloor = false;
+				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+				//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho m�s
+				collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
 
-			//Realizar da�o
-			//health_->loseLife();
-			snd->playSoundEffect("player_jump", 300);
-		}
+				//Realizar da�o
+				//health_->loseLife();
+				snd->playSoundEffect("player_jump", 300);
+			}
 
-		//Para juego final añadir && canDash
-		if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing) {
-			gravity = collider_->getBody()->GetGravityScale();
-			collider_->getBody()->SetGravityScale(0.0f);
-			collider_->setSpeed(Vector2D(0, 0));
-			isDashing = true;
-			if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
-			else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
-			canDash = false;
+			//Para juego final añadir && canDash
+			if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing) {
+				gravity = collider_->getBody()->GetGravityScale();
+				collider_->getBody()->SetGravityScale(0.0f);
+				collider_->setSpeed(Vector2D(0, 0));
+				isDashing = true;
+				if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
+				else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
+				canDash = false;
+			}
 		}
 	}
 #pragma endregion

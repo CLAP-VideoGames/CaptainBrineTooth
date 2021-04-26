@@ -15,6 +15,7 @@ public:
 	void createPompeyWorm(const Config& enemy1Config);
 	void createElfShark(const Config& entityConfig);
 	void createPesca(const Config& entityConfig);
+	void createFlowerJellyHat(const Config& entityConfig);
 protected:
 	SDL_Rect cam;
 };

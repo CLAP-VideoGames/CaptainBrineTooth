@@ -23,6 +23,8 @@ public:
 	void initEntityColliders();
 	void createJointTrigger(Entity* trigger);
 
+	void Paralize() { paralized = true; };
+
 	static void OnTriggerEnter(b2Contact* contact);
 	static void OnTriggerExit(b2Contact* contact);
 
@@ -37,9 +39,9 @@ private:
 
 
 	int lastTimeJumped; 
-	int time = 1500, dashCoolDown = 10000, lasTimeDashed;
+	int time = 1500, dashCoolDown = 10000, lasTimeDashed, timer;
 	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;
 	//Flags
-	bool isOnFloor, isOnAir, isDashing, canDash, moveLeft, moveRight;
+	bool isOnFloor, isOnAir, isDashing, canDash, moveLeft, moveRight, paralized;
 	
 };

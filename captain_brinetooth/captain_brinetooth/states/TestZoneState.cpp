@@ -62,13 +62,13 @@ void TestZoneState::init() {
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
 	pompeyWorm.size = Vector2D(100.0f, 100.0f);
-	pompeyWorm.friction = 0.2f;
+	pompeyWorm.friction = 100;
 	pompeyWorm.physicType = DYNAMIC;
 	pompeyWorm.fixedRotation = true;
 	pompeyWorm.rotation = 0.0f;
 	pompeyWorm.col = ENEMY;
 	pompeyWorm.colMask = ENEMY_MASK;
-	createPompeyWorm(pompeyWorm);
+	createFlowerJellyHat(pompeyWorm);
 	#pragma endregion
 	#pragma region ElfShark
 	/*Config elfShark{};
@@ -331,5 +331,14 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	
 
 
+}
+
+void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
+	auto* fjh1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
+	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
+	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
 
