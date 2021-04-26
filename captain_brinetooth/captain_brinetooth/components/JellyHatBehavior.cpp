@@ -44,7 +44,6 @@ void JellyHatBehavior::update() {
 		anims_->scaleAnimation();
 		entityhealth_->setHealth(iniHealth + newSize);
 		//entitycollider_->Resize(Vector2D(iniH + (newSize / sdlutils().getPPM()), iniW + (newSize / sdlutils().getPPM())));
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("crecimiento_medusa", 5000); // Hay que ajustar este valor
 	}
 	if (entitycollider_->getBody()->GetLinearVelocity().y == 0 && sdlutils().currRealTime() > lastJump + 1500) {
 		lastJump = sdlutils().currRealTime();
@@ -57,8 +56,10 @@ void JellyHatBehavior::collisionPlayer(b2Contact* contact) {
 	Entity* player = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (player != nullptr) {
 		if (player->getMngr()->getHandler<Player>() == player)
+		{
+			player->getMngr()->getSoundMngr()->playSoundEffect("electricidad", 500); // Hay que ajustar este valor
 			player->getComponent<PlayerController>()->Paralize();
-		else {
+		} else {
 			player = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			if (player->getMngr()->getHandler<Player>() == player)
 				player->getComponent<PlayerController>()->Paralize();

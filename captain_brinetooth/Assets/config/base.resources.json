@@ -338,6 +338,10 @@
 		{
 			"id": "ola",
 			"file": "assets/sounds/ola.mp3"
+		},
+		{
+			"id": "electricidad",
+			"file": "assets/sounds/enemies/electricidad.wav"
 		}
 	],
 
