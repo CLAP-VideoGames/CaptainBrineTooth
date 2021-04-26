@@ -234,6 +234,7 @@
     <ClInclude Include="states\IntroState.h" />
     <ClInclude Include="states\OptionsState.h" />
     <ClInclude Include="states\PasueState.h" />
+    <ClInclude Include="states\PescaState.h" />
     <ClInclude Include="states\PlayState.h" />
     <ClInclude Include="states\StateMachine.h" />
     <ClInclude Include="states\MenuState.h" />
@@ -299,6 +300,7 @@
     <ClCompile Include="states\IntroState.cpp" />
     <ClCompile Include="states\OptionsState.cpp" />
     <ClCompile Include="states\PasueState.cpp" />
+    <ClCompile Include="states\PescaState.cpp" />
     <ClCompile Include="states\PlayState.cpp" />
     <ClCompile Include="states\StateMachine.cpp" />
     <ClCompile Include="states\MenuState.cpp" />

@@ -9,6 +9,7 @@
 #include "../states/PasueState.h"
 #include "../states/MenuState.h"
 #include "../states/IntroState.h"
+#include "../states/PescaState.h"
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
@@ -35,6 +36,7 @@ App::App() {
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 }
 
 App::~App() {

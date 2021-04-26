@@ -369,6 +369,9 @@
     <ClInclude Include="components\Bellow.h">
       <Filter>Archivos de encabezado\components\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="states\PescaState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -566,6 +569,9 @@
     </ClCompile>
     <ClCompile Include="components\Bellow.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="states\PescaState.cpp">
+      <Filter>Archivos de origen\states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
