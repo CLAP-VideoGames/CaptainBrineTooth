@@ -206,8 +206,15 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 {
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (bodyA != nullptr) {
-		uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
-			bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
+		uint16 bodyA_layer = 0;
+		if (bodyA->hasComponent<BoxCollider>()) {
+			bodyA_layer = bodyA->getComponent<BoxCollider>()->getColLayer();
+		}
+		else if (bodyA->hasComponent<MapCollider>()) {
+			bodyA_layer = bodyA->getComponent<MapCollider>()->getColLayer();
+		}
+		/*uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
+			bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();*/
 		if (bodyA_layer == PLAYER) {
 			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			//METODO 1 (Mapa)
@@ -221,8 +228,12 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			if (bodyA != nullptr) {
-				uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
-					bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();
+				if (bodyA->hasComponent<BoxCollider>()) {
+					bodyA_layer = bodyA->getComponent<BoxCollider>()->getColLayer();
+				}
+				else if (bodyA->hasComponent<MapCollider>()) {
+					bodyA_layer = bodyA->getComponent<MapCollider>()->getColLayer();
+				}
 				if (bodyA_layer == PLAYER) {
 					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 					//METODO 1 (Mapa)

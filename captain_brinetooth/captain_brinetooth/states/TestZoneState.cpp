@@ -58,17 +58,17 @@ void TestZoneState::init() {
 //-----Enemies-----
 #pragma region Enemies
 	#pragma region PompeyWorm
-	//Config pompeyWorm{};
-	//pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
-	//pompeyWorm.vel = Vector2D(0, 0);
-	//pompeyWorm.size = Vector2D(100.0f, 100.0f);
-	//pompeyWorm.friction = 100;
-	//pompeyWorm.physicType = DYNAMIC;
-	//pompeyWorm.fixedRotation = true;
-	//pompeyWorm.rotation = 0.0f;
-	//pompeyWorm.col = ENEMY;
-	//pompeyWorm.colMask = ENEMY_MASK;
-	//createFlowerJellyHat(pompeyWorm);
+	Config pompeyWorm{};
+	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
+	pompeyWorm.vel = Vector2D(0, 0);
+	pompeyWorm.size = Vector2D(100.0f, 100.0f);
+	pompeyWorm.friction = 100;
+	pompeyWorm.physicType = DYNAMIC;
+	pompeyWorm.fixedRotation = true;
+	pompeyWorm.rotation = 0.0f;
+	pompeyWorm.col = ENEMY;
+	pompeyWorm.colMask = ENEMY_MASK;
+	createPompeyWorm(pompeyWorm);
 	#pragma endregion
 	#pragma region ElfShark
 	/*Config elfShark{};
@@ -233,7 +233,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO
 	Vector2D mapLimit = Vector2D(2000, 2000);
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), &mapLimit, Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<Sword>();
+	player->addComponent<MachineGun>();
 
 	player->addComponent<LoseLife>();
 
