@@ -31,9 +31,21 @@ void ShootDetect::init()
 
 void ShootDetect::shoot(b2Contact* contact)
 {
-	Entity* enemy = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-	if (enemy != nullptr)enemy->getComponent<ShootDetect>()->shootatTime();
+	//enemy->getComponent<ShootDetect>()->shootatTime();
+	
+	//Hay que comprobarlo de ambas parejas 
 
+	Entity* enemy = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	if (enemy != nullptr) {
+		if (enemy->hasComponent<ShootDetect>())enemy->getComponent<ShootDetect>()->shootatTime();
+		else {
+			enemy = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (enemy != nullptr)
+			{
+				if (enemy->hasComponent<ShootDetect>())enemy->getComponent<ShootDetect>()->shootatTime();
+			}
+		}
+	}
 
 }
 void ShootDetect::shootatTime()
@@ -46,24 +58,38 @@ void ShootDetect::update()
 	{
 		if (passedTime + minTime < sdlutils().currRealTime())
 		{
-
-			//Instanciar una entidad bala que cuando salga de la pantalla se destruya 
-			createBullet();
-			entity_->getMngr()->getSoundMngr()->playSoundEffect("disparo_fringehead", 0);
+			enemy->getComponent<AnimBlendGraph>()->setParamValue("Shoot", 1);		
 			passedTime = sdlutils().currRealTime();
 
 		}
 	}
+	if (enemy->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack" && enemy->getComponent<AnimBlendGraph>()->isComplete())
+	{
+		createBullet();
+		enemy->getComponent<AnimBlendGraph>()->setParamValue("Shoot", 0);
+	}
 }
 void ShootDetect::unShoot(b2Contact* contact) {
+
+
 	Entity* enemy = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-	if (enemy != nullptr)enemy->getComponent<ShootDetect>()->setShootFalse();
+	if (enemy != nullptr) {
+		if (enemy->hasComponent<ShootDetect>())enemy->getComponent<ShootDetect>()->setShootFalse();
+		else {
+			enemy = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (enemy != nullptr)
+			{
+				if (enemy->hasComponent<ShootDetect>())enemy->getComponent<ShootDetect>()->setShootFalse();
+			}
+		}
+	}
 
 }
 void ShootDetect::setShootFalse() { shootenabled = false; }
 
 void ShootDetect::createBullet()
 {
+	entity_->getMngr()->getSoundMngr()->playSoundEffect("disparo_fringehead", 0);
 	Entity* bullet = entity_->getMngr()->addEntity();//Añadimos una bala 
 
 		   //Pos del obj disparador- pos del jugador / Normalizado
@@ -77,12 +103,12 @@ void ShootDetect::createBullet()
 	bulletvel= bulletvel.normalize();
 	
 
-
+	// FLIPX METODO PARA LA ORIENTACION 
 
 	//Dotamos a la bala de todos los componentes 
 	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 10.0f, 10.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
-	//anim_controller->addAnimation("iddle", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 1);
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 1);
 	//No hace falta crear un animation graph
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);

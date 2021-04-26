@@ -3,11 +3,12 @@
 #include "box2d.h"
 #include"Transform.h"
 #include "BoxCollider.h"
+#include "../ecs/Entity.h"
 
 class ShootDetect : public Component
 {
 public:
-	ShootDetect(Transform* tr) { enemytransform = tr; };
+	ShootDetect(Transform* tr, Entity* e) : enemytransform(tr), enemy(e) {};
 	virtual ~ShootDetect() {};
 	void init() override;
 	void update() override;
@@ -19,6 +20,7 @@ public:
 	void createBullet();
 
 protected:
+	Entity* enemy;
 	float minTime;
 	float passedTime;
 	bool shootenabled;

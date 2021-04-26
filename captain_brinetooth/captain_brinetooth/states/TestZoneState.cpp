@@ -58,17 +58,17 @@ void TestZoneState::init() {
 //-----Enemies-----
 #pragma region Enemies
 	#pragma region PompeyWorm
-	Config pompeyWorm{};
-	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
-	pompeyWorm.vel = Vector2D(0, 0);
-	pompeyWorm.size = Vector2D(100.0f, 100.0f);
-	pompeyWorm.friction = 100;
-	pompeyWorm.physicType = DYNAMIC;
-	pompeyWorm.fixedRotation = true;
-	pompeyWorm.rotation = 0.0f;
-	pompeyWorm.col = ENEMY;
-	pompeyWorm.colMask = ENEMY_MASK;
-	createFlowerJellyHat(pompeyWorm);
+	//Config pompeyWorm{};
+	//pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
+	//pompeyWorm.vel = Vector2D(0, 0);
+	//pompeyWorm.size = Vector2D(100.0f, 100.0f);
+	//pompeyWorm.friction = 100;
+	//pompeyWorm.physicType = DYNAMIC;
+	//pompeyWorm.fixedRotation = true;
+	//pompeyWorm.rotation = 0.0f;
+	//pompeyWorm.col = ENEMY;
+	//pompeyWorm.colMask = ENEMY_MASK;
+	//createFlowerJellyHat(pompeyWorm);
 	#pragma endregion
 	#pragma region ElfShark
 	/*Config elfShark{};
@@ -84,13 +84,21 @@ void TestZoneState::init() {
 	createElfShark(elfShark);*/
 	#pragma endregion
 	#pragma region FringeHead
-	/*auto* enemy = manager_->addEntity();
-	Transform* t= enemy->addComponent<Transform>(Vector2D(sdlutils().width() / 1.7f, sdlutils().height() / 1.65f), Vector2D(0, 0), 70.0f, 70.0f, 0.0f);
-	enemy->addComponent<BoxCollider>(STATIC, ENEMY, ENEMY_MASK);
-	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
-	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(200);*/
+
+	Config fringeHead{};
+	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
+	fringeHead.vel = Vector2D(0, 0);
+	fringeHead.size = Vector2D(70.0f,70.0f);
+	fringeHead.friction = 0;
+	fringeHead.physicType = KINEMATIC;
+	fringeHead.fixedRotation = true;
+	fringeHead.rotation = 0.0f;
+	fringeHead.col = ENEMY;
+	fringeHead.colMask = ENEMY_MASK;
+	createFringeHead(fringeHead);
+
+
+
 	#pragma endregion
 #pragma endregion
 }
@@ -341,4 +349,16 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
-
+void TestZoneState::createFringeHead(const Config& entityConfig)
+{
+	auto* enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
+	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0);
+	anim_controller->addTransition("idle", "attack", "Shoot", 1, false);
+	anim_controller->addTransition("attack", "idle", "Shoot", 0, true);
+	anim_controller->setParamValue("Shoot", 0);
+	enemy->addComponent<FringeHeadAtack>();
+	enemy->addComponent<Enemy_Health>(200,Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+}

@@ -21,7 +21,7 @@ void FringeHeadAtack::init()
 	Vector2D triggerpos = tr->getPos();
 	triggerpos.setY(triggerpos.getY() + 25.0);
 	trigger->addComponent<Transform>(triggerpos, Vector2D(0, 0), triggersize.getX(), triggersize.getY(),  0.0f);
-	trigger->addComponent<BoxCollider>(STATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK,true);
-	trigger->addComponent<ShootDetect>(tr);
-	AnimBlendGraph* anim_controller = trigger->addComponent<AnimBlendGraph>();
+	trigger->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK,true);
+	trigger->addComponent<ShootDetect>(tr,entity_);
+	//AnimBlendGraph* anim_controller = trigger->addComponent<AnimBlendGraph>();
 }

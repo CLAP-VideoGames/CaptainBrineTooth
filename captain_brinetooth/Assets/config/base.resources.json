@@ -69,6 +69,14 @@
 			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_spit.png"
 		},
 		{
+			"id": "fringehead_idle",
+			"file": "assets/sprites/enemies/fringehead/fringehead_idle.png"
+		},
+		{
+			"id": "fringehead_atk",
+			"file": "assets/sprites/enemies/fringehead/fringehead_atk.png"
+		},
+		{
 			"id": "fullvida",
 			"file": "assets/sprites/player/HUD/anzuelo_sheet.png"
 		},

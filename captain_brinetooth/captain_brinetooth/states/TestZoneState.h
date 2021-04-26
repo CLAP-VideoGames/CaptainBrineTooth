@@ -16,6 +16,7 @@ public:
 	void createElfShark(const Config& entityConfig);
 	void createPesca(const Config& entityConfig);
 	void createFlowerJellyHat(const Config& entityConfig);
+	void createFringeHead(const Config& entityConfig);
 protected:
 	SDL_Rect cam;
 };
