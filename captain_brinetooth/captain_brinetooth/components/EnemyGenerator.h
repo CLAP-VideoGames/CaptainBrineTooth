@@ -9,10 +9,11 @@
 #include "..//components/ElfSharkAttack.h"
 #include "..//components/Enemy_Health.h"
 #include "..//components/JellyHatBehavior.h"
+#include "..//components/FringeHeadAtack.h"
 
 class EnemyGenerator : public Component
 {
-	const int NUM_ENEMIES = 2; //Indica la cantidad de tipos de enemigos que existen
+	const int NUM_ENEMIES = 4; //Indica la cantidad de tipos de enemigos que existen
 public:
 	struct Config {
 		Vector2D pos, vel, size;
@@ -51,7 +52,7 @@ private:
 	void generateFringeHead(Vector2D pos);
 	void generateMedusa(Vector2D pos);
 	void generateElfShark(Vector2D pos);
-
+	void generatePompeyWorm(Vector2D pos);
 
 	Entity* createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel);
 };
