@@ -13,5 +13,9 @@ void PescaController::update() {
 		if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
 			collider_->setSpeed(Vector2D(2, collider_->getBody()->GetLinearVelocity().y));
 		}
+
+	}
+	if (ih().keyUpEvent()) {
+	    if(ih().isKeyUp(SDL_SCANCODE_RIGHT) && ih().isKeyUp(SDL_SCANCODE_LEFT)) collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 	}
 }
