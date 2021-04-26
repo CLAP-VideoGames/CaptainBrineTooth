@@ -177,8 +177,8 @@ private:
 		}
 
 		auto* m = trigger->getMngr()->getHandler<Map>();
-
-		std::string d= trigger->getComponent<Connections>()->getDir();
+		std::string d;
+		d= trigger->getComponent<Connections>()->getDir();
 		int dir = -1;
 
 
@@ -374,7 +374,8 @@ private:
 
 
 			if (names[i] == oppDir) {
-				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY(), 0);
+																													//Dos sumas completamente arbitarias que me sirven
+				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + 100, pos.getY() - 50, 0);
 			}
 			else {
 				t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);

@@ -21,7 +21,7 @@ void EnemyGenerator::generateRandomEnemy(Vector2D pos)
 		//generateFringeHead(pos);
 		break;
 	case 1:
-		generateMedusa(pos);
+		//generateMedusa(pos);
 		//generateFringeHead(pos);
 		break;
 	case 2:
