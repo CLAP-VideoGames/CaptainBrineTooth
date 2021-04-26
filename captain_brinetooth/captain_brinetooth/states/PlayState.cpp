@@ -286,7 +286,6 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 #pragma endregion
-
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
 		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
 	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.25), Vector2D(50.0f, 20.0f));
