@@ -16,27 +16,7 @@ extern "C" {
 	#include <libavcodec/avcodec.h>
 }
 
-
-class VideoPlayer : public Component
-{
-public:
-	VideoPlayer(const char* file, bool loop, const Vector2D& size = Vector2D(App::camera.w * App::camera_Zoom_Out, App::camera.h* App::camera_Zoom_Out));
-	~VideoPlayer();
-
-	void init() override;
-	
-	void update() override;
-	void render() override;
-
-	void queueVideo(const char* file, bool loop);
-
-	int loadVideo();
-
-	SDL_Rect& getRect();
-
-private:
-
-	std::vector<std::pair<const char*, bool>> files;
+struct Video {
 	//Valores para leer los frames del video
 	AVFormatContext* pFormatCtx = nullptr;
 	AVCodecContext* pCodecCtx = nullptr;
@@ -45,16 +25,48 @@ private:
 	unsigned char* out_buffer = nullptr;
 	AVPacket* packet = nullptr;
 	struct SwsContext* img_convert_ctx = nullptr;
+	//Controlar si el video ha acabado
+	int done = 0;
+	bool loop = false;
+	int videoIndex;
+	const char* filename;
+	Uint32 timePerFrame;
 
+	void actTexture(SDL_Texture* text){
+		text = SDL_CreateTexture(sdlutils().renderer(), SDL_PIXELFORMAT_IYUV,
+			SDL_TEXTUREACCESS_STREAMING, pCodecCtx->width, pCodecCtx->height);
+	}
+};
+
+class VideoPlayer : public Component
+{
+public:
+	VideoPlayer(std::vector<std::pair<const char*, bool>>& file, const Vector2D& size = Vector2D(App::camera.w * App::camera_Zoom_Out, App::camera.h* App::camera_Zoom_Out));
+	~VideoPlayer();
+
+	void init() override;
+	
+	void update() override;
+	void render() override;
+
+	int createVideo(Video& video_);
+
+	void queueVideo(const char* file, bool loop);
+
+	int prepareVideos(std::vector<std::pair<const char*, bool>>& files);
+
+	SDL_Rect& getRect();
+
+private:
+	//Cola de videos
+	std::vector<Video> queueVideos;	
 	// sdl stuff
 	int window_w, window_h;
 	SDL_Texture* sdlTexture = nullptr;
 	SDL_Rect sdlRect;
 	SDL_Event event;
-
-	int videoIndex;
+	
 	//Tiempo entre frame y frame del video
-	Uint32 timePerFrame;
 	Uint32 lastUpdate;
 	//Controlares de decodificación del video
 	int done = 0;
