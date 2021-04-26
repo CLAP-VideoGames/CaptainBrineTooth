@@ -207,3 +207,44 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
  {
 	 return isTriggerColliding_;
  }
+
+ void BoxCollider::Resize(Vector2D size)
+ {
+	 size_ = size;
+
+	 auto type = body->GetType();
+	 auto bodypos = body->GetPosition();
+
+	 body->DestroyFixture(fixture);
+	 fixture = nullptr;
+	 world->DestroyBody(body);
+	 body = nullptr;
+
+	 b2BodyDef bodyDef;
+	 bodyDef.type = type;
+
+	 bodyDef.position.Set(bodypos.x, bodypos.y);
+	 bodyDef.angle = rotation_;
+
+	 //Stores the entity in the body for future reference in collisions
+	 bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(entity_);
+
+	 //Make the body
+	 body = world->CreateBody(&bodyDef);
+
+	 b2PolygonShape boxShape;
+	 boxShape.SetAsBox(size_.getX() / sdlutils().getPPM() / 2.0f, size_.getY() / sdlutils().getPPM() / 2.0f);
+
+	 b2FixtureDef fixtureDef;
+	 //Que el cubo real tenga la misma forma que la definicion
+	 fixtureDef.shape = &boxShape;
+	 //No puede ser la densidad 0 para un objeto dinamico
+	 fixtureDef.density = 1.0f;
+	 fixtureDef.friction = friction_;
+	 fixtureDef.isSensor = isTrigger;
+
+	 fixtureDef.filter.categoryBits = getColLayer(); // tag para determinar capa de colision
+	 fixtureDef.filter.maskBits = getColMask(); // con que capas de colision se hace pues eso, colision
+
+	 fixture = body->CreateFixture(&fixtureDef);
+ }

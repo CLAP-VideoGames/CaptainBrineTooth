@@ -116,6 +116,8 @@ public:
 
 	const bool& isTriggerColliding();
 
+	void Resize(Vector2D size);
+
 private:
 	Transform* tr_;
 	Vector2D pos_, size_;

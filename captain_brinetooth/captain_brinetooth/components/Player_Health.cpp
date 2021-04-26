@@ -1,4 +1,21 @@
-#include "../components/Player_Health.h"
+#include "Player_Health.h"
+
+
+
+void Player_Health::init()
+{
+	frame = Vector2D(0, 15);
+	auto w = fVida->width() / 8;
+	auto h = fVida->height();
+
+	src = build_sdlrect(frame, w, h);
+	time_ = 0;
+	frameSize = Vector2D(w, h);
+
+	resetLifes();
+	invulnerability_ = false;
+	elpased_time_invul_ = 0;
+}
 
 void Player_Health::render()
 {
@@ -39,9 +56,9 @@ void Player_Health::render()
 	}
 
 	// Si pasa mas de X tiempo, pasamos al siguiente frame
-	if (sdlutils().currRealTime() > time + tiempoanimacion)
+	if (sdlutils().currRealTime() > time_ + tiempoanimacion)
 	{
-		time = sdlutils().currRealTime();
+		time_ = sdlutils().currRealTime();
 
 		// Avanzamos de frame
 		frame = Vector2D(frame.getX() + 194, frame.getY()); // 194 es la cantidad exacta a avanzar al siguiente frame sin que ocurra nada
@@ -50,6 +67,10 @@ void Player_Health::render()
 		// Si llegamos al ultimo frame, volvemos al primero
 		if (nFrame > 7) { frame = Vector2D(0, 15); nFrame = 0; }
 	}
+
+	//Invulnerabilidad
+	if (invulnerability_ && sdlutils().currRealTime() > elpased_time_invul_ + cd_invul_)
+		invulnerability_ = false;
 	
 }
 
@@ -71,4 +92,21 @@ void Player_Health::loseLife()
 	}
 	vidas -= 0.5f;  g->ShakeCamera(20);
 
+	invulnerability_ = true;
+	elpased_time_invul_ = sdlutils().currRealTime();
+}
+
+int Player_Health::getLife()
+{
+	return vidas;
+}
+
+void Player_Health::resetLifes()
+{  
+	vidas = maxVidas;
+}
+
+const bool& Player_Health::getInvulnerable()
+{
+	return invulnerability_;
 }
