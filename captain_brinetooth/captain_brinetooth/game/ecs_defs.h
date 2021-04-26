@@ -9,6 +9,7 @@ class KeyBoardCtrl;
 class Bounce;
 class Animation;
 class AnimBlendGraph;
+class ParallaxScroll;
 class Rotate;
 class BoxCollider;
 class TriggerCollider;
@@ -60,6 +61,7 @@ class EnemyGenerator;
 	Bounce,\
 	Animation,\
 	AnimBlendGraph,\
+	ParallaxScroll,\
 	Rotate,\
 	BoxCollider,\
 	TriggerCollider,\

@@ -203,6 +203,22 @@
 		{
 			"id": "sky",
 			"file": "assets/background/sky.png"
+		},
+		{
+			"id": "bg_layer1",
+			"file": "assets/background/backgroundB_layer1.png"
+		},
+		{
+			"id": "bg_layer2",
+			"file": "assets/background/backgroundB_layer2.png"
+		},
+		{
+			"id": "bg_layer3",
+			"file": "assets/background/backgroundB_layer3.png"
+		},
+		{
+			"id": "bg_layer4",
+			"file": "assets/background/backgroundB_layer4.png"
 		}
 
 	],

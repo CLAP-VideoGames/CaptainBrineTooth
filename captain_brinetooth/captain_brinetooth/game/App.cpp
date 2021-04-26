@@ -14,7 +14,7 @@
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect App::camera = {0 ,0,window.getX(),window.getY()};
-const float App::camera_Zoom_Out = 2.0f;
+const float App::camera_Zoom_Out = 1.0f;
 
 using namespace ColLayers;
 
@@ -33,9 +33,9 @@ App::App() {
 	//----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
-	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 
 }

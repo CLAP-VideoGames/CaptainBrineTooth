@@ -11,8 +11,14 @@ void TestZoneState::init() {
 	//-----Map-----
 #pragma region Map
 	//---BG----
-	auto* bg = createBasicEntity(Vector2D(0,1440),Vector2D(2560*2,1440*2),0.0f,Vector2D(0,0));
-	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	auto* bg = createBasicEntity(Vector2D(400, sdlutils().height() * 1.5f),Vector2D(3000,1080),0.0f,Vector2D(0,0));
+	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	auto* bgParallax = bg->addComponent<ParallaxScroll>();
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer1"), 0.65);
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer2"), 0.6);
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer3"), 0.55);
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer4"), 0.5);
+
 
 	//--Player--
 	Config playerConfig{};
@@ -57,7 +63,7 @@ void TestZoneState::init() {
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
-	#pragma region PompeyWorm
+	/*#pragma region PompeyWorm
 	Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
@@ -85,7 +91,7 @@ void TestZoneState::init() {
 	#pragma endregion
 	#pragma region FringeHead
 
-	Config fringeHead{};
+	/*Config fringeHead{};
 	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
 	fringeHead.vel = Vector2D(0, 0);
 	fringeHead.size = Vector2D(70.0f,70.0f);
@@ -95,10 +101,7 @@ void TestZoneState::init() {
 	fringeHead.rotation = 0.0f;
 	fringeHead.col = ENEMY;
 	fringeHead.colMask = ENEMY_MASK;
-	createFringeHead(fringeHead);
-
-
-
+	createFringeHead(fringeHead);*/
 	#pragma endregion
 #pragma endregion
 }

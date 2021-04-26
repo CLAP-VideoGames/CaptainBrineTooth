@@ -188,6 +188,7 @@
     <ClInclude Include="components\MachineGun.h" />
     <ClInclude Include="components\Map.h" />
     <ClInclude Include="components\MapProcedural.h" />
+    <ClInclude Include="components\ParallaxScroll.h" />
     <ClInclude Include="components\PescaController.h" />
     <ClInclude Include="components\PlayerController.h" />
     <ClInclude Include="components\Player_Health.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="components\JellyHatBehavior.cpp" />
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\MachineGun.cpp" />
+    <ClCompile Include="components\ParallaxScroll.cpp" />
     <ClCompile Include="components\PescaController.cpp" />
     <ClCompile Include="components\PlayerController.cpp" />
     <ClCompile Include="components\Player_Health.cpp" />

@@ -11,6 +11,7 @@
 #include "../components/Rotate.h"
 #include "../components/Bounce.h"
 #include "../components/Image.h"
+#include "../components/ParallaxScroll.h"
 #include "../components/LoseLife.h"
 #include "../components/Chainsaw.h"
 #include "../components/Animation.h"
