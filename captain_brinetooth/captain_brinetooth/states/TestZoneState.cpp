@@ -306,7 +306,7 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	AnimBlendGraph* gancho_anim_controller = gancho->addComponent<AnimBlendGraph>();
 	gancho_anim_controller->addAnimation("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
 	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	gancho->addComponent<Gancho>();
+	//gancho->addComponent<Gancho>();
 	gancho->addComponent<PescaController>();
 
 	auto* reward0 = createBasicEntity(Vector2D(sdlutils().width() / 2, 800), Vector2D(90,90), 0.0f, Vector2D(0,0));

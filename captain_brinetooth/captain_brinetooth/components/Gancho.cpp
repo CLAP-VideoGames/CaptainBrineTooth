@@ -5,7 +5,6 @@
 
 Gancho::Gancho()
 {
-
 	move = true;
 	contactid = 1; //This means that fishing starts now , and that hook hasnt collided with anithing
 }
@@ -91,7 +90,7 @@ void Gancho::collisionAnswer(Entity* contactedfloor)
 		{
 			baitRef->getComponent<Reward>()->giveReward();
 		}
-
+		
 	}
 	else if (contactedfloor->getComponent<PescaController>() == nullptr) //Esto es para que solo detecte el suelo 
 	{

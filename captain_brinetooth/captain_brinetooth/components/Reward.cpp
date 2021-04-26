@@ -37,9 +37,10 @@ void Reward::update()
 	}
 	else
 	{
-		Vector2D hookpos = hook->getComponent<BoxCollider>()->getPhysicalPos(); //We obtain hook position in order to set bait position
-		entity_->getComponent<BoxCollider>()->setPhysicalTransform(hookpos.getX(), hookpos.getY(), 0); //Set position of our bait
+		b2Vec2 hookpos = hook->getComponent<BoxCollider>()->getBody()->GetTransform().p; //We obtain hook position in order to set bait position
+		entity_->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2(hookpos.x, hookpos.y), 0);
 		//Añadir algo para que no colisione
+		
 	}
 
 }
