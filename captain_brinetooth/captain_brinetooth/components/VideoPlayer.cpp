@@ -230,7 +230,7 @@ void VideoPlayer::queueVideo(const char *file, bool loop_){
 	queueVideos.push_back(video);
 }
 
-int VideoPlayer::prepareVideos(std::vector<std::pair<const char*, bool>>& files){
+void VideoPlayer::prepareVideos(std::vector<std::pair<const char*, bool>>& files){
 	int size = files.size();
 
 	for (int i = 0; i < size; i++)

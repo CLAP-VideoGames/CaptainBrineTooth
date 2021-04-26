@@ -53,7 +53,7 @@ public:
 
 	void queueVideo(const char* file, bool loop);
 
-	int prepareVideos(std::vector<std::pair<const char*, bool>>& files);
+	void prepareVideos(std::vector<std::pair<const char*, bool>>& files);
 
 	SDL_Rect& getRect();
 
