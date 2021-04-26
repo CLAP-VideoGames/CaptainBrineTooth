@@ -322,7 +322,7 @@ void TestZoneState::createPesca(const Config& entityConfig) {
 	reward2->addComponent<Reward>(23);
 
 
-	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15, -30), Vector2D(16.0f, 16.0f), 0.0f, Vector2D(0, 0));
+	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15, -30), Vector2D(10.0f, 16.0f), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* cuerda_anim_controller = cuerda->addComponent<AnimBlendGraph>();
 	cuerda_anim_controller->addAnimation("cuerda", &sdlutils().images().at("cuerda"), 1, 1, 1, 1, 0);
 	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
