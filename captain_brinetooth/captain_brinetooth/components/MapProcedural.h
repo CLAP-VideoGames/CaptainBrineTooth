@@ -381,9 +381,11 @@ private:
 
 			if (names[i] == oppDir) {
 																													//Dos sumas completamente arbitarias que me sirven
-				if(oppDir == "S")entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY() - 100, 0);
-				else if(oppDir == "W")entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + 100, pos.getY(), 0);
-				else entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX(), pos.getY() - 200, 0);
+				if(oppDir == "S")
+					entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x/2), pos.getY() + (size[i].y / 2), 0);
+				else if(oppDir == "W")
+					entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
+				else entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
 			}
 			else {
 				t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
