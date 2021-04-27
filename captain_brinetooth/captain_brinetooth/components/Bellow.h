@@ -33,25 +33,16 @@ public:
 
 	void shoot();
 private:
-	enum STATUS { Iddle, Shooting, Reloading };
+	enum STATUS { Iddle, Shooting};
 
 	Transform* tr_;
 	AnimBlendGraph* anim_controller;
 
 	//Local control variables (don't touch or change them except in code)
 	int CURRENT_STATUS = STATUS::Iddle;
-	float startedReloading;
 	float shotActivationTime;
-	bool currentlyShooting = false;
-	float overheat;
-	float overheatSpikeTime;
-	float decreaseOverheatSpikeTime;
-	float bulletVelocity;
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
-	float reloadingTime = 400;		//Counted after one attack is stopped to avoid animation clipping
 	float timeBetweenShots = 100;
-	float timeBetweenOverheatSpikes = 100;
-	float maxOverheat = 30;
 };
