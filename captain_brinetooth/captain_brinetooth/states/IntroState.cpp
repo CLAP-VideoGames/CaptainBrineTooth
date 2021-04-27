@@ -13,7 +13,7 @@ void IntroState::init(){
 
 	std::vector<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
-	std::pair<const char*, std::pair<bool, int>> video_ = { "assets/videos/intro_loop.mp4", {true,1} };
+	std::pair<const char*, std::pair<bool, int>> video_ = { "assets/videos/0001-0120.mp4", {true,38} };
 	videos.push_back(video_);
 	//std::pair<const char*, std::pair<bool, int>> video__ = { "assets/videos/water.mp4", {false, 38}};
 	//videos.push_back(video__);
