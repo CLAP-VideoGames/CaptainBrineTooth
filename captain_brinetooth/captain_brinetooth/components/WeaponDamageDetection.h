@@ -10,7 +10,7 @@
 
 class WeaponDamageDetection : public Component {
 public:
-	WeaponDamageDetection(int damageToApply) : damageToApply_(damageToApply) {
+	WeaponDamageDetection(int damageToApply, int typeOfDamage = 0) : damageToApply_(damageToApply), typeOfDamage_(typeOfDamage) {
 	}
 	virtual ~WeaponDamageDetection() {
 	}
@@ -37,8 +37,9 @@ public:
 
 	//Aplica danio al enemigo
 	void ApplyDamage(Entity* enemy) {
-		enemy->getComponent<Enemy_Health>()->loseLife(damageToApply_);
+		enemy->getComponent<Enemy_Health>()->loseLife(damageToApply_, typeOfDamage_);
 	}
 private:
 	int damageToApply_;
+	int typeOfDamage_;
 };

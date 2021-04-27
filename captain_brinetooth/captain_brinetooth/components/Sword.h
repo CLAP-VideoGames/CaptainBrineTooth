@@ -50,21 +50,29 @@ private:
 	float stabActivationTime;
 	bool currentlyStabbing = false;
 	float stoppedAttackingTime = 0;
+	float currentLoopAnimationTime;
+	bool toLoop;
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
 	float maxHoldTime = 3000;	//Time player is sawing
 	float animationLockTime = 666;		//Counted after one attack is stopped to avoid animation clipping
-	float maxComboPanningTime = 2000;	//Counted after animation lock is released
+	float maxComboPanningTime = 500;	//Counted after animation lock is released
 	float timeBetweenStabs = 333;
 	float stabTriggerTime = 200;
 	float timeBeforeNextAttackStarts = 666;
+	float timeLoopAnimationTransition = 500;
 
 	//Variables related to ChainsawTriggerPosition
-	int triggerOffSetX = -60;
-	int triggerOffSetY = 100;
-	int triggerWidth = 150;
-	int triggerHeight = 150;
+	int triggerOffSetX = -90;
+	int triggerOffSetY = -30;
+	int triggerWidth = 120;
+	int triggerHeight = 130;
+
+	int thirdTriggerOffSetX = -100;
+	int thirdTriggerOffSetY = 5;
+	int thirdTriggerWidth = 130;
+	int thirdTriggerHeight = 50;
 
 	Entity* trigger;
 };

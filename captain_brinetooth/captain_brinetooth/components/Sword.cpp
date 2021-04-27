@@ -67,6 +67,10 @@ void Sword::update() {
 						anim_->setParamValue("sword_att", 3);
 
 					sawActivationTime = sdlutils().currRealTime();
+
+					toLoop = true;
+					currentLoopAnimationTime = sdlutils().currRealTime();
+
 					break;
 				case ATTACKS::Attack3:
 					std::cout << "Sword attack\n";
@@ -97,6 +101,12 @@ void Sword::update() {
 		}
 	}
 
+	//Transicion de la animacion de preparar tercer ataque a la realización del bucle
+	if (toLoop && CURRENT_STATUS == STATUS::Sawing && currentLoopAnimationTime + timeLoopAnimationTransition < sdlutils().currRealTime()) {
+		anim_->setParamValue("sword_att", 4);
+		toLoop = false;
+	}
+
 	//Check out of input cases
 	if (CURRENT_STATUS == STATUS::Sawing && sawActivationTime + maxHoldTime < sdlutils().currRealTime()) {
 		//Deactivate chainsaw
@@ -118,9 +128,6 @@ void Sword::update() {
 			trigger = nullptr;
 		}
 
-		if (anim_->getParamIndex("sword_att") != -1)
-			anim_->setParamValue("sword_att", 0);
-
 		comboActivationTime = sdlutils().currRealTime();
 	}
 	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
@@ -130,14 +137,25 @@ void Sword::update() {
 		CURRENT_ATTACK = ATTACKS::NotAttacking;
 
 		stoppedAttackingTime = sdlutils().currRealTime();
+
+		if (anim_->getParamIndex("sword_att") != -1)
+			anim_->setParamValue("sword_att", 0);
 	}
 
 	//Updating the trigger's position
 	if (trigger != nullptr) {
-		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX + entity_->getComponent<Transform>()->getW())) / sdlutils().getPPM(),
-			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
-		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
-			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+		if (CURRENT_ATTACK == ATTACKS::Attack3) {
+			if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-thirdTriggerOffSetX)) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + thirdTriggerOffSetY) / sdlutils().getPPM()), 0.0f);
+			else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + thirdTriggerOffSetX) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + thirdTriggerOffSetY) / sdlutils().getPPM()), 0.0f);
+		}
+		else {
+			if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+			else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+		}
 	}
 
 	if (currentlyStabbing && stabActivationTime + stabTriggerTime < sdlutils().currRealTime()) {
@@ -164,12 +182,19 @@ void Sword::update() {
 
 void Sword::creaTrigger(int damage) {
 	trigger = entity_->getMngr()->addEntity();
-	if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX + entity_->getComponent<Transform>()->getW(), triggerOffSetY),
-		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-	else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
+	if (CURRENT_ATTACK == ATTACKS::Attack3) {
+		if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-thirdTriggerOffSetX, thirdTriggerOffSetY),
+			Vector2D(0, 0), thirdTriggerWidth, thirdTriggerHeight, 0.0f);
+		else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(thirdTriggerOffSetX, thirdTriggerOffSetY),
+			Vector2D(0, 0), thirdTriggerWidth, thirdTriggerHeight, 0.0f);
+	}
+	else {
+		if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX, triggerOffSetY),
+			Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+		else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
+			Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+	}
+
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	trigger->addComponent<WeaponDamageDetection>(damage);
 }

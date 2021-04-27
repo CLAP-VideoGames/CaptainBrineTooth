@@ -111,9 +111,6 @@ void Crab::update() {
 			trigger = nullptr;
 		}
 
-		if (anim_->getParamIndex("crab_att") != -1)
-			anim_->setParamValue("crab_att", 0);
-
 		comboActivationTime = sdlutils().currRealTime();
 	}
 	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
@@ -123,11 +120,14 @@ void Crab::update() {
 		CURRENT_ATTACK = ATTACKS::NotAttacking;
 
 		stoppedAttackingTime = sdlutils().currRealTime();
+
+		if (anim_->getParamIndex("crab_att") != -1)
+			anim_->setParamValue("crab_att", 0);
 	}
 
 	//Updating the trigger's position
 	if (trigger != nullptr) {
-		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX + entity_->getComponent<Transform>()->getW())) / sdlutils().getPPM(),
+		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
 			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
@@ -156,12 +156,11 @@ void Crab::update() {
 void Crab::creaTrigger(int damage) {
 	//Activate attack trigger
 	trigger = entity_->getMngr()->addEntity();
-	if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX + entity_->getComponent<Transform>()->getW(), triggerOffSetY),
+	if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX, triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
 	else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
-	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
+
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	trigger->addComponent<WeaponDamageDetection>(damage);
 }

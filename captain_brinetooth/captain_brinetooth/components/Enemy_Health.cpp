@@ -16,8 +16,18 @@ Enemy_Health::Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color&
 	barSize = initBarSize = sizeBar;
 }
 
-void Enemy_Health::loseLife(int damage){
-	lifes -= damage;
+/// <summary>
+/// Realiza daño al enemigo. El segundo parametro es 0 por defecto,
+/// pero si se asigna a 1 el enemigo es electrificado y a 2 el enemigo se envenena
+/// </summary>
+/// <param name="damage">Cantidad de daño a infligir</param>
+/// <param name="typeOfDamage">1: electrificar; 2: envenenar</param>
+void Enemy_Health::loseLife(int damage, int typeOfDamage){
+	if (!isElectrified)
+		lifes -= damage;
+	else
+		lifes = lifes - (damage + electrifyDamage);
+		
 
 	// Reproducimos sonido aleatorio de monstruo herido
 	int x = sdlutils().rand().teCuoto(0, 3);
@@ -33,6 +43,20 @@ void Enemy_Health::loseLife(int damage){
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 200);
 	default:
 		break;
+	}
+
+	//Efecto electrificar
+	if (typeOfDamage == 1 && isElectrified == false) {
+		isElectrified = true;
+	}
+	else {
+		isElectrified = false;
+		//Veneno
+		if (typeOfDamage == 2) {
+			isPoisoned = true;
+			poisonCurrentTime = sdlutils().currRealTime();
+			poisonCurrentTickTime = sdlutils().currRealTime();
+		}
 	}
 
 	if (lifes <= 0) {
@@ -72,6 +96,20 @@ void Enemy_Health::update(){
 		//Parte Horizontal
 		if (ih().isKeyDown(SDL_SCANCODE_A))
 			loseLife(100);
+	}
+
+	//Daño por veneno
+	if (isPoisoned) {
+		//Tiempo hasta fin del veneno
+		if (poisonCurrentTime + poisonMaxTime < sdlutils().currRealTime()) {
+			isPoisoned = false;
+		}
+
+		//Ticks daño por veneno
+		if (poisonCurrentTickTime + poisonDamageTickTime < sdlutils().currRealTime()) {
+			lifes -= poisonDamage;
+			poisonCurrentTickTime = sdlutils().currRealTime();
+		}
 	}
 }
 

@@ -170,9 +170,10 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//-WEAPONS------------------------------------------------------------------------------------------------------
 #pragma region Chainsaw
 	//---CHAINSAW---------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 1, 8, Vector2D(0.75, 0.72));
-	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 9, 18, Vector2D(0.75, 0.72));
-	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 19, 47, Vector2D(0.75, 0.72)); // provisional, habria que hacer una de mantener
+	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 1, 8, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 9, 18, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 28, 0, 19, 27, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack4", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, -1, 28, 47, Vector2D(0.75, 0.72));
 
 	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("idle", "chainsaw_attack1", "chainsaw_att", 1, false);
@@ -187,8 +188,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("run", "chainsaw_attack3", "chainsaw_att", 3, false);
 	anim_controller->addTransition("idle", "chainsaw_attack3", "chainsaw_att", 3, false);
 	anim_controller->addTransition("jump", "chainsaw_attack3", "chainsaw_att", 3, false);
-	anim_controller->addTransition("chainsaw_attack3", "run", "chainsaw_att", 0, false);
-	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack1", "chainsaw_att", 4, true);
+	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack4", "chainsaw_att", 4, true);
+	anim_controller->addTransition("chainsaw_attack4", "run", "chainsaw_att", 0, false);
+	anim_controller->addTransition("chainsaw_attack4", "chainsaw_attack1", "chainsaw_att", 1, false);
 
 	anim_controller->setParamValue("chainsaw_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -198,7 +200,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//---SWORD------------------------------------------------------------------------------------------------------
 	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 1, 9, Vector2D(0.71, 0.69));
 	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 12, 20, Vector2D(0.71, 0.69));
-	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, -1, 27, 44, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 20, 28, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack4", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, -1, 28, 44, Vector2D(0.71, 0.69));
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
@@ -213,8 +216,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("run", "sword_attack3", "sword_att", 3, false);
 	anim_controller->addTransition("idle", "sword_attack3", "sword_att", 3, false);
 	anim_controller->addTransition("jump", "sword_attack3", "sword_att", 3, false);
-	anim_controller->addTransition("sword_attack3", "run", "sword_att", 0, false);
-	anim_controller->addTransition("sword_attack3", "sword_attack1", "sword_att", 4, true);
+	anim_controller->addTransition("sword_attack3", "sword_attack4", "sword_att", 4, true);
+	anim_controller->addTransition("sword_attack4", "run", "sword_att", 0, false);
+	anim_controller->addTransition("sword_attack4", "sword_attack1", "sword_att", 1, false);
 
 	anim_controller->setParamValue("sword_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -242,7 +246,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 #pragma region Crab
 //---CRAB---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 1, 8, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 35, 0, 1, 8, Vector2D(0.71, 0.5));
 	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
 	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
 
@@ -260,7 +264,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("idle", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("jump", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("crab_attack3", "run", "crab_att", 0, false);
-	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 4, true);
+	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 1, true);
 
 	anim_controller->setParamValue("crab_att", 0);
 	//--------------------------------------------------------------------------------------------------------------

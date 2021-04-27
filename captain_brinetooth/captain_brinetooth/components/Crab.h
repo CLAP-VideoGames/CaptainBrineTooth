@@ -21,6 +21,12 @@ public:
 		tr_(nullptr) {
 	}
 	virtual ~Crab() {
+		if (anim_->getParamIndex("crab_att") != -1)
+			anim_->setParamValue("crab_att", 0);
+		if (trigger != nullptr) {
+			trigger->setActive(false);
+			trigger = nullptr;
+		}
 	}
 
 	void init() override;
@@ -48,17 +54,17 @@ private:
 
 	//Cooldown variables (should be able to be changed as you see fit)
 	float maxHoldTime = 666;	//Time player is sawing
-	float animationLockTime = 666;		//Counted after one attack is stopped to avoid animation clipping
-	float maxComboPanningTime = 2000;	//Counted after animation lock is released
+	float animationLockTime = 500;		//Counted after one attack is stopped to avoid animation clipping
+	float maxComboPanningTime = 500;	//Counted after animation lock is released
 	float timeBetweenStabs = 333;
 	float stabTriggerTime = 200;
 	float timeBeforeNextAttackStarts = 666;
 
 	//Variables related to ChainsawTriggerPosition
-	int triggerOffSetX = -60;
-	int triggerOffSetY = 100;
-	int triggerWidth = 150;
-	int triggerHeight = 150;
+	int triggerOffSetX = -70;
+	int triggerOffSetY = -15;
+	int triggerWidth = 80;
+	int triggerHeight = 60;
 
 	Entity* trigger;
 };

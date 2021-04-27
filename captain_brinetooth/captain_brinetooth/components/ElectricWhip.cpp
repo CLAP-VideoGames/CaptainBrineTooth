@@ -114,5 +114,5 @@ void ElectricWhip::creaTrigger(int damage) {
 	/*anim_controller = trigger->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("iddle", &sdlutils().images().at("fondo"), 1, 1, 1, 1, 1);*/
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-	trigger->addComponent<WeaponDamageDetection>(damage);
+	trigger->addComponent<WeaponDamageDetection>(damage, 1);
 }

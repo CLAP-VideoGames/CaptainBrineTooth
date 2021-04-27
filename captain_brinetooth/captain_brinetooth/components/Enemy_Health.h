@@ -14,7 +14,7 @@ public:
 	void render() override;
 	void update() override;
 
-	void loseLife(int damage);
+	void loseLife(int damage, int typeOfDamage = 0);
 	void setHealth(int health) { lifes = health; };
 	int getHealth() { return lifes; };
 
@@ -28,5 +28,13 @@ private:
 	int offsetY_;
 
 	int lifes, initLifes;
+
+	bool isPoisoned;
+	int poisonDamage = 10;
+	float poisonMaxTime = 10.0f, poisonCurrentTime;
+	float poisonDamageTickTime = 1.0f, poisonCurrentTickTime;
+
+	bool isElectrified;
+	int electrifyDamage = 150;
 };
 
