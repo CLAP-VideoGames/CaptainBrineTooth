@@ -219,6 +219,26 @@
 		{
 			"id": "bg_layer4",
 			"file": "assets/background/backgroundB_layer4.png"
+		},
+		{
+			"id": "bg_ice_layer1",
+			"file": "assets/background/ice/ice_layer_1.png"
+		},
+		{
+			"id": "bg_ice_layer2",
+			"file": "assets/background/ice/ice_layer_2.png"
+		},
+		{
+			"id": "bg_ice_layer3",
+			"file": "assets/background/ice/ice_layer_3.png"
+		},
+		{
+			"id": "bg_ice_layer4",
+			"file": "assets/background/ice/ice_layer_4.png"
+		},
+		{
+			"id": "bg_ice_layer5",
+			"file": "assets/background/ice/ice_layer_5.png"
 		}
 
 	],

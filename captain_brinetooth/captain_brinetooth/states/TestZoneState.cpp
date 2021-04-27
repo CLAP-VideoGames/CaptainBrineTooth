@@ -11,13 +11,14 @@ void TestZoneState::init() {
 	//-----Map-----
 #pragma region Map
 	//---BG----
-	auto* bg = createBasicEntity(Vector2D(400, sdlutils().height() * 1.5f),Vector2D(3000,1080),0.0f,Vector2D(0,0));
+	auto* bg = createBasicEntity(Vector2D(400, sdlutils().height() * 1.45f),Vector2D(3000,1080),0.0f,Vector2D(0,0));
 	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	auto* bgParallax = bg->addComponent<ParallaxScroll>();
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer1"), 0.65);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer2"), 0.6);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer3"), 0.55);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer4"), 0.5);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.5);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.4);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.25);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.2);
 
 
 	//--Player--
@@ -230,7 +231,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
 	//player->addComponent<SoundManager>(0, "FinalBoss");
 
-	/*if (playerConfig.physicType != KINEMATIC) */player->addComponent<PlayerController>();
+	/*if (playerConfig.physicType != KINEMATIC) */player->addComponent<PlayerController>(3.0,0.7);
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO

@@ -17,6 +17,16 @@ PlayState::~PlayState(){
 
 void PlayState::init() {
 
+	//---BG----
+	auto* bg = createBasicEntity(Vector2D(sdlutils().width()/2.0, sdlutils().height() * 0.65f), Vector2D(1920, 1400), 0.0f, Vector2D(0, 0));
+	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	auto* bgParallax = bg->addComponent<ParallaxScroll>();
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.35);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.3);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.25);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.2);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.15);
+
 	//SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
 	createLevel0();
 
