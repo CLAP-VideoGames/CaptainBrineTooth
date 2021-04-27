@@ -101,31 +101,33 @@ void PlayerController::update()
 #pragma endregion
 #pragma region Movement
 	//Ambas direcciones o ninguna
-	if ((moveLeft && moveRight) || (!moveLeft && !moveRight)) {
-		collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
-	}
-	else {
-		if (moveLeft) {	//izqda
-			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-			collider_->setSpeed(Vector2D(-speed_, vel.y));
-			animController_->flipX(false);
+	if (!isDashing){
+		if ((moveLeft && moveRight) || (!moveLeft && !moveRight)) {
+			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 		}
-		if (moveRight) {	//drcha
-			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-			collider_->setSpeed(Vector2D(speed_, vel.y));
-			animController_->flipX(true);
+		else {
+			if (moveLeft) {	//izqda
+				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+				collider_->setSpeed(Vector2D(-speed_, vel.y));
+				animController_->flipX(false);
+			}
+			if (moveRight) {	//drcha
+				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+				collider_->setSpeed(Vector2D(speed_, vel.y));
+				animController_->flipX(true);
+			}
 		}
+
 	}
 #pragma endregion
 
 	if (isDashing) {
 		b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-		if (vel.x > 0) {
-			collider_->setSpeed(Vector2D(vel.x - 0.3, 0));
-		}
-		else {
+		if (std::abs(vel.x) == 0) {
 			collider_->getBody()->SetGravityScale(gravity);
 			isDashing = false;
+
+			//collider_->setSpeed(Vector2D(vel.x - 0.3, 0));
 		}
 	}
 

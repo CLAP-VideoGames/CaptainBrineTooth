@@ -13,7 +13,7 @@ using namespace ColLayers;
 
 class PlayerController : public Component {
 public:																
-PlayerController(const float & speed = 3.0f, const float& forceJ = 1.5f , const float& dashS = 7.0f):
+PlayerController(const float & speed = 3.0f, const float& forceJ = 0.9f , const float& dashS = 5.0f):
 															//falso				//falso
 		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(false), isOnAir(false), dashSpeed(dashS), isDashing(false), canDash(true){}
 
