@@ -27,7 +27,7 @@ class App {
 public:
 	static const float camera_Zoom_Out;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qu�Eme tomais por un dictador, que no soy �ngel.
 	static SDL_Rect camera;
-	static const int FPS = 20;
+	static const int FPS = 15;
 
 
 	App();

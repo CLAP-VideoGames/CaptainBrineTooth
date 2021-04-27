@@ -1,6 +1,6 @@
 #include "VideoPlayer.h"
 
-VideoPlayer::VideoPlayer(std::vector<std::pair<const char*, bool>>& file, const Vector2D& size){
+VideoPlayer::VideoPlayer(std::vector<std::pair<const char*, std::pair<bool, int>>>& file, const Vector2D& size){
 
 	prepareVideos(file);
 
@@ -220,16 +220,18 @@ int VideoPlayer::createVideo(Video& video_){
 		AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
 
 	//// calculate frame rate
-	video_.timePerFrame = static_cast<Uint32>(1000.0
-		/ av_q2d(video_.pFormatCtx->streams[video_.videoIndex]->r_frame_rate));
+	////Esto no me sirve :C
+	//video_.timePerFrame = static_cast<Uint32>(1000.0
+	//	/ av_q2d(video_.pFormatCtx->streams[video_.videoIndex]->r_frame_rate));
 
 	return 0;
 }
 
-void VideoPlayer::queueVideo(const char *file, bool loop_){
+void VideoPlayer::queueVideo(const char *file, bool loop_, int frameRate){
 	Video video;
 	video.filename = file;
 	video.loop = loop_;
+	video.timePerFrame= frameRate;
 	createVideo(video);
 	queueVideos.push_back(video);
 }
@@ -252,11 +254,11 @@ void VideoPlayer::forcePopVideo() {
 	}
 }
 
-void VideoPlayer::prepareVideos(std::vector<std::pair<const char*, bool>>& files){
+void VideoPlayer::prepareVideos(std::vector<std::pair<const char*, std::pair<bool, int>>>& files){
 	int size = files.size();
 
 	for (int i = 0; i < size; i++)
-		queueVideo(files[i].first, files[i].second);
+		queueVideo(files[i].first, files[i].second.first , files[i].second.second);
 }
 
 SDL_Rect& VideoPlayer::getRect(){

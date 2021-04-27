@@ -49,7 +49,7 @@ struct Video {
 class VideoPlayer : public Component
 {
 public:
-	VideoPlayer(std::vector<std::pair<const char*, bool>>& file, const Vector2D& size = Vector2D(App::camera.w * App::camera_Zoom_Out, App::camera.h* App::camera_Zoom_Out));
+	VideoPlayer(std::vector<std::pair<const char*, std::pair<bool, int>>>& file, const Vector2D& size = Vector2D(App::camera.w * App::camera_Zoom_Out, App::camera.h* App::camera_Zoom_Out));
 	~VideoPlayer();
 
 	void init() override;
@@ -57,9 +57,9 @@ public:
 	void render() override;
 	
 	int createVideo(Video& video_);
-	void prepareVideos(std::vector<std::pair<const char*, bool>>& files);
+	void prepareVideos(std::vector<std::pair<const char*, std::pair<bool, int>>>& files);
 
-	void queueVideo(const char* file, bool loop);
+	void queueVideo(const char* file, bool loop, int frameRate);
 
 	void popVideo();
 
