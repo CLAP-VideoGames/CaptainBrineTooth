@@ -40,7 +40,8 @@ void MenuState::init() {
 
 	// Boton Iniciar
 	auto botonIniciar = manager_->addEntity();
-	botonIniciar->addComponent<Transform>(Vector2D(pos.getX() + 75, pos.getY() + alt / 1.5), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
+	//botonIniciar->addComponent<Transform>(Vector2D(pos.getX() + 75, pos.getY() + alt / 1.5), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
+	botonIniciar->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt / 1.7), Vector2D(0, 0), cam.w - (cam.w / 1.7) , cam.h - (cam.h / 1.15), 0.0f);
 	botonIniciar->addComponent<Button>(&sdlutils().images().at("jugar"), changeToGame, app, manager_->getSoundMngr());
 
 	// Ajuste de la posicion y altura auxiliar para el siguiente boton
@@ -49,7 +50,8 @@ void MenuState::init() {
 
 	// Opciones
 	auto opciones = manager_->addEntity();
-	opciones->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt / 1.25), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
+	//opciones->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt / 1.25), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
+	opciones->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt*1.25 ), Vector2D(0, 0), cam.w - (cam.w / 1.7), cam.h - (cam.h / 1.15), 0.0f);
 	opciones->addComponent<Button>(&sdlutils().images().at("opciones"), changeToOptions, app, manager_->getSoundMngr());
 
 	// Ajuste de la posicion y altura auxiliar para el siguiente boton
@@ -58,7 +60,8 @@ void MenuState::init() {
 
 	// Boton de salir
 	auto salir = manager_->addEntity();
-	salir->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt / 1.25), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
+	//salir->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt / 1.25), Vector2D(0, 0), cam.w - (cam.w / 2.5), cam.h - (cam.h / 1.3), 0.0f);
+	salir->addComponent<Transform>(Vector2D(pos.getX(), pos.getY() + alt * 1.25), Vector2D(0, 0), cam.w - (cam.w / 1.7), cam.h - (cam.h / 1.15), 0.0f);
 	salir->addComponent<Button>(&sdlutils().images().at("salir"), salirMenu, app, manager_->getSoundMngr());
 }
 
