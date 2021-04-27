@@ -17,6 +17,14 @@ extern "C" {
 }
 
 struct Video {
+
+	Video() {
+
+	}
+
+	~Video() {
+		int m = 0;
+	};
 	//Valores para leer los frames del video
 	AVFormatContext* pFormatCtx = nullptr;
 	AVCodecContext* pCodecCtx = nullptr;
@@ -32,8 +40,8 @@ struct Video {
 	const char* filename;
 	Uint32 timePerFrame;
 
-	void actTexture(SDL_Texture* text){
-		text = SDL_CreateTexture(sdlutils().renderer(), SDL_PIXELFORMAT_IYUV,
+	SDL_Texture* actTexture(){
+		return SDL_CreateTexture(sdlutils().renderer(), SDL_PIXELFORMAT_IYUV,
 			SDL_TEXTUREACCESS_STREAMING, pCodecCtx->width, pCodecCtx->height);
 	}
 };
@@ -45,19 +53,24 @@ public:
 	~VideoPlayer();
 
 	void init() override;
-	
 	void update() override;
 	void render() override;
-
+	
 	int createVideo(Video& video_);
+	void prepareVideos(std::vector<std::pair<const char*, bool>>& files);
 
 	void queueVideo(const char* file, bool loop);
 
-	void prepareVideos(std::vector<std::pair<const char*, bool>>& files);
+	void popVideo();
+
+	void forcePopVideo();
+
 
 	SDL_Rect& getRect();
 
 private:
+
+	void changeTexture();
 	//Cola de videos
 	std::vector<Video> queueVideos;	
 	// sdl stuff
@@ -69,7 +82,6 @@ private:
 	//Tiempo entre frame y frame del video
 	Uint32 lastUpdate;
 	//Controlares de decodificación del video
-	int done = 0;
 	int paused = 0;
 	int ret = 0;
 	bool available = false;

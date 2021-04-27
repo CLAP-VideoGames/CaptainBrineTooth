@@ -24,22 +24,20 @@ VideoPlayer::~VideoPlayer(){
 
 void VideoPlayer::init(){
 	// Create the Texture to be used to render the frame
-	queueVideos.back().actTexture(sdlTexture);
+	changeTexture();
 
 	// the texture occupies the whole window
 	sdlRect.x = 0;
 	sdlRect.y = 0;
-
-	sdlRect.w = window_w / 1;
-	sdlRect.h = window_h / 1;
+	sdlRect.w = window_w;
+	sdlRect.h = window_h;
 
 	// some auxiliary variables to track frame update, pause state, etc.
 	lastUpdate = SDL_GetTicks();
-	done = 0;
+	//done = 0;
 	paused = 0;
 	ret = 0;
 	available = false;
-
 }
 
 void VideoPlayer::update(){
@@ -49,12 +47,12 @@ void VideoPlayer::update(){
 				paused = !paused;
 			}
 			else if (event.key.keysym.sym == SDLK_ESCAPE) {
-				done = 1;
+				queueVideos.back().done = 1;
 				break;
 			}
 		}
 		else if (event.type == SDL_QUIT) {
-			done = 1;
+			queueVideos.back().done = 1;
 			break;
 		}
 	}
@@ -62,7 +60,7 @@ void VideoPlayer::update(){
 	// read (and decode) a frame if no one is available, it is separated
 		// from rendering so it can be done in a thread later
 	int n;
-	if (!done && !available) {
+	if (!queueVideos.empty() && !queueVideos.back().done && !available) {
 		// read a frame
 		do {
 			n = av_read_frame(queueVideos.back().pFormatCtx, queueVideos.back().packet);
@@ -77,14 +75,14 @@ void VideoPlayer::update(){
 					}
 				}
 				else{
-					done = 1;
+					queueVideos.back().done = 1;
 					break;
 				}
 			}
 		} while (queueVideos.back().packet->stream_index != queueVideos.back().videoIndex); // we just take video, we ignore audio
 
 		// exit if there are no more frame
-		if (done)
+		if (queueVideos.back().done)
 			return;
 
 		if (n == AVERROR_EOF)
@@ -96,7 +94,7 @@ void VideoPlayer::update(){
 			std::cout << "Error submitting a packet for decoding "
 				// << av_err2str(ret) 
 				<< std::endl;
-			done = 1;
+			queueVideos.back().done = 1;
 			return;
 		}
 
@@ -112,7 +110,7 @@ void VideoPlayer::update(){
 					//<< av_err2str(ret)
 					<< std::endl;
 			}
-			done = 1;
+			queueVideos.back().done = 1;
 			return;
 		}
 
@@ -124,6 +122,11 @@ void VideoPlayer::update(){
 
 		available = true;
 	}
+
+	if (queueVideos.back().done){
+		popVideo();
+	}
+
 }
 
 void VideoPlayer::render(){
@@ -133,7 +136,7 @@ void VideoPlayer::render(){
 	}
 
 	// show a frame if timePerFrame milliseconds have passed since last update
-	if (!done && !paused && available
+	if (!queueVideos.empty() && !queueVideos.back().done && !paused && available
 		&& SDL_GetTicks() - lastUpdate >= queueVideos.back().timePerFrame) {
 		lastUpdate = SDL_GetTicks();
 		available = false;
@@ -230,6 +233,24 @@ void VideoPlayer::queueVideo(const char *file, bool loop_){
 	queueVideos.push_back(video);
 }
 
+void VideoPlayer::popVideo(){
+	//No queremos que borre el ultimo video ya que borraria la textura y se dejaría de renderizar
+	if (!queueVideos.empty() && queueVideos.size() != 1) {
+		queueVideos.pop_back();
+		changeTexture();
+	}
+}
+
+/// <summary>
+/// Be sure that you wont use the sdltexture after the pop
+/// </summary>
+void VideoPlayer::forcePopVideo() {
+	if (!queueVideos.empty()) {
+		queueVideos.pop_back();
+		changeTexture();
+	}
+}
+
 void VideoPlayer::prepareVideos(std::vector<std::pair<const char*, bool>>& files){
 	int size = files.size();
 
@@ -239,4 +260,11 @@ void VideoPlayer::prepareVideos(std::vector<std::pair<const char*, bool>>& files
 
 SDL_Rect& VideoPlayer::getRect(){
 	return sdlRect;
+}
+
+void VideoPlayer::changeTexture(){
+	if(sdlTexture != nullptr)
+		SDL_DestroyTexture(sdlTexture);
+
+	sdlTexture = queueVideos.back().actTexture();
 }

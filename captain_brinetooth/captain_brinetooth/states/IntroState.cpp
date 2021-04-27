@@ -9,14 +9,21 @@ IntroState::~IntroState(){
 }
 
 void IntroState::init(){
-	//video = manager_->addEntity();
-	//VideoPlayer* compVideo = video->addComponent<VideoPlayer>("assets/videos/0001-0120.mp4", true);
-	//manager_->getSoundMngr()->setGeneralVolume(40);
-	//manager_->getSoundMngr()->playIntroMusic();
-	//SDL_Rect videoRect = compVideo->getRect();
+	video = manager_->addEntity();
 
-	//fade = manager_->addEntity();
-	//fadeComp = fade->addComponent<Fade>(Vector2D(videoRect.w, videoRect.h), Vector2D(videoRect.x, videoRect.y), 3000, 3000);
+	std::vector<std::pair<const char*, bool>> videos;
+	std::pair<const char*, bool> video__ = { "assets/videos/0001-0120.mp4", true };
+	videos.push_back(video__);
+	std::pair<const char*, bool> video_ = { "assets/videos/0001-0120.mp4", false };
+	videos.push_back(video_);
+
+	VideoPlayer* compVideo = video->addComponent<VideoPlayer>(videos);
+	manager_->getSoundMngr()->setGeneralVolume(40);
+	manager_->getSoundMngr()->playIntroMusic();
+	SDL_Rect videoRect = compVideo->getRect();
+
+	fade = manager_->addEntity();
+	fadeComp = fade->addComponent<Fade>(Vector2D(videoRect.w, videoRect.h), Vector2D(videoRect.x, videoRect.y), 3000, 3000);
 }
 
 void IntroState::update(){
