@@ -110,7 +110,8 @@ void VideoPlayer::update(){
 					//<< av_err2str(ret)
 					<< std::endl;
 			}
-			queueVideos.back().done = 1;
+
+			//queueVideos.back().done = 1;
 			return;
 		}
 

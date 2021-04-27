@@ -12,9 +12,9 @@ void IntroState::init(){
 	video = manager_->addEntity();
 
 	std::vector<std::pair<const char*, bool>> videos;
-	std::pair<const char*, bool> video__ = { "assets/videos/0001-0120.mp4", true };
+	std::pair<const char*, bool> video__ = { "assets/videos/IntroTitle_Loop.mp4", true };
 	videos.push_back(video__);
-	std::pair<const char*, bool> video_ = { "assets/videos/0001-0120.mp4", false };
+	std::pair<const char*, bool> video_ = { "assets/videos/IntroTitle.mp4", false };
 	videos.push_back(video_);
 
 	VideoPlayer* compVideo = video->addComponent<VideoPlayer>(videos);
