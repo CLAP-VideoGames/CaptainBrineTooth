@@ -111,7 +111,7 @@ void VideoPlayer::update(){
 					<< std::endl;
 			}
 
-			//queueVideos.back().done = 1;
+			queueVideos.back().done = 1;
 			return;
 		}
 
@@ -231,7 +231,7 @@ void VideoPlayer::queueVideo(const char *file, bool loop_, int frameRate){
 	Video video;
 	video.filename = file;
 	video.loop = loop_;
-	video.timePerFrame= frameRate;
+	video.timePerFrame = frameRate;
 	createVideo(video);
 	queueVideos.push_back(video);
 }

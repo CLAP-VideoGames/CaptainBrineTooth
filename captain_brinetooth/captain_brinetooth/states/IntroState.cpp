@@ -13,10 +13,10 @@ void IntroState::init(){
 
 	std::vector<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
-	std::pair<const char*, std::pair<bool, int>> video_ = { "assets/videos/intro.mp4", {true,1} };
+	std::pair<const char*, std::pair<bool, int>> video_ = { "assets/videos/intro_loop.mp4", {true,1} };
 	videos.push_back(video_);
-	std::pair<const char*, std::pair<bool, int>> video__ = { "assets/videos/water.mp4", {false, 38}};
-	videos.push_back(video__);
+	//std::pair<const char*, std::pair<bool, int>> video__ = { "assets/videos/water.mp4", {false, 38}};
+	//videos.push_back(video__);
 
 	VideoPlayer* compVideo = video->addComponent<VideoPlayer>(videos);
 	manager_->getSoundMngr()->setGeneralVolume(40);
