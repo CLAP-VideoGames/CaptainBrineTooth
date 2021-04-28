@@ -24,17 +24,26 @@ void OptionsState::init(){
 
 	manager_->getSoundMngr()->playPauseMusic();
 
-	std::pair<Vector2D, Vector2D> size = {Vector2D(500 * App::camera_Zoom_Out, 50*App::camera_Zoom_Out), Vector2D(100 * App::camera_Zoom_Out, 100 * App::camera_Zoom_Out)};
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.25 * App::camera_Zoom_Out));
+	//zoom 2		std::pair<Vector2D, Vector2D> size = {Vector2D(500 * App::camera_Zoom_Out, 50*App::camera_Zoom_Out), Vector2D(100 * App::camera_Zoom_Out, 100 * App::camera_Zoom_Out)};
+	std::pair<Vector2D, Vector2D> size = { Vector2D(900, 100), Vector2D(200, 200) };
+	
+
+	//zoom 2		Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.25 * App::camera_Zoom_Out));
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.2));
+
 	Texture* textures[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume());
 
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.55 * App::camera_Zoom_Out));
+	//zoom 2		pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.55 * App::camera_Zoom_Out));
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.5));
+
 	Texture* textures1[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 	createEffects(manager_, pos, size, textures1, manager_->getSoundMngr()->EffectsVolume());
 
 
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.85 * App::camera_Zoom_Out));
+	//zoom 2		pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.85 * App::camera_Zoom_Out));
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.75));
+
 	Texture* textures2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()));
 
@@ -43,8 +52,8 @@ void OptionsState::init(){
 
 Entity* OptionsState::botonVolver(){
 	// Boton de volver al menu
-	//auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.5), cam.h - (cam.h / 1.5)), 0.0f, Vector2D(0, 0));
-	auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
+	auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.5), cam.h - (cam.h / 1.5)), 0.0f, Vector2D(0, 0));
+	//auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
 	volver->addComponent<Button>(&sdlutils().images().at("volverMenu"), volverMenu, app, manager_->getSoundMngr());
 	
 	return volver;

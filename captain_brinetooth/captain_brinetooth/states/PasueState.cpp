@@ -49,29 +49,38 @@ void PauseState::pushOptionsPanel(App* app, SoundManager* snd) {
 
 void PauseState::createOptionPanel() {
 	// Volumen
-	std::pair<Vector2D, Vector2D> size = { Vector2D(500 * App::camera_Zoom_Out, 50 * App::camera_Zoom_Out), Vector2D(100 * App::camera_Zoom_Out, 100 * App::camera_Zoom_Out) };
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.25 * App::camera_Zoom_Out));
+	//zoom 2	std::pair<Vector2D, Vector2D> size = { Vector2D(500 * App::camera_Zoom_Out, 50 * App::camera_Zoom_Out), Vector2D(100 * App::camera_Zoom_Out, 100 * App::camera_Zoom_Out) };
+	//zoom 2	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.25 * App::camera_Zoom_Out));
+	
+	std::pair<Vector2D, Vector2D> size = { Vector2D(900, 100), Vector2D(200, 200) };
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.2));
+	
 	Texture* textures[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 
 	Entity* volume = OptionsState::createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume());
 	panel.push_back(volume);
 
 	// Efectos de sonido
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.55 * App::camera_Zoom_Out));
+	//zoom 2	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.55 * App::camera_Zoom_Out));
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.5));
+	
 	Texture* textures1[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 
 	Entity* effects = OptionsState::createEffects(manager_, pos, size, textures, manager_->getSoundMngr()->EffectsVolume());
 	panel.push_back(effects);
 
 	// Brillo
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.85 * App::camera_Zoom_Out));
+	//zoom 2 pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.85 * App::camera_Zoom_Out));
+	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.75));
+	
 	Texture* textures2[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 	Entity* brightness = OptionsState::createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()));
 	panel.push_back(brightness);
 
 	// Boton Volver
 	float multiplier = App::camera_Zoom_Out;
-	pos = Vector2D((cam.w * 0.135f), cam.h * 0.85);
+	//zoom 2	pos = Vector2D((cam.w * 0.135f), cam.h * 0.85);
+	pos = Vector2D((cam.w * 0.17f), cam.h * 0.85);
 	createButton(&sdlutils().images().at("volverMenu"), multiplier, pos, pushPausePanel);
 }
 
@@ -97,7 +106,9 @@ void PauseState::createBasePanel() {
 }
 
 void PauseState::createButton(Texture* t, float& multiplier, Vector2D& pos_, void(*callback)(App*, SoundManager*)) {
-	Vector2D size = Vector2D(t->width() * multiplier / 1.2, t->height() * multiplier / 1.2);
+	//zoom 2	Vector2D size = Vector2D(t->width() * multiplier / 1.2, t->height() * multiplier / 1.2);
+	Vector2D size = Vector2D(t->width() * multiplier * 2, t->height() * multiplier * 2);
+	
 	Vector2D pos = Vector2D(pos_.getX() - (size.getX() / (2 * getApp()->getCameraZooOut())), pos_.getY());
 	//Vector2D pos = Vector2D((cam.w * 0.5f) - (size.getX() / (2 * getApp()->getCameraZooOut())), cam.h * 0.5);
 	auto* button = createBasicEntity(pos, size, 0.0f, Vector2D(0, 0));
