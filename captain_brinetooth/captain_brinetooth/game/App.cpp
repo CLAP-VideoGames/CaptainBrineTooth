@@ -20,17 +20,14 @@ using namespace ColLayers;
 
 //Comentario para probar un commit
 App::App() {
-	
 	stateMachine = new StateMachine();
-	//Creariamos el menu y hariamos un setManager dandole el valor a 
-	//Hariamos un push del menu
 
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = make_shared<b2World>(gravity);
 
 
-	SoundManager* sndProvisional = new SoundManager(0, "Menu");
-	//----Inicio de Intro----
+	sndProvisional = new SoundManager(0, "Menu");
+	////----Inicio de Intro----
 	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
@@ -44,6 +41,7 @@ App::~App() {
 	//Setteamos de nuevo el brillo por defecto
 	SDL_SetWindowBrightness(sdlutils().window(), brightness);
 	delete stateMachine;
+	delete sndProvisional;
 }
 
 void App::init() {

@@ -2,6 +2,9 @@
 #include "GameState.h"
 
 StateMachine::~StateMachine() {
+	if (stateToPush != nullptr)
+		delete stateToPush;
+
 	while (!states.empty()) {
 		delete states.top();
 		states.pop();
