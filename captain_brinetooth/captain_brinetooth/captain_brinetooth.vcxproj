@@ -268,6 +268,7 @@
     <ClCompile Include="components\FringeHeadAtack.cpp" />
     <ClCompile Include="components\Gancho.cpp" />
     <ClCompile Include="components\Hammer.cpp" />
+    <ClCompile Include="components\Image.cpp" />
     <ClCompile Include="components\Inventory.cpp" />
     <ClCompile Include="components\JellyHatBehavior.cpp" />
     <ClCompile Include="components\LoseLife.cpp" />
@@ -282,6 +283,7 @@
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
+    <ClCompile Include="components\Transform.cpp" />
     <ClCompile Include="components\TriggerCollider.cpp" />
     <ClCompile Include="components\VideoPlayer.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />

@@ -8,8 +8,6 @@ void start() {
 
 	g.init();
 	g.start();
-
-	
 }
 
 int main(int, char**) {
