@@ -206,6 +206,18 @@ private:
 		m->getComponent<MapProcedural>()->travelNextZone();
 	}
 
+	static void pescar(b2Contact* contact) {
+		Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+
+		if (trigger == trigger->getMngr()->getHandler<Player>()) {
+			trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		}
+
+		
+
+		
+	}
+
 	void ReadDirectory(const string& p, int& roomsRead) {
 		std::string path = p;
 
@@ -420,8 +432,24 @@ private:
 			triggers.push_back(t);
 
 		}
+
+		tmx::Vector2f posAux = lvl->getPescaPoint();
+
+
+		Vector2D pescaPos(posAux.x, posAux.y);
+		//Comprobamos que hay un punto de pesca
+		if (pescaPos.getX() != 0) {
+			auto* t = entity_->getMngr()->addEntity();
+			
+			t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 200, 200, 0);
+
+			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+
+			t->setCollisionMethod(pescar);
+		}
 	}
 	//Devuelve si se han explorado todas las habitaciones de la zona
+
 
 protected:
 	int nRooms, nRoomNames = 10;

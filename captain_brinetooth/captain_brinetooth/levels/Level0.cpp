@@ -219,6 +219,22 @@ void Level0::load(const string& path) {
 				connectionsNames.push_back(c.getName());
 			}
 		}
+
+		if (object_layer->getName() == "Pesca") {
+			auto layer_objects = object_layer->getObjects();
+
+			for (auto& c : layer_objects) {
+
+				tmx::Vector2f size(c.getAABB().width, c.getAABB().height);
+				//Obtenemos el tamaño del Trigger
+				//Al parecer el Trasform si que funciona apartir del punto central
+				// Asi que hay que posicionar el objeto sumandole la mitad de sus ejes
+				tmx::Vector2f con = c.getPosition();
+				con.x += (size.x / 2);
+				con.y += (size.y / 2);
+				pescaPos = con;
+			}
+		}
 	}
 
 	spawnEnemies();
