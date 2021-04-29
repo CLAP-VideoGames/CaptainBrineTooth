@@ -43,6 +43,7 @@ App::App() {
 App::~App() {
 	//Setteamos de nuevo el brillo por defecto
 	SDL_SetWindowBrightness(sdlutils().window(), brightness);
+	delete stateMachine;
 }
 
 void App::init() {
@@ -96,6 +97,9 @@ void App::start() {
 		if (frameTime < FPS)
 			SDL_Delay(FPS - frameTime);
 	}
+
+	int n = 0;
+
 }
 //Metodos propios de game 
 

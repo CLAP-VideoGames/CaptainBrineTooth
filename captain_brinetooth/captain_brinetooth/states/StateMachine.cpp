@@ -2,7 +2,10 @@
 #include "GameState.h"
 
 StateMachine::~StateMachine() {
-	while (!states.empty()) popState();
+	while (!states.empty()) {
+		delete states.top();
+		states.pop();
+	}
 }
 GameState* StateMachine::currentState() {
 	return states.top();
