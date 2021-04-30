@@ -86,7 +86,7 @@ void MapProcedural::update()
 		for (Entity* ent : triggers) ent->setActive(false);
 		triggers.clear();
 
-		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), STATIC, GROUND, GROUND_MASK);
+		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
 		setFase(fase + 1);
 		setNumRooms(10);

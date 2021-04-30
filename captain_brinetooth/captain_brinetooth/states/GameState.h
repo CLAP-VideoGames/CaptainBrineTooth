@@ -78,6 +78,8 @@ public:
 	virtual void refresh();
 	virtual void init() {};
 
+	SDL_Rect ScaleSDL_Rect(Texture* text, const Vector2D& pos, float zoomFactor, float sizeFactor, bool centered = false);
+
 	Manager* getMngr() { return manager_; };
 	App* getApp() { return app; };
 

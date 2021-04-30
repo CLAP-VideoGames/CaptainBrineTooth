@@ -15,16 +15,9 @@ using CallBackOnClick = void(App* g, SoundManager* snd);
 
 class Button : public Component {
 public:
-	Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd) : tex(t)
-	{
-		cboq = c;
-		game = g;
-		soundController = snd;
-	}
+	Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd);
 
-	virtual ~Button() {
-	}
-
+	virtual ~Button();
 	void update() override;
 	void render() override;
 	bool handleEvent(); 
