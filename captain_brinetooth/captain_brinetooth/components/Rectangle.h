@@ -11,29 +11,15 @@
 
 class Rectangle: public Component {
 public:
-	Rectangle() :
-			Rectangle(build_sdlcolor(0xffffffff)) {
-	}
-	Rectangle(SDL_Color color) :
-			color_(color), //
-			tr_(nullptr) {
-	}
-	virtual ~Rectangle() {
-	}
+	Rectangle();
 
-	void init() override {
-		tr_ = entity_->getComponent<Transform>();
-		assert(tr_ != nullptr);
+	Rectangle(SDL_Color color);
 
-	}
-	void render() override {
+	virtual ~Rectangle();
 
-		SDL_SetRenderDrawColor(sdlutils().renderer(), COLOREXP(color_));
+	void init() override;
+	void render() override;
 
-		SDL_Rect rect = build_sdlrect(tr_->getPos(), tr_->getW(), tr_->getH());
-
-		SDL_RenderFillRect(sdlutils().renderer(), &rect);
-	}
 private:
 	SDL_Color color_ = SDL_Color();
 	Transform *tr_;
