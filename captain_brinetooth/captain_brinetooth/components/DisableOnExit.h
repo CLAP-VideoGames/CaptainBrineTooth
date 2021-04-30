@@ -6,15 +6,10 @@
 class DisableOnExit : public Component
 {
 public:
-	DisableOnExit() : timer_(sdlutils().currRealTime()) {}
-	virtual ~DisableOnExit() {}
+	DisableOnExit();
+	virtual ~DisableOnExit() {};
 
-	void update() override {
-		if (timer_ + 2000 < sdlutils().currRealTime()) {
-			entity_->setActive(false);
-			timer_ = sdlutils().currRealTime();
-		}
-	}
+	void update() override;
 
 private:
 	float timer_;

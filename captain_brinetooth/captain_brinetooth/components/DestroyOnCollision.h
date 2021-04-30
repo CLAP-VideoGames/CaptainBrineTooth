@@ -12,14 +12,6 @@ public:
 	DestroyOnCollision() {}
 	~DestroyOnCollision() {}
 
-	virtual void init() override {
-		entity_->setCollisionMethod(destroyOnCollision);
-	}
-	static void destroyOnCollision(b2Contact* contact) {
-		Entity* entity = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-		if (entity != nullptr) {
-			if (entity->hasComponent<DestroyOnCollision>())
-				entity->setActive(false);
-		}
-	}
+	virtual void init() override;
+	static void destroyOnCollision(b2Contact* contact);
 };

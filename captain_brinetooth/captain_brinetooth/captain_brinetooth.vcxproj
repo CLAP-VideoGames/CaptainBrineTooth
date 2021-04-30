@@ -251,6 +251,7 @@
     <ClCompile Include="components\AnimBlendGraph.cpp" />
     <ClCompile Include="components\Armas_HUD.cpp" />
     <ClCompile Include="components\Bellow.cpp" />
+    <ClCompile Include="components\Bounce.cpp" />
     <ClCompile Include="components\BoxCollider.cpp" />
     <ClCompile Include="components\Button.cpp" />
     <ClCompile Include="components\CameraFollow.cpp" />
@@ -258,6 +259,9 @@
     <ClCompile Include="components\Connections.cpp" />
     <ClCompile Include="components\ContactDamage.cpp" />
     <ClCompile Include="components\Cuerda.cpp" />
+    <ClCompile Include="components\DamageCollisionCallbacks.cpp" />
+    <ClCompile Include="components\DestroyOnCollision.cpp" />
+    <ClCompile Include="components\DisableOnExit.cpp" />
     <ClCompile Include="components\ElectricWhip.cpp" />
     <ClCompile Include="components\ElfSharkAttack.cpp" />
     <ClCompile Include="components\EnemyGenerator.cpp" />
@@ -267,12 +271,16 @@
     <ClCompile Include="components\Fade.cpp" />
     <ClCompile Include="components\FringeHeadAtack.cpp" />
     <ClCompile Include="components\Gancho.cpp" />
+    <ClCompile Include="components\GetAWeaponOnCollision.cpp" />
     <ClCompile Include="components\Hammer.cpp" />
     <ClCompile Include="components\Image.cpp" />
     <ClCompile Include="components\Inventory.cpp" />
     <ClCompile Include="components\JellyHatBehavior.cpp" />
+    <ClCompile Include="components\KeyBoardCtrl.cpp" />
     <ClCompile Include="components\LoseLife.cpp" />
     <ClCompile Include="components\MachineGun.cpp" />
+    <ClCompile Include="components\MapCollider.cpp" />
+    <ClCompile Include="components\MapProcedural.cpp" />
     <ClCompile Include="components\ParallaxScroll.cpp" />
     <ClCompile Include="components\PescaController.cpp" />
     <ClCompile Include="components\PlayerController.cpp" />
