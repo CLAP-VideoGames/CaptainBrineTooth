@@ -19,7 +19,9 @@ extern "C" {
 struct Video {
 
 	Video() {
-
+		filename = "";
+		timePerFrame = 0;
+		videoIndex = 0;
 	}
 
 	~Video() {

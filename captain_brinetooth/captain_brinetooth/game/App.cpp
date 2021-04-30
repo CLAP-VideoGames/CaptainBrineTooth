@@ -13,7 +13,7 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-SDL_Rect App::camera = {0 ,0,window.getX(),window.getY()};
+SDL_Rect App::camera = {0 ,0,(int)(window.getX()),(int)(window.getY())};
 const float App::camera_Zoom_Out = 2.0f;
 
 using namespace ColLayers;

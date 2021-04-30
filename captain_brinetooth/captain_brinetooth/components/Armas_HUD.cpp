@@ -10,7 +10,7 @@ void Armas_HUD::render()
 		Vector2D pos1 = Vector2D(40, (alt * zoom) - (alt * (zoom / 10)));
 
 
-		SDL_Rect dest1 = build_sdlrect(pos1, g->camera.w * 0.07 * zoom, g->camera.h * 0.07 * zoom);
+		SDL_Rect dest1 = build_sdlrect(pos1, g->camera.w * 0.07f * zoom, g->camera.h * 0.07f * zoom);
 		mainWeapon->render(dest1);
 
 		if (secondWeapon != nullptr) {
@@ -18,23 +18,23 @@ void Armas_HUD::render()
 
 
 
-			SDL_Rect dest2 = build_sdlrect(pos2, g->camera.w * 0.07 * zoom, g->camera.h * 0.07 * zoom);
+			SDL_Rect dest2 = build_sdlrect(pos2, g->camera.w * 0.07f * zoom, g->camera.h * 0.07f * zoom);
 			secondWeapon->render(dest2);
 
 			if (currentSelectedWeapon) {
 				pos2 = Vector2D(5 + (100 * zoom), (alt * zoom) - (alt * (zoom / 10)));
-				dest2 = build_sdlrect(pos2, g->camera.w * 0.10 * zoom, g->camera.h * 0.10 * zoom);
+				dest2 = build_sdlrect(pos2, g->camera.w * 0.10f * zoom, g->camera.h * 0.10f * zoom);
 				weaponFrame->render(dest2);
 			}
 			else {
 				pos1 = Vector2D(5, (alt * zoom) - (alt * (zoom / 10)));
-				dest1 = build_sdlrect(pos1, g->camera.w * 0.10 * zoom, g->camera.h * 0.10 * zoom);
+				dest1 = build_sdlrect(pos1, g->camera.w * 0.10f * zoom, g->camera.h * 0.10f * zoom);
 				weaponFrame->render(dest1);
 			}
 		}
 		else {
 			pos1 = Vector2D(5, (alt * zoom) - (alt * (zoom / 10)));
-			dest1 = build_sdlrect(pos1, g->camera.w * 0.10 * zoom, g->camera.h * 0.10 * zoom);
+			dest1 = build_sdlrect(pos1, (int)(g->camera.w * 0.10f * zoom), (int)(g->camera.h * 0.10f * zoom));
 			weaponFrame->render(dest1);
 		}
 	}
