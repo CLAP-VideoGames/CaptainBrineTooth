@@ -237,7 +237,7 @@ Room* MapProcedural::initializeNewRoom(const RoomNames& tag) {
 	r->level = tag.path;
 	lvl->load(r->level);
 
-	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), STATIC, GROUND, GROUND_MASK);
+	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
 	//Opcion 1
 	getConec(tag.name, r->cons);
