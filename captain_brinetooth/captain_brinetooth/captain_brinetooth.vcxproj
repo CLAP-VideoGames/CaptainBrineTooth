@@ -287,13 +287,17 @@
     <ClCompile Include="components\Player_Health.cpp" />
     <ClCompile Include="components\Crab.cpp" />
     <ClCompile Include="components\PompeyWormAttack.cpp" />
+    <ClCompile Include="components\RayCast.cpp" />
+    <ClCompile Include="components\Rectangle.cpp" />
     <ClCompile Include="components\Reward.cpp" />
+    <ClCompile Include="components\Rotate.cpp" />
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="components\Transform.cpp" />
     <ClCompile Include="components\TriggerCollider.cpp" />
     <ClCompile Include="components\VideoPlayer.cpp" />
+    <ClCompile Include="components\WeaponDamageDetection.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />
