@@ -6,6 +6,7 @@
 #include "../states/StateMachine.h"
 #include "../states/GameState.h"
 #include "../states/TestZoneState.h"
+#include "../states/PlayState.h"
 #include "../states/PasueState.h"
 #include "../states/MenuState.h"
 #include "../states/IntroState.h"
@@ -30,7 +31,9 @@ App::App() {
 	////----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//----Inicio Juego----
+	stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));

@@ -30,6 +30,7 @@ AnimBlendGraph::~AnimBlendGraph(){
 
 
 	currentAnim_ = nullptr;
+
 	defaultAnim_ = nullptr;
 	nextAnim_ = nullptr;
 	tr_ = nullptr;

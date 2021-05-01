@@ -2,6 +2,13 @@
 #include "PasueState.h"
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW (_NORMAL_BLOCK, __FILE__, __LINE__)
+#define  DEBUG_NEW
+#endif
+
 PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd): GameState(a, mundo, snd){
 	//Testing floor
 	//auto suelo = manager_->addEntity();
@@ -18,21 +25,21 @@ PlayState::~PlayState(){
 void PlayState::init() {
 
 	//---BG----
-	//auto* bg = createBasicEntity(Vector2D(sdlutils().width()*0.65, sdlutils().height() * 0.65f), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
-	////bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
-	//auto* bgParallax = bg->addComponent<ParallaxScroll>();
-	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
-	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
-	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
-	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4);
-	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);
+	auto* bg = createBasicEntity(Vector2D(sdlutils().width()*0.65, sdlutils().height() * 0.65f), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
+	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	auto* bgParallax = bg->addComponent<ParallaxScroll>();
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);
 
 	//SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
-	//createLevel0();
+	createLevel0();
 
 	Config playerConfig{};
-	//playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
-	playerConfig.pos = Vector2D(0, 0);
+	playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
+	//playerConfig.pos = Vector2D(0, 0);
 	playerConfig.vel = Vector2D(0, 0);
 	playerConfig.size = Vector2D(100.0f, 100.0f);
 	playerConfig.friction = 0.2f;
@@ -41,17 +48,17 @@ void PlayState::init() {
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
 
-	//Config swordGiverConfig{};
-	//swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
-	//swordGiverConfig.vel = Vector2D();
-	//swordGiverConfig.size = Vector2D(50, 50);
-	//swordGiverConfig.friction = 0.2f;
-	//swordGiverConfig.physicType = STATIC;
-	//swordGiverConfig.fixedRotation = true;
-	//swordGiverConfig.rotation = 0.0f;
-	//swordGiverConfig.spriteId = "espada";
-	//int swordNumber = 0;
-	//createWeaponGiver(swordGiverConfig, swordNumber);
+	Config swordGiverConfig{};
+	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
+	swordGiverConfig.vel = Vector2D();
+	swordGiverConfig.size = Vector2D(50, 50);
+	swordGiverConfig.friction = 0.2f;
+	swordGiverConfig.physicType = STATIC;
+	swordGiverConfig.fixedRotation = true;
+	swordGiverConfig.rotation = 0.0f;
+	swordGiverConfig.spriteId = "espada";
+	int swordNumber = 0;
+	createWeaponGiver(swordGiverConfig, swordNumber);
 
 	//Config hammerGiverConfig{};
 	//hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
@@ -252,11 +259,11 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 1, false);
 
 	anim_controller->setParamValue("hammer_att", 0);
-	//--------------------------------------------------------------------------------------------------------------
-#pragma endregion
-
-#pragma region Crab
-//---CRAB---------------------------------------------------------------------------------------------------------
+//	//--------------------------------------------------------------------------------------------------------------
+//#pragma endregion
+//
+//#pragma region Crab
+////---CRAB---------------------------------------------------------------------------------------------------------
 	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 35, 0, 1, 8, Vector2D(0.71, 0.5));
 	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
 	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
@@ -278,11 +285,11 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 1, true);
 
 	anim_controller->setParamValue("crab_att", 0);
-	//--------------------------------------------------------------------------------------------------------------
-#pragma endregion
-
-#pragma region MachineGun
-//---CRAB---------------------------------------------------------------------------------------------------------
+//	//--------------------------------------------------------------------------------------------------------------
+//#pragma endregion
+//
+//#pragma region MachineGun
+////---CRAB---------------------------------------------------------------------------------------------------------
 	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, Vector2D(0.65, 0.5));
 	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, Vector2D(0.65, 0.5));
 
@@ -301,6 +308,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 #pragma endregion
+
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
 		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
 	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.28), Vector2D(50.0f, 10.0f));
