@@ -18,7 +18,7 @@ public:
 	static void pushOptionsPanel(App* app, SoundManager* snd);
 	static void pushPausePanel(App* app, SoundManager* snd);
 	//Creacion de Paneles
-	void createButton(Texture* t, float& multiplier, Vector2D& pos,void(*callback)(App*, SoundManager*));
+	void createButton(Texture* t, float& sizeFactor, Vector2D& pos,void(*callback)(App*, SoundManager*));
 	void createOptionPanel();
 	void createBasePanel();
 

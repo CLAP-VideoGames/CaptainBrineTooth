@@ -93,26 +93,46 @@ void PauseState::pushPausePanel(App* app, SoundManager* snd) {
 }
 
 void PauseState::createBasePanel() {
+	SDL_Rect rectPos;
+	rectPos.x = 0;
+	rectPos.y = 0;
+	rectPos.w = cam.w;
+	rectPos.h = cam.h;
+
+	float sizeFactor = 0.9;
+	//Vector2D(cam.w / 1.9, cam.h * 0.07);
 	//BOTON BACKMENU---------
-	float multiplier = App::camera_Zoom_Out;
-	Vector2D pos = Vector2D((cam.w * 0.2f), cam.h * 0.5);
-	createButton(&sdlutils().images().at("menu"), multiplier, pos, backToMenu);
+
+	Vector2D pos = Vector2D((cam.w * 0.75f), cam.h * 0.5);
+
+	createButton(&sdlutils().images().at("menu"), sizeFactor, pos, backToMenu);
 	//BOTON OPTIONS---------
-	pos = Vector2D((cam.w * 0.8f), cam.h * 0.5);
-	createButton(&sdlutils().images().at("opciones"), multiplier, pos, pushOptionsPanel);
+	pos = Vector2D((cam.w * 0.25f), cam.h * 0.5);
+	createButton(&sdlutils().images().at("opciones"), sizeFactor, pos, pushOptionsPanel);
 	//BOTON RESUME---------
 	pos = Vector2D((cam.w * 0.5f), cam.h * 0.2);
-	createButton(&sdlutils().images().at("continuar"), multiplier, pos, backToGame);
+	createButton(&sdlutils().images().at("continuar"), sizeFactor, pos, backToGame);
 }
 
-void PauseState::createButton(Texture* t, float& multiplier, Vector2D& pos_, void(*callback)(App*, SoundManager*)) {
-	//zoom 2	Vector2D size = Vector2D(t->width() * multiplier / 1.2, t->height() * multiplier / 1.2);
-	Vector2D size = Vector2D(t->width() * multiplier * 2, t->height() * multiplier * 2);
+void PauseState::createButton(Texture* imageTexture, float& sizeFactor, Vector2D& pos, void(*callback)(App*, SoundManager*)) {
+	float factor_ = app->getCameraZooOut();
+	SDL_Rect rectPos;
+	rectPos.x = 0;
+	rectPos.y = 0;
+	rectPos.w = cam.w;
+	rectPos.h = cam.h;
 	
-	Vector2D pos = Vector2D(pos_.getX() - (size.getX() / (2 * getApp()->getCameraZooOut())), pos_.getY());
+	rectPos = GameState::ScaleSDL_Rect(imageTexture, pos, factor_, sizeFactor, true);
+
+
+	//zoom 2	Vector2D size = Vector2D(t->width() * multiplier / 1.2, t->height() * multiplier / 1.2);
+	//Vector2D size = Vector2D(t->width() * multiplier * 2, t->height() * multiplier * 2);
+	
+	//Vector2D pos = Vector2D(pos_.getX() - (size.getX() / (2 * getApp()->getCameraZooOut())), pos_.getY());
 	//Vector2D pos = Vector2D((cam.w * 0.5f) - (size.getX() / (2 * getApp()->getCameraZooOut())), cam.h * 0.5);
-	auto* button = createBasicEntity(pos, size, 0.0f, Vector2D(0, 0));
-	button->addComponent<Button>(t, callback, app, manager_->getSoundMngr());
+	
+	auto* button = createBasicEntity(Vector2D(rectPos.x, rectPos.y), Vector2D(rectPos.w, rectPos.h), 0.0f, Vector2D(0, 0));
+	button->addComponent<Button>(imageTexture, callback, app, manager_->getSoundMngr());
 
 	panel.push_back(button);
 }
