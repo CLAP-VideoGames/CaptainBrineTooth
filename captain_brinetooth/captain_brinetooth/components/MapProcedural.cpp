@@ -1,10 +1,11 @@
 ﻿#include "MapProcedural.h"
 
-MapProcedural::MapProcedural(int nR, int f)
+MapProcedural::MapProcedural(int nR, int f, App* s)
 {
 	nRooms = nR;
 	lvl = nullptr;
 	fase = f;
+	states = s;
 }
 
 MapProcedural::~MapProcedural()
@@ -201,6 +202,9 @@ void MapProcedural::pescar(b2Contact* contact) {
 	if (trigger == trigger->getMngr()->getHandler<Player>()) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
+
+	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getStates()->changeToPesca();
+
 }
 
 void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
@@ -393,18 +397,21 @@ void MapProcedural::createConnectionTriggers(int dir) {
 
 	}
 
-	tmx::Vector2f posAux = lvl->getPescaPoint();
+	vector<tmx::Vector2f> posAux = lvl->getPescaPoints();
 
 
-	Vector2D pescaPos(posAux.x, posAux.y);
 	//Comprobamos que hay un punto de pesca
-	if (pescaPos.getX() != 0) {
-		auto* t = entity_->getMngr()->addEntity();
+	if (posAux.size() != 0) {
+		for (int i = 0; i < posAux.size(); i++) {
+			Vector2D pescaPos(posAux[i].x, posAux[i].y);
 
-		t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 200, 200, 0);
+			auto* t = entity_->getMngr()->addEntity();
 
-		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+			t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 200, 200, 0);
 
-		t->setCollisionMethod(pescar);
+			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+
+			t->setCollisionMethod(pescar);
+		}
 	}
 }

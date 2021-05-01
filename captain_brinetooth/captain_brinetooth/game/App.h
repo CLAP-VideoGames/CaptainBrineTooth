@@ -40,6 +40,8 @@ public:
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
 	void exitGame() { exit = true; }
 
+	void changeToPesca();
+
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
 	StateMachine* getStateMachine() { return stateMachine; }
 	inline float getCameraZooOut() const { return camera_Zoom_Out; }

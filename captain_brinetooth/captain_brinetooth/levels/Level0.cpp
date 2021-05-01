@@ -232,7 +232,7 @@ void Level0::load(const string& path) {
 				tmx::Vector2f con = c.getPosition();
 				con.x += (size.x / 2);
 				con.y += (size.y / 2);
-				pescaPos = con;
+				pescaPos.push_back(con);
 			}
 		}
 	}

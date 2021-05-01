@@ -40,7 +40,7 @@ class MapProcedural : public Component {
 	const std::array<char, 4> cardinals = {'N','E','S','W'};
 public:
 
-	MapProcedural(int nR, int f);
+	MapProcedural(int nR, int f, App* s);
 
 	~MapProcedural();
 
@@ -60,6 +60,8 @@ public:
 	bool zoneCompleted();
 
 	int zone();
+
+	App* getStates() { return states; }
 
 private:
 
@@ -110,4 +112,6 @@ protected:
 	MapCollider* chainCollider;
 
 	vector<Entity*> triggers;
+
+	App* states;
 };

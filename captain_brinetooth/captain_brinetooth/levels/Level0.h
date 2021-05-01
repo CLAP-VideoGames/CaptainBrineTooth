@@ -72,7 +72,7 @@ public:
 
 	void traveled() { finalR = false; }
 
-	tmx::Vector2f getPescaPoint() { return pescaPos; }
+	vector<tmx::Vector2f> getPescaPoints() { return pescaPos; }
 	//Creo que es para que sea L value. Se lo tengo que preguntar a Samir
 	Vector2D& getMaxCoordenates() { return (maxCoordenate); }
 	
@@ -105,7 +105,7 @@ private:
 
 	vector<tmx::Vector2f> connectionSize;
 
-	tmx::Vector2f pescaPos;
+	vector<tmx::Vector2f> pescaPos;
 
 	tmx::Vector2f end;
 	bool finalR = false;

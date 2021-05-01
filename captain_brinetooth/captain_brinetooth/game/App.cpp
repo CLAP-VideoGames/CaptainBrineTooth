@@ -33,7 +33,7 @@ App::App() {
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
-	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
+	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 
 }
 
@@ -136,6 +136,11 @@ void App::createBackGround(const std::string& spriteId, const int & fils, const 
 	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
 	//anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 121, 24, -1, 0, 119);
 	anim_controller->addAnimation("waves", &sdlutils().images().at(spriteId), fils, cols, 1, 1, -1);
+}
+
+void App::changeToPesca()
+{
+	stateMachine->changeState(new PescaState(this, world_, sndProvisional));
 }
 
 /// <summary>
