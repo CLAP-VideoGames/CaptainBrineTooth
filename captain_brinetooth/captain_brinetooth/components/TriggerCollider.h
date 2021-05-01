@@ -21,7 +21,7 @@ public:
 	/// <param name="offsetTrigger"></param>
 	/// <param name="triggersize"></param>
 	TriggerCollider(std::string id, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, Vector2D offsetTrigger = Vector2D(0.0, 0.0), Vector2D triggersize = Vector2D(500.0f, 500.0f)) :
-		id_(id), colLayer_(collisionLayer), colMask_(collisionMask), offsetTrigger_(offsetTrigger), triggersize_(triggersize) {};
+		id_(id), colLayer_(collisionLayer), colMask_(collisionMask), offsetTrigger_(offsetTrigger), triggersize_(triggersize) , trigger(nullptr), entitytr_(nullptr){};
 	virtual ~TriggerCollider() {};
 	void init() override;
 	void update() override;

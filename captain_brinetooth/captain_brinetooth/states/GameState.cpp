@@ -30,3 +30,20 @@ void GameState::update() {
 void GameState::refresh() {
 	manager_->refresh();
 }
+
+SDL_Rect GameState::ScaleSDL_Rect(Texture* text, const Vector2D& pos, float zoomFactor, float sizeFactor, bool centered){
+	SDL_Rect rect;
+
+	rect.w = text->width() * zoomFactor * sizeFactor;
+	rect.h = text->height() * zoomFactor * sizeFactor;
+
+	if (centered){
+		rect.x = pos.getX() - (rect.w / 2);
+		rect.y = pos.getY();
+	}
+	else{
+		rect.x = pos.getX();
+		rect.y = pos.getY();
+	}
+	return rect;
+}

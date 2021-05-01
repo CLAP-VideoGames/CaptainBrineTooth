@@ -7,58 +7,30 @@
 
 class Transform: public Component {
 public:
-	Transform() :
-			pos_(), vel_(), width_(), height_(), rotation_() {
-	}
+	Transform();
 
 	Transform(Vector2D pos, Vector2D vel, float width, float height,
-			float rotation) :
-			pos_(pos), //
-			vel_(vel), //
-			width_(width), //
-			height_(height), //
-			rotation_(rotation)
-	{
-	}
+		float rotation);
 
-	virtual ~Transform() {
-	}
+	virtual ~Transform();
 
-	Vector2D& getPos() {
-		return pos_;
-	}
+	Vector2D& getPos();
 
-	Vector2D& getVel() {
-		return vel_;
-	}
+	Vector2D& getVel();
 
-	float getH() const {
-		return height_;
-	}
+	float getH() const;
 
-	void setH(float height) {
-		height_ = height;
-	}
+	void setH(float height);
 
-	float getW() const {
-		return width_;
-	}
+	float getW() const;
 
-	void setW(float width) {
-		width_ = width;
-	}
+	void setW(float width);
 
-	float getRot() const {
-		return rotation_;
-	}
+	float getRot() const;
 
-	void setRot(float rot) {
-		rotation_ = rot;
-	}
+	void setRot(float rot);
 
-	void update() override {
-		pos_ = pos_ + vel_;
-	}
+	void update() override;
 
 private:
 	Vector2D pos_;

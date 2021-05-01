@@ -18,6 +18,6 @@ public:
 	void createFlowerJellyHat(const Config& entityConfig);
 	void createFringeHead(const Config& entityConfig);
 protected:
-	SDL_Rect cam;
+	SDL_Rect cam {};
 };
 

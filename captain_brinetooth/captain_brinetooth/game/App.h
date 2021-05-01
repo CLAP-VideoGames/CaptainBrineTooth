@@ -58,4 +58,6 @@ private:
 	MapProcedural* map;
 
 	float brightness = 0;
+
+	SoundManager* sndProvisional;
 };

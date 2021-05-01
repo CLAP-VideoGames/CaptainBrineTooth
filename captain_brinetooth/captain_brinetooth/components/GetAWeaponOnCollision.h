@@ -10,37 +10,18 @@
 
 class GetAWeaponOnCollision : public Component {
 public:
-	GetAWeaponOnCollision(int weaponToGive) : weaponToGive_(weaponToGive) {
-	}
+	GetAWeaponOnCollision(int weaponToGive);
 	virtual ~GetAWeaponOnCollision() {
 	}
 
-	void init() override {
-		//Asigna el metodo introducido en la entidad para que se pueda utilizar mediante el metodo PlayCollisionMethod
-		entity_->setCollisionMethod(GetWeapon);
-	}
+	void init() override;
 
 	//Metodo de ejemplo que se llama al colisionar
 	//IMPORTANTE: debe de ser estatico
-	static void GetWeapon(b2Contact* contact) {
-		//Llamar a otro metodo
-		Entity* cosaA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-		Entity* cosaB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+	static void GetWeapon(b2Contact* contact);
 
-		if (cosaB != nullptr && cosaA != nullptr)
-			if (cosaA->getComponent<Inventory>() != nullptr) {
-				cosaB->getComponent<GetAWeaponOnCollision>()->GiveAWeapon(cosaA);
-				cosaB->setActive(false);
-			}
-			else if (cosaB->getComponent<Inventory>() != nullptr) {
-				cosaA->getComponent<GetAWeaponOnCollision>()->GiveAWeapon(cosaA);
-				cosaA->setActive(false);
-			}
-	}
 private:
-	void GiveAWeapon(Entity* player) {
-		player->getComponent<Inventory>()->addWeapon(weaponToGive_);
-	}
+	void GiveAWeapon(Entity* player);
 
 	int weaponToGive_;
 };

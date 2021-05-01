@@ -1,5 +1,13 @@
 #include "ParallaxScroll.h"
 
+ParallaxScroll::~ParallaxScroll(){
+
+	for (Layer* l : layers_)
+		delete l;
+
+	layers_.clear();
+}
+
 void ParallaxScroll::init()
 {
 	tr_ = entity_->getComponent<Transform>();
@@ -22,6 +30,7 @@ void ParallaxScroll::addLayer(Texture* text, float scrollRatio)
 {
 	if (scrollRatio > 1.0) scrollRatio = 1.0;
 	else if (scrollRatio < 0.0) scrollRatio = 0.0;
+	//Juan me cago en tus muertos <3 no limpias el vector al final
 	Layer* l = new Layer({ text,scrollRatio });
 	layers_.push_back(l);
 }

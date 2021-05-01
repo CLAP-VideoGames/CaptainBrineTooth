@@ -19,10 +19,10 @@ void Animation::init()
 	//Asignacion en memoria de las posiciones de los frames
 	framepos_.reserve(frames_);
 	for (int i = 0; i < frames_; i++) {
-		Vector2D* p = new Vector2D(framewidth_ * i % tex_->width() / framewidth_, framewidth_ * i / tex_->width());
+		Vector2D* p = new Vector2D((float)(framewidth_ * i % tex_->width() / framewidth_), (float)(framewidth_ * i / tex_->width()));
 		framepos_.emplace_back(p);
 	}
-	srcSize_ = Vector2D(framewidth_, frameheight_);
+	srcSize_ = Vector2D((float)framewidth_, (float)frameheight_);
 	destSize(tr_->getW(), tr_->getH());
 	actfr_ = startfr_;	//1er frame es el inicial
 	state_ = Playing;		//No empieza la animacion de base

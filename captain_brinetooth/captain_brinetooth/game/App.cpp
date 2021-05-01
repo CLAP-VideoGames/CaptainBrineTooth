@@ -13,27 +13,24 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-SDL_Rect App::camera = {0 ,0,window.getX(),window.getY()};
-const float App::camera_Zoom_Out = 2.0f;
+SDL_Rect App::camera = {0 ,0,(int)(window.getX()),(int)(window.getY())};
+const float App::camera_Zoom_Out = 1.0f;
 
 using namespace ColLayers;
 
 //Comentario para probar un commit
 App::App() {
-	
 	stateMachine = new StateMachine();
-	//Creariamos el menu y hariamos un setManager dandole el valor a 
-	//Hariamos un push del menu
 
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = make_shared<b2World>(gravity);
 
 
-	SoundManager* sndProvisional = new SoundManager(0, "Menu");
-	//----Inicio de Intro----
+	sndProvisional = new SoundManager(0, "Menu");
+	////----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
-	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
@@ -43,6 +40,8 @@ App::App() {
 App::~App() {
 	//Setteamos de nuevo el brillo por defecto
 	SDL_SetWindowBrightness(sdlutils().window(), brightness);
+	delete stateMachine;
+	delete sndProvisional;
 }
 
 void App::init() {
@@ -96,6 +95,9 @@ void App::start() {
 		if (frameTime < FPS)
 			SDL_Delay(FPS - frameTime);
 	}
+
+	int n = 0;
+
 }
 //Metodos propios de game 
 

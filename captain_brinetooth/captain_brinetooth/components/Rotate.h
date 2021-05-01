@@ -12,38 +12,19 @@
 
 class Rotate : public Component {
 public:
-	Rotate() :
-		tr_(nullptr), speed_(10.0) {
-	}
-	virtual ~Rotate() {
-	}
-
+	Rotate();
+	virtual ~Rotate();
 
 	inline void setSpeed(float speed) {
 		speed_ = speed;
 	}
 
-	void init() override {
-		tr_ = entity_->getComponent<Transform>();
-		assert(tr_ != nullptr);
+	void init() override;
 
-	}
-
-	void update() override {
-		if (ih().keyDownEvent()) {
-			auto& vel = tr_->getVel();
-			if (ih().isKeyDown(SDLK_LEFT)) {
-				tr_->setRot(tr_->getRot() + 5.0f);
-			}
-			else if (ih().isKeyDown(SDLK_RIGHT)) {
-				tr_->setRot(tr_->getRot() - 5.0f);
-			}
-		}
-	}
+	void update() override;
 
 private:
 	Transform* tr_;
 	float speed_;
-}
-;
+};
 

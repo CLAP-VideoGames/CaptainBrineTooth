@@ -85,7 +85,7 @@ public:
 	}
 
 	// move assignment - not really needed
-	inline Vector2D& operator=(const Vector2D &&v) {
+	 inline Vector2D& operator=(const Vector2D &&v) {
 		x_ = v.x_;
 		y_ = v.y_;
 		return *this;

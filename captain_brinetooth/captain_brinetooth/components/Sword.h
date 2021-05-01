@@ -18,7 +18,7 @@
 class Sword : public Component {
 public:
 	Sword() :
-		tr_(nullptr) {
+		tr_(nullptr), trigger(nullptr) {
 	}
 	virtual ~Sword() {
 		if (anim_->getParamIndex("sword_att") != -1)

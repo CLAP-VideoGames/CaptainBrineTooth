@@ -16,7 +16,7 @@ class ParallaxScroll : public Component
 {
 public:
 	ParallaxScroll(){};
-	virtual ~ParallaxScroll() {};
+	virtual ~ParallaxScroll();
 	void init()override;
 	void render()override;
 
