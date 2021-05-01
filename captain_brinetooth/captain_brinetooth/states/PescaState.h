@@ -11,7 +11,9 @@ public:
 	virtual void update();
 
 	void createPesca(const Config& entityConfig);
+	void createRandomReward(const Config& entityConfig);
 protected:
 	SDL_Rect cam;
+	int entitiesPerLine;
 };
 

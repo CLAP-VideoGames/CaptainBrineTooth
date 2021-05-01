@@ -14,7 +14,7 @@ void PescaState::init() {
 	auto* bg = createBasicEntity(Vector2D(0, 1440), Vector2D(2560 * 2, 1440 * 2), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
-
+	entitiesPerLine = 7;
 	Config gancho{};
 	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
 	gancho.vel = Vector2D(0, 0);
@@ -30,7 +30,7 @@ void PescaState::init() {
 
 }
 void PescaState::createPesca(const Config& entityConfig) {
-	
+
 
 	auto* floor = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() * 2), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* floor_anim_controller = floor->addComponent<AnimBlendGraph>();
@@ -43,7 +43,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 	floor2->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	floor2->addComponent<PescaController>();
 	floor2->getMngr()->setHandler<Rod>(floor2); //Para deteccion de colision con el gancho 
-	
+
 
 
 
@@ -61,23 +61,14 @@ void PescaState::createPesca(const Config& entityConfig) {
 	gancho->addComponent<Gancho>();
 	gancho->addComponent<PescaController>();
 
-	auto* reward0 = createBasicEntity(Vector2D(sdlutils().width() / 2, 800), Vector2D(90,90), 0.0f, Vector2D(0,0));
-	AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
-	reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
-	reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	reward0->addComponent<Reward>(26);
 
-	auto* reward1 = createBasicEntity(Vector2D(sdlutils().width() / 2, 1000), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* reward1_anim_controller = reward1->addComponent<AnimBlendGraph>();
-	reward1_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
-	reward1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	reward1->addComponent<Reward>(1);
 
-	auto* reward2 = createBasicEntity(Vector2D(sdlutils().width() / 2, 1200), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* reward2_anim_controller = reward2->addComponent<AnimBlendGraph>();
-	reward2_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
-	reward2->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	reward2->addComponent<Reward>(23);
+	//Rewards 
+	
+
+	createRandomReward(entityConfig);
+
+
 
 
 	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15, -30), Vector2D(10.0f, 16.0f), 0.0f, Vector2D(0, 0));
@@ -86,8 +77,88 @@ void PescaState::createPesca(const Config& entityConfig) {
 	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	cuerda->addComponent<Cuerda>(gancho);
 	cuerda->addComponent<PescaController>();
-	
+
 
 
 }
+void PescaState::createRandomReward(const Config& entityConfig)
+{
+	//0 espada 1 martillo 2 sierra ---> se iran añadiendo segun vaya habiendo mas armas
+	int random; 
+	Vector2D pos1 = Vector2D(sdlutils().width() / 2, 800);
+	Vector2D pos2 = Vector2D(sdlutils().width() / 2, 1000);
+	Vector2D pos3 = Vector2D(sdlutils().width() / 2, 1200);
+	for (int i = 0; i < entitiesPerLine; i++)
+	{
+		random = sdlutils().rand().teCuoto(0, 3);
+	
+			auto* reward0 = createBasicEntity(Vector2D(pos1.getX()+(200*i), pos1.getY()), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
+			AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
+			if (random == 0)
+			{
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
+				
+			}
+			else if (random == 1)
+			{
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
+				
+			}
+			else
+			{
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+			}
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+			reward0->addComponent<Reward>(random);
+			
 
+	}
+	for (int i = 0; i < entitiesPerLine; i++)
+	{
+		random = sdlutils().rand().teCuoto(0, 3);
+
+		auto* reward0 = createBasicEntity(Vector2D(pos2.getX() + (200 * i), pos2.getY()), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
+		AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
+		if (random == 0)
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
+
+		}
+		else if (random == 1)
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
+
+		}
+		else
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+		}
+		reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+		reward0->addComponent<Reward>(random);
+
+	}
+	for (int i = 0; i < entitiesPerLine; i++)
+	{
+		random = sdlutils().rand().teCuoto(0, 3);
+
+		auto* reward0 = createBasicEntity(Vector2D(pos3.getX() + (200 * i), pos3.getY()), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
+		AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
+		if (random == 0)
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
+
+		}
+		else if (random == 1)
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
+
+		}
+		else
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+		}
+		reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+		reward0->addComponent<Reward>(random);
+
+	}
+}
