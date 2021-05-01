@@ -12,6 +12,8 @@ const int NUM_TILEMAPS = 40;
 using namespace ColLayers;
 
 struct Room {
+	Room() {};
+
 	string getName() {
 		int puntoCorte = level.find_last_of("\\");
 		int length = level.length(); //Final del string

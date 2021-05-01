@@ -8,8 +8,19 @@ MapProcedural::MapProcedural(int nR, int f, App* s)
 	states = s;
 }
 
-MapProcedural::~MapProcedural()
-{
+MapProcedural::~MapProcedural(){
+
+	if (!triggers.empty()){
+		for (Entity* ent : triggers) ent->setActive(false);
+		triggers.clear();
+	}
+
+	//No se puede borrar memoria debido a la estructura de Room. Es recursiva la destruccion
+	/*for (int i = 0; i < 4; ++i) {
+		delete actualRoom->conections[0];
+	}*/
+
+	//Esto deja 4 Memory Leaks
 	delete actualRoom;
 }
 
@@ -68,8 +79,7 @@ Vector2D MapProcedural::getPlayerPos()
 	return spawn;
 }
 
-void MapProcedural::update()
-{
+void MapProcedural::update(){
 
 	//Cambia de habitación
 	if (gonTotravel) {
@@ -303,13 +313,6 @@ Room* MapProcedural::initializeRoom(Room* partida, int dir) {
 	roomNames[tile].used = true;
 	r->level = roomNames[tile].path;
 
-	/*if (partida->conections[0] != nullptr) r->level = "assets/maps/" + tile;
-
-	if (partida->conections[1] != nullptr) r->level = "assets/maps/" + tile;
-
-	if (partida->conections[2] != nullptr) r->level = "assets/maps" + tile;
-
-	if (partida->conections[3] != nullptr) r->level = "assets/maps/" + tile;*/
 	return r;
 }
 

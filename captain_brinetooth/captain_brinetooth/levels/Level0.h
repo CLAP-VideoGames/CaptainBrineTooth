@@ -41,6 +41,7 @@ struct object {
 class Level0 : public Component{
 public:
 	Level0(const string& name, std::shared_ptr<b2World> b2World);
+	virtual ~Level0();
 	virtual void init();
 	void render() override;
 	Vector2D getFilsCols() { return Vector2D(fils_, cols_); }
@@ -79,6 +80,7 @@ public:
 private:
 	void spawnEnemies();
 
+	void clearLevelVectors();
 
 	string name_;
 	int fils_, cols_,		// filas y columnas de 
@@ -100,17 +102,13 @@ private:
 
 	//Conexiones
 	vector<tmx::Vector2f> connectionPos;
-
 	vector<std::string> connectionsNames;
-
 	vector<tmx::Vector2f> connectionSize;
-
 	vector<tmx::Vector2f> pescaPos;
 
 	tmx::Vector2f end;
 	bool finalR = false;
 
 	Vector2D maxCoordenate = Vector2D(0,0);
-
 	EnemyGenerator* generator;
 };

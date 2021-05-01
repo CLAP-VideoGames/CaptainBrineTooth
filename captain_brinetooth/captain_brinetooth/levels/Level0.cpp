@@ -39,6 +39,10 @@ Level0::Level0(const string& name, std::shared_ptr<b2World> b2World)
 	//load(name);
 }
 
+Level0::~Level0(){
+	clearLevelVectors();
+}
+
 void Level0::init()
 {
 	generator = entity_->getComponent<EnemyGenerator>();
@@ -47,17 +51,8 @@ void Level0::init()
 //Donde carguemos los enemigos hay que extraerlo en un método que nos devuelva la lista
 //A las salas hay que meterles un atributo que sean las salidas, preferiblemente un bool
 void Level0::load(const string& path) {
-	if (tiles_.size() > 0) {
-		for (tile* tile__ : tiles_) delete tile__;
-		tiles_.clear();
-	}
-	//Limpiamos todos los vectores.
-	if (tilesets_.size() > 0) tilesets_.clear();
-	if (enemiePos.size() > 0)enemiePos.clear();
-	if (points.size() > 0)points.clear();
-	if (connectionPos.size() > 0)connectionPos.clear();
-	if (connectionSize.size() > 0)connectionSize.clear();
-	if (connectionsNames.size() > 0)connectionsNames.clear();
+
+	clearLevelVectors();
 	//Reseteamos los limites de la pantalla
 	maxCoordenate.set(0, 0);
 
@@ -249,8 +244,7 @@ void Level0::setPlayerPos()
 	p->getComponent<Transform>()->getPos().set(plaPos);
 }
 
-void Level0::clearTileset()
-{
+void Level0::clearTileset(){
 	tilesets_.clear();
 	tiles_.clear();
 }
@@ -262,6 +256,20 @@ void Level0::spawnEnemies()
 
 		generator->generateRandomEnemy(realPos);
 	}
+}
+
+void Level0::clearLevelVectors(){
+	if (!tiles_.empty()) {
+		for (tile* tile__ : tiles_) delete tile__;
+		tiles_.clear();
+	}
+	//Limpiamos todos los vectores.
+	if (!tilesets_.empty()) tilesets_.clear();
+	if (!enemiePos.empty())enemiePos.clear();
+	if (!points.empty())points.clear();
+	if (!connectionPos.empty())connectionPos.clear();
+	if (!connectionSize.empty())connectionSize.clear();
+	if (!connectionsNames.empty())connectionsNames.clear();
 }
 
 void Level0::render() {
