@@ -59,11 +59,14 @@ void AnimBlendGraph::render(){
 	}
 }
 
-void AnimBlendGraph::updateAnim()
-{
+void AnimBlendGraph::updateAnim(){
+
 	if (currentAnim_ == nullptr) {
-		if (animStates_.size() == 0 && entityAnims_.size() > 0)	//Si solo hay vertices en el grafo, coge el primer vertice
-			currentAnim_ = new AnimState({ entityAnims_[0] });
+		if (animStates_.size() == 0 && entityAnims_.size() > 0) { //Si solo hay vertices en el grafo, coge el primer vertice
+			animStates_.push_back(new AnimState({ entityAnims_[0] }));
+			currentAnim_ = animStates_.back();
+		}
+
 		else
 			currentAnim_ = defaultAnim_;
 		scaleAnimation();
