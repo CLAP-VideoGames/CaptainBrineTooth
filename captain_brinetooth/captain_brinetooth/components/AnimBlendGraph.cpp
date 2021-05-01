@@ -48,7 +48,7 @@ void AnimBlendGraph::init()
 }
 
 void AnimBlendGraph::update(){
-	//updateAnim();
+	updateAnim();
 }
 
 void AnimBlendGraph::render(){
