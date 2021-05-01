@@ -1,5 +1,13 @@
 #include "Animation.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include<iostream>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif
+
 Animation::Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, Vector2D anchor):
 	id_(id), tex_(tex), frames_(frames), framerate_(framerate), repeat_(repeat), startfr_(0), endfr_(frames - 1), anchorPoint_(anchor) {	//startfr_ y endfr_ se inicializan por defecto en esta constructora
 	framewidth_ = tex->width() / cols;
@@ -12,6 +20,10 @@ Animation::Animation(std::string id, Texture* tex, int rows, int cols, int frame
 	frameheight_ = tex->height() / rows;
 }
 
+Animation::~Animation(){
+
+}
+
 void Animation::init()
 {
 	tr_ = entity_->getComponent<Transform>();
@@ -21,6 +33,9 @@ void Animation::init()
 	for (int i = 0; i < frames_; i++) {
 		Vector2D* p = new Vector2D((float)(framewidth_ * i % tex_->width() / framewidth_), (float)(framewidth_ * i / tex_->width()));
 		framepos_.emplace_back(p);
+
+		//Al ser una variable auxiliar, no hace falta mantenerla
+		delete p;
 	}
 	srcSize_ = Vector2D((float)framewidth_, (float)frameheight_);
 	destSize(tr_->getW(), tr_->getH());

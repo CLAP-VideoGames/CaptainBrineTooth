@@ -18,20 +18,21 @@ PlayState::~PlayState(){
 void PlayState::init() {
 
 	//---BG----
-	auto* bg = createBasicEntity(Vector2D(sdlutils().width()*0.65, sdlutils().height() * 0.65f), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
-	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
-	auto* bgParallax = bg->addComponent<ParallaxScroll>();
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);
+	//auto* bg = createBasicEntity(Vector2D(sdlutils().width()*0.65, sdlutils().height() * 0.65f), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
+	////bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	//auto* bgParallax = bg->addComponent<ParallaxScroll>();
+	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
+	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
+	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
+	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4);
+	//bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);
 
 	//SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
-	createLevel0();
+	//createLevel0();
 
 	Config playerConfig{};
-	playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
+	//playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
+	playerConfig.pos = Vector2D(0, 0);
 	playerConfig.vel = Vector2D(0, 0);
 	playerConfig.size = Vector2D(100.0f, 100.0f);
 	playerConfig.friction = 0.2f;
@@ -40,77 +41,77 @@ void PlayState::init() {
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
 
-	Config swordGiverConfig{};
-	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
-	swordGiverConfig.vel = Vector2D();
-	swordGiverConfig.size = Vector2D(50, 50);
-	swordGiverConfig.friction = 0.2f;
-	swordGiverConfig.physicType = STATIC;
-	swordGiverConfig.fixedRotation = true;
-	swordGiverConfig.rotation = 0.0f;
-	swordGiverConfig.spriteId = "espada";
-	int swordNumber = 0;
-	createWeaponGiver(swordGiverConfig, swordNumber);
+	//Config swordGiverConfig{};
+	//swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
+	//swordGiverConfig.vel = Vector2D();
+	//swordGiverConfig.size = Vector2D(50, 50);
+	//swordGiverConfig.friction = 0.2f;
+	//swordGiverConfig.physicType = STATIC;
+	//swordGiverConfig.fixedRotation = true;
+	//swordGiverConfig.rotation = 0.0f;
+	//swordGiverConfig.spriteId = "espada";
+	//int swordNumber = 0;
+	//createWeaponGiver(swordGiverConfig, swordNumber);
 
-	Config hammerGiverConfig{};
-	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
-	hammerGiverConfig.vel = Vector2D();
-	hammerGiverConfig.size = Vector2D(50, 50);
-	hammerGiverConfig.friction = 0.2f;
-	hammerGiverConfig.physicType = STATIC;
-	hammerGiverConfig.fixedRotation = true;
-	hammerGiverConfig.rotation = 0.0f;
-	hammerGiverConfig.spriteId = "martillo";
-	int hammerNumber = 1;
-	createWeaponGiver(hammerGiverConfig, hammerNumber);
+	//Config hammerGiverConfig{};
+	//hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
+	//hammerGiverConfig.vel = Vector2D();
+	//hammerGiverConfig.size = Vector2D(50, 50);
+	//hammerGiverConfig.friction = 0.2f;
+	//hammerGiverConfig.physicType = STATIC;
+	//hammerGiverConfig.fixedRotation = true;
+	//hammerGiverConfig.rotation = 0.0f;
+	//hammerGiverConfig.spriteId = "martillo";
+	//int hammerNumber = 1;
+	//createWeaponGiver(hammerGiverConfig, hammerNumber);
 
-	Config chainsawGiverConfig{};
-	chainsawGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() - 100);
-	chainsawGiverConfig.vel = Vector2D();
-	chainsawGiverConfig.size = Vector2D(50, 50);
-	chainsawGiverConfig.friction = 0.2f;
-	chainsawGiverConfig.physicType = STATIC;
-	chainsawGiverConfig.fixedRotation = true;
-	chainsawGiverConfig.rotation = 0.0f;
-	chainsawGiverConfig.spriteId = "sierra";
-	int chainsawNumber = 2;
-	createWeaponGiver(chainsawGiverConfig, chainsawNumber);
+	//Config chainsawGiverConfig{};
+	//chainsawGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() - 100);
+	//chainsawGiverConfig.vel = Vector2D();
+	//chainsawGiverConfig.size = Vector2D(50, 50);
+	//chainsawGiverConfig.friction = 0.2f;
+	//chainsawGiverConfig.physicType = STATIC;
+	//chainsawGiverConfig.fixedRotation = true;
+	//chainsawGiverConfig.rotation = 0.0f;
+	//chainsawGiverConfig.spriteId = "sierra";
+	//int chainsawNumber = 2;
+	//createWeaponGiver(chainsawGiverConfig, chainsawNumber);
 
-	Config crabGiverConfig{};
-	crabGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height() - 100);
-	crabGiverConfig.vel = Vector2D();
-	crabGiverConfig.size = Vector2D(50, 50);
-	crabGiverConfig.friction = 0.2f;
-	crabGiverConfig.physicType = STATIC;
-	crabGiverConfig.fixedRotation = true;
-	crabGiverConfig.rotation = 0.0f;
-	crabGiverConfig.spriteId = "crab";
-	int crabNumber = 3;
-	createWeaponGiver(crabGiverConfig, crabNumber);
+	//Config crabGiverConfig{};
+	//crabGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height() - 100);
+	//crabGiverConfig.vel = Vector2D();
+	//crabGiverConfig.size = Vector2D(50, 50);
+	//crabGiverConfig.friction = 0.2f;
+	//crabGiverConfig.physicType = STATIC;
+	//crabGiverConfig.fixedRotation = true;
+	//crabGiverConfig.rotation = 0.0f;
+	//crabGiverConfig.spriteId = "crab";
+	//int crabNumber = 3;
+	//createWeaponGiver(crabGiverConfig, crabNumber);
 
-	Config machineGunGiverConfig{};
-	machineGunGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height());
-	machineGunGiverConfig.vel = Vector2D();
-	machineGunGiverConfig.size = Vector2D(50, 50);
-	machineGunGiverConfig.friction = 0.2f;
-	machineGunGiverConfig.physicType = STATIC;
-	machineGunGiverConfig.fixedRotation = true;
-	machineGunGiverConfig.rotation = 0.0f;
-	machineGunGiverConfig.spriteId = "machine_gun";
-	int machineGunNumber = 4;
-	createWeaponGiver(machineGunGiverConfig, machineGunNumber);
+	//Config machineGunGiverConfig{};
+	//machineGunGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height());
+	//machineGunGiverConfig.vel = Vector2D();
+	//machineGunGiverConfig.size = Vector2D(50, 50);
+	//machineGunGiverConfig.friction = 0.2f;
+	//machineGunGiverConfig.physicType = STATIC;
+	//machineGunGiverConfig.fixedRotation = true;
+	//machineGunGiverConfig.rotation = 0.0f;
+	//machineGunGiverConfig.spriteId = "machine_gun";
+	//int machineGunNumber = 4;
+	//createWeaponGiver(machineGunGiverConfig, machineGunNumber);
 
-	Config elfShark{};
-	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
-	elfShark.vel = Vector2D(0, 0);
-	elfShark.size = Vector2D(180.0f, 180.0f);
-	elfShark.friction = 0.2f;
-	elfShark.physicType = KINEMATIC;
-	elfShark.fixedRotation = true;
-	elfShark.rotation = 0.0f;
-	elfShark.col = ENEMY;
-	elfShark.colMask = ENEMY_MASK;
-	createElfShark(elfShark);
+	//Config elfShark{};
+	//elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
+	//elfShark.vel = Vector2D(0, 0);
+	//elfShark.size = Vector2D(180.0f, 180.0f);
+	//elfShark.friction = 0.2f;
+	//elfShark.physicType = KINEMATIC;
+	//elfShark.fixedRotation = true;
+	//elfShark.rotation = 0.0f;
+	//elfShark.col = ENEMY;
+	//elfShark.colMask = ENEMY_MASK;
+	//createElfShark(elfShark);
 
 	//Config flowerJellyHat{};
 	//flowerJellyHat.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
@@ -310,7 +311,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	/*if(playerConfig.physicType != KINEMATIC)*/ player->addComponent<PlayerController>();
 	//else player->addComponent<KeyBoardCtrl>(map);
 
-	player->addComponent<CameraFollow>(player->getComponent<Transform>(), &(manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()), Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), false, false); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	//Por testing basura
+	//player->addComponent<CameraFollow>(player->getComponent<Transform>(), &(manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()), Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), false, false); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();

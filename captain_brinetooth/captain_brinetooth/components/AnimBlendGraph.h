@@ -43,9 +43,10 @@ public:
 	/// Grafo de animaciones vacio
 	/// </summary>
 	AnimBlendGraph(){};
-	virtual	~AnimBlendGraph() {};
+	virtual	~AnimBlendGraph();
 
 	void init() override;
+	void update() override;
 	void render() override;
 	void updateAnim();
 
@@ -62,6 +63,7 @@ public:
 	/// Conexion entre 2 animaciones ya definidas segun el parametro que se le de
 	/// </summary>
 	void addTransition(std::string animsrc_, std::string animdest_, std::string nameP, int valueP, bool onComplete);
+	
 	void setParamValue(std::string paramName, int value);
 
 	void checkAnimState(Parameter* p);

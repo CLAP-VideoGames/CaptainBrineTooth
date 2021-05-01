@@ -28,7 +28,7 @@ public:
 	/// </summary>
 	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr, Vector2D anchor = Vector2D(0.5, 0.5));
 
-	virtual ~Animation() {}
+	virtual ~Animation();
 
 	void init() override;
 	void render() override;

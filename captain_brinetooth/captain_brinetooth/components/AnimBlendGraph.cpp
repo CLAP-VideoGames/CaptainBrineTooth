@@ -1,5 +1,40 @@
 ﻿#include "AnimBlendGraph.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include<iostream>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif
+
+AnimBlendGraph::~AnimBlendGraph(){
+	//Limpiamos todas las animaciones
+	for (Animation* anim : entityAnims_){
+		delete anim;
+	}
+
+	for (AnimState* animS : animStates_){
+		delete animS;
+	}
+
+	
+	for (Parameter* param : params_){
+		delete param;
+	}
+	
+
+	entityAnims_.clear();
+	animStates_.clear();
+	params_.clear();
+
+
+	currentAnim_ = nullptr;
+	defaultAnim_ = nullptr;
+	nextAnim_ = nullptr;
+	tr_ = nullptr;
+}
+
 void AnimBlendGraph::init()
 {
 	tr_ = entity_->getComponent<Transform>();
@@ -12,9 +47,11 @@ void AnimBlendGraph::init()
 	keepProportion_ = false;
 }
 
-void AnimBlendGraph::render()
-{
-	updateAnim();
+void AnimBlendGraph::update(){
+	//updateAnim();
+}
+
+void AnimBlendGraph::render(){
 	if (currentAnim_ != nullptr) {
 		currentAnim_->anim_->flipX(flip_horizontal_);
 		currentAnim_->anim_->render();
@@ -100,6 +137,10 @@ void AnimBlendGraph::addTransition(std::string animsrc_, std::string animdest_, 
 		if (animStates_.size() == 1)
 			defaultAnim_ = animStates_[0];
 	}
+
+	//Param al parecer es solo una variable auxiliar, ya que solo la crea para verificar si ya existe ese parametro y ademas
+	//Cuando lo pasa a un push back, pasa el dato y no la referencia. Asi que se puede borrar.
+	delete param;
 }
 
 void AnimBlendGraph::setParamValue(std::string paramName, int value)
