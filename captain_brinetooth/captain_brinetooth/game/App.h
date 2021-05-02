@@ -17,7 +17,7 @@
 
 class GameState;
 class StateMachine;
-const Vector2D window(1100, 900);
+const Vector2D window(1280, 720);
 // when you are not using the methods of a class, just
 // say that it exists, that saves time when parsing files
 class Manager;
