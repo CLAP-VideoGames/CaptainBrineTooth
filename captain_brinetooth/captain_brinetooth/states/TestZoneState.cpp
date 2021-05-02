@@ -92,7 +92,7 @@ void TestZoneState::init() {
 //	#pragma endregion
 //	#pragma region FringeHead
 //
-	Config fringeHead{};
+	/*Config fringeHead{};
 	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
 	fringeHead.vel = Vector2D(0, 0);
 	fringeHead.size = Vector2D(70.0f,70.0f);
@@ -103,7 +103,7 @@ void TestZoneState::init() {
 	fringeHead.col = ENEMY;
 	fringeHead.colMask = ENEMY_MASK;
 	createFringeHead(fringeHead);
-	#pragma endregion
+	#pragma endregion*/
 //#pragma endregion
 //
 //#pragma region Weapons
@@ -330,8 +330,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO
-	Vector2D mapLimit = Vector2D(2000, 2000);
-	player->addComponent<CameraFollow>(player->getComponent<Transform>(), &mapLimit, Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<CameraFollow>(Vector2D(250.0f, -300.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 
 	player->addComponent<Inventory>();
 

@@ -237,7 +237,7 @@ void VideoPlayer::queueVideo(const char *file, bool loop_, int frameRate){
 }
 
 void VideoPlayer::popVideo(){
-	//No queremos que borre el ultimo video ya que borraria la textura y se dejaría de renderizar
+	//No queremos que borre el ultimo video ya que borraria la textura y se dejarú} de renderizar
 	if (!queueVideos.empty() && queueVideos.size() != 1) {
 		queueVideos.pop_back();
 		changeTexture();

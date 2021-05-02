@@ -33,7 +33,6 @@ void Animation::init()
 	for (int i = 0; i < frames_; i++) {
 		Vector2D* p = new Vector2D((float)(framewidth_ * i % tex_->width() / framewidth_), (float)(framewidth_ * i / tex_->width()));
 		framepos_.emplace_back(p);
-
 		//Al ser una variable auxiliar, no hace falta mantenerla
 		delete p;
 	}

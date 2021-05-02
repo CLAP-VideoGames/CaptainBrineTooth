@@ -25,7 +25,7 @@ PlayState::~PlayState(){
 void PlayState::init() {
 
 	//---BG----
-	auto* bg = createBasicEntity(Vector2D(sdlutils().width()*0.65, sdlutils().height() * 0.65f), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
+	auto* bg = createBasicEntity(Vector2D(960, 640), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
 	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	auto* bgParallax = bg->addComponent<ParallaxScroll>();
 	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
@@ -320,7 +320,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//Por testing basura
-	//player->addComponent<CameraFollow>(player->getComponent<Transform>(), &(manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()), Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), false, false); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<CameraFollow>(Vector2D(250.0f, -200.0f), 0.06f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();

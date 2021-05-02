@@ -37,9 +37,7 @@ private:
 	SoundManager* snd = nullptr;
 	TriggerCollider* trigger_ = nullptr;
 
-
-	int lastTimeJumped; 
-	int time = 1500, dashCoolDown = 10000, lasTimeDashed, timer;
+	int time = 1500, dashCoolDown = 10000, lasTimeDashed, lastTimeJumped,timer;
 	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;
 	//Flags
 	bool isOnFloor, isOnAir, isDashing, canDash, moveLeft, moveRight, paralized;
