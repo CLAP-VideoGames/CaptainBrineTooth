@@ -1,5 +1,13 @@
 ﻿#include "PlayerController.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include<iostream>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif
+
 void PlayerController::init()
 {
 	tr_ = entity_->getComponent<Transform>();
@@ -54,7 +62,7 @@ void PlayerController::update()
 		//Parte Vertical
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor && !isDashing) {
 			isOnFloor = false;
-			//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho m�s
+			//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho mas
 			collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
 
 			//Realizar da�o
@@ -72,16 +80,17 @@ void PlayerController::update()
 			else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
 			canDash = false;
 		}
-
-		if (ih().isKeyDown(SDL_SCANCODE_X)) {
-			App::fullScreen();
-		}
 	}
 #pragma endregion
 #pragma region States
-	isOnGround();
+	//isOnGround();
 	//std::cout << "\n" << isOnFloor;
 	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
+	if (collider_->getBody()->GetLinearVelocity().y == 0 && !isDashing) {
+		isOnGround();
+	}
+	else 
+		isOnFloor = false;
 #pragma endregion
 #pragma region Animaciones
 	//Esta tocando suelo
@@ -272,7 +281,7 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 
 void PlayerController::isOnGround()
 {
-	if (trigger_->getTriggerEntity()->getComponent<BoxCollider>()->isTriggerColliding())
+	if (!trigger_->getTriggerEntity()->getComponent<BoxCollider>()->isTriggerColliding())
 		isOnFloor = true;
 	else
 		isOnFloor = false;

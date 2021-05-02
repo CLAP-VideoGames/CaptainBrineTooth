@@ -26,12 +26,11 @@ App::App() {
 	b2Vec2 gravity(0.0f, 9.8f);
 	world_ = make_shared<b2World>(gravity);
 
-
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio Juego----
 	stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------

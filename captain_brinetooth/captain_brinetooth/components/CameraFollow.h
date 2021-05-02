@@ -28,8 +28,8 @@ protected:
 	//Booleanos de seguimiento ilimitado
 	bool limitless_Horizontal_, limitless_Vertical_;
 	//Cooldowns
-	float cd_up_ = 25;
-	float cd_down_ = 25;
+	float cd_up_ = 10;
+	float cd_down_ = 10;
 	float up_time_, down_time_;
 
 

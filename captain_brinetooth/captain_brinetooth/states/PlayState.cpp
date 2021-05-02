@@ -26,13 +26,16 @@ void PlayState::init() {
 
 	//---BG----
 	auto* bg = createBasicEntity(Vector2D(960, 640), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
-	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	auto* bgParallax = bg->addComponent<ParallaxScroll>();
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer1"), 0.2);
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer2"), 0.25);
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer3"), 0.35);
+	bgParallax->addLayer(&sdlutils().images().at("bg_layer4"), 0.4);
+	/*bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
 	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
 	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
 	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);
+	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);*/
 
 	//SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
 	createLevel0();
@@ -311,7 +314,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
 		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
-	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.28), Vector2D(50.0f, 10.0f));
+	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, -0.28), Vector2D(50.0f, 10.0f));
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
 	//player->addComponent<SoundManager>(75, "FinalBoss");

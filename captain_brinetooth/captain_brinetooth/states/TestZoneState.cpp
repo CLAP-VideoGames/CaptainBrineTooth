@@ -57,6 +57,17 @@ void TestZoneState::init() {
 	floor.col = GROUND;
 	floor.colMask = GROUND_MASK;
 	createBoxFloor(floor);
+	Config floor2{};
+	floor2.pos = Vector2D(0, sdlutils().height() * 2.0f - 350);
+	floor2.vel = Vector2D(0, 0);
+	floor2.size = Vector2D(400, 100.0f);
+	floor2.friction = 0.0f;
+	floor2.physicType = STATIC;
+	floor2.fixedRotation = true;
+	floor2.rotation = 0.0f;
+	floor2.col = GROUND;
+	floor2.colMask = GROUND_MASK;
+	createBoxFloor(floor2);
 #pragma endregion
 //-----Player-----
 #pragma region Player
@@ -321,7 +332,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
 		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
-	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.28), Vector2D(50.0f, 10.0f));
+	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, -0.28), Vector2D(50.0f, 10.0f));
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
 	//player->addComponent<SoundManager>(75, "FinalBoss");
@@ -330,7 +341,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO
-	player->addComponent<CameraFollow>(Vector2D(250.0f, -300.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<CameraFollow>(Vector2D(250.0f, -200.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 
 	player->addComponent<Inventory>();
 
