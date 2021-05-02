@@ -112,7 +112,9 @@ void Reward::adjustIfLimits()
 }
 void Reward::giveReward()
 {
-	//Now if a bait has been catched , we give one weapon to Player
+	//Del 0- hasta nArmas = armas del juego
+	//De nArmas+1 hasta 20-> monedas
+	//Si no , es una piedra y directamente no se da nada 
 	if ((int)weapontoGive < 10)
 	{
 		//entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addWeapon((int)weapontoGive);

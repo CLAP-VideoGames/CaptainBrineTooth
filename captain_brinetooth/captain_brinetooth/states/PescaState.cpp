@@ -32,17 +32,17 @@ void PescaState::init() {
 void PescaState::createPesca(const Config& entityConfig) {
 
 
-	auto* floor = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() * 2), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
+	auto* floor = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() * 2), Vector2D(sdlutils().width()+1200, 500), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* floor_anim_controller = floor->addComponent<AnimBlendGraph>();
-	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("arena"), 1, 1, 1, 1, 0);
 	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 
-	auto* floor2 = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5), entityConfig.size, 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* floor2_anim_controller = floor2->addComponent<AnimBlendGraph>();
-	floor2_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
-	floor2->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
-	floor2->addComponent<PescaController>();
-	floor2->getMngr()->setHandler<Rod>(floor2); //Para deteccion de colision con el gancho 
+	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5), entityConfig.size, 0.0f, Vector2D(0, 0));
+	AnimBlendGraph* topRod_anim_controller = topRod->addComponent<AnimBlendGraph>();
+	topRod_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	topRod->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
+	topRod->addComponent<PescaController>();
+	topRod->getMngr()->setHandler<Rod>(topRod); //Para deteccion de colision con el gancho 
 
 
 
@@ -90,7 +90,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 	Vector2D pos3 = Vector2D(sdlutils().width() / 2, 1200);
 	for (int i = 0; i < entitiesPerLine; i++)
 	{
-		random = sdlutils().rand().teCuoto(0, 3);
+		random = sdlutils().rand().teCuoto(0, 7);
 	
 			auto* reward0 = createBasicEntity(Vector2D(pos1.getX()+(200*i), pos1.getY()), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
 			AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
@@ -104,9 +104,14 @@ void PescaState::createRandomReward(const Config& entityConfig)
 				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
 				
 			}
-			else
+			else if(random==2)
 			{
 				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+			}
+			else //No es ninguna recompensa activa 
+			{
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
+				random = 30;
 			}
 			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 			reward0->addComponent<Reward>(random);

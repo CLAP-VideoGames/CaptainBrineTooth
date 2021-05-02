@@ -95,7 +95,7 @@ void Gancho::collisionAnswer(Entity* contactedfloor)
 			baitRef->getComponent<Reward>()->giveReward();
 		}
 		//Go back to actual state
-		app->getStateMachine()->popState();
+		//app->getStateMachine()->popState();
 
 
 	}

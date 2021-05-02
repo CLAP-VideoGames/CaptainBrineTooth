@@ -239,8 +239,15 @@
 		{
 			"id": "bg_ice_layer5",
 			"file": "assets/background/ice/ice_layer_5.png"
+		},
+		{
+			"id": "piedra",
+			"file": "assets/sprites/armas/piedraPesca.png"
+		},
+		{
+			"id": "arena",
+			"file": "assets/sprites/armas/arenaPesca.png"
 		}
-
 	],
 
 	"sounds": [
