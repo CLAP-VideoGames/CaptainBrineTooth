@@ -72,6 +72,10 @@ void PlayerController::update()
 			else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
 			canDash = false;
 		}
+
+		if (ih().isKeyDown(SDL_SCANCODE_X)) {
+			App::fullScreen();
+		}
 	}
 #pragma endregion
 #pragma region States

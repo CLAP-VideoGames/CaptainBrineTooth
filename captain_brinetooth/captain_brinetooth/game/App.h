@@ -25,7 +25,7 @@ class Manager;
 
 class App {
 public:
-	static const float camera_Zoom_Out;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qu�Eme tomais por un dictador, que no soy �ngel.
+	static float camera_Zoom_Out;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qu�Eme tomais por un dictador, que no soy �ngel.
 	static SDL_Rect camera;
 	static const int FPS = 15;
 
@@ -38,8 +38,8 @@ public:
 	void createBackGround(const std::string& spriteId, const int & fils, const int & cols);
 	void createJointMedusa(Entity* ground);
 	void createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation);
+	static void fullScreen();
 	void exitGame() { exit = true; }
-
 	void changeToPesca();
 
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);

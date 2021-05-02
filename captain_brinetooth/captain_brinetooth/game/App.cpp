@@ -15,7 +15,7 @@
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
 SDL_Rect App::camera = {0 ,0,(int)(window.getX()),(int)(window.getY())};
-const float App::camera_Zoom_Out = 2.0f;
+float App::camera_Zoom_Out = 2.0f;
 
 using namespace ColLayers;
 
@@ -31,12 +31,12 @@ App::App() {
 	////----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
-	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio Juego----
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
-	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
+	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 
 }
 
@@ -130,6 +130,17 @@ void App::ShakeCamera(int time){
 
 	// Devolvemos la camara a la posicion original
 	camera = aux2;
+}
+
+void App::fullScreen()
+{
+	//sdlutils().toggleFullScreen(); // Esto de aqui hace que explote el ordenador
+
+	// Actualizamos la camara
+	camera = { 0 ,0,(int)(window.getX()),(int)(window.getY()) };
+
+
+	camera_Zoom_Out = 1.0f;
 }
 
 void App::createBackGround(const std::string& spriteId, const int & fils, const int & cols){
