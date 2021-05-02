@@ -14,8 +14,8 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-SDL_Rect App::camera = {0 ,0,(int)(window.getX()),(int)(window.getY())};
-float App::camera_Zoom_Out = 2.0f;
+float App::camera_Zoom_Out = 1.0f;
+SDL_Rect App::camera = {0 ,0,(int)(window.getX() * camera_Zoom_Out),(int)(window.getY() * camera_Zoom_Out)};
 
 using namespace ColLayers;
 
@@ -33,7 +33,7 @@ App::App() {
 	//----Inicio por defecto----
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio Juego----
-	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
+	stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
@@ -87,7 +87,7 @@ void App::start() {
 		stateMachine->currentState()->refresh();
 
 		sdlutils().clearRenderer();
-		SDL_RenderSetLogicalSize(sdlutils().renderer(), window.getX() * camera_Zoom_Out, window.getY()* camera_Zoom_Out);
+		SDL_RenderSetLogicalSize(sdlutils().renderer(), camera.w, camera.h);
 		//Renderizamos las entidades
 		stateMachine->currentState()->render();
 		

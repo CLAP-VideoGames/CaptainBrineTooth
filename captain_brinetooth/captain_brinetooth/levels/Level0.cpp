@@ -164,13 +164,13 @@ void Level0::load(const string& path) {
 				j++;
 			}
 
-			Entity* player = entity_->getMngr()->getHandler<Player>();
+			/*Entity* player = entity_->getMngr()->getHandler<Player>();
 			if (player != nullptr){
 				CameraFollow* camara = player->getComponent<CameraFollow>();
 				if (camara != nullptr) {
-  					camara->checkCameraFollow();
+  					camara->checkCameraFollowLimits();
 				}
-			}
+			}*/
 		}
 
 		if (object_layer->getName() == "spawns") {
