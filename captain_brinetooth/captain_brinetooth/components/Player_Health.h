@@ -23,6 +23,8 @@ public:
 
 	void resetLifes();
 
+	void respawn();
+
 	const bool& getInvulnerable();
 
 private:

@@ -20,8 +20,8 @@ void MenuState::init() {
 
 	fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), rectPos, "fondoMenu");
 
-	//manager_->getSoundMngr()->setGeneralVolume(63.5);
-	//manager_->getSoundMngr()->playMainMusic();
+	manager_->getSoundMngr()->setGeneralVolume(63.5);
+	manager_->getSoundMngr()->playMainMusic();
 
 	float sizeFactor;
 	// Titulo

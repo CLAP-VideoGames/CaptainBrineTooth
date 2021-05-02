@@ -110,3 +110,9 @@ const bool& Player_Health::getInvulnerable()
 {
 	return invulnerability_;
 }
+
+
+void Player_Health::respawn()
+{
+	
+}

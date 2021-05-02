@@ -1,6 +1,7 @@
 #pragma once
 #include "../ecs/Component.h"
 #include "../ecs/Manager.h"
+#include "../states/GameState.h"
 #include <functional>
 #include "../sdlutils/SDLUtils.h"
 #include "Image.h"
@@ -16,7 +17,7 @@ public:
 	/// <param name="sizes_">tamaño en pixeles del slider y su barra </param>
 	/// <param name="texts">texturas del slider y su barra</param>
 	/// <param name="callback">tarea que realizar al mover el slider que recibe un valor de 0 a 1 y la entidad</param>
-	Slider(const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void (*callback)(float, Entity*), Texture* t);
+	Slider(const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void (*callback)(float, Entity*), Texture* t, App* ap, float sFactor, float pY);
 	~Slider();
 
 	void init() override;
@@ -38,6 +39,8 @@ private:
 	Texture* textureText = nullptr;
 
 	Image* sliderImage;
-
+	App* a;
+	float sizeFactor;
+	float posY;
 	bool selected = true;
 };

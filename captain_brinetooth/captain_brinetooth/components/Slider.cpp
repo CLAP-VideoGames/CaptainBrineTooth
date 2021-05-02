@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void(*callback)(float, Entity*), Texture* text_){
+Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_, Texture* texts[NUM_TEXTURES], void(*callback)(float, Entity*), Texture* text_, App* ap, float sFactor, float pY){
 	pos = pos_;
 	sizes = sizes_;
 	for (int i = 0; i < NUM_TEXTURES; i++) textures[i] = texts[i];
@@ -10,6 +10,10 @@ Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_
 	callback_ = callback;
 
 	textureText = text_;
+	a = ap;
+
+	sizeFactor = sFactor;
+	posY = pY;
 
 	selected = false;
 }
@@ -21,13 +25,34 @@ void Slider::init(){
 	mngr = entity_->getMngr();
 
 	background = mngr->addEntity();
+
+	SDL_Rect rectPos;
+	rectPos.x = 0;
+	rectPos.y = 0;
+	rectPos.w = App::camera.w;
+	rectPos.h = App::camera.h;
+
+	Texture* imageTexture = textures[0];
+	sizeFactor = 0.5;
+	float factor_ = App::camera_Zoom_Out;
+
+	rectPos = a->getStateMachine()->currentState()->ScaleSDL_Rect(imageTexture, Vector2D(App::camera.w / 2, App::camera.h * 0.2), factor_, sizeFactor, false);
+	rectPos.x += rectPos.x / 4;
+	rectPos.y += rectPos.y * posY;
+
 	backgroundSlideRct = build_sdlrect(pos, sizes.first.getX(), sizes.first.getY());
-	background->addComponent<Image>(textures[0], backgroundSlideRct, "fondo");
+	background->addComponent<Image>(textures[0], rectPos, "fondo");	
+	
 
 	slide = mngr->addEntity();
-	Vector2D posSlide = Vector2D(pos.getX()* 1.1f, pos.getY() - (sizes.second.getY()*0.5f));
-	SDL_Rect slideRect = build_sdlrect(posSlide, sizes.second.getX(), sizes.second.getY());
-	sliderImage = slide->addComponent<Image>(textures[1], slideRect, "fondo");
+
+	sizeFactor = 0.5;
+	imageTexture = textures[1];
+	rectPos = a->getStateMachine()->currentState()->ScaleSDL_Rect(imageTexture, Vector2D(App::camera.w , App::camera.h * 0.2), factor_, sizeFactor, true);
+	rectPos.x += rectPos.x / 2; // Esto por alguna razon no funciona muy bien
+	rectPos.y += (rectPos.y * (posY/1.1));
+
+	sliderImage = slide->addComponent<Image>(textures[1], rectPos, "fondo");
 
 	Sliderdest = (sliderImage->getDestRect());
 }

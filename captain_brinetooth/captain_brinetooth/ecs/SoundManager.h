@@ -2,7 +2,6 @@
 
 #include "../sdlutils/SDLUtils.h"
 #include "../game/App.h"
-#include "../sdlutils/Music.h"
 
 const int MAX_VOL = 127;
 const int MIN_VOL = 0;

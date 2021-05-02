@@ -7,6 +7,7 @@
 #include "AnimBlendGraph.h"
 #include "ContactDamage.h"
 #include "PlayerController.h"
+#include "Player_Health.h"
 using namespace ColLayers;
 
 
@@ -58,6 +59,7 @@ void JellyHatBehavior::collisionPlayer(b2Contact* contact) {
 		if (player->getMngr()->getHandler<Player>() == player)
 		{
 			player->getMngr()->getSoundMngr()->playSoundEffect("electricidad", 500); // Hay que ajustar este valor
+			player->getComponent<Player_Health>()->loseLife();
 			player->getComponent<PlayerController>()->Paralize();
 		} else {
 			player = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
