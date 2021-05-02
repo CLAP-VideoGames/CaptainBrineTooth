@@ -63,6 +63,7 @@ void ShootDetect::update()
 
 		}
 	}
+	else enemy->getComponent<AnimBlendGraph>()->flipX(false);
 	if (enemy->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack" && enemy->getComponent<AnimBlendGraph>()->isComplete())
 	{
 		createBullet();
@@ -103,7 +104,9 @@ void ShootDetect::createBullet()
 	bulletvel= bulletvel.normalize();
 	
 
-	// FLIPX METODO PARA LA ORIENTACION 
+	//Si la posicion del juagdor es menor, significa que esta a nuestra izquierda y hay que hacer el flip 
+	if (playertransform->getPos().getX() < enemytransform->getPos().getX()) enemy->getComponent<AnimBlendGraph>()->flipX(true);
+	else enemy->getComponent<AnimBlendGraph>()->flipX(false );
 
 	//Dotamos a la bala de todos los componentes 
 	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 10.0f, 10.0f, 0.0f);

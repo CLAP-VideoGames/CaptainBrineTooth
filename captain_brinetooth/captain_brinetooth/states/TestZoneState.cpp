@@ -92,18 +92,18 @@ void TestZoneState::init() {
 //	#pragma endregion
 //	#pragma region FringeHead
 //
-//	Config fringeHead{};
-//	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
-//	fringeHead.vel = Vector2D(0, 0);
-//	fringeHead.size = Vector2D(70.0f,70.0f);
-//	fringeHead.friction = 0;
-//	fringeHead.physicType = DYNAMIC;
-//	fringeHead.fixedRotation = true;
-//	fringeHead.rotation = 0.0f;
-//	fringeHead.col = ENEMY;
-//	fringeHead.colMask = ENEMY_MASK;
-//	createFringeHead(fringeHead);
-//	#pragma endregion
+	Config fringeHead{};
+	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
+	fringeHead.vel = Vector2D(0, 0);
+	fringeHead.size = Vector2D(70.0f,70.0f);
+	fringeHead.friction = 0;
+	fringeHead.physicType = DYNAMIC;
+	fringeHead.fixedRotation = true;
+	fringeHead.rotation = 0.0f;
+	fringeHead.col = ENEMY;
+	fringeHead.colMask = ENEMY_MASK;
+	createFringeHead(fringeHead);
+	#pragma endregion
 //#pragma endregion
 //
 //#pragma region Weapons
