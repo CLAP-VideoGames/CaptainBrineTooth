@@ -143,7 +143,7 @@ void App::createBackGround(const std::string& spriteId, const int & fils, const 
 
 void App::changeToPesca()
 {
-	stateMachine->changeState(new PescaState(this, world_, sndProvisional));
+	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 }
 
 /// <summary>
