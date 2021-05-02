@@ -8,6 +8,10 @@
 #include "ContactDamage.h"
 using namespace ColLayers;
 
+ElfSharkAttack::~ElfSharkAttack() {
+	if (attackTrigger_ != nullptr)
+		attackTrigger_->setActive(false);
+}
 
 void ElfSharkAttack::init()
 {
@@ -51,7 +55,7 @@ void ElfSharkAttack::update() {
 		}
 		else { move(); }
 	}
-	else{ 
+	else {
 		//Desactiva el trigger del ataque al acabar la animacion
 		if (attackTrigger_ != nullptr) {
 			if (entity_Parent_->getComponent<AnimBlendGraph>()->isComplete()) {
@@ -71,7 +75,7 @@ void ElfSharkAttack::update() {
 bool ElfSharkAttack::canAttack() {
 	//Player Transform
 	Transform* playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
-	float xRange =  attackTriggerSize_.getX() + attack_anticipation_; //rango X del ataque
+	float xRange = attackTriggerSize_.getX() + attack_anticipation_; //rango X del ataque
 	if (playertr_->getPos().getX() + playertr_->getW() > entitytr_->getPos().getX() - xRange &&
 		playertr_->getPos().getX() < entitytr_->getPos().getX() + xRange + entitytr_->getW())	//Si esta a rango de ataque
 		return true;
@@ -94,11 +98,11 @@ void ElfSharkAttack::hasEnter(b2Contact* contact) {
 void ElfSharkAttack::hasExit(b2Contact* contact) {
 	Entity* body = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (body != nullptr) {
-		if(body->hasComponent<ElfSharkAttack>())
+		if (body->hasComponent<ElfSharkAttack>())
 			body->getComponent<ElfSharkAttack>()->entityOutRange();
 		else {
 			body = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-			if(body != nullptr)body->getComponent<ElfSharkAttack>()->entityOutRange();
+			if (body != nullptr)body->getComponent<ElfSharkAttack>()->entityOutRange();
 		}
 	}
 }
@@ -110,17 +114,17 @@ void ElfSharkAttack::attack() {
 	//Player Transform
 	Transform* playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
 	//No se mueve
-	entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
+	entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, 0)));
 	//Actualizar posicion
-	entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0,0)));
+	entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, 0)));
 	//Offset
 	float offsetY = (entitytr_->getH() - attackTriggerSize_.getY()) * 0.5f;
 	float offsetX;
-	if (playertr_->getPos().getX() + playertr_->getW()*0.5f < entitytr_->getPos().getX() + entitytr_->getW()*0.5f) {	//izqda
-		offsetX = -attackTriggerSize_.getX()*0.5f;
+	if (playertr_->getPos().getX() + playertr_->getW() * 0.5f < entitytr_->getPos().getX() + entitytr_->getW() * 0.5f) {	//izqda
+		offsetX = -attackTriggerSize_.getX() * 0.5f;
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(true);
 	}
-	else{	//drcha
+	else {	//drcha
 		offsetX = attackTriggerSize_.getX();
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(false);
 	}
@@ -128,7 +132,7 @@ void ElfSharkAttack::attack() {
 	attackTrigger_ = entity_->getMngr()->addEntity();
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + offsetX, entitytr_->getPos().getY() + offsetY),
 		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
-	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK,true);
+	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 	attackTrigger_->addComponent<ContactDamage>();
 	//Llama al cambio de estado de animacion
 	entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 1);

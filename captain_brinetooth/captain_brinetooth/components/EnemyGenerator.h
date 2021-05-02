@@ -10,6 +10,7 @@
 #include "..//components/Enemy_Health.h"
 #include "..//components/JellyHatBehavior.h"
 #include "..//components/FringeHeadAtack.h"
+#include "..//components/ContactDamage.h"
 
 class EnemyGenerator : public Component
 {
@@ -34,7 +35,7 @@ public:
 			colsSprite(), 
 			col(), 
 			colMask(), 
-			physicType(STATIC), 
+			physicType(DYNAMIC), 
 			spriteId(), 
 			isTrigger(), 
 			fixedRotation() {

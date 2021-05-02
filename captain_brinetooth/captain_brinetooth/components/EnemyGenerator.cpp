@@ -63,6 +63,7 @@ void EnemyGenerator::generateMedusa(Vector2D pos)
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
 	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask);
+	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 	
 }
@@ -74,7 +75,7 @@ void EnemyGenerator::generateElfShark(Vector2D pos)
 	elfShark.vel = Vector2D(0, 0);
 	elfShark.size = Vector2D(180.0f, 180.0f);
 	elfShark.friction = 0.2f;
-	elfShark.physicType = KINEMATIC;
+	elfShark.physicType = DYNAMIC;
 	elfShark.fixedRotation = true;
 	elfShark.rotation = 0.0f;
 	elfShark.col = ColLayers::collisionLayers::ENEMY;

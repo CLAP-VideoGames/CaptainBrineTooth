@@ -62,48 +62,111 @@ void TestZoneState::init() {
 #pragma region Player
 #pragma endregion
 //-----Enemies-----
-#pragma region Enemies
-	/*#pragma region PompeyWorm
-	Config pompeyWorm{};
-	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
-	pompeyWorm.vel = Vector2D(0, 0);
-	pompeyWorm.size = Vector2D(100.0f, 100.0f);
-	pompeyWorm.friction = 100;
-	pompeyWorm.physicType = DYNAMIC;
-	pompeyWorm.fixedRotation = true;
-	pompeyWorm.rotation = 0.0f;
-	pompeyWorm.col = ENEMY;
-	pompeyWorm.colMask = ENEMY_MASK;
-	createPompeyWorm(pompeyWorm);
-	#pragma endregion
-	#pragma region ElfShark
-	/*Config elfShark{};
-	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
-	elfShark.vel = Vector2D(0, 0);
-	elfShark.size = Vector2D(180.0f, 180.0f);
-	elfShark.friction = 0.2f;
-	elfShark.physicType = DYNAMIC;
-	elfShark.fixedRotation = true;
-	elfShark.rotation = 0.0f;
-	elfShark.col = ENEMY;
-	elfShark.colMask = ENEMY_MASK;
-	createElfShark(elfShark);*/
-	#pragma endregion
-	#pragma region FringeHead
-
-	/*Config fringeHead{};
-	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
-	fringeHead.vel = Vector2D(0, 0);
-	fringeHead.size = Vector2D(70.0f,70.0f);
-	fringeHead.friction = 0;
-	fringeHead.physicType = KINEMATIC;
-	fringeHead.fixedRotation = true;
-	fringeHead.rotation = 0.0f;
-	fringeHead.col = ENEMY;
-	fringeHead.colMask = ENEMY_MASK;
-	createFringeHead(fringeHead);*/
-	#pragma endregion
-#pragma endregion
+//#pragma region Enemies
+//	#pragma region PompeyWorm
+//	Config pompeyWorm{};
+//	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
+//	pompeyWorm.vel = Vector2D(0, 0);
+//	pompeyWorm.size = Vector2D(100.0f, 100.0f);
+//	pompeyWorm.friction = 100;
+//	pompeyWorm.physicType = DYNAMIC;
+//	pompeyWorm.fixedRotation = true;
+//	pompeyWorm.rotation = 0.0f;
+//	pompeyWorm.col = ENEMY;
+//	pompeyWorm.colMask = ENEMY_MASK;
+//	createPompeyWorm(pompeyWorm);
+//	#pragma endregion
+//
+//	#pragma region ElfShark
+//	Config elfShark{};
+//	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
+//	elfShark.vel = Vector2D(0, 0);
+//	elfShark.size = Vector2D(180.0f, 180.0f);
+//	elfShark.friction = 0.2f;
+//	elfShark.physicType = DYNAMIC;
+//	elfShark.fixedRotation = true;
+//	elfShark.rotation = 0.0f;
+//	elfShark.col = ENEMY;
+//	elfShark.colMask = ENEMY_MASK;
+//	createElfShark(elfShark);
+//	#pragma endregion
+//	#pragma region FringeHead
+//
+//	Config fringeHead{};
+//	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
+//	fringeHead.vel = Vector2D(0, 0);
+//	fringeHead.size = Vector2D(70.0f,70.0f);
+//	fringeHead.friction = 0;
+//	fringeHead.physicType = DYNAMIC;
+//	fringeHead.fixedRotation = true;
+//	fringeHead.rotation = 0.0f;
+//	fringeHead.col = ENEMY;
+//	fringeHead.colMask = ENEMY_MASK;
+//	createFringeHead(fringeHead);
+//	#pragma endregion
+//#pragma endregion
+//
+//#pragma region Weapons
+//	Config swordGiverConfig{};
+//	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() * 2.0f);
+//	swordGiverConfig.vel = Vector2D();
+//	swordGiverConfig.size = Vector2D(50, 50);
+//	swordGiverConfig.friction = 0.2f;
+//	swordGiverConfig.physicType = STATIC;
+//	swordGiverConfig.fixedRotation = true;
+//	swordGiverConfig.rotation = 0.0f;
+//	swordGiverConfig.spriteId = "espada";
+//	int swordNumber = 0;
+//	createWeaponGiver(swordGiverConfig, swordNumber);
+//
+//	Config hammerGiverConfig{};
+//	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height() * 2.0f);
+//	hammerGiverConfig.vel = Vector2D();
+//	hammerGiverConfig.size = Vector2D(50, 50);
+//	hammerGiverConfig.friction = 0.2f;
+//	hammerGiverConfig.physicType = STATIC;
+//	hammerGiverConfig.fixedRotation = true;
+//	hammerGiverConfig.rotation = 0.0f;
+//	hammerGiverConfig.spriteId = "martillo";
+//	int hammerNumber = 1;
+//	createWeaponGiver(hammerGiverConfig, hammerNumber);
+//
+//	Config chainsawGiverConfig{};
+//	chainsawGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() * 2.0f - 100);
+//	chainsawGiverConfig.vel = Vector2D();
+//	chainsawGiverConfig.size = Vector2D(50, 50);
+//	chainsawGiverConfig.friction = 0.2f;
+//	chainsawGiverConfig.physicType = STATIC;
+//	chainsawGiverConfig.fixedRotation = true;
+//	chainsawGiverConfig.rotation = 0.0f;
+//	chainsawGiverConfig.spriteId = "sierra";
+//	int chainsawNumber = 2;
+//	createWeaponGiver(chainsawGiverConfig, chainsawNumber);
+//
+//	Config crabGiverConfig{};
+//	crabGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height() * 2.0f - 100);
+//	crabGiverConfig.vel = Vector2D();
+//	crabGiverConfig.size = Vector2D(50, 50);
+//	crabGiverConfig.friction = 0.2f;
+//	crabGiverConfig.physicType = STATIC;
+//	crabGiverConfig.fixedRotation = true;
+//	crabGiverConfig.rotation = 0.0f;
+//	crabGiverConfig.spriteId = "crab";
+//	int crabNumber = 3;
+//	createWeaponGiver(crabGiverConfig, crabNumber);
+//
+//	Config machineGunGiverConfig{};
+//	machineGunGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height() * 2.0f);
+//	machineGunGiverConfig.vel = Vector2D();
+//	machineGunGiverConfig.size = Vector2D(50, 50);
+//	machineGunGiverConfig.friction = 0.2f;
+//	machineGunGiverConfig.physicType = STATIC;
+//	machineGunGiverConfig.fixedRotation = true;
+//	machineGunGiverConfig.rotation = 0.0f;
+//	machineGunGiverConfig.spriteId = "machine_gun";
+//	int machineGunNumber = 4;
+//	createWeaponGiver(machineGunGiverConfig, machineGunNumber);
+//#pragma endregion
 }
 
 void TestZoneState::createPlayer(const Config& playerConfig) {
@@ -135,22 +198,27 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//-WEAPONS------------------------------------------------------------------------------------------------------
 #pragma region Chainsaw
 	//---CHAINSAW---------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 1, 8, Vector2D(0.75,0.72));
-	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 9, 18, Vector2D(0.75, 0.72));
-	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, 0, 19, 47, Vector2D(0.75, 0.72)); // provisional, habria que hacer una de mantener
+	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 1, 8, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 9, 18, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 28, 0, 19, 27, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack4", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, -1, 28, 47, Vector2D(0.75, 0.72));
 
 	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("idle", "chainsaw_attack1", "chainsaw_att", 1, false);
+	anim_controller->addTransition("jump", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("chainsaw_attack1", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack1", "chainsaw_attack2", "chainsaw_att", 2, true);
 	anim_controller->addTransition("run", "chainsaw_attack2", "chainsaw_att", 2, false);
 	anim_controller->addTransition("idle", "chainsaw_attack2", "chainsaw_att", 2, false);
+	anim_controller->addTransition("jump", "chainsaw_attack2", "chainsaw_att", 2, false);
 	anim_controller->addTransition("chainsaw_attack2", "run", "chainsaw_att", 0, true);
 	anim_controller->addTransition("chainsaw_attack2", "chainsaw_attack3", "chainsaw_att", 3, true);
 	anim_controller->addTransition("run", "chainsaw_attack3", "chainsaw_att", 3, false);
 	anim_controller->addTransition("idle", "chainsaw_attack3", "chainsaw_att", 3, false);
-	anim_controller->addTransition("chainsaw_attack3", "run", "chainsaw_att", 0, false);
-	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack1", "chainsaw_att", 4, true);
+	anim_controller->addTransition("jump", "chainsaw_attack3", "chainsaw_att", 3, false);
+	anim_controller->addTransition("chainsaw_attack3", "chainsaw_attack4", "chainsaw_att", 4, true);
+	anim_controller->addTransition("chainsaw_attack4", "run", "chainsaw_att", 0, false);
+	anim_controller->addTransition("chainsaw_attack4", "chainsaw_attack1", "chainsaw_att", 1, false);
 
 	anim_controller->setParamValue("chainsaw_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -158,22 +226,27 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 #pragma region Sword
 	//---SWORD------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 1, 9, Vector2D(0.71,0.69));
+	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 1, 9, Vector2D(0.71, 0.69));
 	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 12, 20, Vector2D(0.71, 0.69));
-	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, -1, 27, 44, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 20, 28, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack4", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, -1, 28, 44, Vector2D(0.71, 0.69));
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
+	anim_controller->addTransition("jump", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("sword_attack1", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack1", "sword_attack2", "sword_att", 2, true);
 	anim_controller->addTransition("run", "sword_attack2", "sword_att", 2, false);
 	anim_controller->addTransition("idle", "sword_attack2", "sword_att", 2, false);
+	anim_controller->addTransition("jump", "sword_attack2", "sword_att", 2, false);
 	anim_controller->addTransition("sword_attack2", "run", "sword_att", 0, true);
 	anim_controller->addTransition("sword_attack2", "sword_attack3", "sword_att", 3, true);
 	anim_controller->addTransition("run", "sword_attack3", "sword_att", 3, false);
 	anim_controller->addTransition("idle", "sword_attack3", "sword_att", 3, false);
-	anim_controller->addTransition("sword_attack3", "run", "sword_att", 0, false);
-	anim_controller->addTransition("sword_attack3", "sword_attack1", "sword_att", 4, true);
+	anim_controller->addTransition("jump", "sword_attack3", "sword_att", 3, false);
+	anim_controller->addTransition("sword_attack3", "sword_attack4", "sword_att", 4, true);
+	anim_controller->addTransition("sword_attack4", "run", "sword_att", 0, false);
+	anim_controller->addTransition("sword_attack4", "sword_attack1", "sword_att", 1, false);
 
 	anim_controller->setParamValue("sword_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -186,57 +259,81 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);
+	anim_controller->addTransition("jump", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("hammer_attack1", "run", "hammer_att", 0, false);
 	anim_controller->addTransition("hammer_attack1", "hammer_attack2", "hammer_att", 2, true);
 	anim_controller->addTransition("run", "hammer_attack2", "hammer_att", 2, false);
 	anim_controller->addTransition("idle", "hammer_attack2", "hammer_att", 2, false);
+	anim_controller->addTransition("jump", "hammer_attack2", "hammer_att", 2, false);
 	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, false);
 	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 1, false);
 
 	anim_controller->setParamValue("hammer_att", 0);
-	//--------------------------------------------------------------------------------------------------------------
-#pragma endregion
-
-#pragma region Crab
-//---CRAB---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 1, 8, Vector2D(0.71,0.5));
+	//	//--------------------------------------------------------------------------------------------------------------
+	//#pragma endregion
+	//
+	//#pragma region Crab
+	////---CRAB---------------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 35, 0, 1, 8, Vector2D(0.71, 0.5));
 	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
 	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
 
 	anim_controller->addTransition("run", "crab_attack1", "crab_att", 1, false);
 	anim_controller->addTransition("idle", "crab_attack1", "crab_att", 1, false);
+	anim_controller->addTransition("jump", "crab_attack1", "crab_att", 1, false);
 	anim_controller->addTransition("crab_attack1", "run", "crab_att", 0, true);
 	anim_controller->addTransition("crab_attack1", "crab_attack2", "crab_att", 2, true);
 	anim_controller->addTransition("run", "crab_attack2", "crab_att", 2, false);
 	anim_controller->addTransition("idle", "crab_attack2", "crab_att", 2, false);
+	anim_controller->addTransition("jump", "crab_attack2", "crab_att", 2, false);
 	anim_controller->addTransition("crab_attack2", "run", "crab_att", 0, false);
 	anim_controller->addTransition("crab_attack2", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("run", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("idle", "crab_attack3", "crab_att", 3, false);
+	anim_controller->addTransition("jump", "crab_attack3", "crab_att", 3, false);
 	anim_controller->addTransition("crab_attack3", "run", "crab_att", 0, false);
-	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 4, true);
+	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 1, true);
 
 	anim_controller->setParamValue("crab_att", 0);
+	//	//--------------------------------------------------------------------------------------------------------------
+	//#pragma endregion
+	//
+	//#pragma region MachineGun
+	////---CRAB---------------------------------------------------------------------------------------------------------
+	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, Vector2D(0.65, 0.5));
+	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, Vector2D(0.65, 0.5));
+
+	anim_controller->addTransition("run", "machine_gun1", "machineGun_att", 1, false);
+	anim_controller->addTransition("idle", "machine_gun1", "machineGun_att", 1, false);
+	anim_controller->addTransition("jump", "machine_gun1", "machineGun_att", 1, false);
+	anim_controller->addTransition("machine_gun1", "run", "machineGun_att", 0, false);
+	anim_controller->addTransition("machine_gun1", "machine_gun2", "machineGun_att", 2, false);
+	anim_controller->addTransition("machine_gun2", "run", "machineGun_att", 0, false);
+	anim_controller->addTransition("machine_gun2", "idle", "machineGun_att", 0, false);
+	anim_controller->addTransition("machine_gun2", "machine_gun1", "machineGun_att", 1, false);
+
+	anim_controller->setParamValue("machineGun_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 #pragma endregion
 
-	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false, 
-		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX()*0.6, playerConfig.size.getY()));
-	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.25), Vector2D(50.0f, 20.0f));
+	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
+		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
+	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, 0.28), Vector2D(50.0f, 10.0f));
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
-	//player->addComponent<SoundManager>(0, "FinalBoss");
+	//player->addComponent<SoundManager>(75, "FinalBoss");
 
-	/*if (playerConfig.physicType != KINEMATIC) */player->addComponent<PlayerController>(3.0,0.7);
+	/*if(playerConfig.physicType != KINEMATIC)*/ player->addComponent<PlayerController>();
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO
 	Vector2D mapLimit = Vector2D(2000, 2000);
 	player->addComponent<CameraFollow>(player->getComponent<Transform>(), &mapLimit, Vector2D(250.0f, -300.0f), 0.06f, app->getCameraZooOut(), true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<MachineGun>();
+
+	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();
 
@@ -350,12 +447,14 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
 	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
 void TestZoneState::createFringeHead(const Config& entityConfig)
 {
 	auto* enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	BoxCollider* collider = enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7f,
+		true, 0.0f, Vector2D(), Vector2D(), 100000);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
 	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0);
@@ -364,4 +463,13 @@ void TestZoneState::createFringeHead(const Config& entityConfig)
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
 	enemy->addComponent<Enemy_Health>(200,Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+}
+
+void TestZoneState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
+	auto* weaponGiver = createBasicEntity(weaponGiverConfig.pos, weaponGiverConfig.size, weaponGiverConfig.rotation, weaponGiverConfig.vel);
+
+	auto* anim_controller = weaponGiver->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("idle", &sdlutils().images().at(weaponGiverConfig.spriteId), 1, 1, 1, 24, 1);
+	weaponGiver->addComponent<BoxCollider>(weaponGiverConfig.physicType, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true);
+	weaponGiver->addComponent<GetAWeaponOnCollision>(weaponType);
 }

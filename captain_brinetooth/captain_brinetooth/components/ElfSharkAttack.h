@@ -9,7 +9,7 @@ class ElfSharkAttack: public Component
 {
 public:
 	ElfSharkAttack(Entity* entity_Parent) : entity_Parent_(entity_Parent){};
-	virtual ~ElfSharkAttack() {};
+	virtual ~ElfSharkAttack();
 	void init() override;
 	void update() override;
 	bool canAttack();

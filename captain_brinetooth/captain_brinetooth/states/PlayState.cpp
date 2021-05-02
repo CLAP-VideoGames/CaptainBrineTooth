@@ -383,6 +383,7 @@ void PlayState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
 	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
 

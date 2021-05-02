@@ -24,6 +24,16 @@ void WeaponDamageDetection::ContactEnemy(b2Contact* contact) {
 				entidad->getComponent<WeaponDamageDetection>()->ApplyDamage(enemy);
 			}
 		}
+		else {
+			enemy = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+			if (enemy->getComponent<Enemy_Health>() != nullptr) {
+				Entity* entidad = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+
+				if (entidad != nullptr) {
+					entidad->getComponent<WeaponDamageDetection>()->ApplyDamage(enemy);
+				}
+			}
+		}
 }
 
 void WeaponDamageDetection::ApplyDamage(Entity* enemy) {

@@ -32,9 +32,9 @@ public:
 	/// <param name="pos_"> posición en caso de que no exista el componente Transform. Por defecto (0,0)</param>
 	/// <param name="size_">tamaño en caso de que no exista el componente Transform. Por defecto (10,10)</param>
 	BoxCollider(int typeAux = TYPE::STATIC, const uint16& collisionLayer = 0x0001, const uint16& collisionMask = 0xFFFF, bool isTriggerAux = false,
-		float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& size = Vector2D(0, 0), const Vector2D& pos = Vector2D(0, 0)) :
+		float friction = 0.7f, bool fixedRotation = true, float rotation = 0.0f, const Vector2D& size = Vector2D(0, 0), const Vector2D& pos = Vector2D(0, 0), const float density = 1.0f) :
 		type(typeAux), isTrigger(isTriggerAux), friction_(friction), colLay_(collisionLayer),
-		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), size_(size), pos_(pos) {}
+		colMask_(collisionMask), fixedRotation_(fixedRotation), rotation_(rotation), size_(size), pos_(pos), density_(density) {}
 
 	virtual ~BoxCollider();
 
@@ -123,7 +123,7 @@ private:
 	Vector2D pos_, size_;
 	int type;
 	bool isTrigger, isTriggerColliding_;
-	float rotation_, friction_;
+	float rotation_, friction_, density_;
 	uint16 colLay_, colMask_;
 
 	//bool entra = 0;
