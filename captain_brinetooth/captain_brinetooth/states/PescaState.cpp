@@ -16,7 +16,7 @@ void PescaState::init() {
 	//---------
 	entitiesPerLine = 7;
 	Config gancho{};
-	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
+	gancho.pos = Vector2D(sdlutils().width(), 370);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(100.0f, 100.0f);
 	gancho.friction = 0.0f;
@@ -36,6 +36,10 @@ void PescaState::createPesca(const Config& entityConfig) {
 	AnimBlendGraph* floor_anim_controller = floor->addComponent<AnimBlendGraph>();
 	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("arena"), 1, 1, 1, 1, 0);
 	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
+
+	auto* muelle = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() / 2), Vector2D(512 * 3, 128 * 3), 0, Vector2D(0, 0));
+	AnimBlendGraph* muelle_anim_controller = muelle->addComponent<AnimBlendGraph>();
+	muelle_anim_controller->addAnimation("muelle", &sdlutils().images().at("muelle"), 1, 1, 1, 1, 0);
 
 	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5), entityConfig.size, 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* topRod_anim_controller = topRod->addComponent<AnimBlendGraph>();

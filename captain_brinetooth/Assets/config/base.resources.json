@@ -242,11 +242,15 @@
 		},
 		{
 			"id": "piedra",
-			"file": "assets/sprites/armas/piedraPesca.png"
+			"file": "assets/sprites/pesca/piedraPesca.png"
 		},
 		{
 			"id": "arena",
-			"file": "assets/sprites/armas/arenaPesca.png"
+			"file": "assets/sprites/pesca/arenaPesca.png"
+		},
+		{
+			"id": "muelle",
+			"file": "assets/sprites/pesca/muellePesca.png"
 		}
 	],
 
