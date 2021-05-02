@@ -115,6 +115,15 @@ void MapProcedural::update(){
 		travelZone = false;
 
 	}
+
+	//Elimina los triggers de pesca
+	if (stopFishing) {
+		for (auto* t : pescaTriggers) {
+			t->setActive(false);
+		}
+
+		stopFishing = false;
+	}
 }
 
 void MapProcedural::TravelNextRoom(int dir) {
@@ -215,6 +224,7 @@ void MapProcedural::pescar(b2Contact* contact) {
 
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getStates()->changeToPesca();
 
+	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
 }
 
 void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
@@ -415,6 +425,8 @@ void MapProcedural::createConnectionTriggers(int dir) {
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
 			t->setCollisionMethod(pescar);
+
+			pescaTriggers.push_back(t);
 		}
 	}
 }

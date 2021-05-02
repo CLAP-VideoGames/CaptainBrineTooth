@@ -92,10 +92,12 @@ private:
 
 	static void pescar(b2Contact* contact);
 
+	void stoppedFishing(){stopFishing = true;}
+
 protected:
 	int nRooms, nRoomNames = 10;
 	int fase;		//Número de la zona en la que está el player
-	bool gonTotravel = false, travelZone = false;
+	bool gonTotravel = false, travelZone = false, stopFishing = false;
 	int nextDir = -1;
 	//Opcion con struct
 	vector<RoomNames> roomNames;
@@ -114,6 +116,7 @@ protected:
 	MapCollider* chainCollider;
 
 	vector<Entity*> triggers;
+	vector<Entity*> pescaTriggers;
 
 	App* states;
 };

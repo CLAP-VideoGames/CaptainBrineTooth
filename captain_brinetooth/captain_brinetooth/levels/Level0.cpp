@@ -228,6 +228,7 @@ void Level0::load(const string& path) {
 				con.x += (size.x / 2);
 				con.y += (size.y / 2);
 				pescaPos.push_back(con);
+
 			}
 		}
 	}
