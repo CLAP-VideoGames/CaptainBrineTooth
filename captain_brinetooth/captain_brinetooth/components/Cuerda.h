@@ -13,9 +13,11 @@ public:
 
 	void cuerdaDownMovement();
 	void cuerdaUpMovement();
+	void setBajar(bool t) { bajar = t; }
 private:
 	Transform* tr_ = nullptr;
 	BoxCollider* collider_ = nullptr;
 	Entity* hook;
 	AnimBlendGraph* anims_;
+	bool bajar = false;
 };

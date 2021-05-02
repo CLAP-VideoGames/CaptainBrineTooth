@@ -15,4 +15,5 @@ public:
 
 private:
 	BoxCollider* collider_ = nullptr;
+	bool move = false;
 };

@@ -21,13 +21,17 @@ void  Gancho::init()
 	//No se Exactamente donde va para poder hacer el timer
 
 
-	speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0.65f);
-	hookMovement();
+	
 	entity_->setCollisionMethod(contactWithSomething);
 	baitRef = nullptr; //No ref of cattched bait 
 }
 void Gancho::update()
 {
+	if (bajar) {
+		speed = Vector2D(hookBody->getBody()->GetLinearVelocity().x, 0.65f);
+		hookMovement();
+		bajar = false;
+	}
 	if (baitRef != nullptr)
 	{
 		//Si ha tocado con el tope de la cuerda

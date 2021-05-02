@@ -16,11 +16,12 @@ public :
 	bool hasBaitRef();
 	void setBaitReference(Entity* b) { baitRef = b; }
 	int getContactId() { return contactid; } //In order to know wether  has contact with the top of the rod or with the down floor
-
+	void setBajar(bool t) { bajar = t; }
 private:
 
 	int contactid;  // 1 DownMovement //2 UpMovement  //3 Top of the Rod
 	bool move = false;
+	bool bajar = false;
 	float moveTime;         //CurrRealTime
 	float timetoMove = 300;       //Definded time 
 	BoxCollider* hookBody;
