@@ -1,6 +1,6 @@
 #include "Player_Health.h"
 
-
+#include "../states/MenuState.h"
 
 void Player_Health::init()
 {
@@ -94,6 +94,11 @@ void Player_Health::loseLife()
 
 	invulnerability_ = true;
 	elpased_time_invul_ = sdlutils().currRealTime();
+
+	if (vidas <= 0)
+	{
+		respawn();
+	}
 }
 
 int Player_Health::getLife()
@@ -114,5 +119,10 @@ const bool& Player_Health::getInvulnerable()
 
 void Player_Health::respawn()
 {
-	
+	StateMachine* sM = g->getStateMachine();
+	Manager* mngr = entity_->getMngr();
+	mngr->getSoundMngr()->ChangeMainMusic("Menu");
+
+	sM->popState();
+	sM->changeState(new MenuState(g, mngr->getWorld(), mngr->getSoundMngr()));
 }
