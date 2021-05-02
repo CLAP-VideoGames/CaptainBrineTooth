@@ -3,12 +3,13 @@
 #include "../utils/Vector2D.h"
 #include "./BoxCollider.h"
 #include "../ecs/Entity.h"
+class App;
 
 
 class Gancho : public Component
 {
 public :
-	Gancho();
+	Gancho(App* a);
 	virtual ~Gancho() {};
 	void init() override;
 	void update() override;
@@ -25,6 +26,7 @@ private:
 	BoxCollider* hookBody;
 	Vector2D speed;      //Movement in Y 
 	Entity* baitRef;
+	App* app;
 	//Collision check with top and floor
 	static void contactWithSomething(b2Contact* contact);
 	void hookMovement();   //Check contacts at time

@@ -33,9 +33,9 @@ App::App() {
 	//----Inicio por defecto----
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio Juego----
-	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
+	stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
-	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 
 }

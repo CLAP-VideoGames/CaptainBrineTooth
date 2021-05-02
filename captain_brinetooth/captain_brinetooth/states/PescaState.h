@@ -12,8 +12,10 @@ public:
 
 	void createPesca(const Config& entityConfig);
 	void createRandomReward(const Config& entityConfig);
+	App* getApp() { return app; }
 protected:
 	SDL_Rect cam;
 	int entitiesPerLine;
+	
 };
 

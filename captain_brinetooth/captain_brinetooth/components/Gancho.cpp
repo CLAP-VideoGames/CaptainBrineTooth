@@ -1,12 +1,16 @@
 #include "Gancho.h"
+#include "../states/StateMachine.h"
+#include "../states/PlayState.h"
 #include "../sdlutils/SDLUtils.h"
 #include "Reward.h"
 #include "PescaController.h"
+#include "../game/App.h"
 
-Gancho::Gancho()
+Gancho::Gancho(App* a)
 {
 	move = true;
 	contactid = 1; //This means that fishing starts now , and that hook hasnt collided with anithing
+	app = a;
 }
 
 void  Gancho::init()
@@ -90,7 +94,10 @@ void Gancho::collisionAnswer(Entity* contactedfloor)
 		{
 			baitRef->getComponent<Reward>()->giveReward();
 		}
-		
+		//Go back to actual state
+		app->getStateMachine()->popState();
+
+
 	}
 	else if (contactedfloor->getComponent<PescaController>() == nullptr) //Esto es para que solo detecte el suelo 
 	{

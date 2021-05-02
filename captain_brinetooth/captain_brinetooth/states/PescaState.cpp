@@ -58,7 +58,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 	AnimBlendGraph* gancho_anim_controller = gancho->addComponent<AnimBlendGraph>();
 	gancho_anim_controller->addAnimation("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
 	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	gancho->addComponent<Gancho>();
+	gancho->addComponent<Gancho>(app);
 	gancho->addComponent<PescaController>();
 
 
