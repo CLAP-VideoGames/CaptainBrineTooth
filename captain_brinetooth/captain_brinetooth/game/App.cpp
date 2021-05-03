@@ -11,6 +11,7 @@
 #include "../states/MenuState.h"
 #include "../states/IntroState.h"
 #include "../states/PescaState.h"
+#include "../states/OptionsState.h"
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
@@ -29,11 +30,13 @@ App::App() {
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
-	//----Inicio por defecto----
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
-	//----Inicio Juego----
+	//----Inicio por defecto---
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//----Inicio de Options----
+	stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
+	//----Inicio de Juego------
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
-	//-----Zona de pruebas------
+	//-----Zona de pruebas-----
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 

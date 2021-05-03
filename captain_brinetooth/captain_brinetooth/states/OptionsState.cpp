@@ -2,13 +2,8 @@
 #include "../states/MenuState.h"
 #include "../states/PlayState.h"
 
-OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd)
-{
+OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 	cam = a->camera;
-
-	//No tengo ni idea pero si no es chikito
-	cam.w = cam.w * a->getCameraZooOut();
-	cam.h = cam.h * a->getCameraZooOut();
 }
 
 void OptionsState::init(){
@@ -24,6 +19,19 @@ void OptionsState::init(){
 
 	manager_->getSoundMngr()->playPauseMusic();
 
+
+	//COSAS
+	float sizeFactor;
+	// Titulo
+	auto* title = manager_->addEntity();
+	Texture* imageTexture = &sdlutils().images().at("titulo");
+	sizeFactor = 0.4;
+	float factor_ = app->getCameraZooOut();
+
+	//SDL_Rect rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w / 1.9, cam.h * 0.07), factor_, sizeFactor, true);
+	//title->addComponent<Image>(imageTexture, rectPos, "titulo");
+	// 
+
 	//zoom 2		std::pair<Vector2D, Vector2D> size = {Vector2D(500 * App::camera_Zoom_Out, 50*App::camera_Zoom_Out), Vector2D(100 * App::camera_Zoom_Out, 100 * App::camera_Zoom_Out)};
 											// Barra			Barco
 	std::pair<Vector2D, Vector2D> size = { Vector2D(900, 100), Vector2D(200, 200) };
@@ -35,20 +43,20 @@ void OptionsState::init(){
 	Texture* textures[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume(), app);
 
-	//zoom 2		pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.55 * App::camera_Zoom_Out));
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.5));
+	////zoom 2		pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.55 * App::camera_Zoom_Out));
+	//pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.5));
 
-	Texture* textures1[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
-	createEffects(manager_, pos, size, textures1, manager_->getSoundMngr()->EffectsVolume(), app);
+	//Texture* textures1[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
+	//createEffects(manager_, pos, size, textures1, manager_->getSoundMngr()->EffectsVolume(), app);
 
 
-	//zoom 2		pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.85 * App::camera_Zoom_Out));
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.75));
+	////zoom 2		pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX()/2)), cam.h * 0.85 * App::camera_Zoom_Out));
+	//pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.75));
 
-	Texture* textures2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
-	createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()), app);
+	//Texture* textures2[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
+	//createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()), app);
 
-	botonVolver();
+	//botonVolver();
 }
 
 Entity* OptionsState::botonVolver(){
@@ -77,12 +85,12 @@ Entity* OptionsState::botonVolver(){
 
 Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume, App* a){
 	Entity* sliderVolume = mngr->addEntity();
-	
+	//
 	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().images().at("volumen"), a, 0.5f, 1.0f);
 
-	//Est� mmmuy alto
-	float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol()/2);
-	slider->setSlider(newVol);
+	////Est� mmmuy alto
+	//float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol()/2);
+	////slider->setSlider(newVol);
 
 	return sliderVolume;
 }
@@ -92,7 +100,7 @@ Entity* OptionsState::createEffects(Manager* mngr, const Vector2D& pos, const st
 	Slider* slider =  sliderEffects->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().images().at("efectos"), a, 0.5f, 4.0f);
 
 	float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol() / 2);
-	slider->setSlider(newVol);
+	//slider->setSlider(newVol);
 
 	return sliderEffects;
 }
