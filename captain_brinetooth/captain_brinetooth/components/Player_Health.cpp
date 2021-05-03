@@ -88,10 +88,10 @@ void Player_Health::loseLife()
 	switch (x)
 	{
 	case 0:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_hurt2", 300);
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_hurt2", 0);
 		break;
 	case 1:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_hurt1", 300);
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_hurt1", 0);
 		break;
 	
 	default:
