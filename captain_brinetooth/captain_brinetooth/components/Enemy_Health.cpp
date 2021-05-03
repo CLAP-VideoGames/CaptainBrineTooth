@@ -34,13 +34,13 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 	switch (x)
 	{
 	case 0:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt", 200);
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt", 15);
 		break;
 	case 1:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt1", 200);
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt1", 15);
 		break;
 	case 2:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 200);
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 15);
 	default:
 		break;
 	}
