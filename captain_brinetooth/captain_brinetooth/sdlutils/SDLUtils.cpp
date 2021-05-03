@@ -30,6 +30,13 @@ SDLUtils::~SDLUtils() {
 	closeWindow();
 }
 
+std::string SDLUtils::getNameFilePath(std::string& path){
+	int puntoCorte = path.find_last_of("\\");
+	int length = path.length(); //Final del string
+	std::string namePath = path.substr(puntoCorte + 1, length);
+	return namePath;
+}
+
 void SDLUtils::initWindow() {
 	// initialise SDL
 	int sdlInit_ret = SDL_Init(SDL_INIT_EVERYTHING);

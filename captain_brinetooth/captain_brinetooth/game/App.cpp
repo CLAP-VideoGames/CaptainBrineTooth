@@ -76,7 +76,7 @@ void App::start() {
 
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			exit = true;
-			continue;
+			//continue;
 		}
 		//Procesamos la entrada del usuario y cualquier cambio de entidad
 		stateMachine->currentState()->update();

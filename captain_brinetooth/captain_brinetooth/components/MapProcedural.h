@@ -14,15 +14,27 @@ using namespace ColLayers;
 struct Room {
 	Room() {};
 
-	string getName() {
-		int puntoCorte = level.find_last_of("\\");
-		int length = level.length(); //Final del string
-		string namePath = level.substr(puntoCorte + 1, length);
-		return namePath;
+	~Room() {
+		
+	};
+
+	string nameLevel;
+	string level;	//Nombre del tileMap
+};
+
+struct CurrentRoom {
+
+	CurrentRoom(){
+
 	}
 
+	~CurrentRoom() {
+
+	};
+
+	string nameLevel;
 	string level;	//Nombre del tileMap
-	std::array<Room*, 4> conections;	//Conexiones con otras habitaciones
+	std::array<Room, 4> conections;	//Conexiones con otras habitaciones
 	std::array<bool, 4> cons; //Array para crear las conexiones
 };
 
@@ -57,42 +69,47 @@ public:
 
 	void travelNextZone();
 
+	bool isZoneCompleted();
+
+	int getPhase();
+
 	Vector2D getPlayerPos();
-
-	bool zoneCompleted();
-
-	int zone();
 
 	App* getStates() { return states; }
 
 private:
 
-	void setFase(int f);
+	void setPhase(int f);
 
 	void setNumRooms(int nR);
 
-
 	void ReadDirectory(const string& p, int& roomsRead);
 
-	//Primera sala
-	Room* initializeNewRoom(const RoomNames& tag);
+	/// <summary>
+	/// Inicializa la primera sala
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	CurrentRoom* initializeNewRoom(const RoomNames& tag);
 
-	void CreateConnections(Room* r, const std::array<bool, 4>& rConnections, int dir);
+	Room initializeRoom(int dir);
 
-	Room* initializeRoom(Room* partida, int dir);
+	void CreateConnections(CurrentRoom* r, const std::array<bool, 4>& rConnections, int dir);
+
 
 	void getConec(const string& name, std::array<bool, 4>& cons);
 
 	//Devuelve si se han explorado todas las habitaciones de la zona
 	void createConnectionTriggers(int dir);
 
+	void stoppedFishing(){stopFishing = true;}
+
+	//Callbacks
 	static void travel(b2Contact* contact);
 
 	static void travelNextZone(b2Contact* contact);
 
 	static void pescar(b2Contact* contact);
-
-	void stoppedFishing(){stopFishing = true;}
 
 protected:
 	int nRooms, nRoomNames = 10;
@@ -106,7 +123,8 @@ protected:
 	int roomsExplored = 1;
 
 	//Habitacion actual
-	Room* actualRoom;
+	//Room* actualRoom;
+	CurrentRoom* actualRoom;
 
 	//Divisi�n entre tipos de salas
 	std::array<int, 2> fronteras;

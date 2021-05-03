@@ -1,5 +1,13 @@
 ﻿#include "MapProcedural.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include<iostream>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif
+
 MapProcedural::MapProcedural(int nR, int f, App* s)
 {
 	nRooms = nR;
@@ -53,31 +61,90 @@ void MapProcedural::init() {
 		ReadDirectory("assets/maps/level_ends2", roomsRead);
 	}
 
-	//Cacheamos el componente Level
-
+	//En funcion de la fase, obtenemos de manera aletoria el nombre de una de las salas  
 	int tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 	//Testing
 	//int tile = 0;
-
 	actualRoom = initializeNewRoom(roomNames[tile]);
 
 	roomNames[tile].used = true;
 }
 
-void MapProcedural::setTravel(const bool travel, int dir)
-{
-	gonTotravel = travel;
-	nextDir = dir;
+CurrentRoom* MapProcedural::initializeNewRoom(const RoomNames& tag) {
+	cout << tag.name;
+	CurrentRoom* r = new CurrentRoom();
+	///*std::string test = "assets/maps/level_rooms/NSWtile6.tmx";
+	//lvl->load(test);*/
+	r->level = tag.path;
+	r->nameLevel = sdlutils().getNameFilePath(r->level);
+
+	lvl->load(r->level);
+
+	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
+
+	////Setteamos las conexiones en funcion del nombre del archivo
+	getConec(tag.name, r->cons);
+
+	CreateConnections(r, r->cons, -1);
+
+	return r;
 }
 
-Vector2D MapProcedural::getPlayerPos()
-{
-	tmx::Vector2f s = lvl->getPlayerPos();
+void MapProcedural::CreateConnections(CurrentRoom* r, const std::array<bool, 4>& rConnections, int dir) {
+	for (int i = 0; i < 4; i++) {
+		if (rConnections[i] == true) r->conections[i] = initializeRoom(i);
 
-	Vector2D spawn(s.x, s.y);
-
-	return spawn;
+	}
+	createConnectionTriggers(dir);
 }
+
+Room MapProcedural::initializeRoom(int dir) {
+	int tile;
+
+	if (roomsExplored == nRooms - 1) {
+		//Habitaci�n final
+		tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
+	}
+	else {
+		//Habitación intermedia
+		tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
+	}
+
+	Room r;
+
+	//Cogemos la posici�n opuesta
+	int opositeDir = dir + 2;
+
+	if (opositeDir >= 4) opositeDir = opositeDir - 4;
+
+	bool concuerda = (roomNames[tile].name[opositeDir] == cardinals[opositeDir]);
+
+
+	//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
+	while (!concuerda) {
+
+		if (roomsExplored == nRooms - 1)
+			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
+		else
+			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1]);
+
+		int i = 0;
+		//Comprobamos que tiene conexión por el cardinal opuesto
+		while (i < 4 && roomNames[tile].name[i] != cardinals[opositeDir]) i++;
+
+		if (i < 4) concuerda = true;
+	}
+	//Si la habitaci�n tiene una conexi�n, la del otro lado tiene que tener conexi�n opuesta
+	//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcci�n que pareces tonto
+
+	roomNames[tile].used = true;
+	r.level = roomNames[tile].path;
+	r.nameLevel = sdlutils().getNameFilePath(roomNames[tile].path);
+
+	return r;
+}
+
+
 
 void MapProcedural::update(){
 
@@ -99,7 +166,7 @@ void MapProcedural::update(){
 
 		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
-		setFase(fase + 1);
+		setPhase(fase + 1);
 		setNumRooms(10);
 		init();
 
@@ -128,7 +195,10 @@ void MapProcedural::update(){
 
 void MapProcedural::TravelNextRoom(int dir) {
 	//Nueva habitaci�n a la que hemos ido
-	actualRoom = actualRoom->conections[dir];
+
+
+	actualRoom->level = actualRoom->conections[dir].level;
+	actualRoom->nameLevel = actualRoom->conections[dir].nameLevel;
 	//lvl->clearTileset();
 	//Cargamos nuevo mapa
 	lvl->load(actualRoom->level);
@@ -147,7 +217,8 @@ void MapProcedural::TravelNextRoom(int dir) {
 
 	//cout << actualRoom->getName();
 	//Cogemos sus conexiones	
-	getConec(actualRoom->getName(), actualRoom->cons);
+	getConec(actualRoom->nameLevel, actualRoom->cons);
+
 	//Creamos habitaciones en funci�n de las conexiones que tiene
 	CreateConnections(actualRoom, actualRoom->cons, dir);
 
@@ -156,12 +227,12 @@ void MapProcedural::TravelNextRoom(int dir) {
 	std::cout << roomsExplored << "\n";
 }
 
-bool MapProcedural::zoneCompleted()
+bool MapProcedural::isZoneCompleted()
 {
 	return roomsExplored == nRooms;
 }
 
-int MapProcedural::zone()
+int MapProcedural::getPhase()
 {
 	return fase;
 }
@@ -170,7 +241,7 @@ void MapProcedural::travelNextZone() {
 	travelZone = true;
 }
 
-void MapProcedural::setFase(int f) { 
+void MapProcedural::setPhase(int f) { 
 	fase = f; 
 }
 
@@ -253,84 +324,29 @@ void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 	}
 }
 
-Room* MapProcedural::initializeNewRoom(const RoomNames& tag) {
-	cout << tag.name;
-	Room* r = new Room();
-	/*std::string test = "assets/maps/level_rooms/NSWtile6.tmx";
-	lvl->load(test);*/
-	r->level = tag.path;
-	lvl->load(r->level);
-
-	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
-
-	//Opcion 1
-	getConec(tag.name, r->cons);
-
-
-	CreateConnections(r, r->cons, -1);
-
-	return r;
-}
-
-void MapProcedural::CreateConnections(Room* r, const std::array<bool, 4>& rConnections, int dir) {
-	for (int i = 0; i < 4; i++) {
-		if (rConnections[i] == true) r->conections[i] = initializeRoom(r, i);
-
-	}
-	createConnectionTriggers(dir);
-}
-
-Room* MapProcedural::initializeRoom(Room* partida, int dir) {
-	int tile;
-	//Tenemos que reconocer donde est�n los extremos, para poder poner habitaciones lim�trofes
-	//Y tambi�n deber�amos crear los colliders desde level, btw
-	if (roomsExplored == nRooms - 1) {
-		//Habitaci�n final
-		tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
-	}
-	else {
-		//Habitación intermedia
-		tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
-	}
-
-	Room* r = new Room();
-
-	//Cogemos la posici�n opuesta
-	int opositeDir = dir + 2;
-
-	if (opositeDir >= 4) opositeDir = opositeDir - 4;
-
-	bool concuerda = (roomNames[tile].name[opositeDir] == cardinals[opositeDir]);
-
-
-	//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
-	while (!concuerda) {
-
-		if (roomsExplored == nRooms - 1)
-			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
-		else
-			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1]);
-
-		int i = 0;
-		//Comprobamos que tiene conexión por el cardinal opuesto
-		while (i < 4 && roomNames[tile].name[i] != cardinals[opositeDir]) i++;
-
-		if (i < 4) concuerda = true;
-	}
-	//Si la habitaci�n tiene una conexi�n, la del otro lado tiene que tener conexi�n opuesta
-	//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcci�n que pareces tonto
-
-	roomNames[tile].used = true;
-	r->level = roomNames[tile].path;
-
-	return r;
-}
-
+/// <summary>
+/// Dado el nombre del archivo de un Tile, selecciona sus conexiones
+/// </summary>
+/// <param name="name"></param>
+/// <param name="cons"></param>
 void MapProcedural::getConec(const string& name, std::array<bool, 4>& cons) {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++)
 			if (name[i] == cardinals[j]) cons[j] = true;
 	}
+}
+
+void MapProcedural::setTravel(const bool travel, int dir) {
+	gonTotravel = travel;
+	nextDir = dir;
+}
+
+Vector2D MapProcedural::getPlayerPos() {
+	tmx::Vector2f s = lvl->getPlayerPos();
+
+	Vector2D spawn(s.x, s.y);
+
+	return spawn;
 }
 
 void MapProcedural::createConnectionTriggers(int dir) {

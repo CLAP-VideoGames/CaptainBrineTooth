@@ -44,6 +44,9 @@ public:
 	SDLUtils& operator=(SDLUtils&) = delete;
 	SDLUtils& operator=(SDLUtils&&) = delete;
 
+	//string nameFilePath
+	std::string getNameFilePath(std::string& path);
+
 	// access to the underlying SDL_Window -- in principle not needed
 	inline SDL_Window* window() {
 		return window_;

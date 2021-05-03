@@ -52,6 +52,7 @@ void MapCollider::createChainFixture() {
 		bodies_[i].body_->SetFixedRotation(fixedRotation_);
 
 		b2ChainShape chain;
+
 		//Vertice fantasmas inicial								//Vertice fantasmas final
 		//chain.CreateLoop(vs, 4/*, b2Vec2(sdlutils().width() / 6.5f, sdlutils().height() / 2.0f), b2Vec2(sdlutils().width() / 1.0f, sdlutils().height() / 2.0f)*/);
 		//chain.CreateChain(vs, sizeChain, b2Vec2((vs[0].x) - 30.0f / sdlutils().getPPM(), ((vs[0].y)) / sdlutils().getPPM()), b2Vec2((vs[sizeChain - 1].x) / sdlutils().getPPM(), ((vs[sizeChain - 1].y - 30)) / sdlutils().getPPM()));
@@ -81,6 +82,9 @@ void MapCollider::deleteChains()
 	for (auto& bodyC : bodies_) {
 		bodyC.fixt_ = nullptr;
 		bodyC.body_->GetWorld()->DestroyBody(bodyC.body_);
+
+		delete[] bodyC.vs;
+		delete[] bodyC.realPoints;
 		int m = 10;
 	}
 
