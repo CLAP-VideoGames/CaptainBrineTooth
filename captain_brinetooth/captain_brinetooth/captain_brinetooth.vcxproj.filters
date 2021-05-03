@@ -294,9 +294,6 @@
     <ClInclude Include="components\Inventory.h">
       <Filter>Archivos de encabezado\components\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="components\Slider.h">
-      <Filter>Archivos de encabezado\components\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="components\Map.h">
       <Filter>Archivos de encabezado\components\Map</Filter>
     </ClInclude>
@@ -374,6 +371,9 @@
     </ClInclude>
     <ClInclude Include="components\ParallaxScroll.h">
       <Filter>Archivos de encabezado\components\SpritesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="components\Slider.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -453,9 +453,6 @@
     <ClCompile Include="components\LoseLife.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="components\Button.cpp">
-      <Filter>Archivos de origen\components</Filter>
-    </ClCompile>
     <ClCompile Include="components\Sword.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
@@ -498,9 +495,6 @@
     <ClCompile Include="components\Crab.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="states\OptionsState.cpp">
-      <Filter>Archivos de origen\states</Filter>
-    </ClCompile>
     <ClCompile Include="components\MachineGun.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
@@ -511,9 +505,6 @@
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
     <ClCompile Include="components\Inventory.cpp">
-      <Filter>Archivos de origen\components</Filter>
-    </ClCompile>
-    <ClCompile Include="components\Slider.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="ecs\SoundManager.cpp">
@@ -620,6 +611,15 @@
     </ClCompile>
     <ClCompile Include="components\WeaponDamageDetection.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Button.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Slider.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="states\OptionsState.cpp">
+      <Filter>Archivos de origen\states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

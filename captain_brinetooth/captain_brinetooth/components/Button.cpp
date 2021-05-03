@@ -14,10 +14,10 @@ void Button::update(){
 }
 
 void Button::render(){
-	Transform* t = entity_->getComponent<Transform>();
+	Transform* trans = entity_->getComponent<Transform>();
 
-	Vector2D aux = t->getPos();
-	SDL_Rect dest = build_sdlrect(aux, t->getW(), t->getH());
+	Vector2D aux = trans->getPos();
+	SDL_Rect dest = build_sdlrect(aux, trans->getW(), trans->getH());
 
 	tex->render(dest);
 
@@ -28,13 +28,11 @@ void Button::render(){
 }
 
 bool Button::handleEvent(){
-	Transform* t = entity_->getComponent<Transform>();
+	Transform* tr = entity_->getComponent<Transform>();
 	SDL_Point mouseP = { ih().getMousePos().first, ih().getMousePos().second};
-	SDL_Rect dest = build_sdlrect(t->getPos(), t->getW(), t->getH());
-	//Así no queda tan feo :D, no me grites David Please
+	SDL_Rect dest = build_sdlrect(tr->getPos(), tr->getW(), tr->getH());
 	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE){
 		if (ih().mouseButtonEvent()){
-			//game->getStateMachine()->currentState()->getMngr()->getSoundMngr();
 			cboq(game, soundController);
 			return true;
 		}

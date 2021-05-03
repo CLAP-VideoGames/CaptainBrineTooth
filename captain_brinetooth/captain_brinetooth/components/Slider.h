@@ -34,6 +34,7 @@ private:
 	std::function<void(float, Entity*)> callback_;
 	SDL_Rect backgroundSlideRct = {};
 	SDL_Rect* Sliderdest = {};
+	SDL_Rect titleDest = {};
 
 	Texture* textures[NUM_TEXTURES] = {};
 	Texture* textureText = nullptr;

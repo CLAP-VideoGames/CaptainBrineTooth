@@ -18,63 +18,66 @@ Slider::Slider(const Vector2D& pos_, const std::pair<Vector2D, Vector2D>& sizes_
 	selected = false;
 }
 
-Slider::~Slider(){
+Slider::~Slider() {
 }
 
-void Slider::init(){
+void Slider::init() {
 	mngr = entity_->getMngr();
+	float factor_ = a->getCameraZooOut();
 
+	//FondoSlider
 	background = mngr->addEntity();
+	backgroundSlideRct.w = 600 * factor_;
+	backgroundSlideRct.h = 90 * factor_;
 
-	SDL_Rect rectPos;
-	rectPos.x = 0;
-	rectPos.y = 0;
-	rectPos.w = App::camera.w;
-	rectPos.h = App::camera.h;
+	backgroundSlideRct.x = pos.getX() - (backgroundSlideRct.w / 2);
+	backgroundSlideRct.y = pos.getY();
+	background->addComponent<Image>(textures[0], backgroundSlideRct, "fondo");
 
-	Texture* imageTexture = textures[0];
-	sizeFactor = 0.5;
-	float factor_ = App::camera_Zoom_Out;
 
-	rectPos = a->getStateMachine()->currentState()->ScaleSDL_Rect(imageTexture, Vector2D(App::camera.w / 2, App::camera.h * 0.2), factor_, sizeFactor, false);
-	rectPos.x += rectPos.x / 4;
-	rectPos.y += rectPos.y * posY;
+	//Titulo : No cambiar de orden,  tiene que ir antes el FondoSlider
+	titleDest.w = textureText->width() * factor_ * sizeFactor;
+	titleDest.h = textureText->height() * factor_ * sizeFactor;
 
-	backgroundSlideRct = build_sdlrect(pos, sizes.first.getX(), sizes.first.getY());
-	background->addComponent<Image>(textures[0], rectPos, "fondo");	
-	
+	titleDest.x = (backgroundSlideRct.x + (backgroundSlideRct.w / 2)) - (titleDest.w / 2);
+	titleDest.y = backgroundSlideRct.y - titleDest.h - (posY * factor_);
 
+
+	//Slider 
 	slide = mngr->addEntity();
+	Vector2D posSlide = Vector2D(pos.getX() * 1.1f, pos.getY() - (backgroundSlideRct.h * 0.5f));
 
-	sizeFactor = 0.5;
-	imageTexture = textures[1];
-	rectPos = a->getStateMachine()->currentState()->ScaleSDL_Rect(imageTexture, Vector2D(App::camera.w , App::camera.h * 0.2), factor_, sizeFactor, true);
-	rectPos.x += rectPos.x / 2; // Esto por alguna razon no funciona muy bien
-	rectPos.y += (rectPos.y * (posY/1.1));
+	SDL_Rect slideRect;
 
-	sliderImage = slide->addComponent<Image>(textures[1], rectPos, "fondo");
+	slideRect.w = sizes.second.getX() * factor_;
+	slideRect.h = sizes.second.getY() * factor_;
 
+	slideRect.x = posSlide.getX() - (slideRect.w / 2);
+	slideRect.y = posSlide.getY();
+
+	//Guardamos el rectangulo del slider
+	sliderImage = slide->addComponent<Image>(textures[1], slideRect, "fondo");
 	Sliderdest = (sliderImage->getDestRect());
 }
 
-void Slider::update(){
+void Slider::update() {
 	SDL_Point mouseP = { ih().getMousePos().first, ih().getMousePos().second };
 	if (SDL_PointInRect(&mouseP, Sliderdest) == SDL_TRUE) {
 		//Si ha habido un evento de raton o si se sigue presionando
-		if (ih().mouseButtonEvent() || ih().getMouseButtonHeld()){
+		if (ih().mouseButtonEvent() || ih().getMouseButtonHeld()) {
 			//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
-			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().getLeftMouseButtonPressed()){
+			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().getLeftMouseButtonPressed()) {
 				//std::cout << "pressed" << std::endl;
 				//Necesito esto para saber en qué momento selecciona la imagen del Slider
 				selected = true;
 			}
 		}
-		
+
 	}
 
 	//Compruebo que ha soltado el boton y que si se ha seleccionado la imagen
 	if (!ih().getLeftMouseButtonPressed() && selected) selected = false;
-	else if(selected) { //No me sirve con verificar que sólo mantiene el boton izquierdo presionado. Necesito comprobar que también la imagen sigue seleccionada
+	else if (selected) { //No me sirve con verificar que sólo mantiene el boton izquierdo presionado. Necesito comprobar que también la imagen sigue seleccionada
 		int newPos = mouseP.x - (Sliderdest->w / 2);
 		if (newPos >= backgroundSlideRct.x - (Sliderdest->w / 2) && newPos <= backgroundSlideRct.x + backgroundSlideRct.w - (Sliderdest->w / 2)) {
 			//Actualizamos la posición del Slider
@@ -92,17 +95,21 @@ void Slider::update(){
 /// Posicion el slider dado un valor de 0 a 1
 /// </summary>
 /// <param name="value"> de 0 a 1</param>
-void Slider::setSlider(float& value){
+void Slider::setSlider(float& value) {
 	int valor = backgroundSlideRct.w * value;
 	int newPos = backgroundSlideRct.x + valor - (Sliderdest->w / 2);
 	sliderImage->moveRect(newPos, Sliderdest->y);
 }
 
-void Slider::render(){
-	textureText->render(((backgroundSlideRct.x + (backgroundSlideRct.w/2)) - (textureText->width()/2)), backgroundSlideRct.y - 200);
+void Slider::render() {
+	textureText->render(titleDest);
+	if (sdlutils().getDebug()) {
+		SDL_SetRenderDrawColor(sdlutils().renderer(), 255, 0, 0, 255);
+		SDL_RenderDrawRect(sdlutils().renderer(), &titleDest);
+	}
 }
 
-void Slider::desactivateSlider(){
+void Slider::desactivateSlider() {
 	background->setActive(false);
 	slide->setActive(false);
 }
