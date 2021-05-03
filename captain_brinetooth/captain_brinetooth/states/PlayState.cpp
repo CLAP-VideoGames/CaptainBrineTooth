@@ -40,28 +40,28 @@ void PlayState::init() {
 	////SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
 	createLevel0();
 
-	//Config playerConfig{};
-	//playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
-	////playerConfig.pos = Vector2D(0, 0);
-	//playerConfig.vel = Vector2D(0, 0);
-	//playerConfig.size = Vector2D(100.0f, 100.0f);
-	//playerConfig.friction = 0.2f;
-	//playerConfig.physicType = DYNAMIC;
-	//playerConfig.fixedRotation = true;
-	//playerConfig.rotation = 0.0f;
-	//createPlayer(playerConfig);
+	Config playerConfig{};
+	playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
+	//playerConfig.pos = Vector2D(0, 0);
+	playerConfig.vel = Vector2D(0, 0);
+	playerConfig.size = Vector2D(100.0f, 100.0f);
+	playerConfig.friction = 0.2f;
+	playerConfig.physicType = DYNAMIC;
+	playerConfig.fixedRotation = true;
+	playerConfig.rotation = 0.0f;
+	createPlayer(playerConfig);
 
-	//Config swordGiverConfig{};
-	//swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
-	//swordGiverConfig.vel = Vector2D();
-	//swordGiverConfig.size = Vector2D(50, 50);
-	//swordGiverConfig.friction = 0.2f;
-	//swordGiverConfig.physicType = STATIC;
-	//swordGiverConfig.fixedRotation = true;
-	//swordGiverConfig.rotation = 0.0f;
-	//swordGiverConfig.spriteId = "espada";
-	//int swordNumber = 0;
-	//createWeaponGiver(swordGiverConfig, swordNumber);
+	Config swordGiverConfig{};
+	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
+	swordGiverConfig.vel = Vector2D();
+	swordGiverConfig.size = Vector2D(50, 50);
+	swordGiverConfig.friction = 0.2f;
+	swordGiverConfig.physicType = STATIC;
+	swordGiverConfig.fixedRotation = true;
+	swordGiverConfig.rotation = 0.0f;
+	swordGiverConfig.spriteId = "espada";
+	int swordNumber = 0;
+	createWeaponGiver(swordGiverConfig, swordNumber);
 
 	//Config hammerGiverConfig{};
 	//hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
