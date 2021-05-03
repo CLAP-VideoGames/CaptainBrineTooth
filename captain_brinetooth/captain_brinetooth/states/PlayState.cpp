@@ -174,18 +174,33 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addAnimation("idle", &sdlutils().images().at("player_idle"), 4, 6, 24, 24, -1);
 	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
 	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 6, 24, 24, 0);
+	anim_controller->addAnimation("dash_ground", &sdlutils().images().at("player_dash_ground"), 3, 4, 12, 60, 0);
+	anim_controller->addAnimation("dash_air", &sdlutils().images().at("player_dash_air"), 3, 4, 12, 60, 0);
 	//Proportion?
 	anim_controller->keepProportion("idle", Vector2D(player->getComponent<Transform>()->getW(), player->getComponent<Transform>()->getH()));
-	//Transitions
+	//Transitions 
 	anim_controller->addTransition("idle", "run", "Speed", 1, false);
 	anim_controller->addTransition("run", "idle", "Speed", 0, false);
 	anim_controller->addTransition("run", "jump", "NotOnFloor", 1, false);	//Anim fuente, anim destino, parametro, valor de parametro, esperar a que termine la animacion
 	anim_controller->addTransition("jump", "run", "NotOnFloor", 0, false);
 	anim_controller->addTransition("idle", "jump", "NotOnFloor", 1, false);
 	anim_controller->addTransition("jump", "idle", "NotOnFloor", 0, true);
+#pragma endregion
+#pragma region dash
+	//Transitions
+	anim_controller->addTransition("jump", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("dash_air", "jump", "Dash_Air", 0, true);
+	anim_controller->addTransition("run", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_ground", "run", "Dash_Ground", 0, true);
+	anim_controller->addTransition("idle", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_ground", "idle", "Dash_Ground", 0, true);
+#pragma endregion
+#pragma region parametros
+	//--Parametros--
 	anim_controller->setParamValue("NotOnFloor", 0);	//AVISO: Si no existe el parametro, no hara nada
 	anim_controller->setParamValue("Speed", 0);
-	//--------------------------------------------------------------------------------------------------------------
+	anim_controller->setParamValue("Dash_Air", 0);
+	anim_controller->setParamValue("Dash_Ground", 0);
 #pragma endregion
 #pragma region Weapons
 	//-WEAPONS------------------------------------------------------------------------------------------------------

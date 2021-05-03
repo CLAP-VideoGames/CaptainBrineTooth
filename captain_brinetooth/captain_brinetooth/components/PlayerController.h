@@ -13,7 +13,7 @@ using namespace ColLayers;
 
 class PlayerController : public Component {
 public:																
-PlayerController(const float & speed = 3.0f, const float& forceJ = 0.9f , const float& dashS = 5.0f):
+PlayerController(const float & speed = 3.0f, const float& forceJ = 0.9f , const float& dashS = 1.0f):
 															//falso				//falso
 		tr_(nullptr), speed_(speed), forceJump_(forceJ), isOnFloor(false), isOnAir(false), dashSpeed(dashS), isDashing(false), canDash(true){}
 
@@ -37,7 +37,7 @@ private:
 	SoundManager* snd = nullptr;
 	TriggerCollider* trigger_ = nullptr;
 
-	int time = 1500, dashCoolDown = 10000, lasTimeDashed, lastTimeJumped,timer;
+	int time = 1500, dashCoolDown = 1000, lasTimeDashed, lastTimeJumped,timer;
 	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;
 	//Flags
 	bool isOnFloor, isOnAir, isDashing, canDash, moveLeft, moveRight, paralized;

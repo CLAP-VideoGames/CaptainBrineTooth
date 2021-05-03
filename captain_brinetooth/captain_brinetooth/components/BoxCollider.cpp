@@ -256,3 +256,12 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 
 	 fixture = body->CreateFixture(&fixtureDef);
  }
+
+ void BoxCollider::changeColLayer_and_Mask(const uint16& colL, const uint16& colM)
+ {
+	 b2Filter filt;
+	 filt.categoryBits = colL;
+	 filt.groupIndex = fixture->GetFilterData().groupIndex;
+	 filt.maskBits = colM;
+	 fixture->SetFilterData(filt);
+ }

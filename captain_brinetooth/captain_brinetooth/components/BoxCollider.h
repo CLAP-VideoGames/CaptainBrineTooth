@@ -118,6 +118,7 @@ public:
 
 	void Resize(Vector2D size);
 
+	void changeColLayer_and_Mask(const uint16& colL, const uint16& colM);
 private:
 	Transform* tr_;
 	Vector2D pos_, size_;

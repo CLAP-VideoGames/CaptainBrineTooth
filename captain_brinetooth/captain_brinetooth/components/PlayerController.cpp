@@ -71,13 +71,14 @@ void PlayerController::update()
 		}
 
 		//Para juego final añadir && canDash
-		if (ih().isKeyDown(SDLK_LSHIFT) && !isDashing) {
+		if (ih().isKeyDown(SDLK_LSHIFT) && canDash) {
 			gravity = collider_->getBody()->GetGravityScale();
 			collider_->getBody()->SetGravityScale(0.0f);
 			collider_->setSpeed(Vector2D(0, 0));
 			isDashing = true;
 			if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
 			else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
+			collider_->changeColLayer_and_Mask(PLAYER_DASH, PLAYER_DASH_MASK);
 			canDash = false;
 		}
 	}
@@ -106,11 +107,17 @@ void PlayerController::update()
 	else
 		animController_->setParamValue("Speed", 1);
 
-	/*//--No vel en Y
-	if (collider_->getBody()->GetLinearVelocity().y == 0) {
-		isOnFloor = true;
-		animController_->setParamValue("NotOnFloor", 0);
-	}*/
+	//dash aire o suelo
+	if (isDashing) {
+		if (animController_->getCurrentAnimation()->getID() == "jump")
+			animController_->setParamValue("Dash_Air", 1);
+		else
+			animController_->setParamValue("Dash_Ground", 1);
+	}
+	else {
+		animController_->setParamValue("Dash_Air", 0);
+		animController_->setParamValue("Dash_Ground", 0);
+	}
 #pragma endregion
 #pragma region Movement
 	//Ambas direcciones o ninguna
@@ -133,21 +140,20 @@ void PlayerController::update()
 
 	}
 #pragma endregion
-
-	if (isDashing) {
+#pragma region Dash
+	if (isDashing && animController_->isComplete()) {
 		b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-		if (std::abs(vel.x) == 0) {
-			collider_->getBody()->SetGravityScale(gravity);
-			isDashing = false;
-
-			//collider_->setSpeed(Vector2D(vel.x - 0.3, 0));
-		}
+		collider_->setSpeed(Vector2D(0, 0));
+		collider_->getBody()->SetGravityScale(gravity);
+		collider_->changeColLayer_and_Mask(PLAYER, PLAYER_MASK);
+		isDashing = false;
 	}
 
-	if (sdlutils().currRealTime() - lasTimeDashed >= dashCoolDown) {
+	if (dashCoolDown + lasTimeDashed < sdlutils().currRealTime()) {
 		lasTimeDashed = sdlutils().currRealTime();
 		canDash = true;
 	}
+#pragma endregion
 }
 
 void PlayerController::initEntityColliders()

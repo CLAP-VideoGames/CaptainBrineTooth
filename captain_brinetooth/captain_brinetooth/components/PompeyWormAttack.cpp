@@ -175,6 +175,7 @@ void PompeyWormAttack::hit(b2Contact* contact)
 				if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
 					auto* collider = bodyA->getComponent<BoxCollider>();
 					collider->setSpeed(Vector2D(0.0, 0.0));
+					collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
 					collider->triggerCollide(true);
 				}
 			}
@@ -199,6 +200,7 @@ void PompeyWormAttack::hit(b2Contact* contact)
 						if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
 							auto* collider = bodyA->getComponent<BoxCollider>();
 							collider->setSpeed(Vector2D(0.0, 0.0));
+							collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
 							collider->triggerCollide(true);
 						}
 					}

@@ -13,8 +13,12 @@
 			"file": "assets/sprites/player/player_idle.png"
 		},
 		{
-			"id": "player_dash",
-			"file": "assets/sprites/player/player_dash.png"
+			"id": "player_dash_ground",
+			"file": "assets/sprites/player/player_dash_ground.png"
+		},
+		{
+			"id": "player_dash_air",
+			"file": "assets/sprites/player/player_dash_air.png"
 		},
 		{
 			"id": "player_cana",
