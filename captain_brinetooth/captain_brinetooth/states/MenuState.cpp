@@ -5,9 +5,6 @@
 
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 	cam = a->camera;
-	//No tengo ni idea pero si no es chikito
-	cam.w = cam.w * a->getCameraZooOut();
-	cam.h = cam.h * a->getCameraZooOut();
 }
 
 void MenuState::init() {
