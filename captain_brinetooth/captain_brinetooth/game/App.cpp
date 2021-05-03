@@ -158,6 +158,8 @@ void App::createBackGround(const std::string& spriteId, const int& fils, const i
 
 void App::changeToPesca()
 {
+	stateMachine->currentState()->getMngr()->getSoundMngr()->ChangeMainMusic("Pescando");
+
 	b2Vec2 gravity(0.0f, 9.8f);
 	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
 	stateMachine->pushState(new PescaState(this, w, sndProvisional));
