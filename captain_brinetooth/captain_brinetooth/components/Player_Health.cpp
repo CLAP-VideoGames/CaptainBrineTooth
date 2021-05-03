@@ -7,8 +7,7 @@
 #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #define new DEBUG_NEW
 #endif
-
-#include "../states/MenuState.h"
+#include "../states/PlayState.h"
 
 void Player_Health::init()
 {
@@ -129,8 +128,9 @@ void Player_Health::respawn()
 {
 	StateMachine* sM = g->getStateMachine();
 	Manager* mngr = entity_->getMngr();
-	mngr->getSoundMngr()->ChangeMainMusic("Menu");
+	mngr->getSoundMngr()->ChangeMainMusic("Nivel1");
 
 	sM->popState();
-	sM->changeState(new MenuState(g, mngr->getWorld(), mngr->getSoundMngr()));
+	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr()));
+
 }

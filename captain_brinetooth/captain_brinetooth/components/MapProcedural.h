@@ -9,6 +9,7 @@
 
 namespace fs = std::filesystem;
 const int NUM_TILEMAPS = 40;
+const string LOBBY = "assets/maps/Etile0.tmx";	
 using namespace ColLayers;
 
 struct Room {
@@ -137,4 +138,6 @@ protected:
 	vector<Entity*> pescaTriggers;
 
 	App* states;
+
+	bool lobby;
 };

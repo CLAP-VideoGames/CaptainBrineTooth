@@ -14,11 +14,12 @@ MapProcedural::MapProcedural(int nR, int f, App* s)
 	lvl = nullptr;
 	fase = f;
 	states = s;
+	lobby = true;
 }
 
-MapProcedural::~MapProcedural(){
+MapProcedural::~MapProcedural() {
 
-	if (!triggers.empty()){
+	if (!triggers.empty()) {
 		for (Entity* ent : triggers) ent->setActive(false);
 		triggers.clear();
 	}
@@ -65,8 +66,15 @@ void MapProcedural::init() {
 	int tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 	//Testing
 	//int tile = 0;
-	actualRoom = initializeNewRoom(roomNames[tile]);
+	if (!lobby)actualRoom = initializeNewRoom(roomNames[tile]);
+	else {
+		RoomNames lob;
+		lob.path = LOBBY;
+		lob.name = "Etile0";
 
+		actualRoom = initializeNewRoom(lob);
+		lobby = false;
+	}
 	roomNames[tile].used = true;
 }
 
@@ -83,17 +91,18 @@ CurrentRoom* MapProcedural::initializeNewRoom(const RoomNames& tag) {
 	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
 	////Setteamos las conexiones en funcion del nombre del archivo
+
 	getConec(tag.name, r->cons);
 
 	CreateConnections(r, r->cons, -1);
 
+
 	return r;
 }
 
-void MapProcedural::CreateConnections(CurrentRoom* r, const std::array<bool, 4>& rConnections, int dir) {
+void MapProcedural::CreateConnections(CurrentRoom* r, const std::array<bool, 4> & rConnections, int dir) {
 	for (int i = 0; i < 4; i++) {
 		if (rConnections[i] == true) r->conections[i] = initializeRoom(i);
-
 	}
 	createConnectionTriggers(dir);
 }
@@ -146,7 +155,7 @@ Room MapProcedural::initializeRoom(int dir) {
 
 
 
-void MapProcedural::update(){
+void MapProcedural::update() {
 
 	//Cambia de habitación
 	if (gonTotravel) {
@@ -241,12 +250,12 @@ void MapProcedural::travelNextZone() {
 	travelZone = true;
 }
 
-void MapProcedural::setPhase(int f) { 
-	fase = f; 
+void MapProcedural::setPhase(int f) {
+	fase = f;
 }
 
-void MapProcedural::setNumRooms(int nR) { 
-	nRooms = nR; 
+void MapProcedural::setNumRooms(int nR) {
+	nRooms = nR;
 }
 
 void MapProcedural::travel(b2Contact* contact) {
@@ -329,7 +338,7 @@ void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 /// </summary>
 /// <param name="name"></param>
 /// <param name="cons"></param>
-void MapProcedural::getConec(const string& name, std::array<bool, 4>& cons) {
+void MapProcedural::getConec(const string& name, std::array<bool, 4> & cons) {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++)
 			if (name[i] == cardinals[j]) cons[j] = true;

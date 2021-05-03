@@ -36,9 +36,8 @@ void OptionsState::init(){
 											// Barra			Barco
 	std::pair<Vector2D, Vector2D> size = { Vector2D(900, 100), Vector2D(200, 200) };
 	
-
 	//zoom 2		Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.25 * App::camera_Zoom_Out));
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.2));
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.3));
 
 	Texture* textures[2] = {&sdlutils().images().at("barra") , &sdlutils().images().at("barco")};
 	createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume(), app);
@@ -76,7 +75,7 @@ Entity* OptionsState::botonVolver(){
 
 	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(App::camera.w / 2, App::camera.h * 0.2), factor_, sizeFactor, false);
 	
-	auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 7)), Vector2D(rectPos.w, rectPos.y), 0.0f, Vector2D(0, 0));
+	auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.9)), Vector2D(rectPos.w, rectPos.y), 0.0f, Vector2D(0, 0));
 	//auto* volver = createBasicEntity(Vector2D(30, cam.h - (cam.h / 5.75)), Vector2D(cam.w - (cam.w / 1.2), cam.h - (cam.h / 1.2)), 0.0f, Vector2D(0, 0));
 	volver->addComponent<Button>(imageTexture, volverMenu, app, manager_->getSoundMngr());
 	

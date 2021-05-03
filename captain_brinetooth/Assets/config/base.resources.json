@@ -493,9 +493,13 @@
 			"id": "tileset3",
 			"file": "assets/tileset/tileset3.png"
 		},
-		{
-			"id": "tileset4",
-			"file": "assets/tileset/tileset4.png"
+    {
+      "id": "tileset4",
+      "file": "assets/tileset/tileset4.png"
+    },
+    {
+			"id": "tileset5",
+			"file": "assets/tileset/tileset5.png"
 		}
 	],
 	"fonts": [
