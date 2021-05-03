@@ -1,5 +1,5 @@
 #include "PescaState.h"
-
+#include "..//components/DamageCollisionCallbacks.h"
 using namespace ColLayers;
 
 void PescaState::update() {
@@ -11,6 +11,8 @@ void PescaState::init() {
 	//-----Map-----
 #pragma region Map
 	//---BG----
+	//manager_->getWorld()->SetContactListener(&collisionListener);
+
 	auto* bg = createBasicEntity(Vector2D(0, 1440), Vector2D(2560 * 2, 1440 * 2), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
@@ -26,7 +28,7 @@ void PescaState::init() {
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
 	createPesca(gancho);
-
+	//Metodo para cambiar el zoom 
 
 }
 void PescaState::createPesca(const Config& entityConfig) {

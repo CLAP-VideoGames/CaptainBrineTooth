@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "box2d.h"
+class DamageCollisionCallbacks;
 class Entity;
 
 class PescaState :public GameState
@@ -16,6 +17,7 @@ public:
 protected:
 	SDL_Rect cam;
 	int entitiesPerLine;
+	//DamageCollisionCallbacks collisionListener;
 	
 };
 

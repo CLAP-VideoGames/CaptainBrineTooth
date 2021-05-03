@@ -14,8 +14,8 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-float App::camera_Zoom_Out = 1.0f;
-SDL_Rect App::camera = {0 ,0,(int)(window.getX() * camera_Zoom_Out),(int)(window.getY() * camera_Zoom_Out)};
+float App::camera_Zoom_Out = 2.0f;
+SDL_Rect App::camera = { 0 ,0,(int)(window.getX() * camera_Zoom_Out),(int)(window.getY() * camera_Zoom_Out) };
 
 using namespace ColLayers;
 
@@ -49,7 +49,7 @@ App::~App() {
 void App::init() {
 	SDLUtils::init("Captain BrineTooth", window.getX(), window.getY(), "assets/config/base.resources.json");
 	brightness = SDL_GetWindowBrightness(sdlutils().window());
-	
+
 	//Refrescamos los estados pusheados
 	stateMachine->refreshStates();
 
@@ -94,9 +94,9 @@ void App::start() {
 		SDL_RenderSetLogicalSize(sdlutils().renderer(), camera.w, camera.h);
 		//Renderizamos las entidades
 		stateMachine->currentState()->render();
-		
+
 		sdlutils().presentRenderer();
-		
+
 		Uint32 frameTime = sdlutils().currRealTime() - startTime;
 
 		if (frameTime < FPS)
@@ -108,19 +108,19 @@ void App::start() {
 }
 //Metodos propios de game 
 
-void App::ShakeCamera(int time){
+void App::ShakeCamera(int time) {
 	int aux = 0;
 	SDL_Rect aux2 = camera;
 	int slow = 0;
 	// Movemos la camara de forma random y rapidamente
-	for (int i = 0; i < time; i++){
-		if (slow % 2 == 0){
-			if (aux == 0){
-				camera.x -= 15; 
+	for (int i = 0; i < time; i++) {
+		if (slow % 2 == 0) {
+			if (aux == 0) {
+				camera.x -= 15;
 				camera.y -= 15;
 				aux++;
 			}
-			else{
+			else {
 				camera.x += 15;
 				camera.y += 15;
 				aux--;
@@ -147,7 +147,7 @@ void App::fullScreen()
 	camera_Zoom_Out = 1.0f;
 }
 
-void App::createBackGround(const std::string& spriteId, const int & fils, const int & cols){
+void App::createBackGround(const std::string& spriteId, const int& fils, const int& cols) {
 	auto* bg = createBasicEntity(Vector2D(300, 300), Vector2D(sdlutils().width(), sdlutils().height()), 0.0f, Vector2D());
 	auto* anim_controller = bg->addComponent<AnimBlendGraph>();
 
@@ -158,7 +158,9 @@ void App::createBackGround(const std::string& spriteId, const int & fils, const 
 
 void App::changeToPesca()
 {
-	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
+	b2Vec2 gravity(0.0f, 9.8f);
+	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
+	stateMachine->pushState(new PescaState(this, w, sndProvisional));
 }
 
 /// <summary>
@@ -170,7 +172,7 @@ void App::changeToPesca()
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="vel">Velocidad (por defecto es cero)</param>
 /// <returns></returns>
-Entity* App::createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation = 0.0f, const Vector2D & vel = Vector2D(0.0f,0.0f))
+Entity* App::createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation = 0.0f, const Vector2D& vel = Vector2D(0.0f, 0.0f))
 {
 	auto* entity_ = mngr_->addEntity();
 	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
@@ -183,7 +185,7 @@ void App::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation
 
 	auto* anim_controller = enemy1->addComponent<AnimBlendGraph>();
 
-								//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
+	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
 	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
 	enemy1->addComponent<BoxCollider>();
 	//enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
