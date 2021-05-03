@@ -45,15 +45,15 @@ public:
 	EnemyGenerator();
 	~EnemyGenerator();
 
-	void generateRandomEnemy(Vector2D pos);
+	Entity* generateRandomEnemy(Vector2D pos);
 
 private:
 
 
-	void generateFringeHead(Vector2D pos);
-	void generateMedusa(Vector2D pos);
-	void generateElfShark(Vector2D pos);
-	void generatePompeyWorm(Vector2D pos);
+	Entity* generateFringeHead(Vector2D pos);
+	Entity* generateMedusa(Vector2D pos);
+	Entity* generateElfShark(Vector2D pos);
+	Entity* generatePompeyWorm(Vector2D pos);
 
 	Entity* createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel);
 };

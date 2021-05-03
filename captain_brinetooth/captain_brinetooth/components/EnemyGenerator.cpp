@@ -11,13 +11,13 @@ EnemyGenerator::~EnemyGenerator()
 
 }
 
-void EnemyGenerator::generateRandomEnemy(Vector2D pos)
+Entity* EnemyGenerator::generateRandomEnemy(Vector2D pos)
 {
 	int rnd = sdlutils().rand().teCuoto(0, NUM_ENEMIES);
 	switch (rnd)
 	{
 	case 0:
-		generateElfShark(pos);
+		return generateElfShark(pos);
 		//generateFringeHead(pos);
 		break;
 	case 1:
@@ -25,17 +25,17 @@ void EnemyGenerator::generateRandomEnemy(Vector2D pos)
 		//generateFringeHead(pos);
 		break;
 	case 2:
-		generateFringeHead(pos);
+		return generateFringeHead(pos);
 		break;
 	case 3:
-		generatePompeyWorm(pos);
+		return generatePompeyWorm(pos);
 		break;
 	default:
 		break;
 	}
 }
 
-void EnemyGenerator::generateFringeHead(Vector2D pos)
+Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 {
 	auto* enemy = createBasicEntity(pos, Vector2D(20,20), 0, Vector2D(0,0));
 	enemy->addComponent<BoxCollider>(DYNAMIC, ENEMY, ENEMY_MASK);
@@ -43,9 +43,11 @@ void EnemyGenerator::generateFringeHead(Vector2D pos)
 	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
 	enemy->addComponent<FringeHeadAtack>();
 	enemy->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+
+	return enemy;
 }
 
-void EnemyGenerator::generateMedusa(Vector2D pos)
+Entity* EnemyGenerator::generateMedusa(Vector2D pos)
 {
 	Config flowerJellyHat{};
 	flowerJellyHat.pos = pos;
@@ -66,9 +68,10 @@ void EnemyGenerator::generateMedusa(Vector2D pos)
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 	
+	return fjh1;
 }
 
-void EnemyGenerator::generateElfShark(Vector2D pos)
+Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 {
 	Config elfShark{};
 	elfShark.pos = pos;
@@ -96,9 +99,11 @@ void EnemyGenerator::generateElfShark(Vector2D pos)
 	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
 	elf1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+
+	return elf1;
 }
 
-void EnemyGenerator::generatePompeyWorm(Vector2D pos)
+Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 {
 	Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
@@ -118,6 +123,8 @@ void EnemyGenerator::generatePompeyWorm(Vector2D pos)
 	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(pompeyWorm.physicType, pompeyWorm.col, pompeyWorm.colMask);
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
+
+	return fjh1;
 }
 
 Entity* EnemyGenerator::createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel)

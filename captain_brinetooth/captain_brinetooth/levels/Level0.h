@@ -99,7 +99,7 @@ private:
 	vector<vector<tmx::Vector2f>> points;
 	//Enemigos
 	vector<tmx::Vector2f> enemiePos;
-
+	vector<Entity*> enemigos;
 	//Conexiones
 	vector<tmx::Vector2f> connectionPos;
 	vector<std::string> connectionsNames;

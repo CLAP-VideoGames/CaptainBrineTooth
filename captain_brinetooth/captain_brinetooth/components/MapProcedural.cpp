@@ -109,7 +109,9 @@ void MapProcedural::CreateConnections(CurrentRoom* r, const std::array<bool, 4> 
 
 Room MapProcedural::initializeRoom(int dir) {
 	int tile;
-
+	if (roomsExplored <= 1) {
+		tile = sdlutils().rand().teCuoto(0, fronteras[0]);
+	}
 	if (roomsExplored == nRooms - 1) {
 		//Habitaci�n final
 		tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
@@ -132,6 +134,8 @@ Room MapProcedural::initializeRoom(int dir) {
 	//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
 	while (!concuerda) {
 
+		/*if(roomsExplored <= 1)
+			tile = sdlutils().rand().teCuoto(0, fronteras[0]);*/
 		if (roomsExplored == nRooms - 1)
 			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
 		else

@@ -255,7 +255,7 @@ void Level0::spawnEnemies()
 	for (tmx::Vector2f pos : enemiePos) {
 		Vector2D realPos(pos.x, pos.y);
 
-		generator->generateRandomEnemy(realPos);
+		enemigos.push_back(generator->generateRandomEnemy(realPos));
 	}
 }
 
@@ -271,6 +271,12 @@ void Level0::clearLevelVectors(){
 	if (!connectionPos.empty())connectionPos.clear();
 	if (!connectionSize.empty())connectionSize.clear();
 	if (!connectionsNames.empty())connectionsNames.clear();
+
+	for (Entity* e : enemigos) {
+		e->setActive(false);
+	}
+
+	enemigos.clear();
 }
 
 void Level0::render() {
