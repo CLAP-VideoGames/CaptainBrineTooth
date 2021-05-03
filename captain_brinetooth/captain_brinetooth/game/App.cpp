@@ -30,9 +30,9 @@ App::App() {
 	////----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto----
-	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio Juego----
-	stateMachine->pushState(new PlayState(this, world_, sndProvisional));
+	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
@@ -74,10 +74,15 @@ void App::start() {
 		while (SDL_PollEvent(&event))
 			ih().update(event);
 
-		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
+		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)|| event.type == SDL_QUIT) {
 			exit = true;
 			continue;
 		}
+
+		if (ih().isKeyDown(SDL_SCANCODE_A)) {
+			sdlutils().toggleFullScreen();
+		}
+
 		//Procesamos la entrada del usuario y cualquier cambio de entidad
 		stateMachine->currentState()->update();
 		//Refrescamos la máquina de estados
