@@ -196,14 +196,7 @@ void MapProcedural::update() {
 
 	}
 
-	//Elimina los triggers de pesca
-	if (stopFishing) {
-		for (auto* t : pescaTriggers) {
-			t->setActive(false);
-		}
 
-		stopFishing = false;
-	}
 }
 
 void MapProcedural::TravelNextRoom(int dir) {
@@ -223,7 +216,10 @@ void MapProcedural::TravelNextRoom(int dir) {
 
 	//player->getComponent<BoxCollider>()->actPhyscialPos(-300,-30);
 
-	for (Entity* ent : triggers) ent->setActive(false);
+	for (Entity* ent : triggers) {
+		ent->setActive(false);
+		
+	}
 	triggers.clear();
 
 	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
@@ -285,6 +281,8 @@ void MapProcedural::travel(b2Contact* contact) {
 	else dir = 3;
 
 	m->getComponent<MapProcedural>()->setTravel(true, dir);
+
+	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
 }
 
 void MapProcedural::travelNextZone(b2Contact* contact) {
@@ -455,7 +453,7 @@ void MapProcedural::createConnectionTriggers(int dir) {
 
 			t->setCollisionMethod(pescar);
 
-			pescaTriggers.push_back(t);
+			triggers.push_back(t);
 		}
 	}
 }
