@@ -70,7 +70,7 @@ Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std
 
 Entity* OptionsState::createEffects(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume, App* a) {
 	Entity* sliderEffects = mngr->addEntity();
-	Slider* slider =  sliderEffects->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().images().at("efectos"), a, 0.5f, 50.0f);
+	Slider* slider =  sliderEffects->addComponent<Slider>(pos, sizes, textures, controlEffects, &sdlutils().images().at("efectos"), a, 0.5f, 50.0f);
 
 	float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol() / 2);
 	slider->setSlider(newVol);
@@ -80,7 +80,7 @@ Entity* OptionsState::createEffects(Manager* mngr, const Vector2D& pos, const st
 
 Entity* OptionsState::createBrightness(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const float& brightness, App* a){
 	Entity* sliderBrightness = mngr->addEntity();
-	Slider* slider = sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().images().at("brillo"), a, 0.5f, 30.0f);
+	Slider* slider = sliderBrightness->addComponent<Slider>(pos, sizes, textures, controlBrightness, &sdlutils().images().at("brillo"), a, 0.5f, 30.0f);
 
 	float value = brightness;
 	slider->setSlider(value);

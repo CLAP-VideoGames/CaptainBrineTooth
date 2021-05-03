@@ -5,8 +5,6 @@
 PauseState::PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd) {
 	stRend = stateToRender;
 	cam = a->camera;
-	cam.w = cam.w * a->getCameraZooOut();
-	cam.h = cam.h * a->getCameraZooOut();
 }
 
 void PauseState::init() {
@@ -52,35 +50,30 @@ void PauseState::createOptionPanel() {
 	//zoom 2	std::pair<Vector2D, Vector2D> size = { Vector2D(500 * App::camera_Zoom_Out, 50 * App::camera_Zoom_Out), Vector2D(100 * App::camera_Zoom_Out, 100 * App::camera_Zoom_Out) };
 	//zoom 2	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.25 * App::camera_Zoom_Out));
 	
-	std::pair<Vector2D, Vector2D> size = { Vector2D(900, 100), Vector2D(200, 200) };
-	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.2));
-	
-	Texture* textures[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 
+
+		//Tamaño de las texturas del Slider
+	std::pair<Vector2D, Vector2D> size = { Vector2D(600, 30), Vector2D(95, 100) };
+	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5), cam.h * 0.2));
+
+	//Volumen
+	Texture* textures[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 	Entity* volume = OptionsState::createVolume(manager_, pos, size, textures, manager_->getSoundMngr()->PauseVolume(), app);
 	panel.push_back(volume);
-
-	// Efectos de sonido
-	//zoom 2	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.55 * App::camera_Zoom_Out));
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.5));
-	
+	//Efectos
+	pos = Vector2D(Vector2D((cam.w * 0.5), cam.h * 0.55));
 	Texture* textures1[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
-
-	Entity* effects = OptionsState::createEffects(manager_, pos, size, textures, manager_->getSoundMngr()->EffectsVolume(), app);
+	Entity* effects = OptionsState::createEffects(manager_, pos, size, textures1, manager_->getSoundMngr()->EffectsVolume(), app);
 	panel.push_back(effects);
-
-	// Brillo
-	//zoom 2 pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.85 * App::camera_Zoom_Out));
-	pos = Vector2D(Vector2D((cam.w * 0.5 - (size.first.getX() / 2)), cam.h * 0.75));
-	
+	//Brillo
+	pos = Vector2D(Vector2D((cam.w * 0.5), cam.h * 0.85));
 	Texture* textures2[2] = { &sdlutils().images().at("barra") , &sdlutils().images().at("barco") };
 	Entity* brightness = OptionsState::createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()), app);
 	panel.push_back(brightness);
 
 	// Boton Volver
 	float multiplier = 0.5;
-	//zoom 2	pos = Vector2D((cam.w * 0.135f), cam.h * 0.85);
-	pos = Vector2D((cam.w * 0.1f), cam.h * 0.9);
+	pos = Vector2D((cam.w * 0.04f), cam.h * 0.8);
 	createButton(&sdlutils().images().at("volverMenu"), multiplier, pos, pushPausePanel);
 }
 
