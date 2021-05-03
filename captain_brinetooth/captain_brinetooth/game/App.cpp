@@ -168,6 +168,11 @@ void App::changeToPesca()
 	stateMachine->pushState(new PescaState(this, w, sndProvisional));
 }
 
+void App::changeZoom(float zoom)
+{
+	camera_Zoom_Out = zoom;
+}
+
 /// <summary>
 /// Crea un entidad b�sica, con el componente Transform
 /// </summary>
