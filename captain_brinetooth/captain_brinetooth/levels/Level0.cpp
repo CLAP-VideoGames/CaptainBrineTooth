@@ -271,12 +271,13 @@ void Level0::clearLevelVectors(){
 	if (!connectionPos.empty())connectionPos.clear();
 	if (!connectionSize.empty())connectionSize.clear();
 	if (!connectionsNames.empty())connectionsNames.clear();
+	if (!pescaPos.empty())pescaPos.clear();
 
 	for (Entity* e : enemigos) {
 		e->setActive(false);
 	}
 
-	enemigos.clear();
+	if(!enemigos.empty())enemigos.clear();
 }
 
 void Level0::render() {

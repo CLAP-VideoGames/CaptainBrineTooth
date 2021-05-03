@@ -31,8 +31,10 @@ App::App() {
 	////----Inicio de Intro----
 	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto---
-	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
-	//----Inicio Juego----
+	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//----Inicio de Options----
+	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
+	//----Inicio de Juego------
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));

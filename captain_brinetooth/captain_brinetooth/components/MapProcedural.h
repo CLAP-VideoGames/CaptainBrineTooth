@@ -135,7 +135,6 @@ protected:
 	MapCollider* chainCollider;
 
 	vector<Entity*> triggers;
-	vector<Entity*> pescaTriggers;
 
 	App* states;
 
