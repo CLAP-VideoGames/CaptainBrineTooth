@@ -44,6 +44,8 @@ class Reward;
 class Gancho;
 class Crab;
 class MachineGun;
+class ElectricWhip;
+class Bellow;
 class VideoPlayer;
 class Fade;
 class JellyHatBehavior;
@@ -97,6 +99,8 @@ class EnemyGenerator;
 	Image,\
 	Crab,\
 	MachineGun,\
+	ElectricWhip,\
+	Bellow,\
 	Connections,\
 	VideoPlayer,\
 	JellyHatBehavior,\

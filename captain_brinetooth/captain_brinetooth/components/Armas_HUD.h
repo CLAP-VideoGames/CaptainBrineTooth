@@ -7,7 +7,7 @@
 
 class Armas_HUD : public Component {
 public:
-	Armas_HUD(Texture* weapon1, Texture* weapon2, App* game) :
+	Armas_HUD(App* game) :
 		mainWeapon(nullptr),
 		secondWeapon(nullptr),
 		g(game),

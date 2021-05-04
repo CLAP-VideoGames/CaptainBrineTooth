@@ -100,7 +100,7 @@ void PlayState::init() {
 	//createWeaponGiver(crabGiverConfig, crabNumber);
 
 	//Config machineGunGiverConfig{};
-	//machineGunGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height());
+	//machineGunGiverConfig.pos = Vector2D(sdlutils().width() / 1.75f, sdlutils().height());
 	//machineGunGiverConfig.vel = Vector2D();
 	//machineGunGiverConfig.size = Vector2D(50, 50);
 	//machineGunGiverConfig.friction = 0.2f;
@@ -110,6 +110,30 @@ void PlayState::init() {
 	//machineGunGiverConfig.spriteId = "machine_gun";
 	//int machineGunNumber = 4;
 	//createWeaponGiver(machineGunGiverConfig, machineGunNumber);
+
+	Config whipGiverConfig{};
+	whipGiverConfig.pos = Vector2D(sdlutils().width() / 1.75f, sdlutils().height() - 100);
+	whipGiverConfig.vel = Vector2D();
+	whipGiverConfig.size = Vector2D(50, 50);
+	whipGiverConfig.friction = 0.2f;
+	whipGiverConfig.physicType = STATIC;
+	whipGiverConfig.fixedRotation = true;
+	whipGiverConfig.rotation = 0.0f;
+	whipGiverConfig.spriteId = "martillo";
+	int whipNumber = 5;
+	createWeaponGiver(whipGiverConfig, whipNumber);
+
+	Config bellowGiverConfig{};
+	bellowGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height());
+	bellowGiverConfig.vel = Vector2D();
+	bellowGiverConfig.size = Vector2D(50, 50);
+	bellowGiverConfig.friction = 0.2f;
+	bellowGiverConfig.physicType = STATIC;
+	bellowGiverConfig.fixedRotation = true;
+	bellowGiverConfig.rotation = 0.0f;
+	bellowGiverConfig.spriteId = "machine_gun";
+	int bellowNumber = 6;
+	createWeaponGiver(bellowGiverConfig, bellowNumber);
 
 	//Config elfShark{};
 	//elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
@@ -278,7 +302,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	anim_controller->setParamValue("hammer_att", 0);
 //	//--------------------------------------------------------------------------------------------------------------
-//#pragma endregion
+#pragma endregion
 //
 //#pragma region Crab
 ////---CRAB---------------------------------------------------------------------------------------------------------
@@ -307,7 +331,6 @@ void PlayState::createPlayer(const Config& playerConfig) {
 //#pragma endregion
 //
 //#pragma region MachineGun
-////---CRAB---------------------------------------------------------------------------------------------------------
 	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, Vector2D(0.65, 0.5));
 	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, Vector2D(0.65, 0.5));
 
@@ -331,7 +354,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
 	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, -0.28), Vector2D(50.0f, 10.0f));
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
-	player->addComponent<Armas_HUD>(&sdlutils().images().at("sierra"), &sdlutils().images().at("espada"), app);
+	player->addComponent<Armas_HUD>(app);
 	//player->addComponent<SoundManager>(75, "FinalBoss");
 
 	/*if(playerConfig.physicType != KINEMATIC)*/ player->addComponent<PlayerController>();

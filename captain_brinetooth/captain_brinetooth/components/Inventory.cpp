@@ -68,6 +68,12 @@ void Inventory::addWeaponById(int weapToAdd) {
 	case PosibleWeapons::TypeMachineGun:
 		entity_->addComponent<MachineGun>();
 		break;
+	case PosibleWeapons::TypeEel:
+		entity_->addComponent<ElectricWhip>();
+		break;
+	case PosibleWeapons::TypeInk:
+		entity_->addComponent<Bellow>();
+		break;
 	}
 }
 
@@ -90,6 +96,12 @@ Texture* Inventory::textureById(int weapToAdd) {
 		return &sdlutils().images().at("crab");
 		break;
 	case PosibleWeapons::TypeMachineGun:
+		return &sdlutils().images().at("machine_gun");
+		break;
+	case PosibleWeapons::TypeEel:
+		return &sdlutils().images().at("martillo");
+		break;
+	case PosibleWeapons::TypeInk:
 		return &sdlutils().images().at("machine_gun");
 		break;
 	}
@@ -115,6 +127,12 @@ void Inventory::removeWeaponById(int weapToAdd) {
 		break;
 	case PosibleWeapons::TypeMachineGun:
 		entity_->removeComponent<MachineGun>();
+		break;
+	case PosibleWeapons::TypeEel:
+		entity_->removeComponent<ElectricWhip>();
+		break;
+	case PosibleWeapons::TypeInk:
+		entity_->removeComponent<Bellow>();
 		break;
 	}
 }

@@ -8,6 +8,8 @@
 #include "Chainsaw.h"
 #include "MachineGun.h"
 #include "Crab.h"
+#include "ElectricWhip.h"
+#include "Bellow.h"
 #include "Armas_HUD.h"
 
 
