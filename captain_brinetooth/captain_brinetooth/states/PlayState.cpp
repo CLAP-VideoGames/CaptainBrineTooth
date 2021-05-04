@@ -63,17 +63,17 @@ void PlayState::init() {
 	int swordNumber = 0;
 	createWeaponGiver(swordGiverConfig, swordNumber);
 
-	//Config hammerGiverConfig{};
-	//hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
-	//hammerGiverConfig.vel = Vector2D();
-	//hammerGiverConfig.size = Vector2D(50, 50);
-	//hammerGiverConfig.friction = 0.2f;
-	//hammerGiverConfig.physicType = STATIC;
-	//hammerGiverConfig.fixedRotation = true;
-	//hammerGiverConfig.rotation = 0.0f;
-	//hammerGiverConfig.spriteId = "martillo";
-	//int hammerNumber = 1;
-	//createWeaponGiver(hammerGiverConfig, hammerNumber);
+	Config hammerGiverConfig{};
+	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
+	hammerGiverConfig.vel = Vector2D();
+	hammerGiverConfig.size = Vector2D(50, 50);
+	hammerGiverConfig.friction = 0.2f;
+	hammerGiverConfig.physicType = STATIC;
+	hammerGiverConfig.fixedRotation = true;
+	hammerGiverConfig.rotation = 0.0f;
+	hammerGiverConfig.spriteId = "martillo";
+	int hammerNumber = 1;
+	createWeaponGiver(hammerGiverConfig, hammerNumber);
 
 	//Config chainsawGiverConfig{};
 	//chainsawGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() - 100);
@@ -286,8 +286,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 #pragma region Hammer
 //---HAMMER---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 1, 16, Vector2D(0.75, 0.69));
-	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 17, 30, Vector2D(0.75, 0.69));
+	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 23, 0, 1, 16, Vector2D(0.75, 0.69));
+	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 20, 0, 17, 30, Vector2D(0.75, 0.69));
 
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);

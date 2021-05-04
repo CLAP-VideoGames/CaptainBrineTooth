@@ -50,7 +50,7 @@ private:
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit) (not changed)
-	float animationLockTime = 400;		//Counted after one attack is stopped to avoid animation clipping
+	float animationLockTime = 700;		//Counted after one attack is stopped to avoid animation clipping
 	float maxComboPanningTime = 400;	//Counted after animation lock is released
 
 	//Variables related to Hammer (not changed)
