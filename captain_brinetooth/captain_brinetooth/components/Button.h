@@ -10,6 +10,8 @@
 #include "../ecs/SoundManager.h"
 #include "../sdlutils/SDLUtils.h"
 
+#include "..//components/Fade.h"
+
 
 using CallBackOnClick = void(App* g, SoundManager* snd);
 
@@ -18,6 +20,9 @@ public:
 	Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd);
 
 	virtual ~Button();
+
+	void init() override;
+
 	void update() override;
 	void render() override;
 	bool handleEvent(); 
@@ -26,6 +31,7 @@ protected:
 	CallBackOnClick* cboq;
 
 private:
+	Fade* fade;
 	Texture* tex;
 	SoundManager* soundController;
 	App* game;

@@ -30,15 +30,7 @@ void MenuState::init() {
 	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w/1.9,cam.h * 0.07), factor_, sizeFactor, true);
 	title->addComponent<Image>(imageTexture, rectPos, "titulo");
 
-
-	//// Boton Iniciar
 	sizeFactor = 1;
-	imageTexture = &sdlutils().images().at("jugar");
-	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w/2 , cam.h* 0.4), factor_, sizeFactor, true);
-
-	auto botonIniciar = manager_->addEntity();
-	botonIniciar->addComponent<Transform>(Vector2D(rectPos.x, rectPos.y), Vector2D(0, 0), rectPos.w, rectPos.h, 0.0f);
-	botonIniciar->addComponent<Button>(&sdlutils().images().at("jugar"), changeToGame, app, manager_->getSoundMngr());
 
 	//// Opciones
 	imageTexture = &sdlutils().images().at("opciones");
@@ -48,8 +40,6 @@ void MenuState::init() {
 	opciones->addComponent<Transform>(Vector2D(rectPos.x, rectPos.y), Vector2D(0, 0), rectPos.w, rectPos.h, 0.0f);
 	opciones->addComponent<Button>(imageTexture, changeToOptions, app, manager_->getSoundMngr());
 
-
-
 	//// Boton de salir
 	imageTexture = &sdlutils().images().at("salir");
 	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w / 2, cam.h * 0.8), factor_, sizeFactor, true);
@@ -57,6 +47,16 @@ void MenuState::init() {
 	auto salir = manager_->addEntity();
 	salir->addComponent<Transform>(Vector2D(rectPos.x, rectPos.y), Vector2D(0, 0), rectPos.w, rectPos.h, 0.0f);
 	salir->addComponent<Button>(imageTexture, salirMenu, app, manager_->getSoundMngr());
+
+
+	//// Boton Iniciar
+	imageTexture = &sdlutils().images().at("jugar");
+	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w / 2, cam.h * 0.4), factor_, sizeFactor, true);
+	auto botonIniciar = manager_->addEntity();
+	botonIniciar->addComponent<Transform>(Vector2D(rectPos.x, rectPos.y), Vector2D(0, 0), rectPos.w, rectPos.h, 0.0f);
+	botonIniciar->addComponent<Button>(&sdlutils().images().at("jugar"), changeToGame, app, manager_->getSoundMngr());
+	botonIniciar->addComponent<Fade>(Vector2D(cam.w, cam.h), Vector2D(0, 0), 1500, 1000);
+	//Añadimos un fade asi to guapo :D
 }
 
 void MenuState::changeToGame(App* app, SoundManager* snd) {
