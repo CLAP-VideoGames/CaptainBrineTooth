@@ -24,6 +24,13 @@ void OptionsState::init(){
 	int x = (int)((App::camera.w - w) * 0.02);
 	int y = (int)((App::camera.h - h) * 0.1);
 	createButton(&sdlutils().images().at("atras_boton"), Vector2D(x, y), Vector2D(w, h), volverMenu);
+	
+	// FullScreen Button
+	w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out * 0.65;
+	h = (int)w * 0.4;
+	x = (int)((App::camera.w - w) * 0.95);
+	y = (int)((App::camera.h - h) * 0.1);
+	createButton(&sdlutils().msgs().at("FullScreen"), Vector2D(x, y), Vector2D(w, h), changeFullScreen);
 
 	//Tamaño de las texturas del Slider
 	std::pair<Vector2D, Vector2D> size = { Vector2D(600, 30), Vector2D(95, 100) };
@@ -112,4 +119,8 @@ void OptionsState::volverMenu(App* app, SoundManager* snd){
 	snd->playSoundEffect("gaviota",0);
 	snd->resumeMainMusic();
 	app->getStateMachine()->popState();
+}
+
+void OptionsState::changeFullScreen(App* app, SoundManager* snd){
+	sdlutils().toggleFullScreen();
 }

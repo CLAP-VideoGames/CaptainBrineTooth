@@ -33,16 +33,17 @@ App::App() {
 	//----Inicio por defecto---
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
-	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
+	stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
 	//----Inicio de Juego------
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
-	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
+	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 
 }
 
 App::~App() {
+	sdlutils().setToWindowMode();
 	//Setteamos de nuevo el brillo por defecto
 	SDL_SetWindowBrightness(sdlutils().window(), brightness);
 	delete stateMachine;
@@ -82,7 +83,7 @@ void App::start() {
 			continue;
 		}
 
-		if (ih().isKeyDown(SDL_SCANCODE_A)) {
+		if (ih().isKeyDown(SDL_SCANCODE_M)) {
 			sdlutils().toggleFullScreen();
 		}
 

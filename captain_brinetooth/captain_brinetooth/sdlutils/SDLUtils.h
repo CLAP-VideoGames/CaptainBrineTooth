@@ -110,6 +110,13 @@ public:
 		}
 	}
 
+	//set the scree to window mode if fullscreen is activated
+	inline void setToWindowMode(){
+		auto flags = SDL_GetWindowFlags(window_);
+		if (flags & SDL_WINDOW_FULLSCREEN)
+			SDL_SetWindowFullscreen(window_, 0);
+	}
+
 	// show the cursor when mouse is over the window
 	inline void showCursor() {
 		SDL_ShowCursor(1);
