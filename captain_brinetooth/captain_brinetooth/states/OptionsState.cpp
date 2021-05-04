@@ -22,7 +22,7 @@ void OptionsState::init(){
 	int w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out * 0.65;
 	int h = (int)w * 0.4;
 	int x = (int)((App::camera.w - w) * 0.02);
-	int y = (int)((App::camera.h - h) * 0.98);
+	int y = (int)((App::camera.h - h) * 0.1);
 	createButton(&sdlutils().images().at("atras_boton"), Vector2D(x, y), Vector2D(w, h), volverMenu);
 
 	//Tamaño de las texturas del Slider
