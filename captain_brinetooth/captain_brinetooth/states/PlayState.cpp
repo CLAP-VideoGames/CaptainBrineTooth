@@ -261,7 +261,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 1, 9, Vector2D(0.71, 0.69));
 	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 12, 20, Vector2D(0.71, 0.69));
 	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, 0, 20, 28, Vector2D(0.71, 0.69));
-	anim_controller->addAnimation("sword_attack4", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, -1, 28, 44, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack4", &sdlutils().images().at("sword_combo"), 6, 8, 48, 48, -1, 30, 44, Vector2D(0.71, 0.69));
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
