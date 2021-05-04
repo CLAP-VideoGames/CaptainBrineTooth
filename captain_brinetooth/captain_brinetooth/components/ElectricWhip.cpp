@@ -12,65 +12,68 @@ void ElectricWhip::init() {
 }
 
 void ElectricWhip::update() {
-	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDL_SCANCODE_E)) {
+	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
+		if (ih().keyDownEvent()) {
+			if (ih().isKeyDown(SDL_SCANCODE_E)) {
 
-			//Player not attacking or in combo
-			if (CURRENT_STATUS == STATUS::Iddle) {
-				std::cout << "Martillazo! el primero\n";
+				//Player not attacking or in combo
+				if (CURRENT_STATUS == STATUS::Iddle) {
+					std::cout << "Martillazo! el primero\n";
 
-				//Set player as sawing
-				CURRENT_STATUS = STATUS::OnAnimationLock;
-				CURRENT_ATTACK = ATTACKS::Attack1;
+					//Set player as sawing
+					CURRENT_STATUS = STATUS::OnAnimationLock;
+					CURRENT_ATTACK = ATTACKS::Attack1;
 
-				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
-				//Activate attack animation + sawing on attack
-				if (anim_->getParamIndex("hammer_att") != -1)
-					anim_->setParamValue("hammer_att", 1);
+					entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
+					//Activate attack animation + sawing on attack
+					if (anim_->getParamIndex("hammer_att") != -1)
+						anim_->setParamValue("hammer_att", 1);
 
-				//
-				creaTrigger(150);
+					//
+					creaTrigger(150);
 
-				//Time control variables
-				stoppedSawTime = sdlutils().currRealTime();
-			}
-			//Player already attacked once
-			else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack1) {
-				std::cout << "Latigazo! el segundo\n";
+					//Time control variables
+					stoppedSawTime = sdlutils().currRealTime();
+				}
+				//Player already attacked once
+				else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack1) {
+					std::cout << "Latigazo! el segundo\n";
 
-				CURRENT_STATUS = STATUS::OnAnimationLock;
-				CURRENT_ATTACK = ATTACKS::Attack2;
-				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
+					CURRENT_STATUS = STATUS::OnAnimationLock;
+					CURRENT_ATTACK = ATTACKS::Attack2;
+					entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
 
-				//
-				if (anim_->getParamIndex("hammer_att") != -1)
-					anim_->setParamValue("hammer_att", 2);
+					//
+					if (anim_->getParamIndex("hammer_att") != -1)
+						anim_->setParamValue("hammer_att", 2);
 
-				//
-				creaTrigger(150);
+					//
+					creaTrigger(150);
 
-				stoppedSawTime = sdlutils().currRealTime();
-			}
-			else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack2) {
-				std::cout << "Latigazo! el primero\n";
+					stoppedSawTime = sdlutils().currRealTime();
+				}
+				else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack2) {
+					std::cout << "Latigazo! el primero\n";
 
-				//Set player as sawing
-				CURRENT_STATUS = STATUS::OnAnimationLock;
-				CURRENT_ATTACK = ATTACKS::Attack1;
-				entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
+					//Set player as sawing
+					CURRENT_STATUS = STATUS::OnAnimationLock;
+					CURRENT_ATTACK = ATTACKS::Attack1;
+					entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
 
-				//Activate attack animation + sawing on attack
-				if (anim_->getParamIndex("hammer_att") != -1)
-					anim_->setParamValue("hammer_att", 1);
+					//Activate attack animation + sawing on attack
+					if (anim_->getParamIndex("hammer_att") != -1)
+						anim_->setParamValue("hammer_att", 1);
 
-				//
-				creaTrigger(150);
+					//
+					creaTrigger(150);
 
-				//Time control variables
-				stoppedSawTime = sdlutils().currRealTime();
+					//Time control variables
+					stoppedSawTime = sdlutils().currRealTime();
+				}
 			}
 		}
 	}
+	
 
 	//Check out of input cases
 	if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {

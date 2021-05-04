@@ -14,62 +14,12 @@ void Chainsaw::init() {
 }
 
 void Chainsaw::update() {
-	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDL_SCANCODE_E)) {
+	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
+		if (ih().keyDownEvent()) {
+			if (ih().isKeyDown(SDL_SCANCODE_E)) {
 
-			//Player not attacking or in combo
-			if (CURRENT_STATUS == STATUS::Iddle && stoppedAttackingTime + timeBeforeNextAttackStarts < sdlutils().currRealTime()) {
-				std::cout << "Attack 1 Initiated\n";
-
-				//Set player as sawing
-				CURRENT_STATUS = STATUS::OnAnimationLock;
-				CURRENT_ATTACK = ATTACKS::Attack1;
-
-				entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh0", 0);
-
-				//Activate attack animation + sawing on attack
-				if(anim_->getParamIndex("chainsaw_att") != -1)
-					anim_->setParamValue("chainsaw_att", 1);
-
-				//
-				creaTrigger(125);
-				
-				//Time control variables
-				stoppedSawTime = sdlutils().currRealTime();
-			}
-			else if (CURRENT_STATUS == STATUS::OnCombo) {
-				switch (CURRENT_ATTACK)
-				{
-				case ATTACKS::Attack1:
-					std::cout << "Attack 2 Initiated\n";
-					CURRENT_STATUS = STATUS::OnAnimationLock;
-					CURRENT_ATTACK = ATTACKS::Attack2;
-					entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh1", 0);
-
-					//
-					if (anim_->getParamIndex("chainsaw_att") != -1)
-						anim_->setParamValue("chainsaw_att", 2);
-
-					//
-					creaTrigger(125);
-
-					stoppedSawTime = sdlutils().currRealTime();
-					break;
-				case ATTACKS::Attack2:
-					std::cout << "Attack 3 Initiated\n";
-					CURRENT_STATUS = STATUS::Sawing;
-					CURRENT_ATTACK = ATTACKS::Attack3;
-
-					if (anim_->getParamIndex("chainsaw_att") != -1)
-						anim_->setParamValue("chainsaw_att", 3);
-
-					sawActivationTime = sdlutils().currRealTime();
-
-					toLoop = true;
-					currentLoopAnimationTime = sdlutils().currRealTime();
-
-					break;
-				case ATTACKS::Attack3:
+				//Player not attacking or in combo
+				if (CURRENT_STATUS == STATUS::Iddle && stoppedAttackingTime + timeBeforeNextAttackStarts < sdlutils().currRealTime()) {
 					std::cout << "Attack 1 Initiated\n";
 
 					//Set player as sawing
@@ -77,7 +27,6 @@ void Chainsaw::update() {
 					CURRENT_ATTACK = ATTACKS::Attack1;
 
 					entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh0", 0);
-
 
 					//Activate attack animation + sawing on attack
 					if (anim_->getParamIndex("chainsaw_att") != -1)
@@ -88,13 +37,67 @@ void Chainsaw::update() {
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
-					break;
-				default:
-					break;
+				}
+				else if (CURRENT_STATUS == STATUS::OnCombo) {
+					switch (CURRENT_ATTACK)
+					{
+					case ATTACKS::Attack1:
+						std::cout << "Attack 2 Initiated\n";
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack2;
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh1", 0);
+
+						//
+						if (anim_->getParamIndex("chainsaw_att") != -1)
+							anim_->setParamValue("chainsaw_att", 2);
+
+						//
+						creaTrigger(125);
+
+						stoppedSawTime = sdlutils().currRealTime();
+						break;
+					case ATTACKS::Attack2:
+						std::cout << "Attack 3 Initiated\n";
+						CURRENT_STATUS = STATUS::Sawing;
+						CURRENT_ATTACK = ATTACKS::Attack3;
+
+						if (anim_->getParamIndex("chainsaw_att") != -1)
+							anim_->setParamValue("chainsaw_att", 3);
+
+						sawActivationTime = sdlutils().currRealTime();
+
+						toLoop = true;
+						currentLoopAnimationTime = sdlutils().currRealTime();
+
+						break;
+					case ATTACKS::Attack3:
+						std::cout << "Attack 1 Initiated\n";
+
+						//Set player as sawing
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack1;
+
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("sierra_whoosh0", 0);
+
+
+						//Activate attack animation + sawing on attack
+						if (anim_->getParamIndex("chainsaw_att") != -1)
+							anim_->setParamValue("chainsaw_att", 1);
+
+						//
+						creaTrigger(125);
+
+						//Time control variables
+						stoppedSawTime = sdlutils().currRealTime();
+						break;
+					default:
+						break;
+					}
 				}
 			}
 		}
 	}
+	
 
 	//Transicion de la animacion de preparar tercer ataque a la realización del bucle
 	if (toLoop && CURRENT_STATUS == STATUS::Sawing && currentLoopAnimationTime + timeLoopAnimationTransition < sdlutils().currRealTime()) {

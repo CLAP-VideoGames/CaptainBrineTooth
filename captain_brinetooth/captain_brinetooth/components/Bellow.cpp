@@ -13,28 +13,31 @@ void Bellow::init() {
 }
 
 void Bellow::update() {
-	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDL_SCANCODE_E)) {
+	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
+		if (ih().keyDownEvent()) {
+			if (ih().isKeyDown(SDL_SCANCODE_E)) {
 
-			//Player not attacking or in combo
-			if (CURRENT_STATUS == STATUS::Iddle && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {
-				std::cout << "Started shooting\n";
+				//Player not attacking or in combo
+				if (CURRENT_STATUS == STATUS::Iddle && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {
+					std::cout << "Started shooting\n";
 
-				//Set player as sawing
-				CURRENT_STATUS = STATUS::Shooting;
+					//Set player as sawing
+					CURRENT_STATUS = STATUS::Shooting;
 
-				//Activate attack animation + sawing on attack
-				if (anim_->getParamIndex("machineGun_att") != -1)
-					anim_->setParamValue("machineGun_att", 1);
+					//Activate attack animation + sawing on attack
+					if (anim_->getParamIndex("machineGun_att") != -1)
+						anim_->setParamValue("machineGun_att", 1);
 
-				//Shoot
-				shoot();
+					//Shoot
+					shoot();
 
-				//Time control variables
-				shotActivationTime = sdlutils().currRealTime();
+					//Time control variables
+					shotActivationTime = sdlutils().currRealTime();
+				}
 			}
 		}
 	}
+	
 
 	//Check out of input cases
 	if (CURRENT_STATUS == STATUS::Shooting && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {

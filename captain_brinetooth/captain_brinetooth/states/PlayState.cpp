@@ -252,6 +252,21 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("chainsaw_attack4", "run", "chainsaw_att", 0, false);
 	anim_controller->addTransition("chainsaw_attack4", "chainsaw_attack1", "chainsaw_att", 1, false);
 
+	anim_controller->addTransition("chainsaw_attack1", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("chainsaw_attack1", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "chainsaw_attack1", "chainsaw_att", 1, true);
+	anim_controller->addTransition("dash_ground", "chainsaw_attack1", "chainsaw_att", 1, true);
+	anim_controller->addTransition("chainsaw_attack2", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("chainsaw_attack2", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "chainsaw_attack2", "chainsaw_att", 2, true);
+	anim_controller->addTransition("dash_ground", "chainsaw_attack2", "chainsaw_att", 2, true);
+	anim_controller->addTransition("chainsaw_attack3", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("chainsaw_attack3", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "chainsaw_attack3", "chainsaw_att", 3, true);
+	anim_controller->addTransition("dash_ground", "chainsaw_attack3", "chainsaw_att", 3, true);
+	anim_controller->addTransition("chainsaw_attack4", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("chainsaw_attack4", "dash_ground", "Dash_Ground", 1, false);
+
 	anim_controller->setParamValue("chainsaw_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
@@ -280,6 +295,21 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("sword_attack4", "run", "sword_att", 0, false);
 	anim_controller->addTransition("sword_attack4", "sword_attack1", "sword_att", 1, false);
 
+	anim_controller->addTransition("sword_attack1", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("sword_attack1", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "chainsaw_attack1", "sword_att", 1, true);
+	anim_controller->addTransition("dash_ground", "chainsaw_attack1", "sword_att", 1, true);
+	anim_controller->addTransition("sword_attack2", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("sword_attack2", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "sword_attack2", "sword_att", 2, true);
+	anim_controller->addTransition("dash_ground", "sword_attack2", "sword_att", 2, true);
+	anim_controller->addTransition("sword_attack3", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("sword_attack3", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "sword_attack3", "sword_att", 3, true);
+	anim_controller->addTransition("dash_ground", "sword_attack3", "sword_att", 3, true);
+	anim_controller->addTransition("sword_attack4", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("sword_attack4", "dash_ground", "Dash_Ground", 1, false);
+
 	anim_controller->setParamValue("sword_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
@@ -299,6 +329,15 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("jump", "hammer_attack2", "hammer_att", 2, false);
 	anim_controller->addTransition("hammer_attack2", "run", "hammer_att", 0, false);
 	anim_controller->addTransition("hammer_attack2", "hammer_attack1", "hammer_att", 1, false);
+
+	anim_controller->addTransition("hammer_attack1", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("hammer_attack1", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "hammer_attack1", "hammer_att", 1, true);
+	anim_controller->addTransition("dash_ground", "hammer_attack1", "hammer_att", 1, true);
+	anim_controller->addTransition("hammer_attack2", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("hammer_attack2", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "hammer_attack2", "hammer_att", 2, true);
+	anim_controller->addTransition("dash_ground", "hammer_attack2", "hammer_att", 2, true);
 
 	anim_controller->setParamValue("hammer_att", 0);
 //	//--------------------------------------------------------------------------------------------------------------
@@ -326,6 +365,19 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("crab_attack3", "run", "crab_att", 0, false);
 	anim_controller->addTransition("crab_attack3", "crab_attack1", "crab_att", 1, true);
 
+	anim_controller->addTransition("crab_attack1", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("crab_attack1", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "crab_attack1", "crab_att", 1, true);
+	anim_controller->addTransition("dash_ground", "crab_attack1", "crab_att", 1, true);
+	anim_controller->addTransition("crab_attack2", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("crab_attack2", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "crab_attack2", "crab_att", 2, true);
+	anim_controller->addTransition("dash_ground", "crab_attack2", "crab_att", 2, true);
+	anim_controller->addTransition("crab_attack3", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("crab_attack3", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "crab_attack3", "crab_att", 3, true);
+	anim_controller->addTransition("dash_ground", "crab_attack3", "crab_att", 3, true);
+
 	anim_controller->setParamValue("crab_att", 0);
 //	//--------------------------------------------------------------------------------------------------------------
 //#pragma endregion
@@ -342,6 +394,13 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("machine_gun2", "run", "machineGun_att", 0, false);
 	anim_controller->addTransition("machine_gun2", "idle", "machineGun_att", 0, false);
 	anim_controller->addTransition("machine_gun2", "machine_gun1", "machineGun_att", 1, false);
+
+	anim_controller->addTransition("machine_gun1", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("machine_gun1", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "machine_gun1", "machineGun_att", 1, true);
+	anim_controller->addTransition("dash_ground", "machine_gun1", "machineGun_att", 1, true);
+	anim_controller->addTransition("machine_gun2", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("machine_gun2", "dash_ground", "Dash_Ground", 1, false);
 
 	anim_controller->setParamValue("machineGun_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
