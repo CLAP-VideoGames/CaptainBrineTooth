@@ -167,6 +167,7 @@
     <ClInclude Include="components\Fade.h" />
     <ClInclude Include="components\Gancho.h" />
     <ClInclude Include="components\GetAWeaponOnCollision.h" />
+    <ClInclude Include="components\InkMovement.h" />
     <ClInclude Include="components\Inventory.h" />
     <ClInclude Include="components\JellyHatBehavior.h" />
     <ClInclude Include="components\MapCollider.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="components\GetAWeaponOnCollision.cpp" />
     <ClCompile Include="components\Hammer.cpp" />
     <ClCompile Include="components\Image.cpp" />
+    <ClCompile Include="components\InkMovement.cpp" />
     <ClCompile Include="components\Inventory.cpp" />
     <ClCompile Include="components\JellyHatBehavior.cpp" />
     <ClCompile Include="components\KeyBoardCtrl.cpp" />

@@ -375,6 +375,9 @@
     <ClInclude Include="components\Slider.h">
       <Filter>Archivos de encabezado\components\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="components\InkMovement.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -620,6 +623,9 @@
     </ClCompile>
     <ClCompile Include="states\OptionsState.cpp">
       <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="components\InkMovement.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
