@@ -48,6 +48,7 @@ void Bellow::update() {
 }
 
 void Bellow::shoot() {
+	auto* level0 = entity_->getMngr()->getHandler<Map>()->getComponent<Level0>();
 	Entity* bullet = entity_->getMngr()->addEntity();
 
 	Vector2D bulletpos; Vector2D bulletvel;
@@ -64,6 +65,9 @@ void Bellow::shoot() {
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("iddle", &sdlutils().images().at("machine_gun_bullet"), 1, 1, 1, 1, 1);
 	bullet->addComponent<DisableOnExit>();
-	bullet->addComponent<BoxCollider>(STATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK);
+	bullet->addComponent<BoxCollider>(DYNAMIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	bullet->addComponent<WeaponDamageDetection>(150, 2);
+	bullet->addComponent<InkMovement>(!anim_->isFlipX());
+
+	level0->addProjectile(bullet);
 }

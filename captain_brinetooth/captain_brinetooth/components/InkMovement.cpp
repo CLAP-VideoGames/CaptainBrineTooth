@@ -12,6 +12,13 @@ void InkMovement::init() {
 	else
 		xVel = 1;
 
-	box->setSpeed(Vector2D(xVel * initialVelocity, 0));
+	currentVel = initialVelocity;
+	dir = xVel;
 
+	box->setSpeed(Vector2D(xVel * initialVelocity, 0));
+}
+
+void InkMovement::update() {
+	currentVel *= deacceleration;
+	box->setSpeed(Vector2D(dir * currentVel, 0));
 }

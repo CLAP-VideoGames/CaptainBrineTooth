@@ -31,8 +31,8 @@ private:
 
 	bool isPoisoned;
 	int poisonDamage = 10;
-	float poisonMaxTime = 10.0f, poisonCurrentTime;
-	float poisonDamageTickTime = 1.0f, poisonCurrentTickTime;
+	float poisonMaxTime = 10000.0f, poisonCurrentTime;
+	float poisonDamageTickTime = 1000.0f, poisonCurrentTickTime;
 
 	bool isElectrified;
 	int electrifyDamage = 150;

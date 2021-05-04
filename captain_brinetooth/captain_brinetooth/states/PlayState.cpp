@@ -63,7 +63,7 @@ void PlayState::init() {
 	int swordNumber = 0;
 	createWeaponGiver(swordGiverConfig, swordNumber);
 
-	Config hammerGiverConfig{};
+	/*Config hammerGiverConfig{};
 	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
 	hammerGiverConfig.vel = Vector2D();
 	hammerGiverConfig.size = Vector2D(50, 50);
@@ -73,7 +73,7 @@ void PlayState::init() {
 	hammerGiverConfig.rotation = 0.0f;
 	hammerGiverConfig.spriteId = "martillo";
 	int hammerNumber = 1;
-	createWeaponGiver(hammerGiverConfig, hammerNumber);
+	createWeaponGiver(hammerGiverConfig, hammerNumber);*/
 
 	//Config chainsawGiverConfig{};
 	//chainsawGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() - 100);
@@ -121,9 +121,9 @@ void PlayState::init() {
 	whipGiverConfig.rotation = 0.0f;
 	whipGiverConfig.spriteId = "anguila";
 	int whipNumber = 5;
-	createWeaponGiver(whipGiverConfig, whipNumber);
+	createWeaponGiver(whipGiverConfig, whipNumber);*/
 
-	Config bellowGiverConfig{};
+	/*Config bellowGiverConfig{};
 	bellowGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height());
 	bellowGiverConfig.vel = Vector2D();
 	bellowGiverConfig.size = Vector2D(50, 50);

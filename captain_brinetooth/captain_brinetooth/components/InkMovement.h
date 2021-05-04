@@ -13,17 +13,21 @@ public:
 		lookingLeft_(lookingLeft)
 	{
 		initialVelocity = 10;
+		deacceleration = 0.9;
 	}
 	virtual ~InkMovement() {
 	}
 
 	void init() override;
 
+	void update() override;
+
 private:
 	bool lookingLeft_;
 	float initialVelocity;
-	Vector2D vel;
-	float dir;
+	float currentVel;
+	int dir;
+	float deacceleration;
 
 	BoxCollider* box;
 };

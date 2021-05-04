@@ -55,6 +55,7 @@ class GetAWeaponOnCollision;
 class Cuerda;
 class PescaController;
 class EnemyGenerator;
+class InkMovement;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -108,7 +109,8 @@ class EnemyGenerator;
 	GetAWeaponOnCollision,\
 	Cuerda,\
 	EnemyGenerator,\
-	PescaController
+	PescaController,\
+	InkMovement
 
 // groups
 

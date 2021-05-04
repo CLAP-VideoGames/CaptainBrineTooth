@@ -15,6 +15,8 @@
 #include "PlayerController.h"
 #include "DisableOnExit.h"
 #include "DestroyOnCollision.h"
+#include "InkMovement.h"
+#include "../levels/Level0.h"
 
 
 class Bellow : public Component {
@@ -44,5 +46,5 @@ private:
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
-	float timeBetweenShots = 100;
+	float timeBetweenShots = 700;
 };

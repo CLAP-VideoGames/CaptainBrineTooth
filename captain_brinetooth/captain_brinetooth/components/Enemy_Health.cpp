@@ -41,8 +41,6 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 		break;
 	case 2:
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 15);
-	default:
-		break;
 	}
 
 	//Efecto electrificar
@@ -92,11 +90,11 @@ void Enemy_Health::render(){
 }
 
 void Enemy_Health::update(){
-	if (ih().keyDownEvent()) {
-		//Parte Horizontal
-		if (ih().isKeyDown(SDL_SCANCODE_A))
-			loseLife(100);
-	}
+	//if (ih().keyDownEvent()) {
+	//	//Parte Horizontal
+	//	if (ih().isKeyDown(SDL_SCANCODE_A))
+	//		loseLife(100);
+	//}
 
 	//Daño por veneno
 	if (isPoisoned) {
@@ -109,6 +107,13 @@ void Enemy_Health::update(){
 		if (poisonCurrentTickTime + poisonDamageTickTime < sdlutils().currRealTime()) {
 			lifes -= poisonDamage;
 			poisonCurrentTickTime = sdlutils().currRealTime();
+			if (lifes <= 0) {
+				entity_->setActive(false);
+				//Tenemos que eliminar el Trigger del enemigo (si tiene)
+				EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
+				if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
+			}
+			barSize.setX((lifes * initBarSize.getX()) / initLifes);
 		}
 	}
 }
