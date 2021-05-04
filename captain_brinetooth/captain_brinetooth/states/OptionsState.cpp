@@ -29,8 +29,9 @@ void OptionsState::init(){
 	w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out * 0.65;
 	h = (int)w * 0.4;
 	x = (int)((App::camera.w - w) * 0.95);
-	y = (int)((App::camera.h - h) * 0.1);
-	createButton(&sdlutils().msgs().at("FullScreen"), Vector2D(x, y), Vector2D(w, h), changeFullScreen);
+	y = (int)((App::camera.h - h) * 0.1); 
+	fullscreen_button = createBasicEntity(Vector2D(x, y), Vector2D(w, h), 0.0f, Vector2D(0, 0));
+	fullscreen_button->addComponent<Button>(&sdlutils().images().at("fullscreen_off"), changeFullScreen, app, manager_->getSoundMngr());
 
 	//Tamaño de las texturas del Slider
 	std::pair<Vector2D, Vector2D> size = { Vector2D(600, 30), Vector2D(95, 100) };
@@ -89,6 +90,12 @@ Entity* OptionsState::createBrightness(Manager* mngr, const Vector2D& pos, const
 
 void OptionsState::update() {
 	GameState::update(); //esto se podria quitar ya que solo va a hacer un update
+	if (fullscreen_button != nullptr) {
+		auto flags = SDL_GetWindowFlags(sdlutils().window());
+		if (flags & SDL_WINDOW_FULLSCREEN) {
+			fullscreen_button->getComponent<Button>()->changeTex(&sdlutils().images().at("fullscreen_on"));
+		}
+	}
 }
 
 void OptionsState::controlVolume(float value, Entity* ent){
@@ -121,6 +128,7 @@ void OptionsState::volverMenu(App* app, SoundManager* snd){
 	app->getStateMachine()->popState();
 }
 
-void OptionsState::changeFullScreen(App* app, SoundManager* snd){
+void OptionsState::changeFullScreen(App* app, SoundManager* snd)
+{
 	sdlutils().toggleFullScreen();
 }

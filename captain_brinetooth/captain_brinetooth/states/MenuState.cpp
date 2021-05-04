@@ -35,7 +35,7 @@ void MenuState::init() {
 	x = (int)((App::camera.w - w) * 0.5);
 
 	//Boton Cargar
-	if (saved_game) {
+	if (!saved_game) {
 		auto* botonCargar = manager_->addEntity();
 		w *= 0.8;
 		h *= 0.8;
