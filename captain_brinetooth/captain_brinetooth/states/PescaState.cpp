@@ -52,7 +52,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 
 
 
-	auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
+	auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 20), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* player_anim_controller = player->addComponent<AnimBlendGraph>();
 	player_anim_controller->addAnimation("player", &sdlutils().images().at("player_cana"), 1, 1, 1, 1, 0);
 	BoxCollider* playercollider_ = player->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
@@ -89,45 +89,66 @@ void PescaState::createPesca(const Config& entityConfig) {
 void PescaState::createRandomReward(const Config& entityConfig)
 {
 	//0 espada 1 martillo 2 sierra ---> se iran añadiendo segun vaya habiendo mas armas
-	int random; 
+	int random;
 	Vector2D pos1 = Vector2D(sdlutils().width() / 2, 800);
 	Vector2D pos2 = Vector2D(sdlutils().width() / 2, 1000);
 	Vector2D pos3 = Vector2D(sdlutils().width() / 2, 1200);
 	for (int i = 0; i < entitiesPerLine; i++)
 	{
 		random = sdlutils().rand().teCuoto(0, 7);
-	
-			auto* reward0 = createBasicEntity(Vector2D(pos1.getX()+(200*i), pos1.getY()), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
-			AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
-			if (random == 0)
-			{
-				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
-				
-			}
-			else if (random == 1)
-			{
-				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
-				
-			}
-			else if(random==2)
-			{
-				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
-			}
-			else //No es ninguna recompensa activa 
+
+		auto* reward0 = createBasicEntity(Vector2D(pos1.getX() + (200 * i) , pos1.getY()), Vector2D(70, 70), 0.0f, Vector2D(0, 0));
+		AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
+		if (random == 0)
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
+
+		}
+		else if (random == 1)
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
+
+		}
+		else if (random == 2)
+		{
+			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+		}
+		else //No es ninguna recompensa activa 
+		{
+			int rnd = sdlutils().rand().teCuoto(0, 15);
+			if (rnd >= 0 && rnd < 5)
 			{
 				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
-				random = 30;
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
 			}
-			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-			reward0->addComponent<Reward>(random);
-			
+			else if (rnd >= 6 && rnd < 10)
+			{
+
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("casco"), 1, 1, 1, 1, 0);
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			else  if (rnd >= 10 && rnd <= 14)
+			{
+
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("lata"), 1, 1, 1, 1, 0);
+				//Pones a pelo tanto el tipo como el colision mask-> acuerdate de poner la capa para que solo toque el gancho , es decir que es para cuando el gancho baja 
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			random = 30;
+		}
+
+		reward0->addComponent<Reward>(random);
+
 
 	}
 	for (int i = 0; i < entitiesPerLine; i++)
 	{
-		random = sdlutils().rand().teCuoto(0, 3);
+		random = sdlutils().rand().teCuoto(0, 7);
 
-		auto* reward0 = createBasicEntity(Vector2D(pos2.getX() + (200 * i), pos2.getY()), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
+		auto* reward0 = createBasicEntity(Vector2D(pos1.getX() + (200 * i), pos1.getY()), Vector2D(70, 70), 0.0f, Vector2D(0, 0));
 		AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
 		if (random == 0)
 		{
@@ -139,19 +160,46 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
 
 		}
-		else
+		else if (random == 2)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 		}
-		reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+		else //No es ninguna recompensa activa 
+		{
+			int rnd = sdlutils().rand().teCuoto(0, 15);
+			if (rnd >= 0 && rnd < 5)
+			{
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			else if (rnd >= 6 && rnd < 10)
+			{
+
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("casco"), 1, 1, 1, 1, 0);
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			else  if (rnd >= 10 && rnd <= 14)
+			{
+
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("lata"), 1, 1, 1, 1, 0);
+				//Pones a pelo tanto el tipo como el colision mask-> acuerdate de poner la capa para que solo toque el gancho , es decir que es para cuando el gancho baja 
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			random = 30;
+		}
+
 		reward0->addComponent<Reward>(random);
+
 
 	}
 	for (int i = 0; i < entitiesPerLine; i++)
 	{
-		random = sdlutils().rand().teCuoto(0, 3);
+		random = sdlutils().rand().teCuoto(0, 7);
 
-		auto* reward0 = createBasicEntity(Vector2D(pos3.getX() + (200 * i), pos3.getY()), Vector2D(90, 90), 0.0f, Vector2D(0, 0));
+		auto* reward0 = createBasicEntity(Vector2D(pos1.getX() + (200 * i), pos1.getY()), Vector2D(70, 70), 0.0f, Vector2D(0, 0));
 		AnimBlendGraph* reward0_anim_controller = reward0->addComponent<AnimBlendGraph>();
 		if (random == 0)
 		{
@@ -163,12 +211,40 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
 
 		}
-		else
+		else if (random == 2)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 		}
-		reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+		else //No es ninguna recompensa activa 
+		{
+			int rnd = sdlutils().rand().teCuoto(0, 15);
+			if (rnd >= 0 && rnd < 5)
+			{
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			else if (rnd >= 6 && rnd < 10)
+			{
+
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("casco"), 1, 1, 1, 1, 0);
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			else  if (rnd >= 10 && rnd <= 14)
+			{
+
+				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("lata"), 1, 1, 1, 1, 0);
+				//Pones a pelo tanto el tipo como el colision mask-> acuerdate de poner la capa para que solo toque el gancho , es decir que es para cuando el gancho baja 
+				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+
+			}
+			random = 30;
+		}
+
 		reward0->addComponent<Reward>(random);
+
 
 	}
 }
+

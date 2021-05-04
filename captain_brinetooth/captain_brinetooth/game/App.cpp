@@ -15,7 +15,7 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-float App::camera_Zoom_Out = 1.0f;
+float App::camera_Zoom_Out = 2.0f;
 SDL_Rect App::camera = { 0 ,0,(int)(window.getX() * camera_Zoom_Out),(int)(window.getY() * camera_Zoom_Out) };
 
 using namespace ColLayers;
@@ -29,11 +29,11 @@ App::App() {
 
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
-	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
+	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto---
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
-	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
+	stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
 	//----Inicio de Juego------
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
@@ -43,6 +43,7 @@ App::App() {
 }
 
 App::~App() {
+	sdlutils().setToWindowMode();
 	//Setteamos de nuevo el brillo por defecto
 	SDL_SetWindowBrightness(sdlutils().window(), brightness);
 	delete stateMachine;
@@ -82,7 +83,7 @@ void App::start() {
 			continue;
 		}
 
-		if (ih().isKeyDown(SDL_SCANCODE_A)) {
+		if (ih().isKeyDown(SDL_SCANCODE_M)) {
 			sdlutils().toggleFullScreen();
 		}
 

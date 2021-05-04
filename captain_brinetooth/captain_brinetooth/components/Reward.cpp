@@ -106,7 +106,7 @@ void Reward::adjustIfLimits()
 {
 	//We have to check limits in orden to set position if neccesary
 	//If not  we just use speed in x in order to move it 
-	tr_->getPos().set(Vector2D(sdlutils().width() * 2, tr_->getPos().getY()));
+	tr_->getPos().set(Vector2D(sdlutils().width()*2, tr_->getPos().getY()));
 	collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
 
 }
