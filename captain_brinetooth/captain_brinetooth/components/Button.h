@@ -27,6 +27,9 @@ public:
 	void render() override;
 	bool handleEvent(); 
 
+	void changeTex(Texture* newTexture);
+	void changeTexColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+
 protected:
 	CallBackOnClick* cboq;
 

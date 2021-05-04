@@ -29,5 +29,6 @@ public:
 private:
 	SDL_Rect cam;
 	SDL_Window* window;
+	Entity* fullscreen_button;
 };
 

@@ -55,3 +55,14 @@ bool Button::handleEvent(){
 	}
 	return false;
 }
+
+void Button::changeTex(Texture* newTexture)
+{
+	tex = newTexture;
+}
+
+void Button::changeTexColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	SDL_SetTextureColorMod(tex->getTexture(), r, g, b);
+	SDL_SetTextureAlphaMod(tex->getTexture(), a);
+}

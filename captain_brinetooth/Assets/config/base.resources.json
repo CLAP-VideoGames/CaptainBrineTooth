@@ -205,6 +205,14 @@
 			"file": "assets/sprites/botones/fondoOpciones.jpg"
 		},
 		{
+			"id": "fullscreen_on",
+			"file": "assets/sprites/botones/fullscreen_on.png"
+		},
+		{
+			"id": "fullscreen_off",
+			"file": "assets/sprites/botones/fullscreen_off.png"
+		},
+		{
 			"id": "menu_titulo",
 			"file": "assets/sprites/botones/menu_titulo.png"
 		},
@@ -411,8 +419,6 @@
 			"id": "pick_weapon",
 			"file": "assets/sounds/weapons/pick_weapon.mp3"
 		},
-
-
 		{
 			"id": "crecimiento_medusa",
 			"file": "assets/sounds/enemies/crecimiento_medusa.mp3"
