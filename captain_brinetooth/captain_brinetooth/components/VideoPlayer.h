@@ -2,7 +2,8 @@
 
 #include "../ecs/Component.h"
 #include <string>
-#include <vector>
+#include <queue>
+#include <deque>
 #include "SDL.h"
 #include <iostream>
 #include "../game/App.h"
@@ -51,7 +52,7 @@ struct Video {
 class VideoPlayer : public Component
 {
 public:
-	VideoPlayer(std::vector<std::pair<const char*, std::pair<bool, int>>>& file, const Vector2D& size = Vector2D(App::camera.w * App::camera_Zoom_Out, App::camera.h* App::camera_Zoom_Out));
+	VideoPlayer(std::deque<std::pair<const char*, std::pair<bool, int>>>& file, const Vector2D& size = Vector2D(App::camera.w, App::camera.h));
 	~VideoPlayer();
 
 	void init() override;
@@ -59,22 +60,41 @@ public:
 	void render() override;
 	
 	int createVideo(Video& video_);
-	void prepareVideos(std::vector<std::pair<const char*, std::pair<bool, int>>>& files);
+	/// <summary>
+	/// Crea los videos con todos sus atributos para ser renderizado
+	/// </summary>
+	/// <param name="files">cola de videos</param>
+	void prepareVideos(std::deque<std::pair<const char*, std::pair<bool, int>>>& files);
 
+	/// <summary>
+	/// Añade un nuevo video a la cola
+	/// </summary>
+	/// <param name="file"></param>
+	/// <param name="loop">: si se reproduce en loop</param>
+	/// <param name="frameRate">: frames per Second (Varia debido a los FPS del juego)</param>
 	void queueVideo(const char* file, bool loop, int frameRate);
 
+	/// <summary>
+	/// Quita un video de la cola, en caso de haber más de uno
+	/// </summary>
 	void popVideo();
 
+	/// <summary>
+	/// Quita, sea la cantidad que sea, un video de la cola
+	/// </summary>
 	void forcePopVideo();
 
-
+	/// <summary>
+	/// Obtiene el sdlRect del video
+	/// </summary>
+	/// <returns></returns>
 	SDL_Rect& getRect();
 
 private:
 
 	void changeTexture();
 	//Cola de videos
-	std::vector<Video> queueVideos;	
+	std::deque<Video> queueVideos;	
 	// sdl stuff
 	int window_w, window_h;
 	SDL_Texture* sdlTexture = nullptr;

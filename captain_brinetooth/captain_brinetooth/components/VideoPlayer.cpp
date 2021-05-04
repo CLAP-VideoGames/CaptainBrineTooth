@@ -1,11 +1,12 @@
 #include "VideoPlayer.h"
 
-VideoPlayer::VideoPlayer(std::vector<std::pair<const char*, std::pair<bool, int>>>& file, const Vector2D& size){
+VideoPlayer::VideoPlayer(std::deque<std::pair<const char*, std::pair<bool, int>>>& file, const Vector2D& size){
 
 	prepareVideos(file);
 
 	window_w = size.getX();
 	window_h = size.getY();
+
 }
 
 VideoPlayer::~VideoPlayer(){
@@ -47,12 +48,12 @@ void VideoPlayer::update(){
 				paused = !paused;
 			}
 			else if (event.key.keysym.sym == SDLK_ESCAPE) {
-				queueVideos.back().done = 1;
+				queueVideos.front().done = 1;
 				break;
 			}
 		}
 		else if (event.type == SDL_QUIT) {
-			queueVideos.back().done = 1;
+			queueVideos.front().done = 1;
 			break;
 		}
 	}
@@ -60,45 +61,45 @@ void VideoPlayer::update(){
 	// read (and decode) a frame if no one is available, it is separated
 		// from rendering so it can be done in a thread later
 	int n;
-	if (!queueVideos.empty() && !queueVideos.back().done && !available) {
+	if (!queueVideos.empty() && !queueVideos.front().done && !available) {
 		// read a frame
 		do {
-			n = av_read_frame(queueVideos.back().pFormatCtx, queueVideos.back().packet);
+			n = av_read_frame(queueVideos.front().pFormatCtx, queueVideos.front().packet);
 			if (n < 0) {
 				//Verificamos si se quiere loopear
-				if (queueVideos.back().loop){
+				if (queueVideos.front().loop){
 					if (n == AVERROR_EOF) {
-						auto stream = queueVideos.back().pFormatCtx->streams[queueVideos.back().videoIndex];
-						avio_seek(queueVideos.back().pFormatCtx->pb, 0, SEEK_SET);
-						avformat_seek_file(queueVideos.back().pFormatCtx, queueVideos.back().videoIndex, 0, 0, stream->duration, 0);
+						auto stream = queueVideos.front().pFormatCtx->streams[queueVideos.front().videoIndex];
+						avio_seek(queueVideos.front().pFormatCtx->pb, 0, SEEK_SET);
+						avformat_seek_file(queueVideos.front().pFormatCtx, queueVideos.front().videoIndex, 0, 0, stream->duration, 0);
 						continue;
 					}
 				}
 				else{
-					queueVideos.back().done = 1;
+					queueVideos.front().done = 1;
 					break;
 				}
 			}
-		} while (queueVideos.back().packet->stream_index != queueVideos.back().videoIndex); // we just take video, we ignore audio
+		} while (queueVideos.front().packet->stream_index != queueVideos.front().videoIndex); // we just take video, we ignore audio
 
 		// exit if there are no more frame
-		if (queueVideos.back().done)
+		if (queueVideos.front().done)
 			return;
 
 		if (n == AVERROR_EOF)
 			return;
 
 		// decode
-		avcodec_send_packet(queueVideos.back().pCodecCtx, queueVideos.back().packet);
+		avcodec_send_packet(queueVideos.front().pCodecCtx, queueVideos.front().packet);
 		if (ret < 0) {
 			std::cout << "Error submitting a packet for decoding "
 				// << av_err2str(ret) 
 				<< std::endl;
-			queueVideos.back().done = 1;
+			queueVideos.front().done = 1;
 			return;
 		}
 
-		ret = avcodec_receive_frame(queueVideos.back().pCodecCtx, queueVideos.back().pFrame);
+		ret = avcodec_receive_frame(queueVideos.front().pCodecCtx, queueVideos.front().pFrame);
 		if (ret < 0) {
 			// those two return values are special and mean there is no output
 			// frame available, but there were no errors during decoding
@@ -111,20 +112,20 @@ void VideoPlayer::update(){
 					<< std::endl;
 			}
 
-			queueVideos.back().done = 1;
+			queueVideos.front().done = 1;
 			return;
 		}
 
 		// scale the image
-		sws_scale(queueVideos.back().img_convert_ctx,
-			static_cast<const unsigned char* const*>(queueVideos.back().pFrame->data),
-			queueVideos.back().pFrame->linesize, 0, queueVideos.back().pCodecCtx->height, queueVideos.back().pFrameYUV->data,
-			queueVideos.back().pFrameYUV->linesize);
+		sws_scale(queueVideos.front().img_convert_ctx,
+			static_cast<const unsigned char* const*>(queueVideos.front().pFrame->data),
+			queueVideos.front().pFrame->linesize, 0, queueVideos.front().pCodecCtx->height, queueVideos.front().pFrameYUV->data,
+			queueVideos.front().pFrameYUV->linesize);
 
 		available = true;
 	}
 
-	if (queueVideos.back().done){
+	if (queueVideos.front().done){
 		popVideo();
 	}
 
@@ -137,16 +138,16 @@ void VideoPlayer::render(){
 	}
 
 	// show a frame if timePerFrame milliseconds have passed since last update
-	if (!queueVideos.empty() && !queueVideos.back().done && !paused && available
-		&& SDL_GetTicks() - lastUpdate >= queueVideos.back().timePerFrame) {
+	if (!queueVideos.empty() && !queueVideos.front().done && !paused && available
+		&& SDL_GetTicks() - lastUpdate >= queueVideos.front().timePerFrame) {
 		lastUpdate = SDL_GetTicks();
 		available = false;
 		// render the frame
-		SDL_UpdateTexture(sdlTexture, NULL, queueVideos.back().pFrameYUV->data[0],
-			queueVideos.back().pFrameYUV->linesize[0]);
+		SDL_UpdateTexture(sdlTexture, NULL, queueVideos.front().pFrameYUV->data[0],
+			queueVideos.front().pFrameYUV->linesize[0]);
 
-		av_frame_unref(queueVideos.back().pFrame);
-		av_packet_unref(queueVideos.back().packet);
+		av_frame_unref(queueVideos.front().pFrame);
+		av_packet_unref(queueVideos.front().packet);
 	}
 
 	SDL_RenderCopy(sdlutils().renderer(), sdlTexture, NULL, &sdlRect);
@@ -239,7 +240,7 @@ void VideoPlayer::queueVideo(const char *file, bool loop_, int frameRate){
 void VideoPlayer::popVideo(){
 	//No queremos que borre el ultimo video ya que borraria la textura y se dejarú} de renderizar
 	if (!queueVideos.empty() && queueVideos.size() != 1) {
-		queueVideos.pop_back();
+		queueVideos.pop_front();
 		changeTexture();
 	}
 }
@@ -249,16 +250,17 @@ void VideoPlayer::popVideo(){
 /// </summary>
 void VideoPlayer::forcePopVideo() {
 	if (!queueVideos.empty()) {
-		queueVideos.pop_back();
+		queueVideos.pop_front();
 		changeTexture();
 	}
 }
 
-void VideoPlayer::prepareVideos(std::vector<std::pair<const char*, std::pair<bool, int>>>& files){
+void VideoPlayer::prepareVideos(std::deque<std::pair<const char*, std::pair<bool, int>>>& files){
 	int size = files.size();
 
-	for (int i = 0; i < size; i++)
-		queueVideo(files[i].first, files[i].second.first , files[i].second.second);
+	for (std::pair<const char*, std::pair<bool, int>> file : files){
+		queueVideo(file.first, file.second.first, file.second.second);
+	}
 }
 
 SDL_Rect& VideoPlayer::getRect(){
@@ -269,5 +271,5 @@ void VideoPlayer::changeTexture(){
 	if(sdlTexture != nullptr)
 		SDL_DestroyTexture(sdlTexture);
 
-	sdlTexture = queueVideos.back().actTexture();
+	sdlTexture = queueVideos.front().actTexture();
 }

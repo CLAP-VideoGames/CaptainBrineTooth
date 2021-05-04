@@ -243,6 +243,30 @@ void SDLUtils::loadReasources(std::string filename) {
 			throw "'tilesets' is not an array in '" + filename + "'";
 		}
 	}
+	
+	//load videos
+	jValue = root["videos"];
+	if (jValue != nullptr) {
+		if (jValue->IsArray()) {
+			for (auto& v : jValue->AsArray()) {
+				if (v->IsObject()) {
+					JSONObject vObj = v->AsObject();
+					std::string key = vObj["id"]->AsString();
+					std::string file = vObj["file"]->AsString();
+					videos_.emplace(key, file);
+				}
+				else {
+					throw "'videos' array in '" + filename
+						+ "' includes and invalid value";
+				}
+			}
+		}
+		else {
+			throw "'videos' is not an array in '" + filename + "'";
+		}
+	}
+
+
 	delete jaux;
 }
 

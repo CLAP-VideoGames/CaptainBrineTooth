@@ -592,7 +592,7 @@
 		}
 	],
 
-	"messages" : [
+	"messages": [
 		{
 			"id": "Volume",
 			"text": "Volume",
@@ -636,5 +636,20 @@
 			"color": "0xffffffff"
 		}
 
+	],
+
+	"videos": [
+		{
+			"id": "waves",
+			"file": "assets/videos/waves.mp4"
+		},
+		{
+			"id": "intro",
+			"file": "assets/videos/intro.mp4"
+		},
+		{
+			"id": "introLoop",
+			"file": "assets/videos/intro_loop.mp4"
+		}
 	]
 }
