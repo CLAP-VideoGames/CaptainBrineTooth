@@ -76,6 +76,8 @@ public:
 	vector<tmx::Vector2f> getPescaPoints() { return pescaPos; }
 	//Creo que es para que sea L value. Se lo tengo que preguntar a Samir
 	Vector2D& getMaxCoordenates() { return (maxCoordenate); }
+
+	void addProjectile(Entity* p) { projectiles.push_back(p); }
 	
 private:
 	void spawnEnemies();
@@ -95,6 +97,9 @@ private:
 	map<gid, Texture*> tilesets_;	// tilesets usados para dibujar el Tiled Map
 	vector<tile*> tiles_;			// tiles a dibujar en pantalla
 
+
+	//Proyectiles
+	vector<Entity*> projectiles;
 	//Puntos para las colisiones del mapa
 	vector<vector<tmx::Vector2f>> points;
 	//Enemigos

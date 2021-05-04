@@ -278,6 +278,13 @@ void Level0::clearLevelVectors(){
 	}
 
 	if(!enemigos.empty())enemigos.clear();
+
+
+	for (Entity* e : projectiles) {
+		e->setActive(false);
+	}
+
+	if (!projectiles.empty()) projectiles.clear();
 }
 
 void Level0::render() {
