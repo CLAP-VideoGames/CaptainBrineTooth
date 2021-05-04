@@ -281,7 +281,7 @@ void Level0::clearLevelVectors(){
 
 
 	for (Entity* e : projectiles) {
-		e->setActive(false);
+		if(e != nullptr )e->setActive(false);
 	}
 
 	if (!projectiles.empty()) projectiles.clear();
