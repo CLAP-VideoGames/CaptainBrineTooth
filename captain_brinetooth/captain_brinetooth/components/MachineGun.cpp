@@ -39,6 +39,14 @@ void MachineGun::update() {
 			}
 		}
 	}
+	else {
+		if (CURRENT_STATUS != STATUS::Iddle) {
+			CURRENT_STATUS = STATUS::Iddle;
+
+			if (anim_->getParamIndex("machineGun_att") != -1)
+				anim_->setParamValue("machineGun_att", 0);
+		}
+	}
 	
 
 	if (ih().keyUpEvent()) {

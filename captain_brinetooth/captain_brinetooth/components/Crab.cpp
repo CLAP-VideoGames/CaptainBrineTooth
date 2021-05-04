@@ -90,70 +90,82 @@ void Crab::update() {
 				}
 			}
 		}
+
+		//Check out of input cases
+		if (CURRENT_STATUS == STATUS::Sawing && sawActivationTime + maxHoldTime < sdlutils().currRealTime()) {
+			//Deactivate chainsaw
+			std::cout << "STOPPED STABBING\n";
+			CURRENT_STATUS = STATUS::OnAnimationLock;
+
+			if (anim_->getParamIndex("crab_att") != -1)
+				anim_->setParamValue("crab_att", 0);
+
+			stoppedSawTime = sdlutils().currRealTime();
+		}
+		else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
+			//Deactivate animation lock
+			std::cout << "STOPPED ANIMATION\n";
+			CURRENT_STATUS = STATUS::OnCombo;
+
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+
+			comboActivationTime = sdlutils().currRealTime();
+		}
+		else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
+			//Deactivate combo availability
+			std::cout << "STOPPED COMBO\n";
+			CURRENT_STATUS = STATUS::Iddle;
+			CURRENT_ATTACK = ATTACKS::NotAttacking;
+
+			stoppedAttackingTime = sdlutils().currRealTime();
+
+			if (anim_->getParamIndex("crab_att") != -1)
+				anim_->setParamValue("crab_att", 0);
+		}
+
+		//Updating the trigger's position
+		if (trigger != nullptr) {
+			if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+			else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+		}
+
+		if (currentlyStabbing && stabActivationTime + stabTriggerTime < sdlutils().currRealTime()) {
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+			currentlyStabbing = false;
+		}
+
+		//Comprobamos si hay que spawnear una estocada
+		if (CURRENT_STATUS == Sawing && stabActivationTime + timeBetweenStabs < sdlutils().currRealTime()) {
+			std::cout << "Crab Punch\n";
+
+			//
+			creaTrigger(100);
+
+			stabActivationTime = sdlutils().currRealTime();
+			currentlyStabbing = true;
+		}
+	}
+	else {
+		if (CURRENT_STATUS != STATUS::Iddle) {
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+			CURRENT_STATUS = STATUS::Iddle;
+			CURRENT_ATTACK = ATTACKS::NotAttacking;
+		}
 	}
 	
 
-	//Check out of input cases
-	if (CURRENT_STATUS == STATUS::Sawing && sawActivationTime + maxHoldTime < sdlutils().currRealTime()) {
-		//Deactivate chainsaw
-		std::cout << "STOPPED STABBING\n";
-		CURRENT_STATUS = STATUS::OnAnimationLock;
-
-		if (anim_->getParamIndex("crab_att") != -1)
-			anim_->setParamValue("crab_att", 0);
-
-		stoppedSawTime = sdlutils().currRealTime();
-	}
-	else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
-		//Deactivate animation lock
-		std::cout << "STOPPED ANIMATION\n";
-		CURRENT_STATUS = STATUS::OnCombo;
-
-		if (trigger != nullptr) {
-			trigger->setActive(false);
-			trigger = nullptr;
-		}
-
-		comboActivationTime = sdlutils().currRealTime();
-	}
-	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
-		//Deactivate combo availability
-		std::cout << "STOPPED COMBO\n";
-		CURRENT_STATUS = STATUS::Iddle;
-		CURRENT_ATTACK = ATTACKS::NotAttacking;
-
-		stoppedAttackingTime = sdlutils().currRealTime();
-
-		if (anim_->getParamIndex("crab_att") != -1)
-			anim_->setParamValue("crab_att", 0);
-	}
-
-	//Updating the trigger's position
-	if (trigger != nullptr) {
-		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
-			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
-		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
-			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
-	}
-
-	if (currentlyStabbing && stabActivationTime + stabTriggerTime < sdlutils().currRealTime()) {
-		if (trigger != nullptr) {
-			trigger->setActive(false);
-			trigger = nullptr;
-		}
-		currentlyStabbing = false;
-	}
-
-	//Comprobamos si hay que spawnear una estocada
-	if (CURRENT_STATUS == Sawing && stabActivationTime + timeBetweenStabs < sdlutils().currRealTime()) {
-		std::cout << "Crab Punch\n";
-
-		//
-		creaTrigger(100);
-
-		stabActivationTime = sdlutils().currRealTime();
-		currentlyStabbing = true;
-	}
+	
 }
 
 void Crab::creaTrigger(int damage) {

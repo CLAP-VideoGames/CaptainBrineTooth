@@ -96,84 +96,95 @@ void Chainsaw::update() {
 				}
 			}
 		}
+		//Transicion de la animacion de preparar tercer ataque a la realización del bucle
+		if (toLoop && CURRENT_STATUS == STATUS::Sawing && currentLoopAnimationTime + timeLoopAnimationTransition < sdlutils().currRealTime()) {
+			anim_->setParamValue("chainsaw_att", 4);
+			toLoop = false;
+		}
+
+		//Check out of input cases
+		if (CURRENT_STATUS == STATUS::Sawing && sawActivationTime + maxHoldTime < sdlutils().currRealTime()) {
+			//Deactivate chainsaw
+			std::cout << "STOPPED SAWING\n";
+			CURRENT_STATUS = STATUS::OnAnimationLock;
+
+			stoppedSawTime = sdlutils().currRealTime();
+
+			if (anim_->getParamIndex("chainsaw_att") != -1)
+				anim_->setParamValue("chainsaw_att", 0);
+		}
+		else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
+			//Deactivate animation lock
+			std::cout << "STOPPED ANIMATION\n";
+			CURRENT_STATUS = STATUS::OnCombo;
+
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+
+			comboActivationTime = sdlutils().currRealTime();
+		}
+		else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
+			//Deactivate combo availability
+			std::cout << "STOPPED COMBO\n";
+			CURRENT_STATUS = STATUS::Iddle;
+			CURRENT_ATTACK = ATTACKS::NotAttacking;
+
+			stoppedAttackingTime = sdlutils().currRealTime();
+
+			if (anim_->getParamIndex("chainsaw_att") != -1)
+				anim_->setParamValue("chainsaw_att", 0);
+		}
+
+		//Updating the trigger's position
+		if (trigger != nullptr) {
+			if (CURRENT_ATTACK == ATTACKS::Attack3) {
+				if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-thirdTriggerOffSetX)) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + thirdTriggerOffSetY) / sdlutils().getPPM()), 0.0f);
+				else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + thirdTriggerOffSetX) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + thirdTriggerOffSetY) / sdlutils().getPPM()), 0.0f);
+			}
+			else {
+				if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+				else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+			}
+		}
+
+		if (currentlyStabbing && stabActivationTime + stabTriggerTime < sdlutils().currRealTime()) {
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+			currentlyStabbing = false;
+		}
+
+		//Comprobamos si hay que spawnear una estocada
+		if (CURRENT_STATUS == Sawing && stabActivationTime + timeBetweenStabs < sdlutils().currRealTime()) {
+			std::cout << "Saw\n";
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("estocada_sierra", 0);
+
+			creaTrigger(200);
+
+			stabActivationTime = sdlutils().currRealTime();
+			currentlyStabbing = true;
+		}
+	}
+	else {
+		if (CURRENT_STATUS != STATUS::Iddle) {
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+			CURRENT_STATUS = STATUS::Iddle;
+			CURRENT_ATTACK = ATTACKS::NotAttacking;
+		}
 	}
 	
 
-	//Transicion de la animacion de preparar tercer ataque a la realización del bucle
-	if (toLoop && CURRENT_STATUS == STATUS::Sawing && currentLoopAnimationTime + timeLoopAnimationTransition < sdlutils().currRealTime()) {
-		anim_->setParamValue("chainsaw_att", 4);
-		toLoop = false;
-	}
-
-	//Check out of input cases
-	if (CURRENT_STATUS == STATUS::Sawing && sawActivationTime + maxHoldTime < sdlutils().currRealTime()) {
-		//Deactivate chainsaw
-		std::cout << "STOPPED SAWING\n";
-		CURRENT_STATUS = STATUS::OnAnimationLock;
-
-		stoppedSawTime = sdlutils().currRealTime();
-
-		if (anim_->getParamIndex("chainsaw_att") != -1)
-			anim_->setParamValue("chainsaw_att", 0);
-	}
-	else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
-		//Deactivate animation lock
-		std::cout << "STOPPED ANIMATION\n";
-		CURRENT_STATUS = STATUS::OnCombo;
-
-		if (trigger != nullptr) {
-			trigger->setActive(false);
-			trigger = nullptr;
-		}
-
-		comboActivationTime = sdlutils().currRealTime();
-	}
-	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
-		//Deactivate combo availability
-		std::cout << "STOPPED COMBO\n";
-		CURRENT_STATUS = STATUS::Iddle;
-		CURRENT_ATTACK = ATTACKS::NotAttacking;
-
-		stoppedAttackingTime = sdlutils().currRealTime();
-
-		if (anim_->getParamIndex("chainsaw_att") != -1)
-			anim_->setParamValue("chainsaw_att", 0);
-	}
-
-	//Updating the trigger's position
-	if (trigger != nullptr) {
-		if (CURRENT_ATTACK == ATTACKS::Attack3) {
-			if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-thirdTriggerOffSetX)) / sdlutils().getPPM(),
-				(tr_->getPos().getY() + thirdTriggerOffSetY) / sdlutils().getPPM()), 0.0f);
-			else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + thirdTriggerOffSetX) / sdlutils().getPPM(),
-				(tr_->getPos().getY() + thirdTriggerOffSetY) / sdlutils().getPPM()), 0.0f);
-		}
-		else {
-			if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
-				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
-			else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
-				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
-		}
-	}
-
-	if (currentlyStabbing && stabActivationTime + stabTriggerTime < sdlutils().currRealTime()) {
-		if (trigger != nullptr) {
-			trigger->setActive(false);
-			trigger = nullptr;
-		}
-		currentlyStabbing = false;
-	}
-
-	//Comprobamos si hay que spawnear una estocada
-	if (CURRENT_STATUS == Sawing && stabActivationTime + timeBetweenStabs < sdlutils().currRealTime()) {
-		std::cout << "Saw\n";
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("estocada_sierra", 0);
-
-		creaTrigger(200);
-
-		stabActivationTime = sdlutils().currRealTime();
-		currentlyStabbing = true;
-	}
+	
 }
 
 void Chainsaw::creaTrigger(int damage) {

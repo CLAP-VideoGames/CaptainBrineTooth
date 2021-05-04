@@ -72,39 +72,47 @@ void ElectricWhip::update() {
 				}
 			}
 		}
-	}
-	
+		//Check out of input cases
+		if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
+			//Deactivate animation lock
+			std::cout << "STOPPED ANIMATION\n";
+			CURRENT_STATUS = STATUS::OnCombo;
+			comboActivationTime = sdlutils().currRealTime();
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+		}
+		else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
+			//Deactivate combo availability
+			std::cout << "STOPPED COMBO\n";
+			CURRENT_STATUS = STATUS::Iddle;
+			CURRENT_ATTACK = ATTACKS::NotAttacking;
 
-	//Check out of input cases
-	if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
-		//Deactivate animation lock
-		std::cout << "STOPPED ANIMATION\n";
-		CURRENT_STATUS = STATUS::OnCombo;
-		comboActivationTime = sdlutils().currRealTime();
+			anim_->setParamValue("hammer_att", 0);
+		}
+
+		/*if (anim_->isComplete() && anim_->getParamIndex("hammer_att") != ATTACKS::NotAttacking && anim_->getParamIndex("hammer_att") == CURRENT_ATTACK) {
+			anim_->setParamValue("hammer_att", 0);
+		}*/
+
+		//Updating the trigger's position
 		if (trigger != nullptr) {
-			trigger->setActive(false);
-			trigger = nullptr;
+			if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+			else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 		}
 	}
-	else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
-		//Deactivate combo availability
-		std::cout << "STOPPED COMBO\n";
-		CURRENT_STATUS = STATUS::Iddle;
-		CURRENT_ATTACK = ATTACKS::NotAttacking;
-
-		anim_->setParamValue("hammer_att", 0);
-	}
-
-	/*if (anim_->isComplete() && anim_->getParamIndex("hammer_att") != ATTACKS::NotAttacking && anim_->getParamIndex("hammer_att") == CURRENT_ATTACK) {
-		anim_->setParamValue("hammer_att", 0);
-	}*/
-
-	//Updating the trigger's position
-	if (trigger != nullptr) {
-		if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
-			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
-		else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
-			(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+	else {
+		if (CURRENT_STATUS != STATUS::Iddle) {
+			if (trigger != nullptr) {
+				trigger->setActive(false);
+				trigger = nullptr;
+			}
+			CURRENT_STATUS = STATUS::Iddle;
+			CURRENT_ATTACK = ATTACKS::NotAttacking;
+		}
 	}
 }
 
