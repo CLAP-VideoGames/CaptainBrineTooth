@@ -15,7 +15,7 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-float App::camera_Zoom_Out = 1.0f;
+float App::camera_Zoom_Out = 2.0f;
 SDL_Rect App::camera = { 0 ,0,(int)(window.getX() * camera_Zoom_Out),(int)(window.getY() * camera_Zoom_Out) };
 
 using namespace ColLayers;
@@ -29,7 +29,7 @@ App::App() {
 
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
-	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
+	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto---
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
@@ -38,7 +38,7 @@ App::App() {
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
-	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
+	stateMachine->pushState(new PescaState(this, world_, sndProvisional));
 
 }
 

@@ -295,6 +295,14 @@
 		{
 			"id": "muelle",
 			"file": "assets/sprites/pesca/muellePesca.png"
+		},
+		{
+			"id": "lata",
+			"file": "assets/sprites/pesca/lataPesca.png"
+		},
+		{
+			"id": "casco",
+			"file": "assets/sprites/pesca/cascoPesca.png"
 		}
 	],
 
