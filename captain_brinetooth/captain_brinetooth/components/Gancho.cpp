@@ -18,7 +18,6 @@ void  Gancho::init()
 	hookBody = entity_->getComponent<BoxCollider>();
 	assert(hookBody != nullptr);
 	//hookBody->getBody()->SetGravityScale(0.0f);
-	//No se Exactamente donde va para poder hacer el timer
 
 
 	

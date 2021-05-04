@@ -17,6 +17,9 @@ public:
 protected:
 	SDL_Rect cam;
 	int entitiesPerLine;
+	std::array<float, 3> rowHeights;
+	int w;
+	int h;
 	//DamageCollisionCallbacks collisionListener;
 	
 };
