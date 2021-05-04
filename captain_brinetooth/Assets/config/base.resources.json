@@ -205,8 +205,48 @@
 			"file": "assets/sprites/botones/fondoOpciones.jpg"
 		},
 		{
+			"id": "menu_titulo",
+			"file": "assets/sprites/botones/menu_titulo.png"
+		},
+		{
+			"id": "continuar_menu",
+			"file": "assets/sprites/botones/continuar_titulo.png"
+		},
+		{
+			"id": "nueva_partida_menu",
+			"file": "assets/sprites/botones/nueva_titulo.png"
+		},
+		{
+			"id": "ajustes_menu",
+			"file": "assets/sprites/botones/ajustes_titulo.png"
+		},
+		{
+			"id": "creditos_menu",
+			"file": "assets/sprites/botones/creditos_titulo.png"
+		},
+		{
+			"id": "menu_boton",
+			"file": "assets/sprites/botones/menu_boton.png"
+		},
+		{
+			"id": "atras_boton",
+			"file": "assets/sprites/botones/atras_boton.png"
+		},
+		{
+			"id": "salir_menu",
+			"file": "assets/sprites/botones/salir_titulo.png"
+		},
+		{
 			"id": "sky",
 			"file": "assets/background/sky.png"
+		},
+		{
+			"id": "bg_pausa",
+			"file": "assets/background/bg_pausa.png"
+		},
+		{
+			"id": "bg_options",
+			"file": "assets/background/bg_options.png"
 		},
 		{
 			"id": "bg_layer1",

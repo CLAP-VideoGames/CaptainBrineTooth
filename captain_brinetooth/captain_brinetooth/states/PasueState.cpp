@@ -10,7 +10,7 @@ PauseState::PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World
 void PauseState::init() {
 	auto* fondo = manager_->addEntity();
 	SDL_Rect posImage = build_sdlrect(0, 0, cam.w, cam.h);
-	fondo->addComponent<Image>(&sdlutils().images().at("debug_square"), posImage, "pausa");
+	fondo->addComponent<Image>(&sdlutils().images().at("bg_pausa"), posImage, "pausa");
 	createBasePanel();
 }
 
@@ -52,7 +52,7 @@ void PauseState::createOptionPanel() {
 	
 
 
-		//Tamaño de las texturas del Slider
+	//Tamaño de las texturas del Slider
 	std::pair<Vector2D, Vector2D> size = { Vector2D(600, 30), Vector2D(95, 100) };
 	Vector2D pos = Vector2D(Vector2D((cam.w * 0.5), cam.h * 0.2));
 
@@ -71,10 +71,12 @@ void PauseState::createOptionPanel() {
 	Entity* brightness = OptionsState::createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()), app);
 	panel.push_back(brightness);
 
-	// Boton Volver
-	float multiplier = 0.5;
-	pos = Vector2D((cam.w * 0.04f), cam.h * 0.8);
-	createButton(&sdlutils().images().at("volverMenu"), multiplier, pos, pushPausePanel);
+	// Back
+	int w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out * 0.65;
+	int h = (int)w * 0.4;
+	int x = (int)((App::camera.w - w) * 0.02);
+	int y = (int)((App::camera.h - h) * 0.98);
+	createButton(&sdlutils().images().at("atras_boton"), Vector2D(x,y), Vector2D(w,h), pushPausePanel);
 }
 
 void PauseState::pushPausePanel(App* app, SoundManager* snd) {
@@ -86,40 +88,33 @@ void PauseState::pushPausePanel(App* app, SoundManager* snd) {
 }
 
 void PauseState::createBasePanel() {
-	SDL_Rect rectPos;
-	rectPos.x = 0;
-	rectPos.y = 0;
-	rectPos.w = cam.w;
-	rectPos.h = cam.h;
-
-	float sizeFactor = 0.9;
-	//Vector2D(cam.w / 1.9, cam.h * 0.07);
-	//BOTON BACKMENU---------
-
-	Vector2D pos = Vector2D((cam.w * 0.75f), cam.h * 0.5);
-
-	createButton(&sdlutils().images().at("menu"), sizeFactor, pos, backToMenu);
-	//BOTON OPTIONS---------
-	pos = Vector2D((cam.w * 0.25f), cam.h * 0.5);
-	createButton(&sdlutils().images().at("opciones"), sizeFactor, pos, pushOptionsPanel);
-	//BOTON RESUME---------
-	pos = Vector2D((cam.w * 0.5f), cam.h * 0.2);
-	createButton(&sdlutils().images().at("continuar"), sizeFactor, pos, backToGame);
+	//Atributos de los botones
+	int w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out;
+	int h = (int)w * 0.4;
+	int x = (int)((App::camera.w - w) * 0.5);
+	int y = (int)((App::camera.w - w) * 0.15);
+	// Continue
+	createButton(&sdlutils().images().at("continuar_menu"), Vector2D(x,y), Vector2D(w,h), backToGame);
+	// Options
+	w *= 0.8;
+	h *= 0.8;
+	x = (int)((App::camera.w - w) * 0.2);
+	y = (int)((App::camera.h - h) * 0.6);
+	createButton(&sdlutils().images().at("ajustes_menu"), Vector2D(x, y), Vector2D(w, h), pushOptionsPanel);
+	//Back to menu
+	x = (int)((App::camera.w - w) * 0.8);
+	createButton(&sdlutils().images().at("menu_boton"), Vector2D(x, y), Vector2D(w, h), backToMenu);
+	// Exit
+	w *= 0.8;
+	h *= 0.8;
+	x = (int)((App::camera.w - w) * 0.98);
+	y = (int)((App::camera.h - h) * 0.98);
+	createButton(&sdlutils().images().at("salir_menu"), Vector2D(x, y), Vector2D(w, h), quitGame);
 }
 
-void PauseState::createButton(Texture* imageTexture, float& sizeFactor, Vector2D& pos, void(*callback)(App*, SoundManager*)) {
-	float factor_ = app->getCameraZooOut();
-	SDL_Rect rectPos;
-	rectPos.x = 0;
-	rectPos.y = 0;
-	rectPos.w = cam.w;
-	rectPos.h = cam.h;
-	
-	rectPos = GameState::ScaleSDL_Rect(imageTexture, pos, factor_, sizeFactor, true);
-	
-	auto* button = createBasicEntity(Vector2D(rectPos.x, rectPos.y), Vector2D(rectPos.w, rectPos.h), 0.0f, Vector2D(0, 0));
+void PauseState::createButton(Texture* imageTexture, Vector2D pos, Vector2D size, void(*callback)(App*, SoundManager*)) {	
+	auto* button = createBasicEntity(Vector2D(pos.getX(), pos.getY()), Vector2D(size.getX(), size.getY()), 0.0f, Vector2D(0, 0));
 	button->addComponent<Button>(imageTexture, callback, app, manager_->getSoundMngr());
-
 	panel.push_back(button);
 }
 
@@ -131,4 +126,7 @@ void PauseState::clearPanel() {
 		ent->setActive(false);
 	}
 	panel.clear();
+}
+void PauseState::quitGame(App* game, SoundManager* snd) {
+	game->exitGame();
 }

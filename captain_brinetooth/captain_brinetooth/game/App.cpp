@@ -15,7 +15,7 @@
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
-float App::camera_Zoom_Out = 2.0f;
+float App::camera_Zoom_Out = 1.0f;
 SDL_Rect App::camera = { 0 ,0,(int)(window.getX() * camera_Zoom_Out),(int)(window.getY() * camera_Zoom_Out) };
 
 using namespace ColLayers;
@@ -29,9 +29,9 @@ App::App() {
 
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
-	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
+	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto---
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
 	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
 	//----Inicio de Juego------
@@ -166,11 +166,6 @@ void App::changeToPesca()
 	b2Vec2 gravity(0.0f, 9.8f);
 	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
 	stateMachine->pushState(new PescaState(this, w, sndProvisional));
-}
-
-void App::changeZoom(float zoom)
-{
-	camera_Zoom_Out = zoom;
 }
 
 /// <summary>

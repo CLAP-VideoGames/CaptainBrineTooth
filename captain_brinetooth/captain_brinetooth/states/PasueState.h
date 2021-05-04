@@ -17,8 +17,9 @@ public:
 	static void backToMenu(App* app, SoundManager* snd);
 	static void pushOptionsPanel(App* app, SoundManager* snd);
 	static void pushPausePanel(App* app, SoundManager* snd);
+	static void quitGame(App* game, SoundManager* snd);
 	//Creacion de Paneles
-	void createButton(Texture* t, float& sizeFactor, Vector2D& pos,void(*callback)(App*, SoundManager*));
+	void createButton(Texture* t, Vector2D pos, Vector2D size,void(*callback)(App*, SoundManager*));
 	void createOptionPanel();
 	void createBasePanel();
 

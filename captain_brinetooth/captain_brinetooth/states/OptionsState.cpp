@@ -15,11 +15,15 @@ void OptionsState::init(){
 	posImage.w = cam.w;
 	posImage.h = cam.h;
 
-	fondo->addComponent<Image>(&sdlutils().images().at("fondoOpciones"), posImage, "fondoOpciones");
+	fondo->addComponent<Image>(&sdlutils().images().at("bg_options"), posImage, "fondoOpciones");
 	manager_->getSoundMngr()->playPauseMusic();
 
-	//Boton
-	botonVolver();
+	// Back Button
+	int w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out * 0.65;
+	int h = (int)w * 0.4;
+	int x = (int)((App::camera.w - w) * 0.02);
+	int y = (int)((App::camera.h - h) * 0.98);
+	createButton(&sdlutils().images().at("atras_boton"), Vector2D(x, y), Vector2D(w, h), volverMenu);
 
 	//Tamaño de las texturas del Slider
 	std::pair<Vector2D, Vector2D> size = { Vector2D(600, 30), Vector2D(95, 100) };
@@ -40,20 +44,9 @@ void OptionsState::init(){
 	createBrightness(manager_, pos, size, textures2, SDL_GetWindowBrightness(sdlutils().window()), app);
 }
 
-Entity* OptionsState::botonVolver(){
-	// Boton de volver al menu
-	SDL_Rect rectPos;
-
-	Texture* imageTexture = &sdlutils().images().at("volverMenu");
-	float sizeFactor = 0.5;
-	float factor_ = App::camera_Zoom_Out;
-	
-	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(App::camera.w* 0.04 , App::camera.h * 0.8), factor_, sizeFactor, false);
-	
-	auto* volver = createBasicEntity(Vector2D(rectPos.x, rectPos.y), Vector2D(rectPos.w, rectPos.h), 0.0f, Vector2D(0, 0));
-	volver->addComponent<Button>(imageTexture, volverMenu, app, manager_->getSoundMngr());
-	
-	return volver;
+void OptionsState::createButton(Texture* imageTexture, Vector2D pos, Vector2D size, void(*callback)(App*, SoundManager*)) {
+	auto* button = createBasicEntity(Vector2D(pos.getX(), pos.getY()), Vector2D(size.getX(), size.getY()), 0.0f, Vector2D(0, 0));
+	button->addComponent<Button>(imageTexture, callback, app, manager_->getSoundMngr());
 }
 
 Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume, App* a){

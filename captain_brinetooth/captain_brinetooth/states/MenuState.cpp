@@ -20,43 +20,63 @@ void MenuState::init() {
 	manager_->getSoundMngr()->setGeneralVolume(63.5);
 	manager_->getSoundMngr()->playMainMusic();
 
-	float sizeFactor;
 	// Titulo
 	auto* title = manager_->addEntity();
-	Texture* imageTexture = &sdlutils().images().at("titulo");
-	sizeFactor = 0.4;
-	float factor_ = app->getCameraZooOut();
+	int w = (int)sdlutils().width() * 0.3 * App::camera_Zoom_Out;
+	int h = (int)w * 0.6;	//mantener aspect ratio
+	int x = (int)((App::camera.w - w) * 0.5);
+	int y = (int)((App::camera.h - h) * 0.05);
+	title->addComponent<Image>(&sdlutils().images().at("menu_titulo"), SDL_Rect{ x, y, w, h }, "title");
+#pragma region Botones
+	//Atributos de los botones
+	y = (int)((y + h * 0.75));
+	w = (int)sdlutils().width() * 0.2 * App::camera_Zoom_Out;
+	h = (int)w * 0.4;
+	x = (int)((App::camera.w - w) * 0.5);
 
-	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w/1.9,cam.h * 0.07), factor_, sizeFactor, true);
-	title->addComponent<Image>(imageTexture, rectPos, "titulo");
-
-	sizeFactor = 1;
-
-	//// Opciones
-	imageTexture = &sdlutils().images().at("opciones");
-	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w / 2, cam.h * 0.6), factor_, sizeFactor, true);
-
-	auto opciones = manager_->addEntity();
-	opciones->addComponent<Transform>(Vector2D(rectPos.x, rectPos.y), Vector2D(0, 0), rectPos.w, rectPos.h, 0.0f);
-	opciones->addComponent<Button>(imageTexture, changeToOptions, app, manager_->getSoundMngr());
-
-	//// Boton de salir
-	imageTexture = &sdlutils().images().at("salir");
-	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w / 2, cam.h * 0.8), factor_, sizeFactor, true);
+	//Boton Cargar
+	if (saved_game) {
+		auto* botonCargar = manager_->addEntity();
+		w *= 0.8;
+		h *= 0.8;
+		x = (int)((App::camera.w - w) * 0.5);
+		y = (int)((y + h * 1.2));
+		//y = (int)((App::camera.h - h) * (0.48 + 0.22 * nBoton));
+		botonCargar->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
+		botonCargar->addComponent<Button>(&sdlutils().images().at("continuar_menu"), changeToGame, app, manager_->getSoundMngr());
+		w *= 1.25;
+		h *= 1.25;
+		x = (int)((App::camera.w - w) * 0.5);
+	}
 	
-	auto salir = manager_->addEntity();
-	salir->addComponent<Transform>(Vector2D(rectPos.x, rectPos.y), Vector2D(0, 0), rectPos.w, rectPos.h, 0.0f);
-	salir->addComponent<Button>(imageTexture, salirMenu, app, manager_->getSoundMngr());
 
+	// Boton Iniciar
+	auto* botonIniciar = manager_->addEntity();
+	y = (int)((y + h*1.2));
+	botonIniciar->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
+	botonIniciar->addComponent<Button>(&sdlutils().images().at("nueva_partida_menu"), changeToGame, app, manager_->getSoundMngr());
 
-	//// Boton Iniciar
-	imageTexture = &sdlutils().images().at("jugar");
-	rectPos = GameState::ScaleSDL_Rect(imageTexture, Vector2D(cam.w / 2, cam.h * 0.4), factor_, sizeFactor, true);
-	auto botonIniciar = manager_->addEntity();
-	botonIniciar->addComponent<Transform>(Vector2D(rectPos.x, rectPos.y), Vector2D(0, 0), rectPos.w, rectPos.h, 0.0f);
-	botonIniciar->addComponent<Button>(&sdlutils().images().at("jugar"), changeToGame, app, manager_->getSoundMngr());
-	botonIniciar->addComponent<Fade>(Vector2D(cam.w, cam.h), Vector2D(0, 0), 1500, 1000);
-	//Añadimos un fade asi to guapo :D
+	// Opciones
+	auto* opciones = manager_->addEntity();
+	y = (int)((y + h*1.2));
+	opciones->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
+	opciones->addComponent<Button>(&sdlutils().images().at("ajustes_menu"), changeToOptions, app, manager_->getSoundMngr());
+
+	//Creditos
+	auto* creditos = manager_->addEntity();
+	x = (int)((App::camera.w - w) * 0.02);
+	y = (int)((App::camera.h - h) * 0.98);
+	creditos->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w * 0.7, h * 0.7, 0.0f);
+	creditos->addComponent<Button>(&sdlutils().images().at("creditos_menu"), salirMenu, app, manager_->getSoundMngr());
+
+	// Boton de salir
+	auto* salir = manager_->addEntity();
+	x = (int)((App::camera.w - w) * 1.05);
+	y = (int)((App::camera.h - h) * 0.98);
+	salir->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w*0.7, h*0.7, 0.0f);
+	salir->addComponent<Button>(&sdlutils().images().at("salir_menu"), salirMenu, app, manager_->getSoundMngr());
+
+#pragma endregion
 }
 
 void MenuState::changeToGame(App* app, SoundManager* snd) {

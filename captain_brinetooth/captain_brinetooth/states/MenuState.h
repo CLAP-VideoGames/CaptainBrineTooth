@@ -16,6 +16,6 @@ public:
 
 private:
 	SDL_Rect cam;
-	
+	bool saved_game = false;
 };
 

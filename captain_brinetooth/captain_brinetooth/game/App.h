@@ -40,7 +40,7 @@ public:
 	static void fullScreen();
 	void exitGame() { exit = true; }
 	void changeToPesca();
-	void changeZoom(float zoom);
+
 
 
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
