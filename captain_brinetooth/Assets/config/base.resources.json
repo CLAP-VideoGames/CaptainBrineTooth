@@ -93,6 +93,14 @@
 			"file": "assets/sprites/weaponSelection.png"
 		},
 		{
+			"id": "escupetintas",
+			"file": "assets/sprites/armas/ESCUPETINTAS2.png"
+		},
+		{
+			"id": "anguila",
+			"file": "assets/sprites/armas/ANGUILA.png"
+		},
+		{
 			"id": "machine_gun",
 			"file": "assets/sprites/armas/machine_gun.png"
 		},

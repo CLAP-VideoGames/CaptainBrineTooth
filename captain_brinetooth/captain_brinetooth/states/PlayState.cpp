@@ -111,7 +111,7 @@ void PlayState::init() {
 	//int machineGunNumber = 4;
 	//createWeaponGiver(machineGunGiverConfig, machineGunNumber);
 
-	Config whipGiverConfig{};
+	/*Config whipGiverConfig{};
 	whipGiverConfig.pos = Vector2D(sdlutils().width() / 1.75f, sdlutils().height() - 100);
 	whipGiverConfig.vel = Vector2D();
 	whipGiverConfig.size = Vector2D(50, 50);
@@ -119,7 +119,7 @@ void PlayState::init() {
 	whipGiverConfig.physicType = STATIC;
 	whipGiverConfig.fixedRotation = true;
 	whipGiverConfig.rotation = 0.0f;
-	whipGiverConfig.spriteId = "martillo";
+	whipGiverConfig.spriteId = "anguila";
 	int whipNumber = 5;
 	createWeaponGiver(whipGiverConfig, whipNumber);
 
@@ -131,9 +131,9 @@ void PlayState::init() {
 	bellowGiverConfig.physicType = STATIC;
 	bellowGiverConfig.fixedRotation = true;
 	bellowGiverConfig.rotation = 0.0f;
-	bellowGiverConfig.spriteId = "machine_gun";
+	bellowGiverConfig.spriteId = "escupetintas";
 	int bellowNumber = 6;
-	createWeaponGiver(bellowGiverConfig, bellowNumber);
+	createWeaponGiver(bellowGiverConfig, bellowNumber);*/
 
 	//Config elfShark{};
 	//elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);

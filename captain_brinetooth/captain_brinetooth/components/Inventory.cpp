@@ -99,10 +99,10 @@ Texture* Inventory::textureById(int weapToAdd) {
 		return &sdlutils().images().at("machine_gun");
 		break;
 	case PosibleWeapons::TypeEel:
-		return &sdlutils().images().at("martillo");
+		return &sdlutils().images().at("anguila");
 		break;
 	case PosibleWeapons::TypeInk:
-		return &sdlutils().images().at("machine_gun");
+		return &sdlutils().images().at("escupetintas");
 		break;
 	}
 }
