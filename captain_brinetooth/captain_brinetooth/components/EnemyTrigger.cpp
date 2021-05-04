@@ -1,5 +1,11 @@
 #include "EnemyTrigger.h"
 
+EnemyTrigger::~EnemyTrigger()
+{
+	if (trigger != nullptr)
+		trigger->setActive(false);
+}
+
 void EnemyTrigger::init()
 {
 	entitytr_ = entity_->getComponent<Transform>();

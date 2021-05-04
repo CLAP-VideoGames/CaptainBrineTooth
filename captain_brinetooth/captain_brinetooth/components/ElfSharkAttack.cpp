@@ -11,6 +11,8 @@ using namespace ColLayers;
 ElfSharkAttack::~ElfSharkAttack() {
 	if (attackTrigger_ != nullptr)
 		attackTrigger_->setActive(false);
+	if (entity_Parent_ != nullptr)
+		entity_Parent_->setActive(false);
 }
 
 void ElfSharkAttack::init()

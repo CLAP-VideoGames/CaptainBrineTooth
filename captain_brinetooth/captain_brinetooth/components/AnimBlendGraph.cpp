@@ -211,8 +211,13 @@ void AnimBlendGraph::flipX(bool state)
 
 bool AnimBlendGraph::isComplete()
 {
-	if (currentAnim_ != nullptr && currentAnim_->anim_->getState() == Complete) return true;
-	else return false;
+	if (currentAnim_ != nullptr) {
+		if (currentAnim_->anim_->getState() == Complete)
+			return true;
+		else 
+			return false;
+	}
+	else { return false; }
 }
 
 const bool& AnimBlendGraph::isFlipX()

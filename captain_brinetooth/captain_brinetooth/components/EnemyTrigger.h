@@ -14,7 +14,7 @@ class EnemyTrigger : public Component
 {
 public:
 	EnemyTrigger(Vector2D triggersize = Vector2D(500.0f, 500.0f)) :triggersize_(triggersize) {};
-	virtual ~EnemyTrigger() {};
+	virtual ~EnemyTrigger();
 	void init() override; 
 	void update() override;
 

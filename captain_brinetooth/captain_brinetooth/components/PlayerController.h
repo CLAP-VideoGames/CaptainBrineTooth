@@ -29,6 +29,7 @@ PlayerController(const float & speed = 3.0f, const float& forceJ = 0.9f , const 
 	static void OnTriggerExit(b2Contact* contact);
 
 	void isOnGround();
+	const bool& isPlayerDashing();
 
 private:
 	Transform* tr_ = nullptr;

@@ -22,7 +22,7 @@ void MenuState::init() {
 
 	// Titulo
 	auto* title = manager_->addEntity();
-	int w = (int)sdlutils().width() * 0.3 * App::camera_Zoom_Out;
+	int w = (int)sdlutils().width() * App::camera_Zoom_Out * 0.3;
 	int h = (int)w * 0.6;	//mantener aspect ratio
 	int x = (int)((App::camera.w - w) * 0.5);
 	int y = (int)((App::camera.h - h) * 0.05);

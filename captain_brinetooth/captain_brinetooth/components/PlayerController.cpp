@@ -24,6 +24,8 @@ void PlayerController::init()
 
 	initEntityColliders();
 
+	gravity = collider_->getBody()->GetGravityScale();
+
 	lastTimeJumped = sdlutils().currRealTime();
 	lasTimeDashed = sdlutils().currRealTime();
 
@@ -44,19 +46,19 @@ void PlayerController::update()
 	}
 	if (ih().keyUpEvent()) {
 		//---Para la velocidad X
-		if (ih().isKeyUp(SDL_SCANCODE_LEFT) && !isDashing) {
+		if (ih().isKeyUp(SDL_SCANCODE_LEFT)) {
 			moveLeft = false;
 		}
-		if (ih().isKeyUp(SDL_SCANCODE_RIGHT) && !isDashing) {
+		if (ih().isKeyUp(SDL_SCANCODE_RIGHT)) {
 			moveRight = false;
 		}
 	}
 	if (ih().keyDownEvent()) {
 		//Parte Horizontal
-		if (ih().isKeyDown(SDLK_LEFT) && !isDashing) {
+		if (ih().isKeyDown(SDLK_LEFT)) {
 			moveLeft = true;
 		}
-		if (ih().isKeyDown(SDLK_RIGHT) && !isDashing) {
+		if (ih().isKeyDown(SDLK_RIGHT)) {
 			moveRight = true;
 		}
 		//Parte Vertical
@@ -72,7 +74,6 @@ void PlayerController::update()
 
 		//Para juego final añadir && canDash
 		if (ih().isKeyDown(SDLK_LSHIFT) && canDash) {
-			gravity = collider_->getBody()->GetGravityScale();
 			collider_->getBody()->SetGravityScale(0.0f);
 			collider_->setSpeed(Vector2D(0, 0));
 			isDashing = true;
@@ -141,12 +142,14 @@ void PlayerController::update()
 	}
 #pragma endregion
 #pragma region Dash
-	if (isDashing && animController_->isComplete()) {
-		b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-		collider_->setSpeed(Vector2D(0, 0));
-		collider_->getBody()->SetGravityScale(gravity);
-		collider_->changeColLayer_and_Mask(PLAYER, PLAYER_MASK);
-		isDashing = false;
+	if (isDashing) {
+		if (animController_->isComplete()) {
+			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
+			collider_->setSpeed(Vector2D(0, vel.y));
+			collider_->getBody()->SetGravityScale(gravity);
+			collider_->changeColLayer_and_Mask(PLAYER, PLAYER_MASK);
+			isDashing = false;
+		}
 	}
 
 	if (dashCoolDown + lasTimeDashed < sdlutils().currRealTime()) {
@@ -292,3 +295,9 @@ void PlayerController::isOnGround()
 	else
 		isOnFloor = false;
 }
+
+const bool& PlayerController::isPlayerDashing()
+{
+	return isDashing;
+}
+
