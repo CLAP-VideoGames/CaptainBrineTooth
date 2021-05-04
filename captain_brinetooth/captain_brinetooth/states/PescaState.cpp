@@ -12,6 +12,10 @@ void PescaState::init() {
 	//---BG----
 	//manager_->getWorld()->SetContactListener(&collisionListener);
 
+
+
+
+
 	auto* bg = createBasicEntity(Vector2D(0, 1440), Vector2D(2560 * 2, 1440 * 2), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
@@ -102,21 +106,24 @@ void PescaState::createRandomReward(const Config& entityConfig)
 		if (random == 0)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 
 		}
 		else if (random == 1)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 
 		}
 		else if (random == 2)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 		}
 		else //No es ninguna recompensa activa 
 		{
 			int rnd = sdlutils().rand().teCuoto(0, 15);
-			if (rnd >= 0 && rnd < 5)
+			if (rnd >= 0 && rnd <=5)
 			{
 				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
@@ -153,21 +160,24 @@ void PescaState::createRandomReward(const Config& entityConfig)
 		if (random == 0)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 
 		}
 		else if (random == 1)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 
 		}
 		else if (random == 2)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 		}
 		else //No es ninguna recompensa activa 
 		{
 			int rnd = sdlutils().rand().teCuoto(0, 15);
-			if (rnd >= 0 && rnd < 5)
+			if (rnd >= 0 && rnd <=5)
 			{
 				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
@@ -204,21 +214,24 @@ void PescaState::createRandomReward(const Config& entityConfig)
 		if (random == 0)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 
 		}
 		else if (random == 1)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 
 		}
 		else if (random == 2)
 		{
 			reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+			reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 		}
 		else //No es ninguna recompensa activa 
 		{
 			int rnd = sdlutils().rand().teCuoto(0, 15);
-			if (rnd >= 0 && rnd < 5)
+			if (rnd >= 0 && rnd <= 5)
 			{
 				reward0_anim_controller->addAnimation("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 				reward0->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
