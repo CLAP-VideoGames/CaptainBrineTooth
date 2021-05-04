@@ -166,7 +166,6 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 
 	b2Vec2 toMove(x_, y_);
 	body->SetTransform(toMove, newRot);
-
 	actRenderPos();
 }
 

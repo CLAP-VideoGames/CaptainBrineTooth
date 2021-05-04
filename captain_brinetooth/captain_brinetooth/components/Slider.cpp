@@ -23,7 +23,7 @@ Slider::~Slider() {
 
 void Slider::init() {
 	mngr = entity_->getMngr();
-	float factor_ = a->getCameraZooOut();
+	float factor_ = a->getCameraZoomOut();
 
 	//FondoSlider
 	background = mngr->addEntity();
@@ -68,7 +68,7 @@ void Slider::update() {
 			//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
 			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().getLeftMouseButtonPressed()) {
 				//std::cout << "pressed" << std::endl;
-				//Necesito esto para saber en qué momento selecciona la imagen del Slider
+				//Necesito esto para saber en quEmomento selecciona la imagen del Slider
 				selected = true;
 			}
 		}

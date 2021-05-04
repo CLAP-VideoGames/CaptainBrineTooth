@@ -17,7 +17,7 @@ public:
 
 private:
 
-	PosibleWeapons weapontoGive; 
+	PosibleWeapons weapontoGive;
 	Entity* leftlimit;
 	Entity* rightlimit;
 	Entity* hook;

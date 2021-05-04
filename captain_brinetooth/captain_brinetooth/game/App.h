@@ -45,7 +45,11 @@ public:
 
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);
 	StateMachine* getStateMachine() { return stateMachine; }
-	inline float getCameraZooOut() const { return camera_Zoom_Out; }
+	inline float getCameraZoomOut() const { return camera_Zoom_Out; }
+	inline void setCameraZoomOut(float zoom) { 
+		camera_Zoom_Out = zoom; 
+		camera = { 0 ,0,(int)(window.getX() * camera_Zoom_Out),(int)(window.getY() * camera_Zoom_Out) };
+	}
 
 private:
 	
