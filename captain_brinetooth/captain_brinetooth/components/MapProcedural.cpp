@@ -67,6 +67,7 @@ void MapProcedural::init() {
 
 		actualRoom = initializeNewRoom(lob);
 		lobby = false;
+		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Lobby");
 	}
 	roomNames[tile].used = true;
 }
@@ -216,7 +217,10 @@ Room MapProcedural::initializeRoom(int dir) {
 	int tile;
 
 	//que son las fronteras??
-
+	if (roomsExplored <= 1)
+	{
+		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
+	}
 
 	if (roomsExplored <= 1) {
 		tile = sdlutils().rand().teCuoto(0, fronteras[0]);
