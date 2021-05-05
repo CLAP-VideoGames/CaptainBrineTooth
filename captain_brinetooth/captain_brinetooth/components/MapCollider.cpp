@@ -73,7 +73,7 @@ void MapCollider::createChainFixture() {
 		fixtureDef.filter.categoryBits = colLay_; // tag para determinar capa de colision
 		fixtureDef.filter.maskBits = colMask_; // con que capas de colision se hace pues eso, colision
 		//Inicializamos la fixture del cuerpo
-		bodies_[i].fixt_ = bodies_[i].body_->CreateFixture(&fixtureDef);
+ 		bodies_[i].fixt_ = bodies_[i].body_->CreateFixture(&fixtureDef);
 	}
 }
 

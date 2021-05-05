@@ -3,12 +3,12 @@
 #include "../ecs/Component.h"
 #include "box2d.h"
 #include "../ecs/Entity.h"
-
+class App;
 enum class PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk };
 class Reward : public Component
 {
 public:
-	Reward(int w);
+	Reward(int w,Entity* p,App* a);
 	virtual ~Reward() {};
 	void init() override;
 	void update() override;
@@ -16,11 +16,12 @@ public:
 
 
 private:
-
+	App* app;
 	PosibleWeapons weapontoGive;
 	Entity* leftlimit;
 	Entity* rightlimit;
 	Entity* hook;
+	Entity* playerRef;
 	bool catched;
 	Transform* tr_;
 	BoxCollider* collider_;

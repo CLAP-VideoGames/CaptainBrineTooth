@@ -22,6 +22,7 @@ PlayerController(const float & speed = 3.0f, const float& forceJ = 0.9f , const 
 	void update() override;
 	void initEntityColliders();
 	void createJointTrigger(Entity* trigger);
+	void playerReceiveInput(bool state);
 
 	void Paralize() { paralized = true; };
 
@@ -37,6 +38,7 @@ private:
 	AnimBlendGraph* animController_ = nullptr;
 	SoundManager* snd = nullptr;
 	TriggerCollider* trigger_ = nullptr;
+	bool receiveInput;
 
 	int time = 1500, dashCoolDown = 1000, lasTimeDashed, lastTimeJumped,timer;
 	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;

@@ -1,6 +1,15 @@
 #include "PescaState.h"
 using namespace ColLayers;
 
+PescaState::~PescaState() {
+	app->setCameraZoomOut(main_zoom);
+	//Falta poner la musica bien de nuevo 
+	playerRef->getComponent<PlayerController>()->playerReceiveInput(true);
+
+	//Falta cambiar la musica con el sounmanager a la de playstate 
+};
+
+
 void PescaState::update() {
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	GameState::update();
@@ -12,6 +21,9 @@ void PescaState::init() {
 	//Metodo para cambiar el zoom 
 	main_zoom = app->getCameraZoomOut();
 	app->setCameraZoomOut(2.0f);
+
+	playerRef->getComponent<PlayerController>()->playerReceiveInput(false);
+
 
 	//---BG----
 	//manager_->getWorld()->SetContactListener(&collisionListener);
@@ -114,24 +126,10 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			else if (random == 2)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 
-			/*else //No es ninguna recompensa activa
-			{
-				int rnd = sdlutils().rand().teCuoto(0, 15);
-				if (rnd >= 0 && rnd <= 5)
-					reward0->addComponent<Animation>("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 
-				else if (rnd >= 6 && rnd < 10)
-					reward0->addComponent<Animation>("idle", &sdlutils().images().at("casco"), 1, 1, 1, 1, 0);
 
-				else  if (rnd >= 10 && rnd <= 14)
-					reward0->addComponent<Animation>("idle", &sdlutils().images().at("lata"), 1, 1, 1, 1, 0);
-
-				random = 30;
-				reward0->addComponent<BoxCollider>(STATIC, entityConfig.col, entityConfig.colMask);
-				reward0->addComponent<Reward>(random);
-			}*/
 			reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
-			reward0->addComponent<Reward>(random);
+			reward0->addComponent<Reward>(random, playerRef, app);
 
 		}
 	}
@@ -153,7 +151,7 @@ void PescaState::crearBasura() {
 			basura->addComponent<Animation>("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 		}
 		basura->addComponent<BoxCollider>(STATIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
-		basura->addComponent<Reward>(random);
+		basura->addComponent<Reward>(random, playerRef, app);
 	}
 }
 

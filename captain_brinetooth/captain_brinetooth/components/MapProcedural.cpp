@@ -452,6 +452,7 @@ void MapProcedural::pescar(b2Contact* contact) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
 
+
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getStates()->changeToPesca();
 
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();

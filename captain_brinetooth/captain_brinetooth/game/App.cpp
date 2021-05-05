@@ -166,7 +166,8 @@ void App::changeToPesca()
 	b2Vec2 gravity(0.0f, 9.8f);
 	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
 	w->SetContactListener(&collisionListener);
-	stateMachine->pushState(new PescaState(this, w, sndProvisional));
+	auto p = stateMachine->currentState()->getMngr()->getHandler<Player>();
+	stateMachine->pushState(new PescaState(this, w, sndProvisional,p));
 }
 
 /// <summary>

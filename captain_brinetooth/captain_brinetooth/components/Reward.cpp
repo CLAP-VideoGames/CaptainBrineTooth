@@ -5,11 +5,15 @@
 #include "Transform.h"
 #include "AnimBlendGraph.h"
 #include "Inventory.h"
+#include "../game/App.h"
+#include "../states/StateMachine.h"
 
-Reward::Reward(int w)
+Reward::Reward(int w, Entity* p, App* a)
 {
 	weapontoGive = (PosibleWeapons)w;
 	catched = false;
+	playerRef = p;
+	app = a;
 	//Falta incializar los limites para tener una referencia cuando el cebo se mueva 
 }
 void Reward::init()
@@ -38,7 +42,7 @@ void Reward::update()
 		b2Vec2 hookpos = hook->getComponent<BoxCollider>()->getBody()->GetTransform().p; //We obtain hook position in order to set bait position
 		entity_->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2(hookpos.x, hookpos.y), 0);
 		//Añadir algo para que no colisione
-		
+
 	}
 
 }
@@ -89,9 +93,6 @@ void Reward::baitCatched(Entity* h)
 	Transform* baitTransform = entity_->getComponent<Transform>(); //We get bait transform
 	baitTransform->setW(baitTransform->getW() / 2);
 	baitTransform->setW(baitTransform->getH() / 2);
-	/*AnimBlendGraph* baitanim = entity_->getComponent<AnimBlendGraph>();
-	baitanim->keepProportion("idle", Vector2D(baitTransform->getW() / 2, baitTransform->getH() / 2));
-	baitanim->scaleAnimation();*/
 
 	catched = true;
 }
@@ -101,7 +102,6 @@ void Reward::adjustIfLimits()
 	//If not  we just use speed in x in order to move it 
 	tr_->getPos().setX(sdlutils().width() * App::camera_Zoom_Out);
 	collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
-	//collider_->getBody()->SetTransform(b2Vec2(tr_->getPos().getX(), tr_->getPos().getY()), 0.0f);
 }
 void Reward::giveReward()
 {
@@ -110,7 +110,9 @@ void Reward::giveReward()
 	//Si no , es una piedra y directamente no se da nada 
 	if ((int)weapontoGive < 10)
 	{
-		//entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addWeapon((int)weapontoGive);
+		playerRef->getComponent<Inventory>()->addWeapon((int)weapontoGive);
 		//Cambiar animacion de player
 	}
+	//As finished fishing we go back to playstate 
+	app->getStateMachine()->popState();
 }
