@@ -27,7 +27,6 @@ public:
 
 private:
 	enum PosibleWeapons {TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk};
-
 	void addWeaponById(int weapToAdd);
 	void removeWeaponById(int weapToRemove);
 	Texture* textureById(int weapToAdd);

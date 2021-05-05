@@ -36,12 +36,27 @@ Entity* EnemyGenerator::generateRandomEnemy(Vector2D pos)
 
 Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 {
-	auto* enemy = createBasicEntity(pos, Vector2D(20,20), 0, Vector2D(0,0));
-	enemy->addComponent<BoxCollider>(DYNAMIC, ENEMY, ENEMY_MASK);
+	Config fringeHead{};
+	fringeHead.vel = Vector2D(0, 0);
+	fringeHead.size = Vector2D(70.0f, 70.0f);
+	fringeHead.friction = 0;
+	fringeHead.physicType = DYNAMIC;
+	fringeHead.fixedRotation = true;
+	fringeHead.rotation = 0.0f;
+	fringeHead.col = ENEMY;
+	fringeHead.colMask = ENEMY_MASK;
+
+	auto* enemy = createBasicEntity(pos, fringeHead.size, fringeHead.rotation, fringeHead.vel);
+	BoxCollider* collider = enemy->addComponent<BoxCollider>(fringeHead.physicType, fringeHead.col, fringeHead.colMask, false, 0.7f,
+		true, 0.0f, Vector2D(), Vector2D(), 100000);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
+	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
+	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0);
+	anim_controller->addTransition("idle", "attack", "Shoot", 1, false);
+	anim_controller->addTransition("attack", "idle", "Shoot", 0, true);
+	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	enemy->addComponent<Enemy_Health>(200, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 
 	return enemy;
 }
@@ -66,7 +81,7 @@ Entity* EnemyGenerator::generateMedusa(Vector2D pos)
 	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask);
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
-	
+
 	return fjh1;
 }
 
@@ -126,10 +141,10 @@ Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 	pompeyWorm.rotation = 0.0f;
 	pompeyWorm.col = ENEMY;
 	pompeyWorm.colMask = ENEMY_MASK;
-	
 
 
-	auto* gusano = createBasicEntity(pompeyWorm.pos, pompeyWorm.size, pompeyWorm.rotation, pompeyWorm.vel);
+
+	auto* gusano = createBasicEntity(pos, pompeyWorm.size, pompeyWorm.rotation, pompeyWorm.vel);
 	gusano->addComponent<BoxCollider>(pompeyWorm.physicType, pompeyWorm.col, pompeyWorm.colMask);
 	AnimBlendGraph* gusano_anim_controller = gusano->addComponent<AnimBlendGraph>();
 	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("pompey_worm_idle"), 1, 2, 2, 12, -1);
