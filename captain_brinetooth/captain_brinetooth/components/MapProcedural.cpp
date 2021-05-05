@@ -422,6 +422,18 @@ void MapProcedural::travelNextZone(b2Contact* contact) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
 
+	int aux = trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPhase();
+
+	// Cambiamos de cancion cuando cambiamos de fase
+	if (aux == 2)
+	{
+		trigger->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel2");
+	}
+	else if (aux == 3)
+	{
+		trigger->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel3");
+	}
+
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
 	m->getComponent<MapProcedural>()->travelNextZone();
