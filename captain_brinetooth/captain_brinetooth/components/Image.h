@@ -13,7 +13,7 @@ public:
 
 	void actRect(SDL_Rect d);
 
-	void moveRect(const int& x, const int& y);
+	void setDestRect(int x, int y, int w, int h);
 
 	Texture* getTexture();
 

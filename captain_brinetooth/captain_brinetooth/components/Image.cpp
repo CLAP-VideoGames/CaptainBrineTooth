@@ -25,7 +25,7 @@ void Image::actRect(SDL_Rect d)
 	dest = d;
 }
 
-void Image::moveRect(const int& x, const int& y) {
+void Image::setDestRect(int x, int y, int w, int h) {
 	dest.x = x;
 	dest.y = y;
 }

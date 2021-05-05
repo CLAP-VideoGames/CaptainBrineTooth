@@ -93,7 +93,7 @@ void OptionsState::update() {
 	if (fullscreen_button != nullptr) {
 		auto flags = SDL_GetWindowFlags(sdlutils().window());
 		if (flags & SDL_WINDOW_FULLSCREEN) {
-			fullscreen_button->getComponent<Button>()->changeTex(&sdlutils().images().at("fullscreen_on"));
+			fullscreen_button->getComponent<Button>()->setTex(&sdlutils().images().at("fullscreen_on"));
 		}
 	}
 }

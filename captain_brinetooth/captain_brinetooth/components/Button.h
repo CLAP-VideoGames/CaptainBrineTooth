@@ -4,6 +4,7 @@
 #include "../states/GameState.h"
 #include "../states/StateMachine.h"
 #include "Transform.h"
+#include "Image.h"
 #include "../sdlutils/Texture.h"
 #include "../sdlutils/InputHandler.h"
 #include "../ecs/Entity.h"
@@ -27,16 +28,19 @@ public:
 	void render() override;
 	bool handleEvent(); 
 
-	void changeTex(Texture* newTexture);
-	void changeTexColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+	void setTex(Texture* newTexture);
+	void setTexColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
 protected:
 	CallBackOnClick* cboq;
 
 private:
 	bool selected;
+	bool apply_offset;
+	float offset_pressed = 5 * App::camera_Zoom_Out;
 	Fade* fade;
 	Texture* tex;
+	Image* img_;
 	SoundManager* soundController;
 	App* game;
 

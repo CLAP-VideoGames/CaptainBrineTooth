@@ -57,7 +57,7 @@ void Slider::init() {
 
 	//Guardamos el rectangulo del slider
 	sliderImage = slide->addComponent<Image>(textures[1], slideRect, "fondo");
-	Sliderdest = (sliderImage->getDestRect());
+	Sliderdest = sliderImage->getDestRect();
 }
 
 void Slider::update() {
@@ -81,7 +81,7 @@ void Slider::update() {
 		int newPos = mouseP.x - (Sliderdest->w / 2);
 		if (newPos >= backgroundSlideRct.x - (Sliderdest->w / 2) && newPos <= backgroundSlideRct.x + backgroundSlideRct.w - (Sliderdest->w / 2)) {
 			//Actualizamos la posición del Slider
-			sliderImage->moveRect(newPos, Sliderdest->y);
+			sliderImage->setDestRect(newPos, Sliderdest->y, sliderImage->getDestRect()->w, sliderImage->getDestRect()->h);
 			//Calculamos el valor con respecto al tamaño total del Slider
 			//Cancelamos la posicion de la mitad de la imagen
 			int value = newPos - backgroundSlideRct.x + (Sliderdest->w / 2);
@@ -98,7 +98,7 @@ void Slider::update() {
 void Slider::setSlider(float& value) {
 	int valor = backgroundSlideRct.w * value;
 	int newPos = backgroundSlideRct.x + valor - (Sliderdest->w / 2);
-	sliderImage->moveRect(newPos, Sliderdest->y);
+	sliderImage->setDestRect(newPos, Sliderdest->y, sliderImage->getDestRect()->w, sliderImage->getDestRect()->h);
 }
 
 void Slider::render() {

@@ -1,4 +1,4 @@
-#include "Button.h"
+ï»¿#include "Button.h"
 
 Button::Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd) : tex(t){
 	cboq = c;
@@ -12,6 +12,7 @@ Button::~Button(){
 }
 
 void Button::init(){
+	apply_offset = false;
 }
 
 void Button::update(){
@@ -26,7 +27,12 @@ void Button::render(){
 	Transform* trans = entity_->getComponent<Transform>();
 
 	Vector2D aux = trans->getPos();
-	SDL_Rect dest = build_sdlrect(aux, trans->getW(), trans->getH());
+	SDL_Rect dest;
+	if (!apply_offset)
+		dest = build_sdlrect(aux, trans->getW(), trans->getH());
+	else   //offset del boton presionado
+		dest = build_sdlrect(trans->getPos().getX() + offset_pressed * 0.5f, trans->getPos().getY() + offset_pressed*2.0,
+			trans->getW() - offset_pressed, trans->getH() - offset_pressed);
 
 	tex->render(dest);
 
@@ -41,19 +47,18 @@ bool Button::handleEvent(){
 	SDL_Point mouseP = { ih().getMousePos().first, ih().getMousePos().second};
 	SDL_Rect dest = build_sdlrect(tr->getPos(), tr->getW(), tr->getH());
 	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE) {
-
-		//Si ha habido algun evento de ratón, o el usuario mantiene presionado algun button, entra
+		setTexColor(192, 192, 192, 255);
+		//Si ha habido algun evento de ratî‰¢, o el usuario mantiene presionado algun button, entra
 		if (ih().mouseButtonEvent() || ih().getMouseButtonHeld()) {
 			//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
 			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().getLeftMouseButtonPressed()) {
-				//std::cout << "pressed" << std::endl;
-				//Necesito esto para saber en quEmomento selecciona la imagen del Slider
+				//"Animacion de boton" 
+				apply_offset = true;
+				//Necesito esto para saber en quãƒ»momento selecciona la imagen del Slider
 				selected = true;
 			}
 		}
-
-
-		//Si el usuario sigue dentro del boton, éste ha sido seleccionado, y el boton izquierdo ya no está mantenido
+		//Si el usuario sigue dentro del boton, é§¸te ha sido seleccionado, y el boton izquierdo ya no estãƒ»mantenido
 		if (!ih().getLeftMouseButtonPressed() && selected) {
 			//En caso de haber un componente Fade, ejecutar su callback cuando haya terminado el fade OUt (Update)
 			fade = entity_->getComponent<Fade>();
@@ -63,23 +68,28 @@ bool Button::handleEvent(){
 			else {
 				cboq(game, soundController);
 			}
-			//Ha soltado el button, pues ya no está seleccionado
+			//Ha soltado el button, pues ya no estãƒ»seleccionado
 			selected = false;
 		}
 
 		return true;
 	}//Si ha salido del button, deja de estar seleccionado ( para que si misclickea, pueda cancelar dicho click)
-	else selected = false;
+	else {
+		//"Animacion de boton" reset
+		apply_offset = false;
+		setTexColor(255, 255, 255, 255);
+		selected = false;
+	}
 
 	return false;
 }
 
-void Button::changeTex(Texture* newTexture)
+void Button::setTex(Texture* newTexture)
 {
 	tex = newTexture;
 }
 
-void Button::changeTexColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+void Button::setTexColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	SDL_SetTextureColorMod(tex->getTexture(), r, g, b);
 	SDL_SetTextureAlphaMod(tex->getTexture(), a);

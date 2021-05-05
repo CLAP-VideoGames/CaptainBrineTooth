@@ -92,7 +92,7 @@ void TestZoneState::init() {
 	Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
-	elfShark.size = Vector2D(180.0f, 180.0f);
+	elfShark.size = Vector2D(100.0f, 100.0f);
 	elfShark.friction = 0.2f;
 	elfShark.physicType = DYNAMIC;
 	elfShark.fixedRotation = true;
