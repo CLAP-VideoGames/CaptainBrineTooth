@@ -29,8 +29,7 @@ private:
 	bool entity_in_range_;
 	float speed_ = 1.0f;
 	bool attack_player;
-	float attack_anticipation_ = 0;	//offset del ataque que permite atacar al player un poco antes de que este a rango del ataque
-	Vector2D attackTriggerSize_ = Vector2D(180.0f, 90.0f);
+	Vector2D attackTriggerSize_ = Vector2D(0.5, 0.75);
 	Entity* attackTrigger_;
 	//Cooldown
 	float cd_attack_time = 2000;

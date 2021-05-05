@@ -30,10 +30,13 @@ void PompeyWormAttack::update() {
 					attackTrigger_->getComponent<BoxCollider>()->triggerCollide(false);
 					attackTrigger_->setActive(false);
 					attackTrigger_ = nullptr;
+					init_pudle_Size = Vector2D(0,0);
 					lifetime_puddle = 0;
 				}
 				else {
-					attackTrigger_->getComponent<BoxCollider>()->Resize(puddleSize);	//Obligatorio llamarlo en clases no estaticas
+					if(init_pudle_Size.getX() < puddleSize.getX())
+						init_pudle_Size = Vector2D(init_pudle_Size + puddleSize * 0.025);
+					attackTrigger_->getComponent<BoxCollider>()->Resize(init_pudle_Size);	//Obligatorio llamarlo en clases no estaticas
 					lifetime_puddle++;
 				}
 			}
@@ -54,7 +57,9 @@ void PompeyWormAttack::update() {
 		shot = false; 
 		entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
 	}
-	if(!shot) { patrol(); }
+	if(!shot) { 
+		patrol(); 
+	}
 }
 
 void PompeyWormAttack::hasEnter(b2Contact* contact) {
@@ -133,6 +138,8 @@ void PompeyWormAttack::patrol() {
 		//Actualizar posicion
 		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(or_ * speed_, vel.y)));
 	}
+
+	entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Speed", 1);
 	move_time++;
 }
 
@@ -141,7 +148,7 @@ void PompeyWormAttack::createTriggerAttack()
 	Transform* playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
 	//Crea trigger de ataque
 	attackTrigger_ = entity_->getMngr()->addEntity();
-	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX(), entitytr_->getPos().getY()),
+	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + entitytr_->getW()*0.05, entitytr_->getPos().getY()),
 		Vector2D(0, 0), attackSpriteSize_.getX(), attackSpriteSize_.getY(), 0.0f);
 	//Animacion disparo
 	auto* anim_c = attackTrigger_->addComponent<AnimBlendGraph>();
@@ -153,7 +160,7 @@ void PompeyWormAttack::createTriggerAttack()
 
 	attackTrigger_->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true, 0.0f, true,0.0f, attackTriggerSize_);
 	//Posicion del player
-	Vector2D attackdir = (playertr_->getPos() - entitytr_->getPos());
+	Vector2D attackdir = Vector2D(playertr_->getPos().getX() - entitytr_->getPos().getX(),playertr_->getPos().getY() - playertr_->getH()*0.1 - entitytr_->getPos().getY());
 	attackdir = attackdir.normalize();
 	attackTrigger_->getComponent<BoxCollider>()->applyForce(attackdir, attack_force);
 	attackTrigger_->addComponent<ContactDamage>();

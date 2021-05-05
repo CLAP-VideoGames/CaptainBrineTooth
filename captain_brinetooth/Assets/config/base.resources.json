@@ -65,8 +65,28 @@
 			"file": "assets/sprites/enemies/medusa/medusa_anim.png"
 		},
 		{
-			"id": "Elf_Shark",
-			"file": "assets/sprites/enemies/elf_shark/elf_shark.png"
+			"id": "elfshark_idle",
+			"file": "assets/sprites/enemies/elf_shark/elfshark_idle.png"
+		},
+		{
+			"id": "elfshark_move",
+			"file": "assets/sprites/enemies/elf_shark/elfshark_move.png"
+		},
+		{
+			"id": "elfshark_attack",
+			"file": "assets/sprites/enemies/elf_shark/elfshark_attack.png"
+		},
+		{
+			"id": "pompey_worm_idle",
+			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_idle.png"
+		},
+		{
+			"id": "pompey_worm_move",
+			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_move.png"
+		},
+		{
+			"id": "pompey_worm_attack",
+			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_attack.png"
 		},
 		{
 			"id": "pompey_worm_spit",

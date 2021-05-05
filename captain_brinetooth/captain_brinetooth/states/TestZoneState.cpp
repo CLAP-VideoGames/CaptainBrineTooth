@@ -74,11 +74,11 @@ void TestZoneState::init() {
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
-	#pragma region PompeyWorm
-	/*Config pompeyWorm{};
+	/*#pragma region PompeyWorm
+	Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
-	pompeyWorm.size = Vector2D(100.0f, 100.0f);
+	pompeyWorm.size = Vector2D(100.0f, 60.0f);
 	pompeyWorm.friction = 100;
 	pompeyWorm.physicType = DYNAMIC;
 	pompeyWorm.fixedRotation = true;
@@ -92,7 +92,7 @@ void TestZoneState::init() {
 	Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
-	elfShark.size = Vector2D(100.0f, 100.0f);
+	elfShark.size = Vector2D(240.0f, 200.0f);
 	elfShark.friction = 0.2f;
 	elfShark.physicType = DYNAMIC;
 	elfShark.fixedRotation = true;
@@ -374,66 +374,62 @@ void TestZoneState::createBoxFloor(const Config& entityConfig) {
 	box_Floor->addComponent<Animation>("Floor", &sdlutils().images().at("red_square"), 1, 1, 1, 1, 0);
 	box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
 }
-
+#pragma region PompeyWorm
 void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 {
 	auto* gusano = createBasicEntity(enemy1Config.pos, enemy1Config.size, enemy1Config.rotation, enemy1Config.vel);
 	gusano->addComponent<BoxCollider>(enemy1Config.physicType, enemy1Config.col, enemy1Config.colMask);
 	AnimBlendGraph* gusano_anim_controller = gusano->addComponent<AnimBlendGraph>();
-	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("Elf_Shark"), 1, 3, 1, 1, -1);
-	gusano_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
+	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("pompey_worm_idle"), 1, 2, 2, 12, -1);
+	gusano_anim_controller->addAnimation("move", &sdlutils().images().at("pompey_worm_move"), 1, 2, 2, 12, -1);
+	gusano_anim_controller->addAnimation("attack", &sdlutils().images().at("pompey_worm_attack"), 2, 3, 6, 12, 0, 0, 4);
+	//Proportion?
+	gusano_anim_controller->keepProportion("idle", Vector2D(gusano->getComponent<Transform>()->getW(), gusano->getComponent<Transform>()->getH()));
+	gusano_anim_controller->addTransition("idle", "move", "Speed", 1, false);
+	gusano_anim_controller->addTransition("move", "idle", "Speed", 0, false);
 	gusano_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
 	gusano_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
+	gusano_anim_controller->addTransition("move", "attack", "Attack", 1, false);
+	gusano_anim_controller->addTransition("attack", "move", "Attack", 0, true);
+	gusano_anim_controller->setParamValue("Speed", 0);
 	gusano_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
 	gusano->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 }
+#pragma endregion
+#pragma region ElfShark
 void TestZoneState::createElfShark(const Config& entityConfig) {
-	auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	auto* elf = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	//auto* elf1 = manager_->addEntity();
 	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
 	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
-	elf1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	AnimBlendGraph* elf1_anim_controller = elf1->addComponent<AnimBlendGraph>();
-	elf1_anim_controller->addAnimation("idle", &sdlutils().images().at("Elf_Shark"), 1, 3, 1, 1, -1);
-	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
-	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
-	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
-	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
-	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
-	elf1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	elf->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger,
+		entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation, Vector2D(entityConfig.size.getX() * 0.75, entityConfig.size.getY() * 0.75), Vector2D(entityConfig.pos.getX() * 1.33, entityConfig.pos.getY() * 1.33));
+	AnimBlendGraph* elf_anim_controller = elf->addComponent<AnimBlendGraph>();
+	elf_anim_controller->addAnimation("idle", &sdlutils().images().at("elfshark_idle"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66,0.6));
+	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.6));
+	elf_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 48, 0, 0, 10, Vector2D(0.66, 0.6));
+	elf_anim_controller->addAnimation("attack_end", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 24, 0, 11, 18, Vector2D(0.66, 0.6));
+	//Proportion?
+	elf_anim_controller->keepProportion("idle", Vector2D(elf->getComponent<Transform>()->getW(), elf->getComponent<Transform>()->getH()));
+	elf_anim_controller->addTransition("idle", "move", "Speed", 1, false);
+	elf_anim_controller->addTransition("move", "idle", "Speed", 0, false);
+	elf_anim_controller->addTransition("idle", "attack_ini", "Attack", 1, false);
+	elf_anim_controller->addTransition("attack_end", "idle", "Attack", 0, true);
+	elf_anim_controller->addTransition("move", "attack_ini", "Attack", 1, false);
+	elf_anim_controller->addTransition("attack_end", "move", "Attack", 0, true);
+	elf_anim_controller->addTransition("attack_ini", "move", "Attack", 0, false);
+	elf_anim_controller->addTransition("attack_ini", "idle", "Attack", 0, false);
+	elf_anim_controller->addTransition("attack_ini", "attack_end", "Attack", 2, true);
+	elf_anim_controller->setParamValue("Speed", 0);
+	elf_anim_controller->setParamValue("Attack", 0);
+	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
+	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
+	elf->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 }
-//En teoria esto ya no tiene ninguna utilidad pero se deja por si hay que volver a hacer pruebas 
-void TestZoneState::createPesca(const Config& entityConfig) {
-	
-
-	auto* floor = createBasicEntity(Vector2D(sdlutils().width(), sdlutils().height() * 2), Vector2D(sdlutils().width(), 400), 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* floor_anim_controller = floor->addComponent<AnimBlendGraph>();
-	floor_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
-	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
-
-	auto* floor2 = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5), entityConfig.size, 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* floor2_anim_controller = floor2->addComponent<AnimBlendGraph>();
-	floor2_anim_controller->addAnimation("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
-	floor2->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
-	floor2->addComponent<PescaController>();
-	floor2->getMngr()->setHandler<Rod>(floor2); //Para deteccion de colision con el gancho 
-	
-
-
-
-	auto* player = createBasicEntity(entityConfig.pos + Vector2D(100, 50), Vector2D(256, 256), 0.0f, Vector2D(0, 0));
-	AnimBlendGraph* player_anim_controller = player->addComponent<AnimBlendGraph>();
-	player_anim_controller->addAnimation("player", &sdlutils().images().at("player_cana"), 1, 1, 1, 1, 0);
-	BoxCollider* playercollider_ = player->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
-	playercollider_->getFixture()->SetSensor(true);
-	player->addComponent<PescaController>();
-
-
-
-}
-
+#pragma endregion
+#pragma region JellyHat
 void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	auto* fjh1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
@@ -443,6 +439,8 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
+#pragma endregion
+#pragma region FringeHead
 void TestZoneState::createFringeHead(const Config& entityConfig)
 {
 	auto* enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
@@ -457,7 +455,7 @@ void TestZoneState::createFringeHead(const Config& entityConfig)
 	enemy->addComponent<FringeHeadAtack>();
 	enemy->addComponent<Enemy_Health>(200,Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 }
-
+#pragma endregion
 void TestZoneState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
 	auto* weaponGiver = createBasicEntity(weaponGiverConfig.pos, weaponGiverConfig.size, weaponGiverConfig.rotation, weaponGiverConfig.vel);
 

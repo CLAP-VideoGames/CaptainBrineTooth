@@ -38,6 +38,7 @@ private:
 	float attack_anticipation_ = 0;	//offset del ataque que permite atacar al player un poco antes de que este a rango del ataque
 	Vector2D attackSpriteSize_ = Vector2D(20.0, 20.0);
 	Vector2D attackTriggerSize_ = Vector2D(20.0, 20.0);
+	Vector2D init_pudle_Size = Vector2D(0, 0);
 	Vector2D puddleSize = Vector2D(300.0, 20);
 	Entity* attackTrigger_;
 	float attack_force = 2.5f;
