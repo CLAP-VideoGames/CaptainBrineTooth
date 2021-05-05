@@ -3,6 +3,8 @@
 void Inventory::init() {
 	//Generar un arma aleatoria
 	hud = entity_->getComponent<Armas_HUD>();
+
+	addWeapon(sdlutils().rand().teCuoto(0, 7));
 }
 
 void Inventory::update() {
