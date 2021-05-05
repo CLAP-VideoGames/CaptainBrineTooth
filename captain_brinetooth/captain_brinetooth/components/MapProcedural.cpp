@@ -322,6 +322,7 @@ void MapProcedural::update() {
 		}
 
 		pesca.clear();
+		stopFishing = false;
 	}
 
 }
@@ -357,7 +358,11 @@ void MapProcedural::TravelNextRoom(int dir) {
 		ent->setActive(false);
 		
 	}
+	for (Entity* ent : pesca) {
+		ent->setActive(false);
+	}
 	triggers.clear();
+	pesca.clear();
 
 	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
