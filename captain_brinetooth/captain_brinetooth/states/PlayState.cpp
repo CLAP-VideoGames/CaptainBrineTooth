@@ -179,7 +179,7 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(700, 0, app);
+	map = nivel->addComponent<MapProcedural>(4, 0, app);
 	getMngr()->setHandler<Map>(nivel);
 	camLimits = levelTile->getMaxCoordenates();
 }

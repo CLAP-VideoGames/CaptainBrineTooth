@@ -87,7 +87,7 @@ CurrentRoom* MapProcedural::initializeNewRoom(const RoomNames& tag) {
 
 	r->nameLevel = sdlutils().getNameFilePath(r->level);
 
-	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
+	if(!entity_->hasComponent<MapCollider>())chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
 	////Setteamos las conexiones en funcion del nombre del archivo
 
@@ -287,6 +287,7 @@ void MapProcedural::update() {
 	//Cambia de zona
 	if (travelZone) {
 		lvl->traveled();
+		roomsExplored = 0;
 
 		entity_->removeComponent<MapCollider>();
 
@@ -306,7 +307,6 @@ void MapProcedural::update() {
 
 		player->getComponent<BoxCollider>()->setPhysicalTransform(pos.x, pos.y, 0);
 
-		roomsExplored = 0;
 
 		travelZone = false;
 
