@@ -42,7 +42,7 @@ void JellyHatBehavior::update() {
 		entitytr_->setW(iniW + newSize);
 		anims_->keepProportion("idle", Vector2D(entitytr_->getW(), entitytr_->getH()));
 		anims_->scaleAnimation();
-		entityhealth_->setHealth(iniHealth + newSize);
+		//entityhealth_->setHealth(iniHealth + newSize);
 		//entitycollider_->Resize(Vector2D(iniH + (newSize / sdlutils().getPPM()), iniW + (newSize / sdlutils().getPPM())));
 	}
 	if (entitycollider_->getBody()->GetLinearVelocity().y == 0 && sdlutils().currRealTime() > lastJump + 1500) {
