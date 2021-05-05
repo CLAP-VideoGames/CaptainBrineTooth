@@ -46,19 +46,19 @@ void PlayerController::update()
 	}
 	if (ih().keyUpEvent()) {
 		//---Para la velocidad X
-		if (ih().isKeyUp(SDL_SCANCODE_LEFT)) {
+		if (ih().isKeyUp(SDL_SCANCODE_A)) {
 			moveLeft = false;
 		}
-		if (ih().isKeyUp(SDL_SCANCODE_RIGHT)) {
+		if (ih().isKeyUp(SDL_SCANCODE_D)) {
 			moveRight = false;
 		}
 	}
 	if (ih().keyDownEvent()) {
 		//Parte Horizontal
-		if (ih().isKeyDown(SDLK_LEFT)) {
+		if (ih().isKeyDown(SDL_SCANCODE_A)) {
 			moveLeft = true;
 		}
-		if (ih().isKeyDown(SDLK_RIGHT)) {
+		if (ih().isKeyDown(SDL_SCANCODE_D)) {
 			moveRight = true;
 		}
 		//Parte Vertical
@@ -73,7 +73,7 @@ void PlayerController::update()
 		}
 
 		//Para juego final añadir && canDash
-		if (ih().isKeyDown(SDLK_LSHIFT) && canDash) {
+		if (ih().isKeyDown(SDL_SCANCODE_LSHIFT) && canDash) {
 			collider_->getBody()->SetGravityScale(0.0f);
 			collider_->setSpeed(Vector2D(0, 0));
 			isDashing = true;

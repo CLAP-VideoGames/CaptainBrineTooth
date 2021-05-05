@@ -23,15 +23,15 @@ void CameraFollow::init(){
 void CameraFollow::update(){
 	//Input
 	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDL_SCANCODE_DOWN))
+		if (ih().isKeyDown(SDL_SCANCODE_S))
 			down_time_ ++;
-		if (ih().isKeyDown(SDL_SCANCODE_UP))
+		if (ih().isKeyDown(SDL_SCANCODE_W))
 			up_time_ ++;
 	}
 	if (ih().keyUpEvent()) {
-		if (ih().isKeyUp(SDL_SCANCODE_DOWN))
+		if (ih().isKeyUp(SDL_SCANCODE_S))
 			down_time_ = 0;
-		if (ih().isKeyUp(SDL_SCANCODE_UP))
+		if (ih().isKeyUp(SDL_SCANCODE_W))
 			up_time_ = 0;
 	}
 	//Actualizar la camara

@@ -39,7 +39,6 @@ App::App() {
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional));
-
 }
 
 App::~App() {

@@ -13,8 +13,8 @@ void Hammer::init() {
 
 void Hammer::update() {
 	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
-		if (ih().keyDownEvent()) {
-			if (ih().isKeyDown(SDL_SCANCODE_E)) {
+		if (ih().mouseButtonEvent()) {
+			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 
 				//Player not attacking or in combo
 				if (CURRENT_STATUS == STATUS::Iddle) {
