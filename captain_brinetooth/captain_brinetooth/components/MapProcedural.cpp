@@ -215,18 +215,13 @@ void MapProcedural::createConnectionTriggers(int dir) {
 
 Room MapProcedural::initializeRoom(int dir) {
 	int tile;
-
-	//que son las fronteras??
-	if (roomsExplored <= 1)
-	{
+	bool concuerda = false;
+	if (roomsExplored <= 1){
+		concuerda = true;
 		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
-	}
-
-	if (roomsExplored <= 1) {
 		tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 	}
-	//Aqui por que haces de nuevo otro if?????????
-	if (roomsExplored == nRooms - 1) {
+	else if (roomsExplored == nRooms - 1) {
 		//Habitaci�n final
 		tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
 	}
@@ -242,20 +237,21 @@ Room MapProcedural::initializeRoom(int dir) {
 
 	//Si es 2 = "S", luego es 4, y el opuesto de S es N, luego es 0
 	//Si es 3 = "W", luego es 5, y el opuesto de W es E, luego es 1
-	if (opositeDir >= 4) 
-		opositeDir = opositeDir - 4;
+	if (opositeDir >= 4) opositeDir = opositeDir - 4;
 
-	//Si opositeDir = 3 = "W". Luego si el nombre es NEtile8, no coincide t != W
-	//Pero si el nombre fuese NWtile8, tampoco iba a coincidir.
-	bool concuerda = (roomNames[tile].name[opositeDir] == cardinals[opositeDir]);
+	if (!concuerda){
+		int i = 0;
+		while (i < 4 && roomNames[tile].name[i] != cardinals[opositeDir]) i++;
+		if (i < 4) concuerda = true;
+	}
 
 
 	//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
 	while (!concuerda) {
 
-		/*if(roomsExplored <= 1)
+	/*	if(roomsExplored <= 1)
 			tile = sdlutils().rand().teCuoto(0, fronteras[0]);*/
-		if (roomsExplored == nRooms - 1)
+		 if (roomsExplored == nRooms - 1)
 			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
 		else
 			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1]);
@@ -267,8 +263,6 @@ Room MapProcedural::initializeRoom(int dir) {
 
 		if (i < 4) concuerda = true;
 	}
-	//Si la habitaci�n tiene una conexi�n, la del otro lado tiene que tener conexi�n opuesta
-	//Bueno esto lo tengo mirar pero es esto basicamente, buscar una con esa direcci�n que pareces tonto
 
 	roomNames[tile].used = true;
 	r.level = roomNames[tile].path;
@@ -488,8 +482,6 @@ void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 		roomsRead++;
 	}
 }
-
-
 
 void MapProcedural::setTravel(const bool travel, int dir) {
 	gonTotravel = travel;
