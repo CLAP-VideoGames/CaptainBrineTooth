@@ -208,7 +208,7 @@ void MapProcedural::createConnectionTriggers(int dir) {
 
 			t->setCollisionMethod(pescar);
 
-			triggers.push_back(t);
+			pesca.push_back(t);
 		}
 	}
 }
@@ -316,6 +316,13 @@ void MapProcedural::update() {
 
 	}
 
+	if (stopFishing) {
+		for (Entity* e : pesca) {
+			e->setActive(false);
+		}
+
+		pesca.clear();
+	}
 
 }
 
@@ -412,7 +419,7 @@ void MapProcedural::travel(b2Contact* contact) {
 
 	m->getComponent<MapProcedural>()->setTravel(true, dir);
 
-	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
+	//trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
 }
 
 void MapProcedural::travelNextZone(b2Contact* contact) {
