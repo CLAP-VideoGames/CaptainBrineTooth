@@ -50,13 +50,10 @@
   <object id="5" name="W" x="0" y="256" width="64" height="320"/>
  </objectgroup>
  <objectgroup id="4" name="spawns">
-  <object id="7" x="448" y="2240">
+  <object id="7" x="576" y="2176">
    <point/>
   </object>
-  <object id="8" x="832" y="2240">
-   <point/>
-  </object>
-  <object id="9" x="640" y="2240">
+  <object id="8" x="896" y="2176">
    <point/>
   </object>
  </objectgroup>
@@ -70,6 +67,5 @@
   <object id="3" x="576" y="640">
    <polygon points="0,0 576,0 576,704 512,768 576,832 576,960 512,1024 576,1088 576,1408 448,1408 448,1344 384,1280 0,1280 0,1088 64,1024 0,960 0,832 64,768 0,704"/>
   </object>
-  <object id="10" x="0" y="0" width="1920" height="2560"/>
  </objectgroup>
 </map>

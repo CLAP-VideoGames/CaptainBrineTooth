@@ -171,8 +171,9 @@ void MapProcedural::createConnectionTriggers(int dir) {
 		}
 		tmx::Vector2f playerpos = lvl->getPlayerPos();
 
-		if (roomsExplored <= 1 && playerpos.x != 0)
-			entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
+		auto* player = entity_->getMngr()->getHandler<Player>();
+		if (player != NULL && roomsExplored <= 1 && playerpos.x != 0)
+			player->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
 		//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
 
 	}
@@ -382,6 +383,12 @@ bool MapProcedural::isZoneCompleted()
 int MapProcedural::getPhase()
 {
 	return fase;
+}
+
+void MapProcedural::setPlayer2spawn()
+{
+	tmx::Vector2f playerpos = lvl->getPlayerPos();
+	entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0.0f);
 }
 
 void MapProcedural::travelNextZone() {

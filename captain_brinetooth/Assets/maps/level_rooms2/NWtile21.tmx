@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="9">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="10">
  <tileset firstgid="1" source="../tileset4.tsx"/>
  <layer id="1" name="tiles" width="40" height="30">
   <data encoding="csv">
@@ -40,7 +40,7 @@
   <object id="4" name="N" x="448" y="0" width="576" height="64"/>
  </objectgroup>
  <objectgroup id="4" name="spawns">
-  <object id="5" x="960" y="384">
+  <object id="5" x="1088" y="448">
    <point/>
   </object>
   <object id="6" x="1984" y="1024">
@@ -54,6 +54,8 @@
   <object id="2" x="0" y="576">
    <polygon points="0,0 256,0 1216,960 2112,512 2304,512 2304,128 2240,128 2240,192 2176,192 2176,64 2112,64 2112,0 1920,0 1920,64 1856,64 1856,-128 1728,-128 1728,-192 1664,-192 1600,-192 1600,-256 1472,-256 1472,-320 1280,-320 1280,-256 1216,-256 1216,-384 1152,-384 1152,-448 1024,-448 1024,-576 2560,-576 2560,1344 0,1344"/>
   </object>
-  <object id="8" x="0" y="0" width="2560" height="1920"/>
+  <object id="9" x="0" y="0">
+   <polygon points="0,0 2560,0 2560,1920 0,1920"/>
+  </object>
  </objectgroup>
 </map>

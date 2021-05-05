@@ -80,6 +80,8 @@ public:
 
 	int getPhase();
 
+	void setPlayer2spawn();
+
 	Vector2D getPlayerPos();
 
 	App* getStates() { return states; }

@@ -61,6 +61,8 @@ void PlayState::init() {
 	int swordNumber = 0;
 	createWeaponGiver(swordGiverConfig, swordNumber);
 
+	getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->setPlayer2spawn();
+
 	/*Config hammerGiverConfig{};
 	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
 	hammerGiverConfig.vel = Vector2D();
