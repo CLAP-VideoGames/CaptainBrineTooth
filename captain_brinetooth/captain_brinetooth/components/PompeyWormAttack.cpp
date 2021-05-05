@@ -33,7 +33,7 @@ void PompeyWormAttack::update() {
 					lifetime_puddle = 0;
 				}
 				else {
-					attackTrigger_->getComponent<BoxCollider>()->Resize(Vector2D(300.0, 20.0));	//Obligatorio llamarlo en clases no estaticas
+					attackTrigger_->getComponent<BoxCollider>()->Resize(puddleSize);	//Obligatorio llamarlo en clases no estaticas
 					lifetime_puddle++;
 				}
 			}
@@ -143,8 +143,14 @@ void PompeyWormAttack::createTriggerAttack()
 	attackTrigger_ = entity_->getMngr()->addEntity();
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX(), entitytr_->getPos().getY()),
 		Vector2D(0, 0), attackSpriteSize_.getX(), attackSpriteSize_.getY(), 0.0f);
-	Animation* sprite = attackTrigger_->addComponent<Animation>("pompey", &sdlutils().images().at("pompey_worm_spit"), 1, 1, 1, 1, 0);
-	sprite->flipX(true);
+	//Animacion disparo
+	auto* anim_c = attackTrigger_->addComponent<AnimBlendGraph>();
+	anim_c->addAnimation("pompey_spit", &sdlutils().images().at("pompey_worm_spit"), 1, 1, 1, 1, 0);
+	anim_c->addAnimation("pompey_puddle", &sdlutils().images().at("pompey_worm_puddle"), 3, 4, 12, 24, 0);
+	anim_c->addTransition("pompey_spit", "pompey_puddle", "Puddle", 1, false);
+	anim_c->addTransition("pompey_puddle", "pompey_spit", "Puddle", 0, false);
+	anim_c->setParamValue("Puddle", 0);
+
 	attackTrigger_->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true, 0.0f, true,0.0f, attackTriggerSize_);
 	//Posicion del player
 	Vector2D attackdir = (playertr_->getPos() - entitytr_->getPos());
@@ -177,6 +183,8 @@ void PompeyWormAttack::hit(b2Contact* contact)
 					collider->setSpeed(Vector2D(0.0, 0.0));
 					collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
 					collider->triggerCollide(true);
+					bodyA->getComponent<AnimBlendGraph>()->setDestSizeAnim("pompey_puddle", 300, 30);
+					bodyA->getComponent<AnimBlendGraph>()->setParamValue("Puddle", 1);
 				}
 			}
 		}
@@ -202,6 +210,8 @@ void PompeyWormAttack::hit(b2Contact* contact)
 							collider->setSpeed(Vector2D(0.0, 0.0));
 							collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
 							collider->triggerCollide(true);
+							bodyA->getComponent<AnimBlendGraph>()->setDestSizeAnim("pompey_puddle", 300, 30);
+							bodyA->getComponent<AnimBlendGraph>()->setParamValue("Puddle", 1);
 						}
 					}
 				}
