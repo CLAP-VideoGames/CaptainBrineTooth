@@ -34,7 +34,7 @@ void PescaState::init() {
 	auto* bg = createBasicEntity(Vector2D(0, 1440), Vector2D(2560 * 2, 1440 * 2), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
-	entitiesPerLine = 7;
+	entitiesPerLine = 3;
 	totalBasura = 5;
 
 	Config gancho{};
@@ -101,7 +101,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < entitiesPerLine; j++)
 		{
-			random = sdlutils().rand().teCuoto(0, 7);
+			random = sdlutils().rand().teCuoto(0, 2);
 
 			auto* reward0 = createBasicEntity(Vector2D(x + (100 *App::camera_Zoom_Out * j), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 
@@ -130,7 +130,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 				reward0->addComponent<BoxCollider>(STATIC, entityConfig.col, entityConfig.colMask);
 				reward0->addComponent<Reward>(random);
 			}*/
-			reward0->addComponent<BoxCollider>(DYNAMIC, entityConfig.col, entityConfig.colMask);
+			reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
 			reward0->addComponent<Reward>(random);
 			
 		}
@@ -152,7 +152,7 @@ void PescaState::crearBasura() {
 		else if (random == 32) {
 			basura->addComponent<Animation>("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 		}
-		basura->addComponent<BoxCollider>(STATIC, CEBO, CEBO_MASK);
+		basura->addComponent<BoxCollider>(STATIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
 		basura->addComponent<Reward>(random);
 	}
 }
