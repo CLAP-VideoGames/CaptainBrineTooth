@@ -132,7 +132,8 @@ void MachineGun::shoot() {
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("iddle", &sdlutils().images().at("machine_gun_bullet"), 1, 1, 1, 1, 1);
 	bullet->addComponent<DisableOnExit>();
-	bullet->addComponent<BoxCollider>(DYNAMIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK);
+	bullet->addComponent<BoxCollider>(DYNAMIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
+	bullet->getComponent<BoxCollider>()->getBody()->SetGravityScale(0);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
 	bullet->addComponent<WeaponDamageDetection>(20);
 	bullet->addComponent<DestroyOnCollision>(); // esto da problemas si no se hacen bien las capas de colision?

@@ -378,6 +378,9 @@
     <ClInclude Include="components\InkMovement.h">
       <Filter>Archivos de encabezado\components\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="components\FishlerController.h">
+      <Filter>Archivos de encabezado\components\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -625,6 +628,9 @@
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
     <ClCompile Include="components\InkMovement.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\FishlerController.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>

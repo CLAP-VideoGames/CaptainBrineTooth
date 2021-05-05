@@ -56,6 +56,7 @@ class Cuerda;
 class PescaController;
 class EnemyGenerator;
 class InkMovement;
+class FishlerController;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -110,7 +111,8 @@ class InkMovement;
 	Cuerda,\
 	EnemyGenerator,\
 	PescaController,\
-	InkMovement
+	InkMovement,\
+	FishlerController
 
 // groups
 
