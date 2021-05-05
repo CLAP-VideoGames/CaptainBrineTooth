@@ -34,6 +34,7 @@ protected:
 	CallBackOnClick* cboq;
 
 private:
+	bool selected;
 	Fade* fade;
 	Texture* tex;
 	SoundManager* soundController;

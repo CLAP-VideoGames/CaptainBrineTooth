@@ -4,6 +4,7 @@ Button::Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd) : tex(
 	cboq = c;
 	game = g;
 	soundController = snd;
+	selected = false;
 }
 
 Button::~Button(){
@@ -39,20 +40,37 @@ bool Button::handleEvent(){
 	Transform* tr = entity_->getComponent<Transform>();
 	SDL_Point mouseP = { ih().getMousePos().first, ih().getMousePos().second};
 	SDL_Rect dest = build_sdlrect(tr->getPos(), tr->getW(), tr->getH());
-	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE){
-		if (ih().mouseButtonEvent()){
+	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE) {
 
-			fade = entity_->getComponent<Fade>();
-			if(fade != nullptr){
-				fade->setState(Fade::STATE_FADE::Out);
+		//Si ha habido algun evento de ratón, o el usuario mantiene presionado algun button, entra
+		if (ih().mouseButtonEvent() || ih().getMouseButtonHeld()) {
+			//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
+			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().getLeftMouseButtonPressed()) {
+				//std::cout << "pressed" << std::endl;
+				//Necesito esto para saber en quEmomento selecciona la imagen del Slider
+				selected = true;
 			}
-			else{
-				cboq(game, soundController);
-			}
-			return true;
 		}
 
-	}
+
+		//Si el usuario sigue dentro del boton, éste ha sido seleccionado, y el boton izquierdo ya no está mantenido
+		if (!ih().getLeftMouseButtonPressed() && selected) {
+			//En caso de haber un componente Fade, ejecutar su callback cuando haya terminado el fade OUt (Update)
+			fade = entity_->getComponent<Fade>();
+			if (fade != nullptr) {
+				fade->setState(Fade::STATE_FADE::Out);
+			}
+			else {
+				cboq(game, soundController);
+			}
+			//Ha soltado el button, pues ya no está seleccionado
+			selected = false;
+		}
+
+		return true;
+	}//Si ha salido del button, deja de estar seleccionado ( para que si misclickea, pueda cancelar dicho click)
+	else selected = false;
+
 	return false;
 }
 

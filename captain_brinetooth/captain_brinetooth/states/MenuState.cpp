@@ -22,8 +22,8 @@ void MenuState::init() {
 																//Filename, loop, frameRate
 	std::pair<const char*, std::pair<bool, int>> video__ = { sdlutils().videos().at("waves").c_str(), {true, 25} };
 	videos.push_back(video__);
-	auto* video = manager_->addEntity();
-	video->addComponent<VideoPlayer>(videos);
+	//auto* video = manager_->addEntity();
+	//video->addComponent<VideoPlayer>(videos);
 
 	manager_->getSoundMngr()->setGeneralVolume(63.5);
 	manager_->getSoundMngr()->playMainMusic();
