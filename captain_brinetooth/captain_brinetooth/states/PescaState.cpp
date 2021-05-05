@@ -35,6 +35,7 @@ void PescaState::init() {
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	//---------
 	entitiesPerLine = 7;
+	totalBasura = 5;
 
 	Config gancho{};
 	gancho.pos = Vector2D(screen_width / 2.0, screen_heigth * 0.2);
@@ -82,6 +83,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 
 	//Rewards 
 	createRandomReward(entityConfig);
+	crearBasura();
 	//cuerda *no arreglada
 	auto* cuerda = createBasicEntity(entityConfig.pos + Vector2D(15 * z_factor, -30 * z_factor), Vector2D(10.0f *z_factor, 16.0f* z_factor), 0.0f, Vector2D(0, 0));
 	AnimBlendGraph* cuerda_anim_controller = cuerda->addComponent<AnimBlendGraph>();
@@ -112,7 +114,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			else if (random == 2)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 
-			else //No es ninguna recompensa activa 
+			/*else //No es ninguna recompensa activa 
 			{
 				int rnd = sdlutils().rand().teCuoto(0, 15);
 				if (rnd >= 0 && rnd <= 5)
@@ -125,11 +127,33 @@ void PescaState::createRandomReward(const Config& entityConfig)
 					reward0->addComponent<Animation>("idle", &sdlutils().images().at("lata"), 1, 1, 1, 1, 0);
 
 				random = 30;
-			}
-
+				reward0->addComponent<BoxCollider>(STATIC, entityConfig.col, entityConfig.colMask);
+				reward0->addComponent<Reward>(random);
+			}*/
 			reward0->addComponent<BoxCollider>(DYNAMIC, entityConfig.col, entityConfig.colMask);
 			reward0->addComponent<Reward>(random);
+			
 		}
+	}
+}
+
+void PescaState::crearBasura() {
+	for (int i = 0; i < totalBasura; i++) {
+		int rndx = sdlutils().rand().teCuoto(0, sdlutils().width() * App::camera_Zoom_Out);
+		int rndy = sdlutils().rand().teCuoto((sdlutils().height() * App::camera_Zoom_Out) * 0.6f ,(sdlutils().height() * App::camera_Zoom_Out) * 0.9f);
+		auto* basura = createBasicEntity(Vector2D(rndx, rndy), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
+		int random = sdlutils().rand().teCuoto(30,32);
+		if (random == 30) {
+			basura->addComponent<Animation>("idle", &sdlutils().images().at("lata"), 1, 1, 1, 1, 0);
+		}
+		else if (random == 31) {
+			basura->addComponent<Animation>("idle", &sdlutils().images().at("casco"), 1, 1, 1, 1, 0);
+		}
+		else if (random == 32) {
+			basura->addComponent<Animation>("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
+		}
+		basura->addComponent<BoxCollider>(STATIC, CEBO, CEBO_MASK);
+		basura->addComponent<Reward>(random);
 	}
 }
 

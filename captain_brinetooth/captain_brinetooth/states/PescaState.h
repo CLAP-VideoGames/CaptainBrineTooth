@@ -13,10 +13,11 @@ public:
 
 	void createPesca(const Config& entityConfig);
 	void createRandomReward(const Config& entityConfig);
+	void crearBasura();
 	App* getApp() { return app; }
 protected:
 	SDL_Rect cam;
-	int entitiesPerLine;
+	int entitiesPerLine, totalBasura;
 	int rows_ = 3;
 	std::vector<int> rowHeights;
 	float screen_width;
