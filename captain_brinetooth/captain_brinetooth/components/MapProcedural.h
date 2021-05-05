@@ -9,8 +9,10 @@
 
 namespace fs = std::filesystem;
 const int NUM_TILEMAPS = 40;
-const string LOBBY = "assets/maps/Etile0.tmx";	
+const string LOBBY = "assets/maps\\Etile0.tmx";	
 using namespace ColLayers;
+
+enum class Cardinals { N, E, S, W, None};
 
 struct Room {
 	Room() {};
@@ -23,9 +25,13 @@ struct Room {
 	string level;	//Nombre del tileMap
 };
 
+
+
 struct CurrentRoom {
 
 	CurrentRoom(){
+		for (bool& con : cons)
+			con = false;
 
 	}
 
@@ -93,14 +99,32 @@ private:
 	/// <returns></returns>
 	CurrentRoom* initializeNewRoom(const RoomNames& tag);
 
+	/// <summary>
+	/// Inicializa cada habitacion
+	/// </summary>
+	/// <param name="dir"></param>
+	/// <returns></returns>
 	Room initializeRoom(int dir);
 
+	/// <summary>
+	/// Crea las conexiones de cada habitacion
+	/// </summary>
+	/// <param name="r"></param>
+	/// <param name="rConnections"></param>
+	/// <param name="dir">direccion a la que se dirige el player</param>
 	void CreateConnections(CurrentRoom* r, const std::array<bool, 4>& rConnections, int dir);
 
-
+	/// <summary>
+	/// Obtiene las conexiones de un habitacion en concreto
+	/// </summary>
+	/// <param name="name"></param>
+	/// <param name="cons"></param>
 	void getConec(const string& name, std::array<bool, 4>& cons);
 
-	//Devuelve si se han explorado todas las habitaciones de la zona
+	/// <summary>
+	/// Crea los triggers de una habitacion en funcion de sus salidas
+	/// </summary>
+	/// <param name="dir"></param>
 	void createConnectionTriggers(int dir);
 
 	void stoppedFishing(){stopFishing = true;}
@@ -116,6 +140,8 @@ protected:
 	int nRooms, nRoomNames = 10;
 	int fase;		//Número de la zona en la que está el player
 	bool gonTotravel = false, travelZone = false, stopFishing = false;
+
+	Cardinals nextDirection = Cardinals::None;
 	int nextDir = -1;
 	//Opcion con struct
 	vector<RoomNames> roomNames;

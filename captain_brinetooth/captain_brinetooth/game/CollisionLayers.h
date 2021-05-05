@@ -19,6 +19,7 @@ namespace ColLayers {
 		GROUND = 0x0040,
 		PLAYER_DASH = 0X0080,
 		CEBO_GANCHO = 0X0100,
+		PLAYER_JUMP = 0X0200,
 	};
 
 	//Collision masks. Decide what each collision layer can collide with
@@ -27,6 +28,7 @@ namespace ColLayers {
 	const uint16 PLAYER_ATTACK_MASK = DEFAULT | GROUND | ENEMY;
 	const uint16 ENEMY_MASK = DEFAULT | GROUND | PLAYER | PLAYER_ATTACK;
 	const uint16 ENEMY_ATTACK_MASK = DEFAULT | GROUND | PLAYER;
+	const uint16 PLAYER_JUMP_MASK = DEFAULT | GROUND;
 	const uint16 PLAYER_DETECTION_MASK = PLAYER;
 	const uint16 GROUND_MASK = DEFAULT | PLAYER | PLAYER_ATTACK | ENEMY | ENEMY_ATTACK | PLAYER_DASH;
 	const uint16 PLAYER_DASH_MASK = DEFAULT | GROUND | PLAYER_DETECTION;

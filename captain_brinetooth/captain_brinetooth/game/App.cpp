@@ -29,9 +29,9 @@ App::App() {
 
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
-	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
+	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto---
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
 	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
 	//----Inicio de Juego------
@@ -166,6 +166,7 @@ void App::changeToPesca()
 
 	b2Vec2 gravity(0.0f, 9.8f);
 	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
+	w->SetContactListener(&collisionListener);
 	stateMachine->pushState(new PescaState(this, w, sndProvisional));
 }
 

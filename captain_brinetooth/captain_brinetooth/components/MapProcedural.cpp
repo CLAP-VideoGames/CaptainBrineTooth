@@ -8,8 +8,7 @@
 #define new DEBUG_NEW
 #endif
 
-MapProcedural::MapProcedural(int nR, int f, App* s)
-{
+MapProcedural::MapProcedural(int nR, int f, App* s){
 	nRooms = nR;
 	lvl = nullptr;
 	fase = f;
@@ -24,12 +23,6 @@ MapProcedural::~MapProcedural() {
 		triggers.clear();
 	}
 
-	//No se puede borrar memoria debido a la estructura de Room. Es recursiva la destruccion
-	/*for (int i = 0; i < 4; ++i) {
-		delete actualRoom->conections[0];
-	}*/
-
-	//Esto deja 4 Memory Leaks
 	delete actualRoom;
 }
 
@@ -66,7 +59,7 @@ void MapProcedural::init() {
 	int tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 	//Testing
 	//int tile = 0;
-	if (!lobby)actualRoom = initializeNewRoom(roomNames[tile]);
+	if (!lobby) actualRoom = initializeNewRoom(roomNames[tile]);
 	else {
 		RoomNames lob;
 		lob.path = LOBBY;
@@ -81,37 +74,154 @@ void MapProcedural::init() {
 CurrentRoom* MapProcedural::initializeNewRoom(const RoomNames& tag) {
 	cout << tag.name;
 	CurrentRoom* r = new CurrentRoom();
-	///*std::string test = "assets/maps/level_rooms/NSWtile6.tmx";
-	//lvl->load(test);*/
+	//Test
+	//std::string test = "assets/maps/level_rooms0\\NEtile3.tmx";
+	//r->level = test;
+	//lvl->load(test);
+	
+	//Real
 	r->level = tag.path;
-	r->nameLevel = sdlutils().getNameFilePath(r->level);
-
 	lvl->load(r->level);
+	
+
+	r->nameLevel = sdlutils().getNameFilePath(r->level);
 
 	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
 	////Setteamos las conexiones en funcion del nombre del archivo
 
-	getConec(tag.name, r->cons);
+	getConec(r->nameLevel, r->cons);
 
 	CreateConnections(r, r->cons, -1);
-
 
 	return r;
 }
 
+/// <summary>
+/// Dado el nombre del archivo de un Tile, selecciona sus conexiones
+/// </summary>
+/// <param name="name"></param>
+/// <param name="cons"></param>
+void MapProcedural::getConec(const string& name, std::array<bool, 4>& cons) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++){
+
+			if (name[i] == cardinals[j]) 
+				cons[j] = true;
+		}
+	}
+}
+
 void MapProcedural::CreateConnections(CurrentRoom* r, const std::array<bool, 4> & rConnections, int dir) {
 	for (int i = 0; i < 4; i++) {
-		if (rConnections[i] == true) r->conections[i] = initializeRoom(i);
+		if (rConnections[i] == true) 
+			r->conections[i] = initializeRoom(i);
 	}
 	createConnectionTriggers(dir);
 }
 
+void MapProcedural::createConnectionTriggers(int dir) {
+	vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
+	vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
+	vector<std::string> names = lvl->getConNames();
+
+	std::string oppDir = "";
+
+	if (dir != -1) {
+		switch (dir)
+		{
+		case 0:
+			oppDir = "S";
+			break;
+		case 1:
+			oppDir = "W";
+			break;
+		case 2:
+			oppDir = "N";
+			break;
+		case 3:
+			oppDir = "E";
+			break;
+		default:
+			break;
+		}
+	}
+
+	for (int i = 0; i < positions.size(); i++) {
+		auto* t = entity_->getMngr()->addEntity();
+
+		//Vector2D size;
+		Vector2D pos(positions[i].x, positions[i].y);
+
+
+		if (names[i] == oppDir) {
+			entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
+		}
+		else {
+			t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
+
+			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+
+			t->addComponent<Connections>(names[i]);
+
+			t->setCollisionMethod(travel);
+
+			triggers.push_back(t);
+		}
+
+
+		//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
+
+	}
+
+	if (lvl->finalRoom()) {
+		auto end = lvl->getEnd();
+
+		auto* t = entity_->getMngr()->addEntity();
+
+		Vector2D pos(end.x, end.y);
+
+		t->addComponent<Transform>(pos, Vector2D(0, 0), 200, 200, 0);
+
+		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+
+		t->setCollisionMethod(travelNextZone);
+
+		triggers.push_back(t);
+
+	}
+
+	vector<tmx::Vector2f> posAux = lvl->getPescaPoints();
+
+
+	//Comprobamos que hay un punto de pesca
+	if (posAux.size() != 0) {
+		for (int i = 0; i < posAux.size(); i++) {
+			Vector2D pescaPos(posAux[i].x, posAux[i].y);
+
+			auto* t = entity_->getMngr()->addEntity();
+
+			t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 200, 200, 0);
+
+			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+
+			t->setCollisionMethod(pescar);
+
+			triggers.push_back(t);
+		}
+	}
+}
+
 Room MapProcedural::initializeRoom(int dir) {
 	int tile;
+
+	//que son las fronteras??
+
+
 	if (roomsExplored <= 1) {
 		tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 	}
+	//Aqui por que haces de nuevo otro if?????????
 	if (roomsExplored == nRooms - 1) {
 		//Habitaci�n final
 		tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
@@ -126,8 +236,13 @@ Room MapProcedural::initializeRoom(int dir) {
 	//Cogemos la posici�n opuesta
 	int opositeDir = dir + 2;
 
-	if (opositeDir >= 4) opositeDir = opositeDir - 4;
+	//Si es 2 = "S", luego es 4, y el opuesto de S es N, luego es 0
+	//Si es 3 = "W", luego es 5, y el opuesto de W es E, luego es 1
+	if (opositeDir >= 4) 
+		opositeDir = opositeDir - 4;
 
+	//Si opositeDir = 3 = "W". Luego si el nombre es NEtile8, no coincide t != W
+	//Pero si el nombre fuese NWtile8, tampoco iba a coincidir.
 	bool concuerda = (roomNames[tile].name[opositeDir] == cardinals[opositeDir]);
 
 
@@ -143,6 +258,7 @@ Room MapProcedural::initializeRoom(int dir) {
 
 		int i = 0;
 		//Comprobamos que tiene conexión por el cardinal opuesto
+		//Quite good this
 		while (i < 4 && roomNames[tile].name[i] != cardinals[opositeDir]) i++;
 
 		if (i < 4) concuerda = true;
@@ -200,16 +316,26 @@ void MapProcedural::update() {
 }
 
 void MapProcedural::TravelNextRoom(int dir) {
-	//Nueva habitaci�n a la que hemos ido
+	//Nueva habitacion a la que hemos ido
 
+	//actualRoom->level = "assets/maps/level_rooms0\\NSWtile6.tmx";
+	//actualRoom->nameLevel = "NSWtile6.tmx";
 
 	actualRoom->level = actualRoom->conections[dir].level;
 	actualRoom->nameLevel = actualRoom->conections[dir].nameLevel;
+
+	//Reseteamos las conexiones para la nueva habitacion
+	for (bool& con : actualRoom->cons) con = false;
+
+	//Hay que resetear tambien los datos de las conexiones
+	for (Room& room : actualRoom->conections) room = {};
+
+
 	//lvl->clearTileset();
 	//Cargamos nuevo mapa
 	lvl->load(actualRoom->level);
-	//Setteamos los nuevos vertices para la creacion del cuerpo Collider
 
+	//Setteamos los nuevos vertices para la creacion del cuerpo Collider
 	entity_->removeComponent<MapCollider>();
 
 	Entity* player = entity_->getMngr()->getHandler<Player>();
@@ -259,8 +385,8 @@ void MapProcedural::setNumRooms(int nR) {
 }
 
 void MapProcedural::travel(b2Contact* contact) {
-	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-
+ 	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	//Si el contacto es el player, obtenemos el otro contacto que nos interesa, es decir, el trigger
 	if (trigger == trigger->getMngr()->getHandler<Player>()) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
@@ -335,17 +461,7 @@ void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 	}
 }
 
-/// <summary>
-/// Dado el nombre del archivo de un Tile, selecciona sus conexiones
-/// </summary>
-/// <param name="name"></param>
-/// <param name="cons"></param>
-void MapProcedural::getConec(const string& name, std::array<bool, 4> & cons) {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++)
-			if (name[i] == cardinals[j]) cons[j] = true;
-	}
-}
+
 
 void MapProcedural::setTravel(const bool travel, int dir) {
 	gonTotravel = travel;
@@ -360,100 +476,4 @@ Vector2D MapProcedural::getPlayerPos() {
 	return spawn;
 }
 
-void MapProcedural::createConnectionTriggers(int dir) {
-	vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
-	vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
-	vector<std::string> names = lvl->getConNames();
 
-	std::string oppDir = "";
-
-	if (dir != -1) {
-
-		switch (dir)
-		{
-		case 0:
-			oppDir = "S";
-			break;
-		case 1:
-			oppDir = "W";
-			break;
-		case 2:
-			oppDir = "N";
-			break;
-		case 3:
-			oppDir = "E";
-			break;
-		default:
-			break;
-		}
-	}
-
-	for (int i = 0; i < positions.size(); i++) {
-		auto* t = entity_->getMngr()->addEntity();
-
-		//Vector2D size;
-		Vector2D pos(positions[i].x, positions[i].y);
-
-
-		if (names[i] == oppDir) {
-			//Dos sumas completamente arbitarias que me sirven
-			if (oppDir == "S")
-				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
-			else if (oppDir == "W")
-				entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
-			else entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
-		}
-		else {
-			t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
-
-			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
-
-			t->addComponent<Connections>(names[i]);
-
-			t->setCollisionMethod(travel);
-
-			triggers.push_back(t);
-		}
-
-
-		//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
-
-	}
-
-	if (lvl->finalRoom()) {
-		auto end = lvl->getEnd();
-
-		auto* t = entity_->getMngr()->addEntity();
-
-		Vector2D pos(end.x, end.y);
-
-		t->addComponent<Transform>(pos, Vector2D(0, 0), 200, 200, 0);
-
-		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
-
-		t->setCollisionMethod(travelNextZone);
-
-		triggers.push_back(t);
-
-	}
-
-	vector<tmx::Vector2f> posAux = lvl->getPescaPoints();
-
-
-	//Comprobamos que hay un punto de pesca
-	if (posAux.size() != 0) {
-		for (int i = 0; i < posAux.size(); i++) {
-			Vector2D pescaPos(posAux[i].x, posAux[i].y);
-
-			auto* t = entity_->getMngr()->addEntity();
-
-			t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 200, 200, 0);
-
-			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
-
-			t->setCollisionMethod(pescar);
-
-			triggers.push_back(t);
-		}
-	}
-}

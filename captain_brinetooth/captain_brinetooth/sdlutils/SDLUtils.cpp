@@ -4,7 +4,7 @@
 #include <cassert>
 #include "../json/JSON.h"
 
-
+//bool SDLUtils::deb
 
 SDLUtils::SDLUtils() :
 		SDLUtils("SDL Demo", 600, 400) {
@@ -35,6 +35,10 @@ std::string SDLUtils::getNameFilePath(std::string& path){
 	int length = path.length(); //Final del string
 	std::string namePath = path.substr(puntoCorte + 1, length);
 	return namePath;
+}
+
+bool SDLUtils::getDebug() const{
+	return false;
 }
 
 void SDLUtils::initWindow() {

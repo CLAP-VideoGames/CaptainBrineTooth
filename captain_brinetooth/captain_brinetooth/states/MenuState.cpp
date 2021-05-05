@@ -16,7 +16,7 @@ void MenuState::init() {
 	rectPos.h = cam.h;
 
 	
-	fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), rectPos, "fondoMenu");
+	//fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), rectPos, "fondoMenu");
 	//Background
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 																//Filename, loop, frameRate

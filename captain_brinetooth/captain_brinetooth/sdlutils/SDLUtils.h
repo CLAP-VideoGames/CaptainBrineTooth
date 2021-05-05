@@ -16,7 +16,6 @@
 
 
 const double PPM = 200;
-const bool DEBUG = true;
 const bool CONSOLE_DEBUG = false;
 
 class SDLUtils: public Singleton<SDLUtils> {
@@ -84,9 +83,7 @@ public:
 		return PPM;
 	}
 
-	inline bool getDebug() {
-		return DEBUG;
-	}
+	bool getDebug() const;
 	
 	inline bool getConsoleDebug() {
 		return CONSOLE_DEBUG;
