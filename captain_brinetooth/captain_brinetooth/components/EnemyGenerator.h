@@ -11,6 +11,7 @@
 #include "..//components/JellyHatBehavior.h"
 #include "..//components/FringeHeadAtack.h"
 #include "..//components/ContactDamage.h"
+#include "..//components/PompeyWormAttack.h"
 
 class EnemyGenerator : public Component
 {

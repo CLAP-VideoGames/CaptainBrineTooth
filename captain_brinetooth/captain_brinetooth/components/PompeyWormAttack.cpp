@@ -201,7 +201,7 @@ void PompeyWormAttack::hit(b2Contact* contact)
 				if (bodyA->hasComponent<ContactDamage>()) {
 					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 					//Colision con el player
-					if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
+ 					if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
 						//bodyA->getComponent<ContactDamage>()->makeDamage();
 						if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
 							//Desactiva el trigger

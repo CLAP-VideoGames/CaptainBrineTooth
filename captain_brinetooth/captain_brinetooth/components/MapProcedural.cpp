@@ -154,7 +154,7 @@ void MapProcedural::createConnectionTriggers(int dir) {
 		//Vector2D size;
 		Vector2D pos(positions[i].x, positions[i].y);
 
-
+		
 		if (names[i] == oppDir) {
 			entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
 		}
@@ -169,8 +169,10 @@ void MapProcedural::createConnectionTriggers(int dir) {
 
 			triggers.push_back(t);
 		}
+		tmx::Vector2f playerpos = lvl->getPlayerPos();
 
-
+		if (roomsExplored <= 1 && playerpos.x != 0)
+			entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
 		//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
 
 	}
