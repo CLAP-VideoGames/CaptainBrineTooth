@@ -15,7 +15,6 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd):
 	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
 	//auto anim = suelo->addComponent<AnimBlendGraph>();
 	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
-
 	//suelo->addComponent<BoxCollider>();
 }
 
@@ -23,7 +22,6 @@ PlayState::~PlayState(){
 }
 
 void PlayState::init() {
-
 	//---BG----
 	auto* bg = createBasicEntity(Vector2D(960, 640), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
 	auto* bgParallax = bg->addComponent<ParallaxScroll>();

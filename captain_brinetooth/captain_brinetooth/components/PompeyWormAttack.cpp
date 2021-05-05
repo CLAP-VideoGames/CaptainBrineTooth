@@ -173,25 +173,27 @@ void PompeyWormAttack::hit(b2Contact* contact)
 	if (bodyA != nullptr) {
 		if (bodyA->hasComponent<ContactDamage>()) {
 			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-			//Colision con el player
-			if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
-				//bodyA->getComponent<ContactDamage>()->makeDamage();
-				if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
-					//Desactiva el trigger
-					bodyA->setActive(false);
+			if (bodyB->hasComponent<BoxCollider>()) {
+				//Colision con el player
+				if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
+					//bodyA->getComponent<ContactDamage>()->makeDamage();
+					if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+						//Desactiva el trigger
+						bodyA->setActive(false);
+					}
 				}
-			}
-			//Colision con el Mapa
-			else if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
-				uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
-					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-				if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
-					auto* collider = bodyA->getComponent<BoxCollider>();
-					collider->setSpeed(Vector2D(0.0, 0.0));
-					collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
-					collider->triggerCollide(true);
-					bodyA->getComponent<AnimBlendGraph>()->setDestSizeAnim("pompey_puddle", 300, 30);
-					bodyA->getComponent<AnimBlendGraph>()->setParamValue("Puddle", 1);
+				//Colision con el Mapa
+				else if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
+					uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
+						bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+					if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+						auto* collider = bodyA->getComponent<BoxCollider>();
+						collider->setSpeed(Vector2D(0.0, 0.0));
+						collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
+						collider->triggerCollide(true);
+						bodyA->getComponent<AnimBlendGraph>()->setDestSizeAnim("pompey_puddle", 300, 30);
+						bodyA->getComponent<AnimBlendGraph>()->setParamValue("Puddle", 1);
+					}
 				}
 			}
 		}
@@ -200,25 +202,27 @@ void PompeyWormAttack::hit(b2Contact* contact)
 			if (bodyA != nullptr) {
 				if (bodyA->hasComponent<ContactDamage>()) {
 					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-					//Colision con el player
- 					if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
-						//bodyA->getComponent<ContactDamage>()->makeDamage();
-						if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
-							//Desactiva el trigger
-							bodyA->setActive(false);
+					if (bodyB->hasComponent<BoxCollider>()) {
+						//Colision con el player
+						if (bodyB->getComponent<BoxCollider>()->getColLayer() == PLAYER) {
+							//bodyA->getComponent<ContactDamage>()->makeDamage();
+							if (!bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+								//Desactiva el trigger
+								bodyA->setActive(false);
+							}
 						}
-					}
-					//Colision con el Mapa
-					else if (bodyB->hasComponent<BoxCollider>()|| bodyB->hasComponent<MapCollider>()) {
-						uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
-							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-						if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
-							auto* collider = bodyA->getComponent<BoxCollider>();
-							collider->setSpeed(Vector2D(0.0, 0.0));
-							collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
-							collider->triggerCollide(true);
-							bodyA->getComponent<AnimBlendGraph>()->setDestSizeAnim("pompey_puddle", 300, 30);
-							bodyA->getComponent<AnimBlendGraph>()->setParamValue("Puddle", 1);
+						//Colision con el Mapa
+						else if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
+							uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
+								bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+							if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+								auto* collider = bodyA->getComponent<BoxCollider>();
+								collider->setSpeed(Vector2D(0.0, 0.0));
+								collider->getBody()->SetType(b2BodyType::b2_kinematicBody);
+								collider->triggerCollide(true);
+								bodyA->getComponent<AnimBlendGraph>()->setDestSizeAnim("pompey_puddle", 300, 30);
+								bodyA->getComponent<AnimBlendGraph>()->setParamValue("Puddle", 1);
+							}
 						}
 					}
 				}
