@@ -16,8 +16,8 @@ void MachineGun::init() {
 
 void MachineGun::update() {
 	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
-		if (ih().mouseButtonEvent()) {
-			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
+		if (ih().mouseButtonEvent() || ih().keyDownEvent()) {
+			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
 
 				//Player not attacking or in combo
 				if (CURRENT_STATUS == STATUS::Iddle && overheat <= maxOverheat && startedReloading + reloadingTime < sdlutils().currRealTime()) {
@@ -49,8 +49,8 @@ void MachineGun::update() {
 	}
 	
 
-	if (ih().keyUpEvent()) {
-		if (ih().isKeyUp(SDL_SCANCODE_E) && CURRENT_STATUS == STATUS::Shooting) {
+	if (ih().mouseButtonEvent()) {
+		if (!ih().getLeftMouseButtonPressed() && CURRENT_STATUS == STATUS::Shooting) {
 			std::cout << "Stopped shooting\n";
 
 			CURRENT_STATUS = STATUS::Iddle;

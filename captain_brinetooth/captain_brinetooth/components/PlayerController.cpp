@@ -39,52 +39,55 @@ void PlayerController::update()
 #pragma region Input
 	//Gestion del input
 	assert(collider_ != nullptr);
-	if (receiveInput)
-	{
+	if (receiveInput){
 		if (paralized) {
 			timer = sdlutils().currRealTime();
 			paralized = false;
 			moveLeft = false;
 			moveRight = false;
 		}
+
 		if (ih().keyUpEvent()) {
 			//---Para la velocidad X
-			if (ih().isKeyUp(SDL_SCANCODE_LEFT)) {
+			if (ih().isKeyUp(SDL_SCANCODE_A)) {
 				moveLeft = false;
 			}
-			if (ih().isKeyUp(SDL_SCANCODE_RIGHT)) {
+			if (ih().isKeyUp(SDL_SCANCODE_D)) {
 				moveRight = false;
 			}
 		}
+
 		if (ih().keyDownEvent()) {
-			//Parte Horizontal
-			if (ih().isKeyDown(SDLK_LEFT)) {
+			if (ih().isKeyDown(SDL_SCANCODE_A)) {
 				moveLeft = true;
 			}
-			if (ih().isKeyDown(SDLK_RIGHT)) {
+			
+			if (ih().isKeyDown(SDL_SCANCODE_D)) {
 				moveRight = true;
 			}
-			//Parte Vertical
-			if (ih().isKeyDown(SDL_SCANCODE_SPACE) && isOnFloor && !isDashing) {
-				isOnFloor = false;
-				//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho mas
-				collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
+		}
 
-				//Realizar da�o
-				//health_->loseLife();
-				snd->playSoundEffect("player_jump", 300);
-			}
+		//Parte Vertical
+		if ((ih().isKeyDown(SDL_SCANCODE_SPACE) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_A)) && isOnFloor && !isDashing) {
+			isOnFloor = false;
+			//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho mas
+			collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
 
-			//Para juego final añadir && canDash
-			if (ih().isKeyDown(SDLK_LSHIFT) && canDash) {
-				collider_->getBody()->SetGravityScale(0.0f);
-				collider_->setSpeed(Vector2D(0, 0));
-				isDashing = true;
-				if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
-				else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
-				collider_->changeColLayer_and_Mask(PLAYER_DASH, PLAYER_DASH_MASK);
-				canDash = false;
-			}
+			//Realizar da�o
+			//health_->loseLife();
+			snd->playSoundEffect("player_jump", 300);
+			
+
+		}
+		//Para juego final añadir && canDash
+		if (ih().isKeyDown(SDLK_LSHIFT) && canDash) {
+			collider_->getBody()->SetGravityScale(0.0f);
+			collider_->setSpeed(Vector2D(0, 0));
+			isDashing = true;
+			if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
+			else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
+			collider_->changeColLayer_and_Mask(PLAYER_DASH, PLAYER_DASH_MASK);
+			canDash = false;
 		}
 	}
 #pragma endregion

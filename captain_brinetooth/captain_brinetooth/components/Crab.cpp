@@ -14,8 +14,8 @@ void Crab::init() {
 
 void Crab::update() {
 	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
-		if (ih().mouseButtonEvent()) {
-			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
+		if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
+			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
 
 				//Player not attacking or in combo
 				if (CURRENT_STATUS == STATUS::Iddle && stoppedAttackingTime + timeBeforeNextAttackStarts < sdlutils().currRealTime()) {

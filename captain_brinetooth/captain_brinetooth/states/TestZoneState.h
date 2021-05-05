@@ -14,7 +14,6 @@ public:
 	void createBoxFloor(const Config& entityConfig);
 	void createPompeyWorm(const Config& enemy1Config);
 	void createElfShark(const Config& entityConfig);
-	void createPesca(const Config& entityConfig);
 	void createFlowerJellyHat(const Config& entityConfig);
 	void createFringeHead(const Config& entityConfig);
 	void createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType);
