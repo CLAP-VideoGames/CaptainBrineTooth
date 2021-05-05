@@ -89,6 +89,7 @@ public:
 	void flipX(bool state);
 	void setAlpha(Uint8 alpha);
 	bool isComplete();
+	void setDestSizeAnim(std::string animId, float w_, float h_);
 	const bool& isFlipX();
 	const int& getParamValue(std::string paramName);
 	const Animation* getCurrentAnimation();

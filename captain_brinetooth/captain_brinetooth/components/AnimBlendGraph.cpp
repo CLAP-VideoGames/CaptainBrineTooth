@@ -240,6 +240,14 @@ const int& AnimBlendGraph::getParamValue(std::string paramName)
 	return val;
 }
 
+void AnimBlendGraph::setDestSizeAnim(std::string animId, float w_, float h_)
+{
+	int i = 0;
+	while (i < entityAnims_.size() && animId != entityAnims_[i]->getID())i++;
+	if (i < entityAnims_.size())
+		entityAnims_[i]->destSize(w_, h_);
+}
+
 const Animation* AnimBlendGraph::getCurrentAnimation() {
 	if (currentAnim_ != nullptr)
 		return currentAnim_->anim_;

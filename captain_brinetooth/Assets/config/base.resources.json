@@ -73,6 +73,10 @@
 			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_spit.png"
 		},
 		{
+			"id": "pompey_worm_puddle",
+			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_puddle.png"
+		},
+		{
 			"id": "fringehead_idle",
 			"file": "assets/sprites/enemies/fringehead/fringehead_idle.png"
 		},

@@ -26,6 +26,7 @@ void ElfSharkAttack::init()
 	entity_->setCollisionMethod(hasEnter);
 	entity_->setEndCollisionMethod(hasExit);
 	attackTrigger_ = nullptr;
+	attack_player = false;
 	//Set de los timers
 	elapsed_time_lastAttack = 0;
 }
@@ -46,7 +47,7 @@ void ElfSharkAttack::update() {
 				}
 			}
 			else {
-				if (entity_Parent_->getComponent<AnimBlendGraph>()->isComplete()) {
+				if (!attack_player && entity_Parent_->getComponent<AnimBlendGraph>()->getParamValue("Attack") == 1) {
 					//Desactiva el trigger
 					attackTrigger_->setActive(false);
 					attackTrigger_ = nullptr;
@@ -72,6 +73,11 @@ void ElfSharkAttack::update() {
 		//Actualizar posicion
 		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
 	}
+	//Ataque
+	if (entity_Parent_->getComponent<AnimBlendGraph>()->isComplete() && attack_player) {
+		createAttackTrigger();
+		attack_player = false;
+	}
 }
 
 bool ElfSharkAttack::canAttack() {
@@ -83,6 +89,25 @@ bool ElfSharkAttack::canAttack() {
 		return true;
 	else
 		return false;
+}
+
+void ElfSharkAttack::createAttackTrigger()
+{
+	Transform* playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
+	//Offset
+	float offsetY = (entitytr_->getH() - attackTriggerSize_.getY()) * 0.5f;
+	float offsetX;
+	if (playertr_->getPos().getX() + playertr_->getW() * 0.5f < entitytr_->getPos().getX() + entitytr_->getW() * 0.5f)	//izqda
+		offsetX = -attackTriggerSize_.getX() * 0.5f;
+	else	//drcha
+		offsetX = attackTriggerSize_.getX();
+
+	//Crea trigger de ataque
+	attackTrigger_ = entity_->getMngr()->addEntity();
+	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + offsetX, entitytr_->getPos().getY() + offsetY),
+		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
+	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
+	attackTrigger_->addComponent<ContactDamage>();
 }
 
 void ElfSharkAttack::hasEnter(b2Contact* contact) {
@@ -119,28 +144,17 @@ void ElfSharkAttack::attack() {
 	entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, 0)));
 	//Actualizar posicion
 	entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, 0)));
-	//Offset
-	float offsetY = (entitytr_->getH() - attackTriggerSize_.getY()) * 0.5f;
-	float offsetX;
-	if (playertr_->getPos().getX() + playertr_->getW() * 0.5f < entitytr_->getPos().getX() + entitytr_->getW() * 0.5f) {	//izqda
-		offsetX = -attackTriggerSize_.getX() * 0.5f;
+
+	if (playertr_->getPos().getX() + playertr_->getW() * 0.5f < entitytr_->getPos().getX() + entitytr_->getW() * 0.5f)	//izqda
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(true);
-	}
-	else {	//drcha
-		offsetX = attackTriggerSize_.getX();
+	else
 		entity_Parent_->getComponent<AnimBlendGraph>()->flipX(false);
-	}
-	//Crea trigger de ataque
-	attackTrigger_ = entity_->getMngr()->addEntity();
-	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + offsetX, entitytr_->getPos().getY() + offsetY),
-		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
-	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
-	attackTrigger_->addComponent<ContactDamage>();
+
 	//Llama al cambio de estado de animacion
 	entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 1);
-
 	// Reproducimos el sonido de mordisco
 	entity_->getMngr()->getSoundMngr()->playSoundEffect("mordisco_elfshark", 300);
+	attack_player = true;
 }
 
 void ElfSharkAttack::move() {
