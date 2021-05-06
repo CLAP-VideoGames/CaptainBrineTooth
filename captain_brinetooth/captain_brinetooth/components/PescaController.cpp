@@ -1,11 +1,14 @@
 #include "PescaController.h"
 #include "Gancho.h"
 #include "Cuerda.h"
-PescaController::PescaController(){}
+PescaController::PescaController(int w){ 
+	s_width = w;
+}
 void PescaController::init() {
 	collider_ = entity_->getComponent<BoxCollider>();
 	assert(collider_ != nullptr);
 	collider_->getBody()->SetGravityScale(0.0f);
+	
 }
 void PescaController::update() {
 	if(!move){
@@ -22,7 +25,7 @@ void PescaController::update() {
 				
 	}
 	else {
-		if (entity_->getMngr()->getHandler<Rod>()->getComponent<BoxCollider>()->getPhysicalPos().getX() <= 600) {
+		if (entity_->getMngr()->getHandler<Rod>()->getComponent<BoxCollider>()->getPhysicalPos().getX() <= s_width * 0.15) {
 			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 			if (ih().keyDownEvent()) {
 				if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
@@ -31,7 +34,7 @@ void PescaController::update() {
 
 			}
 		}
-		else if(entity_->getMngr()->getHandler<Rod>()->getComponent<BoxCollider>()->getPhysicalPos().getX() >= 1400){
+		else if(entity_->getMngr()->getHandler<Rod>()->getComponent<BoxCollider>()->getPhysicalPos().getX() >= s_width * 0.75){
 			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 			if (ih().keyDownEvent()) {
 				if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {

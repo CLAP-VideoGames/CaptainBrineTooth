@@ -343,6 +343,10 @@
 		{
 			"id": "casco",
 			"file": "assets/sprites/pesca/cascoPesca.png"
+		},
+		{
+			"id": "fondoPesca",
+			"file": "assets/sprites/pesca/fondoPesca.png"
 		}
 	],
 

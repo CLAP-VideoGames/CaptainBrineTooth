@@ -43,14 +43,14 @@ void PescaState::init() {
 		rowHeights.push_back(y);
 	}
 
-	auto* bg = createBasicEntity(Vector2D(0, 1440), Vector2D(2560 * 2, 1440 * 2), 0.0f, Vector2D(0, 0));
-	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
+	auto* bg = createBasicEntity(Vector2D(screen_width / 2, screen_heigth / 2), Vector2D(screen_width, screen_heigth), 0.0f, Vector2D(0, 0));
+	bg->addComponent<Animation>("1", &sdlutils().images().at("fondoPesca"), 1, 1, 1, 1, 0);
 	//---------
 	entitiesPerLine = 3;
 	totalBasura = 8;
 
 	Config gancho{};
-	gancho.pos = Vector2D(screen_width / 2.0, screen_heigth * 0.2);
+	gancho.pos = Vector2D(screen_width / 2.0, screen_heigth * 0.22);
 	gancho.vel = Vector2D(0, 0);
 	gancho.size = Vector2D(50.0 * App::camera_Zoom_Out, 50.0 * App::camera_Zoom_Out);
 	gancho.friction = 0.0f;
@@ -68,16 +68,13 @@ void PescaState::createPesca(const Config& entityConfig) {
 
 	//Suelo *arreglado
 	auto* floor = createBasicEntity(Vector2D(entityConfig.pos.getX(), screen_heigth * 0.95), Vector2D(screen_width * 0.8, screen_heigth * 0.1), 0.0f, Vector2D(0, 0));
-	floor->addComponent<Animation>("debug", &sdlutils().images().at("arena"), 1, 1, 1, 1, 0);
+	//floor->addComponent<Animation>("debug", &sdlutils().images().at("arena"), 1, 1, 1, 1, 0);
 	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
-	//muelle *arreglado
-	auto* muelle = createBasicEntity(Vector2D(entityConfig.pos.getX(), screen_heigth * 0.23), Vector2D(screen_width * 0.7, 230 * z_factor), 0, Vector2D(0, 0));
-	muelle->addComponent<Animation>("muelle", &sdlutils().images().at("muelle"), 1, 1, 1, 1, 0);
 	//cuerda *arreglada
 	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5 * z_factor), entityConfig.size, 0.0f, Vector2D(0, 0));
 	topRod->addComponent<Animation>("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	topRod->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
-	topRod->addComponent<PescaController>();
+	topRod->addComponent<PescaController>(screen_width);
 	topRod->getMngr()->setHandler<Rod>(topRod); //Para deteccion de colision con el gancho 
 
 	//player *arreglado
@@ -85,13 +82,13 @@ void PescaState::createPesca(const Config& entityConfig) {
 	player->addComponent<Animation>("player", &sdlutils().images().at("player_cana"), 1, 1, 1, 1, 0);
 	BoxCollider* playercollider_ = player->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	playercollider_->getFixture()->SetSensor(true);
-	player->addComponent<PescaController>();
+	player->addComponent<PescaController>(screen_width);
 	//gancho *si arreglado
 	auto* gancho = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	gancho->addComponent<Animation>("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
 	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	gancho->addComponent<Gancho>(app);
-	gancho->addComponent<PescaController>();
+	gancho->addComponent<PescaController>(screen_width);
 
 	//Rewards 
 	createRandomReward(entityConfig);
@@ -102,7 +99,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 	cuerda_anim_controller->addAnimation("cuerda", &sdlutils().images().at("cuerda"), 1, 1, 1, 1, 0);
 	cuerda->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	cuerda->addComponent<Cuerda>(gancho);
-	cuerda->addComponent<PescaController>();
+	cuerda->addComponent<PescaController>(screen_width);
 
 }
 void PescaState::createRandomReward(const Config& entityConfig)
@@ -137,8 +134,8 @@ void PescaState::createRandomReward(const Config& entityConfig)
 
 void PescaState::crearBasura() {
 	for (int i = 0; i < totalBasura; i++) {
-		int rndx = sdlutils().rand().teCuoto(0, sdlutils().width() * App::camera_Zoom_Out * 0.8);
-		int rndy = sdlutils().rand().teCuoto((sdlutils().height() * App::camera_Zoom_Out) * 0.6f, (sdlutils().height() * App::camera_Zoom_Out) * 0.9f);
+		int rndx = sdlutils().rand().teCuoto(screen_width * 0.15, screen_width * 0.75);
+		int rndy = sdlutils().rand().teCuoto(screen_heigth * 0.6f, screen_heigth * 0.9f);
 		auto* basura = createBasicEntity(Vector2D(rndx, rndy), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 		int random = sdlutils().rand().teCuoto(30, 32);
 		if (random == 30) {
