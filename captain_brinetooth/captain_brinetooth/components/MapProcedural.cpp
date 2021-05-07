@@ -17,58 +17,23 @@ MapProcedural::MapProcedural(int nR, int f, App* s){
 }
 
 MapProcedural::~MapProcedural() {
+	//Borramos los triggers
+	deleteTriggers();
 
-	if (!triggers.empty()) {
-		for (Entity* ent : triggers) ent->setActive(false);
-		triggers.clear();
-	}
-
-	delete actualRoom;
+	delete currentRoom;
 }
 
 void MapProcedural::init() {
-	//Leeemos los distintos directorios
-	if (fase == 0) {
-		int roomsRead = 0;
-		ReadDirectory("assets/maps/level_starts0", roomsRead);
-		fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-		ReadDirectory("assets/maps/level_rooms0", roomsRead);
-		fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-		ReadDirectory("assets/maps/level_ends0", roomsRead);
-		lvl = entity_->getComponent<Level0>();
-
-	}
-	else if (fase == 1) {
-		int roomsRead = 0;
-		ReadDirectory("assets/maps/level_starts1", roomsRead);
-		fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-		ReadDirectory("assets/maps/level_rooms1", roomsRead);
-		fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-		ReadDirectory("assets/maps/level_ends1", roomsRead);
-	}
-	else {
-		int roomsRead = 0;
-		ReadDirectory("assets/maps/level_starts2", roomsRead);
-		fronteras[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-		ReadDirectory("assets/maps/level_rooms2", roomsRead);
-		fronteras[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-		ReadDirectory("assets/maps/level_ends2", roomsRead);
-	}
+	loadTileFiles();
 
 	//En funcion de la fase, obtenemos de manera aletoria el nombre de una de las salas  
-	int tile = sdlutils().rand().teCuoto(0, fronteras[0]);
 	//Testing
 	//int tile = 0;
-	if (!lobby) actualRoom = initializeNewRoom(roomNames[tile]);
-	else {
-		RoomNames lob;
-		lob.path = LOBBY;
-		lob.name = "Etile0";
 
-		actualRoom = initializeNewRoom(lob);
-		lobby = false;
-		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Lobby");
-	}
+	int tile = getRandomTileFromArea(Starts);
+	if (!lobby) currentRoom = initializeNewRoom(roomNames[tile]);
+	else loadLobby();
+
 	roomNames[tile].used = true;
 }
 
@@ -222,15 +187,17 @@ Room MapProcedural::initializeRoom(int dir) {
 	if (roomsExplored <= 1){
 		concuerda = true;
 		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
-		tile = sdlutils().rand().teCuoto(0, fronteras[0]);
+		tile = getRandomTileFromArea(Starts);
+		//tile = sdlutils().rand().teCuoto(0, areaLimits[0]);
 	}
+	//Habitacion final
 	else if (roomsExplored == nRooms - 1) {
-		//Habitaci�n final
-		tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
+		tile = getRandomTileFromArea(Final);
+		//tile = sdlutils().rand().teCuoto(areaLimits[1], roomNames.size());
 	}
+	//Habitación intermedia
 	else {
-		//Habitación intermedia
-		tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1] + 1);
+		tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1] + 1);
 	}
 
 	Room r;
@@ -254,10 +221,13 @@ Room MapProcedural::initializeRoom(int dir) {
 
 	/*	if(roomsExplored <= 1)
 			tile = sdlutils().rand().teCuoto(0, fronteras[0]);*/
-		 if (roomsExplored == nRooms - 1)
-			tile = sdlutils().rand().teCuoto(fronteras[1], roomNames.size());
+		if (roomsExplored == nRooms - 1)
+			tile = getRandomTileFromArea(Final);
+			//tile =  sdlutils().rand().teCuoto(areaLimits[1], roomNames.size());
 		else
-			tile = sdlutils().rand().teCuoto(fronteras[0], fronteras[1]);
+			tile = getRandomTileFromArea(Mid);
+
+			//tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1]);
 
 		int i = 0;
 		//Comprobamos que tiene conexión por el cardinal opuesto
@@ -330,19 +300,19 @@ void MapProcedural::TravelNextRoom(int dir) {
 	//actualRoom->level = "assets/maps/level_rooms0\\NSWtile6.tmx";
 	//actualRoom->nameLevel = "NSWtile6.tmx";
 
-	actualRoom->level = actualRoom->conections[dir].level;
-	actualRoom->nameLevel = actualRoom->conections[dir].nameLevel;
+	currentRoom->level = currentRoom->conections[dir].level;
+	currentRoom->nameLevel = currentRoom->conections[dir].nameLevel;
 
 	//Reseteamos las conexiones para la nueva habitacion
-	for (bool& con : actualRoom->cons) con = false;
+	for (bool& con : currentRoom->cons) con = false;
 
 	//Hay que resetear tambien los datos de las conexiones
-	for (Room& room : actualRoom->conections) room = {};
+	for (Room& room : currentRoom->conections) room = {};
 
 
 	//lvl->clearTileset();
 	//Cargamos nuevo mapa
-	lvl->load(actualRoom->level);
+	lvl->load(currentRoom->level);
 
 	//Setteamos los nuevos vertices para la creacion del cuerpo Collider
 	entity_->removeComponent<MapCollider>();
@@ -365,42 +335,62 @@ void MapProcedural::TravelNextRoom(int dir) {
 
 	//cout << actualRoom->getName();
 	//Cogemos sus conexiones	
-	getConec(actualRoom->nameLevel, actualRoom->cons);
+	getConec(currentRoom->nameLevel, currentRoom->cons);
 
 	//Creamos habitaciones en funci�n de las conexiones que tiene
-	CreateConnections(actualRoom, actualRoom->cons, dir);
+	CreateConnections(currentRoom, currentRoom->cons, dir);
 
 	roomsExplored++;
 
 	std::cout << roomsExplored << "\n";
 }
 
-bool MapProcedural::isZoneCompleted()
-{
-	return roomsExplored == nRooms;
-}
-
-int MapProcedural::getPhase()
-{
-	return fase;
-}
-
-void MapProcedural::setPlayer2spawn()
-{
+void MapProcedural::setPlayer2spawn(){
 	tmx::Vector2f playerpos = lvl->getPlayerPos();
 	entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0.0f);
 }
 
-void MapProcedural::travelNextZone() {
-	travelZone = true;
+void MapProcedural::loadLobby() {
+
+	RoomNames lob;
+	lob.name = "Etile0";
+	lob.path = LOBBY;
+
+	currentRoom = initializeNewRoom(lob);
+	//No es más el lobby
+	lobby = !lobby;
+	//Cambiamos la musica
+	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Lobby");
 }
 
-void MapProcedural::setPhase(int f) {
-	fase = f;
-}
+void MapProcedural::loadTileFiles(){
+	//Leeemos los distintos directorios
+	if (fase == 0) {
+		int roomsRead = 0;
+		ReadDirectory("assets/maps/level_starts0", roomsRead);
+		areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+		ReadDirectory("assets/maps/level_rooms0", roomsRead);
+		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+		ReadDirectory("assets/maps/level_ends0", roomsRead);
+		lvl = entity_->getComponent<Level0>();
 
-void MapProcedural::setNumRooms(int nR) {
-	nRooms = nR;
+	}
+	else if (fase == 1) {
+		int roomsRead = 0;
+		ReadDirectory("assets/maps/level_starts1", roomsRead);
+		areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+		ReadDirectory("assets/maps/level_rooms1", roomsRead);
+		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+		ReadDirectory("assets/maps/level_ends1", roomsRead);
+	}
+	else {
+		int roomsRead = 0;
+		ReadDirectory("assets/maps/level_starts2", roomsRead);
+		areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+		ReadDirectory("assets/maps/level_rooms2", roomsRead);
+		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+		ReadDirectory("assets/maps/level_ends2", roomsRead);
+	}
 }
 
 void MapProcedural::travel(b2Contact* contact) {
@@ -440,12 +430,10 @@ void MapProcedural::travelNextZone(b2Contact* contact) {
 	int aux = trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPhase();
 
 	// Cambiamos de cancion cuando cambiamos de fase
-	if (aux == 2)
-	{
+	if (aux == 2){
 		trigger->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel2");
 	}
-	else if (aux == 3)
-	{
+	else if (aux == 3){
 		trigger->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel3");
 	}
 
@@ -463,7 +451,6 @@ void MapProcedural::pescar(b2Contact* contact) {
 
 
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getStates()->changeToPesca();
-
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
 }
 
@@ -475,11 +462,8 @@ void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 		string ruta = entry.path().u8string();
 		//string ruta = entry.path();
 
-		RoomNames rN;
-
-		rN.path = ruta; //Se la asignamos al path
-		rN.used = false;	//No se ha usado la habitaci�n
-		rN.tipo = 1;		//Tipo start
+							//No usada //TipoStart
+		RoomNames rN{"", ruta, false, 1};
 
 		//Encontramos donde est� la divisi�n con el nombre
 		int puntoCorte = entry.path().string().find_last_of("\\");
@@ -505,5 +489,29 @@ Vector2D MapProcedural::getPlayerPos() {
 
 	return spawn;
 }
+
+void MapProcedural::deleteTriggers(){
+	if (!triggers.empty()) {
+		for (Entity* ent : triggers) ent->setActive(false);
+		triggers.clear();
+	}
+}
+
+int MapProcedural::getRandomTileFromArea(Area a){
+	if (a == Starts) return sdlutils().rand().teCuoto(0, areaLimits[(int)a]);
+	else if (a == Mid) return sdlutils().rand().teCuoto(areaLimits[0], areaLimits[a]);
+	else  return sdlutils().rand().teCuoto(areaLimits[a], roomNames.size());
+}
+
+bool MapProcedural::isZoneCompleted(){ return roomsExplored == nRooms; }
+
+int MapProcedural::getPhase(){ return fase; }
+
+void MapProcedural::travelNextZone() { travelZone = true; }
+
+void MapProcedural::setPhase(int f) { fase = f; }
+
+void MapProcedural::setNumRooms(int nR) { nRooms = nR; }
+
 
 

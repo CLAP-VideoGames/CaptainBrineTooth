@@ -14,6 +14,8 @@ using namespace ColLayers;
 
 enum class Cardinals { N, E, S, W, None};
 
+enum Area {Starts, Mid, Final};
+
 struct Room {
 	Room() {};
 
@@ -82,9 +84,17 @@ public:
 
 	void setPlayer2spawn();
 
+	void loadLobby();
+	
+	void loadTileFiles();
+
 	Vector2D getPlayerPos();
 
 	App* getStates() { return states; }
+
+	void deleteTriggers();
+
+	int getRandomTileFromArea(Area a);
 
 private:
 
@@ -153,10 +163,10 @@ protected:
 
 	//Habitacion actual
 	//Room* actualRoom;
-	CurrentRoom* actualRoom;
+	CurrentRoom* currentRoom;
 
-	//Divisi�n entre tipos de salas
-	std::array<int, 2> fronteras;
+	//numero de limites de areas starts|midRooms|finalRooms 
+	std::array<int, 2> areaLimits;
 
 	Level0* lvl;
 
