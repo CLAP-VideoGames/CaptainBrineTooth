@@ -74,8 +74,8 @@ void TestZoneState::init() {
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
-	/*#pragma region PompeyWorm
-	Config pompeyWorm{};
+	#pragma region PompeyWorm
+	/*Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
 	pompeyWorm.size = Vector2D(100.0f, 60.0f);
@@ -88,7 +88,7 @@ void TestZoneState::init() {
 	createPompeyWorm(pompeyWorm);
 	#pragma endregion*/
 
-	#pragma region ElfShark
+	/*#pragma region ElfShark
 	Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
@@ -100,7 +100,7 @@ void TestZoneState::init() {
 	elfShark.col = ENEMY;
 	elfShark.colMask = ENEMY_MASK;
 	createElfShark(elfShark);
-	#pragma endregion
+	#pragma endregion*/
 
 	//#pragma region FringeHead
 	/*Config fringeHead{};
@@ -113,8 +113,8 @@ void TestZoneState::init() {
 	fringeHead.rotation = 0.0f;
 	fringeHead.col = ENEMY;
 	fringeHead.colMask = ENEMY_MASK;
-	createFringeHead(fringeHead);
-	#pragma endregion*/
+	createFringeHead(fringeHead);*/
+	#pragma endregion
 //#pragma endregion
 //
 //#pragma region Weapons
