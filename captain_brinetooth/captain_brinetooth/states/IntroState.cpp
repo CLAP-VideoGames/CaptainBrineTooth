@@ -16,8 +16,8 @@ void IntroState::init() {
 	videos.push_back(video__);
 	std::pair<const char*, std::pair<bool, int>> video_ = { sdlutils().videos().at("introLoop").c_str(), {true, 1} };
 	videos.push_back(video_);
-	//auto* video = manager_->addEntity();
-	//video->addComponent<VideoPlayer>(videos);
+	auto* video = manager_->addEntity();
+	video->addComponent<VideoPlayer>(videos);
 	//Sonido
 	manager_->getSoundMngr()->setGeneralVolume(40);
 	manager_->getSoundMngr()->playIntroMusic();
