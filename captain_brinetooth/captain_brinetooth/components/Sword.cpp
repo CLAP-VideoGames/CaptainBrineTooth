@@ -35,7 +35,7 @@ void Sword::update() {
 						anim_->setParamValue("sword_att", 1);
 
 					//
-					creaTrigger(50);
+					creaTrigger(30);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -55,7 +55,7 @@ void Sword::update() {
 							anim_->setParamValue("sword_att", 2);
 
 						//
-						creaTrigger(50);
+						creaTrigger(30);
 
 						stoppedSawTime = sdlutils().currRealTime();
 						break;
@@ -89,8 +89,8 @@ void Sword::update() {
 						if (anim_->getParamIndex("sword_att") != -1)
 							anim_->setParamValue("sword_att", 1);
 
-						//
-						creaTrigger(50);
+						
+						creaTrigger(4);
 
 						//Time control variables
 						stoppedSawTime = sdlutils().currRealTime();

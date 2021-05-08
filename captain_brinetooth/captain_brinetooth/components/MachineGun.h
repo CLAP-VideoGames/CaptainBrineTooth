@@ -51,7 +51,7 @@ private:
 
 	//Cooldown variables (should be able to be changed as you see fit)
 	float reloadingTime = 400;		//Counted after one attack is stopped to avoid animation clipping
-	float timeBetweenShots = 100;
+	float timeBetweenShots = 200;
 	float timeBetweenOverheatSpikes = 100;
 	float maxOverheat = 30;
 };

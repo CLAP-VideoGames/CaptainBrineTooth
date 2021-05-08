@@ -29,8 +29,8 @@ void Crab::update() {
 					if (anim_->getParamIndex("crab_att") != -1)
 						anim_->setParamValue("crab_att", 1);
 
-					//
-					creaTrigger(100);
+					
+					creaTrigger(80);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -59,8 +59,8 @@ void Crab::update() {
 						if (anim_->getParamIndex("crab_att") != -1)
 							anim_->setParamValue("crab_att", 3);
 
-						//
-						creaTrigger(100);
+						
+						creaTrigger(110);
 
 						stoppedSawTime = sdlutils().currRealTime();
 						break;
@@ -78,8 +78,8 @@ void Crab::update() {
 						if (anim_->getParamIndex("crab_att") != -1)
 							anim_->setParamValue("crab_att", 1);
 
-						//
-						creaTrigger(100);
+						
+						creaTrigger(80);
 
 						//Time control variables
 						stoppedSawTime = sdlutils().currRealTime();
@@ -147,7 +147,7 @@ void Crab::update() {
 			std::cout << "Crab Punch\n";
 
 			//
-			creaTrigger(100);
+			creaTrigger(40);
 
 			stabActivationTime = sdlutils().currRealTime();
 			currentlyStabbing = true;

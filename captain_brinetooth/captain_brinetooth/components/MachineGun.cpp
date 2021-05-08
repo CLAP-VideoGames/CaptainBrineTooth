@@ -11,7 +11,7 @@ void MachineGun::init() {
 	assert(tr_ != nullptr);
 	anim_ = entity_->getComponent<AnimBlendGraph>();
 
-	bulletVelocity = 100;
+	bulletVelocity = 50;
 }
 
 void MachineGun::update() {
@@ -128,13 +128,13 @@ void MachineGun::shoot() {
 
 	entity_->getMngr()->getSoundMngr()->playSoundEffect("disparo_anchoa", 700);
 
-	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 100.0f, 30.0f, 0.0f);
+	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 70.0f, 20.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("iddle", &sdlutils().images().at("machine_gun_bullet"), 1, 1, 1, 1, 1);
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	bullet->getComponent<BoxCollider>()->getBody()->SetGravityScale(0);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
-	bullet->addComponent<WeaponDamageDetection>(20);
+	bullet->addComponent<WeaponDamageDetection>(7);
 	bullet->addComponent<DestroyOnCollision>(); // esto da problemas si no se hacen bien las capas de colision?
 }

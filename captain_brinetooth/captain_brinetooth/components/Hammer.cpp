@@ -29,8 +29,8 @@ void Hammer::update() {
 					if (anim_->getParamIndex("hammer_att") != -1)
 						anim_->setParamValue("hammer_att", 1);
 
-					//
-					creaTrigger(150);
+					
+					creaTrigger(65);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -43,12 +43,12 @@ void Hammer::update() {
 					CURRENT_ATTACK = ATTACKS::Attack2;
 					entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
 
-					//
+					
 					if (anim_->getParamIndex("hammer_att") != -1)
 						anim_->setParamValue("hammer_att", 2);
 
-					//
-					creaTrigger(150);
+					
+					creaTrigger(70);
 
 					stoppedSawTime = sdlutils().currRealTime();
 				}
@@ -64,8 +64,8 @@ void Hammer::update() {
 					if (anim_->getParamIndex("hammer_att") != -1)
 						anim_->setParamValue("hammer_att", 1);
 
-					//
-					creaTrigger(150);
+					
+					creaTrigger(65);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();

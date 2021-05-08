@@ -32,8 +32,8 @@ void Chainsaw::update() {
 					if (anim_->getParamIndex("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 1);
 
-					//
-					creaTrigger(125);
+					
+					creaTrigger(80);
 
 					//Time control variables
 					stoppedSawTime = sdlutils().currRealTime();
@@ -51,8 +51,8 @@ void Chainsaw::update() {
 						if (anim_->getParamIndex("chainsaw_att") != -1)
 							anim_->setParamValue("chainsaw_att", 2);
 
-						//
-						creaTrigger(125);
+						
+						creaTrigger(80);
 
 						stoppedSawTime = sdlutils().currRealTime();
 						break;
@@ -84,8 +84,8 @@ void Chainsaw::update() {
 						if (anim_->getParamIndex("chainsaw_att") != -1)
 							anim_->setParamValue("chainsaw_att", 1);
 
-						//
-						creaTrigger(125);
+						
+						creaTrigger(80);
 
 						//Time control variables
 						stoppedSawTime = sdlutils().currRealTime();
@@ -166,7 +166,7 @@ void Chainsaw::update() {
 			std::cout << "Saw\n";
 			entity_->getMngr()->getSoundMngr()->playSoundEffect("estocada_sierra", 0);
 
-			creaTrigger(200);
+			creaTrigger(30);
 
 			stabActivationTime = sdlutils().currRealTime();
 			currentlyStabbing = true;
