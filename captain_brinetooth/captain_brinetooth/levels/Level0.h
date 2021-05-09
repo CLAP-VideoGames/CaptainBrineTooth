@@ -65,7 +65,7 @@ public:
 
 	tmx::Vector2f getPlayerPos() { return playerPos; }
 	
-	vector<std::string> getConNames() {return connectionsNames; }
+	vector<char> getConNames() {return connectionsNames; }
 
 	tmx::Vector2f getEnd() { return end; }
 
@@ -107,7 +107,7 @@ private:
 	vector<Entity*> enemigos;
 	//Conexiones
 	vector<tmx::Vector2f> connectionPos;
-	vector<std::string> connectionsNames;
+	vector<char> connectionsNames;
 	vector<tmx::Vector2f> connectionSize;
 	vector<tmx::Vector2f> pescaPos;
 

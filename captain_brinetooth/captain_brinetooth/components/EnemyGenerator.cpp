@@ -56,7 +56,8 @@ Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 	anim_controller->addTransition("attack", "idle", "Shoot", 0, true);
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(200, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	enemy->addComponent<Enemy_Health>(200, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
+	//build_sdlcolor(76, 15, 22, 200)
 
 	return enemy;
 }
@@ -77,7 +78,7 @@ Entity* EnemyGenerator::generateMedusa(Vector2D pos)
 	auto* fjh1 = createBasicEntity(flowerJellyHat.pos, flowerJellyHat.size, flowerJellyHat.rotation, flowerJellyHat.vel);
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
-	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	fjh1->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask);
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
@@ -124,7 +125,7 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 	elf_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
-	elf->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	elf->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 
 	return elf;
 }
@@ -162,7 +163,7 @@ Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 	gusano_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
-	gusano->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	gusano->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 
 	return gusano;
 }

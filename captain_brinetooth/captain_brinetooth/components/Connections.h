@@ -5,17 +5,17 @@
 class Connections : public Component
 {
 public:
-	Connections(const std::string& d);
+	Connections(const char& d);
 	virtual ~Connections();
 
 
-	std::string getDir() { return dir; }
+	const char getDir() { return dir; }
 
 private:
 	
 
 protected:
-	std::string dir;
+	char dir;
 
 };
 

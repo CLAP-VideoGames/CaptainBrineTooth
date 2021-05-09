@@ -1,7 +1,6 @@
 #include "Connections.h"
 
-Connections::Connections(const std::string& d)
-{
+Connections::Connections(const char& d){
 	dir = d;
 }
 

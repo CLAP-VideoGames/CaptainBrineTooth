@@ -211,7 +211,10 @@ void Level0::load(const string& path) {
 				con.y += (size.y/2);
 				connectionPos.push_back(con);
 				//Se obtiene el nombre de la capa
-				connectionsNames.push_back(c.getName());
+				//Ya que son una sola letra, nos sirve unicamente el primer elemento del string
+				char n = c.getName()[0];
+
+				connectionsNames.push_back(n);
 			}
 		}
 

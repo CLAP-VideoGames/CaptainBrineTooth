@@ -13,7 +13,10 @@ MapProcedural::MapProcedural(int nR, int f, App* s){
 	lvl = nullptr;
 	fase = f;
 	states = s;
-	lobby = true;
+	roomsExplored = 0;
+
+	gonTotravel = travelZone = stopFishing = startRun_ = false;
+	currentRoom = nullptr;
 }
 
 MapProcedural::~MapProcedural() {
@@ -24,94 +27,105 @@ MapProcedural::~MapProcedural() {
 }
 
 void MapProcedural::init() {
+	//Cargamos todos los archivos
 	loadTileFiles();
-
-	//En funcion de la fase, obtenemos de manera aletoria el nombre de una de las salas  
-	//Testing
-	//int tile = 0;
-
-	int tile = getRandomTileFromArea(Starts);
-	if (!lobby) currentRoom = initializeNewRoom(roomNames[tile]);
-	else loadLobby();
-
-	roomNames[tile].used = true;
+	//Cargamos e inicializamos los valores para el lobby
+	loadLobby();
 }
 
-CurrentRoom* MapProcedural::initializeNewRoom(const RoomNames& tag) {
-	cout << tag.name;
-	CurrentRoom* r = new CurrentRoom();
-	//Test
-	//std::string test = "assets/maps/level_rooms0\\NEtile3.tmx";
-	//r->level = test;
-	//lvl->load(test);
-	
-	//Real
-	r->level = tag.path;
-	lvl->load(r->level);
-	
+void MapProcedural::loadLobby() {
+	//Cambiamos la musica
+	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Lobby");
 
-	r->nameLevel = sdlutils().getNameFilePath(r->level);
+	lvl->load(LOBBY);
 
-	if(!entity_->hasComponent<MapCollider>())chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
+	if (!entity_->hasComponent<MapCollider>())
+		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
 
-	////Setteamos las conexiones en funcion del nombre del archivo
-
-	getConec(r->nameLevel, r->cons);
-
-	CreateConnections(r, r->cons, -1);
-
-	return r;
+	createConnectionTriggers(-1, leaveLobby);
 }
 
-/// <summary>
-/// Dado el nombre del archivo de un Tile, selecciona sus conexiones
-/// </summary>
-/// <param name="name"></param>
-/// <param name="cons"></param>
+void MapProcedural::leaveLobby(b2Contact* contact) {
+	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	//Si el contacto es el player, obtenemos el otro contacto que nos interesa, es decir, el trigger
+	if (trigger == trigger->getMngr()->getHandler<Player>()) {
+		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+	}
+
+	auto* m = trigger->getMngr()->getHandler<Map>();
+
+	m->getComponent<MapProcedural>()->startRun(true);
+}
+
 void MapProcedural::getConec(const string& name, std::array<bool, 4>& cons) {
 	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++){
-
-			if (name[i] == cardinals[j]) 
-				cons[j] = true;
-		}
+		int card = checkMatch(name[i]);
+		if (card != -1) cons[card] = true;
+		else return;
 	}
 }
 
-void MapProcedural::CreateConnections(CurrentRoom* r, const std::array<bool, 4> & rConnections, int dir) {
-	for (int i = 0; i < 4; i++) {
-		if (rConnections[i] == true) 
-			r->conections[i] = initializeRoom(i);
-	}
-	createConnectionTriggers(dir);
+int MapProcedural::checkMatch(const char& ch) {
+	if (ch == cardinals[(int)Cardinals::N]) return (int)Cardinals::N;
+	else if (ch == cardinals[(int)Cardinals::E]) return (int)Cardinals::E;
+	else if (ch == cardinals[(int)Cardinals::S]) return (int)Cardinals::S;
+	else if (ch == cardinals[(int)Cardinals::W]) return (int)Cardinals::W;
+	else return -1;
 }
 
-void MapProcedural::createConnectionTriggers(int dir) {
+bool MapProcedural::matchConnections(int tileNum, Cardinals oppositeDir){
+	int i = 0;
+	while (i < 4 && roomNames[tileNum].name[i] != cardinals[(int)oppositeDir]) i++;
+	return (i < 4);
+}
+
+void MapProcedural::initConnections(CurrentRoom* r) {
+	getConec(r->nameLevel, r->cons);
+	//Creamos habitaciones en funci�n de las conexiones que tiene
+	setConnections(r, r->cons);
+}
+
+void MapProcedural::setConnections(CurrentRoom* r, const std::array<bool, 4> & rConnections) {
+	for (int i = 0; i < 4; i++)
+		if (rConnections[i])  r->conections[i] = initializeRoom(i);
+}
+
+Room MapProcedural::initializeRoom(int dir) {
+	int tile = -1;
+	bool concuerda = false;
+	if (roomsExplored < 1){
+		concuerda = true;
+		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
+		tile = getRandomTileFromArea(Starts);
+	}
+	else if (roomsExplored == nRooms - 1)  tile = getRandomTileFromArea(Final);
+	else tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1] + 1); //Habitación intermedia
+	
+	Cardinals opositeDir = getOppositeDir((Cardinals)dir);
+
+	if (tile != -1 && !concuerda)
+		concuerda = matchConnections(tile, opositeDir);
+
+	//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
+	while (!concuerda) {
+		if (roomsExplored == nRooms - 1) tile = getRandomTileFromArea(Final);
+		else tile = getRandomTileFromArea(Mid);
+
+		//Quite good this
+		concuerda = matchConnections(tile, opositeDir);
+	}
+
+	roomNames[tile].used = true;
+
+	return { sdlutils().getNameFilePath(roomNames[tile].path) , roomNames[tile].path };
+}
+
+void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method) {
 	vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
 	vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
-	vector<std::string> names = lvl->getConNames();
+	vector<char> names = lvl->getConNames();
 
-	std::string oppDir = "";
-
-	if (dir != -1) {
-		switch (dir)
-		{
-		case 0:
-			oppDir = "S";
-			break;
-		case 1:
-			oppDir = "W";
-			break;
-		case 2:
-			oppDir = "N";
-			break;
-		case 3:
-			oppDir = "E";
-			break;
-		default:
-			break;
-		}
-	}
+	Cardinals oppositeDir = getOppositeDir((Cardinals)dir);
 
 	for (int i = 0; i < positions.size(); i++) {
 		auto* t = entity_->getMngr()->addEntity();
@@ -120,8 +134,14 @@ void MapProcedural::createConnectionTriggers(int dir) {
 		Vector2D pos(positions[i].x, positions[i].y);
 
 		
-		if (names[i] == oppDir) {
-			entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(pos.getX() + (size[i].x / 2), pos.getY() + (size[i].y / 2), 0);
+		if (oppositeDir == Cardinals::N)
+			int n = 0;
+
+
+		if (dir != -1 && names[i] == cardinals[(int)oppositeDir]) {
+			int x = pos.getX() + (size[i].x / 2);
+			int y = pos.getY() + (size[i].y / 2);
+			entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(x, y, 0);
 		}
 		else {
 			t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
@@ -130,17 +150,16 @@ void MapProcedural::createConnectionTriggers(int dir) {
 
 			t->addComponent<Connections>(names[i]);
 
-			t->setCollisionMethod(travel);
+			t->setCollisionMethod(method);
 
 			triggers.push_back(t);
 		}
 		tmx::Vector2f playerpos = lvl->getPlayerPos();
 
 		auto* player = entity_->getMngr()->getHandler<Player>();
-		if (player != NULL && roomsExplored <= 1 && playerpos.x != 0)
+		if (player != NULL && roomsExplored < 2 && playerpos.x != 0)
 			player->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
 		//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
-
 	}
 
 	if (lvl->finalRoom()) {
@@ -181,72 +200,9 @@ void MapProcedural::createConnectionTriggers(int dir) {
 	}
 }
 
-Room MapProcedural::initializeRoom(int dir) {
-	int tile;
-	bool concuerda = false;
-	if (roomsExplored <= 1){
-		concuerda = true;
-		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
-		tile = getRandomTileFromArea(Starts);
-		//tile = sdlutils().rand().teCuoto(0, areaLimits[0]);
-	}
-	//Habitacion final
-	else if (roomsExplored == nRooms - 1) {
-		tile = getRandomTileFromArea(Final);
-		//tile = sdlutils().rand().teCuoto(areaLimits[1], roomNames.size());
-	}
-	//Habitación intermedia
-	else {
-		tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1] + 1);
-	}
-
-	Room r;
-
-	//Cogemos la posici�n opuesta
-	int opositeDir = dir + 2;
-
-	//Si es 2 = "S", luego es 4, y el opuesto de S es N, luego es 0
-	//Si es 3 = "W", luego es 5, y el opuesto de W es E, luego es 1
-	if (opositeDir >= 4) opositeDir = opositeDir - 4;
-
-	if (!concuerda){
-		int i = 0;
-		while (i < 4 && roomNames[tile].name[i] != cardinals[opositeDir]) i++;
-		if (i < 4) concuerda = true;
-	}
-
-
-	//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
-	while (!concuerda) {
-
-	/*	if(roomsExplored <= 1)
-			tile = sdlutils().rand().teCuoto(0, fronteras[0]);*/
-		if (roomsExplored == nRooms - 1)
-			tile = getRandomTileFromArea(Final);
-			//tile =  sdlutils().rand().teCuoto(areaLimits[1], roomNames.size());
-		else
-			tile = getRandomTileFromArea(Mid);
-
-			//tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1]);
-
-		int i = 0;
-		//Comprobamos que tiene conexión por el cardinal opuesto
-		//Quite good this
-		while (i < 4 && roomNames[tile].name[i] != cardinals[opositeDir]) i++;
-
-		if (i < 4) concuerda = true;
-	}
-
-	roomNames[tile].used = true;
-	r.level = roomNames[tile].path;
-	r.nameLevel = sdlutils().getNameFilePath(roomNames[tile].path);
-
-	return r;
-}
-
-
-
 void MapProcedural::update() {
+
+	if (startRun_) initRun();
 
 	//Cambia de habitación
 	if (gonTotravel) {
@@ -260,15 +216,12 @@ void MapProcedural::update() {
 		lvl->traveled();
 		roomsExplored = 0;
 
-		entity_->removeComponent<MapCollider>();
-
-		for (Entity* ent : triggers) ent->setActive(false);
-		triggers.clear();
-
-		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
+		refreshCollider();
 
 		setPhase(fase + 1);
+
 		setNumRooms(10);
+
 		init();
 
 
@@ -278,9 +231,7 @@ void MapProcedural::update() {
 
 		player->getComponent<BoxCollider>()->setPhysicalTransform(pos.x, pos.y, 0);
 
-
 		travelZone = false;
-
 	}
 
 	if (stopFishing) {
@@ -291,76 +242,52 @@ void MapProcedural::update() {
 		pesca.clear();
 		stopFishing = false;
 	}
+}
 
+void MapProcedural::refreshCollider(){
+	if (entity_->hasComponent<MapCollider>()) {
+		entity_->removeComponent<MapCollider>();
+
+		deleteTriggers();
+
+		chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
+	}
 }
 
 void MapProcedural::TravelNextRoom(int dir) {
-	//Nueva habitacion a la que hemos ido
 
-	//actualRoom->level = "assets/maps/level_rooms0\\NSWtile6.tmx";
-	//actualRoom->nameLevel = "NSWtile6.tmx";
+	if (dir == 2)
+		int n = 0;
 
 	currentRoom->level = currentRoom->conections[dir].level;
 	currentRoom->nameLevel = currentRoom->conections[dir].nameLevel;
 
 	//Reseteamos las conexiones para la nueva habitacion
 	for (bool& con : currentRoom->cons) con = false;
-
 	//Hay que resetear tambien los datos de las conexiones
 	for (Room& room : currentRoom->conections) room = {};
 
-
-	//lvl->clearTileset();
-	//Cargamos nuevo mapa
+	//Cargamos nuevo mapa y renovamos el vector de vertices
 	lvl->load(currentRoom->level);
 
-	//Setteamos los nuevos vertices para la creacion del cuerpo Collider
-	entity_->removeComponent<MapCollider>();
+	refreshCollider();
 
-	Entity* player = entity_->getMngr()->getHandler<Player>();
-
-	//player->getComponent<BoxCollider>()->actPhyscialPos(-300,-30);
-
-	for (Entity* ent : triggers) {
-		ent->setActive(false);
-		
-	}
-	for (Entity* ent : pesca) {
-		ent->setActive(false);
-	}
-	triggers.clear();
+	for (Entity* ent : pesca) ent->setActive(false);
 	pesca.clear();
-
-	chainCollider = entity_->addComponent<MapCollider>(lvl->getVerticesList(), GROUND, GROUND_MASK);
-
-	//cout << actualRoom->getName();
-	//Cogemos sus conexiones	
-	getConec(currentRoom->nameLevel, currentRoom->cons);
-
-	//Creamos habitaciones en funci�n de las conexiones que tiene
-	CreateConnections(currentRoom, currentRoom->cons, dir);
 
 	roomsExplored++;
 
-	std::cout << roomsExplored << "\n";
+	initConnections(currentRoom);
+
+	createConnectionTriggers(dir, travel);
+
+
+	std::cout << roomsExplored << std::endl;
 }
 
 void MapProcedural::setPlayer2spawn(){
 	tmx::Vector2f playerpos = lvl->getPlayerPos();
 	entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0.0f);
-}
-
-void MapProcedural::loadLobby() {
-
-	RoomNames lob;
-	lob.name = "Etile0";
-	lob.path = LOBBY;
-
-	currentRoom = initializeNewRoom(lob);
-	//No es más el lobby
-	lobby = !lobby;
-	//Cambiamos la musica
-	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Lobby");
 }
 
 void MapProcedural::loadTileFiles(){
@@ -393,31 +320,33 @@ void MapProcedural::loadTileFiles(){
 	}
 }
 
-void MapProcedural::travel(b2Contact* contact) {
- 	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-	//Si el contacto es el player, obtenemos el otro contacto que nos interesa, es decir, el trigger
-	if (trigger == trigger->getMngr()->getHandler<Player>()) {
-		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	}
+void MapProcedural::initRun(){
+	int i = 8;
+	startRun_ = !startRun_;
+	int tile = getRandomTileFromArea(Starts);
+	roomNames[i].used = true;
+	currentRoom = initilizeCurrentRoom(roomNames[i]);
+}
 
-	auto* m = trigger->getMngr()->getHandler<Map>();
-	std::string d;
-	//d= trigger->getComponent<Connections>()->getDir();
-	auto* con = trigger->getComponent<Connections>();
+CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
+	CurrentRoom* r = new CurrentRoom();
 
-	if (con != nullptr) d = con->getDir();
+	r->level = tag.path;
+	r->nameLevel = sdlutils().getNameFilePath(r->level);
 
-	int dir = -1;
+	lvl->load(r->level);
 
+	refreshCollider();
 
-	if (d == "N") dir = 0;
-	else if (d == "E") dir = 1;
-	else if (d == "S") dir = 2;
-	else dir = 3;
+	roomsExplored++;
 
-	m->getComponent<MapProcedural>()->setTravel(true, dir);
+	initConnections(r);
+	
 
-	//trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
+	//Queremos que los triggers hagan viajar al player a otras habitaciones. Como se va a cagar la primera hab, dir es -1. No hay dir opuesta
+	createConnectionTriggers(-1, travel);
+
+	return r;
 }
 
 void MapProcedural::travelNextZone(b2Contact* contact) {
@@ -442,6 +371,26 @@ void MapProcedural::travelNextZone(b2Contact* contact) {
 	m->getComponent<MapProcedural>()->travelNextZone();
 }
 
+void MapProcedural::travel(b2Contact* contact) {
+	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	//Si el contacto es el player, obtenemos el otro contacto que nos interesa, es decir, el trigger
+	if (trigger == trigger->getMngr()->getHandler<Player>()) {
+		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+	}
+
+	auto* map = trigger->getMngr()->getHandler<Map>();
+	auto* con = trigger->getComponent<Connections>();
+
+	char d;
+	if (con != nullptr) d = (char)con->getDir();
+
+	MapProcedural* mapP = map->getComponent<MapProcedural>();
+	int dir = -1;
+	dir = mapP->checkMatch(d);
+
+	map->getComponent<MapProcedural>()->setTravel(true, dir);
+}
+
 void MapProcedural::pescar(b2Contact* contact) {
 	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 
@@ -458,19 +407,15 @@ void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 	std::string path = p;
 
 	for (const auto& entry : fs::directory_iterator(path)) {
-		//Cogemos toda la ruta
-		string ruta = entry.path().u8string();
-		//string ruta = entry.path();
+		string ruta = entry.path().u8string();//Cogemos toda la ruta
 
 							//No usada //TipoStart
 		RoomNames rN{"", ruta, false, 1};
 
-		//Encontramos donde est� la divisi�n con el nombre
-		int puntoCorte = entry.path().string().find_last_of("\\");
-
+		int puntoCorte = entry.path().string().find_last_of("\\"); //Encontramos donde est� la divisi�n con el nombre
 		ruta[puntoCorte] = '/';
-		//Nombre real del nivel
-		rN.name = entry.path().filename().string();
+		
+		rN.name = entry.path().filename().string(); //Nombre real del nivel
 
 		roomNames.push_back(rN);
 		roomsRead++;
@@ -490,6 +435,10 @@ Vector2D MapProcedural::getPlayerPos() {
 	return spawn;
 }
 
+void MapProcedural::startRun(bool start){
+	startRun_ = start;
+}
+
 void MapProcedural::deleteTriggers(){
 	if (!triggers.empty()) {
 		for (Entity* ent : triggers) ent->setActive(false);
@@ -500,7 +449,23 @@ void MapProcedural::deleteTriggers(){
 int MapProcedural::getRandomTileFromArea(Area a){
 	if (a == Starts) return sdlutils().rand().teCuoto(0, areaLimits[(int)a]);
 	else if (a == Mid) return sdlutils().rand().teCuoto(areaLimits[0], areaLimits[a]);
-	else  return sdlutils().rand().teCuoto(areaLimits[a], roomNames.size());
+	else  return sdlutils().rand().teCuoto(areaLimits[0], roomNames.size());
+}
+
+Cardinals MapProcedural::getOppositeDir(Cardinals dir) {
+	if (dir != Cardinals::None) {
+		//Cogemos la posici�n opuesta
+		int opositeDir = (int)dir + 2;
+
+		//Si es 2 = "S", luego es 4, y el opuesto de S es N, luego es 0
+		//Si es 3 = "W", luego es 5, y el opuesto de W es E, luego es 1
+		if (opositeDir >= 4) opositeDir = opositeDir - 4;
+
+		Cardinals opDr = (Cardinals)opositeDir;
+
+		return  opDr;
+	}
+	else return Cardinals::None;
 }
 
 bool MapProcedural::isZoneCompleted(){ return roomsExplored == nRooms; }
@@ -512,6 +477,3 @@ void MapProcedural::travelNextZone() { travelZone = true; }
 void MapProcedural::setPhase(int f) { fase = f; }
 
 void MapProcedural::setNumRooms(int nR) { nRooms = nR; }
-
-
-

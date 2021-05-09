@@ -9,37 +9,25 @@
 
 namespace fs = std::filesystem;
 const int NUM_TILEMAPS = 40;
+//r->level = "assets/maps/level_rooms0\\NEtile3.tmx";
 const string LOBBY = "assets/maps\\Etile0.tmx";	
 using namespace ColLayers;
 
-enum class Cardinals { N, E, S, W, None};
+					//0 = N, 1 = E, 2 = S, 3 = W
+enum class Cardinals { N , E , S, W, None };
 
 enum Area {Starts, Mid, Final};
 
 struct Room {
-	Room() {};
-
-	~Room() {
-		
-	};
-
 	string nameLevel;
 	string level;	//Nombre del tileMap
 };
 
-
-
 struct CurrentRoom {
-
 	CurrentRoom(){
-		for (bool& con : cons)
-			con = false;
-
+		for (bool& con : cons) con = false;
+		nameLevel = level = "";
 	}
-
-	~CurrentRoom() {
-
-	};
 
 	string nameLevel;
 	string level;	//Nombre del tileMap
@@ -47,7 +35,6 @@ struct CurrentRoom {
 	std::array<bool, 4> cons; //Array para crear las conexiones
 };
 
-//Opcion con struct
 struct RoomNames {
 	string name; //Nombre para comparar las conexiones
 	string path; //Direcci�n desde la que cargarlo
@@ -60,56 +47,70 @@ struct RoomNames {
 /// </summary>
 class MapProcedural : public Component {
 	const string ruta = "assets/maps/";
-	const std::array<char, 4> cardinals = {'N','E','S','W'};
+	std::array<char, 4> cardinals = {'N','E','S','W'};
 public:
 
 	MapProcedural(int nR, int f, App* s);
 
 	~MapProcedural();
 
-	//0 = N, 1 = E, 2 = S, 3 = W
 	void init() override;
 
 	void update() override;
 
-	void setTravel(const bool travel, int dir);
+	void deleteTriggers();
+
+	//-------SET RUN------------------
+	void loadTileFiles();
 
 	void TravelNextRoom(int dir);
 
 	void travelNextZone();
 
+	void loadLobby();
+	
+	void setPlayer2spawn();
+
+	void initRun();
+
+	void startRun(bool start);
+
+	void setTravel(const bool travel, int dir);
+
+	void refreshCollider();
+
+	//---------- GETTERS--------------
 	bool isZoneCompleted();
 
 	int getPhase();
 
-	void setPlayer2spawn();
-
-	void loadLobby();
-	
-	void loadTileFiles();
-
-	Vector2D getPlayerPos();
-
-	App* getStates() { return states; }
-
-	void deleteTriggers();
-
 	int getRandomTileFromArea(Area a);
 
+	App* getStates() { return states; }
+	
+	Vector2D getPlayerPos();
 private:
 
-	void setPhase(int f);
+	//---------- CALLBACKS --------------
+	static void travel(b2Contact* contact);
 
-	void setNumRooms(int nR);
+	static void leaveLobby(b2Contact* contact);
 
-	void ReadDirectory(const string& p, int& roomsRead);
+	static void travelNextZone(b2Contact* contact);
 
+	static void pescar(b2Contact* contact);
+
+	//---------CONNECTIONS---------------
+	int checkMatch(const char& ch);
+	
+	Cardinals getOppositeDir(Cardinals dir);
+	
 	/// <summary>
 	/// Inicializa la primera sala
 	/// </summary>
 	/// <param name="tag"></param>
 	/// <returns></returns>
-	CurrentRoom* initializeNewRoom(const RoomNames& tag);
+	CurrentRoom* initilizeCurrentRoom(const RoomNames& tag);
 
 	/// <summary>
 	/// Inicializa cada habitacion
@@ -118,16 +119,19 @@ private:
 	/// <returns></returns>
 	Room initializeRoom(int dir);
 
-	/// <summary>
-	/// Crea las conexiones de cada habitacion
-	/// </summary>
-	/// <param name="r"></param>
-	/// <param name="rConnections"></param>
-	/// <param name="dir">direccion a la que se dirige el player</param>
-	void CreateConnections(CurrentRoom* r, const std::array<bool, 4>& rConnections, int dir);
+	bool matchConnections(int tileNum, Cardinals oppositeDir);
 
 	/// <summary>
-	/// Obtiene las conexiones de un habitacion en concreto
+	/// Inicializa las conexiones de la habitacion actual
+	/// </summary>
+	/// <param name="dir"></param>
+	/// <returns></returns>
+	void initConnections(CurrentRoom* r);
+
+	void setConnections(CurrentRoom* r, const std::array<bool, 4>& rConnections);
+
+	/// <summary>
+	/// Dado el nombre del archivo de un Tile, selecciona sus conexiones
 	/// </summary>
 	/// <param name="name"></param>
 	/// <param name="cons"></param>
@@ -137,45 +141,37 @@ private:
 	/// Crea los triggers de una habitacion en funcion de sus salidas
 	/// </summary>
 	/// <param name="dir"></param>
-	void createConnectionTriggers(int dir);
+	void createConnectionTriggers(int dir, CallBackCollision* method);
+	//-----------------------------------
 
-	void stoppedFishing(){stopFishing = true;}
+	void setPhase(int f);
 
-	//Callbacks
-	static void travel(b2Contact* contact);
+	void setNumRooms(int nR);
 
-	static void travelNextZone(b2Contact* contact);
+	void ReadDirectory(const string& p, int& roomsRead);
 
-	static void pescar(b2Contact* contact);
+	void stoppedFishing() {stopFishing = true;}
 
 protected:
-	int nRooms, nRoomNames = 10;
-	int fase;		//Número de la zona en la que está el player
-	bool gonTotravel = false, travelZone = false, stopFishing = false;
+	bool gonTotravel, travelZone, stopFishing, startRun_;
+	int nRooms, nRoomNames = 10, nextDir = -1;
+	int roomsExplored;	//Numero de habitaciones exploradas
+	int fase;				//Número de la zona en la que está el player
 
-	Cardinals nextDirection = Cardinals::None;
-	int nextDir = -1;
-	//Opcion con struct
-	vector<RoomNames> roomNames;
-
-	//Numero de habitaciones exploradas
-	int roomsExplored = 1;
+	App* states;
+	
+	Level0* lvl;
+	MapCollider* chainCollider;
 
 	//Habitacion actual
-	//Room* actualRoom;
 	CurrentRoom* currentRoom;
+
+	Cardinals nextDirection = Cardinals::None;
 
 	//numero de limites de areas starts|midRooms|finalRooms 
 	std::array<int, 2> areaLimits;
 
-	Level0* lvl;
-
-	MapCollider* chainCollider;
-
-	vector<Entity*> triggers;
-	vector<Entity*> pesca;
-
-	App* states;
-
-	bool lobby;
+	vector<RoomNames> roomNames;//vector de todos los nombres de las habitaciones
+	vector<Entity*> triggers;	//Vector de triggers cardinales
+	vector<Entity*> pesca;		//Vector de triggers de pesca	
 };
