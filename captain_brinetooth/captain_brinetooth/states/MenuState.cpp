@@ -15,8 +15,6 @@ void MenuState::init() {
 	rectPos.w = cam.w;
 	rectPos.h = cam.h;
 
-	
-	//fondo->addComponent<Image>(&sdlutils().images().at("fondoMenu"), rectPos, "fondoMenu");
 	//Background
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 																//Filename, loop, frameRate
@@ -25,7 +23,7 @@ void MenuState::init() {
 	auto* video = manager_->addEntity();
 	video->addComponent<VideoPlayer>(videos);
 
-	manager_->getSoundMngr()->setGeneralVolume(63.5);
+	manager_->getSoundMngr()->setGeneralVolume(40);
 	manager_->getSoundMngr()->playMainMusic();
 
 	// Titulo

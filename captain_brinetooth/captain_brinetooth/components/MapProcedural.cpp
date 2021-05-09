@@ -17,6 +17,8 @@ MapProcedural::MapProcedural(int nR, int f, App* s){
 	states = s;
 	roomsExplored = 0;
 
+
+	std::cout << roomsExplored << std::endl;
 	gonTotravel = travelZone = stopFishing = startRun_ = false;
 	currentRoom = nullptr;
 }
@@ -97,11 +99,17 @@ Room MapProcedural::initializeRoom(int dir) {
 	bool concuerda = false;
 	if (roomsExplored < 1){
 		concuerda = true;
-		
 		tile = getRandomTileFromArea(Starts);
 	}
-	else if (roomsExplored == nRooms - 1)  tile = getRandomTileFromArea(Final);
-	else tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1] + 1); //Habitación intermedia
+	else if (roomsExplored == (nRooms - 1))  
+	{
+		tile = getRandomTileFromArea(Final);
+		std::cout << "final" << " " << tile  << " " << areaLimits[1] << std::endl;
+		std::cout << "limits" << " " << roomNames.size() << std:: endl;
+		
+	}
+	else 
+		tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1] + 1); //Habitación intermedia
 	
 	Cardinals opositeDir = getOppositeDir((Cardinals)dir);
 
@@ -110,7 +118,7 @@ Room MapProcedural::initializeRoom(int dir) {
 
 	//Para que no se repitan hay que añadir la condicion ( || roomNames[tile].used) al bucle
 	while (!concuerda) {
-		if (roomsExplored == nRooms - 1) tile = getRandomTileFromArea(Final);
+		if (roomsExplored == (nRooms - 1)) tile = getRandomTileFromArea(Final);
 		else tile = getRandomTileFromArea(Mid);
 
 		//Quite good this
@@ -284,11 +292,11 @@ void MapProcedural::TravelNextRoom(int dir) {
 
 	roomsExplored++;
 
+	std::cout << roomsExplored << std::endl;
+
 	initConnections(currentRoom);
 
 	createConnectionTriggers(dir, travel);
-
-	std::cout << roomsExplored << std::endl;
 }
 
 void MapProcedural::setPlayer2spawn(){
@@ -331,12 +339,13 @@ void MapProcedural::initRun(){
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
 	int tile = getRandomTileFromArea(Starts);
 	roomNames[tile].used = true;
+	roomsExplored++;
+	std::cout << roomsExplored << std::endl;
 	currentRoom = initilizeCurrentRoom(roomNames[tile]);
 }
 
 CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 	CurrentRoom* r = new CurrentRoom();
-
 	r->level = tag.path;
 	r->nameLevel = sdlutils().getNameFilePath(r->level);
 
@@ -344,11 +353,8 @@ CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 
 	refreshCollider();
 
-	roomsExplored++;
-
 	initConnections(r);
 	
-
 	//Queremos que los triggers hagan viajar al player a otras habitaciones. Como se va a cagar la primera hab, dir es -1. No hay dir opuesta
 	createConnectionTriggers(-1, travel);
 
@@ -455,7 +461,7 @@ void MapProcedural::deleteTriggers(){
 int MapProcedural::getRandomTileFromArea(Area a){
 	if (a == Starts) return sdlutils().rand().teCuoto(0, areaLimits[(int)a]);
 	else if (a == Mid) return sdlutils().rand().teCuoto(areaLimits[0], areaLimits[a]);
-	else  return sdlutils().rand().teCuoto(areaLimits[0], roomNames.size());
+	else  return sdlutils().rand().teCuoto(areaLimits[1], roomNames.size());
 }
 
 Cardinals MapProcedural::getOppositeDir(Cardinals dir) {
