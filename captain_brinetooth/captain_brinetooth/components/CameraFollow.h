@@ -16,9 +16,14 @@ public:
 	void update() override;
 
 	void actPosAdvanced();
+
 	void checkCameraFollowLimits();
 
 	void setCamToEntity(const float& t = 0.9f);
+
+	Vector2D getCamMaxLimits();
+
+	void setCamMaxLimits(const Vector2D& camMax);
 
 protected:
 	Transform* target_;

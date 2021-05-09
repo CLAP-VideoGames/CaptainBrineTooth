@@ -1,4 +1,4 @@
-﻿#include "MapProcedural.h"
+#include "MapProcedural.h"
 
 #include "CameraFollow.h"
 
@@ -31,6 +31,9 @@ MapProcedural::~MapProcedural() {
 }
 
 void MapProcedural::init() {
+	fase = 1;
+	//Setteamos el lvl
+	lvl = entity_->getComponent<Level0>();
 	//Cargamos todos los archivos
 	loadTileFiles();
 	//Cargamos e inicializamos los valores para el lobby
@@ -229,22 +232,26 @@ void MapProcedural::update() {
 	//Cambia de zona
 	if (travelZone) {
 		lvl->traveled();
-		roomsExplored = 0;
 
-		refreshCollider();
+		roomsExplored = 0;
 
 		setPhase(fase + 1);
 
-		setNumRooms(10);
+		setNumRooms(2);
 
-		init();
+		deleteTriggers();
 
+		delete currentRoom;
+
+		loadTileFiles();
+
+		initRun();
 
 		Entity* player = entity_->getMngr()->getHandler<Player>();
 
-		tmx::Vector2f pos = lvl->getPlayerPos();
+		//tmx::Vector2f pos = lvl->getPlayerPos();
 
-		player->getComponent<BoxCollider>()->setPhysicalTransform(pos.x, pos.y, 0);
+		//player->getComponent<BoxCollider>()->setPhysicalTransform(pos.x, pos.y, 0);
 
 		travelZone = false;
 	}
@@ -285,6 +292,11 @@ void MapProcedural::TravelNextRoom(int dir) {
 	//Cargamos nuevo mapa y renovamos el vector de vertices
 	lvl->load(currentRoom->level);
 
+	Entity* player = entity_->getMngr()->getHandler<Player>();
+
+	if (player != nullptr)
+		player->getComponent<CameraFollow>()->setCamMaxLimits(lvl->getMaxCoordenates());
+
 	refreshCollider();
 
 	for (Entity* ent : pesca) ent->setActive(false);
@@ -305,6 +317,8 @@ void MapProcedural::setPlayer2spawn(){
 }
 
 void MapProcedural::loadTileFiles(){
+
+	if(!roomNames.empty()) roomNames.clear();
 	//Leeemos los distintos directorios
 	if (fase == 0) {
 		int roomsRead = 0;
@@ -313,8 +327,6 @@ void MapProcedural::loadTileFiles(){
 		ReadDirectory("assets/maps/level_rooms0", roomsRead);
 		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
 		ReadDirectory("assets/maps/level_ends0", roomsRead);
-		lvl = entity_->getComponent<Level0>();
-
 	}
 	else if (fase == 1) {
 		int roomsRead = 0;
@@ -335,13 +347,15 @@ void MapProcedural::loadTileFiles(){
 }
 
 void MapProcedural::initRun(){
-	startRun_ = !startRun_;
+
+	startRun_ = false;
+	int i = 1;
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
 	int tile = getRandomTileFromArea(Starts);
-	roomNames[tile].used = true;
+	roomNames[i].used = true;
 	roomsExplored++;
 	std::cout << roomsExplored << std::endl;
-	currentRoom = initilizeCurrentRoom(roomNames[tile]);
+	currentRoom = initilizeCurrentRoom(roomNames[i]);
 }
 
 CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
@@ -350,6 +364,15 @@ CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 	r->nameLevel = sdlutils().getNameFilePath(r->level);
 
 	lvl->load(r->level);
+
+	Entity* player = entity_->getMngr()->getHandler<Player>();
+
+	if (player != nullptr)
+	{
+		player->getComponent<CameraFollow>()->setCamMaxLimits(lvl->getMaxCoordenates());
+		player->getComponent<CameraFollow>()->setCamToEntity(1);
+	}
+
 
 	refreshCollider();
 
@@ -380,7 +403,7 @@ void MapProcedural::travelNextZone(b2Contact* contact) {
 
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
-	m->getComponent<MapProcedural>()->travelNextZone();
+	m->getComponent<MapProcedural>()->setTravelZone();
 }
 
 void MapProcedural::travel(b2Contact* contact) {
@@ -484,7 +507,7 @@ bool MapProcedural::isZoneCompleted(){ return roomsExplored == nRooms; }
 
 int MapProcedural::getPhase(){ return fase; }
 
-void MapProcedural::travelNextZone() { travelZone = true; }
+void MapProcedural::setTravelZone() { travelZone = true; }
 
 void MapProcedural::setPhase(int f) { fase = f; }
 

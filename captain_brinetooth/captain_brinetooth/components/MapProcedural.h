@@ -65,7 +65,7 @@ public:
 
 	void TravelNextRoom(int dir);
 
-	void travelNextZone();
+	void setTravelZone();
 
 	void loadLobby();
 	

@@ -123,3 +123,11 @@ void CameraFollow::setCamToEntity(const float& t){
 	App::camera.x = differenceX;
 	App::camera.y = differenceY;
 }
+
+Vector2D CameraFollow::getCamMaxLimits(){
+	return camMaxLimits_;
+}
+
+void CameraFollow::setCamMaxLimits(const Vector2D& camMax){
+	camMaxLimits_.set(camMax.getX(), camMax.getY());
+}
