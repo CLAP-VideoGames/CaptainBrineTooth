@@ -31,7 +31,6 @@ MapProcedural::~MapProcedural() {
 }
 
 void MapProcedural::init() {
-	fase = 1;
 	//Setteamos el lvl
 	lvl = entity_->getComponent<Level0>();
 	//Cargamos todos los archivos
@@ -104,13 +103,8 @@ Room MapProcedural::initializeRoom(int dir) {
 		concuerda = true;
 		tile = getRandomTileFromArea(Starts);
 	}
-	else if (roomsExplored == (nRooms - 1))  
-	{
+	else if (roomsExplored == (nRooms - 1))
 		tile = getRandomTileFromArea(Final);
-		std::cout << "final" << " " << tile  << " " << areaLimits[1] << std::endl;
-		std::cout << "limits" << " " << roomNames.size() << std:: endl;
-		
-	}
 	else 
 		tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1] + 1); //Habitación intermedia
 	
@@ -146,11 +140,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 		//Vector2D size;
 		Vector2D pos(positions[i].x, positions[i].y);
 
-		
-		if (oppositeDir == Cardinals::N)
-			int n = 0;
-
-
+		//Posicionamos al jugador en la salida opuesta a la que ha entrado
 		if (dir != -1 && names[i] == cardinals[(int)oppositeDir]) {
 			int x = pos.getX() + (size[i].x / 2);
 			int y = pos.getY() + (size[i].y / 2);
@@ -160,7 +150,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			player->getComponent<CameraFollow>()->setCamToEntity();
 		}
-		else {
+		else { //Creamos los colliders de los triggers la sala actual
 			t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
@@ -175,11 +165,12 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 		auto* player = entity_->getMngr()->getHandler<Player>();
 		//Si solo ha explorado la habitacion inicial (cuando se crea la habitacion inicial, roomExplored = 1)
+		//Si es la sala inicial, posicionamos al player en el Spawn Player
 		if (player != NULL && roomsExplored < 2 && playerpos.x != 0)
 			player->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
-		//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
 	}
 
+	//Si es un final room, creamos el trigger que hace pasar de zona
 	if (lvl->finalRoom()) {
 		auto end = lvl->getEnd();
 
@@ -231,29 +222,26 @@ void MapProcedural::update() {
 
 	//Cambia de zona
 	if (travelZone) {
+		//Se ha acabado el viaje de zona
 		lvl->traveled();
-
-		roomsExplored = 0;
-
-		setPhase(fase + 1);
-
-		setNumRooms(2);
-
-		deleteTriggers();
-
-		delete currentRoom;
-
-		loadTileFiles();
-
-		initRun();
-
-		Entity* player = entity_->getMngr()->getHandler<Player>();
-
-		//tmx::Vector2f pos = lvl->getPlayerPos();
-
-		//player->getComponent<BoxCollider>()->setPhysicalTransform(pos.x, pos.y, 0);
-
 		travelZone = false;
+		//Nueva zona, habitaciones exploradas son cero
+		roomsExplored = 0;
+		//Nueva zona, fase + 1
+		setPhase(fase + 1);
+		//Cambiamos el sonido de base del nivel
+		string song = "Nivel" + std::to_string(fase);
+		entity_->getMngr()->getSoundMngr()->ChangeMainMusic(song);
+		//Numero de salas que habrá en el nivel
+		setNumRooms(nRooms);
+		//Borramos los triggers de la ultima sala
+		deleteTriggers();
+		//Borramos el currentRoom
+		delete currentRoom;
+		//Cargamos los nuevos archivos de la nueva zona
+		loadTileFiles();
+		//Empezamos la run
+		initRun();
 	}
 
 	if (stopFishing) {
@@ -320,42 +308,53 @@ void MapProcedural::loadTileFiles(){
 
 	if(!roomNames.empty()) roomNames.clear();
 	//Leeemos los distintos directorios
-	if (fase == 0) {
-		int roomsRead = 0;
-		ReadDirectory("assets/maps/level_starts0", roomsRead);
-		areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-		ReadDirectory("assets/maps/level_rooms0", roomsRead);
-		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-		ReadDirectory("assets/maps/level_ends0", roomsRead);
-	}
-	else if (fase == 1) {
-		int roomsRead = 0;
-		ReadDirectory("assets/maps/level_starts1", roomsRead);
-		areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-		ReadDirectory("assets/maps/level_rooms1", roomsRead);
-		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-		ReadDirectory("assets/maps/level_ends1", roomsRead);
-	}
-	else {
-		int roomsRead = 0;
-		ReadDirectory("assets/maps/level_starts2", roomsRead);
-		areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-		ReadDirectory("assets/maps/level_rooms2", roomsRead);
-		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-		ReadDirectory("assets/maps/level_ends2", roomsRead);
-	}
+
+	int roomsRead = 0;
+	string fase_ = std::to_string(fase);
+	std::string starts = "assets/maps/level_starts" + fase_;
+	std::string rooms = "assets/maps/level_rooms" + fase_;
+	std::string ends = "assets/maps/level_ends" + fase_;
+	ReadDirectory(starts, roomsRead);
+	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+	ReadDirectory(rooms, roomsRead);
+	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+	ReadDirectory(ends, roomsRead);
+
+	//if (fase == 0) {
+	//	int roomsRead = 0;
+	//	ReadDirectory("assets/maps/level_starts0", roomsRead);
+	//	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+	//	ReadDirectory("assets/maps/level_rooms0", roomsRead);
+	//	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+	//	ReadDirectory("assets/maps/level_ends0", roomsRead);
+	//}
+	//else if (fase == 1) {
+	//	int roomsRead = 0;
+	//	ReadDirectory("assets/maps/level_starts1", roomsRead);
+	//	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+	//	ReadDirectory("assets/maps/level_rooms1", roomsRead);
+	//	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+	//	ReadDirectory("assets/maps/level_ends1", roomsRead);
+	//}
+	//else {
+	//	int roomsRead = 0;
+	//	ReadDirectory("assets/maps/level_starts2", roomsRead);
+	//	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+	//	ReadDirectory("assets/maps/level_rooms2", roomsRead);
+	//	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+	//	ReadDirectory("assets/maps/level_ends2", roomsRead);
+	//}
 }
 
 void MapProcedural::initRun(){
 
 	startRun_ = false;
-	int i = 1;
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
 	int tile = getRandomTileFromArea(Starts);
-	roomNames[i].used = true;
+	roomNames[tile].used = true;
 	roomsExplored++;
 	std::cout << roomsExplored << std::endl;
-	currentRoom = initilizeCurrentRoom(roomNames[i]);
+	currentRoom = initilizeCurrentRoom(roomNames[tile]);
 }
 
 CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
@@ -367,12 +366,10 @@ CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 
 	Entity* player = entity_->getMngr()->getHandler<Player>();
 
-	if (player != nullptr)
-	{
+	if (player != nullptr){
 		player->getComponent<CameraFollow>()->setCamMaxLimits(lvl->getMaxCoordenates());
 		player->getComponent<CameraFollow>()->setCamToEntity(1);
 	}
-
 
 	refreshCollider();
 
@@ -393,13 +390,8 @@ void MapProcedural::travelNextZone(b2Contact* contact) {
 
 	int aux = trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPhase();
 
-	// Cambiamos de cancion cuando cambiamos de fase
-	if (aux == 2){
-		trigger->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel2");
-	}
-	else if (aux == 3){
-		trigger->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel3");
-	}
+
+
 
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
