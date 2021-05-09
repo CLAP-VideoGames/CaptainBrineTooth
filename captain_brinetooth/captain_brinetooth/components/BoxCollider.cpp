@@ -58,7 +58,9 @@ void BoxCollider::init() {
 		break;
 	}
 
-	bodyDef.position.Set(pos_.getX() / sdlutils().getPPM(), pos_.getY() / sdlutils().getPPM());
+	float x = pos_.getX() / sdlutils().getPPM();
+	float y = pos_.getY() / sdlutils().getPPM();
+	bodyDef.position.Set(x, y);
 	bodyDef.angle = rotation_;
 
 	//Stores the entity in the body for future reference in collisions
@@ -148,10 +150,10 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	return fixture;
 }
 
- void BoxCollider::actPhyscialPos(int x, int y)
+ void BoxCollider::actPhyscialPos(float x, float y)
 {
-	int x_ = x / sdlutils().getPPM();
-	int y_ = y / sdlutils().getPPM();
+	float x_ = x / sdlutils().getPPM();
+	float y_ = y / sdlutils().getPPM();
 
 	b2Vec2 toMove(x_, y_);
 	body->SetTransform(body->GetPosition() + toMove, body->GetAngle());
@@ -159,9 +161,9 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	actRenderPos();
 }
 
- void BoxCollider::setPhysicalTransform(int x, int y, float degrees) {
-	int x_ = x / sdlutils().getPPM();
-	int y_ = y / sdlutils().getPPM();
+ void BoxCollider::setPhysicalTransform(float x, float y, float degrees) {
+	float x_ = x / sdlutils().getPPM();
+	float y_ = y / sdlutils().getPPM();
 	float newRot = (degrees * M_PI) / (180.0f);
 
 	b2Vec2 toMove(x_, y_);
@@ -183,8 +185,7 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	if (tr_ != nullptr) {
 		if (entity_->getComponent<AnimBlendGraph>() != nullptr) {
 			Vector2D anchorPoint = entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->anchor();
-			tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM())),
-				round((body->GetPosition().y) * sdlutils().getPPM()));
+			tr_->getPos().set(round((body->GetPosition().x * sdlutils().getPPM())), round((body->GetPosition().y) * sdlutils().getPPM()));
 		}
 		else {
 			tr_->getPos().set(round(body->GetPosition().x * sdlutils().getPPM()), round(body->GetPosition().y * sdlutils().getPPM()));

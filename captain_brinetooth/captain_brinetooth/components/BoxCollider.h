@@ -81,7 +81,7 @@ public:
 	/// </summary>
 	/// <param name="x">in pixels</param>
 	/// <param name="y">in pixels</param>
-	 void actPhyscialPos(int x, int y);
+	 void actPhyscialPos(float x, float y);
 
 	/// <summary>
 	/// Cambia las coordenadas físicas de un cuerpo y su rotación
@@ -89,7 +89,7 @@ public:
 	/// <param name="x">in pixels</param>
 	/// <param name="y">in pixels</param>
 	/// <param name="rotation">in degrees</param>
-	 void setPhysicalTransform(int x, int y, float degrees);
+	 void setPhysicalTransform(float x, float y, float degrees);
 
 	/// <summary>
 	/// Devuelve la posición físicas en metros
