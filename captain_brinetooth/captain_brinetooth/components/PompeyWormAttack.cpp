@@ -2,6 +2,14 @@
 using namespace ColLayers;
 
 
+PompeyWormAttack::~PompeyWormAttack()
+{
+	if (attackTrigger_ != nullptr)
+		attackTrigger_->setActive(false);
+	if (entity_Parent_ != nullptr)
+		entity_Parent_->setActive(false);
+}
+
 void PompeyWormAttack::init()
 {
 	entitytr_ = entity_Parent_->getComponent<Transform>();

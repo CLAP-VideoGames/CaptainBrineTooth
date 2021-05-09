@@ -20,6 +20,11 @@ void PauseState::render() const {
 }
 
 void PauseState::update() {
+	if (ih().keyDownEvent()) {
+		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
+			backToGame(app, getMngr()->getSoundMngr());
+		}
+	}
 	GameState::update();
 }
 

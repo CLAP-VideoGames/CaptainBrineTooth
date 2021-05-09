@@ -164,7 +164,7 @@ void PlayState::update(){
 	//Queremos que, en el estado que hayan objetos físicos, se actualicen las físicas
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDLK_p)) {
+		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
 			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
@@ -200,6 +200,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 6, 24, 24, 0);
 	anim_controller->addAnimation("dash_ground", &sdlutils().images().at("player_dash_ground"), 3, 4, 12, 60, 0, 0, 11, Vector2D(0.5, 0.2));
 	anim_controller->addAnimation("dash_air", &sdlutils().images().at("player_dash_air"), 3, 4, 12, 60, 0, 0, 11, Vector2D(0.5, 0.5));
+	anim_controller->addAnimation("death", &sdlutils().images().at("player_death"), 6, 8, 48, 20, 0, 0, 47, Vector2D(0.5, 0.7));
 	//Proportion?
 	anim_controller->keepProportion("idle", Vector2D(player->getComponent<Transform>()->getW(), player->getComponent<Transform>()->getH()));
 	//Transitions 
@@ -218,6 +219,13 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("dash_ground", "run", "Dash_Ground", 0, true);
 	anim_controller->addTransition("idle", "dash_ground", "Dash_Ground", 1, false);
 	anim_controller->addTransition("dash_ground", "idle", "Dash_Ground", 0, true);
+	//death
+	anim_controller->addTransition("death", "idle", "Dead", 23, false);
+	anim_controller->addTransition("idle", "death", "Dead", 1, false);
+	anim_controller->addTransition("run", "death", "Dead", 1, false);
+	anim_controller->addTransition("jump", "death", "Dead", 1, false);
+	anim_controller->addTransition("dash_ground", "death", "Dead", 1, false);
+	anim_controller->addTransition("dash_air", "death", "Dead", 1, false);
 #pragma endregion
 #pragma region parametros
 	//--Parametros--
@@ -225,6 +233,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->setParamValue("Speed", 0);
 	anim_controller->setParamValue("Dash_Air", 0);
 	anim_controller->setParamValue("Dash_Ground", 0);
+	anim_controller->setParamValue("Dead", 0);
 #pragma endregion
 #pragma region Weapons
 	//-WEAPONS------------------------------------------------------------------------------------------------------
@@ -266,6 +275,11 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("dash_ground", "chainsaw_attack3", "chainsaw_att", 3, true);
 	anim_controller->addTransition("chainsaw_attack4", "dash_air", "Dash_Air", 1, false);
 	anim_controller->addTransition("chainsaw_attack4", "dash_ground", "Dash_Ground", 1, false);
+	//death
+	anim_controller->addTransition("chainsaw_attack1", "death", "Dead", 1, false);
+	anim_controller->addTransition("chainsaw_attack2", "death", "Dead", 1, false);
+	anim_controller->addTransition("chainsaw_attack3", "death", "Dead", 1, false);
+	anim_controller->addTransition("chainsaw_attack4", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("chainsaw_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -309,6 +323,11 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("dash_ground", "sword_attack3", "sword_att", 3, true);
 	anim_controller->addTransition("sword_attack4", "dash_air", "Dash_Air", 1, false);
 	anim_controller->addTransition("sword_attack4", "dash_ground", "Dash_Ground", 1, false);
+	//death
+	anim_controller->addTransition("sword_attack1", "death", "Dead", 1, false);
+	anim_controller->addTransition("sword_attack2", "death", "Dead", 1, false);
+	anim_controller->addTransition("sword_attack4", "death", "Dead", 1, false);
+	anim_controller->addTransition("sword_attack4", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("sword_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -338,6 +357,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("hammer_attack2", "dash_ground", "Dash_Ground", 1, false);
 	anim_controller->addTransition("dash_air", "hammer_attack2", "hammer_att", 2, true);
 	anim_controller->addTransition("dash_ground", "hammer_attack2", "hammer_att", 2, true);
+	//death
+	anim_controller->addTransition("hammer_attack1", "death", "Dead", 1, false);
+	anim_controller->addTransition("hammer_attack2", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("hammer_att", 0);
 //	//--------------------------------------------------------------------------------------------------------------
@@ -377,6 +399,10 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("crab_attack3", "dash_ground", "Dash_Ground", 1, false);
 	anim_controller->addTransition("dash_air", "crab_attack3", "crab_att", 3, true);
 	anim_controller->addTransition("dash_ground", "crab_attack3", "crab_att", 3, true);
+	//death
+	anim_controller->addTransition("crab_attack1", "death", "Dead", 1, false);
+	anim_controller->addTransition("crab_attack2", "death", "Dead", 1, false);
+	anim_controller->addTransition("crab_attack3", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("crab_att", 0);
 //	//--------------------------------------------------------------------------------------------------------------
@@ -401,6 +427,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("dash_ground", "machine_gun1", "machineGun_att", 1, true);
 	anim_controller->addTransition("machine_gun2", "dash_air", "Dash_Air", 1, false);
 	anim_controller->addTransition("machine_gun2", "dash_ground", "Dash_Ground", 1, false);
+	//death
+	anim_controller->addTransition("machine_gun1", "death", "Dead", 1, false);
+	anim_controller->addTransition("machine_gun2", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("machineGun_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
@@ -420,7 +449,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//Por testing basura
-	player->addComponent<CameraFollow>(Vector2D(250.0f, -200.0f), 0.06f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<CameraFollow>(Vector2D(250.0f, -130.0f), 0.06f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();

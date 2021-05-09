@@ -18,6 +18,8 @@ public:
 
 	void render() override;
 
+	void update() override;
+
 	void loseLife();
 
 	int getLife();
@@ -40,8 +42,8 @@ private:
 	Uint32 time_; // Tiempo inicial
 	//Invulnerabilidad
 	bool invulnerability_;
-	float cd_invul_ = 1500;
-	float elpased_time_invul_; 
+	float cd_invul_ = 1500, elpased_time_invul_; 
+	float deadCountdown, dead_time = 1500;
 
 	App* g;
 	float tiempoanimacion; // Tiempo entre frame y frame
