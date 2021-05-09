@@ -21,6 +21,10 @@
 			"file": "assets/sprites/player/player_dash_air.png"
 		},
 		{
+			"id": "player_death",
+			"file": "assets/sprites/player/player_death.png"
+		},
+		{
 			"id": "player_cana",
 			"file": "assets/sprites/player/playercana.png"
 		},

@@ -15,7 +15,7 @@ class PompeyWormAttack :public Component
 {
 public:
 	PompeyWormAttack(Entity* entity_Parent) : entity_Parent_(entity_Parent) {};
-	virtual ~PompeyWormAttack() {};
+	virtual ~PompeyWormAttack();
 	void init() override;
 	void update() override; 
 	static void hasEnter(b2Contact* contact);

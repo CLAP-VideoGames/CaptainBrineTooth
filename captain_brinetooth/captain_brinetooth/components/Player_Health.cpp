@@ -22,6 +22,7 @@ void Player_Health::init()
 	resetLifes();
 	invulnerability_ = false;
 	elpased_time_invul_ = 0;
+	deadCountdown = 0;
 }
 
 void Player_Health::render()
@@ -61,7 +62,6 @@ void Player_Health::render()
 			vVida->render(dest);
 		}
 	}
-
 	// Si pasa mas de X tiempo, pasamos al siguiente frame
 	if (sdlutils().currRealTime() > time_ + tiempoanimacion)
 	{
@@ -81,6 +81,21 @@ void Player_Health::render()
 	
 }
 
+void Player_Health::update()
+{
+	if (ih().keyDownEvent())
+		if (ih().isKeyDown(SDL_SCANCODE_0)) {
+			vidas = 0.5;
+			loseLife();
+		}
+	//Tiempo despues de muerto
+	if (entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "death" && entity_->getComponent<AnimBlendGraph>()->isComplete() && deadCountdown == 0)
+		deadCountdown = sdlutils().currRealTime();
+
+	if(deadCountdown + dead_time < sdlutils().currRealTime() && deadCountdown != 0)
+		respawn();
+}
+
 void Player_Health::loseLife() 
 {
 	int x = sdlutils().rand().teCuoto(0, 2);
@@ -97,14 +112,14 @@ void Player_Health::loseLife()
 	default:
 		break;
 	}
-	vidas -= 0.5f;  g->ShakeCamera(20);
+	if (vidas >= 0.5) { vidas -= 0.5f;  g->ShakeCamera(20); }
 
 	invulnerability_ = true;
 	elpased_time_invul_ = sdlutils().currRealTime();
 
 	if (vidas <= 0)
 	{
-		respawn();
+		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
 	}
 }
 

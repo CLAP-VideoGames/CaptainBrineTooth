@@ -39,6 +39,12 @@ void PlayerController::update()
 #pragma region Input
 	//Gestion del input
 	assert(collider_ != nullptr);
+	//death
+	if (animController_->getParamValue("Dead") == 1)
+		receiveInput = false;
+	else
+		receiveInput = true;
+
 	if (receiveInput){
 		if (paralized) {
 			timer = sdlutils().currRealTime();
@@ -163,6 +169,8 @@ void PlayerController::update()
 		lasTimeDashed = sdlutils().currRealTime();
 		canDash = true;
 	}
+	if (animController_->getParamValue("Dead") == 1) 
+		collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 #pragma endregion
 }
 

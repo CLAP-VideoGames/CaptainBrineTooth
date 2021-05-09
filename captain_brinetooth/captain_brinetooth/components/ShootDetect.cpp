@@ -109,7 +109,7 @@ void ShootDetect::createBullet()
 	else enemy->getComponent<AnimBlendGraph>()->flipX(false );
 
 	//Dotamos a la bala de todos los componentes 
-	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 10.0f, 10.0f, 0.0f);
+	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 20.0f, 20.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("iddle", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 1);
 	//No hace falta crear un animation graph

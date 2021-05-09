@@ -77,12 +77,12 @@ void App::start() {
 		while (SDL_PollEvent(&event))
 			ih().update(event);
 
-		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)|| event.type == SDL_QUIT) {
+		if (event.type == SDL_QUIT) {
 			exit = true;
 			continue;
 		}
 
-		if (ih().isKeyDown(SDL_SCANCODE_M)) {
+		if (ih().isKeyDown(SDL_SCANCODE_F11)) {
 			sdlutils().toggleFullScreen();
 		}
 
