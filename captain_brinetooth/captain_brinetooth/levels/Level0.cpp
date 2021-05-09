@@ -163,14 +163,6 @@ void Level0::load(const string& path) {
 				}
 				j++;
 			}
-
-			/*Entity* player = entity_->getMngr()->getHandler<Player>();
-			if (player != nullptr){
-				CameraFollow* camara = player->getComponent<CameraFollow>();
-				if (camara != nullptr) {
-  					camara->checkCameraFollowLimits();
-				}
-			}*/
 		}
 
 		if (object_layer->getName() == "spawns") {
@@ -184,15 +176,8 @@ void Level0::load(const string& path) {
 					end = spawn.getPosition();
 					finalR = true;
 				}
-				else {
-					tmx::Vector2f spa = spawn.getPosition();
-
-					/*spa.x /= sdlutils().getPPM();
-					spa.y /= sdlutils().getPPM();*/
-
-					enemiePos.push_back(spa);
-
-				}
+				else
+					enemiePos.push_back(spawn.getPosition());
 			}
 		}
 
@@ -276,18 +261,17 @@ void Level0::clearLevelVectors(){
 	if (!connectionsNames.empty())connectionsNames.clear();
 	if (!pescaPos.empty())pescaPos.clear();
 
-	for (Entity* e : enemigos) {
-		e->setActive(false);
+	if (!enemigos.empty()){
+		for (Entity* e : enemigos) 
+			if (e != nullptr) e->setActive(false);
+		enemigos.clear();
 	}
 
-	if(!enemigos.empty())enemigos.clear();
-
-
-	for (Entity* e : projectiles) {
-		if(e != nullptr )e->setActive(false);
+	if (!projectiles.empty()){
+		for (Entity* e : projectiles) 
+			if(e != nullptr )e->setActive(false);
+		 projectiles.clear();
 	}
-
-	if (!projectiles.empty()) projectiles.clear();
 }
 
 void Level0::render() {

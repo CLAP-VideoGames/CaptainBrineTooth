@@ -97,7 +97,7 @@ Room MapProcedural::initializeRoom(int dir) {
 	bool concuerda = false;
 	if (roomsExplored < 1){
 		concuerda = true;
-		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
+		
 		tile = getRandomTileFromArea(Starts);
 	}
 	else if (roomsExplored == nRooms - 1)  tile = getRandomTileFromArea(Final);
@@ -176,7 +176,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 		Vector2D pos(end.x, end.y);
 
-		t->addComponent<Transform>(pos, Vector2D(0, 0), 200, 200, 0);
+		t->addComponent<Transform>(pos, Vector2D(0, 0), 100, 100, 0);
 
 		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
@@ -288,7 +288,6 @@ void MapProcedural::TravelNextRoom(int dir) {
 
 	createConnectionTriggers(dir, travel);
 
-
 	std::cout << roomsExplored << std::endl;
 }
 
@@ -328,11 +327,11 @@ void MapProcedural::loadTileFiles(){
 }
 
 void MapProcedural::initRun(){
-	int i = 8;
 	startRun_ = !startRun_;
+	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
 	int tile = getRandomTileFromArea(Starts);
-	roomNames[i].used = true;
-	currentRoom = initilizeCurrentRoom(roomNames[i]);
+	roomNames[tile].used = true;
+	currentRoom = initilizeCurrentRoom(roomNames[tile]);
 }
 
 CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
