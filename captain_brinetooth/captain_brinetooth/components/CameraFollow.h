@@ -18,6 +18,8 @@ public:
 	void actPosAdvanced();
 	void checkCameraFollowLimits();
 
+	void setCamToEntity(const float& t = 0.9f);
+
 protected:
 	Transform* target_;
 	std::vector<Entity*> entities_;

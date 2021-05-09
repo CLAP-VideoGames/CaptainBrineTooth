@@ -93,3 +93,33 @@ void CameraFollow::checkCameraFollowLimits(){
 			App::camera.y = camMinLimits_.getY();
 	}
 }
+
+void CameraFollow::setCamToEntity(const float& t){
+	//Flip del offset.x en funcion del flip del sprite 
+	Vector2D offset = Vector2D(0, 0);
+	//X Axis
+	if (entity_->getComponent<AnimBlendGraph>()->isFlipX())
+		offset.setX(offset_.getX());//mira derecha
+	else
+		offset.setX(-offset_.getX());//mira izquierda
+	//Y axis
+	if (down_time_ >= cd_down_)
+		offset.setY(-offset_.getY());//mira abajo
+	else if (up_time_ >= cd_up_)
+		offset.setY(offset_.getY() * 1.5);//mira arriba
+	else
+		offset.setY(offset_.getY());
+
+	int x = target_->getPos().getX() + (target_->getW() / 2.0f) - (App::camera.w / 2.0f) + offset.getX();
+	int y = target_->getPos().getY() + (target_->getH() / 2.0f) - (App::camera.h / 2.0f) + offset.getY();
+
+	lastDiff.setX(sdlutils().lerpPrecise(lastDiff.getX(), x, t));
+	differenceX += (lastDiff.getX() - (differenceX));
+
+
+	lastDiff.setY(sdlutils().lerpPrecise(lastDiff.getY(), y, t));
+	differenceY += (lastDiff.getY() - (differenceY));
+
+	App::camera.x = differenceX;
+	App::camera.y = differenceY;
+}

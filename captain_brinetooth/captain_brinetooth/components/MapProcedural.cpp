@@ -1,5 +1,7 @@
 ﻿#include "MapProcedural.h"
 
+#include "CameraFollow.h"
+
 #define _CRTDBG_MAP_ALLOC
 #include<iostream>
 #include <crtdbg.h>
@@ -141,7 +143,11 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 		if (dir != -1 && names[i] == cardinals[(int)oppositeDir]) {
 			int x = pos.getX() + (size[i].x / 2);
 			int y = pos.getY() + (size[i].y / 2);
-			entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(x, y, 0);
+
+			Entity* player = entity_->getMngr()->getHandler<Player>();
+			player->getComponent<BoxCollider>()->setPhysicalTransform(x, y, 0);
+
+			player->getComponent<CameraFollow>()->setCamToEntity();
 		}
 		else {
 			t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
@@ -157,6 +163,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 		tmx::Vector2f playerpos = lvl->getPlayerPos();
 
 		auto* player = entity_->getMngr()->getHandler<Player>();
+		//Si solo ha explorado la habitacion inicial (cuando se crea la habitacion inicial, roomExplored = 1)
 		if (player != NULL && roomsExplored < 2 && playerpos.x != 0)
 			player->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
 		//entity_->addComponent<BoxCollider>(STATIC, PLAYER, PLAYER_MASK, true, 0, true, 0.0, positions[i], Vector2D(200,200));
