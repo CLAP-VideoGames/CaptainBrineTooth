@@ -16,7 +16,7 @@ using namespace ColLayers;
 					//0 = N, 1 = E, 2 = S, 3 = W
 enum class Cardinals { N , E , S, W, None };
 
-enum Area {Starts, Mid, Final};
+enum Area {Starts, Mid, Final, Boss};
 
 struct Room {
 	string nameLevel;
@@ -72,6 +72,8 @@ public:
 	void setPlayer2spawn();
 
 	void initRun();
+
+	void initBoss();
 
 	void startRun(bool start);
 

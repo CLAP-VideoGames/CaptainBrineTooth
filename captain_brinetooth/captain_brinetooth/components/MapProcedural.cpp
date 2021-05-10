@@ -241,7 +241,8 @@ void MapProcedural::update() {
 		//Cargamos los nuevos archivos de la nueva zona
 		loadTileFiles();
 		//Empezamos la run
-		initRun();
+		if (fase < 3) initRun();
+		else initBoss();
 	}
 
 	if (stopFishing) {
@@ -265,10 +266,6 @@ void MapProcedural::refreshCollider(){
 }
 
 void MapProcedural::TravelNextRoom(int dir) {
-
-	if (dir == 2)
-		int n = 0;
-
 	currentRoom->level = currentRoom->conections[dir].level;
 	currentRoom->nameLevel = currentRoom->conections[dir].nameLevel;
 
@@ -292,8 +289,6 @@ void MapProcedural::TravelNextRoom(int dir) {
 
 	roomsExplored++;
 
-	std::cout << roomsExplored << std::endl;
-
 	initConnections(currentRoom);
 
 	createConnectionTriggers(dir, travel);
@@ -308,53 +303,43 @@ void MapProcedural::loadTileFiles(){
 
 	if(!roomNames.empty()) roomNames.clear();
 	//Leeemos los distintos directorios
-
 	int roomsRead = 0;
-	string fase_ = std::to_string(fase);
-	std::string starts = "assets/maps/level_starts" + fase_;
-	std::string rooms = "assets/maps/level_rooms" + fase_;
-	std::string ends = "assets/maps/level_ends" + fase_;
-	ReadDirectory(starts, roomsRead);
-	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-	ReadDirectory(rooms, roomsRead);
-	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-	ReadDirectory(ends, roomsRead);
 
-	//if (fase == 0) {
-	//	int roomsRead = 0;
-	//	ReadDirectory("assets/maps/level_starts0", roomsRead);
-	//	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-	//	ReadDirectory("assets/maps/level_rooms0", roomsRead);
-	//	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-	//	ReadDirectory("assets/maps/level_ends0", roomsRead);
-	//}
-	//else if (fase == 1) {
-	//	int roomsRead = 0;
-	//	ReadDirectory("assets/maps/level_starts1", roomsRead);
-	//	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-	//	ReadDirectory("assets/maps/level_rooms1", roomsRead);
-	//	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-	//	ReadDirectory("assets/maps/level_ends1", roomsRead);
-	//}
-	//else {
-	//	int roomsRead = 0;
-	//	ReadDirectory("assets/maps/level_starts2", roomsRead);
-	//	areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
-	//	ReadDirectory("assets/maps/level_rooms2", roomsRead);
-	//	areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
-	//	ReadDirectory("assets/maps/level_ends2", roomsRead);
-	//}
+	if(fase<3){
+		string fase_ = std::to_string(fase);
+		std::string starts = "assets/maps/level_starts" + fase_;
+		std::string rooms = "assets/maps/level_rooms" + fase_;
+		std::string ends = "assets/maps/level_ends" + fase_;
+		ReadDirectory(starts, roomsRead);
+		areaLimits[0] = roomsRead; //Asertamos la frontera entre inicios y habiaciones normales
+		ReadDirectory(rooms, roomsRead);
+		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
+		ReadDirectory(ends, roomsRead);
+	}
+	else{
+		std::string boss = "assets/maps/level_boss";
+		ReadDirectory(boss, roomsRead);
+	}
+}
+
+void MapProcedural::initBoss() {
+	// Se inicia la musica del nivel correspondiente
+	//entity_->getMngr()->getSoundMngr()->ChangeMainMusic("BossFight");
+
+	int tile = getRandomTileFromArea(Boss);
+	roomNames[tile].used = true;
+	roomsExplored++;
+	currentRoom = initilizeCurrentRoom(roomNames[tile]);
 }
 
 void MapProcedural::initRun(){
 
-	startRun_ = false;
-	// Se inicia la musica del nivel correspondiente
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel" + std::to_string(fase));
+	startRun_ = false;
 	int tile = getRandomTileFromArea(Starts);
 	roomNames[tile].used = true;
 	roomsExplored++;
-	std::cout << roomsExplored << std::endl;
+	//std::cout << roomsExplored << std::endl;
 	currentRoom = initilizeCurrentRoom(roomNames[tile]);
 }
 
@@ -477,6 +462,8 @@ void MapProcedural::deleteTriggers(){
 int MapProcedural::getRandomTileFromArea(Area a){
 	if (a == Starts) return sdlutils().rand().teCuoto(0, areaLimits[(int)a]);
 	else if (a == Mid) return sdlutils().rand().teCuoto(areaLimits[0], areaLimits[a]);
+	else if (a == Boss) return sdlutils().rand().teCuoto(0, roomNames.size());
+	//else if (a == Boss) return sdlutils().rand().teCuoto(areaLimits[0], areaLimits[a]);
 	else  return sdlutils().rand().teCuoto(areaLimits[1], roomNames.size());
 }
 

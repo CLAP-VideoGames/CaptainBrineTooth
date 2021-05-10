@@ -300,9 +300,6 @@
     <ClInclude Include="components\MapCollider.h">
       <Filter>Archivos de encabezado\components\Map</Filter>
     </ClInclude>
-    <ClInclude Include="components\MapProcedural.h">
-      <Filter>Archivos de encabezado\components\Map</Filter>
-    </ClInclude>
     <ClInclude Include="components\Connections.h">
       <Filter>Archivos de encabezado\components\Map</Filter>
     </ClInclude>
@@ -380,6 +377,9 @@
     </ClInclude>
     <ClInclude Include="components\FishlerController.h">
       <Filter>Archivos de encabezado\components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="components\MapProcedural.h">
+      <Filter>Archivos de encabezado\components\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -603,9 +603,6 @@
     <ClCompile Include="components\GetAWeaponOnCollision.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
-    <ClCompile Include="components\MapProcedural.cpp">
-      <Filter>Archivos de origen\components</Filter>
-    </ClCompile>
     <ClCompile Include="components\RayCast.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
@@ -631,6 +628,9 @@
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="components\FishlerController.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\MapProcedural.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
