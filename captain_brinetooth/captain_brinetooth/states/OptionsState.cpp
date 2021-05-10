@@ -16,7 +16,7 @@ void OptionsState::init(){
 	posImage.h = cam.h;
 
 	fondo->addComponent<Image>(&sdlutils().images().at("bg_options"), posImage, "fondoOpciones");
-	manager_->getSoundMngr()->playPauseMusic();
+	//manager_->getSoundMngr()->playPauseMusic();
 
 	// Back Button
 	int w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out * 0.65;
@@ -124,7 +124,7 @@ void OptionsState::controlBrightness(float value, Entity* ent){
 
 void OptionsState::volverMenu(App* app, SoundManager* snd){
 	snd->playSoundEffect("gaviota",0);
-	snd->resumeMainMusic();
+	//snd->resumeMainMusic();
 	app->getStateMachine()->popState();
 }
 

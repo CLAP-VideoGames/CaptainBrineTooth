@@ -49,7 +49,7 @@ public:
 		sdlutils().soundEffects().at("gaviota").play();
 	}
 
-	void resumeMainMusic(); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
+	void resumeMainMusic(bool pesca); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
 
 	void pauseMainMusic(std::string newMusic);
 

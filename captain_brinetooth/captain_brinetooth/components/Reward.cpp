@@ -125,7 +125,7 @@ void Reward::giveReward()
 
 	GameState* pState = app->getStateMachine()->currentState();
 
-	pState->getMngr()->getSoundMngr()->resumeMainMusic();
+	pState->getMngr()->getSoundMngr()->resumeMainMusic(true);
 
 	app->getStateMachine()->popState();
 }
