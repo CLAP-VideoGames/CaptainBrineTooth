@@ -167,8 +167,7 @@ void PlayState::update(){
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
-			app->changeToPesca();
-			//sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
+			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
 		}
 	}
 	GameState::update();
