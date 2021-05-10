@@ -1,5 +1,5 @@
 #include "Animation.h"
-
+#include "../states/PasueState.h"
 #define _CRTDBG_MAP_ALLOC
 #include<iostream>
 #include <crtdbg.h>
@@ -47,6 +47,12 @@ void Animation::init()
 
 void Animation::render()
 {
+	PauseState* s = dynamic_cast<PauseState*>(entity_->getMngr()->getApp()->getStateMachine()->currentState());
+	if (s != nullptr )
+		stop();
+	else
+		play();
+
 	if (state_ == Playing) {
 		//Actualiza el frame segun el framerate
 		Uint32 frameTime = sdlutils().currRealTime() - lastUpdateTime;

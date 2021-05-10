@@ -4,6 +4,7 @@
 #include "box2d.h"
 
 #include "../game/CollisionLayers.h"
+#include "../game/App.h"
 
 #include "../components/Sword.h"
 #include "../components/Button.h"

@@ -10,10 +10,12 @@
 #include "Entity.h"
 #include "box2d.h"
 #include "../ecs/SoundManager.h"
+#include "../game/App.h"
 
+class App;
 class Manager {
 public:
-	Manager(std::shared_ptr<b2World> mundo, SoundManager* snd, bool* pop);
+	Manager(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool* pop);
 	virtual ~Manager();
 
 	// entities
@@ -53,6 +55,10 @@ public:
 	{
 		return snd;
 	}
+	inline App* getApp()
+	{
+		return app;
+	}
 
 	void update();
 	void render();
@@ -65,6 +71,6 @@ private:
 	std::vector<Entity*> entities_;
 	std::array<Entity*, ecs::maxHdlr> hdlrs_;
 	SoundManager* snd;
-
+	App* app;
 };
 

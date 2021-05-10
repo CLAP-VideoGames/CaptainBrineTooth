@@ -1,12 +1,11 @@
 #include "GameState.h"
 #include "../ecs/Manager.h" //Manager ya incluye Entity
-#include "../game/App.h"
 #include "../utils/Vector2D.h"
 
 GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) {
 	app = a;
 	popped = false;
-	manager_ = new Manager(mundo, snd, &popped);
+	manager_ = new Manager(a,mundo, snd, &popped);
 }
 GameState::~GameState() {
 	//Se tiene que borrar el manager de cada Estado
