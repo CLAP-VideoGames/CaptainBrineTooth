@@ -111,6 +111,7 @@ void Reward::giveReward()
 	//Si no , es una piedra y directamente no se da nada 
 	if ((int)weapontoGive < 10)
 	{
+
 		playerRef->getComponent<Inventory>()->addWeapon((int)weapontoGive);
 		//Cambiar animacion de player
 	}

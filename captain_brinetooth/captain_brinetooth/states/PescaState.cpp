@@ -1,4 +1,5 @@
 #include "PescaState.h"
+#include "../components/Inventory.h"
 using namespace ColLayers;
 
 PescaState::~PescaState() {
@@ -22,7 +23,7 @@ void PescaState::init() {
 	main_zoom = app->getCameraZoomOut();
 	app->setCameraZoomOut(2.0f);
 
-	playerRef->getComponent<PlayerController>()->playerReceiveInput(false);
+	//playerRef->getComponent<PlayerController>()->playerReceiveInput(false);
 
 
 	//---BG----
@@ -46,7 +47,7 @@ void PescaState::init() {
 	auto* bg = createBasicEntity(Vector2D(screen_width / 2, screen_heigth / 2), Vector2D(screen_width, screen_heigth), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("fondoPesca"), 1, 1, 1, 1, 0);
 	//---------
-	entitiesPerLine = 3;
+	entitiesPerLine = 5;
 	totalBasura = 8;
 
 	Config gancho{};
@@ -107,13 +108,21 @@ void PescaState::createRandomReward(const Config& entityConfig)
 	//0 espada 1 martillo 2 sierra ---> se iran añadiendo segun vaya habiendo mas armas
 	int x = sdlutils().width() * App::camera_Zoom_Out;
 	int random;
+	int entitiesaux = entitiesPerLine;
+	Inventory* playerInv = playerRef->getComponent<Inventory>();
+
 	for (int i = 0; i < rows_; i++) {
-		for (int j = 0; j < entitiesPerLine; j++)
+		for (int j = 0; j < entitiesaux; j++)
 		{
-			random = sdlutils().rand().teCuoto(0, 2);
+			random = sdlutils().rand().teCuoto(0, 5);
 
 			auto* reward0 = createBasicEntity(Vector2D(x + (100 * App::camera_Zoom_Out * j), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 
+			//If player has not the weapon we try adding another weapon that player hasn´t
+			while (playerInv->hasWeapon(random))
+			{
+				random = sdlutils().rand().teCuoto(0, 5);
+			}
 			if (random == 0)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
 
@@ -122,13 +131,19 @@ void PescaState::createRandomReward(const Config& entityConfig)
 
 			else if (random == 2)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
+			else if (random == 3)
+				reward0->addComponent<Animation>("idle", &sdlutils().images().at("machine_gun"), 1, 1, 1, 1, 0);
+			else if (random == 4)
+				reward0->addComponent<Animation>("idle", &sdlutils().images().at("crab"), 1, 1, 1, 1, 0);
 
 
 
 			reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
 			reward0->addComponent<Reward>(random, playerRef, app);
 
+
 		}
+		entitiesaux--;
 	}
 }
 

@@ -27,6 +27,7 @@ protected:
 	int w_reward;
 	int h_reward;
 	float main_zoom;
+	int WeaponsNumber;
 	//DamageCollisionCallbacks collisionListener;
 	
 };
