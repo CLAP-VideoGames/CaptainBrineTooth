@@ -48,7 +48,7 @@ void PlayState::init() {
 	playerConfig.fixedRotation = true;
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
-
+	
 	Config swordGiverConfig{};
 	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
 	swordGiverConfig.vel = Vector2D();
@@ -167,7 +167,8 @@ void PlayState::update(){
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
-			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
+			app->changeToPesca();
+			//sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
 		}
 	}
 	GameState::update();
