@@ -7,6 +7,7 @@
 #include "Inventory.h"
 #include "../game/App.h"
 #include "../states/StateMachine.h"
+#include "../states/PescaState.h"
 
 Reward::Reward(int w, Entity* p, App* a)
 {
@@ -114,5 +115,11 @@ void Reward::giveReward()
 		//Cambiar animacion de player
 	}
 	//As finished fishing we go back to playstate 
+
+
+	GameState* pState = app->getStateMachine()->currentState();
+
+	pState->getMngr()->getSoundMngr()->resumeMainMusic();
+
 	app->getStateMachine()->popState();
 }

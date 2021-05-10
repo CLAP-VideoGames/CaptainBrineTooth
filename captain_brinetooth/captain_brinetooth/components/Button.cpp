@@ -64,6 +64,7 @@ bool Button::handleEvent(){
 			fade = entity_->getComponent<Fade>();
 			if (fade != nullptr) {
 				fade->setState(Fade::STATE_FADE::Out);
+				soundController->playSoundEffect("sonido_barco", 0);
 			}
 			else {
 				cboq(game, soundController);

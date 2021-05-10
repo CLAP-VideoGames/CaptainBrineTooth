@@ -23,7 +23,7 @@ void MenuState::init() {
 	auto* video = manager_->addEntity();
 	video->addComponent<VideoPlayer>(videos);
 
-	manager_->getSoundMngr()->setGeneralVolume(40);
+	manager_->getSoundMngr()->setGeneralVolume(25);
 	manager_->getSoundMngr()->playMainMusic();
 
 	// Titulo
@@ -88,8 +88,8 @@ void MenuState::init() {
 }
 
 void MenuState::changeToGame(App* app, SoundManager* snd) {
-	snd->ChangeMainMusic("Nivel1");
-
+	snd->playSoundEffect("sonido_barco", 0);
+	
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd));
 }

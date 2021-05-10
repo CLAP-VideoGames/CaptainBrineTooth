@@ -29,18 +29,26 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 		lifes = lifes - (damage + electrifyDamage);
 		
 
-	// Reproducimos sonido aleatorio de monstruo herido
-	int x = sdlutils().rand().teCuoto(0, 3);
-	switch (x)
+	if (lifes <= 0)
 	{
-	case 0:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt", 15);
-		break;
-	case 1:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt1", 15);
-		break;
-	case 2:
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 15);
+		// Sonido de muerte del monstruo
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("muerte_monstruo", 15);
+	}
+	else
+	{
+		// Reproducimos sonido aleatorio de monstruo herido
+		int x = sdlutils().rand().teCuoto(0, 3);
+		switch (x)
+		{
+		case 0:
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt", 15);
+			break;
+		case 1:
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt1", 15);
+			break;
+		case 2:
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 15);
+		}
 	}
 
 	//Efecto electrificar

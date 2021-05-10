@@ -464,6 +464,10 @@
 			"file": "assets/sounds/enemies/crecimiento_medusa.mp3"
 		},
 		{
+			"id": "muerte_monstruo",
+			"file": "assets/sounds/enemies/muerte_monstruo.wav"
+		},
+		{
 			"id": "disparo_fringehead",
 			"file": "assets/sounds/enemies/disparo_fringehead.mp3"
 		},
@@ -487,6 +491,10 @@
 		{
 			"id": "gaviota",
 			"file": "assets/sounds/gaviota.mp3"
+		},
+		{
+			"id": "sonido_barco",
+			"file": "assets/sounds/sonido_barco.mp3"
 		},
 		{
 			"id": "ola",
@@ -516,19 +524,19 @@
 			"file": "assets/sounds/soundtrack/olds_man_tale_underwater.mp3"
 		},
 		{
-			"id": "Nivel3",
+			"id": "Nivel2",
 			"file": "assets/sounds/soundtrack/adventure.mp3"
 		},
 		{
-			"id": "Nivel3Pausa",
+			"id": "Nivel2Pausa",
 			"file": "assets/sounds/soundtrack/adventure_underwater.mp3"
 		},
 		{
-			"id": "Nivel1",
+			"id": "Nivel0",
 			"file": "assets/sounds/soundtrack/celtic.mp3"
 		},
 		{
-			"id": "Nivel1Pausa",
+			"id": "Nivel0Pausa",
 			"file": "assets/sounds/soundtrack/celtic_underwater.mp3"
 		},
 		{
@@ -548,11 +556,11 @@
 			"file": "assets/sounds/soundtrack/the_sailors_waltz_underwater.mp3"
 		},
 		{
-			"id": "Nivel2",
+			"id": "Nivel1",
 			"file": "assets/sounds/soundtrack/travel_cinematic.mp3"
 		},
 		{
-			"id": "Nivel2Pausa",
+			"id": "Nivel1Pausa",
 			"file": "assets/sounds/soundtrack/travel_cinematic_underwater.mp3"
 		},
 		{

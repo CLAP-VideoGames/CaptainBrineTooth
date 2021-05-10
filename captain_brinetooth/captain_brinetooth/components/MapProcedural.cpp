@@ -61,6 +61,8 @@ void MapProcedural::leaveLobby(b2Contact* contact) {
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
 	m->getComponent<MapProcedural>()->startRun(true);
+
+
 }
 
 void MapProcedural::getConec(const string& name, std::array<bool, 4>& cons) {
@@ -193,6 +195,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 	//Comprobamos que hay un punto de pesca
 	if (posAux.size() != 0) {
+		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("CofreTesoro");
 		for (int i = 0; i < posAux.size(); i++) {
 			Vector2D pescaPos(posAux[i].x, posAux[i].y);
 
@@ -229,9 +232,6 @@ void MapProcedural::update() {
 		roomsExplored = 0;
 		//Nueva zona, fase + 1
 		setPhase(fase + 1);
-		//Cambiamos el sonido de base del nivel
-		string song = "Nivel" + std::to_string(fase);
-		entity_->getMngr()->getSoundMngr()->ChangeMainMusic(song);
 		//Numero de salas que habrá en el nivel
 		setNumRooms(nRooms);
 		//Borramos los triggers de la ultima sala
@@ -349,7 +349,8 @@ void MapProcedural::loadTileFiles(){
 void MapProcedural::initRun(){
 
 	startRun_ = false;
-	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel1");
+	// Se inicia la musica del nivel correspondiente
+	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel" + std::to_string(fase));
 	int tile = getRandomTileFromArea(Starts);
 	roomNames[tile].used = true;
 	roomsExplored++;

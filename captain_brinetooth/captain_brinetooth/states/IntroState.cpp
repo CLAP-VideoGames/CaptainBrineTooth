@@ -19,7 +19,7 @@ void IntroState::init() {
 	auto* video = manager_->addEntity();
 	video->addComponent<VideoPlayer>(videos);
 	//Sonido
-	manager_->getSoundMngr()->setGeneralVolume(40);
+	manager_->getSoundMngr()->setGeneralVolume(10);
 	manager_->getSoundMngr()->playIntroMusic();
 	//Fade
 	fade = manager_->addEntity();

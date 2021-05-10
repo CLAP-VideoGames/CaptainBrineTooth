@@ -16,6 +16,7 @@ public:
 		timer = 0;
 		mainMusic = initMus;
 		pauseMusic = initMus + "Pausa";
+		cancionPausada = "";
 	}
 
 	virtual ~SoundManager() {
@@ -50,6 +51,8 @@ public:
 
 	void resumeMainMusic(); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
 
+	void pauseMainMusic(std::string newMusic);
+
 	void ChangeMainMusic(std::string newMusic); // Cambiar de cancion principal
 
 	void playSoundEffect(std::string effect, Uint32 seg);
@@ -63,6 +66,9 @@ public:
 private:
 	std::string mainMusic;
 	std::string pauseMusic;
+
+	std::string cancionPausada;
+
 	Uint32 timer;
 	int volumenGeneral, volumenPausa, volumenEfectos;
 };
