@@ -242,6 +242,7 @@
     <ClInclude Include="states\StateMachine.h" />
     <ClInclude Include="states\MenuState.h" />
     <ClInclude Include="states\TestZoneState.h" />
+    <ClInclude Include="states\TutorialState.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="utils\Collisions.h" />
     <ClInclude Include="utils\Singleton.h" />
@@ -325,6 +326,7 @@
     <ClCompile Include="states\StateMachine.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
     <ClCompile Include="states\TestZoneState.cpp" />
+    <ClCompile Include="states\TutorialState.cpp" />
     <ClCompile Include="utils\Collisions.cpp" />
     <ClCompile Include="utils\Vector2D.cpp" />
   </ItemGroup>

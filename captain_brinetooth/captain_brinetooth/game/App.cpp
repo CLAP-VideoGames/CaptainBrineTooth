@@ -12,6 +12,7 @@
 #include "../states/IntroState.h"
 #include "../states/PescaState.h"
 #include "../states/OptionsState.h"
+#include "../states/TutorialState.h"
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
@@ -34,6 +35,8 @@ App::App() {
 	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
 	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
+	//----Inicio de Tutorial------
+	//stateMachine->pushState(new TutorialState(this, world_, sndProvisional));
 	//----Inicio de Juego------
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------

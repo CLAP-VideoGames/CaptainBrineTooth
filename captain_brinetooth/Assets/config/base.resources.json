@@ -281,6 +281,26 @@
 			"file": "assets/sprites/botones/salir_titulo.png"
 		},
 		{
+			"id": "yes_button",
+			"file": "assets/sprites/botones/yes_button.png"
+		},
+		{
+			"id": "no_button",
+			"file": "assets/sprites/botones/no_button.png"
+		},
+		{
+			"id": "arrow",
+			"file": "assets/sprites/botones/arrow.png"
+		},
+		{
+			"id": "controles_button",
+			"file": "assets/sprites/botones/controles_button.png"
+		},
+		{
+			"id": "player_controls",
+			"file": "assets/sprites/botones/player_controls.png"
+		},
+		{
 			"id": "sky",
 			"file": "assets/background/sky.png"
 		},
@@ -641,6 +661,11 @@
 			"id": "BackerStreet100",
 			"file": "assets/fonts/BakerStreet-Black.ttf",
 			"size": 100
+		},
+		{
+			"id": "Freaks-of-nature72",
+			"file": "assets/fonts/Freaks-of-nature.ttf",
+			"size": 72
 		}
 	],
 
@@ -686,6 +711,84 @@
 			"text": "FullScreen",
 			"font": "BackerStreet100",
 			"color": "0xffffffff"
+		},
+		{
+			"id": "skipTutorial",
+			"text": "Quieres jugar el tutorial?",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "ready?",
+			"text": "Has completado el tutorial, ahora empieza tu aventura",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "izquierda",
+			"text": "Izquierda",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "derecha",
+			"text": "Derecha",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "dash",
+			"text": "Deslizarse",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "cam_up",
+			"text": "Manten para mirar arriba",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "cam_down",
+			"text": "Manten para mirar abajo",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "jump",
+			"text": "Saltar",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "attack",
+			"text": "Atacar",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "switch",
+			"text": "Cambiar de arma",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "switch_explanation",
+			"text": "Abajo a la izquierda se muestra el arma en uso",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "health_explanation",
+			"text": "La vida se muestra arriba a la izquierda, no lo olvides",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "dash_explanation",
+			"text": "Deslizarse te hace inmune y te permite atravesar enemigos",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
 		}
 
 	],

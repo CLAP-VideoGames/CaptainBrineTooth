@@ -8,7 +8,7 @@ void Armas_HUD::render()
 
 	if (mainWeapon != nullptr) {
 		Vector2D size1 = Vector2D((int)sdlutils().width() * 0.07 * App::camera_Zoom_Out, (int)sdlutils().height() * 0.1 * App::camera_Zoom_Out);
-		Vector2D pos1 = Vector2D((int)((App::camera.w - size1.getX()) * 0.03), (int)((App::camera.h - size1.getY()) * 0.8));
+		Vector2D pos1 = Vector2D((int)((App::camera.w - size1.getX()) * 0.03), (int)((App::camera.h - size1.getY()) * 0.95));
 
 
 		SDL_Rect dest1 = build_sdlrect(pos1, size1.getX(), size1.getY());
@@ -16,7 +16,7 @@ void Armas_HUD::render()
 
 		if (secondWeapon != nullptr) {
 			Vector2D size2 = size1;
-			Vector2D pos2 = Vector2D((int)((App::camera.w - size2.getX()) * 0.15), (int)((App::camera.h - size2.getY()) * 0.8));
+			Vector2D pos2 = Vector2D((int)((App::camera.w - size2.getX()) * 0.15), (int)((App::camera.h - size2.getY()) * 0.95));
 
 
 
@@ -29,13 +29,13 @@ void Armas_HUD::render()
 				weaponFrame->render(dest2);
 			}
 			else {
-				pos1 = Vector2D((int)((App::camera.w - size1.getX()) * 0.02), (int)((App::camera.h - size1.getY()) * 0.8));
+				pos1 = Vector2D((int)((App::camera.w - size1.getX()) * 0.02), (int)((App::camera.h - size1.getY()) * 0.95));
 				dest1 = build_sdlrect(pos1, size1.getX() * 1.2, size1.getY() * 1.2);
 				weaponFrame->render(dest1);
 			}
 		}
 		else {
-			pos1 = Vector2D((int)((App::camera.w - size1.getX()) * 0.02), (int)((App::camera.h - size1.getY()) * 0.8));
+			pos1 = Vector2D((int)((App::camera.w - size1.getX()) * 0.02), (int)((App::camera.h - size1.getY()) * 0.95));
 			dest1 = build_sdlrect(pos1, size1.getX() * 1.2, size1.getY() * 1.2);
 			weaponFrame->render(dest1);
 		}

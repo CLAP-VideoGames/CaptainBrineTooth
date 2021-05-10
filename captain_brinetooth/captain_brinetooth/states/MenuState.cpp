@@ -1,7 +1,8 @@
 #include "MenuState.h"
-#include "../states/OptionsState.h"
-#include "../states/PlayState.h"
-#include "../states/TestZoneState.h"
+#include "OptionsState.h"
+#include "PlayState.h"
+#include "TestZoneState.h"
+#include "TutorialState.h"
 
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 	cam = a->camera;
@@ -81,10 +82,17 @@ void MenuState::init() {
 	auto* botonIniciar = manager_->addEntity();
 	y = (int)((y - ((h * 1.2))));
 	botonIniciar->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
-	botonIniciar->addComponent<Button>(&sdlutils().images().at("nueva_partida_menu"), changeToGame, app, manager_->getSoundMngr());
+	botonIniciar->addComponent<Button>(&sdlutils().images().at("nueva_partida_menu"), changeToTutorial, app, manager_->getSoundMngr());
 	botonIniciar->addComponent<Fade>(Vector2D(cam.w, cam.h), Vector2D(0, 0), 1500, 1000);
 
 #pragma endregion
+}
+
+void MenuState::changeToTutorial(App* app, SoundManager* snd) {
+	snd->playSoundEffect("sonido_barco", 0);
+
+	StateMachine* sM = app->getStateMachine();
+	sM->changeState(new TutorialState(app, sM->currentState()->getMngr()->getWorld(), snd));
 }
 
 void MenuState::changeToGame(App* app, SoundManager* snd) {

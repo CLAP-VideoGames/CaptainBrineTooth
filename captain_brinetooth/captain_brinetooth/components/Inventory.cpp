@@ -22,8 +22,8 @@ void Inventory::init() {
 
 void Inventory::update() {
 	//Cambio de arma
-	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDL_SCANCODE_F)) {
+	if (ih().mouseButtonEvent()) {
+		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::RIGHT)){
 			switchSelectedWeapon();
 		}
 	}
