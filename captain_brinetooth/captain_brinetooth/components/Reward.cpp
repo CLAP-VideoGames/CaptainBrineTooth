@@ -79,6 +79,7 @@ void Reward::baitCollision(b2Contact* contact)
 }
 void Reward::baitCatched(Entity* h)
 {
+	entity_->getMngr()->getSoundMngr()->playSoundEffect("pescar_objeto", 0);
 	hook = h; //Now we obtain the reference of the hook
 
 	hook->getComponent<Gancho>()->setBaitReference(entity_); //Now hook has reference of the catchedBait
@@ -111,9 +112,13 @@ void Reward::giveReward()
 	//Si no , es una piedra y directamente no se da nada 
 	if ((int)weapontoGive < 10)
 	{
-
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("get_weapon", 0);
 		playerRef->getComponent<Inventory>()->addWeapon((int)weapontoGive);
 		//Cambiar animacion de player
+	}
+	else
+	{
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("get_trash", 0);
 	}
 	//As finished fishing we go back to playstate 
 

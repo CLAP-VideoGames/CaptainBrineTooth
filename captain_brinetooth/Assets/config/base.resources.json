@@ -375,6 +375,18 @@
 			"id": "walk",
 			"file": "assets/sounds/player/walk.mp3"
 		},
+		{
+			"id": "pescar_objeto",
+			"file": "assets/sounds/player/pescar_objetos.mp3"
+		},
+		{
+			"id": "get_weapon",
+			"file": "assets/sounds/player/get_weapon.wav"
+		},
+		{
+			"id": "get_trash",
+			"file": "assets/sounds/player/get_trash.wav"
+		},
 
 
 		{
