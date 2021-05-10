@@ -4,9 +4,13 @@
 #include "../utils/Vector2D.h"
 #include "Transform.h"
 #include "BoxCollider.h"
+#include "ContactDamage.h"
+#include "DisableOnExit.h"
+#include "DestroyOnCollision.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
 #include "../game/CollisionLayers.h"
+#include <cmath>
 
 using namespace ColLayers;
 
@@ -22,16 +26,18 @@ public:
 	virtual ~FishlerController();
 	void init() override;
 	void update() override;
-	void render() override;
 
 	static void playerDetected(b2Contact* contact);
 	static void playerLost(b2Contact* contact);
 	void playerDetection(bool entered);
 	void playerCloseDetection();
 
+	void creaTrigger();
+	void shoot();
+
 protected:
 	enum PHASE {Phase1, Phase2};
-	enum MOVEMENT_STATE {Iddle, Stunned, Attacking, Walking, Jumping};
+	enum MOVEMENT_STATE {Iddle, Stunned, AttackTelegraph, Attacking, Walking, Jumping};
 	enum ATTACKS {NotAttacking, RushAttack, Bite, Shoot, Spikes};
 
 	PHASE currentPhase;
@@ -39,14 +45,41 @@ protected:
 	ATTACKS currentAttack;
 
 	Transform* tr_;
+	BoxCollider* collider_;
+	AnimBlendGraph* anim_;
+	Entity* trigger;
+
+	float triggerWidth;
+	float triggerHeight;
+	float triggerOffSetX;
+	float triggerOffSetY;
 
 	Transform* playertr;
 	Entity* playerCloseDetect;
 	Vector2D playerCloseSize;
 	bool playerIsClose;
+
+	float walkingSpeed;
+	float rushSpeed;
+	float bulletVelocity;
+
 #pragma region Timers
-	//Initial movement timers
+	//Main loop timers
 	Timer movementTimer;
+	Timer attackTelegraphTimer;
+	Timer attackTimer;
+
+	//Attack times
+	float rushAttackTelegraphTime;
+	float rushAttackTime;
+
+	float biteAttackTelegraphTime;
+	float biteAttackTime;
+
+	float shootAttackTelegraphTime;
+	float shootAttackTime;
 
 #pragma endregion
+
+	
 };
