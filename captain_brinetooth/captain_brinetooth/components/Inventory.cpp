@@ -61,7 +61,18 @@ void Inventory::switchSelectedWeapon() {
 		hud->changeWeaponSelected();
 	}
 }
+bool Inventory::hasWeapon(int searchWeapon)
+{
+	bool weaponfound = false;
+	int i = 0;
+	while (!weaponfound && i < currentWeaponNumber)
+	{
+		if ((int)weapArray_[i] == searchWeapon) weaponfound = true;
+		else i++;
+	}
+	return weaponfound;
 
+}
 /// <summary>
 /// Añade el componente de un arma al jugador
 /// </summary>

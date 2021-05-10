@@ -15,20 +15,22 @@
 
 class Inventory : public Component {
 public:
-	Inventory() : currentWeaponNumber(0), currentSelectedWeapon(0){}
+	Inventory() : currentWeaponNumber(0), currentSelectedWeapon(0) {}
 
 	virtual ~Inventory() {
 	}
 
 	void addWeapon(int weapToAdd);
 	void switchSelectedWeapon();
+	bool hasWeapon(int weapontoSearch);
 	virtual void init() override;
 	virtual void update() override;
 
 private:
-	enum PosibleWeapons {TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk};
+	enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk };
 	void addWeaponById(int weapToAdd);
 	void removeWeaponById(int weapToRemove);
+
 	Texture* textureById(int weapToAdd);
 
 	Armas_HUD* hud;
