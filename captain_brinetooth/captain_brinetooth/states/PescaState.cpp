@@ -22,7 +22,7 @@ void PescaState::init() {
 	main_zoom = app->getCameraZoomOut();
 	app->setCameraZoomOut(2.0f);
 
-	playerRef->getComponent<PlayerController>()->playerReceiveInput(false);
+	//playerRef->getComponent<PlayerController>()->playerReceiveInput(false);
 
 
 	//---BG----
@@ -44,7 +44,7 @@ void PescaState::init() {
 	}
 
 	auto* bg = createBasicEntity(Vector2D(screen_width / 2, screen_heigth / 2), Vector2D(screen_width, screen_heigth), 0.0f, Vector2D(0, 0));
-	bg->addComponent<Animation>("1", &sdlutils().images().at("fondoPesca"), 1, 1, 1, 1, 0);
+	bg->addComponent<Animation>("1", &sdlutils().images().at("fondoPesca"), 1, 10, 10, 3, -1);
 	//---------
 	entitiesPerLine = 3;
 	totalBasura = 8;
