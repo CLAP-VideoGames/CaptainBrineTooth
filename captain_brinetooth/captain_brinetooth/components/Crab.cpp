@@ -172,9 +172,9 @@ void Crab::creaTrigger(int damage) {
 	//Activate attack trigger
 	trigger = entity_->getMngr()->addEntity();
 	if (anim_->isFlipX()) trigger->addComponent<Transform>(tr_->getPos() + Vector2D(-triggerOffSetX, triggerOffSetY),
-		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+		Vector2D(0, 0), triggerWidth * entity_->getComponent<Transform>()->getW() / 100.0f, triggerHeight, 0.0f);	
 	else trigger->addComponent<Transform>(tr_->getPos() + Vector2D(triggerOffSetX, triggerOffSetY),
-		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
+		Vector2D(0, 0), triggerWidth * entity_->getComponent<Transform>()->getW() / 100.0f, triggerHeight, 0.0f);
 
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	trigger->addComponent<WeaponDamageDetection>(damage);

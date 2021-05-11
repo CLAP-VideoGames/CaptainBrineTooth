@@ -38,7 +38,7 @@ Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 {
 	Config fringeHead{};
 	fringeHead.vel = Vector2D(0, 0);
-	fringeHead.size = Vector2D(70.0f, 70.0f);
+	fringeHead.size = Vector2D(60.0f, 60.0f);
 	fringeHead.friction = 0;
 	fringeHead.physicType = DYNAMIC;
 	fringeHead.fixedRotation = true;
@@ -51,7 +51,9 @@ Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 		true, 0.0f, Vector2D(), Vector2D(), 100000);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
-	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0);
+	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0, 0, 12, Vector2D(0.5, 0.7));
+	//Proportion?
+	anim_controller->keepProportion("idle", Vector2D(enemy->getComponent<Transform>()->getW(), enemy->getComponent<Transform>()->getH()));
 	anim_controller->addTransition("idle", "attack", "Shoot", 1, false);
 	anim_controller->addTransition("attack", "idle", "Shoot", 0, true);
 	anim_controller->setParamValue("Shoot", 0);
@@ -100,16 +102,14 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 
 
 	auto* elf = createBasicEntity(pos, elfShark.size, elfShark.rotation, elfShark.vel);
-	//auto* elf1 = manager_->addEntity();
-	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
-	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
 	elf->addComponent<BoxCollider>(elfShark.physicType, elfShark.col, elfShark.colMask, elfShark.isTrigger,
-		elfShark.friction, elfShark.fixedRotation, elfShark.rotation, Vector2D(elfShark.size.getX() * 0.75, elfShark.size.getY() * 0.75), Vector2D(elfShark.pos.getX() * 1.33, elfShark.pos.getY() * 1.33));
+		elfShark.friction, elfShark.fixedRotation, elfShark.rotation, Vector2D(elfShark.size.getX() * 0.5, elfShark.size.getY() * 0.4), 
+		Vector2D(elfShark.pos.getX() * 1.5, elfShark.pos.getY() * 0.8));
 	AnimBlendGraph* elf_anim_controller = elf->addComponent<AnimBlendGraph>();
-	elf_anim_controller->addAnimation("idle", &sdlutils().images().at("elfshark_idle"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.6));
-	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.6));
-	elf_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 48, 0, 0, 10, Vector2D(0.66, 0.6));
-	elf_anim_controller->addAnimation("attack_end", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 24, 0, 11, 18, Vector2D(0.66, 0.6));
+	elf_anim_controller->addAnimation("idle", &sdlutils().images().at("elfshark_idle"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
+	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
+	elf_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 48, 0, 0, 10, Vector2D(0.5, 0.8));
+	elf_anim_controller->addAnimation("attack_end", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 24, 0, 11, 18, Vector2D(0.5, 0.8));
 	//Proportion?
 	elf_anim_controller->keepProportion("idle", Vector2D(elf->getComponent<Transform>()->getW(), elf->getComponent<Transform>()->getH()));
 	elf_anim_controller->addTransition("idle", "move", "Speed", 1, false);
@@ -123,7 +123,7 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 	elf_anim_controller->addTransition("attack_ini", "attack_end", "Attack", 2, true);
 	elf_anim_controller->setParamValue("Speed", 0);
 	elf_anim_controller->setParamValue("Attack", 0);
-	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
+	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(900.0f, 400.0f));
 	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
 	elf->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 

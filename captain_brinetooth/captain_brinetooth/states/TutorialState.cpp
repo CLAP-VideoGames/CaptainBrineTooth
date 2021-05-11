@@ -55,6 +55,10 @@ void TutorialState::update()
 		}
 		nextStep_ = false;
 	}
+	//Actualizar posicion del enemigo
+	if (enemy != nullptr) {
+		enemy->getComponent<BoxCollider>()->getBody()->SetLinearVelocity(b2Vec2(0,0));
+	}
 	GameState::update();
 }
 
@@ -569,22 +573,23 @@ void TutorialState::createPlayer(const Config& playerConfig)
 
 void TutorialState::createEnemy()
 {
-	Config entityConfig{};
-	entityConfig.pos = Vector2D(sdlutils().width() * 1.2* App::camera_Zoom_Out, sdlutils().height() * 0.85 *App::camera_Zoom_Out);
-	entityConfig.vel = Vector2D(0, 0);
-	entityConfig.size = Vector2D(120.0f, 120.0f);
-	entityConfig.friction = 0;
-	entityConfig.physicType = KINEMATIC;
-	entityConfig.fixedRotation = true;
-	entityConfig.rotation = 0.0f;
-	entityConfig.col = ENEMY;
-	entityConfig.colMask = ENEMY_MASK;
-	enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	AnimBlendGraph* enemy_anim_controller = enemy->addComponent<AnimBlendGraph>();
-	enemy_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
-	enemy->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
-	enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	//fjh1->addComponent<ContactDamage>();
+	Config flowerJellyHat{};
+	flowerJellyHat.pos = Vector2D(sdlutils().width() * 1.2 * App::camera_Zoom_Out, sdlutils().height() * 0.85 * App::camera_Zoom_Out);
+	flowerJellyHat.vel = Vector2D(0, 0);
+	flowerJellyHat.size = Vector2D(120.0f, 120.0f);
+	flowerJellyHat.friction = 100.0f;
+	flowerJellyHat.physicType = DYNAMIC;
+	flowerJellyHat.fixedRotation = true;
+	flowerJellyHat.rotation = 0.0f;
+	flowerJellyHat.col = ENEMY;
+	flowerJellyHat.colMask = ENEMY_MASK;
+
+	auto* fjh1 = createBasicEntity(flowerJellyHat.pos, flowerJellyHat.size, flowerJellyHat.rotation, flowerJellyHat.vel);
+	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
+	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
+	fjh1->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask);
+	fjh1->addComponent<ContactDamage>();
 }
 
 void TutorialState::createRoom()

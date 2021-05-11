@@ -432,9 +432,6 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 #pragma region ElfShark
 void TestZoneState::createElfShark(const Config& entityConfig) {
 	auto* elf = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	//auto* elf1 = manager_->addEntity();
-	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
-	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
 	elf->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger,
 		entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation, Vector2D(entityConfig.size.getX() * 0.5, entityConfig.size.getY() * 0.4), Vector2D(entityConfig.pos.getX() * 1.5, entityConfig.pos.getY() * 0.8));
 	AnimBlendGraph* elf_anim_controller = elf->addComponent<AnimBlendGraph>();
