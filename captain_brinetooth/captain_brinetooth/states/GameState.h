@@ -48,6 +48,7 @@
 #include "../components/PescaController.h"
 #include "../components/VideoPlayer.h"
 #include "../components/Fade.h"
+#include "../components/FishlerController.h"
 
 class Manager;
 class App;

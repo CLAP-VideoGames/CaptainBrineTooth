@@ -7,9 +7,11 @@
 #include "ContactDamage.h"
 #include "DisableOnExit.h"
 #include "DestroyOnCollision.h"
+#include "GetStuckOnWall.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
 #include "../game/CollisionLayers.h"
+#include "AnimBlendGraph.h"
 #include <cmath>
 
 using namespace ColLayers;
@@ -22,7 +24,7 @@ class FishlerController : public Component
 	};
 
 public:
-	FishlerController();
+	FishlerController() {};
 	virtual ~FishlerController();
 	void init() override;
 	void update() override;
@@ -34,6 +36,12 @@ public:
 
 	void creaTrigger();
 	void shoot();
+
+	void createFloorDetection();
+	void changeToOnFloor();
+	static void floorTouched(b2Contact* contact);
+
+	void shootSpike();
 
 protected:
 	enum PHASE {Phase1, Phase2};
@@ -59,9 +67,13 @@ protected:
 	Vector2D playerCloseSize;
 	bool playerIsClose;
 
+	Entity* floorDetect;
+	bool onFloor;	//Determines when Fishler is on the floor an therefore he is able to jump
+
 	float walkingSpeed;
 	float rushSpeed;
 	float bulletVelocity;
+	float spikeVelocity;
 
 #pragma region Timers
 	//Main loop timers
@@ -79,7 +91,8 @@ protected:
 	float shootAttackTelegraphTime;
 	float shootAttackTime;
 
-#pragma endregion
+	float spikesAttackTelegraphTime;
+	float spikeAttackTime;
 
-	
+#pragma endregion
 };

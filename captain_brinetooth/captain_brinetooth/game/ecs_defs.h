@@ -57,6 +57,7 @@ class PescaController;
 class EnemyGenerator;
 class InkMovement;
 class FishlerController;
+class GetStuckOnWall;
 
 #define _CMPS_LIST_  \
 	Transform,\
@@ -112,7 +113,8 @@ class FishlerController;
 	EnemyGenerator,\
 	PescaController,\
 	InkMovement,\
-	FishlerController
+	FishlerController,\
+	GetStuckOnWall
 
 // groups
 

@@ -384,6 +384,9 @@
     <ClInclude Include="states\TutorialState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
+    <ClInclude Include="components\GetStuckOnWall.h">
+      <Filter>Archivos de encabezado\components\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -638,6 +641,9 @@
     </ClCompile>
     <ClCompile Include="states\TutorialState.cpp">
       <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="components\GetStuckOnWall.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

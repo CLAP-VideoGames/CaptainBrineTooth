@@ -168,6 +168,7 @@
     <ClInclude Include="components\FishlerController.h" />
     <ClInclude Include="components\Gancho.h" />
     <ClInclude Include="components\GetAWeaponOnCollision.h" />
+    <ClInclude Include="components\GetStuckOnWall.h" />
     <ClInclude Include="components\InkMovement.h" />
     <ClInclude Include="components\Inventory.h" />
     <ClInclude Include="components\JellyHatBehavior.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="components\FringeHeadAtack.cpp" />
     <ClCompile Include="components\Gancho.cpp" />
     <ClCompile Include="components\GetAWeaponOnCollision.cpp" />
+    <ClCompile Include="components\GetStuckOnWall.cpp" />
     <ClCompile Include="components\Hammer.cpp" />
     <ClCompile Include="components\Image.cpp" />
     <ClCompile Include="components\InkMovement.cpp" />

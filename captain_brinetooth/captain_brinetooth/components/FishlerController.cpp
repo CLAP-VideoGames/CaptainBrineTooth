@@ -12,12 +12,17 @@ void FishlerController::init() {
 	anim_ = entity_->getComponent<AnimBlendGraph>();
 	playerCloseSize = Vector2D(400, 200);
 	playertr = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
+	playerCloseDetection();
 	playerIsClose = false;
 
+	createFloorDetection();
+	onFloor = false;
+
 	movementTimer.maxTime = sdlutils().rand().teCuoto(1500, 4000);
-	walkingSpeed = 10;
-	rushSpeed = 50;
+	walkingSpeed = 0.7f;
+	rushSpeed = 3;
 	bulletVelocity = 50;
+	spikeVelocity = 30;
 
 	rushAttackTelegraphTime = 500;
 	rushAttackTime = 2000;
@@ -44,6 +49,11 @@ FishlerController::~FishlerController() {
 		trigger->setActive(false);
 		trigger = nullptr;
 	}
+
+	if (floorDetect != nullptr) {
+		floorDetect->setActive(false);
+		floorDetect = nullptr;
+	}
 }
 
 void FishlerController::update() {
@@ -53,11 +63,14 @@ void FishlerController::update() {
 		//Make a random attack
 		currentMovement = AttackTelegraph;
 
-		//Random between rush, bite and shoot
-		currentAttack = (ATTACKS)sdlutils().rand().teCuoto(1, 4);
+		if (currentPhase == Phase1)
+			//Random between rush, bite and shoot
+			currentAttack = (ATTACKS)sdlutils().rand().teCuoto(1, 4);
+		else
+			currentAttack = (ATTACKS)sdlutils().rand().teCuoto(1, 5);
 
 		//Stop fishler movement
-		collider_->setSpeed(Vector2D());
+		collider_->setSpeed(Vector2D(0,0));
 
 		switch (currentAttack) {
 			//Initiate rush telegraphing
@@ -84,6 +97,14 @@ void FishlerController::update() {
 			attackTelegraphTimer.currentTime = sdlutils().currRealTime();
 
 			//Initiate Shoot telegraph animation
+
+
+			break;
+		case ATTACKS::Spikes:
+			attackTelegraphTimer.maxTime = spikesAttackTelegraphTime;
+			attackTelegraphTimer.currentTime = sdlutils().currRealTime();
+
+			//Initiate spike shooting telegraph animation
 
 
 			break;
@@ -131,6 +152,19 @@ void FishlerController::update() {
 
 
 			break;
+		case ATTACKS::Spikes:
+			attackTimer.maxTime = spikeAttackTime;
+			attackTimer.currentTime = sdlutils().currRealTime();
+
+			//Spawn a certain number of spikes
+			for (int i = 0; i < 3; i++) {
+				shootSpike();
+			}
+
+			//Initiate spike shooting attack animation
+
+
+			break;
 		}
 	}
 	//Back to normal movement that is: walking or maybe jumping in phase 2
@@ -138,14 +172,40 @@ void FishlerController::update() {
 		movementTimer.maxTime = sdlutils().rand().teCuoto(1500, 4000); //Random movement time for a little extra spice
 		movementTimer.currentTime = sdlutils().currRealTime();
 
-		currentMovement = Walking;
+		if (currentPhase == Phase1)
+			currentMovement = Walking;
+		else
+			currentMovement = Jumping;
 	}
 
 	//Walks in the direction of the player
 	if (currentMovement == Walking) {
-		collider_->setSpeed(Vector2D((playertr->getPos().getX() - tr_->getPos().getX()) / std::abs((playertr->getPos().getX() - tr_->getPos().getX())) * walkingSpeed, 0));
+		if ((playertr->getPos().getX() - tr_->getPos().getX()) / std::abs((playertr->getPos().getX() - tr_->getPos().getX()) > 0)) {
+			anim_->flipX(false);
+		}
+		else {
+			anim_->flipX(true);
+		}
+		collider_->setSpeed(Vector2D((playertr->getPos().getX() - tr_->getPos().getX()) / std::abs((playertr->getPos().getX() - tr_->getPos().getX())) * walkingSpeed, collider_->getBody()->GetLinearVelocity().y));
 	}
 
+	//Jumps around the area
+	if (currentMovement == Jumping && onFloor) {
+		//Perform jumo in a more or less random direction
+
+
+		onFloor = false; //Stops being on the floor
+	}
+
+	//Updating the player detect trigger
+	if (playerCloseDetect != nullptr) {
+		playerCloseDetect->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2(tr_->getPos().getX() / sdlutils().getPPM(), tr_->getPos().getY() / sdlutils().getPPM()), 0.0f);
+	}
+
+	//Updating the floor detect trigger
+	if (floorDetect != nullptr) {
+		floorDetect->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2(tr_->getPos().getX() / sdlutils().getPPM(), (tr_->getPos().getY() + tr_->getH() / 2 - 20) / sdlutils().getPPM()), 0.0f);
+	}
 }
 
 /// <summary>
@@ -196,7 +256,7 @@ void FishlerController::playerDetection(bool entered) {
 void FishlerController::playerCloseDetection() {
 	playerCloseDetect = entity_->getMngr()->addEntity();
 	playerCloseDetect->addComponent<Transform>(tr_->getPos(), Vector2D(), playerCloseSize.getX(), playerCloseSize.getY(), 0.0f);
-	playerCloseDetect->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK);
+	playerCloseDetect->addComponent<BoxCollider>(TYPE::KINEMATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true);
 	playerCloseDetect->setCollisionMethod(playerDetected);
 	playerCloseDetect->setEndCollisionMethod(playerLost);
 }
@@ -214,6 +274,7 @@ void FishlerController::creaTrigger() {
 
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 	trigger->addComponent<ContactDamage>();
+	trigger->addComponent<DisableOnExit>();
 }
 
 /// <summary>
@@ -241,4 +302,51 @@ void FishlerController::shoot() {
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
 	bullet->addComponent<ContactDamage>();
 	bullet->addComponent<DestroyOnCollision>();
+}
+
+void FishlerController::createFloorDetection() {
+	floorDetect = entity_->getMngr()->addEntity();
+	floorDetect->addComponent<Transform>(Vector2D(tr_->getPos().getX(), tr_->getPos().getY() + tr_->getH() / 2 - 20), Vector2D(), tr_->getW() / 2, 30, 0.0f);
+	floorDetect->addComponent<BoxCollider>(TYPE::KINEMATIC, GROUND, GROUND_MASK, true);
+	floorDetect->setCollisionMethod(floorTouched);
+}
+
+void FishlerController::floorTouched(b2Contact* contact) {
+	Entity* fishler = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	if (fishler != nullptr && fishler->hasComponent<FishlerController>()) {
+		fishler->getComponent<FishlerController>()->changeToOnFloor();
+	}
+	else {
+		fishler = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		if (fishler != nullptr && fishler->hasComponent<FishlerController>()) {
+			fishler->getComponent<FishlerController>()->changeToOnFloor();
+		}
+	}
+}
+
+void FishlerController::changeToOnFloor() {
+	onFloor = true;
+}
+
+void FishlerController::shootSpike() {
+	Entity* spike = entity_->getMngr()->addEntity();
+
+	Vector2D bulletpos; Vector2D bulletvel;
+	if (anim_->isFlipX()) {
+		bulletpos = tr_->getPos() + Vector2D(tr_->getW(), 0);
+		bulletvel = Vector2D(1, sdlutils().rand().teCuoto(0, 100) / 100);
+	}
+	else {
+		bulletpos = tr_->getPos() + Vector2D(-tr_->getW(), 0);
+		bulletvel = Vector2D(-1, sdlutils().rand().teCuoto(0, 100) / 100);
+	}
+
+	spike->addComponent<Transform>(bulletpos, Vector2D(0, 0), 30.0f, 30.0f, 0.0f);
+	AnimBlendGraph* anim_controller = spike->addComponent<AnimBlendGraph>();
+	anim_controller->addAnimation("iddle", &sdlutils().images().at("machine_gun_bullet"), 1, 1, 1, 1, 1);
+	spike->addComponent<DisableOnExit>();
+	spike->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
+	spike->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
+	spike->addComponent<GetStuckOnWall>();
+	spike->addComponent<ContactDamage>();
 }
