@@ -1,5 +1,6 @@
 #include "PescaState.h"
 #include "../components/Inventory.h"
+#include "../states/PasueState.h"
 using namespace ColLayers;
 
 PescaState::~PescaState() {
@@ -13,6 +14,13 @@ PescaState::~PescaState() {
 
 void PescaState::update() {
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
+	if (ih().keyDownEvent()) {
+		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
+			manager_->getSoundMngr()->playPauseMusic();
+			StateMachine* sM = app->getStateMachine();
+			sM->pushState(new PauseState(this, app, playWorld, sM->currentState()->getMngr()->getSoundMngr()));
+		}
+	}
 	GameState::update();
 }
 
@@ -109,7 +117,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 	int x = sdlutils().width() * App::camera_Zoom_Out;
 	int random;
 	int entitiesaux = entitiesPerLine;
-	Inventory* playerInv = playerRef->getComponent<Inventory>();
+	//Inventory* playerInv = playerRef->getComponent<Inventory>();
 
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < entitiesaux; j++)
@@ -119,10 +127,10 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			auto* reward0 = createBasicEntity(Vector2D(x + (100 * App::camera_Zoom_Out * j), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 
 			//If player has not the weapon we try adding another weapon that player hasn´t
-			while (playerInv->hasWeapon(random))
+			/*while (playerInv->hasWeapon(random))
 			{
 				random = sdlutils().rand().teCuoto(0, 5);
-			}
+			}*/
 			if (random == 0)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
 

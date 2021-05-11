@@ -7,7 +7,7 @@ class Entity;
 class PescaState :public GameState
 {
 public:
-	PescaState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* p) : GameState(a, mundo, snd) { playerRef = p; };
+	PescaState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* p, std::shared_ptr <b2World> maux) : GameState(a, mundo, snd) { playerRef = p;  playWorld = maux; };
 	virtual ~PescaState();
 	virtual void init();
 	virtual void update();
@@ -19,6 +19,7 @@ public:
 protected:
 	Entity* playerRef;
 	SDL_Rect cam;
+	std::shared_ptr<b2World> playWorld;
 	int entitiesPerLine, totalBasura;
 	int rows_ = 3;
 	std::vector<int> rowHeights;
