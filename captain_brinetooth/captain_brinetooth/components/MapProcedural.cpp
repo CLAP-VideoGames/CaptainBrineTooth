@@ -359,7 +359,9 @@ CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 
 	refreshCollider();
 
-	initConnections(r);
+	//No habrá más conexiones cuando haya llegado al nivel de boss
+	if(fase < 3)
+		initConnections(r);
 	
 	//Queremos que los triggers hagan viajar al player a otras habitaciones. Como se va a cagar la primera hab, dir es -1. No hay dir opuesta
 	createConnectionTriggers(-1, travel);
