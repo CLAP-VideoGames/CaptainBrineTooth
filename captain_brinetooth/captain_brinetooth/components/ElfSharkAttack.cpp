@@ -29,6 +29,7 @@ void ElfSharkAttack::init()
 	attack_player = false;
 	//Set de los timers
 	elapsed_time_lastAttack = 0;
+	colliderSize_Parent_ = entity_Parent_->getComponent<BoxCollider>()->getSize();
 }
 
 void ElfSharkAttack::update() {
@@ -42,8 +43,6 @@ void ElfSharkAttack::update() {
 				if (elapsed_time_lastAttack + cd_attack_time < sdlutils().currRealTime()) {
 					//Ataque
 					attack();
-					//Reset cooldown
-					elapsed_time_lastAttack = sdlutils().currRealTime();
 				}
 			}
 			else {
@@ -57,17 +56,12 @@ void ElfSharkAttack::update() {
 				}
 			}
 		}
-		else { move(); }
+		else { 
+			entity_Parent_->getComponent<BoxCollider>()->Resize(Vector2D(colliderSize_Parent_.getX(), colliderSize_Parent_.getY()));
+			move(); 
+		}
 	}
 	else {
-		//Desactiva el trigger del ataque al acabar la animacion
-		if (attackTrigger_ != nullptr) {
-				//Desactiva el trigger
-				attackTrigger_->setActive(false);
-				attackTrigger_ = nullptr;
-				//Llama al cambio de estado de animacion
-				entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
-		}
 		//Para el enemigo
 		entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Speed", 0);
 		entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
@@ -75,16 +69,27 @@ void ElfSharkAttack::update() {
 		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
 	}
 	//Ataque
-	if (entity_Parent_->getComponent<AnimBlendGraph>()->getParamValue("Attack") == 1 && entity_Parent_->getComponent<AnimBlendGraph>()->isComplete() && attack_player) {
+	if (entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack_ini" && entity_Parent_->getComponent<AnimBlendGraph>()->isComplete() && attack_player) {
 		//Llama al cambio de estado de animacion
 		entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 2);
 		createAttackTrigger();
 		attack_player = false;
+		//Reset cooldown
+		elapsed_time_lastAttack = sdlutils().currRealTime();
 	}
 	if (attackTrigger_ != nullptr) {
-		attackTrigger_->getComponent<BoxCollider>()
-			->setSpeed(Vector2D(entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().x,
-				entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y));
+		if (entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack_end") {
+			//Desactiva el trigger
+			attackTrigger_->setActive(false);
+			attackTrigger_ = nullptr;
+			//Llama al cambio de estado de animacion
+			entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
+		}
+		else {
+			attackTrigger_->getComponent<BoxCollider>()
+				->setSpeed(Vector2D(entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().x,
+					entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y));
+		}
 	}
 }
 
@@ -151,6 +156,7 @@ void ElfSharkAttack::entityInRange() { entity_in_range_ = true; }
 void ElfSharkAttack::entityOutRange() { entity_in_range_ = false; }
 
 void ElfSharkAttack::attack() {
+	entity_Parent_->getComponent<BoxCollider>()->Resize(Vector2D(colliderSize_Parent_.getX() * 0.5, colliderSize_Parent_.getY()));
 	//Player Transform
 	Transform* playertr_ = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
 	//No se mueve

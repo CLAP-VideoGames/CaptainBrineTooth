@@ -99,21 +99,21 @@ void TestZoneState::init() {
 	elfShark.rotation = 0.0f;
 	elfShark.col = ENEMY;
 	elfShark.colMask = ENEMY_MASK;
-	createElfShark(elfShark);
-	#pragma endregion*/
+	createElfShark(elfShark);*/
+	#pragma endregion
 
 	//#pragma region FringeHead
-	/*Config fringeHead{};
+	Config fringeHead{};
 	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
 	fringeHead.vel = Vector2D(0, 0);
-	fringeHead.size = Vector2D(70.0f,70.0f);
+	fringeHead.size = Vector2D(60.0f,60.0f);
 	fringeHead.friction = 0;
 	fringeHead.physicType = DYNAMIC;
 	fringeHead.fixedRotation = true;
 	fringeHead.rotation = 0.0f;
 	fringeHead.col = ENEMY;
 	fringeHead.colMask = ENEMY_MASK;
-	createFringeHead(fringeHead);*/
+	createFringeHead(fringeHead);
 	#pragma endregion
 //#pragma endregion
 //
@@ -376,8 +376,8 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 #pragma endregion
 
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
-		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
-	player->addComponent<TriggerCollider>("Feet", PLAYER, PLAYER_MASK, Vector2D(0, -0.28), Vector2D(50.0f, 10.0f));
+		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()*0.95));
+	player->addComponent<TriggerCollider>("Feet", PLAYER_JUMP, PLAYER_JUMP_MASK, Vector2D(0, 0.28), Vector2D(50.0f, 10.0f));
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<Armas_HUD>(app);
 	//player->addComponent<SoundManager>(75, "FinalBoss");
@@ -436,12 +436,12 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
 	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
 	elf->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger,
-		entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation, Vector2D(entityConfig.size.getX() * 0.75, entityConfig.size.getY() * 0.75), Vector2D(entityConfig.pos.getX() * 1.33, entityConfig.pos.getY() * 1.33));
+		entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation, Vector2D(entityConfig.size.getX() * 0.5, entityConfig.size.getY() * 0.4), Vector2D(entityConfig.pos.getX() * 1.5, entityConfig.pos.getY() * 0.8));
 	AnimBlendGraph* elf_anim_controller = elf->addComponent<AnimBlendGraph>();
-	elf_anim_controller->addAnimation("idle", &sdlutils().images().at("elfshark_idle"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66,0.6));
-	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.6));
-	elf_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 48, 0, 0, 10, Vector2D(0.66, 0.6));
-	elf_anim_controller->addAnimation("attack_end", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 24, 0, 11, 18, Vector2D(0.66, 0.6));
+	elf_anim_controller->addAnimation("idle", &sdlutils().images().at("elfshark_idle"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66,0.8));
+	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
+	elf_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 48, 0, 0, 10, Vector2D(0.5, 0.8));
+	elf_anim_controller->addAnimation("attack_end", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 24, 0, 11, 18, Vector2D(0.5, 0.8));
 	//Proportion?
 	elf_anim_controller->keepProportion("idle", Vector2D(elf->getComponent<Transform>()->getW(), elf->getComponent<Transform>()->getH()));
 	elf_anim_controller->addTransition("idle", "move", "Speed", 1, false);
@@ -479,7 +479,9 @@ void TestZoneState::createFringeHead(const Config& entityConfig)
 		true, 0.0f, Vector2D(), Vector2D(), 100000);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
-	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0);
+	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0, 0, 12, Vector2D(0.5,0.7));
+	//Proportion?
+	anim_controller->keepProportion("idle", Vector2D(enemy->getComponent<Transform>()->getW(), enemy->getComponent<Transform>()->getH()));
 	anim_controller->addTransition("idle", "attack", "Shoot", 1, false);
 	anim_controller->addTransition("attack", "idle", "Shoot", 0, true);
 	anim_controller->setParamValue("Shoot", 0);

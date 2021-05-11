@@ -206,6 +206,11 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	 return colLay_;
  }
 
+ const Vector2D& BoxCollider::getSize()
+ {
+	 return size_;
+ }
+
  const uint16& BoxCollider::getColMask() const
  {
 	 return colMask_;
@@ -216,7 +221,7 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	 return isTriggerColliding_;
  }
 
- void BoxCollider::Resize(Vector2D size)
+ void BoxCollider::Resize(Vector2D size, Vector2D anchor)
  {
 	 size_ = size;
 
@@ -241,7 +246,7 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	 body = world->CreateBody(&bodyDef);
 
 	 b2PolygonShape boxShape;
-	 boxShape.SetAsBox(size_.getX() / sdlutils().getPPM() / 2.0f, size_.getY() / sdlutils().getPPM() / 2.0f);
+	 boxShape.SetAsBox(size_.getX() / sdlutils().getPPM() * 0.5f, size_.getY() / sdlutils().getPPM() *0.5f);
 
 	 b2FixtureDef fixtureDef;
 	 //Que el cubo real tenga la misma forma que la definicion

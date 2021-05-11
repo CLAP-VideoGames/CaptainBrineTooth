@@ -109,6 +109,8 @@ public:
 	/// </summary>
 	const uint16& getColLayer()const;
 
+	const Vector2D& getSize();
+
 	/// <summary>
 	/// Devuelve la mascara de colision 
 	/// </summary>
@@ -116,7 +118,7 @@ public:
 
 	const bool& isTriggerColliding();
 
-	void Resize(Vector2D size);
+	void Resize(Vector2D size, Vector2D anchor = Vector2D(0.5,0.5));
 
 	void changeColLayer_and_Mask(const uint16& colL, const uint16& colM);
 private:

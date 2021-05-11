@@ -8,8 +8,8 @@ using namespace ColLayers;
 FringeHeadAtack::FringeHeadAtack()
 {
 	//Damos un tamaño al trigger de la zona de ataque 
-	triggersize.setX(800.0);
-	triggersize.setY(1000.0);
+	triggersize.setX(700.0);
+	triggersize.setY(200.0);
 
 }
 void FringeHeadAtack::init()
@@ -18,8 +18,7 @@ void FringeHeadAtack::init()
 	tr = entity_->getComponent<Transform>();  //Obtenemos una referencia al transform del enemigo 
 	assert(tr != nullptr);
 
-	Vector2D triggerpos = tr->getPos();
-	triggerpos.setY(triggerpos.getY() + 25.0);
+	Vector2D triggerpos = Vector2D(tr->getPos().getX() + tr->getW() * 0.5f, tr->getPos().getY() + tr->getH() *0.5f);
 	trigger->addComponent<Transform>(triggerpos, Vector2D(0, 0), triggersize.getX(), triggersize.getY(),  0.0f);
 	trigger->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK,true);
 	trigger->addComponent<ShootDetect>(tr,entity_);

@@ -14,7 +14,7 @@ void TriggerCollider::init()
 	assert(entitytr_ != nullptr);
 	//Inicializamos las componentes del trigger
 	trigger = entity_->getMngr()->addEntity(); //TRIGGER DEL ENEMIGO (rango de deteccion)
-	Vector2D triggerpos = Vector2D(entitytr_->getPos().getX() + offsetTrigger_.getX(), entitytr_->getPos().getY() + offsetTrigger_.getY());
+	Vector2D triggerpos = Vector2D(entitytr_->getPos().getX() + entitytr_->getW() * offsetTrigger_.getX(), entitytr_->getPos().getY() + entitytr_->getH() * offsetTrigger_.getY());
 	trigger->addComponent<Transform>(triggerpos, Vector2D(0, 0), triggersize_.getX(), triggersize_.getY(), 0.0f);
 	trigger->addComponent<BoxCollider>(DYNAMIC, colLayer_, colMask_, true);
 }

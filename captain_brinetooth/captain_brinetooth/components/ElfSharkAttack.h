@@ -25,6 +25,7 @@ private:
 	Entity* entity_Parent_;
 	Transform* entitytr_;
 	Vector2D triggerSize_;
+	Vector2D colliderSize_Parent_;
 	//Atributos de ataque 
 	bool entity_in_range_;
 	float speed_ = 1.0f;

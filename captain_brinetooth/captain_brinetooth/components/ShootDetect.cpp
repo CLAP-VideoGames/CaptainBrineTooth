@@ -26,7 +26,7 @@ void ShootDetect::init()
 
 	shootenabled = false;
 	offsetbala = 8.0f;
-	velocity = 1;
+	velocity = 5;
 }
 
 void ShootDetect::shoot(b2Contact* contact)
@@ -56,11 +56,16 @@ void ShootDetect::update()
 {
 	if (shootenabled)
 	{
+		//Pos del obj disparador- pos del jugador / Normalizado
+		Transform* playertransform = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
+		//Si la posicion del juagdor es menor, significa que esta a nuestra izquierda y hay que hacer el flip 
+		if (playertransform->getPos().getX() < enemytransform->getPos().getX()) enemy->getComponent<AnimBlendGraph>()->flipX(true);
+		else enemy->getComponent<AnimBlendGraph>()->flipX(false);
+
 		if (passedTime + minTime < sdlutils().currRealTime())
 		{
 			enemy->getComponent<AnimBlendGraph>()->setParamValue("Shoot", 1);		
 			passedTime = sdlutils().currRealTime();
-
 		}
 	}
 	else enemy->getComponent<AnimBlendGraph>()->flipX(false);
@@ -104,17 +109,15 @@ void ShootDetect::createBullet()
 	bulletvel= bulletvel.normalize();
 	
 
-	//Si la posicion del juagdor es menor, significa que esta a nuestra izquierda y hay que hacer el flip 
-	if (playertransform->getPos().getX() < enemytransform->getPos().getX()) enemy->getComponent<AnimBlendGraph>()->flipX(true);
-	else enemy->getComponent<AnimBlendGraph>()->flipX(false );
 
 	//Dotamos a la bala de todos los componentes 
-	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 20.0f, 20.0f, 0.0f);
-	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 1);
+	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 40.0f, 20.0f, 0.0f);
+	bullet->addComponent<Animation>("iddle", &sdlutils().images().at("fringehead_bullet"), 1, 1, 1, 1, 0);
+	bullet->getComponent<Animation>()->flipX(enemy->getComponent<AnimBlendGraph>()->isFlipX());
 	//No hace falta crear un animation graph
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
+	bullet->getComponent<BoxCollider>()->getBody()->SetGravityScale(0);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel,velocity);
 	bullet->addComponent<ContactDamage>();
 	bullet->addComponent<DestroyOnCollision>();

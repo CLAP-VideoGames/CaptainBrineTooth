@@ -109,6 +109,10 @@
 			"file": "assets/sprites/enemies/fringehead/fringehead_atk.png"
 		},
 		{
+			"id": "fringehead_bullet",
+			"file": "assets/sprites/enemies/fringehead/fringehead_bullet.png"
+		},
+		{
 			"id": "fullvida",
 			"file": "assets/sprites/player/HUD/anzuelo_sheet.png"
 		},

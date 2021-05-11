@@ -31,6 +31,7 @@ void PlayerController::init()
 
 	moveLeft = moveRight = paralized = false;
 	receiveInput = true;
+	jumpkey_pressed = false;
 }
 
 
@@ -61,6 +62,9 @@ void PlayerController::update()
 			if (ih().isKeyUp(SDL_SCANCODE_D)) {
 				moveRight = false;
 			}
+			if (ih().isKeyUp(SDL_SCANCODE_SPACE)) {
+				jumpkey_pressed = false;
+			}
 		}
 
 		if (ih().keyDownEvent()) {
@@ -74,11 +78,11 @@ void PlayerController::update()
 		}
 
 		//Parte Vertical
-		if ((ih().isKeyDown(SDL_SCANCODE_SPACE) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_A)) && isOnFloor && !isDashing) {
+		if ((ih().isKeyDown(SDL_SCANCODE_SPACE) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_A)) && isOnFloor && !isDashing && !jumpkey_pressed) {
 			isOnFloor = false;
 			//collider_->applyForce(Vector2D(0, -1), forceJump_ * 44.0f); Al ser gradual, le cuesta mucho mas
 			collider_->applyLinearForce(Vector2D(0, -1), forceJump_);
-
+			jumpkey_pressed = true;
 			//Realizar da�o
 			//health_->loseLife();
 			snd->playSoundEffect("player_jump", 300);
@@ -101,11 +105,11 @@ void PlayerController::update()
 	//isOnGround();
 	//std::cout << "\n" << isOnFloor;
 	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
-	if (collider_->getBody()->GetLinearVelocity().y == 0 && !isDashing) {
 		isOnGround();
+	/*if (collider_->getBody()->GetLinearVelocity().y < 0.1 && collider_->getBody()->GetLinearVelocity().y > -0.1 && !isDashing) {
 	}
 	else 
-		isOnFloor = false;
+		isOnFloor = false;*/
 #pragma endregion
 #pragma region Animaciones
 	//Esta tocando suelo
@@ -181,8 +185,6 @@ void PlayerController::initEntityColliders()
 
 		trigger_->getTriggerEntity()->setCollisionMethod(OnTriggerEnter);
 		trigger_->getTriggerEntity()->setEndCollisionMethod(OnTriggerExit);
-
-		//createJointTrigger(trigger_->getTriggerEntity());
 	}
 }
 
@@ -211,46 +213,33 @@ void PlayerController::OnTriggerEnter(b2Contact* contact)
 {
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (bodyA != nullptr) {
-		uint16 bodyA_layer = 0;
 		if (bodyA->hasComponent<BoxCollider>()) {
-			bodyA_layer = bodyA->getComponent<BoxCollider>()->getColLayer();
-		}
-		else if (bodyA->hasComponent<MapCollider>()) {
-			bodyA_layer = bodyA->getComponent<MapCollider>()->getColLayer();
-		}
-		if (bodyA_layer == PLAYER) {
-			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-			//METODO 1 (Mapa)
-			if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
-				uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
-					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-				uint16 bodyB_LayerMask = (bodyB->hasComponent<BoxCollider>()) ?
-					bodyB->getComponent<BoxCollider>()->getColMask() : bodyB->getComponent<MapCollider>()->getColMask();
-				if (bodyB_Layer == GROUND) {
-					bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+			if (bodyA->getComponent<BoxCollider>()->getColLayer() == PLAYER_JUMP) {
+				Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+				if (bodyB->hasComponent<MapCollider>() || bodyB->hasComponent<BoxCollider>()) {
+					uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
+						bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+
+					if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+						bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+					}
 				}
 			}
 		}
+		
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			if (bodyA != nullptr) {
-				uint16 bodyA_layer = 0;
 				if (bodyA->hasComponent<BoxCollider>()) {
-					bodyA_layer = bodyA->getComponent<BoxCollider>()->getColLayer();
-				}
-				else if (bodyA->hasComponent<MapCollider>()) {
-					bodyA_layer = bodyA->getComponent<MapCollider>()->getColLayer();
-				}
-				if (bodyA_layer == PLAYER) {
-					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-					//METODO 1 (Mapa)
-					if (bodyB->hasComponent<BoxCollider>() || bodyB->hasComponent<MapCollider>()) {
-						uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
-							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-						uint16 bodyB_LayerMask = (bodyB->hasComponent<BoxCollider>()) ?
-							bodyB->getComponent<BoxCollider>()->getColMask() : bodyB->getComponent<MapCollider>()->getColMask();
-						if (bodyB_Layer == GROUND) {
-							bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+					if (bodyA->getComponent<BoxCollider>()->getColLayer() == PLAYER_JUMP) {
+						Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+						if (bodyB->hasComponent<MapCollider>() || bodyB->hasComponent<BoxCollider>()) {
+							uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
+								bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+
+							if (bodyB_Layer == GROUND && !bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+								bodyA->getComponent<BoxCollider>()->triggerCollide(true);
+							}
 						}
 					}
 				}
@@ -263,43 +252,33 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 {
 	Entity* bodyA = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
 	if (bodyA != nullptr) {
-		uint16 bodyA_layer = 0;
 		if (bodyA->hasComponent<BoxCollider>()) {
-			bodyA_layer = bodyA->getComponent<BoxCollider>()->getColLayer();
-		}
-		else if (bodyA->hasComponent<MapCollider>()) {
-			bodyA_layer = bodyA->getComponent<MapCollider>()->getColLayer();
-		}
-		/*uint16 bodyA_layer = (bodyA->getComponent<BoxCollider>() != nullptr) ?
-			bodyA->getComponent<BoxCollider>()->getColLayer() : bodyA->getComponent<MapCollider>()->getColLayer();*/
-		if (bodyA_layer == PLAYER) {
-			Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-			//METODO 1 (Mapa)
-			if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-				uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
-					bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-				if (bodyB_Layer == GROUND) {
-					bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+			if (bodyA->getComponent<BoxCollider>()->getColLayer() == PLAYER_JUMP) {
+				Entity* bodyB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+				if (bodyB->hasComponent<MapCollider>() || bodyB->hasComponent<BoxCollider>()) {
+					uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
+						bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+
+					if (bodyB_Layer == GROUND && bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+						bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+					}
 				}
 			}
 		}
+
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			if (bodyA != nullptr) {
 				if (bodyA->hasComponent<BoxCollider>()) {
-					bodyA_layer = bodyA->getComponent<BoxCollider>()->getColLayer();
-				}
-				else if (bodyA->hasComponent<MapCollider>()) {
-					bodyA_layer = bodyA->getComponent<MapCollider>()->getColLayer();
-				}
-				if (bodyA_layer == PLAYER) {
-					Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-					//METODO 1 (Mapa)
-					if (bodyB->getComponent<BoxCollider>() != nullptr || bodyB->getComponent<MapCollider>() != nullptr) {
-						uint16 bodyB_Layer = (bodyB->getComponent<BoxCollider>() != nullptr) ?
-							bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
-						if (bodyB_Layer == GROUND) {
-							bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+					if (bodyA->getComponent<BoxCollider>()->getColLayer() == PLAYER_JUMP) {
+						Entity* bodyB = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+						if (bodyB->hasComponent<MapCollider>() || bodyB->hasComponent<BoxCollider>()) {
+							uint16 bodyB_Layer = (bodyB->hasComponent<BoxCollider>()) ?
+								bodyB->getComponent<BoxCollider>()->getColLayer() : bodyB->getComponent<MapCollider>()->getColLayer();
+
+							if (bodyB_Layer == GROUND && bodyA->getComponent<BoxCollider>()->isTriggerColliding()) {
+								bodyA->getComponent<BoxCollider>()->triggerCollide(false);
+							}
 						}
 					}
 				}
@@ -310,7 +289,7 @@ void PlayerController::OnTriggerExit(b2Contact* contact)
 
 void PlayerController::isOnGround()
 {
-	if (!trigger_->getTriggerEntity()->getComponent<BoxCollider>()->isTriggerColliding())
+	if ((trigger_->getTriggerEntity()->getComponent<BoxCollider>()->isTriggerColliding() || collider_->getBody()->GetLinearVelocity().y == 0) && !isDashing)
 		isOnFloor = true;
 	else
 		isOnFloor = false;
