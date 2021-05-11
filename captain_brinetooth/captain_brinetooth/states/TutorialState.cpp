@@ -55,10 +55,6 @@ void TutorialState::update()
 		}
 		nextStep_ = false;
 	}
-	//Actualizar posicion del enemigo
-	if (enemy != nullptr) {
-		enemy->getComponent<BoxCollider>()->getBody()->SetLinearVelocity(b2Vec2(0,0));
-	}
 	GameState::update();
 }
 
@@ -243,7 +239,7 @@ void TutorialState::stepDash()
 	Entity* a = manager_->addEntity();
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
-	a->addComponent<Transform>(aPos, Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
+	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 80.0f * App::camera_Zoom_Out, 0.0f);
 	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 4, 4);
 	stepImg.push_back(a);
 
@@ -260,7 +256,7 @@ void TutorialState::stepDash()
 	y = (int)(sdlutils().height() * 0.9f * App::camera_Zoom_Out);
 	stepImgPos.push_back(Vector2D(x, y));
 	Entity* m2 = manager_->addEntity();
-	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.6 * App::camera_Zoom_Out, sdlutils().width() * 0.5 * App::camera_Zoom_Out * 0.07, 0.0f);
+	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.7 * App::camera_Zoom_Out, sdlutils().width() * 0.5 * App::camera_Zoom_Out * 0.07, 0.0f);
 	m2->addComponent<Animation>("a", &sdlutils().msgs().at("dash_explanation"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m2);
 	countDown = sdlutils().currRealTime() - 4000;
@@ -287,6 +283,7 @@ void TutorialState::stepAttack()
 	m->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 100.0f * App::camera_Zoom_Out, 20.0f * App::camera_Zoom_Out, 0.0f);
 	m->addComponent<Animation>("a", &sdlutils().msgs().at("attack"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m);
+	countDown = sdlutils().currRealTime() + 4000;
 }
 
 void TutorialState::stepWeapon()
@@ -314,17 +311,18 @@ void TutorialState::stepWeapon()
 	int y = (int)(aPos.getY() + a->getComponent<Transform>()->getH());
 	stepImgPos.push_back(Vector2D(x, y));
 	Entity* m = manager_->addEntity();
-	m->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 100.0f * App::camera_Zoom_Out, 20.0f * App::camera_Zoom_Out, 0.0f);
+	m->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 30.0f * App::camera_Zoom_Out, 0.0f);
 	m->addComponent<Animation>("a", &sdlutils().msgs().at("switch"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m);
 
-	x = (int)(sdlutils().width() * 0.6f * App::camera_Zoom_Out);
+	x = (int)(sdlutils().width() * 0.55f * App::camera_Zoom_Out);
 	y = (int)(sdlutils().height() * 0.9f * App::camera_Zoom_Out);
 	stepImgPos.push_back(Vector2D(x, y));
 	Entity* m2 = manager_->addEntity();
-	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.5 * App::camera_Zoom_Out, sdlutils().width() * 0.5 * App::camera_Zoom_Out * 0.08, 0.0f);
+	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.5 * App::camera_Zoom_Out, sdlutils().width() * 0.45 * App::camera_Zoom_Out * 0.08, 0.0f);
 	m2->addComponent<Animation>("a", &sdlutils().msgs().at("switch_explanation"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m2);
+	countDown = sdlutils().currRealTime() + 4000;
 }
 
 void TutorialState::stepHealth()
@@ -565,7 +563,7 @@ void TutorialState::createPlayer(const Config& playerConfig)
 
 	//Por testing basura
 	player->addComponent<CameraFollow>(Vector2D(250.0f, -130.0f), 0.06f, false, true,
-		Vector2D(sdlutils().width() * 4 * App::camera_Zoom_Out, 0.0f)); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+		Vector2D(sdlutils().width() * 2 * App::camera_Zoom_Out, 0.0f)); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 
 	//Seteamos al Player como MainHandler
 	manager_->setHandler<Player>(player);
@@ -573,23 +571,22 @@ void TutorialState::createPlayer(const Config& playerConfig)
 
 void TutorialState::createEnemy()
 {
-	Config flowerJellyHat{};
-	flowerJellyHat.pos = Vector2D(sdlutils().width() * 1.2 * App::camera_Zoom_Out, sdlutils().height() * 0.85 * App::camera_Zoom_Out);
-	flowerJellyHat.vel = Vector2D(0, 0);
-	flowerJellyHat.size = Vector2D(120.0f, 120.0f);
-	flowerJellyHat.friction = 100.0f;
-	flowerJellyHat.physicType = DYNAMIC;
-	flowerJellyHat.fixedRotation = true;
-	flowerJellyHat.rotation = 0.0f;
-	flowerJellyHat.col = ENEMY;
-	flowerJellyHat.colMask = ENEMY_MASK;
-
-	auto* fjh1 = createBasicEntity(flowerJellyHat.pos, flowerJellyHat.size, flowerJellyHat.rotation, flowerJellyHat.vel);
-	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
-	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
-	fjh1->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
-	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask);
-	fjh1->addComponent<ContactDamage>();
+	Config entityConfig{};
+	entityConfig.pos = Vector2D(sdlutils().width() * 1.2* App::camera_Zoom_Out, sdlutils().height() * 0.85 *App::camera_Zoom_Out);
+	entityConfig.vel = Vector2D(0, 0);
+	entityConfig.size = Vector2D(120.0f, 120.0f);
+	entityConfig.friction = 0;
+	entityConfig.physicType = DYNAMIC;
+	entityConfig.fixedRotation = true;
+	entityConfig.rotation = 0.0f;
+	entityConfig.col = ENEMY;
+	entityConfig.colMask = ENEMY_MASK;
+	enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	AnimBlendGraph* enemy_anim_controller = enemy->addComponent<AnimBlendGraph>();
+	enemy_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
+	enemy->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	//fjh1->addComponent<ContactDamage>();
 }
 
 void TutorialState::createRoom()
@@ -599,7 +596,7 @@ void TutorialState::createRoom()
 	floor.pos = Vector2D(sdlutils().width() * App::camera_Zoom_Out, sdlutils().height()* App::camera_Zoom_Out);
 	floor.vel = Vector2D(0, 0);
 	floor.size = Vector2D(sdlutils().width() * 2.0f * App::camera_Zoom_Out, 100.0f);
-	floor.friction = 0.0f;
+	floor.friction = 0.2f;
 	floor.physicType = STATIC;
 	floor.fixedRotation = true;
 	floor.rotation = 0.0f;
@@ -609,7 +606,7 @@ void TutorialState::createRoom()
 	Config floor2{};
 	floor2.pos = Vector2D(sdlutils().width() * 2 * App::camera_Zoom_Out, sdlutils().height() * 0.2f * App::camera_Zoom_Out);
 	floor2.vel = Vector2D(0, 0);
-	floor2.size = Vector2D(800, 50.0f);
+	floor2.size = Vector2D(sdlutils().width() * App::camera_Zoom_Out, 50.0f);
 	floor2.friction = 0.0f;
 	floor2.physicType = STATIC;
 	floor2.fixedRotation = true;
@@ -620,7 +617,7 @@ void TutorialState::createRoom()
 	Config floor3{};
 	floor3.pos = Vector2D(0, sdlutils().height() * 0.2f * App::camera_Zoom_Out);
 	floor3.vel = Vector2D(0, 0);
-	floor3.size = Vector2D(800, 50.0f);
+	floor3.size = Vector2D(sdlutils().width() * App::camera_Zoom_Out, 50.0f);
 	floor3.friction = 0.0f;
 	floor3.physicType = STATIC;
 	floor3.fixedRotation = true;

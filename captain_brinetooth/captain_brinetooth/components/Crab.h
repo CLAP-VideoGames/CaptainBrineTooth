@@ -63,7 +63,7 @@ private:
 	//Variables related to ChainsawTriggerPosition
 	int triggerOffSetX = -70;
 	int triggerOffSetY = -15;
-	int triggerWidth = 80;
+	int triggerWidth = 120;
 	int triggerHeight = 60;
 
 	Entity* trigger;

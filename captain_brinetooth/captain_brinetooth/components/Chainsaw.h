@@ -65,7 +65,7 @@ private:
 	//Variables related to ChainsawTriggerPosition
 	int triggerOffSetX = -60;
 	int triggerOffSetY = -30;
-	int triggerWidth = 120;
+	int triggerWidth = 150;
 	int triggerHeight = 130;
 	
 	int thirdTriggerOffSetX = -90;
