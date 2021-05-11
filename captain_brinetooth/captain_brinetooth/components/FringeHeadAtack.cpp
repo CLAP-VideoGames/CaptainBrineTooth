@@ -9,7 +9,7 @@ FringeHeadAtack::FringeHeadAtack()
 {
 	//Damos un tamaño al trigger de la zona de ataque 
 	triggersize.setX(700.0);
-	triggersize.setY(200.0);
+	triggersize.setY(300.0);
 
 }
 void FringeHeadAtack::init()
