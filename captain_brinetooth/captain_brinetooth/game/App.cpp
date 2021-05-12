@@ -36,7 +36,7 @@ App::App() {
 	//----Inicio de Options----
 	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
 	//----Inicio de Tutorial------
-	stateMachine->pushState(new TutorialState(this, world_, sndProvisional));
+	//stateMachine->pushState(new TutorialState(this, world_, sndProvisional));
 	//----Inicio de Juego------
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional));
 	//-----Zona de pruebas------

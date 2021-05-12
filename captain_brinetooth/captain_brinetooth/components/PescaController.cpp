@@ -28,7 +28,7 @@ void PescaController::update() {
 		if (entity_->getMngr()->getHandler<Rod>()->getComponent<BoxCollider>()->getPhysicalPos().getX() <= s_width * 0.15) {
 			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 			if (ih().keyDownEvent()) {
-				if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
+				if (ih().isKeyDown(SDL_SCANCODE_D)) {
 					collider_->setSpeed(Vector2D(2, collider_->getBody()->GetLinearVelocity().y));
 				}
 
@@ -37,7 +37,7 @@ void PescaController::update() {
 		else if(entity_->getMngr()->getHandler<Rod>()->getComponent<BoxCollider>()->getPhysicalPos().getX() >= s_width * 0.75){
 			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 			if (ih().keyDownEvent()) {
-				if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
+				if (ih().isKeyDown(SDL_SCANCODE_A)) {
 					collider_->setSpeed(Vector2D(-2, collider_->getBody()->GetLinearVelocity().y));
 				}
 
@@ -45,16 +45,16 @@ void PescaController::update() {
 		}
 		else {
 			if (ih().keyDownEvent()) {
-				if (ih().isKeyDown(SDL_SCANCODE_LEFT)) {
+				if (ih().isKeyDown(SDL_SCANCODE_A)) {
 					collider_->setSpeed(Vector2D(-2, collider_->getBody()->GetLinearVelocity().y));
 				}
-				if (ih().isKeyDown(SDL_SCANCODE_RIGHT)) {
+				if (ih().isKeyDown(SDL_SCANCODE_D)) {
 					collider_->setSpeed(Vector2D(2, collider_->getBody()->GetLinearVelocity().y));
 				}
 			}
 		}
 		if (ih().keyUpEvent()) {
-			if (ih().isKeyUp(SDL_SCANCODE_RIGHT) && ih().isKeyUp(SDL_SCANCODE_LEFT)) collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
+			if (ih().isKeyUp(SDL_SCANCODE_D) && ih().isKeyUp(SDL_SCANCODE_A)) collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 		}
 	}
 }
