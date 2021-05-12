@@ -163,14 +163,14 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			triggers.push_back(t);
 		}
-		tmx::Vector2f playerpos = lvl->getPlayerPos();
-
-		auto* player = entity_->getMngr()->getHandler<Player>();
-		//Si solo ha explorado la habitacion inicial (cuando se crea la habitacion inicial, roomExplored = 1)
-		//Si es la sala inicial, posicionamos al player en el Spawn Player
-		if (player != NULL && roomsExplored < 2 && playerpos.x != 0)
-			player->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
 	}
+	tmx::Vector2f playerpos = lvl->getPlayerPos();
+
+	auto* player = entity_->getMngr()->getHandler<Player>();
+	//Si solo ha explorado la habitacion inicial (cuando se crea la habitacion inicial, roomExplored = 1)
+	//Si es la sala inicial, posicionamos al player en el Spawn Player
+	if (player != NULL && roomsExplored < 2 && playerpos.x != 0)
+		player->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
 
 	//Si es un final room, creamos el trigger que hace pasar de zona
 	if (lvl->finalRoom()) {
@@ -325,7 +325,7 @@ void MapProcedural::loadTileFiles(){
 void MapProcedural::initBoss() {
 	// Se inicia la musica del nivel correspondiente
 	//entity_->getMngr()->getSoundMngr()->ChangeMainMusic("BossFight");
-
+	roomsExplored = 0;
 	int tile = getRandomTileFromArea(Boss);
 	roomNames[tile].used = true;
 	roomsExplored++;
@@ -377,9 +377,6 @@ void MapProcedural::travelNextZone(b2Contact* contact) {
 	}
 
 	int aux = trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPhase();
-
-
-
 
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
