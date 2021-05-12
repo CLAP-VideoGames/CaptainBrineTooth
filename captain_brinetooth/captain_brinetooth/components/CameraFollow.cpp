@@ -50,9 +50,9 @@ void CameraFollow::actPosAdvanced(){
 		offset.setX(-offset_.getX());//mira izquierda
 	//Y axis
 	if (down_time_ >= cd_down_)
-		offset.setY(-offset_.getY());//mira abajo
+		offset.setY(-offset_.getY()*3);//mira abajo
 	else if (up_time_ >= cd_up_)
-		offset.setY(offset_.getY() * 1.5);//mira arriba
+		offset.setY(offset_.getY() * 3);//mira arriba
 	else
 		offset.setY(offset_.getY());
 

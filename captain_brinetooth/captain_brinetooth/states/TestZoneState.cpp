@@ -375,7 +375,7 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//SE NECESITA LA VARIABLE DE CAMLIMITS DE PLAYSTATE; POR ESO ESTA COMENTADO
-	player->addComponent<CameraFollow>(Vector2D(250.0f, -200.0f), 0.06f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<CameraFollow>(Vector2D(200.0f, -80.0f), 0.1f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 
 	player->addComponent<Inventory>()->addWeapon(4);
 

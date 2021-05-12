@@ -562,7 +562,7 @@ void TutorialState::createPlayer(const Config& playerConfig)
 	player->addComponent<PlayerController>(3.0f, 2.1f, 3.0f);
 
 	//Por testing basura
-	player->addComponent<CameraFollow>(Vector2D(250.0f, -130.0f), 0.06f, false, true,
+	player->addComponent<CameraFollow>(Vector2D(200.0f, -80.0f), 0.1f, false, true,
 		Vector2D(sdlutils().width() * 2 * App::camera_Zoom_Out, 0.0f)); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 
 	//Seteamos al Player como MainHandler
