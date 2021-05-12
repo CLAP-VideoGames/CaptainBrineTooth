@@ -19,6 +19,13 @@ void PescaState::update() {
 			StateMachine* sM = app->getStateMachine();
 			sM->pushState(new PauseState(this, app, playWorld, sM->currentState()->getMngr()->getSoundMngr()));
 		}
+		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && !space_pressed_) {
+			space_pressed_ = true;
+			s->setActive(false);
+			s = nullptr;
+			m3->setActive(false);
+			m3 = nullptr;
+		}
 	}
 	GameState::update();
 }
@@ -29,9 +36,7 @@ void PescaState::init() {
 	//Metodo para cambiar el zoom 
 	main_zoom = app->getCameraZoomOut();
 	app->setCameraZoomOut(2.0f);
-
-	//playerRef->getComponent<PlayerController>()->playerReceiveInput(false);
-
+	space_pressed_ = false;
 
 	//---BG----
 	//manager_->getWorld()->SetContactListener(&collisionListener);
@@ -68,7 +73,39 @@ void PescaState::init() {
 	gancho.col = DEFAULT;
 	gancho.colMask = DEFAULT_MASK;
 	createPesca(gancho);
+	//Imagenes
+	auto* a = manager_->addEntity();
+	Vector2D aPos = Vector2D(sdlutils().width() * 0.1f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
+	a->addComponent<Transform>(aPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 0, 0);
 
+	auto* d = manager_->addEntity();
+	Vector2D dPos = Vector2D(sdlutils().width() * 0.9f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
+	d->addComponent<Transform>(dPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
+	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 1, 1);
+
+	s = manager_->addEntity();
+	Vector2D sPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.4f * App::camera_Zoom_Out);
+	s->addComponent<Transform>(sPos, Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
+	s->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 5, 5);
+	//Messages
+	int x = (int)(aPos.getX());
+	y = (int)(aPos.getY() + a->getComponent<Transform>()->getH());
+	auto* m = manager_->addEntity();
+	m->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 75.0f * App::camera_Zoom_Out, 10.0f * App::camera_Zoom_Out, 0.0f);
+	m->addComponent<Animation>("a", &sdlutils().msgs().at("izquierda"), 1, 1, 1, 1, 0);
+
+	x = (int)(dPos.getX());
+	y = (int)(dPos.getY() + d->getComponent<Transform>()->getH());
+	auto* m2 = manager_->addEntity();
+	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 75.0f * App::camera_Zoom_Out, 10.0f * App::camera_Zoom_Out, 0.0f);
+	m2->addComponent<Animation>("d", &sdlutils().msgs().at("derecha"), 1, 1, 1, 1, 0);
+
+	x = (int)(sPos.getX());
+	y = (int)(sPos.getY() + s->getComponent<Transform>()->getH() * 0.5);
+	m3 = manager_->addEntity();
+	m3->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 30.0f * App::camera_Zoom_Out, 0.0f);
+	m3->addComponent<Animation>("a", &sdlutils().msgs().at("fishing"), 1, 1, 1, 1, 0);
 }
 void PescaState::createPesca(const Config& entityConfig) {
 
@@ -79,7 +116,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 	//floor->addComponent<Animation>("debug", &sdlutils().images().at("arena"), 1, 1, 1, 1, 0);
 	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 	//cuerda *arreglada
-	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5 * z_factor), entityConfig.size, 0.0f, Vector2D(0, 0));
+	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5 * z_factor), Vector2D(entityConfig.size.getX()*4, entityConfig.size.getX()), 0.0f, Vector2D(0, 0));
 	topRod->addComponent<Animation>("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	topRod->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	topRod->addComponent<PescaController>(screen_width);
@@ -92,9 +129,9 @@ void PescaState::createPesca(const Config& entityConfig) {
 	playercollider_->getFixture()->SetSensor(true);
 	player->addComponent<PescaController>(screen_width);
 	//gancho *si arreglado
-	auto* gancho = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	auto* gancho = createBasicEntity(Vector2D(entityConfig.pos.getX()+5, entityConfig.pos.getY()), entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	gancho->addComponent<Animation>("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
-	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7f, true, 0.0f, Vector2D(entityConfig.size.getX()*0.5, entityConfig.size.getY()*0.5));
 	gancho->addComponent<Gancho>(app);
 	gancho->addComponent<PescaController>(screen_width);
 

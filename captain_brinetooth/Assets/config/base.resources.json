@@ -793,6 +793,12 @@
 			"text": "Deslizarse te hace inmune y te permite atravesar enemigos",
 			"font": "Freaks-of-nature72",
 			"color": "0x000000ff"
+		},
+		{
+			"id": "fishing",
+			"text": "Soltar anzuelo",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
 		}
 
 	],
