@@ -13,7 +13,7 @@ void PescaController::init() {
 void PescaController::update() {
 	if(!move){
 		if (ih().keyDownEvent())
-			if (ih().isKeyDown(SDLK_k)) {
+			if (ih().isKeyDown(SDLK_SPACE)) {
 				move = true;
 				if (entity_->getComponent<Gancho>() != nullptr) {
 					entity_->getComponent<Gancho>()->setBajar(true);
