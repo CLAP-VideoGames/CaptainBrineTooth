@@ -25,7 +25,7 @@ void TestZoneState::init() {
 	playerConfig.pos = Vector2D(100, sdlutils().height() * 1.5f);
 	playerConfig.vel = Vector2D(0, 0);
 	playerConfig.size = Vector2D(100.0f, 100.0f);
-	playerConfig.friction = 0.2f;
+	playerConfig.friction = 0.0f;
 	playerConfig.physicType = DYNAMIC;
 	playerConfig.fixedRotation = true;
 	playerConfig.rotation = 0.0f;
@@ -33,24 +33,12 @@ void TestZoneState::init() {
 	playerConfig.colMask = PLAYER_MASK;
 	createPlayer(playerConfig);
 
-	/*Config gancho{};
-	gancho.pos = Vector2D(sdlutils().width() * 0.8f, 400);
-	gancho.vel = Vector2D(0, 0);
-	gancho.size = Vector2D(100.0f, 100.0f);
-	gancho.friction = 0.0f;
-	gancho.physicType = DYNAMIC;
-	gancho.fixedRotation = true;
-	gancho.rotation = 0.0f;
-	gancho.col = DEFAULT;
-	gancho.colMask = DEFAULT_MASK;
-	createPesca(gancho);*/
-
 	//---SUELO---
 	Config floor{};
 	floor.pos = Vector2D(200, sdlutils().height() * 2.0f);
 	floor.vel = Vector2D(0, 0);
 	floor.size = Vector2D(sdlutils().width() * 4.0f, 100.0f);
-	floor.friction = 0.0f;
+	floor.friction = 0.2f;
 	floor.physicType = STATIC;
 	floor.fixedRotation = true;
 	floor.rotation = 0.0f;
@@ -61,7 +49,7 @@ void TestZoneState::init() {
 	floor2.pos = Vector2D(0, sdlutils().height() * 2.0f - 350);
 	floor2.vel = Vector2D(0, 0);
 	floor2.size = Vector2D(400, 100.0f);
-	floor2.friction = 0.0f;
+	floor2.friction = 0.2f;
 	floor2.physicType = STATIC;
 	floor2.fixedRotation = true;
 	floor2.rotation = 0.0f;
@@ -74,12 +62,12 @@ void TestZoneState::init() {
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
-	#pragma region PompeyWorm
-	/*Config pompeyWorm{};
+	/*#pragma region PompeyWorm
+	Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
 	pompeyWorm.size = Vector2D(100.0f, 60.0f);
-	pompeyWorm.friction = 100;
+	pompeyWorm.friction = 0.7;
 	pompeyWorm.physicType = DYNAMIC;
 	pompeyWorm.fixedRotation = true;
 	pompeyWorm.rotation = 0.0f;
@@ -88,32 +76,33 @@ void TestZoneState::init() {
 	createPompeyWorm(pompeyWorm);
 	#pragma endregion*/
 
-	/*#pragma region ElfShark
+	#pragma region ElfShark
 	Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
 	elfShark.size = Vector2D(240.0f, 200.0f);
-	elfShark.friction = 0.2f;
+	elfShark.friction = 0.7f;
 	elfShark.physicType = DYNAMIC;
 	elfShark.fixedRotation = true;
 	elfShark.rotation = 0.0f;
 	elfShark.col = ENEMY;
 	elfShark.colMask = ENEMY_MASK;
-	createElfShark(elfShark);*/
+	createElfShark(elfShark);
 	#pragma endregion
 
-	//#pragma region FringeHead
+	/*#pragma region FringeHead
 	Config fringeHead{};
 	fringeHead.pos = Vector2D(300, sdlutils().height() * 1.7f);
 	fringeHead.vel = Vector2D(0, 0);
 	fringeHead.size = Vector2D(60.0f,60.0f);
-	fringeHead.friction = 0;
+	fringeHead.friction = 0.7;
 	fringeHead.physicType = DYNAMIC;
 	fringeHead.fixedRotation = true;
 	fringeHead.rotation = 0.0f;
 	fringeHead.col = ENEMY;
 	fringeHead.colMask = ENEMY_MASK;
-	createFringeHead(fringeHead);
+	createFringeHead(fringeHead);*/
+
 	#pragma endregion
 //#pragma endregion
 //
@@ -409,7 +398,8 @@ void TestZoneState::createBoxFloor(const Config& entityConfig) {
 void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 {
 	auto* gusano = createBasicEntity(enemy1Config.pos, enemy1Config.size, enemy1Config.rotation, enemy1Config.vel);
-	gusano->addComponent<BoxCollider>(enemy1Config.physicType, enemy1Config.col, enemy1Config.colMask);
+	gusano->addComponent<BoxCollider>(enemy1Config.physicType, enemy1Config.col, enemy1Config.colMask, enemy1Config.isTrigger,enemy1Config.friction,
+										enemy1Config.fixedRotation, enemy1Config.rotation, Vector2D(), Vector2D(),10000);
 	AnimBlendGraph* gusano_anim_controller = gusano->addComponent<AnimBlendGraph>();
 	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("pompey_worm_idle"), 1, 2, 2, 12, -1);
 	gusano_anim_controller->addAnimation("move", &sdlutils().images().at("pompey_worm_move"), 1, 2, 2, 12, -1);
@@ -432,8 +422,9 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 #pragma region ElfShark
 void TestZoneState::createElfShark(const Config& entityConfig) {
 	auto* elf = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	elf->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger,
-		entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation, Vector2D(entityConfig.size.getX() * 0.5, entityConfig.size.getY() * 0.4), Vector2D(entityConfig.pos.getX() * 1.5, entityConfig.pos.getY() * 0.8));
+	elf->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false,
+		entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation, Vector2D(entityConfig.size.getX() * 0.5, entityConfig.size.getY() * 0.4),
+		Vector2D(entityConfig.pos.getX() * 1.5, entityConfig.pos.getY() * 0.8),35000);
 	AnimBlendGraph* elf_anim_controller = elf->addComponent<AnimBlendGraph>();
 	elf_anim_controller->addAnimation("idle", &sdlutils().images().at("elfshark_idle"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66,0.8));
 	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
@@ -463,7 +454,7 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
 	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
-	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7, true, 0.0, Vector2D(), Vector2D(),10000);
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
@@ -472,8 +463,8 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 void TestZoneState::createFringeHead(const Config& entityConfig)
 {
 	auto* enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	BoxCollider* collider = enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7f,
-		true, 0.0f, Vector2D(), Vector2D(), 100000);
+	BoxCollider* collider = enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, entityConfig.friction,
+		entityConfig.fixedRotation, entityConfig.rotation, Vector2D(), Vector2D(), 10000);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
 	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0, 0, 12, Vector2D(0.5,0.7));

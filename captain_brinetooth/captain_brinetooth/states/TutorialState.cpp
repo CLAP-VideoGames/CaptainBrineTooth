@@ -575,17 +575,14 @@ void TutorialState::createEnemy()
 	entityConfig.pos = Vector2D(sdlutils().width() * 1.2* App::camera_Zoom_Out, sdlutils().height() * 0.85 *App::camera_Zoom_Out);
 	entityConfig.vel = Vector2D(0, 0);
 	entityConfig.size = Vector2D(120.0f, 120.0f);
-	entityConfig.friction = 0;
 	entityConfig.physicType = DYNAMIC;
-	entityConfig.fixedRotation = true;
-	entityConfig.rotation = 0.0f;
 	entityConfig.col = ENEMY;
 	entityConfig.colMask = ENEMY_MASK;
 	enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* enemy_anim_controller = enemy->addComponent<AnimBlendGraph>();
 	enemy_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
 	enemy->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
-	enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
+	enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7f,true,0.0,Vector2D(),Vector2D(),10000);
 	//fjh1->addComponent<ContactDamage>();
 }
 

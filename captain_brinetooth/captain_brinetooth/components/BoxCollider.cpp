@@ -252,7 +252,7 @@ void BoxCollider::applyLinearForce(Vector2D dir, float force)
 	 //Que el cubo real tenga la misma forma que la definicion
 	 fixtureDef.shape = &boxShape;
 	 //No puede ser la densidad 0 para un objeto dinamico
-	 fixtureDef.density = 1.0f;
+	 fixtureDef.density = density_;
 	 fixtureDef.friction = friction_;
 	 fixtureDef.isSensor = isTrigger;
 

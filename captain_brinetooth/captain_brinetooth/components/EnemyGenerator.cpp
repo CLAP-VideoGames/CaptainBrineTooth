@@ -47,8 +47,8 @@ Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 	fringeHead.colMask = ENEMY_MASK;
 
 	auto* enemy = createBasicEntity(pos, fringeHead.size, fringeHead.rotation, fringeHead.vel);
-	BoxCollider* collider = enemy->addComponent<BoxCollider>(fringeHead.physicType, fringeHead.col, fringeHead.colMask, false, 0.7f,
-		true, 0.0f, Vector2D(), Vector2D(), 100000);
+	BoxCollider* collider = enemy->addComponent<BoxCollider>(fringeHead.physicType, fringeHead.col, fringeHead.colMask, false, fringeHead.friction,
+		fringeHead.fixedRotation, fringeHead.rotation, Vector2D(), Vector2D(), 10000);
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
 	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0, 0, 12, Vector2D(0.5, 0.7));
@@ -81,7 +81,7 @@ Entity* EnemyGenerator::generateMedusa(Vector2D pos)
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
 	fjh1->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
-	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask);
+	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask, false, 0.7, true, 0.0, Vector2D(), Vector2D(), 10000);
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 
@@ -102,9 +102,9 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 
 
 	auto* elf = createBasicEntity(pos, elfShark.size, elfShark.rotation, elfShark.vel);
-	elf->addComponent<BoxCollider>(elfShark.physicType, elfShark.col, elfShark.colMask, elfShark.isTrigger,
-		elfShark.friction, elfShark.fixedRotation, elfShark.rotation, Vector2D(elfShark.size.getX() * 0.5, elfShark.size.getY() * 0.4), 
-		Vector2D(elfShark.pos.getX() * 1.5, elfShark.pos.getY() * 0.8));
+	elf->addComponent<BoxCollider>(elfShark.physicType, elfShark.col, elfShark.colMask, false,
+		elfShark.friction, elfShark.fixedRotation, elfShark.rotation, Vector2D(elfShark.size.getX() * 0.5, elfShark.size.getY() * 0.4),
+		Vector2D(elfShark.pos.getX() * 1.5, elfShark.pos.getY() * 0.8), 35000);
 	AnimBlendGraph* elf_anim_controller = elf->addComponent<AnimBlendGraph>();
 	elf_anim_controller->addAnimation("idle", &sdlutils().images().at("elfshark_idle"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
 	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
@@ -146,7 +146,8 @@ Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 
 
 	auto* gusano = createBasicEntity(pos, pompeyWorm.size, pompeyWorm.rotation, pompeyWorm.vel);
-	gusano->addComponent<BoxCollider>(pompeyWorm.physicType, pompeyWorm.col, pompeyWorm.colMask);
+	gusano->addComponent<BoxCollider>(pompeyWorm.physicType, pompeyWorm.col, pompeyWorm.colMask, pompeyWorm.isTrigger, pompeyWorm.friction,
+		pompeyWorm.fixedRotation, pompeyWorm.rotation, Vector2D(), Vector2D(), 10000);
 	AnimBlendGraph* gusano_anim_controller = gusano->addComponent<AnimBlendGraph>();
 	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("pompey_worm_idle"), 1, 2, 2, 12, -1);
 	gusano_anim_controller->addAnimation("move", &sdlutils().images().at("pompey_worm_move"), 1, 2, 2, 12, -1);
