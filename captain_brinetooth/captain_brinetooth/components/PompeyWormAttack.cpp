@@ -6,8 +6,7 @@ PompeyWormAttack::~PompeyWormAttack()
 {
 	if (attackTrigger_ != nullptr)
 		attackTrigger_->setActive(false);
-	if (entity_Parent_ != nullptr)
-		entity_Parent_->setActive(false);
+	attackTrigger_ = nullptr;
 }
 
 void PompeyWormAttack::init()
