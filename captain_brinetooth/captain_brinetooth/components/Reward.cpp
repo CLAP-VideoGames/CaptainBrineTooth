@@ -15,6 +15,8 @@ Reward::Reward(int w, Entity* p, App* a)
 	catched = false;
 	playerRef = p;
 	app = a;
+	
+	
 	//Falta incializar los limites para tener una referencia cuando el cebo se mueva 
 }
 void Reward::init()
@@ -29,6 +31,7 @@ void Reward::init()
 	collider_->setSpeed(Vector2D(-App::camera_Zoom_Out, 0));
 	collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
 	entity_->setCollisionMethod(baitCollision);
+	collider_->getFixture()->SetSensor(true);
 }
 void Reward::update()
 {
