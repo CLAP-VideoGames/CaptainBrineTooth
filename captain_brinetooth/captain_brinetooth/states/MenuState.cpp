@@ -23,8 +23,15 @@ void MenuState::init() {
 	videos.push_back(video__);
 	auto* video = manager_->addEntity();
 	video->addComponent<VideoPlayer>(videos);
+	if (manager_->getSoundMngr()->GeneralVolume() > manager_->getSoundMngr()->PauseVolume())
+	{
+		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->GeneralVolume());
+	}
+	else
+	{
+		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->PauseVolume());
+	}
 
-	manager_->getSoundMngr()->setGeneralVolume(25);
 	manager_->getSoundMngr()->playMainMusic();
 
 	// Titulo

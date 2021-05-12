@@ -396,6 +396,10 @@
 			"file": "assets/sounds/player/player_jump.mp3"
 		},
 		{
+			"id": "player_death",
+			"file": "assets/sounds/player/player_death.mp3"
+		},
+		{
 			"id": "walk",
 			"file": "assets/sounds/player/walk.mp3"
 		},
