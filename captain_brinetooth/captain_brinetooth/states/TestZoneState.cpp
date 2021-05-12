@@ -417,6 +417,7 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
 	gusano->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	gusano->addComponent<ContactDamage>();
 }
 #pragma endregion
 #pragma region ElfShark
@@ -446,6 +447,7 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
 	elf->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	elf->addComponent<ContactDamage>();
 }
 #pragma endregion
 #pragma region JellyHat
@@ -475,6 +477,7 @@ void TestZoneState::createFringeHead(const Config& entityConfig)
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
 	enemy->addComponent<Enemy_Health>(200, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
+	enemy->addComponent<ContactDamage>();
 }
 #pragma endregion
 void TestZoneState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
