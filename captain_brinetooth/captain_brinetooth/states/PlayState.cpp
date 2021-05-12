@@ -59,7 +59,7 @@ void PlayState::init() {
 	swordGiverConfig.rotation = 0.0f;
 	swordGiverConfig.spriteId = "espada";
 	int swordNumber = 0;
-	createWeaponGiver(swordGiverConfig, swordNumber);
+	//createWeaponGiver(swordGiverConfig, swordNumber);
 
 	getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->setPlayer2spawn();
 
@@ -159,7 +159,7 @@ void PlayState::init() {
 	//flowerJellyHat.colMask = ENEMY_MASK;
 	//createFlowerJellyHat(flowerJellyHat);
 
-	Config fishlerConfig{};
+	/*Config fishlerConfig{};
 	fishlerConfig.pos = Vector2D(sdlutils().width(), sdlutils().height() * 1.3f);
 	fishlerConfig.vel = Vector2D();
 	fishlerConfig.size = Vector2D(100, 200);
@@ -177,7 +177,7 @@ void PlayState::init() {
 	fishler_anim_controller->addAnimation("sinMoverse", &sdlutils().images().at(fishlerConfig.spriteId), 1, 1, 1, 23, 1);
 	fishler->addComponent<Enemy_Health>(5000, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fishler->addComponent<FishlerController>();
-	fishler->addComponent<ContactDamage>();
+	fishler->addComponent<ContactDamage>();*/
 }
 
 void PlayState::update(){
@@ -201,7 +201,7 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(2, 2, app);
+	map = nivel->addComponent<MapProcedural>(4, 0, app);
 	getMngr()->setHandler<Map>(nivel);
 	camLimits = levelTile->getMaxCoordenates();
 }

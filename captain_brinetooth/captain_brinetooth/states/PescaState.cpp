@@ -117,7 +117,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 	//cuerda *arreglada
 	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5 * z_factor), Vector2D(entityConfig.size.getX()*4, entityConfig.size.getX()), 0.0f, Vector2D(0, 0));
-	topRod->addComponent<Animation>("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
+	//topRod->addComponent<Animation>("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	topRod->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	topRod->addComponent<PescaController>(screen_width);
 	topRod->getMngr()->setHandler<Rod>(topRod); //Para deteccion de colision con el gancho 

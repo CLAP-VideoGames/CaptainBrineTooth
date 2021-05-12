@@ -552,7 +552,7 @@ void TutorialState::createPlayer(const Config& playerConfig)
 
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
 		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY()));
-	player->addComponent<TriggerCollider>("Feet", PLAYER_JUMP, PLAYER_JUMP_MASK, Vector2D(0, -0.44), Vector2D(100.0f, 10.0f));
+	player->addComponent<TriggerCollider>("Feet", PLAYER_JUMP, PLAYER_JUMP_MASK, Vector2D(0, 0.44), Vector2D(80.0f, 10.0f));
 	/*player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
 	player->addComponent<LoseLife>();*/
 
@@ -611,8 +611,8 @@ void TutorialState::createRoom()
 	floor2.physicType = STATIC;
 	floor2.fixedRotation = true;
 	floor2.rotation = 0.5 * M_PI;
-	floor2.col = GROUND;
-	floor2.colMask = GROUND_MASK;
+	floor2.col = DEFAULT;
+	floor2.colMask = DEFAULT_MASK;
 	createBoxFloor(floor2);
 	Config floor3{};
 	floor3.pos = Vector2D(0, sdlutils().height() * 0.2f * App::camera_Zoom_Out);
@@ -622,8 +622,8 @@ void TutorialState::createRoom()
 	floor3.physicType = STATIC;
 	floor3.fixedRotation = true;
 	floor3.rotation = 0.5 * M_PI;
-	floor3.col = GROUND;
-	floor3.colMask = GROUND_MASK;
+	floor3.col = DEFAULT;
+	floor3.colMask = DEFAULT_MASK;
 	createBoxFloor(floor3);
 }
 
