@@ -53,6 +53,14 @@
 			"file": "assets/sprites/player/weapons/sword_combo.png"
 		},
 		{
+			"id": "squid_combo",
+			"file": "assets/sprites/player/weapons/squid_gun.png"
+		},
+		{
+			"id": "squid_tint",
+			"file": "assets/sprites/player/weapons/squid_tint.png"
+		},
+		{
 			"id": "hammer_combo",
 			"file": "assets/sprites/player/weapons/hammer_combo.png"
 		},
@@ -69,6 +77,10 @@
 			"file": "assets/sprites/enemies/medusa/medusa_anim.png"
 		},
 		{
+			"id": "medusa_death",
+			"file": "assets/sprites/enemies/medusa/medusa_death.png"
+		},
+		{
 			"id": "elfshark_idle",
 			"file": "assets/sprites/enemies/elf_shark/elfshark_idle.png"
 		},
@@ -79,6 +91,10 @@
 		{
 			"id": "elfshark_attack",
 			"file": "assets/sprites/enemies/elf_shark/elfshark_attack.png"
+		},
+		{
+			"id": "elfshark_death",
+			"file": "assets/sprites/enemies/elf_shark/elfshark_death.png"
 		},
 		{
 			"id": "pompey_worm_idle",
@@ -101,6 +117,10 @@
 			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_puddle.png"
 		},
 		{
+			"id": "pompey_worm_death",
+			"file": "assets/sprites/enemies/pompey_worm/pompey_worm_death.png"
+		},
+		{
 			"id": "fringehead_idle",
 			"file": "assets/sprites/enemies/fringehead/fringehead_idle.png"
 		},
@@ -111,6 +131,22 @@
 		{
 			"id": "fringehead_bullet",
 			"file": "assets/sprites/enemies/fringehead/fringehead_bullet.png"
+		},
+		{
+			"id": "fringehead_death",
+			"file": "assets/sprites/enemies/fringehead/fringehead_death.png"
+		},
+		{
+			"id": "thornfish_idle",
+			"file": "assets/sprites/enemies/thornfish/thornfish_idle.png"
+		},
+		{
+			"id": "thornfish_attack",
+			"file": "assets/sprites/enemies/thornfish/thornfish_atk.png"
+		},
+		{
+			"id": "thornfish_death",
+			"file": "assets/sprites/enemies/thornfish/thornfish_death.png"
 		},
 		{
 			"id": "fullvida",
@@ -151,6 +187,10 @@
 		{
 			"id": "martillo",
 			"file": "assets/sprites/armas/tiburon_martillo.png"
+		},
+		{
+			"id": "espada",
+			"file": "assets/sprites/armas/pez_espada.png"
 		},
 		{
 			"id": "espada",
