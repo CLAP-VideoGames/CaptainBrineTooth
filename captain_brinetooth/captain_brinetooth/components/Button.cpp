@@ -5,6 +5,7 @@ Button::Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd) : tex(
 	game = g;
 	soundController = snd;
 	selected = false;
+	mouseOnButton = false;
 }
 
 Button::~Button(){
@@ -48,6 +49,11 @@ bool Button::handleEvent(){
 	SDL_Rect dest = build_sdlrect(tr->getPos(), tr->getW(), tr->getH());
 	if (SDL_PointInRect(&mouseP, &dest) == SDL_TRUE) {
 		setTexColor(192, 192, 192, 255);
+		if (!mouseOnButton)
+		{
+			soundController->playSoundEffect("button", 0);
+			mouseOnButton = true;
+		}
 		//Si ha habido algun evento de rat, o el usuario mantiene presionado algun button, entra
 		if (ih().mouseButtonEvent() || ih().getMouseButtonHeld()) {
 			//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
@@ -80,6 +86,7 @@ bool Button::handleEvent(){
 		apply_offset = false;
 		setTexColor(255, 255, 255, 255);
 		selected = false;
+		mouseOnButton = false;
 	}
 
 	return false;

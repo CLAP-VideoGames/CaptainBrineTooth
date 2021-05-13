@@ -37,6 +37,7 @@ protected:
 private:
 	bool selected;
 	bool apply_offset;
+	bool mouseOnButton;
 	float offset_pressed = 5 * App::camera_Zoom_Out;
 	Fade* fade;
 	Texture* tex;

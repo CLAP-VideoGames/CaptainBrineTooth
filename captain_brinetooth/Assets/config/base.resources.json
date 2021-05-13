@@ -533,6 +533,10 @@
 			"file": "assets/sounds/gaviota.mp3"
 		},
 		{
+			"id": "button",
+			"file": "assets/sounds/button.wav"
+		},
+		{
 			"id": "sonido_barco",
 			"file": "assets/sounds/sonido_barco.mp3"
 		},
