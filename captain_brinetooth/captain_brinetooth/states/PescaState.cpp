@@ -23,8 +23,8 @@ void PescaState::update() {
 			infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
 			infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
 			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-			if (infoPlayer.weapon1 < 0)infoPlayer.weapon1 = 0;
-			if (infoPlayer.weapon2 < 0)infoPlayer.weapon2 = 0;
+			if (infoPlayer.weapon1 < 0)infoPlayer.weapon1 = 100;
+			if (infoPlayer.weapon2 < 0)infoPlayer.weapon2 = 100;
 			sM->pushState(new PauseState(this, app, playWorld, sM->currentState()->getMngr()->getSoundMngr(),infoPlayer));
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && !space_pressed_) {

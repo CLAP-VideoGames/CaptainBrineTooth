@@ -1,5 +1,7 @@
 ﻿#include "PlayState.h"
 #include "PasueState.h"
+#include <fstream>
+
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
 #define _CRTDBG_MAP_ALLOC
@@ -9,13 +11,14 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 #define  DEBUG_NEW
 #endif
 
-PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd) {
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool lsGame) : GameState(a, mundo, snd) {
 	//Testing floor
 	//auto suelo = manager_->addEntity();
 	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
 	//auto anim = suelo->addComponent<AnimBlendGraph>();
 	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
 	//suelo->addComponent<BoxCollider>();
+	loadSavedGame = lsGame;
 }
 
 PlayState::~PlayState() {
@@ -191,12 +194,12 @@ void PlayState::update() {
 			infoPartida infoPlayer;
 			Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
 			infoPlayer.playerLife = playerrefAux->getComponent<Player_Health>()->getLife();
-			infoPlayer.weapon1= playerrefAux->getComponent<Inventory>()->getWeapon(0);
+			infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
 			infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
 			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-			if (infoPlayer.weapon1 < 0)infoPlayer.weapon1 = 0;
-			if (infoPlayer.weapon2 < 0)infoPlayer.weapon2 = 0;
-			
+			if (infoPlayer.weapon1 < 0)infoPlayer.weapon1 = 100;
+			if (infoPlayer.weapon2 < 0)infoPlayer.weapon2 = 100;
+
 			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
 		}
 	}
@@ -483,6 +486,26 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<LoseLife>();
 
+	if (loadSavedGame)
+	{
+		ifstream readtxt;
+		readtxt.open("savedGame.dat");
+		float life;
+		int weapon1;
+		int weapon2;
+		string info;
+		readtxt >> info;
+
+		if (info == "Vida:")readtxt >> life;
+		readtxt >> info;
+		if (info == "Arma0:")readtxt >> weapon1;
+		readtxt >> info;
+		if (info == "Arma1:")readtxt >> weapon2;
+
+		player->getComponent<Player_Health>()->setLife(life);
+		player->getComponent<Inventory>()->addWeapon(weapon1);
+		player->getComponent<Inventory>()->addWeapon(weapon2);
+	}
 	//Seteamos al Player como MainHandler
 	manager_->setHandler<Player>(player);
 

@@ -138,7 +138,10 @@ const bool& Player_Health::getInvulnerable()
 {
 	return invulnerability_;
 }
-
+void Player_Health::setLife(float life)
+{
+	vidas = life;
+}
 
 void Player_Health::respawn()
 {
@@ -147,6 +150,6 @@ void Player_Health::respawn()
 	mngr->getSoundMngr()->ChangeMainMusic("Nivel1");
 
 	sM->popState();
-	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr()));
+	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr(),false));
 
 }

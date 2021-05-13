@@ -5,7 +5,7 @@ class Entity;
 class PlayState : public GameState
 {
 public:
-	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
+	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd,bool lsGame);
 	virtual ~PlayState();
 
 	virtual void init();
@@ -23,4 +23,5 @@ private:
 	SDL_Rect cam;
 	MapProcedural* map;
 	Vector2D camLimits;
+	bool loadSavedGame;
 };

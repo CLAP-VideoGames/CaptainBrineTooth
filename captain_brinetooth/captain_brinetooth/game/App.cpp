@@ -38,7 +38,7 @@ App::App() {
 	//----Inicio de Tutorial------
 	//stateMachine->pushState(new TutorialState(this, world_, sndProvisional));
 	//----Inicio de Juego------
-	stateMachine->pushState(new PlayState(this, world_, sndProvisional));
+	stateMachine->pushState(new PlayState(this, world_, sndProvisional,false));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional,nullptr,world_));
@@ -169,7 +169,7 @@ void App::changeToPesca()
 	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
 	w->SetContactListener(&collisionListener);
 	auto p = stateMachine->currentState()->getMngr()->getHandler<Player>();
-	stateMachine->pushState(new PescaState(this, w, sndProvisional,p,mngr_->getWorld()));
+	stateMachine->pushState(new PescaState(this, w, sndProvisional,p, stateMachine->currentState()->getMngr()->getWorld()));
 }
 
 /// <summary>

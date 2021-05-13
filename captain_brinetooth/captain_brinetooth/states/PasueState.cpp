@@ -146,9 +146,9 @@ void PauseState::savePartida(infoPartida info)
 	
 	string file = "savedGame.dat";
 	datatxt.open(file);
-	datatxt << "Vida del Jugador" << info.playerLife;
-	datatxt << "Arma 0" << info.weapon1;
-	datatxt << "Arma 1" << info.weapon2;
+	datatxt << "Vida: " << info.playerLife << endl;
+	datatxt << "Arma0: " << info.weapon1<< endl;
+	datatxt << "Arma1: " << info.weapon2 << endl;
 	datatxt.close();
 
 

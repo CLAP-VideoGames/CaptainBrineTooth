@@ -27,6 +27,7 @@ public:
 	void resetLifes();
 
 	void respawn();
+	void setLife(float life);
 
 	const bool& getInvulnerable();
 
