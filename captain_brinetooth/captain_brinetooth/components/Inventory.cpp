@@ -28,6 +28,10 @@ void Inventory::update() {
 		}
 	}
 }
+int Inventory::getWeapon(int numofweapon) {
+	
+	return weapArray_[numofweapon];
+}
 
 
 void Inventory::addWeapon(int weapToAdd) {

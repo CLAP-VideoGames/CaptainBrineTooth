@@ -1,10 +1,14 @@
 #include "PasueState.h"
 #include "OptionsState.h"
 #include "MenuState.h"
+#include <fstream>
+using namespace std;
 
-PauseState::PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd) {
+
+PauseState::PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, infoPartida info) : GameState(a, mundo, snd) {
 	stRend = stateToRender;
 	cam = a->camera;
+	partida = info;
 }
 
 void PauseState::init() {
@@ -39,6 +43,7 @@ void PauseState::backToMenu(App* app, SoundManager* snd) {
 	StateMachine* sM = app->getStateMachine();
 	Manager* mngr = sM->currentState()->getMngr();
 	sM->popState();
+	savePartida(partida);
 	sM->changeState(new MenuState(app, mngr->getWorld(), mngr->getSoundMngr()));
 }
 
@@ -135,3 +140,17 @@ void PauseState::clearPanel() {
 void PauseState::quitGame(App* game, SoundManager* snd) {
 	game->exitGame();
 }
+void PauseState::savePartida(infoPartida info)
+{
+	std::ofstream datatxt;
+	
+	string file = "savedGame.dat";
+	datatxt.open(file);
+	datatxt << "Vida del Jugador" << info.playerLife;
+	datatxt << "Arma 0" << info.weapon1;
+	datatxt << "Arma 1" << info.weapon2;
+	datatxt.close();
+
+
+
+ }

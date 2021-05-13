@@ -9,7 +9,7 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 #define  DEBUG_NEW
 #endif
 
-PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd): GameState(a, mundo, snd){
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd) {
 	//Testing floor
 	//auto suelo = manager_->addEntity();
 	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
@@ -18,7 +18,7 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd):
 	//suelo->addComponent<BoxCollider>();
 }
 
-PlayState::~PlayState(){
+PlayState::~PlayState() {
 }
 
 void PlayState::init() {
@@ -180,14 +180,24 @@ void PlayState::init() {
 	fishler->addComponent<ContactDamage>();*/
 }
 
-void PlayState::update(){
+void PlayState::update() {
 	//Queremos que, en el estado que hayan objetos físicos, se actualicen las físicas
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
-			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
+			//Savings players Data 
+			infoPartida infoPlayer;
+			Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
+			infoPlayer.playerLife = playerrefAux->getComponent<Player_Health>()->getLife();
+			infoPlayer.weapon1= playerrefAux->getComponent<Inventory>()->getWeapon(0);
+			infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
+			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
+			if (infoPlayer.weapon1 < 0)infoPlayer.weapon1 = 0;
+			if (infoPlayer.weapon2 < 0)infoPlayer.weapon2 = 0;
+			
+			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
 		}
 	}
 	GameState::update();
@@ -382,7 +392,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("hammer_attack2", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("hammer_att", 0);
-//	//--------------------------------------------------------------------------------------------------------------
+	//	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 //
 //#pragma region Crab
@@ -425,10 +435,10 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("crab_attack3", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("crab_att", 0);
-//	//--------------------------------------------------------------------------------------------------------------
-//#pragma endregion
-//
-//#pragma region MachineGun
+	//	//--------------------------------------------------------------------------------------------------------------
+	//#pragma endregion
+	//
+	//#pragma region MachineGun
 	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, Vector2D(0.65, 0.5));
 	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, Vector2D(0.65, 0.5));
 
@@ -497,7 +507,7 @@ void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& we
 /// <param name="width">Anchura en pixeles</param>
 /// <param name="rotation">Rotacion (por defecto es cero)</param>
 /// <param name="physicType">Determina el tipo f�sico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
-void PlayState::createBoxTest(const Config& entityConfig){
+void PlayState::createBoxTest(const Config& entityConfig) {
 	auto* box = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 
 	auto* anim_controller = box->addComponent<AnimBlendGraph>();
@@ -509,7 +519,7 @@ void PlayState::createBoxTest(const Config& entityConfig){
 		box->addComponent<KeyBoardCtrl>(map);
 }
 
-void PlayState::createElfShark(const Config& entityConfig){
+void PlayState::createElfShark(const Config& entityConfig) {
 #pragma region ElfShark
 	auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	//auto* elf1 = manager_->addEntity();

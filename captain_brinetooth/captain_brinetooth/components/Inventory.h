@@ -23,6 +23,7 @@ public:
 	void addWeapon(int weapToAdd);
 	void switchSelectedWeapon();
 	bool hasWeapon(int weapontoSearch);
+	int getWeapon(int numofweapon);
 	virtual void init() override;
 	virtual void update() override;
 

@@ -17,7 +17,15 @@ void PescaState::update() {
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
-			sM->pushState(new PauseState(this, app, playWorld, sM->currentState()->getMngr()->getSoundMngr()));
+			infoPartida infoPlayer;
+			Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
+			infoPlayer.playerLife = playerrefAux->getComponent<Player_Health>()->getLife();
+			infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
+			infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
+			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
+			if (infoPlayer.weapon1 < 0)infoPlayer.weapon1 = 0;
+			if (infoPlayer.weapon2 < 0)infoPlayer.weapon2 = 0;
+			sM->pushState(new PauseState(this, app, playWorld, sM->currentState()->getMngr()->getSoundMngr(),infoPlayer));
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && !space_pressed_) {
 			space_pressed_ = true;
