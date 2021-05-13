@@ -28,7 +28,7 @@ public:
 	static float camera_Zoom_Out;	//Zoom de la camara si asi soy, lo siento Joseda | pero por qu�Eme tomais por un dictador, que no soy �ngel.
 	static SDL_Rect camera;
 	static const int FPS = 15;
-
+	bool loadSavedGame;
 	App();
 	virtual ~App();
 	void init();
@@ -40,7 +40,8 @@ public:
 	static void fullScreen();
 	void exitGame() { exit = true; }
 	void changeToPesca();
-
+	bool getloadSavedGame() { return loadSavedGame; }
+	void setloadSavedGame(bool value) {  loadSavedGame = value; }
 
 
 	Entity* createBasicEntity(const Vector2D & pos, const Vector2D & size, const float & rotation, const Vector2D & vel);

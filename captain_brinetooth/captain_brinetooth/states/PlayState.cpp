@@ -11,14 +11,14 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 #define  DEBUG_NEW
 #endif
 
-PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool lsGame) : GameState(a, mundo, snd) {
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool saved) : GameState(a, mundo, snd) {
 	//Testing floor
 	//auto suelo = manager_->addEntity();
 	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
 	//auto anim = suelo->addComponent<AnimBlendGraph>();
 	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
 	//suelo->addComponent<BoxCollider>();
-	loadSavedGame = lsGame;
+	save = saved;
 }
 
 PlayState::~PlayState() {
@@ -188,6 +188,7 @@ void PlayState::update() {
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
+			app->setloadSavedGame(true);
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
 			//Savings players Data 
@@ -197,8 +198,8 @@ void PlayState::update() {
 			infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
 			infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
 			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-			if (infoPlayer.weapon1 < 0)infoPlayer.weapon1 = 100;
-			if (infoPlayer.weapon2 < 0)infoPlayer.weapon2 = 100;
+			if (infoPlayer.weapon1 <= 0)infoPlayer.weapon1 = 100;
+			if (infoPlayer.weapon2 <= 0)infoPlayer.weapon2 = 100;
 
 			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
 		}
@@ -486,7 +487,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<LoseLife>();
 
-	if (loadSavedGame)
+	if (save)
 	{
 		ifstream readtxt;
 		readtxt.open("savedGame.dat");
@@ -503,8 +504,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		if (info == "Arma1:")readtxt >> weapon2;
 
 		player->getComponent<Player_Health>()->setLife(life);
-		player->getComponent<Inventory>()->addWeapon(weapon1);
-		player->getComponent<Inventory>()->addWeapon(weapon2);
+		if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon2);
+		if (weapon1 < 100)player->getComponent<Inventory>()->addWeapon(weapon1);
+
 	}
 	//Seteamos al Player como MainHandler
 	manager_->setHandler<Player>(player);
