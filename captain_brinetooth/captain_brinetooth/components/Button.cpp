@@ -64,7 +64,7 @@ bool Button::handleEvent(){
 				selected = true;
 			}
 		}
-		//Si el usuario sigue dentro del boton, 駸te ha sido seleccionado, y el boton izquierdo ya no est・mantenido
+		//Si el usuario sigue dentro del boton, este ha sido seleccionado, y el boton izquierdo ya no esta mantenido
 		if (!ih().getLeftMouseButtonPressed() && selected) {
 			//En caso de haber un componente Fade, ejecutar su callback cuando haya terminado el fade OUt (Update)
 			fade = entity_->getComponent<Fade>();
