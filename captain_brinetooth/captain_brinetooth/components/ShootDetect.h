@@ -4,6 +4,7 @@
 #include"Transform.h"
 #include "BoxCollider.h"
 #include "../ecs/Entity.h"
+#include "Enemy_Health.h"
 
 class ShootDetect : public Component
 {

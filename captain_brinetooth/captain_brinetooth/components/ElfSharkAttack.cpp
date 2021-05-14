@@ -36,59 +36,61 @@ void ElfSharkAttack::update() {
 	//Actualiza la posicion del trigger
 	//Joseda por favor dime que hacer aqui que no se pone donde le digo
 	//El player ha entrado
-	if (entity_in_range_) {
-		//A rango de ataque
-		if (canAttack()) {
-			if (attackTrigger_ == nullptr) {
-				if (elapsed_time_lastAttack + cd_attack_time < sdlutils().currRealTime()) {
-					//Ataque
-					attack();
+	if (entity_Parent_->getComponent<Enemy_Health>()->getHealth() > 0) {
+		if (entity_in_range_) {
+			//A rango de ataque
+			if (canAttack()) {
+				if (attackTrigger_ == nullptr) {
+					if (elapsed_time_lastAttack + cd_attack_time < sdlutils().currRealTime()) {
+						//Ataque
+						attack();
+					}
+				}
+				else {
+					std::string tag = entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID();
+					if (!attack_player && tag == "attack_end" && entity_Parent_->getComponent<AnimBlendGraph>()->getParamValue("Attack") == 2) {
+						//Desactiva el trigger
+						attackTrigger_->setActive(false);
+						attackTrigger_ = nullptr;
+						//Llama al cambio de estado de animacion
+						entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
+					}
 				}
 			}
 			else {
-				std::string tag = entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID();
-				if (!attack_player && tag == "attack_end" && entity_Parent_->getComponent<AnimBlendGraph>()->getParamValue("Attack") == 2) {
-					//Desactiva el trigger
-					attackTrigger_->setActive(false);
-					attackTrigger_ = nullptr;
-					//Llama al cambio de estado de animacion
-					entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
-				}
+				entity_Parent_->getComponent<BoxCollider>()->Resize(Vector2D(colliderSize_Parent_.getX(), colliderSize_Parent_.getY()));
+				move();
 			}
 		}
-		else { 
-			entity_Parent_->getComponent<BoxCollider>()->Resize(Vector2D(colliderSize_Parent_.getX(), colliderSize_Parent_.getY()));
-			move(); 
-		}
-	}
-	else {
-		//Para el enemigo
-		entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Speed", 0);
-		entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
-		//Actualizar posicion
-		entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
-	}
-	//Ataque
-	if (entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack_ini" && entity_Parent_->getComponent<AnimBlendGraph>()->isComplete() && attack_player) {
-		//Llama al cambio de estado de animacion
-		entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 2);
-		createAttackTrigger();
-		attack_player = false;
-		//Reset cooldown
-		elapsed_time_lastAttack = sdlutils().currRealTime();
-	}
-	if (attackTrigger_ != nullptr) {
-		if (entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack_end") {
-			//Desactiva el trigger
-			attackTrigger_->setActive(false);
-			attackTrigger_ = nullptr;
-			//Llama al cambio de estado de animacion
-			entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
-		}
 		else {
-			attackTrigger_->getComponent<BoxCollider>()
-				->setSpeed(Vector2D(entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().x,
-					entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y));
+			//Para el enemigo
+			entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Speed", 0);
+			entity_Parent_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
+			//Actualizar posicion
+			entity_->getComponent<BoxCollider>()->setSpeed((Vector2D(0, entity_Parent_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y)));
+		}
+		//Ataque
+		if (entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack_ini" && entity_Parent_->getComponent<AnimBlendGraph>()->isComplete() && attack_player) {
+			//Llama al cambio de estado de animacion
+			entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 2);
+			createAttackTrigger();
+			attack_player = false;
+			//Reset cooldown
+			elapsed_time_lastAttack = sdlutils().currRealTime();
+		}
+		if (attackTrigger_ != nullptr) {
+			if (entity_Parent_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack_end") {
+				//Desactiva el trigger
+				attackTrigger_->setActive(false);
+				attackTrigger_ = nullptr;
+				//Llama al cambio de estado de animacion
+				entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
+			}
+			else {
+				attackTrigger_->getComponent<BoxCollider>()
+					->setSpeed(Vector2D(entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().x,
+						entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y));
+			}
 		}
 	}
 }

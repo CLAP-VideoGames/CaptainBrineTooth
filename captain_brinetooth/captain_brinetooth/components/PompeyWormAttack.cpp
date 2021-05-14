@@ -29,43 +29,44 @@ void PompeyWormAttack::init()
 
 void PompeyWormAttack::update() {
 	//Charco de veneno
-
-	if (attackTrigger_ != nullptr) {
-		if (attackTrigger_->isActive() && attackTrigger_->hasComponent<BoxCollider>()) {
-			if (attackTrigger_->getComponent<BoxCollider>()->isTriggerColliding()) {
-				if (lifetime_puddle >= cd_puddle_lifetime) {
-					attackTrigger_->getComponent<BoxCollider>()->triggerCollide(false);
-					attackTrigger_->setActive(false);
-					attackTrigger_ = nullptr;
-					init_pudle_Size = Vector2D(0,0);
-					lifetime_puddle = 0;
-				}
-				else {
-					if(init_pudle_Size.getX() < puddleSize.getX())
-						init_pudle_Size = Vector2D(init_pudle_Size + puddleSize * 0.025);
-					attackTrigger_->getComponent<BoxCollider>()->Resize(init_pudle_Size);	//Obligatorio llamarlo en clases no estaticas
-					lifetime_puddle++;
+	if (entity_Parent_->getComponent<Enemy_Health>()->getHealth() > 0) {
+		if (attackTrigger_ != nullptr) {
+			if (attackTrigger_->isActive() && attackTrigger_->hasComponent<BoxCollider>()) {
+				if (attackTrigger_->getComponent<BoxCollider>()->isTriggerColliding()) {
+					if (lifetime_puddle >= cd_puddle_lifetime) {
+						attackTrigger_->getComponent<BoxCollider>()->triggerCollide(false);
+						attackTrigger_->setActive(false);
+						attackTrigger_ = nullptr;
+						init_pudle_Size = Vector2D(0, 0);
+						lifetime_puddle = 0;
+					}
+					else {
+						if (init_pudle_Size.getX() < puddleSize.getX())
+							init_pudle_Size = Vector2D(init_pudle_Size + puddleSize * 0.025);
+						attackTrigger_->getComponent<BoxCollider>()->Resize(init_pudle_Size);	//Obligatorio llamarlo en clases no estaticas
+						lifetime_puddle++;
+					}
 				}
 			}
+			else if (!attackTrigger_->isActive()) {
+				attackTrigger_ = nullptr;
+			}
 		}
-		else if (!attackTrigger_->isActive()) {
-			attackTrigger_ = nullptr;
+		//Actualiza la posicion del trigger
+		//El player ha entrado
+		if (entity_in_range_ && elapsed_time_lastAttack + cd_attack_time < sdlutils().currRealTime() && attackTrigger_ == nullptr) {
+			attack();
+			//Reset cooldown
+			elapsed_time_lastAttack = sdlutils().currRealTime();
 		}
-	}
-	//Actualiza la posicion del trigger
-	//El player ha entrado
-	if (entity_in_range_ && elapsed_time_lastAttack + cd_attack_time < sdlutils().currRealTime() && attackTrigger_ == nullptr) {
-		attack();
-		//Reset cooldown
-		elapsed_time_lastAttack = sdlutils().currRealTime();
-	}
-	if (entity_Parent_->getComponent<AnimBlendGraph>()->isComplete() && shot) { 
-		createTriggerAttack(); 
-		shot = false; 
-		entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
-	}
-	if(!shot) { 
-		patrol(); 
+		if (entity_Parent_->getComponent<AnimBlendGraph>()->isComplete() && shot) {
+			createTriggerAttack();
+			shot = false;
+			entity_Parent_->getComponent<AnimBlendGraph>()->setParamValue("Attack", 0);
+		}
+		if (!shot) {
+			patrol();
+		}
 	}
 }
 

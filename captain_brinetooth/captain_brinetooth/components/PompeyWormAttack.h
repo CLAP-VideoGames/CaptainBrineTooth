@@ -11,6 +11,8 @@
 #include "MapCollider.h"
 #include "AnimBlendGraph.h"
 #include "ContactDamage.h"
+#include "Enemy_Health.h"
+
 class PompeyWormAttack :public Component
 {
 public:

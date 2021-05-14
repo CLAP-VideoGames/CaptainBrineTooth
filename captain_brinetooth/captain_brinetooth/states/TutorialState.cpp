@@ -580,7 +580,11 @@ void TutorialState::createEnemy()
 	entityConfig.colMask = ENEMY_MASK;
 	enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* enemy_anim_controller = enemy->addComponent<AnimBlendGraph>();
-	enemy_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
+	enemy_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1); 
+	enemy_anim_controller->addAnimation("death", &sdlutils().images().at("medusa_death"), 2, 3, 6, 12, 0, 0, 4);
+	enemy_anim_controller->addTransition("idle", "death", "Dead", 1, false);
+	enemy_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
+	enemy_anim_controller->setParamValue("Dead", 0);
 	enemy->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	enemy->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7f,true,0.0,Vector2D(),Vector2D(),10000);
 	//fjh1->addComponent<ContactDamage>();

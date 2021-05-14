@@ -1,9 +1,4 @@
 #include "Enemy_Health.h"
-#include  "../ecs/Entity.h"
-#include  "../ecs/Manager.h"
-#include "FringeHeadAtack.h"
-#include "../game/App.h"
-#include "EnemyTrigger.h"
 
 
 Enemy_Health::Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color& color, int offsetY = 25) {
@@ -31,6 +26,8 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 
 	if (lifes <= 0)
 	{
+		//Animacion muerte
+		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
 		// Sonido de muerte del monstruo
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("muerte_monstruo", 15);
 	}
@@ -65,13 +62,8 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 		}
 	}
 
-	if (lifes <= 0) {
-		entity_->setActive(false);
-		//Tenemos que eliminar el Trigger del enemigo (si tiene)
-		EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
-		if(enT != nullptr) enT->getTriggerEntity()->setActive(false);
-	}
 	barSize.setX((lifes * initBarSize.getX()) / initLifes);
+	if (barSize.getX() <= 0) barSize.setX(0);
 }
 
 void Enemy_Health::init(){
@@ -116,13 +108,22 @@ void Enemy_Health::update(){
 			lifes -= poisonDamage;
 			poisonCurrentTickTime = sdlutils().currRealTime();
 			if (lifes <= 0) {
-				entity_->setActive(false);
-				//Tenemos que eliminar el Trigger del enemigo (si tiene)
-				EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
-				if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
+				entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
+			//	entity_->setActive(false);
+			//	//Tenemos que eliminar el Trigger del enemigo (si tiene)
+			//	EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
+			//	if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
 			}
 			barSize.setX((lifes * initBarSize.getX()) / initLifes);
+			if (barSize.getX() <= 0) barSize.setX(0);
 		}
+	}
+
+	if (entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "death" && entity_->getComponent<AnimBlendGraph>()->isComplete()) {
+		entity_->setActive(false);
+		//Tenemos que eliminar el Trigger del enemigo (si tiene)
+		EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
+		if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
 	}
 }
 

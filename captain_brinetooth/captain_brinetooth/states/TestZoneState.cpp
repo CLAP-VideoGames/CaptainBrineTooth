@@ -62,7 +62,7 @@ void TestZoneState::init() {
 #pragma endregion
 //-----Enemies-----
 #pragma region Enemies
-	/*#pragma region PompeyWorm
+	#pragma region PompeyWorm
 	Config pompeyWorm{};
 	pompeyWorm.pos = Vector2D(700, sdlutils().height() * 2.0f - 200);
 	pompeyWorm.vel = Vector2D(0, 0);
@@ -74,9 +74,9 @@ void TestZoneState::init() {
 	pompeyWorm.col = ENEMY;
 	pompeyWorm.colMask = ENEMY_MASK;
 	createPompeyWorm(pompeyWorm);
-	#pragma endregion*/
+	#pragma endregion
 
-	#pragma region ElfShark
+	/*#pragma region ElfShark
 	Config elfShark{};
 	elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
 	elfShark.vel = Vector2D(0, 0);
@@ -88,7 +88,7 @@ void TestZoneState::init() {
 	elfShark.col = ENEMY;
 	elfShark.colMask = ENEMY_MASK;
 	createElfShark(elfShark);
-	#pragma endregion
+	#pragma endregion*/
 
 	/*#pragma region FringeHead
 	Config fringeHead{};
@@ -404,6 +404,7 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("pompey_worm_idle"), 1, 2, 2, 12, -1);
 	gusano_anim_controller->addAnimation("move", &sdlutils().images().at("pompey_worm_move"), 1, 2, 2, 12, -1);
 	gusano_anim_controller->addAnimation("attack", &sdlutils().images().at("pompey_worm_attack"), 2, 3, 6, 12, 0, 0, 4);
+	gusano_anim_controller->addAnimation("death", &sdlutils().images().at("pompey_worm_death"), 2, 3, 6, 12, 0, 0, 4);
 	//Proportion?
 	gusano_anim_controller->keepProportion("idle", Vector2D(gusano->getComponent<Transform>()->getW(), gusano->getComponent<Transform>()->getH()));
 	gusano_anim_controller->addTransition("idle", "move", "Speed", 1, false);
@@ -412,6 +413,11 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 	gusano_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
 	gusano_anim_controller->addTransition("move", "attack", "Attack", 1, false);
 	gusano_anim_controller->addTransition("attack", "move", "Attack", 0, true);
+	gusano_anim_controller->addTransition("idle", "death", "Dead", 1, false);
+	gusano_anim_controller->addTransition("move", "death", "Dead", 1, false);
+	gusano_anim_controller->addTransition("attack", "death", "Dead", 1, false);
+	gusano_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
+	gusano_anim_controller->setParamValue("Dead", 0);
 	gusano_anim_controller->setParamValue("Speed", 0);
 	gusano_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
@@ -431,6 +437,7 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
 	elf_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 48, 0, 0, 10, Vector2D(0.5, 0.8));
 	elf_anim_controller->addAnimation("attack_end", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 24, 0, 11, 18, Vector2D(0.5, 0.8));
+	elf_anim_controller->addAnimation("death", &sdlutils().images().at("elfshark_death"), 2, 3, 6, 12, 0, 0, 4, Vector2D(0.5, 0.8));
 	//Proportion?
 	elf_anim_controller->keepProportion("idle", Vector2D(elf->getComponent<Transform>()->getW(), elf->getComponent<Transform>()->getH()));
 	elf_anim_controller->addTransition("idle", "move", "Speed", 1, false);
@@ -442,6 +449,12 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	elf_anim_controller->addTransition("attack_ini", "move", "Attack", 0, false);
 	elf_anim_controller->addTransition("attack_ini", "idle", "Attack", 0, false);
 	elf_anim_controller->addTransition("attack_ini", "attack_end", "Attack", 2, true);
+	elf_anim_controller->addTransition("idle", "death", "Dead", 1, false);
+	elf_anim_controller->addTransition("move", "death", "Dead", 1, false);
+	elf_anim_controller->addTransition("attack_ini", "death", "Dead", 1, false);
+	elf_anim_controller->addTransition("attack_end", "death", "Dead", 1, false);
+	elf_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
+	elf_anim_controller->setParamValue("Dead", 0);
 	elf_anim_controller->setParamValue("Speed", 0);
 	elf_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
@@ -455,6 +468,10 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	auto* fjh1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
+	fjh1_anim_controller->addAnimation("death", &sdlutils().images().at("medusa_death"), 2, 3, 6, 12, 0, 0, 4);
+	fjh1_anim_controller->addTransition("idle", "death", "Dead", 1, false);
+	fjh1_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
+	fjh1_anim_controller->setParamValue("Dead", 0);
 	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7, true, 0.0, Vector2D(), Vector2D(),10000);
 	fjh1->addComponent<ContactDamage>();
@@ -470,10 +487,15 @@ void TestZoneState::createFringeHead(const Config& entityConfig)
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
 	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0, 0, 12, Vector2D(0.5,0.7));
+	anim_controller->addAnimation("death", &sdlutils().images().at("fringehead_death"), 2, 3, 6, 12, 0, 0, 4, Vector2D(0.5, 0.7));
 	//Proportion?
 	anim_controller->keepProportion("idle", Vector2D(enemy->getComponent<Transform>()->getW(), enemy->getComponent<Transform>()->getH()));
 	anim_controller->addTransition("idle", "attack", "Shoot", 1, false);
 	anim_controller->addTransition("attack", "idle", "Shoot", 0, true);
+	anim_controller->addTransition("idle", "death", "Dead", 1, false);
+	anim_controller->addTransition("attack", "death", "Dead", 1, false);
+	anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
+	anim_controller->setParamValue("Dead", 0);
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
 	enemy->addComponent<Enemy_Health>(200, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);

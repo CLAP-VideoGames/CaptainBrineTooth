@@ -54,25 +54,27 @@ void ShootDetect::shootatTime()
 }
 void ShootDetect::update()
 {
-	if (shootenabled)
-	{
-		//Pos del obj disparador- pos del jugador / Normalizado
-		Transform* playertransform = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
-		//Si la posicion del juagdor es menor, significa que esta a nuestra izquierda y hay que hacer el flip 
-		if (playertransform->getPos().getX() < enemytransform->getPos().getX()) enemy->getComponent<AnimBlendGraph>()->flipX(true);
-		else enemy->getComponent<AnimBlendGraph>()->flipX(false);
-
-		if (passedTime + minTime < sdlutils().currRealTime())
+	if (enemy->getComponent<Enemy_Health>()->getHealth() > 0) {
+		if (shootenabled)
 		{
-			enemy->getComponent<AnimBlendGraph>()->setParamValue("Shoot", 1);		
-			passedTime = sdlutils().currRealTime();
+			//Pos del obj disparador- pos del jugador / Normalizado
+			Transform* playertransform = entity_->getMngr()->getHandler<Player>()->getComponent<Transform>();
+			//Si la posicion del juagdor es menor, significa que esta a nuestra izquierda y hay que hacer el flip 
+			if (playertransform->getPos().getX() < enemytransform->getPos().getX()) enemy->getComponent<AnimBlendGraph>()->flipX(true);
+			else enemy->getComponent<AnimBlendGraph>()->flipX(false);
+
+			if (passedTime + minTime < sdlutils().currRealTime())
+			{
+				enemy->getComponent<AnimBlendGraph>()->setParamValue("Shoot", 1);
+				passedTime = sdlutils().currRealTime();
+			}
 		}
-	}
-	else enemy->getComponent<AnimBlendGraph>()->flipX(false);
-	if (enemy->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack" && enemy->getComponent<AnimBlendGraph>()->isComplete())
-	{
-		createBullet();
-		enemy->getComponent<AnimBlendGraph>()->setParamValue("Shoot", 0);
+		else enemy->getComponent<AnimBlendGraph>()->flipX(false);
+		if (enemy->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "attack" && enemy->getComponent<AnimBlendGraph>()->isComplete())
+		{
+			createBullet();
+			enemy->getComponent<AnimBlendGraph>()->setParamValue("Shoot", 0);
+		}
 	}
 }
 void ShootDetect::unShoot(b2Contact* contact) {

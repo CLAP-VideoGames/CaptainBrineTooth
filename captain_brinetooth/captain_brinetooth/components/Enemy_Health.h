@@ -1,6 +1,11 @@
 #pragma once
 #include "../ecs/Component.h"
+#include "AnimBlendGraph.h"
 #include "Animation.h"
+#include  "../ecs/Entity.h"
+#include  "../ecs/Manager.h"
+#include "../game/App.h"
+#include "EnemyTrigger.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 

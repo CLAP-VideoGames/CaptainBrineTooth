@@ -4,6 +4,7 @@
 #include "../utils/Vector2D.h"
 #include "Transform.h"
 #include "EnemyTrigger.h"
+#include "Enemy_Health.h"
 
 class ElfSharkAttack: public Component
 {
