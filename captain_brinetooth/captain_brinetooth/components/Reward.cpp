@@ -128,7 +128,7 @@ void Reward::giveReward()
 
 	GameState* pState = app->getStateMachine()->currentState();
 
-	pState->getMngr()->getSoundMngr()->resumeMainMusic(true);
+	pState->getMngr()->getSoundMngr()->ChangeMainMusic("CofreTesoro");
 
 	app->getStateMachine()->popState();
 }

@@ -87,26 +87,25 @@ void SoundManager::playPauseMusic()
 	sdlutils().musics().at(pauseMusic).setChannelVolume(volumenPausa);
 }
 
-void SoundManager::resumeMainMusic(bool pesca)
+void SoundManager::resumeMainMusic()
 {
-	if (!pesca)
-	{
+	
 		volumenGeneral = volumenPausa;
 		volumenPausa = 0;
 		sdlutils().musics().at(pauseMusic).setChannelVolume(0);
 		sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
-	}
-	else
+	
+	/*else
 	{
-		sdlutils().musics().at(mainMusic).haltChannel();
-		sdlutils().musics().at(pauseMusic).haltChannel();
+		sdlutils().musics().at("Pescando").haltChannel();
+		sdlutils().musics().at("PescandoPausa").haltChannel();
 
-		mainMusic = cancionPausada;
-		pauseMusic = cancionPausada + "Pausa";
+		mainMusic = "CofreTesoro";
+		pauseMusic = "CofreTesoroPausa";
 
 		sdlutils().musics().at(mainMusic).resumeChannel();
 		sdlutils().musics().at(pauseMusic).resumeChannel();
-	}
+	}*/
 }
 
 void SoundManager::pauseMainMusic(std::string newMusic)

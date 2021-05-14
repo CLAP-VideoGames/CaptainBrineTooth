@@ -33,7 +33,7 @@ void PauseState::update() {
 }
 
 void PauseState::backToGame(App* app, SoundManager* snd) {
-	snd->resumeMainMusic(false);
+	snd->resumeMainMusic();
 	StateMachine* sM = app->getStateMachine();
 	sM->popState();
 }

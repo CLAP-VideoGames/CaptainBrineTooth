@@ -127,6 +127,7 @@ void PlayerController::update()
 
 	//dash aire o suelo
 	if (isDashing) {
+		snd->playSoundEffect("dash", 500);
 		if (animController_->getCurrentAnimation()->getID() == "jump")
 			animController_->setParamValue("Dash_Air", 1);
 		else

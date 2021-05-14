@@ -444,6 +444,10 @@
 			"file": "assets/sounds/player/player_death.mp3"
 		},
 		{
+			"id": "dash",
+			"file": "assets/sounds/player/dash2.mp3"
+		},
+		{
 			"id": "walk",
 			"file": "assets/sounds/player/walk.mp3"
 		},

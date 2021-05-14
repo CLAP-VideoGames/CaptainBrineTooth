@@ -25,6 +25,7 @@ public:
 
 	//int MusicVolume() { return volumenMusica; }
 	//int EffectsVolume() { return volumenEfectos; }
+	std::string currentSong() { return mainMusic; }
 	int GeneralVolume() { return volumenGeneral; }
 	int PauseVolume() { return volumenPausa; }
 	int EffectsVolume() { return volumenEfectos; }
@@ -49,7 +50,7 @@ public:
 		sdlutils().soundEffects().at("gaviota").play();
 	}
 
-	void resumeMainMusic(bool pesca); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
+	void resumeMainMusic(); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
 
 	void pauseMainMusic(std::string newMusic);
 

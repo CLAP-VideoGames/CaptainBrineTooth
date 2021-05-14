@@ -210,6 +210,10 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 			pesca.push_back(t);
 		}
 	}
+	else if (entity_->getMngr()->getSoundMngr()->currentSong() == "CofreTesoro")
+	{
+		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel" + std::to_string(fase));
+	}
 }
 
 void MapProcedural::update() {

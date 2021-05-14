@@ -5,7 +5,6 @@ using namespace ColLayers;
 
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
-	//Falta poner la musica bien de nuevo 
 	//playerRef->getComponent<PlayerController>()->playerReceiveInput(true);
 	//Falta cambiar la musica con el sounmanager a la de playstate 
 };
