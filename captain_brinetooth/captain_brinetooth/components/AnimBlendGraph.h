@@ -88,6 +88,7 @@ public:
 	void stop();
 	void flipX(bool state);
 	void setAlpha(Uint8 alpha);
+	void setColor(Uint8 r, Uint8 g, Uint8 b);
 	bool isComplete();
 	void setDestSizeAnim(std::string animId, float w_, float h_);
 	const bool& isFlipX();

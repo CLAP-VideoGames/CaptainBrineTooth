@@ -39,6 +39,7 @@ public:
 	void reset();
 	void flipX(bool state);
 	void setAlpha(Uint8 alpha);
+	void setColorRGB(Uint8 r, Uint8 g, Uint8 b);
 	void setAnchor(float x, float y);
 	void destSize(float w, float h);
 	const State& getState() const;
@@ -61,6 +62,6 @@ protected:
 	Uint32 lastUpdateTime;
 	bool flip_horizontal_;	//Flip
 	Vector2D anchorPoint_;
-	Uint8 alpha_;
+	Uint8 alpha_, red_, green_, blue_;
 };
 

@@ -9,6 +9,7 @@ Enemy_Health::Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color&
 	baseColor = build_sdlcolor(0,0,0,125);
 
 	barSize = initBarSize = sizeBar;
+	skip_reset_ = false;
 }
 
 /// <summary>
@@ -64,6 +65,11 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 
 	barSize.setX((lifes * initBarSize.getX()) / initLifes);
 	if (barSize.getX() <= 0) barSize.setX(0);
+
+	//Cambio color
+	entity_->getComponent<AnimBlendGraph>()->setColor(171, 42, 62);
+	skip_reset_ = true;
+	cd_reset_ = 6;
 }
 
 void Enemy_Health::init(){
@@ -95,7 +101,17 @@ void Enemy_Health::update(){
 	//	if (ih().isKeyDown(SDL_SCANCODE_A))
 	//		loseLife(100);
 	//}
-
+	if (!skip_reset_) {
+		//Reset color
+		entity_->getComponent<AnimBlendGraph>()->setColor(255, 255, 255);
+	}
+	else {
+		if (cd_reset_ <= 0) {
+			//Esperar cd_reset_ ticks para el reset de color
+			skip_reset_ = false;
+		}
+		cd_reset_--;
+	}
 	//Daño por veneno
 	if (isPoisoned) {
 		//Tiempo hasta fin del veneno

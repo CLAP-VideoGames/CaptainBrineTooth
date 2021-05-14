@@ -42,6 +42,7 @@ void Animation::init()
 	state_ = Playing;		//No empieza la animacion de base
 	lastUpdateTime = sdlutils().currRealTime();
 	flip_horizontal_ = false;
+	red_ = green_ = blue_ = 255;
 	alpha_ = 255;
 }
 
@@ -72,6 +73,8 @@ void Animation::render()
 		flip = SDL_FLIP_NONE; 
 		anchor_ = anchorPoint_;
 	}
+	//Color
+	SDL_SetTextureColorMod(tex_->getTexture(), red_, green_, blue_);
 	//ALPHA
 	if (alpha_ > 255) alpha_ = 255;
 	else if (alpha_ < 0) alpha_ = 0;
@@ -123,6 +126,22 @@ void Animation::flipX(bool state)
 void Animation::setAlpha(Uint8 alpha)
 {
 	alpha_ = alpha;
+}
+
+void Animation::setColorRGB(Uint8 r, Uint8 g, Uint8 b)
+{
+	//RED
+	if (r <= 0) r = 0;
+	else if (r > 255) r = 255; 
+	red_ = r;
+	//GREEN
+	if (g <= 0) g = 0;
+	else if (g > 255) g = 255; 
+	green_ = g;
+	//BLUE
+	if (b <= 0) b = 0;
+	else if (b > 255) b = 255;
+	blue_ = b;
 }
 
 void Animation::setAnchor(float x, float y)

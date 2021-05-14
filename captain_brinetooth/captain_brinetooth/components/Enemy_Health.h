@@ -26,6 +26,8 @@ public:
 private:
 	SDL_Color barColor;
 	SDL_Color baseColor;
+	bool skip_reset_;
+	int cd_reset_;
 	Vector2D barSize, initBarSize;
 
 	SDL_Rect bar, base;

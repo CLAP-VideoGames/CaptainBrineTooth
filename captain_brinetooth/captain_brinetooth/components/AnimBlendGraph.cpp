@@ -240,6 +240,12 @@ const int& AnimBlendGraph::getParamValue(std::string paramName)
 	return val;
 }
 
+void AnimBlendGraph::setColor(Uint8 r, Uint8 g, Uint8 b)
+{
+	if (currentAnim_ != nullptr)
+		currentAnim_->anim_->setColorRGB(r,g,b);
+}
+
 void AnimBlendGraph::setDestSizeAnim(std::string animId, float w_, float h_)
 {
 	int i = 0;
