@@ -439,6 +439,48 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("crab_attack3", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("crab_att", 0);
+
+	//FISTS
+
+	anim_controller->addAnimation("fist_attack1", &sdlutils().images().at("fists_combo"), 6, 7, 39, 35, 0, 1, 8, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("fist_attack2", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("fist_attack3", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
+
+	anim_controller->addTransition("run", "fist_attack1", "fist_att", 1, false);
+	anim_controller->addTransition("idle", "fist_attack1", "fist_att", 1, false);
+	anim_controller->addTransition("jump", "fist_attack1", "fist_att", 1, false);
+	anim_controller->addTransition("fist_attack1", "run", "fist_att", 0, true);
+	anim_controller->addTransition("fist_attack1", "fist_attack2", "fist_att", 2, true);
+	anim_controller->addTransition("run", "fist_attack2", "fist_att", 2, false);
+	anim_controller->addTransition("idle", "fist_attack2", "fist_att", 2, false);
+	anim_controller->addTransition("jump", "fist_attack2", "fist_att", 2, false);
+	anim_controller->addTransition("fist_attack2", "run", "fist_att", 0, false);
+	anim_controller->addTransition("fist_attack2", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("run", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("idle", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("jump", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("fist_attack3", "run", "fist_att", 0, false);
+	anim_controller->addTransition("fist_attack3", "fist_attack1", "fist_att", 1, true);
+
+	anim_controller->addTransition("fist_attack1", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("fist_attack1", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "fist_attack1", "fist_att", 1, true);
+	anim_controller->addTransition("dash_ground", "fist_attack1", "fist_att", 1, true);
+	anim_controller->addTransition("fist_attack2", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("fist_attack2", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "fist_attack2", "fist_att", 2, true);
+	anim_controller->addTransition("dash_ground", "fist_attack2", "fist_att", 2, true);
+	anim_controller->addTransition("fist_attack3", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("fist_attack3", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "fist_attack3", "fist_att", 3, true);
+	anim_controller->addTransition("dash_ground", "fist_attack3", "fist_att", 3, true);
+	//death
+	anim_controller->addTransition("fist_attack1", "death", "Dead", 1, false);
+	anim_controller->addTransition("fist_attack2", "death", "Dead", 1, false);
+	anim_controller->addTransition("fist_attack3", "death", "Dead", 1, false);
+
+	anim_controller->setParamValue("fist_att", 0);
+
 	//	//--------------------------------------------------------------------------------------------------------------
 	//#pragma endregion
 	//

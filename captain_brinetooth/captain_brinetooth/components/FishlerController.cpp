@@ -180,7 +180,7 @@ void FishlerController::update() {
 
 	//Walks in the direction of the player
 	if (currentMovement == Walking) {
-		if ((playertr->getPos().getX() - tr_->getPos().getX()) / std::abs((playertr->getPos().getX() - tr_->getPos().getX()) > 0)) {
+		if ((playertr->getPos().getX() < tr_->getPos().getX())) {
 			anim_->flipX(false);
 		}
 		else {

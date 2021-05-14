@@ -387,6 +387,9 @@
     <ClInclude Include="components\GetStuckOnWall.h">
       <Filter>Archivos de encabezado\components\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="components\Fists.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -643,6 +646,9 @@
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
     <ClCompile Include="components\GetStuckOnWall.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\Fists.cpp">
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>

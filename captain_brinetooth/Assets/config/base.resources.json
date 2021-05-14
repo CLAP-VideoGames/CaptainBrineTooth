@@ -177,6 +177,10 @@
 			"file": "assets/sprites/armas/machine_gun_bullet.png"
 		},
 		{
+			"id": "fist",
+			"file": "assets/sprites/armas/fist.png"
+		},
+		{
 			"id": "crab",
 			"file": "assets/sprites/armas/punosCrustaceo.png"
 		},

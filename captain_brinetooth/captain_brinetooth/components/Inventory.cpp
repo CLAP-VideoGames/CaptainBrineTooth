@@ -4,19 +4,11 @@ void Inventory::init() {
 	//Generar un arma aleatoria
 	hud = entity_->getComponent<Armas_HUD>();
 
-	int initWeapon = sdlutils().rand().teCuoto(0, 3);
-
-	switch (initWeapon)
-	{
-	case 0:
-		addWeapon(0);
-	case 1:
-		addWeapon(3);
-
-	case 2:
-		addWeapon(1);
-	default:
-		break;
+	//Añadimos los puños
+	if (currentWeaponNumber == 0) {
+		//Añadimos los puños sin que cuenten en el array de armas
+		entity_->addComponent<Fists>();
+		hud->actualizarNewWeapon(0, &sdlutils().images().at("fist"));
 	}
 }
 
@@ -38,8 +30,11 @@ void Inventory::addWeapon(int weapToAdd) {
 	//Si hay espacio
 	if (currentWeaponNumber < 2) {
 		//Si no tiene ningun arma, añadimos su componente
-		if (currentWeaponNumber == 0)
+		if (currentWeaponNumber == 0) {
+			if (entity_->hasComponent<Fists>())
+				entity_->removeComponent<Fists>();
 			addWeaponById(weapToAdd);
+		}
 		hud->actualizarNewWeapon(currentWeaponNumber, textureById(weapToAdd));
 		weapArray_[currentWeaponNumber] = (PosibleWeapons)weapToAdd;
 		currentWeaponNumber++;
