@@ -5,8 +5,12 @@ using namespace ColLayers;
 
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
-	//playerRef->getComponent<PlayerController>()->playerReceiveInput(true);
+	
 	//Falta cambiar la musica con el sounmanager a la de playstate 
+
+
+
+
 };
 
 
@@ -17,13 +21,21 @@ void PescaState::update() {
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
 			infoPartida infoPlayer;
-			Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
-			infoPlayer.playerLife = playerrefAux->getComponent<Player_Health>()->getLife();
-			infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
-			infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
+			infoPlayer.playerLife = playerRef->getComponent<Player_Health>()->getLife();
+			infoPlayer.weapon1 = playerRef->getComponent<Inventory>()->getWeapon(0);
+			infoPlayer.weapon2 = playerRef->getComponent<Inventory>()->getWeapon(1);
 			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-			if (infoPlayer.weapon1 <= 0)infoPlayer.weapon1 = 100;
-			if (infoPlayer.weapon2 <= 0)infoPlayer.weapon2 = 100;
+			if (playerRef->getComponent<Inventory>()->emptyInventory())
+			{
+				infoPlayer.weapon1 = 100;
+				infoPlayer.weapon2 = 100;
+			}
+			else    //Si tiene un arma ponemos la otra a 100( como si fuese null) si no leemos las dos puesto que tendria dos armas
+			{
+				if (playerRef->getComponent<Inventory>()->hasOneWeapon())infoPlayer.weapon2 = 100;
+				//si no tiene el inventario lleno , con lo cual se le pasa direcatente la lectura de las armas 
+
+			}
 			sM->pushState(new PauseState(this, app, playWorld, sM->currentState()->getMngr()->getSoundMngr(),infoPlayer));
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && !space_pressed_) {
