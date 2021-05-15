@@ -66,10 +66,30 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 	barSize.setX((lifes * initBarSize.getX()) / initLifes);
 	if (barSize.getX() <= 0) barSize.setX(0);
 
-	//Cambio color
+	//Cambio color 
 	entity_->getComponent<AnimBlendGraph>()->setColor(171, 42, 62);
 	skip_reset_ = true;
 	cd_reset_ = 6;
+	//Particula HIT
+	if (particle_hit == nullptr) {
+		std::string name;
+		int z = sdlutils().rand().teCuoto(0, 3);
+		switch (z)
+		{
+		case 0:
+			name = "enemy_hit_1";
+			break;
+		case 1:
+			name = "enemy_hit_2";
+			break;
+		case 2:
+			name = "enemy_hit_3";
+			break;
+		}
+		particle_hit = entity_->getMngr()->addEntity();
+		particle_hit->addComponent<Transform>(trParent_->getPos(), Vector2D(), trParent_->getW()*1.2, trParent_->getH()*1.2, 0.0);
+		particle_hit->addComponent<Animation>("hit", &sdlutils().images().at(name), 2, 3, 6, 24, 0);
+	}
 }
 
 void Enemy_Health::init(){
@@ -96,13 +116,8 @@ void Enemy_Health::render(){
 }
 
 void Enemy_Health::update(){
-	//if (ih().keyDownEvent()) {
-	//	//Parte Horizontal
-	//	if (ih().isKeyDown(SDL_SCANCODE_A))
-	//		loseLife(100);
-	//}
+	//Reset color
 	if (!skip_reset_) {
-		//Reset color
 		entity_->getComponent<AnimBlendGraph>()->setColor(255, 255, 255);
 	}
 	else {
@@ -134,12 +149,22 @@ void Enemy_Health::update(){
 			if (barSize.getX() <= 0) barSize.setX(0);
 		}
 	}
-
+	//Particula Hit
+	if (particle_hit != nullptr) {
+		if (particle_hit->getComponent<Animation>()->getState() == 0) {
+			particle_hit->setActive(false);
+			particle_hit = nullptr;
+		}
+		else {
+			particle_hit->getComponent<Transform>()->getPos() = entity_->getComponent<Transform>()->getPos();
+		}
+	}
 	if (entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "death" && entity_->getComponent<AnimBlendGraph>()->isComplete()) {
 		entity_->setActive(false);
 		//Tenemos que eliminar el Trigger del enemigo (si tiene)
 		EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
 		if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
+		if (particle_hit != nullptr) particle_hit->setActive(false);
 	}
 }
 

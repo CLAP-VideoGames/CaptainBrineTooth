@@ -30,6 +30,8 @@ private:
 	int cd_reset_;
 	Vector2D barSize, initBarSize;
 
+	Entity* particle_hit;
+
 	SDL_Rect bar, base;
 	Transform* trParent_;
 	int offsetY_;

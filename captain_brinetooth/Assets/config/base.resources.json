@@ -149,6 +149,18 @@
 			"file": "assets/sprites/enemies/thornfish/thornfish_death.png"
 		},
 		{
+			"id": "enemy_hit_1",
+			"file": "assets/sprites/enemies/hits/enemy_hit_1.png"
+		},
+		{
+			"id": "enemy_hit_2",
+			"file": "assets/sprites/enemies/hits/enemy_hit_2.png"
+		},
+		{
+			"id": "enemy_hit_3",
+			"file": "assets/sprites/enemies/hits/enemy_hit_3.png"
+		},
+		{
 			"id": "fullvida",
 			"file": "assets/sprites/player/HUD/anzuelo_sheet.png"
 		},
