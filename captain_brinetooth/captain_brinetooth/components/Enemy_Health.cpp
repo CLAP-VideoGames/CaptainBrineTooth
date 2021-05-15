@@ -88,8 +88,9 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 		}
 		particle_hit = entity_->getMngr()->addEntity();
 		particle_hit->addComponent<Transform>(trParent_->getPos(), Vector2D(), trParent_->getW()*1.2, trParent_->getH()*1.2, 0.0);
-		particle_hit->addComponent<Animation>("hit", &sdlutils().images().at(name), 2, 3, 6, 24, 0);
+		particle_hit->addComponent<Animation>("hit", &sdlutils().images().at(name), 2, 3, 6, 30, 0);
 	}
+	SDL_Delay(App::FPS);	//Se salta un frame
 }
 
 void Enemy_Health::init(){
@@ -165,6 +166,7 @@ void Enemy_Health::update(){
 		EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
 		if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
 		if (particle_hit != nullptr) particle_hit->setActive(false);
+		SDL_Delay(100);
 	}
 }
 
