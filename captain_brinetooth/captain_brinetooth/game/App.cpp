@@ -38,9 +38,9 @@ App::App() {
 	//----Inicio de Tutorial------
 	//stateMachine->pushState(new TutorialState(this, world_, sndProvisional));
 	//----Inicio de Juego------
-	//stateMachine->pushState(new PlayState(this, world_, sndProvisional,false));
+	stateMachine->pushState(new PlayState(this, world_, sndProvisional,false));
 	//-----Zona de pruebas------
-	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional,nullptr,world_));
 }
 

@@ -31,6 +31,8 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
 		// Sonido de muerte del monstruo
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("muerte_monstruo", 15);
+		//Borrar collider
+		entity_->removeComponent<ContactDamage>();
 	}
 	else
 	{

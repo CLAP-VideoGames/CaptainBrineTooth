@@ -52,7 +52,7 @@ Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 	AnimBlendGraph* anim_controller = enemy->addComponent<AnimBlendGraph>();
 	anim_controller->addAnimation("idle", &sdlutils().images().at("fringehead_idle"), 1, 12, 12, 24, -1);
 	anim_controller->addAnimation("attack", &sdlutils().images().at("fringehead_atk"), 1, 13, 13, 24, 0, 0, 12, Vector2D(0.5, 0.7));
-	anim_controller->addAnimation("death", &sdlutils().images().at("fringehead_death"), 2, 3, 6, 12, 0, 0, 4, Vector2D(0.5, 0.7));
+	anim_controller->addAnimation("death", &sdlutils().images().at("fringehead_death"), 2, 3, 6, 24, 0, 0, 4, Vector2D(0.5, 0.7));
 	//Proportion?
 	anim_controller->keepProportion("idle", Vector2D(enemy->getComponent<Transform>()->getW(), enemy->getComponent<Transform>()->getH()));
 	anim_controller->addTransition("idle", "attack", "Shoot", 1, false);
@@ -85,14 +85,13 @@ Entity* EnemyGenerator::generateMedusa(Vector2D pos)
 	auto* fjh1 = createBasicEntity(flowerJellyHat.pos, flowerJellyHat.size, flowerJellyHat.rotation, flowerJellyHat.vel);
 	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
 	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
-	fjh1_anim_controller->addAnimation("death", &sdlutils().images().at("medusa_death"), 2, 3, 6, 12, 0, 0, 4);
+	fjh1_anim_controller->addAnimation("death", &sdlutils().images().at("medusa_death"), 2, 3, 6, 24, 0, 0, 4);
 	fjh1_anim_controller->addTransition("idle", "death", "Dead", 1, false);
 	fjh1_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
 	fjh1_anim_controller->setParamValue("Dead", 0);
 	fjh1->addComponent<Enemy_Health>(150, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
-	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask, false, 0.7, true, 0.0, Vector2D(), Vector2D(), 10000);
+	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask, false, 0.7f, true, 0.0, Vector2D(), Vector2D(), 10000);
 	fjh1->addComponent<ContactDamage>();
-	fjh1->addComponent<JellyHatBehavior>(fjh1);
 
 	return fjh1;
 }
@@ -119,7 +118,7 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 	elf_anim_controller->addAnimation("move", &sdlutils().images().at("elfshark_move"), 1, 2, 2, 12, -1, 0, 1, Vector2D(0.66, 0.8));
 	elf_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 48, 0, 0, 10, Vector2D(0.5, 0.8));
 	elf_anim_controller->addAnimation("attack_end", &sdlutils().images().at("elfshark_attack"), 1, 19, 19, 24, 0, 11, 18, Vector2D(0.5, 0.8));
-	elf_anim_controller->addAnimation("death", &sdlutils().images().at("elfshark_death"), 2, 3, 6, 12, 0, 0, 4, Vector2D(0.5, 0.8));
+	elf_anim_controller->addAnimation("death", &sdlutils().images().at("elfshark_death"), 2, 3, 6, 24, 0, 0, 4, Vector2D(0.5, 0.8));
 	//Proportion?
 	elf_anim_controller->keepProportion("idle", Vector2D(elf->getComponent<Transform>()->getW(), elf->getComponent<Transform>()->getH()));
 	elf_anim_controller->addTransition("idle", "move", "Speed", 1, false);
@@ -169,7 +168,7 @@ Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 	gusano_anim_controller->addAnimation("idle", &sdlutils().images().at("pompey_worm_idle"), 1, 2, 2, 12, -1);
 	gusano_anim_controller->addAnimation("move", &sdlutils().images().at("pompey_worm_move"), 1, 2, 2, 12, -1);
 	gusano_anim_controller->addAnimation("attack", &sdlutils().images().at("pompey_worm_attack"), 2, 3, 6, 12, 0, 0, 4);
-	gusano_anim_controller->addAnimation("death", &sdlutils().images().at("pompey_worm_death"), 2, 3, 6, 12, 0, 0, 4);
+	gusano_anim_controller->addAnimation("death", &sdlutils().images().at("pompey_worm_death"), 2, 3, 6, 24, 0, 0, 4);
 	//Proportion?
 	gusano_anim_controller->keepProportion("idle", Vector2D(gusano->getComponent<Transform>()->getW(), gusano->getComponent<Transform>()->getH()));
 	gusano_anim_controller->addTransition("idle", "move", "Speed", 1, false);
