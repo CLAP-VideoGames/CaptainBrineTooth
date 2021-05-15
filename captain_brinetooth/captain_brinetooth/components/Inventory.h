@@ -35,7 +35,7 @@ public:
 	bool playerAttacking();
 
 private:
-	enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk };
+	enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeInk };
 	void addWeaponById(int weapToAdd);
 	void removeWeaponById(int weapToRemove);
 

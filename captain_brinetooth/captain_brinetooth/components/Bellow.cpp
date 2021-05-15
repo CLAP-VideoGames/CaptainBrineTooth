@@ -25,8 +25,8 @@ void Bellow::update() {
 					CURRENT_STATUS = STATUS::Shooting;
 
 					//Activate attack animation + sawing on attack
-					if (anim_->getParamIndex("machineGun_att") != -1)
-						anim_->setParamValue("machineGun_att", 1);
+					if (anim_->getParamIndex("bellow_att") != -1)
+						anim_->setParamValue("bellow_att", 1);
 
 					//Shoot
 					isAttacking = true;
@@ -48,8 +48,8 @@ void Bellow::update() {
 
 		isAttacking = false;
 
-		if (anim_->getParamIndex("machineGun_att") != -1)
-			anim_->setParamValue("machineGun_att", 2);
+		if (anim_->getParamIndex("bellow_att") != -1)
+			anim_->setParamValue("bellow_att", 0);
 	}
 }
 
@@ -69,10 +69,10 @@ void Bellow::shoot() {
 
 	bullet->addComponent<Transform>(bulletpos, Vector2D(0, 0), 150.0f, 150.0f, 0.0f);
 	AnimBlendGraph* anim_controller = bullet->addComponent<AnimBlendGraph>();
-	anim_controller->addAnimation("iddle", &sdlutils().images().at("machine_gun_bullet"), 1, 1, 1, 1, 1);
+	anim_controller->addAnimation("tint", &sdlutils().images().at("squid_tint"), 2, 2, 4, 8, -1);
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
-	bullet->addComponent<WeaponDamageDetection>(150, 2);
+	bullet->addComponent<WeaponDamageDetection>(20, 2);
 	bullet->addComponent<InkMovement>(!anim_->isFlipX());
 
 	level0->addProjectile(bullet);

@@ -4,7 +4,7 @@
 #include "box2d.h"
 #include "../ecs/Entity.h"
 class App;
-enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk };
+enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeInk };
 class Reward : public Component
 {
 public:

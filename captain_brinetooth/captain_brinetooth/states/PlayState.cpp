@@ -132,7 +132,7 @@ void PlayState::init() {
 	bellowGiverConfig.fixedRotation = true;
 	bellowGiverConfig.rotation = 0.0f;
 	bellowGiverConfig.spriteId = "escupetintas";
-	int bellowNumber = 6;
+	int bellowNumber = 5;
 	createWeaponGiver(bellowGiverConfig, bellowNumber);*/
 
 	//Config elfShark{};
@@ -202,7 +202,7 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(3, 1, app);
+	map = nivel->addComponent<MapProcedural>(3, 0, app);
 	getMngr()->setHandler<Map>(nivel);
 	camLimits = levelTile->getMaxCoordenates();
 }
@@ -495,6 +495,25 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->addTransition("machine_gun2", "death", "Dead", 1, false);
 
 	anim_controller->setParamValue("machineGun_att", 0);
+
+	//Bellow
+
+	anim_controller->addAnimation("bellow", &sdlutils().images().at("squid_combo"), 3, 4, 12, 48, 1, Vector2D(0.67, 0.5));
+
+	anim_controller->addTransition("run", "bellow", "bellow_att", 1, false);
+	anim_controller->addTransition("idle", "bellow", "bellow_att", 1, false);
+	anim_controller->addTransition("jump", "bellow", "bellow_att", 1, false);
+	anim_controller->addTransition("bellow", "run", "bellow_att", 0, false);
+	anim_controller->addTransition("bellow", "idle", "bellow_att", 0, false);
+
+	anim_controller->addTransition("bellow", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("bellow", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "bellow", "bellow_att", 1, true);
+	anim_controller->addTransition("dash_ground", "bellow", "bellow_att", 1, true);
+	//death
+	anim_controller->addTransition("bellow", "death", "Dead", 1, false);
+
+	anim_controller->setParamValue("bellow_att", 0);
 	//--------------------------------------------------------------------------------------------------------------
 #pragma endregion
 	//--------------------------------------------------------------------------------------------------------------

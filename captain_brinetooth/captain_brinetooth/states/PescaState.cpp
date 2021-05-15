@@ -154,19 +154,19 @@ void PescaState::createRandomReward(const Config& entityConfig)
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < entitiesaux; j++)
 		{
-			random = sdlutils().rand().teCuoto(0, 5);
+			random = sdlutils().rand().teCuoto(0, 6);
 
 			//Si vuelve a salir el mismo arma que antes volvemos a generar otra 
 			while (random ==lastRandom )
 			{
-				random = sdlutils().rand().teCuoto(0, 5);
+				random = sdlutils().rand().teCuoto(0, 6);
 			}
 			auto* reward0 = createBasicEntity(Vector2D(x + (100 * App::camera_Zoom_Out * j), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 
 			//If player has not the weapon we try adding another weapon that player hasn´t
 			while (playerInv->hasWeapon(random))
 			{
-				random = sdlutils().rand().teCuoto(0, 5);
+				random = sdlutils().rand().teCuoto(0, 6);
 			}
 			if (random == 0)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
@@ -180,6 +180,8 @@ void PescaState::createRandomReward(const Config& entityConfig)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("crab"), 1, 1, 1, 1, 0);
 			else if (random == 4)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("machine_gun"), 1, 1, 1, 1, 0);
+			else if (random == 5)
+				reward0->addComponent<Animation>("idle", &sdlutils().images().at("escupetintas"), 1, 1, 1, 1, 0);
 
 
 

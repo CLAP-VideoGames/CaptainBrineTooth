@@ -25,8 +25,8 @@ public:
 		tr_(nullptr) {
 	}
 	virtual ~Bellow() {
-		if (anim_->getParamIndex("chainsaw_att") != -1)
-			anim_->setParamValue("chainsaw_att", 0);
+		if (anim_->getParamIndex("bellow_att") != -1)
+			anim_->setParamValue("bellow_att", 0);
 	}
 
 	void init() override;
