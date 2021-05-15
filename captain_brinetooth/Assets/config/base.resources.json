@@ -696,20 +696,40 @@
 			"file": "assets/tileset/level0.png"
 		},
 		{
+			"id": "decoration0",
+			"file": "assets/tileset/decoration0.png"
+		},
+		{
 			"id": "tileset2",
 			"file": "assets/tileset/tileset2.png"
+		},
+		{
+			"id": "decoration2",
+			"file": "assets/tileset/decoration0.png"
 		},
 		{
 			"id": "tileset3",
 			"file": "assets/tileset/tileset3.png"
 		},
 		{
+			"id": "decoration3",
+			"file": "assets/tileset/decoration0.png"
+		},
+		{
 			"id": "tileset4",
 			"file": "assets/tileset/tileset4.png"
 		},
 		{
+			"id": "decoration4",
+			"file": "assets/tileset/decoration0.png"
+		},
+		{
 			"id": "tileset5",
 			"file": "assets/tileset/tileset5.png"
+		},
+		{
+			"id": "decoration5",
+			"file": "assets/tileset/decoration0.png"
 		}
 	],
 
