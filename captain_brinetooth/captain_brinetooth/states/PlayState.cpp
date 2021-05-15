@@ -191,17 +191,8 @@ void PlayState::update() {
 			app->setloadSavedGame(true);
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
-			//Savings players Data 
-			infoPartida infoPlayer;
-			Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
-			infoPlayer.playerLife = playerrefAux->getComponent<Player_Health>()->getLife();
-			infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
-			infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
-			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-			if (infoPlayer.weapon1 <= 0)infoPlayer.weapon1 = 100;
-			if (infoPlayer.weapon2 <= 0)infoPlayer.weapon2 = 100;
-
-			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
+			//Pusheamos n nuevo estado de pausa pero antes guardando las vidas y el inventario del player 
+			createSaveDataandSTate();
 		}
 	}
 	GameState::update();
@@ -546,6 +537,15 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		if (info == "Arma1:")readtxt >> weapon2;
 
 		player->getComponent<Player_Health>()->setLife(life);
+
+
+		if (weapon2 < 100 && weapon1 < 100) 
+		{
+			if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon1);
+			if (weapon1 < 100)player->getComponent<Inventory>()->addWeapon(weapon2);
+
+		}
+
 		if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon2);
 		if (weapon1 < 100)player->getComponent<Inventory>()->addWeapon(weapon1);
 
@@ -555,7 +555,36 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	//Carga de archivo
 }
+void PlayState::createSaveDataandSTate()
+{
 
+	StateMachine* sM = app->getStateMachine();
+	//Savings players Data 
+	infoPartida infoPlayer;
+	Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
+	infoPlayer.playerLife = playerrefAux->getComponent<Player_Health>()->getLife();
+	infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
+	infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
+	//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
+	if (playerrefAux->getComponent<Inventory>()->emptyInventory())
+	{
+		infoPlayer.weapon1 = 100;
+		infoPlayer.weapon2 = 100;
+	}
+	else    //Si tiene un arma ponemos la otra a 100( como si fuese null) si no leemos las dos puesto que tendria dos armas
+	{
+		if(playerrefAux->getComponent<Inventory>()->hasOneWeapon())infoPlayer.weapon2 = 100;
+		//si no tiene el inventario lleno , con lo cual se le pasa direcatente la lectura de las armas 
+
+
+	}
+	sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
+
+
+
+
+
+}
 void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
 	auto* weaponGiver = createBasicEntity(weaponGiverConfig.pos, weaponGiverConfig.size, weaponGiverConfig.rotation, weaponGiverConfig.vel);
 
@@ -613,4 +642,6 @@ void PlayState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
+
+
 

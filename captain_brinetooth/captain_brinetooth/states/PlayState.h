@@ -17,7 +17,8 @@ public:
 	void createBoxTest(const Config& entityConfig);
 	void createElfShark(const Config& entityConfig);
 	void createFlowerJellyHat(const Config& entityConfig);
-	
+	void createSaveDataandSTate();
+
 
 private:
 	SDL_Rect cam;

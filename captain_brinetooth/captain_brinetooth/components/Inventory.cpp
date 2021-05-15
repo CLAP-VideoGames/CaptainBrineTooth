@@ -1,5 +1,7 @@
 #include "Inventory.h"
 
+
+
 void Inventory::init() {
 	//Generar un arma aleatoria
 	hud = entity_->getComponent<Armas_HUD>();
@@ -25,6 +27,16 @@ int Inventory::getWeapon(int numofweapon) {
 	return weapArray_[numofweapon];
 }
 
+bool Inventory::hasOneWeapon()
+{
+	if (currentWeaponNumber == 1)return true;
+	else return false;
+}
+bool Inventory::emptyInventory()
+{
+	if (currentWeaponNumber == 0)return true;
+	else return false;
+}
 
 void Inventory::addWeapon(int weapToAdd) {
 	//Si hay espacio

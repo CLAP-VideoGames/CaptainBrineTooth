@@ -25,6 +25,8 @@ public:
 	void switchSelectedWeapon();
 	bool hasWeapon(int weapontoSearch);
 	int getWeapon(int numofweapon);
+	bool hasOneWeapon();
+	bool emptyInventory();
 	virtual void init() override;
 	virtual void update() override;
 

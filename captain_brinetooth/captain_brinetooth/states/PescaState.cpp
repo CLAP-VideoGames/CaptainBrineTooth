@@ -66,8 +66,8 @@ void PescaState::init() {
 	auto* bg = createBasicEntity(Vector2D(screen_width / 2, screen_heigth / 2), Vector2D(screen_width, screen_heigth), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("fondoPesca"), 1, 10, 10, 3, -1);
 	//---------
-	entitiesPerLine = 5;
-	totalBasura = 8;
+	entitiesPerLine = 4;
+	totalBasura = sdlutils().rand().teCuoto(0, 10); //AHora la basura tiene un rango en cuanto a cantidad de aparicion 
 
 	Config gancho{};
 	gancho.pos = Vector2D(screen_width / 2.0, screen_heigth * 0.22);
@@ -157,6 +157,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 void PescaState::createRandomReward(const Config& entityConfig)
 {
 	//0 espada 1 martillo 2 sierra ---> se iran añadiendo segun vaya habiendo mas armas
+	float offset = 10;
 	int x = sdlutils().width() * App::camera_Zoom_Out;
 	int random;
 	int entitiesaux = entitiesPerLine;
@@ -183,9 +184,9 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			else if (random == 2)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 			else if (random == 3)
-				reward0->addComponent<Animation>("idle", &sdlutils().images().at("machine_gun"), 1, 1, 1, 1, 0);
-			else if (random == 4)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("crab"), 1, 1, 1, 1, 0);
+			else if (random == 4)
+				reward0->addComponent<Animation>("idle", &sdlutils().images().at("machine_gun"), 1, 1, 1, 1, 0);
 
 
 
