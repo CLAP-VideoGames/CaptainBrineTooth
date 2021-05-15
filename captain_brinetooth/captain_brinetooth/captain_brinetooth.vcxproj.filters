@@ -390,6 +390,9 @@
     <ClInclude Include="components\Fists.h">
       <Filter>Archivos de encabezado\components\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="components\WeaponComponent.h">
+      <Filter>Archivos de encabezado\components\Weapons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">

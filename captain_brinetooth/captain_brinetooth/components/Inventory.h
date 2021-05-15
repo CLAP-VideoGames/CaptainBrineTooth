@@ -12,6 +12,7 @@
 #include "Bellow.h"
 #include "Fists.h"
 #include "Armas_HUD.h"
+#include "WeaponComponent.h"
 
 
 class Inventory : public Component {
@@ -19,6 +20,7 @@ public:
 	Inventory() : currentWeaponNumber(0), currentSelectedWeapon(0) {}
 
 	virtual ~Inventory() {
+		currentWeapon = nullptr;
 	}
 
 	void addWeapon(int weapToAdd);
@@ -29,6 +31,8 @@ public:
 	bool emptyInventory();
 	virtual void init() override;
 	virtual void update() override;
+
+	bool playerAttacking();
 
 private:
 	enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeEel, TypeInk };
@@ -43,4 +47,6 @@ private:
 	const int maxWeaponNumber = 2;
 	bool currentSelectedWeapon;
 	std::array<PosibleWeapons, 2> weapArray_;
+
+	WeaponComponent* currentWeapon;
 };

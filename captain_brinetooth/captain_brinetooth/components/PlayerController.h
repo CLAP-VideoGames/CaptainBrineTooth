@@ -7,6 +7,7 @@
 #include "BoxCollider.h"
 #include "MapCollider.h"
 #include "TriggerCollider.h"
+#include "Inventory.h"
 
 #include "../ecs/SoundManager.h"
 using namespace ColLayers;

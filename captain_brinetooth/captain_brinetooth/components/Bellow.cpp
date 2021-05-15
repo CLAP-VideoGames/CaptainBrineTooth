@@ -29,6 +29,7 @@ void Bellow::update() {
 						anim_->setParamValue("machineGun_att", 1);
 
 					//Shoot
+					isAttacking = true;
 					shoot();
 
 					//Time control variables
@@ -44,6 +45,8 @@ void Bellow::update() {
 		//Deactivate chainsaw
 		std::cout << "Stopped shooting\n";
 		CURRENT_STATUS = STATUS::Iddle;
+
+		isAttacking = false;
 
 		if (anim_->getParamIndex("machineGun_att") != -1)
 			anim_->setParamValue("machineGun_att", 2);

@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "BoxCollider.h"
 #include "../ecs/Entity.h"
-#include "../ecs/Component.h"
+#include "WeaponComponent.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
@@ -15,7 +15,7 @@
 #include "PlayerController.h"
 
 
-class Sword : public Component {
+class Sword : public WeaponComponent {
 public:
 	Sword() :
 		tr_(nullptr), trigger(nullptr) {
@@ -57,7 +57,7 @@ private:
 	//Cooldown variables (should be able to be changed as you see fit)
 	float maxHoldTime = 3000;	//Time player is sawing
 	float animationLockTime = 666;		//Counted after one attack is stopped to avoid animation clipping
-	float maxComboPanningTime = 500;	//Counted after animation lock is released
+	float maxComboPanningTime = 200;	//Counted after animation lock is released
 	float timeBetweenStabs = 333;
 	float stabTriggerTime = 200;
 	float timeBeforeNextAttackStarts = 666;

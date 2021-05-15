@@ -29,7 +29,7 @@ void Fists::update() {
 					if (anim_->getParamIndex("fist_att") != -1)
 						anim_->setParamValue("fist_att", 1);
 
-
+					isAttacking = true;
 					creaTrigger(20);
 
 					//Time control variables
@@ -44,6 +44,7 @@ void Fists::update() {
 						CURRENT_ATTACK = ATTACKS::Attack2;
 						entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch3", 0);
 
+						isAttacking = true;
 						if (anim_->getParamIndex("fist_att") != -1)
 							anim_->setParamValue("fist_att", 2);
 
@@ -59,7 +60,7 @@ void Fists::update() {
 						if (anim_->getParamIndex("fist_att") != -1)
 							anim_->setParamValue("fist_att", 3);
 
-
+						isAttacking = true;
 						creaTrigger(40);
 
 						stoppedSawTime = sdlutils().currRealTime();
@@ -78,7 +79,7 @@ void Fists::update() {
 						if (anim_->getParamIndex("fist_att") != -1)
 							anim_->setParamValue("fist_att", 1);
 
-
+						isAttacking = true;
 						creaTrigger(20);
 
 						//Time control variables
@@ -97,6 +98,7 @@ void Fists::update() {
 			std::cout << "STOPPED STABBING\n";
 			CURRENT_STATUS = STATUS::OnAnimationLock;
 
+			isAttacking = false;
 			if (anim_->getParamIndex("fist_att") != -1)
 				anim_->setParamValue("fist_att", 0);
 
@@ -107,6 +109,7 @@ void Fists::update() {
 			std::cout << "STOPPED ANIMATION\n";
 			CURRENT_STATUS = STATUS::OnCombo;
 
+			
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;
@@ -122,6 +125,7 @@ void Fists::update() {
 
 			stoppedAttackingTime = sdlutils().currRealTime();
 
+			isAttacking = false;
 			if (anim_->getParamIndex("fist_att") != -1)
 				anim_->setParamValue("fist_att", 0);
 		}
@@ -155,6 +159,7 @@ void Fists::update() {
 	}
 	else {
 		if (CURRENT_STATUS != STATUS::Iddle) {
+			isAttacking = false;
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;

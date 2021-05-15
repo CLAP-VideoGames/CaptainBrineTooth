@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "BoxCollider.h"
 #include "../ecs/Entity.h"
-#include "../ecs/Component.h"
+#include "WeaponComponent.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
@@ -15,7 +15,7 @@
 #include "PlayerController.h"
 
 
-class Hammer : public Component {
+class Hammer : public WeaponComponent {
 public:
 	Hammer() :
 		tr_(nullptr) {
@@ -51,7 +51,7 @@ private:
 
 	//Cooldown variables (should be able to be changed as you see fit) (not changed)
 	float animationLockTime = 700;		//Counted after one attack is stopped to avoid animation clipping
-	float maxComboPanningTime = 400;	//Counted after animation lock is released
+	float maxComboPanningTime = 200;	//Counted after animation lock is released
 
 	//Variables related to Hammer (not changed)
 	int triggerOffSetX = -60;

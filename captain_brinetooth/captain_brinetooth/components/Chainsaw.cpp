@@ -32,7 +32,7 @@ void Chainsaw::update() {
 					if (anim_->getParamIndex("chainsaw_att") != -1)
 						anim_->setParamValue("chainsaw_att", 1);
 
-					
+					isAttacking = true;
 					creaTrigger(80);
 
 					//Time control variables
@@ -51,7 +51,7 @@ void Chainsaw::update() {
 						if (anim_->getParamIndex("chainsaw_att") != -1)
 							anim_->setParamValue("chainsaw_att", 2);
 
-						
+						isAttacking = true;
 						creaTrigger(80);
 
 						stoppedSawTime = sdlutils().currRealTime();
@@ -66,6 +66,7 @@ void Chainsaw::update() {
 
 						sawActivationTime = sdlutils().currRealTime();
 
+						isAttacking = true;
 						toLoop = true;
 						currentLoopAnimationTime = sdlutils().currRealTime();
 
@@ -84,7 +85,7 @@ void Chainsaw::update() {
 						if (anim_->getParamIndex("chainsaw_att") != -1)
 							anim_->setParamValue("chainsaw_att", 1);
 
-						
+						isAttacking = true;
 						creaTrigger(80);
 
 						//Time control variables
@@ -110,6 +111,7 @@ void Chainsaw::update() {
 
 			stoppedSawTime = sdlutils().currRealTime();
 
+			isAttacking = false;
 			if (anim_->getParamIndex("chainsaw_att") != -1)
 				anim_->setParamValue("chainsaw_att", 0);
 		}
@@ -118,6 +120,7 @@ void Chainsaw::update() {
 			std::cout << "STOPPED ANIMATION\n";
 			CURRENT_STATUS = STATUS::OnCombo;
 
+			
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;
@@ -133,6 +136,7 @@ void Chainsaw::update() {
 
 			stoppedAttackingTime = sdlutils().currRealTime();
 
+			isAttacking = false;
 			if (anim_->getParamIndex("chainsaw_att") != -1)
 				anim_->setParamValue("chainsaw_att", 0);
 		}
@@ -174,6 +178,7 @@ void Chainsaw::update() {
 	}
 	else {
 		if (CURRENT_STATUS != STATUS::Iddle) {
+			isAttacking = false;
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;

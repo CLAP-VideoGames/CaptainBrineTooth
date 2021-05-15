@@ -208,6 +208,7 @@
     <ClInclude Include="components\Transform.h" />
     <ClInclude Include="components\TriggerCollider.h" />
     <ClInclude Include="components\VideoPlayer.h" />
+    <ClInclude Include="components\WeaponComponent.h" />
     <ClInclude Include="components\WeaponDamageDetection.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />

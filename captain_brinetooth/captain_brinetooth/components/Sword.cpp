@@ -35,6 +35,7 @@ void Sword::update() {
 						anim_->setParamValue("sword_att", 1);
 
 					//
+					isAttacking = true;
 					creaTrigger(30);
 
 					//Time control variables
@@ -55,6 +56,7 @@ void Sword::update() {
 							anim_->setParamValue("sword_att", 2);
 
 						//
+						isAttacking = true;
 						creaTrigger(30);
 
 						stoppedSawTime = sdlutils().currRealTime();
@@ -66,6 +68,8 @@ void Sword::update() {
 
 						if (anim_->getParamIndex("sword_att") != -1)
 							anim_->setParamValue("sword_att", 3);
+
+						isAttacking = true;
 
 						sawActivationTime = sdlutils().currRealTime();
 
@@ -89,7 +93,7 @@ void Sword::update() {
 						if (anim_->getParamIndex("sword_att") != -1)
 							anim_->setParamValue("sword_att", 1);
 
-						
+						isAttacking = true;
 						creaTrigger(4);
 
 						//Time control variables
@@ -113,6 +117,7 @@ void Sword::update() {
 			std::cout << "STOPPED STABBING\n";
 			CURRENT_STATUS = STATUS::OnAnimationLock;
 
+			isAttacking = false;
 			if (anim_->getParamIndex("sword_att") != -1)
 				anim_->setParamValue("sword_att", 0);
 
@@ -138,6 +143,7 @@ void Sword::update() {
 
 			stoppedAttackingTime = sdlutils().currRealTime();
 
+			isAttacking = false;
 			if (anim_->getParamIndex("sword_att") != -1)
 				anim_->setParamValue("sword_att", 0);
 		}
@@ -181,6 +187,7 @@ void Sword::update() {
 	}
 	else {
 		if (CURRENT_STATUS != STATUS::Iddle) {
+			isAttacking = false;
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;

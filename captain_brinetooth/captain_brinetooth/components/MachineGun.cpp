@@ -31,6 +31,7 @@ void MachineGun::update() {
 						anim_->setParamValue("machineGun_att", 1);
 
 					//Shoot
+					isAttacking = true;
 					shoot();
 
 					//Time control variables
@@ -43,6 +44,7 @@ void MachineGun::update() {
 		if (CURRENT_STATUS != STATUS::Iddle) {
 			CURRENT_STATUS = STATUS::Iddle;
 
+			isAttacking = false;
 			if (anim_->getParamIndex("machineGun_att") != -1)
 				anim_->setParamValue("machineGun_att", 0);
 		}
@@ -55,6 +57,7 @@ void MachineGun::update() {
 
 			CURRENT_STATUS = STATUS::Iddle;
 
+			isAttacking = false;
 			//Desactivar animacion
 			if (anim_->getParamIndex("machineGun_att") != -1)
 				anim_->setParamValue("machineGun_att", 0);
@@ -70,7 +73,7 @@ void MachineGun::update() {
 		startedReloading = sdlutils().currRealTime();
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("recarga_anchoa", 0);
 
-
+		isAttacking = false;
 		if (anim_->getParamIndex("machineGun_att") != -1)
 			anim_->setParamValue("machineGun_att", 2);
 	}

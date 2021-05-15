@@ -29,7 +29,7 @@ void Hammer::update() {
 					if (anim_->getParamIndex("hammer_att") != -1)
 						anim_->setParamValue("hammer_att", 1);
 
-					
+					isAttacking = true;
 					creaTrigger(65);
 
 					//Time control variables
@@ -47,7 +47,7 @@ void Hammer::update() {
 					if (anim_->getParamIndex("hammer_att") != -1)
 						anim_->setParamValue("hammer_att", 2);
 
-					
+					isAttacking = true;
 					creaTrigger(70);
 
 					stoppedSawTime = sdlutils().currRealTime();
@@ -64,7 +64,7 @@ void Hammer::update() {
 					if (anim_->getParamIndex("hammer_att") != -1)
 						anim_->setParamValue("hammer_att", 1);
 
-					
+					isAttacking = true;
 					creaTrigger(65);
 
 					//Time control variables
@@ -78,6 +78,7 @@ void Hammer::update() {
 			std::cout << "STOPPED ANIMATION\n";
 			CURRENT_STATUS = STATUS::OnCombo;
 			comboActivationTime = sdlutils().currRealTime();
+
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;
@@ -89,6 +90,7 @@ void Hammer::update() {
 			CURRENT_STATUS = STATUS::Iddle;
 			CURRENT_ATTACK = ATTACKS::NotAttacking;
 
+			isAttacking = false;
 			anim_->setParamValue("hammer_att", 0);
 		}
 
@@ -106,6 +108,7 @@ void Hammer::update() {
 	}
 	else {
 		if (CURRENT_STATUS != STATUS::Iddle) {
+			isAttacking = false;
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;

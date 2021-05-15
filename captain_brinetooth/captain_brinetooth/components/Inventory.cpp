@@ -9,7 +9,7 @@ void Inventory::init() {
 	//Añadimos los puños
 	if (currentWeaponNumber == 0) {
 		//Añadimos los puños sin que cuenten en el array de armas
-		entity_->addComponent<Fists>();
+		currentWeapon = entity_->addComponent<Fists>();
 		hud->actualizarNewWeapon(0, &sdlutils().images().at("fist"));
 	}
 }
@@ -66,10 +66,12 @@ void Inventory::addWeapon(int weapToAdd) {
 /// </summary>
 void Inventory::switchSelectedWeapon() {
 	if (currentWeaponNumber == 2) {
-		removeWeaponById(weapArray_[currentSelectedWeapon]);
-		currentSelectedWeapon = !currentSelectedWeapon;
-		addWeaponById(weapArray_[currentSelectedWeapon]);
-		hud->changeWeaponSelected();
+		if (!currentWeapon->getIsAttacking()) {
+			removeWeaponById(weapArray_[currentSelectedWeapon]);
+			currentSelectedWeapon = !currentSelectedWeapon;
+			addWeaponById(weapArray_[currentSelectedWeapon]);
+			hud->changeWeaponSelected();
+		}
 	}
 }
 bool Inventory::hasWeapon(int searchWeapon)
@@ -91,25 +93,25 @@ bool Inventory::hasWeapon(int searchWeapon)
 void Inventory::addWeaponById(int weapToAdd) {
 	switch (weapToAdd) {
 	case PosibleWeapons::TypeSword:
-		entity_->addComponent<Sword>();
+		currentWeapon = entity_->addComponent<Sword>();
 		break;
 	case PosibleWeapons::TypeHammer:
-		entity_->addComponent<Hammer>();
+		currentWeapon = entity_->addComponent<Hammer>();
 		break;
 	case PosibleWeapons::TypeChainsaw:
-		entity_->addComponent<Chainsaw>();
+		currentWeapon = entity_->addComponent<Chainsaw>();
 		break;
 	case PosibleWeapons::TypeCrab:
-		entity_->addComponent<Crab>();
+		currentWeapon = entity_->addComponent<Crab>();
 		break;
 	case PosibleWeapons::TypeMachineGun:
-		entity_->addComponent<MachineGun>();
+		currentWeapon = entity_->addComponent<MachineGun>();
 		break;
 	case PosibleWeapons::TypeEel:
-		entity_->addComponent<ElectricWhip>();
+		currentWeapon = entity_->addComponent<ElectricWhip>();
 		break;
 	case PosibleWeapons::TypeInk:
-		entity_->addComponent<Bellow>();
+		currentWeapon = entity_->addComponent<Bellow>();
 		break;
 	}
 }
@@ -172,4 +174,8 @@ void Inventory::removeWeaponById(int weapToAdd) {
 		entity_->removeComponent<Bellow>();
 		break;
 	}
+}
+
+bool Inventory::playerAttacking() {
+	return currentWeapon->getIsAttacking();
 }

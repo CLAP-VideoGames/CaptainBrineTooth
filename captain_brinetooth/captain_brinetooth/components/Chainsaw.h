@@ -5,7 +5,7 @@
 #include <cassert>
 #include "Transform.h"
 #include "../ecs/Entity.h"
-#include "../ecs/Component.h"
+#include "WeaponComponent.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
@@ -14,7 +14,7 @@
 #include "PlayerController.h"
 
 
-class Chainsaw : public Component {
+class Chainsaw : public WeaponComponent {
 public:
 	Chainsaw() :
 		tr_(nullptr) {
@@ -56,7 +56,7 @@ private:
 	//Cooldown variables (should be able to be changed as you see fit)
 	float maxHoldTime = 3000;	//Time player is sawing
 	float animationLockTime = 1000;		//Counted after one attack is stopped to avoid animation clipping
-	float maxComboPanningTime = 500;	//Counted after animation lock is released
+	float maxComboPanningTime = 200;	//Counted after animation lock is released
 	float timeBetweenStabs = 1000;
 	float stabTriggerTime = 500;
 	float timeBeforeNextAttackStarts = 1000;

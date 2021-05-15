@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "BoxCollider.h"
 #include "../ecs/Entity.h"
-#include "../ecs/Component.h"
+#include "WeaponComponent.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
@@ -15,7 +15,7 @@
 #include "PlayerController.h"
 
 
-class ElectricWhip : public Component {
+class ElectricWhip : public WeaponComponent {
 public:
 	ElectricWhip() :
 		tr_(nullptr) {

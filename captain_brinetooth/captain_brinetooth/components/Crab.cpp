@@ -29,7 +29,7 @@ void Crab::update() {
 					if (anim_->getParamIndex("crab_att") != -1)
 						anim_->setParamValue("crab_att", 1);
 
-					
+					isAttacking = true;
 					creaTrigger(80);
 
 					//Time control variables
@@ -47,6 +47,8 @@ void Crab::update() {
 						if (anim_->getParamIndex("crab_att") != -1)
 							anim_->setParamValue("crab_att", 2);
 
+						isAttacking = true;
+
 						sawActivationTime = sdlutils().currRealTime();
 						break;
 
@@ -59,7 +61,7 @@ void Crab::update() {
 						if (anim_->getParamIndex("crab_att") != -1)
 							anim_->setParamValue("crab_att", 3);
 
-						
+						isAttacking = true;
 						creaTrigger(110);
 
 						stoppedSawTime = sdlutils().currRealTime();
@@ -78,7 +80,7 @@ void Crab::update() {
 						if (anim_->getParamIndex("crab_att") != -1)
 							anim_->setParamValue("crab_att", 1);
 
-						
+						isAttacking = true;
 						creaTrigger(80);
 
 						//Time control variables
@@ -100,6 +102,7 @@ void Crab::update() {
 			if (anim_->getParamIndex("crab_att") != -1)
 				anim_->setParamValue("crab_att", 0);
 
+			isAttacking = false;
 			stoppedSawTime = sdlutils().currRealTime();
 		}
 		else if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
@@ -107,6 +110,7 @@ void Crab::update() {
 			std::cout << "STOPPED ANIMATION\n";
 			CURRENT_STATUS = STATUS::OnCombo;
 
+			
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;
@@ -122,6 +126,7 @@ void Crab::update() {
 
 			stoppedAttackingTime = sdlutils().currRealTime();
 
+			isAttacking = false;
 			if (anim_->getParamIndex("crab_att") != -1)
 				anim_->setParamValue("crab_att", 0);
 		}
@@ -155,6 +160,7 @@ void Crab::update() {
 	}
 	else {
 		if (CURRENT_STATUS != STATUS::Iddle) {
+			isAttacking = false;
 			if (trigger != nullptr) {
 				trigger->setActive(false);
 				trigger = nullptr;

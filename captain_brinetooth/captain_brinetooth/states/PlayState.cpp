@@ -333,8 +333,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	anim_controller->addTransition("sword_attack1", "dash_air", "Dash_Air", 1, false);
 	anim_controller->addTransition("sword_attack1", "dash_ground", "Dash_Ground", 1, false);
-	anim_controller->addTransition("dash_air", "chainsaw_attack1", "sword_att", 1, true);
-	anim_controller->addTransition("dash_ground", "chainsaw_attack1", "sword_att", 1, true);
+	anim_controller->addTransition("dash_air", "sword_attack1", "sword_att", 1, true);
+	anim_controller->addTransition("dash_ground", "sword_attack1", "sword_att", 1, true);
 	anim_controller->addTransition("sword_attack2", "dash_air", "Dash_Air", 1, false);
 	anim_controller->addTransition("sword_attack2", "dash_ground", "Dash_Ground", 1, false);
 	anim_controller->addTransition("dash_air", "sword_attack2", "sword_att", 2, true);

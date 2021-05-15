@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "BoxCollider.h"
 #include "../ecs/Entity.h"
-#include "../ecs/Component.h"
+#include "WeaponComponent.h"
 #include "../sdlutils/InputHandler.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
@@ -17,7 +17,7 @@
 #include "DestroyOnCollision.h"
 
 
-class MachineGun : public Component {
+class MachineGun : public WeaponComponent {
 public:
 	MachineGun() :
 		tr_(nullptr) {
