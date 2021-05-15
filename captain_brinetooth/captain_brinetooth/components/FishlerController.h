@@ -45,8 +45,8 @@ public:
 
 protected:
 	enum PHASE {Phase1, Phase2};
-	enum MOVEMENT_STATE {Iddle, Stunned, AttackTelegraph, Attacking, Walking, Jumping};
-	enum ATTACKS {NotAttacking, RushAttack, Bite, Shoot, Spikes};
+	enum MOVEMENT_STATE {Iddle, Stunned, AttackTelegraph, Attacking, Walking};
+	enum ATTACKS {NotAttacking, RushAttack, Bite, Shoot, Spikes, Tentacles};
 
 	PHASE currentPhase;
 	MOVEMENT_STATE currentMovement;

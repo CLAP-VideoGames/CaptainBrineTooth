@@ -39,7 +39,7 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 	Config fishlerConfig{};
 	fishlerConfig.vel = Vector2D();
 	fishlerConfig.size = Vector2D(100, 200);
-	fishlerConfig.friction = 0.2f;
+	fishlerConfig.friction = 0.0f;
 	fishlerConfig.physicType = DYNAMIC;
 	fishlerConfig.col = ENEMY;
 	fishlerConfig.colMask = ENEMY_MASK;
@@ -48,7 +48,7 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 	fishlerConfig.spriteId = "espada";
 	Entity* fishler = entity_->getMngr()->addEntity();
 	fishler->addComponent<Transform>(pos, fishlerConfig.vel, fishlerConfig.size.getX(), fishlerConfig.size.getY(), fishlerConfig.rotation);
-	fishler->addComponent<BoxCollider>(fishlerConfig.physicType, fishlerConfig.col, fishlerConfig.colMask, false, fishlerConfig.friction);
+	fishler->addComponent<BoxCollider>(fishlerConfig.physicType, fishlerConfig.col, fishlerConfig.colMask, false, fishlerConfig.friction, true, 0.0, Vector2D(), Vector2D(), 10000);
 	AnimBlendGraph* fishler_anim_controller = fishler->addComponent<AnimBlendGraph>();
 	fishler_anim_controller->addAnimation("sinMoverse", &sdlutils().images().at(fishlerConfig.spriteId), 1, 1, 1, 23, 1);
 	fishler->addComponent<Enemy_Health>(5000, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);

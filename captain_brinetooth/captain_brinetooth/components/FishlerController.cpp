@@ -34,10 +34,10 @@ void FishlerController::init() {
 	shootAttackTime = 1000;
 
 	//Trigger position variables
-	triggerWidth = 100;
-	triggerHeight = 100;
-	triggerOffSetX = -90;
-	triggerOffSetY = -30;
+	triggerWidth = 150;
+	triggerHeight = 200;
+	triggerOffSetX = -100;
+	triggerOffSetY = 0;
 }
 
 FishlerController::~FishlerController() {
@@ -121,7 +121,15 @@ void FishlerController::update() {
 			attackTimer.currentTime = sdlutils().currRealTime();
 
 			//Attack
-			collider_->setSpeed(Vector2D((playertr->getPos().getX() - tr_->getPos().getX()) / std::abs((playertr->getPos().getX() - tr_->getPos().getX())) * rushSpeed, 0));
+			float direction;
+			if ((playertr->getPos().getX() < tr_->getPos().getX())) {
+				direction = -1;
+			}
+			else {
+				direction = 1;
+			}
+
+			collider_->setSpeed(Vector2D(direction * rushSpeed, 0));
 
 			//Initiate rush attack animation
 
@@ -172,29 +180,21 @@ void FishlerController::update() {
 		movementTimer.maxTime = sdlutils().rand().teCuoto(1500, 4000); //Random movement time for a little extra spice
 		movementTimer.currentTime = sdlutils().currRealTime();
 
-		if (currentPhase == Phase1)
-			currentMovement = Walking;
-		else
-			currentMovement = Jumping;
+		currentMovement = Walking;
 	}
 
 	//Walks in the direction of the player
 	if (currentMovement == Walking) {
+		float direction;
 		if ((playertr->getPos().getX() < tr_->getPos().getX())) {
+			direction = -1;
 			anim_->flipX(false);
 		}
 		else {
+			direction = 1;
 			anim_->flipX(true);
 		}
-		collider_->setSpeed(Vector2D((playertr->getPos().getX() - tr_->getPos().getX()) / std::abs((playertr->getPos().getX() - tr_->getPos().getX())) * walkingSpeed, collider_->getBody()->GetLinearVelocity().y));
-	}
-
-	//Jumps around the area
-	if (currentMovement == Jumping && onFloor) {
-		//Perform jumo in a more or less random direction
-
-
-		onFloor = false; //Stops being on the floor
+		collider_->setSpeed(Vector2D(direction * walkingSpeed, collider_->getBody()->GetLinearVelocity().y));
 	}
 
 	//Updating the player detect trigger
