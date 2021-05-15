@@ -193,7 +193,6 @@ void PlayState::update() {
 		}
 	}
 	GameState::update();
-
 }
 
 /// <summary>
