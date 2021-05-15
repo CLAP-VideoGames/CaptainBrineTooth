@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="16">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="17">
  <tileset firstgid="1" source="../tileset2.tsx"/>
  <layer id="1" name="tiles" width="60" height="40">
   <data encoding="csv">
@@ -63,14 +63,8 @@
   <object id="4" x="2176" y="1856">
    <polygon points="0,0 192,0 192,64 0,64"/>
   </object>
-  <object id="8" x="0" y="0">
-   <polygon points="0,0 3776,0 3840,0 3840,2560 576,2560 576,576 704,576 704,896 640,960 640,1088 704,1152 704,1344 2240,1344 2240,1600 2176,1600 2112,1664 2112,1984 2560,1984 2560,1088 2432,960 1408,960 1344,1024 1088,1024 1088,768 1152,704 1152,320 1152,384 1088,320 1088,256 1024,192 384,192 256,320 256,2560 0,2560"/>
-  </object>
-  <object id="9" x="256" y="704">
-   <polygon points="0,0 320,0 320,1856 0,1856"/>
-  </object>
-  <object id="15" x="0" y="0">
-   <polygon points="0,0 3840,0 3840,2560 0,2560"/>
+  <object id="16" x="256" y="320">
+   <polygon points="0,0 128,-128 768,-128 832,-64 832,0 896,64 896,384 832,448 832,704 1088,704 1152,640 2176,640 2304,768 2304,1664 1856,1664 1856,1344 1920,1280 1984,1280 1984,1024 448,1024 448,832 384,768 384,640 448,576 448,256 320,256 320,384 0,384"/>
   </object>
  </objectgroup>
 </map>
