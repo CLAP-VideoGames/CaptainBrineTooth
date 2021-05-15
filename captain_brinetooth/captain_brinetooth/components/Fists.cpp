@@ -24,7 +24,7 @@ void Fists::update() {
 					//Set player as sawing
 					CURRENT_STATUS = STATUS::OnAnimationLock;
 					CURRENT_ATTACK = ATTACKS::Attack1;
-					entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch1", 0);
+					entity_->getMngr()->getSoundMngr()->playSoundEffect("normal_punch1", 0);
 					//Activate attack animation + sawing on attack
 					if (anim_->getParamIndex("fist_att") != -1)
 						anim_->setParamValue("fist_att", 1);
@@ -42,7 +42,7 @@ void Fists::update() {
 						std::cout << "Attack 2 Initiated\n";
 						CURRENT_STATUS = STATUS::Sawing;
 						CURRENT_ATTACK = ATTACKS::Attack2;
-						entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch3", 0);
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("normal_punch2", 0);
 
 						isAttacking = true;
 						if (anim_->getParamIndex("fist_att") != -1)
@@ -55,7 +55,7 @@ void Fists::update() {
 						std::cout << "Attack 3 Initiated\n";
 						CURRENT_STATUS = STATUS::OnAnimationLock;
 						CURRENT_ATTACK = ATTACKS::Attack3;
-						entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch4", 0);
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("normal_punch3", 0);
 
 						if (anim_->getParamIndex("fist_att") != -1)
 							anim_->setParamValue("fist_att", 3);
@@ -72,7 +72,7 @@ void Fists::update() {
 						CURRENT_STATUS = STATUS::OnAnimationLock;
 						CURRENT_ATTACK = ATTACKS::Attack1;
 
-						entity_->getMngr()->getSoundMngr()->playSoundEffect("boxing_punch1", 0);
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("normal_punch1", 0);
 
 
 						//Activate attack animation + sawing on attack

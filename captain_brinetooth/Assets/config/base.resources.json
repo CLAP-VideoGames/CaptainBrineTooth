@@ -521,15 +521,15 @@
 		},
 		{
 			"id": "normal_punch1",
-			"file": "assets/sounds/weapons/punch/punch.mp3"
+			"file": "assets/sounds/weapons/punch/punch1.mp3"
 		},
 		{
 			"id": "normal_punch2",
-			"file": "assets/sounds/weapons/punch/punch2.wav"
+			"file": "assets/sounds/weapons/punch/punch5.mp3"
 		},
 		{
 			"id": "normal_punch3",
-			"file": "assets/sounds/weapons/punch/punch3.wav"
+			"file": "assets/sounds/weapons/punch/punch4.mp3"
 		},
 
 		{

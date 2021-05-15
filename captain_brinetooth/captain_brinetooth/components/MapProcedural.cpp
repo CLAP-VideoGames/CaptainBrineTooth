@@ -339,7 +339,7 @@ void MapProcedural::loadTileFiles(){
 
 void MapProcedural::initBoss() {
 	// Se inicia la musica del nivel correspondiente
-	//entity_->getMngr()->getSoundMngr()->ChangeMainMusic("BossFight");
+	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("FinalBoss");
 	roomsExplored = 0;
 	int tile = getRandomTileFromArea(Boss);
 	roomNames[tile].used = true;
