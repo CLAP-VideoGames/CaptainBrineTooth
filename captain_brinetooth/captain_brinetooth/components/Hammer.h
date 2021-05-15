@@ -55,7 +55,7 @@ private:
 
 	//Variables related to Hammer (not changed)
 	int triggerOffSetX = -60;
-	int triggerOffSetY = -10;
+	int triggerOffSetY = -20;
 	int triggerWidth = 150;
 	int triggerHeight = 130;
 

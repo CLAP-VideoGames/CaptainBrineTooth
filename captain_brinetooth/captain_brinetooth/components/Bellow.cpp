@@ -59,10 +59,10 @@ void Bellow::shoot() {
 
 	Vector2D bulletpos; Vector2D bulletvel;
 	if (anim_->isFlipX()) {
-		bulletpos = tr_->getPos() + Vector2D(+150, 0);
+		bulletpos = tr_->getPos() + Vector2D(+150, -30);
 	}
 	else {
-		bulletpos = tr_->getPos() + Vector2D(-150, 0);
+		bulletpos = tr_->getPos() + Vector2D(-150, -30);
 	}
 
 	//Sonido

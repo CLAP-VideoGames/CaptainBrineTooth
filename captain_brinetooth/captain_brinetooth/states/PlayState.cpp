@@ -49,7 +49,7 @@ void PlayState::init() {
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
 
-	Config swordGiverConfig{};
+	/*Config swordGiverConfig{};
 	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
 	swordGiverConfig.vel = Vector2D();
 	swordGiverConfig.size = Vector2D(50, 50);
@@ -58,7 +58,7 @@ void PlayState::init() {
 	swordGiverConfig.fixedRotation = true;
 	swordGiverConfig.rotation = 0.0f;
 	swordGiverConfig.spriteId = "espada";
-	int swordNumber = 0;
+	int swordNumber = 0;*/
 	//createWeaponGiver(swordGiverConfig, swordNumber);
 
 	getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->setPlayer2spawn();
@@ -159,7 +159,7 @@ void PlayState::init() {
 	//flowerJellyHat.colMask = ENEMY_MASK;
 	//createFlowerJellyHat(flowerJellyHat);
 
-	Config fishlerConfig{};
+	/*Config fishlerConfig{};
 	fishlerConfig.pos = Vector2D(sdlutils().width(), sdlutils().height() * 1.3f);
 	fishlerConfig.vel = Vector2D();
 	fishlerConfig.size = Vector2D(100, 200);
@@ -177,7 +177,7 @@ void PlayState::init() {
 	fishler_anim_controller->addAnimation("sinMoverse", &sdlutils().images().at(fishlerConfig.spriteId), 1, 1, 1, 23, 1);
 	fishler->addComponent<Enemy_Health>(5000, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fishler->addComponent<FishlerController>();
-	fishler->addComponent<ContactDamage>();
+	fishler->addComponent<ContactDamage>();*/
 }
 
 void PlayState::update() {
