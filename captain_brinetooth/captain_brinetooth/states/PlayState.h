@@ -19,8 +19,10 @@ public:
 	void createFlowerJellyHat(const Config& entityConfig);
 	void createSaveDataandSTate();
 
+	Entity* getBackgroundLevel();
 
 private:
+	Entity* backgroundLevel;
 	SDL_Rect cam;
 	MapProcedural* map;
 	Vector2D camLimits;

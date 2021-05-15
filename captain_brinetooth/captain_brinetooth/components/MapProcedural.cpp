@@ -1,5 +1,7 @@
 #include "MapProcedural.h"
 #include "CameraFollow.h"
+#include "../states/StateMachine.h"
+#include "../states/PlayState.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include<iostream>
@@ -15,7 +17,7 @@ MapProcedural::MapProcedural(int nR, int f, App* s){
 	fase = f;
 	states = s;
 	roomsExplored = 0;
-
+	backgroundLayer = nullptr;
 
 	std::cout << roomsExplored << std::endl;
 	gonTotravel = travelZone = stopFishing = startRun_ = false;
@@ -30,6 +32,12 @@ MapProcedural::~MapProcedural() {
 }
 
 void MapProcedural::init() {
+
+	PlayState* playState = dynamic_cast<PlayState*>(states->getStateMachine()->currentState());
+	//Obtenemos el playStat para poder cambiar el fondo en cada nivel
+	if (playState != nullptr)
+		backgroundLayer = playState->getBackgroundLevel()->getComponent<ParallaxScroll>();
+
 	//Setteamos el lvl
 	lvl = entity_->getComponent<Level0>();
 	//Cargamos todos los archivos
@@ -244,6 +252,8 @@ void MapProcedural::update() {
 		delete currentRoom;
 		//Cargamos los nuevos archivos de la nueva zona
 		loadTileFiles();
+		//Cambiamos el fondo del nivel
+		backgroundLayer->setLevelBackground(fase);
 		//Empezamos la run
 		if (fase < 3) initRun();
 		else initBoss();
@@ -338,8 +348,8 @@ void MapProcedural::initBoss() {
 }
 
 void MapProcedural::initRun(){
-
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel" + std::to_string(fase));
+	backgroundLayer->setLevelBackground(fase);
 	startRun_ = false;
 	int tile = getRandomTileFromArea(Starts);
 	roomNames[tile].used = true;

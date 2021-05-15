@@ -15,13 +15,20 @@ typedef struct {
 class ParallaxScroll : public Component
 {
 public:
-	ParallaxScroll(){};
+	ParallaxScroll(): levelBackGround(0){};
 	virtual ~ParallaxScroll();
 	void init()override;
 	void render()override;
 
 	void addLayer(Texture* text, float scrollRatio);
+
+	void setLevelBackground(const int& index_);
+
 private:
 	Transform* tr_;
 	std::vector<Layer*> layers_;
+
+	std::vector<std::vector<Layer*>> layerGroup;
+	
+	int levelBackGround;
 };

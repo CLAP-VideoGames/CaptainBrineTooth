@@ -6,6 +6,7 @@
 #include "../ecs/Entity.h"
 #include "MapCollider.h"
 #include "../components/Connections.h"
+#include "ParallaxScroll.h"
 
 static BoxCollider* playerCollider_;
 namespace fs = std::filesystem;
@@ -162,7 +163,7 @@ protected:
 	int fase;				//Número de la zona en la que está el player
 
 	App* states;
-	
+	ParallaxScroll* backgroundLayer;
 	Level0* lvl;
 	MapCollider* chainCollider;
 

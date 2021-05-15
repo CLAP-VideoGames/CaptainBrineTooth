@@ -26,12 +26,9 @@ PlayState::~PlayState() {
 
 void PlayState::init() {
 	//---BG----
-	auto* bg = createBasicEntity(Vector2D(960, 640), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
-	auto* bgParallax = bg->addComponent<ParallaxScroll>();
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer1"), 0.2);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer2"), 0.25);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer3"), 0.35);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer4"), 0.4);
+	backgroundLevel = createBasicEntity(Vector2D(960, 640), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
+	auto* bgParallax = backgroundLevel->addComponent<ParallaxScroll>();
+
 	/*bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
 	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
 	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
@@ -206,7 +203,7 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(4, 0, app);
+	map = nivel->addComponent<MapProcedural>(2, 0, app);
 	getMngr()->setHandler<Map>(nivel);
 	camLimits = levelTile->getMaxCoordenates();
 }
@@ -584,6 +581,9 @@ void PlayState::createSaveDataandSTate()
 
 
 
+}
+Entity* PlayState::getBackgroundLevel(){
+	return backgroundLevel;
 }
 void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
 	auto* weaponGiver = createBasicEntity(weaponGiverConfig.pos, weaponGiverConfig.size, weaponGiverConfig.rotation, weaponGiverConfig.vel);
