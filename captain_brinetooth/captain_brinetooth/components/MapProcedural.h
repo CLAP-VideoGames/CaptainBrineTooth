@@ -7,6 +7,7 @@
 #include "MapCollider.h"
 #include "../components/Connections.h"
 
+static BoxCollider* playerCollider_;
 namespace fs = std::filesystem;
 const int NUM_TILEMAPS = 40;
 //r->level = "assets/maps/level_rooms0\\NEtile3.tmx";

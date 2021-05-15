@@ -1,5 +1,4 @@
 #include "MapProcedural.h"
-
 #include "CameraFollow.h"
 
 #define _CRTDBG_MAP_ALLOC
@@ -195,6 +194,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 	//Comprobamos que hay un punto de pesca
 	if (posAux.size() != 0) {
+
 		entity_->getMngr()->getSoundMngr()->ChangeMainMusic("CofreTesoro");
 		for (int i = 0; i < posAux.size(); i++) {
 			Vector2D pescaPos(posAux[i].x, posAux[i].y);
@@ -254,7 +254,8 @@ void MapProcedural::update() {
 			e->setActive(false);
 		}
 
-		pesca.clear();
+		playerCollider_->setSpeed(Vector2D(0, 0));
+		pesca.clear(); 
 		stopFishing = false;
 	}
 }
@@ -415,6 +416,7 @@ void MapProcedural::pescar(b2Contact* contact) {
 	}
 
 
+	playerCollider_ = trigger->getMngr()->getHandler<Player>()->getComponent<BoxCollider>();
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getStates()->changeToPesca();
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
 }
