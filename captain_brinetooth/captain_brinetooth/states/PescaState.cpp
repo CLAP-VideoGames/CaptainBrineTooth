@@ -149,12 +149,18 @@ void PescaState::createRandomReward(const Config& entityConfig)
 	int random;
 	int entitiesaux = entitiesPerLine;
 	Inventory* playerInv = playerRef->getComponent<Inventory>();
+	int lastRandom=90; //Inicialmente no hay ultimo arma generada asi que ponemos un numero grande para que el bucle no se confunda haciendo comprobaciones 
 
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < entitiesaux; j++)
 		{
 			random = sdlutils().rand().teCuoto(0, 5);
 
+			//Si vuelve a salir el mismo arma que antes volvemos a generar otra 
+			while (random ==lastRandom )
+			{
+				random = sdlutils().rand().teCuoto(0, 5);
+			}
 			auto* reward0 = createBasicEntity(Vector2D(x + (100 * App::camera_Zoom_Out * j), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 
 			//If player has not the weapon we try adding another weapon that player hasn´t
@@ -179,7 +185,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 
 			reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
 			reward0->addComponent<Reward>(random, playerRef, app);
-
+			lastRandom = random; //Guardamos el ultimo random para saber que recompensa se ha generado la ultima 
 
 		}
 		entitiesaux--;
