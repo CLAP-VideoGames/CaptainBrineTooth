@@ -5,7 +5,7 @@ using namespace ColLayers;
 
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
-	
+
 	//Falta cambiar la musica con el sounmanager a la de playstate 
 
 
@@ -20,23 +20,6 @@ void PescaState::update() {
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
-			infoPartida infoPlayer;
-			infoPlayer.playerLife = playerRef->getComponent<Player_Health>()->getLife();
-			infoPlayer.weapon1 = playerRef->getComponent<Inventory>()->getWeapon(0);
-			infoPlayer.weapon2 = playerRef->getComponent<Inventory>()->getWeapon(1);
-			//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-			if (playerRef->getComponent<Inventory>()->emptyInventory())
-			{
-				infoPlayer.weapon1 = 100;
-				infoPlayer.weapon2 = 100;
-			}
-			else    //Si tiene un arma ponemos la otra a 100( como si fuese null) si no leemos las dos puesto que tendria dos armas
-			{
-				if (playerRef->getComponent<Inventory>()->hasOneWeapon())infoPlayer.weapon2 = 100;
-				//si no tiene el inventario lleno , con lo cual se le pasa direcatente la lectura de las armas 
-
-			}
-			sM->pushState(new PauseState(this, app, playWorld, sM->currentState()->getMngr()->getSoundMngr(),infoPlayer));
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && !space_pressed_) {
 			space_pressed_ = true;
@@ -135,7 +118,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 	//floor->addComponent<Animation>("debug", &sdlutils().images().at("arena"), 1, 1, 1, 1, 0);
 	floor->addComponent<BoxCollider>(KINEMATIC, DEFAULT, DEFAULT_MASK);
 	//cuerda *arreglada
-	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5 * z_factor), Vector2D(entityConfig.size.getX()*4, entityConfig.size.getX()), 0.0f, Vector2D(0, 0));
+	auto* topRod = createBasicEntity(entityConfig.pos + Vector2D(0, -entityConfig.size.getY() - 5 * z_factor), Vector2D(entityConfig.size.getX() * 4, entityConfig.size.getX()), 0.0f, Vector2D(0, 0));
 	//topRod->addComponent<Animation>("debug", &sdlutils().images().at("debug_square"), 1, 1, 1, 1, 0);
 	topRod->addComponent<BoxCollider>(DYNAMIC, DEFAULT, DEFAULT_MASK);
 	topRod->addComponent<PescaController>(screen_width);
@@ -148,9 +131,9 @@ void PescaState::createPesca(const Config& entityConfig) {
 	playercollider_->getFixture()->SetSensor(true);
 	player->addComponent<PescaController>(screen_width);
 	//gancho *si arreglado
-	auto* gancho = createBasicEntity(Vector2D(entityConfig.pos.getX()+5, entityConfig.pos.getY()), entityConfig.size, entityConfig.rotation, entityConfig.vel);
+	auto* gancho = createBasicEntity(Vector2D(entityConfig.pos.getX() + 5, entityConfig.pos.getY()), entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	gancho->addComponent<Animation>("idle", &sdlutils().images().at("fullvida"), 1, 8, 8, 8, -1);
-	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7f, true, 0.0f, Vector2D(entityConfig.size.getX()*0.5, entityConfig.size.getY()*0.5));
+	gancho->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7f, true, 0.0f, Vector2D(entityConfig.size.getX() * 0.5, entityConfig.size.getY() * 0.5));
 	gancho->addComponent<Gancho>(app);
 	gancho->addComponent<PescaController>(screen_width);
 
