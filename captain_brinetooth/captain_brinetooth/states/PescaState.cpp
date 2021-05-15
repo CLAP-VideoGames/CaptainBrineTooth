@@ -5,12 +5,6 @@ using namespace ColLayers;
 
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
-
-	//Falta cambiar la musica con el sounmanager a la de playstate 
-
-
-
-
 };
 
 
@@ -40,8 +34,6 @@ void PescaState::init() {
 	app->setCameraZoomOut(2.0f);
 	space_pressed_ = false;
 
-	//---BG----
-	//manager_->getWorld()->SetContactListener(&collisionListener);
 
 	//Ancho y alto de la ventana para situar mejor los sprites
 	screen_width = sdlutils().width() * App::camera_Zoom_Out;
@@ -156,7 +148,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 	int x = sdlutils().width() * App::camera_Zoom_Out;
 	int random;
 	int entitiesaux = entitiesPerLine;
-	//Inventory* playerInv = playerRef->getComponent<Inventory>();
+	Inventory* playerInv = playerRef->getComponent<Inventory>();
 
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < entitiesaux; j++)
@@ -166,10 +158,10 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			auto* reward0 = createBasicEntity(Vector2D(x + (100 * App::camera_Zoom_Out * j), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 
 			//If player has not the weapon we try adding another weapon that player hasn´t
-			/*while (playerInv->hasWeapon(random))
+			while (playerInv->hasWeapon(random))
 			{
 				random = sdlutils().rand().teCuoto(0, 5);
-			}*/
+			}
 			if (random == 0)
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
 
