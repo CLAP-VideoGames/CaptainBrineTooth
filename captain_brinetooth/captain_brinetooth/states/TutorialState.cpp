@@ -118,7 +118,7 @@ void TutorialState::readyPanel()
 void TutorialState::initTutorial()
 {
 
-	SDL_Delay(500);
+	SDL_Delay(App::FPS*10);
 	//Initialize flags
 	moveLeft_ = moveRight_ = jump_ = camera_Up_ = camera_Down_ = dash_ = attack_ = weapon_ = false;
 	//--Player--
