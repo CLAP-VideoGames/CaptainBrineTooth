@@ -12,6 +12,7 @@
 #include "..//components/FringeHeadAtack.h"
 #include "..//components/ContactDamage.h"
 #include "..//components/PompeyWormAttack.h"
+#include "..//components/FishlerController.h"
 
 class EnemyGenerator : public Component
 {
@@ -47,6 +48,7 @@ public:
 	~EnemyGenerator();
 
 	Entity* generateRandomEnemy(Vector2D pos);
+	Entity* generateFishler(Vector2D pos);
 
 private:
 

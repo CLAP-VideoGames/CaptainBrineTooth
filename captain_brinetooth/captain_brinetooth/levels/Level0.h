@@ -112,6 +112,8 @@ private:
 	vector<tmx::Vector2f> pescaPos;
 
 	tmx::Vector2f end;
+	tmx::Vector2f bossPos;
+
 	bool finalR = false;
 
 	Vector2D maxCoordenate = Vector2D(0,0);

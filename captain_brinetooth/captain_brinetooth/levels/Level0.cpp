@@ -39,7 +39,7 @@ Level0::Level0(const string& name, std::shared_ptr<b2World> b2World)
 	//load(name);
 }
 
-Level0::~Level0(){
+Level0::~Level0() {
 	clearLevelVectors();
 }
 
@@ -153,9 +153,9 @@ void Level0::load(const string& path) {
 					points[j][i].x += object.getPosition().x;
 					points[j][i].y += object.getPosition().y;
 
-					if (points[j][i].x > maxCoordenate.getX()) 
+					if (points[j][i].x > maxCoordenate.getX())
 						maxCoordenate.setX(points[j][i].x);
-					if (points[j][i].y > maxCoordenate.getY()) 
+					if (points[j][i].y > maxCoordenate.getY())
 						maxCoordenate.setY(points[j][i].y);
 
 					points[j][i].x /= sdlutils().getPPM();
@@ -169,13 +169,14 @@ void Level0::load(const string& path) {
 			auto layer_objects = object_layer->getObjects();
 
 			for (auto& spawn : layer_objects) {
-				if (spawn.getName() == "player"){
+				if (spawn.getName() == "player") {
 					playerPos = spawn.getPosition();
 				}
 				else if (spawn.getName() == "end") {
 					end = spawn.getPosition();
 					finalR = true;
 				}
+				else if (spawn.getName() == "boss") bossPos = spawn.getPosition();
 				else
 					enemiePos.push_back(spawn.getPosition());
 			}
@@ -185,15 +186,15 @@ void Level0::load(const string& path) {
 			auto layer_objects = object_layer->getObjects();
 
 			for (auto& c : layer_objects) {
-				
+
 				tmx::Vector2f size(c.getAABB().width, c.getAABB().height);
 				//Obtenemos el tamaño del Trigger
-				connectionSize.push_back(size); 
+				connectionSize.push_back(size);
 				//Al parecer el Trasform si que funciona apartir del punto central
 				// Asi que hay que posicionar el objeto sumandole la mitad de sus ejes
 				tmx::Vector2f con = c.getPosition();
-				con.x += (size.x/2);
-				con.y += (size.y/2);
+				con.x += (size.x / 2);
+				con.y += (size.y / 2);
 				connectionPos.push_back(con);
 				//Se obtiene el nombre de la capa
 				//Ya que son una sola letra, nos sirve unicamente el primer elemento del string
@@ -233,21 +234,29 @@ void Level0::setPlayerPos()
 	p->getComponent<Transform>()->getPos().set(plaPos);
 }
 
-void Level0::clearTileset(){
+void Level0::clearTileset() {
 	tilesets_.clear();
 	tiles_.clear();
 }
 
 void Level0::spawnEnemies()
 {
+	if (bossPos.x != 0) {
+		Vector2D realPos(bossPos.x, bossPos.y);
+
+		enemigos.push_back(generator->generateFishler(realPos));
+	}
+
 	for (tmx::Vector2f pos : enemiePos) {
 		Vector2D realPos(pos.x, pos.y);
 
 		enemigos.push_back(generator->generateRandomEnemy(realPos));
 	}
+
+
 }
 
-void Level0::clearLevelVectors(){
+void Level0::clearLevelVectors() {
 	if (!tiles_.empty()) {
 		for (tile* tile__ : tiles_) delete tile__;
 		tiles_.clear();
@@ -261,16 +270,16 @@ void Level0::clearLevelVectors(){
 	if (!connectionsNames.empty())connectionsNames.clear();
 	if (!pescaPos.empty())pescaPos.clear();
 
-	if (!enemigos.empty()){
-		for (Entity* e : enemigos) 
+	if (!enemigos.empty()) {
+		for (Entity* e : enemigos)
 			if (e != nullptr) e->setActive(false);
 		enemigos.clear();
 	}
 
-	if (!projectiles.empty()){
-		for (Entity* e : projectiles) 
-			if(e != nullptr )e->setActive(false);
-		 projectiles.clear();
+	if (!projectiles.empty()) {
+		for (Entity* e : projectiles)
+			if (e != nullptr)e->setActive(false);
+		projectiles.clear();
 	}
 }
 
