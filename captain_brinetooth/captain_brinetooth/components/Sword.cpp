@@ -177,7 +177,7 @@ void Sword::update() {
 			std::cout << "Stab\n";
 
 			//
-			creaTrigger(20);
+			creaTrigger(7);
 
 			entity_->getMngr()->getSoundMngr()->playSoundEffect("estocada_espada", 0);
 

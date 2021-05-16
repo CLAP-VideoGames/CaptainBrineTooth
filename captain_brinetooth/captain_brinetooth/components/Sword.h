@@ -55,9 +55,9 @@ private:
 	AnimBlendGraph* anim_;
 
 	//Cooldown variables (should be able to be changed as you see fit)
-	float maxHoldTime = 3000;	//Time player is sawing
-	float animationLockTime = 666;		//Counted after one attack is stopped to avoid animation clipping
-	float maxComboPanningTime = 200;	//Counted after animation lock is released
+	float maxHoldTime = 2000;	//Time player is sawing
+	float animationLockTime = 400;		//Counted after one attack is stopped to avoid animation clipping
+	float maxComboPanningTime = 400;	//Counted after animation lock is released
 	float timeBetweenStabs = 333;
 	float stabTriggerTime = 200;
 	float timeBeforeNextAttackStarts = 666;
