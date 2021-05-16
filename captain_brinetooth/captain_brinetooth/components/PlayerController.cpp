@@ -148,14 +148,24 @@ void PlayerController::update()
 			if (moveLeft) {	//izqda
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(-speed_, vel.y));
-				if (!entity_->getComponent<Inventory>()->playerAttacking()) {
+				if (entity_->hasComponent<Inventory>()) {
+					if (!entity_->getComponent<Inventory>()->playerAttacking()) {
+						animController_->flipX(false);
+					}
+				}
+				else {
 					animController_->flipX(false);
 				}
 			}
 			if (moveRight) {	//drcha
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(speed_, vel.y));
-				if (!entity_->getComponent<Inventory>()->playerAttacking()) {
+				if (entity_->hasComponent<Inventory>()) {
+					if (!entity_->getComponent<Inventory>()->playerAttacking()) {
+						animController_->flipX(true);
+					}
+				}
+				else {
 					animController_->flipX(true);
 				}
 			}
