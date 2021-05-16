@@ -25,7 +25,7 @@ public:
 	//repeat -1, es un bucle
 	//Anchor point por defecto es (0.5,0.5)
 	/// </summary>
-	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr, Vector2D anchor = Vector2D(0.5, 0.5));
+	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr,Vector2D anchor = Vector2D(0.5, 0.5));
 
 	virtual ~Animation();
 
