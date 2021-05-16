@@ -556,6 +556,11 @@
 		},
 
 		{
+			"id": "inkShot",
+			"file": "assets/sounds/weapons/ink/inkShot.mp3"
+		},
+
+		{
 			"id": "pick_weapon",
 			"file": "assets/sounds/weapons/pick_weapon.mp3"
 		},

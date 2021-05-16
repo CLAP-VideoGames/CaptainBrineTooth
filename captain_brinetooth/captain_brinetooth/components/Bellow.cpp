@@ -23,7 +23,6 @@ void Bellow::update() {
 
 					//Set player as sawing
 					CURRENT_STATUS = STATUS::Shooting;
-
 					//Activate attack animation + sawing on attack
 					if (anim_->getParamIndex("bellow_att") != -1)
 						anim_->setParamValue("bellow_att", 1);
@@ -76,4 +75,6 @@ void Bellow::shoot() {
 	bullet->addComponent<InkMovement>(!anim_->isFlipX());
 
 	level0->addProjectile(bullet);
+	entity_->getMngr()->getSoundMngr()->playSoundEffect("inkShot", 0);
+
 }
