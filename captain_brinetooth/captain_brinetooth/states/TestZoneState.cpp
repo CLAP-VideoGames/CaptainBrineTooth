@@ -14,11 +14,14 @@ void TestZoneState::init() {
 	auto* bg = createBasicEntity(Vector2D(400, sdlutils().height() * 1.45f),Vector2D(3000,1080),0.0f,Vector2D(0,0));
 	//bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
 	auto* bgParallax = bg->addComponent<ParallaxScroll>();
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer1"), 0.2);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer2"), 0.25);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer3"), 0.35);
-	bgParallax->addLayer(&sdlutils().images().at("bg_layer4"), 0.4);
 
+	//--EJEMPLO PARA USAR GRUPOS DE CAPAS---------
+	//std::vector<std::pair<Texture*, float>> groupLayer;
+	//groupLayer.push_back({ &sdlutils().images().at("bg_layer1"), 0.2 });
+	//groupLayer.push_back({ &sdlutils().images().at("bg_layer2"), 0.25});
+	//groupLayer.push_back({ &sdlutils().images().at("bg_layer3"), 0.35});
+	//groupLayer.push_back({ &sdlutils().images().at("bg_layer4"), 0.40});
+	//bgParallax->addGroupLayer(groupLayer);
 
 	//--Player--
 	Config playerConfig{};
