@@ -94,10 +94,21 @@ void PlayerController::update()
 			collider_->getBody()->SetGravityScale(0.0f);
 			collider_->setSpeed(Vector2D(0, 0));
 			isDashing = true;
-			if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
-			else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
+			if (moveRight && !moveLeft) {
+				animController_->flipX(true);
+				collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
+			}
+			else if (moveLeft) { 
+				animController_->flipX(false);
+				collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed); 
+			}
+			else {
+				if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
+				else collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
+			}
 			collider_->changeColLayer_and_Mask(PLAYER_DASH, PLAYER_DASH_MASK);
 			canDash = false;
+			std::cout << "dash_pressed";
 		}
 	}
 #pragma endregion
@@ -174,7 +185,7 @@ void PlayerController::update()
 #pragma endregion
 #pragma region Dash
 	if (isDashing) {
-		if (animController_->isComplete()) {
+		if (animController_->isComplete() && (animController_->getCurrentAnimation()->getID() == "dash_air" || animController_->getCurrentAnimation()->getID() == "dash_ground")) {
 			b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 			collider_->setSpeed(Vector2D(0, vel.y));
 			collider_->getBody()->SetGravityScale(gravity);
@@ -183,7 +194,7 @@ void PlayerController::update()
 		}
 	}
 
-	if (dashCoolDown + lasTimeDashed < sdlutils().currRealTime()) {
+	if (dashCoolDown + lasTimeDashed < sdlutils().currRealTime() && !canDash) {
 		lasTimeDashed = sdlutils().currRealTime();
 		canDash = true;
 	}

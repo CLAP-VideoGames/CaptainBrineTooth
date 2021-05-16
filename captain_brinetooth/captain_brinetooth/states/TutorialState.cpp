@@ -9,6 +9,8 @@ void TutorialState::init()
 	skipTutorial();
 	step_ = -1;
 	nextStep_ = false;
+	App::camera.x = 0;
+	App::camera.y = 0;
 }
 
 void TutorialState::update()

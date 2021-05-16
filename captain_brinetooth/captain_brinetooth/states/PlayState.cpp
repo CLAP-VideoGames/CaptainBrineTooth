@@ -524,7 +524,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//else player->addComponent<KeyBoardCtrl>(map);
 
 	//Por testing basura
-	player->addComponent<CameraFollow>(Vector2D(200.0f, -80.0f), 0.1f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
+	player->addComponent<CameraFollow>(Vector2D(100.0f, -80.0f), 0.08f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
 
 	player->addComponent<LoseLife>();

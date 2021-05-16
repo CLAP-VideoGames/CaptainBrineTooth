@@ -89,7 +89,7 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 			break;
 		}
 		particle_hit = entity_->getMngr()->addEntity();
-		particle_hit->addComponent<Transform>(trParent_->getPos(), Vector2D(), trParent_->getW()*0.75, trParent_->getH()*0.75, 0.0);
+		particle_hit->addComponent<Transform>(trParent_->getPos(), Vector2D(), trParent_->getW()*0.75, trParent_->getW()*0.75, 0.0);
 		particle_hit->addComponent<Animation>("hit", &sdlutils().images().at(name), 2, 3, 6, 30, 0);
 		particle_hit->getComponent<Animation>()->setAlpha(160);
 	}
