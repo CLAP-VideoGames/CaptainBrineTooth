@@ -39,7 +39,7 @@ private:
 	int lifes, initLifes;
 
 	bool isPoisoned;
-	int poisonDamage = 15;
+	int poisonDamage = 7;
 	float poisonMaxTime = 10000.0f, poisonCurrentTime;
 	float poisonDamageTickTime = 1000.0f, poisonCurrentTickTime;
 
