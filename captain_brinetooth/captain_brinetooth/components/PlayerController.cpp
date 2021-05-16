@@ -170,7 +170,6 @@ void PlayerController::update()
 				}
 			}
 		}
-
 	}
 #pragma endregion
 #pragma region Dash

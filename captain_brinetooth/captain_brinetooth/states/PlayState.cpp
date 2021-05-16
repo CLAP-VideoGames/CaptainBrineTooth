@@ -548,11 +548,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		player->getComponent<Player_Health>()->setLife(life);
 
 
-		if (weapon2 < 100 && weapon1 < 100) 
-		{
+		if (weapon2 < 100 && weapon1 < 100){
 			if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon1);
 			if (weapon1 < 100)player->getComponent<Inventory>()->addWeapon(weapon2);
-
 		}
 
 		if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon2);

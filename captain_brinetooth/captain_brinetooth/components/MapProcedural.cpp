@@ -155,7 +155,9 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 			int y = pos.getY();
 
 			Entity* player = entity_->getMngr()->getHandler<Player>();
-			player->getComponent<BoxCollider>()->setPhysicalTransform(x, y, 0);
+			playerCollider_ = player->getComponent<BoxCollider>();
+			playerCollider_->setPhysicalTransform(x, y, 0);
+			playerCollider_->setSpeed(Vector2D(0.0f, 0.0f));
 
 			player->getComponent<CameraFollow>()->setCamToEntity();
 		}
@@ -209,7 +211,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			auto* t = entity_->getMngr()->addEntity();
 
-			t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 200, 200, 0);
+			t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 50, 50, 0);
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
@@ -427,6 +429,7 @@ void MapProcedural::pescar(b2Contact* contact) {
 
 
 	playerCollider_ = trigger->getMngr()->getHandler<Player>()->getComponent<BoxCollider>();
+	playerCollider_->setSpeed(Vector2D(0.0f, 0.0f));
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getStates()->changeToPesca();
 	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
 }
