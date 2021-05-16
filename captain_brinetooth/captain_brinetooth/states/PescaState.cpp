@@ -12,7 +12,6 @@ void PescaState::update() {
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
-			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
 		}
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && !space_pressed_) {
