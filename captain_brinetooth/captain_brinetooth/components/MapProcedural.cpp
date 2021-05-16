@@ -151,8 +151,8 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 		//Posicionamos al jugador en la salida opuesta a la que ha entrado
 		if (dir != -1 && names[i] == cardinals[(int)oppositeDir]) {
-			int x = pos.getX() + (size[i].x / 2);
-			int y = pos.getY() + (size[i].y / 2);
+			int x = pos.getX();
+			int y = pos.getY();
 
 			Entity* player = entity_->getMngr()->getHandler<Player>();
 			player->getComponent<BoxCollider>()->setPhysicalTransform(x, y, 0);

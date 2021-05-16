@@ -29,13 +29,7 @@ void PlayState::init() {
 	backgroundLevel = createBasicEntity(Vector2D(960, 640), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
 	auto* bgParallax = backgroundLevel->addComponent<ParallaxScroll>();
 
-	/*bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4);
-	bgParallax->addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);*/
-
-	////SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
+	//SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
 	createLevel0();
 
 	Config playerConfig{};
@@ -202,7 +196,7 @@ void PlayState::createLevel0() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(4, 0, app);
+	map = nivel->addComponent<MapProcedural>(7, 0, app);
 	getMngr()->setHandler<Map>(nivel);
 	camLimits = levelTile->getMaxCoordenates();
 }

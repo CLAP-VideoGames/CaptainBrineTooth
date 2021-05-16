@@ -7,9 +7,11 @@
 #define new DEBUG_NEW
 #endif
 ParallaxScroll::~ParallaxScroll(){
-
-	for (Layer* l : layers_)
-		delete l;
+	for (std::vector<Layer*> vectorLayer : layerGroup){
+		for (Layer* l : vectorLayer){
+			delete l;
+		}
+	}
 
 	layers_.clear();
 }
@@ -17,15 +19,15 @@ ParallaxScroll::~ParallaxScroll(){
 void ParallaxScroll::init(){
 	tr_ = entity_->getComponent<Transform>();
 	assert(tr_ != nullptr);
-
+	//level 1
 	addLayer(&sdlutils().images().at("bg_layer1"), 0.2);
 	addLayer(&sdlutils().images().at("bg_layer2"), 0.25);
 	addLayer(&sdlutils().images().at("bg_layer3"), 0.35);
 	addLayer(&sdlutils().images().at("bg_layer4"), 0.4);
 
 	layerGroup.push_back(layers_);
-
 	layers_.clear();
+	//level 3
 	addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
 	addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
 	addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
@@ -33,6 +35,7 @@ void ParallaxScroll::init(){
 	addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);
 
 	layerGroup.push_back(layers_);
+	layers_.clear();
 }
 
 void ParallaxScroll::render()

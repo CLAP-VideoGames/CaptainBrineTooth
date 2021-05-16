@@ -52,6 +52,10 @@ public:
 
 	std::array<bool, 4> returnRoomCons() { return Cons; }
 
+	/// <summary>
+	/// Get the positions of the trigger at the center of the body
+	/// </summary>
+	/// <returns></returns>
 	vector<tmx::Vector2f> getConPos() { return connectionPos; }
 
 
