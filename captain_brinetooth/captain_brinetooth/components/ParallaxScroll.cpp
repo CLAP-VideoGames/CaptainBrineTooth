@@ -20,26 +20,24 @@ void ParallaxScroll::init(){
 	tr_ = entity_->getComponent<Transform>();
 	assert(tr_ != nullptr);
 	//level 1
-	addLayer(&sdlutils().images().at("bg_layer1"), 0.2);
-	addLayer(&sdlutils().images().at("bg_layer2"), 0.25);
-	addLayer(&sdlutils().images().at("bg_layer3"), 0.35);
-	addLayer(&sdlutils().images().at("bg_layer4"), 0.4);
-
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_layer1"), 0.2));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_layer2"), 0.25));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_layer3"), 0.35));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_layer4"), 0.4));
 	layerGroup.push_back(layers_);
 	layers_.clear();
-	//level 3
-	addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2);
-	addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25);
-	addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35);
-	addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4);
-	addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45);
 
+	//level 3
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_ice_layer3"), 0.35));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_ice_layer4"), 0.4));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_ice_layer5"), 0.45));
 	layerGroup.push_back(layers_);
 	layers_.clear();
 }
 
-void ParallaxScroll::render()
-{
+void ParallaxScroll::render(){
 	for (int i = 0; i < layerGroup[levelBackGround].size(); i++) {
 		//Construccion de los rectangulos fuente(textura) y destino (entidad)
 		Vector2D destPos = Vector2D(tr_->getPos().getX() - (tr_->getW() * 0.5f), tr_->getPos().getY() - (tr_->getH() * 0.5f));
@@ -49,18 +47,36 @@ void ParallaxScroll::render()
 	}
 }
 
+void ParallaxScroll::addLayerToGroup(Texture* text, float scrollRatio, int indexGroup){
+	//Si se pasa, que salte un error
+	assert(indexGroup < layerGroup.size());
 
-void ParallaxScroll::addLayer(Texture* text, float scrollRatio){
+	layerGroup[indexGroup].push_back(addLayer(text, scrollRatio));
+}
+
+void ParallaxScroll::addGroupLayer(std::vector<std::pair<Texture*, float>> groupLayer){
+	for (std::pair<Texture*, float> layer : groupLayer){
+		layers_.push_back(addLayer(layer.first, layer.second));
+	}
+
+	layerGroup.push_back(layers_);
+	layers_.clear();
+}
+
+Layer* ParallaxScroll::addLayer(Texture* text, float scrollRatio){
 	if (scrollRatio > 1.0) scrollRatio = 1.0;
 	else if (scrollRatio < 0.0) scrollRatio = 0.0;
 	//Juan me cago en tus muertos <3 no limpias el vector al final
-	Layer* l = new Layer({ text,scrollRatio });
-	layers_.push_back(l);
+	return  new Layer({ text,scrollRatio });
 }
 
 void ParallaxScroll::setLevelBackground(const int& index_){
 	if (index_ < layerGroup.size()){
 		levelBackGround = index_;
+	}
+	else if(index_ >= layerGroup.size()){
+		//Si el indice recibido se pasa, pone el ultimo grupo de layers
+		levelBackGround = layerGroup.size() - 1;
 	}
 }
 
