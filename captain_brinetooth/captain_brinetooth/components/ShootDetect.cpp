@@ -107,20 +107,20 @@ void ShootDetect::createBullet()
 	bulletpos.set(Vector2D(enemytransform->getPos().getX()+offsetbala, enemytransform->getPos().getY()));
 
 
-	Vector2D bulletvel= (playertransform->getPos()-enemytransform->getPos());
-	bulletvel= bulletvel.normalize();
+	Vector2D bulletdir= (playertransform->getPos()- enemytransform->getPos()).normalize();
 	
+	float bulletRotaion = atanf((playertransform->getPos().getY() - enemytransform->getPos().getY()) / (playertransform->getPos().getY() - enemytransform->getPos().getY()));
 
 
 	//Dotamos a la bala de todos los componentes 
-	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 40.0f, 20.0f, 0.0f);
+	bullet->addComponent<Transform>(bulletpos, Vector2D(0,0), 40.0f, 20.0f, 0.5*M_PI);
 	bullet->addComponent<Animation>("iddle", &sdlutils().images().at("fringehead_bullet"), 1, 1, 1, 1, 0);
 	bullet->getComponent<Animation>()->flipX(enemy->getComponent<AnimBlendGraph>()->isFlipX());
 	//No hace falta crear un animation graph
 	bullet->addComponent<DisableOnExit>();
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK);
 	bullet->getComponent<BoxCollider>()->getBody()->SetGravityScale(0);
-	bullet->getComponent<BoxCollider>()->applyForce(bulletvel,velocity);
+	bullet->getComponent<BoxCollider>()->applyForce(bulletdir,velocity);
 	bullet->addComponent<ContactDamage>();
 	bullet->addComponent<DestroyOnCollision>();
 }

@@ -12,111 +12,223 @@ void Hammer::init() {
 }
 
 void Hammer::update() {
-	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
-		if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
-			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
+	if (entity_->hasComponent<Player_Health>()) {
+		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && entity_->getComponent<Player_Health>()->getLife() > 0) {
+			if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
+				if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
 
-				//Player not attacking or in combo
-				if (CURRENT_STATUS == STATUS::Iddle) {
-					std::cout << "Martillazo! el primero\n";
+					//Player not attacking or in combo
+					if (CURRENT_STATUS == STATUS::Iddle) {
+						std::cout << "Martillazo! el primero\n";
 
-					//Set player as sawing
-					CURRENT_STATUS = STATUS::OnAnimationLock;
-					CURRENT_ATTACK = ATTACKS::Attack1;
+						//Set player as sawing
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack1;
 
-					entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
-					//Activate attack animation + sawing on attack
-					if (anim_->getParamIndex("hammer_att") != -1)
-						anim_->setParamValue("hammer_att", 1);
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
+						//Activate attack animation + sawing on attack
+						if (anim_->getParamIndex("hammer_att") != -1)
+							anim_->setParamValue("hammer_att", 1);
 
-					isAttacking = true;
-					creaTrigger(65);
+						isAttacking = true;
+						creaTrigger(65);
 
-					//Time control variables
-					stoppedSawTime = sdlutils().currRealTime();
-				}
-				//Player already attacked once
-				else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack1) {
-					std::cout << "Martillazo! el segundo\n";
+						//Time control variables
+						stoppedSawTime = sdlutils().currRealTime();
+					}
+					//Player already attacked once
+					else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack1) {
+						std::cout << "Martillazo! el segundo\n";
 
-					CURRENT_STATUS = STATUS::OnAnimationLock;
-					CURRENT_ATTACK = ATTACKS::Attack2;
-					entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack2;
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
 
-					
-					if (anim_->getParamIndex("hammer_att") != -1)
-						anim_->setParamValue("hammer_att", 2);
 
-					isAttacking = true;
-					creaTrigger(70);
+						if (anim_->getParamIndex("hammer_att") != -1)
+							anim_->setParamValue("hammer_att", 2);
 
-					stoppedSawTime = sdlutils().currRealTime();
-				}
-				else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack2) {
-					std::cout << "Martillazo! el primero\n";
+						isAttacking = true;
+						creaTrigger(70);
 
-					//Set player as sawing
-					CURRENT_STATUS = STATUS::OnAnimationLock;
-					CURRENT_ATTACK = ATTACKS::Attack1;
-					entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
+						stoppedSawTime = sdlutils().currRealTime();
+					}
+					else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack2) {
+						std::cout << "Martillazo! el primero\n";
 
-					//Activate attack animation + sawing on attack
-					if (anim_->getParamIndex("hammer_att") != -1)
-						anim_->setParamValue("hammer_att", 1);
+						//Set player as sawing
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack1;
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
 
-					isAttacking = true;
-					creaTrigger(65);
+						//Activate attack animation + sawing on attack
+						if (anim_->getParamIndex("hammer_att") != -1)
+							anim_->setParamValue("hammer_att", 1);
 
-					//Time control variables
-					stoppedSawTime = sdlutils().currRealTime();
+						isAttacking = true;
+						creaTrigger(65);
+
+						//Time control variables
+						stoppedSawTime = sdlutils().currRealTime();
+					}
 				}
 			}
-		}
-		//Check out of input cases
-		if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
-			//Deactivate animation lock
-			std::cout << "STOPPED ANIMATION\n";
-			CURRENT_STATUS = STATUS::OnCombo;
-			comboActivationTime = sdlutils().currRealTime();
+			//Check out of input cases
+			if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
+				//Deactivate animation lock
+				std::cout << "STOPPED ANIMATION\n";
+				CURRENT_STATUS = STATUS::OnCombo;
+				comboActivationTime = sdlutils().currRealTime();
 
+				if (trigger != nullptr) {
+					trigger->setActive(false);
+					trigger = nullptr;
+				}
+			}
+			else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
+				//Deactivate combo availability
+				std::cout << "STOPPED COMBO\n";
+				CURRENT_STATUS = STATUS::Iddle;
+				CURRENT_ATTACK = ATTACKS::NotAttacking;
+
+				isAttacking = false;
+				anim_->setParamValue("hammer_att", 0);
+			}
+
+			/*if (anim_->isComplete() && anim_->getParamIndex("hammer_att") != ATTACKS::NotAttacking && anim_->getParamIndex("hammer_att") == CURRENT_ATTACK) {
+				anim_->setParamValue("hammer_att", 0);
+			}*/
+
+			//Updating the trigger's position
 			if (trigger != nullptr) {
-				trigger->setActive(false);
-				trigger = nullptr;
+				if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+				else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
 			}
 		}
-		else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
-			//Deactivate combo availability
-			std::cout << "STOPPED COMBO\n";
-			CURRENT_STATUS = STATUS::Iddle;
-			CURRENT_ATTACK = ATTACKS::NotAttacking;
-
-			isAttacking = false;
-			anim_->setParamValue("hammer_att", 0);
-		}
-
-		/*if (anim_->isComplete() && anim_->getParamIndex("hammer_att") != ATTACKS::NotAttacking && anim_->getParamIndex("hammer_att") == CURRENT_ATTACK) {
-			anim_->setParamValue("hammer_att", 0);
-		}*/
-
-		//Updating the trigger's position
-		if (trigger != nullptr) {
-			if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
-				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
-			else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
-				(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+		else {
+			if (CURRENT_STATUS != STATUS::Iddle) {
+				isAttacking = false;
+				if (trigger != nullptr) {
+					trigger->setActive(false);
+					trigger = nullptr;
+				}
+				CURRENT_STATUS = STATUS::Iddle;
+				CURRENT_ATTACK = ATTACKS::NotAttacking;
+			}
 		}
 	}
+	//else de los weapon **NECESARIO PARA EL TUTORIAL**
+	#pragma region Tutorial
 	else {
-		if (CURRENT_STATUS != STATUS::Iddle) {
-			isAttacking = false;
-			if (trigger != nullptr) {
-				trigger->setActive(false);
-				trigger = nullptr;
+		if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
+			if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
+				if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
+
+					//Player not attacking or in combo
+					if (CURRENT_STATUS == STATUS::Iddle) {
+						std::cout << "Martillazo! el primero\n";
+
+						//Set player as sawing
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack1;
+
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
+						//Activate attack animation + sawing on attack
+						if (anim_->getParamIndex("hammer_att") != -1)
+							anim_->setParamValue("hammer_att", 1);
+
+						isAttacking = true;
+						creaTrigger(65);
+
+						//Time control variables
+						stoppedSawTime = sdlutils().currRealTime();
+					}
+					//Player already attacked once
+					else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack1) {
+						std::cout << "Martillazo! el segundo\n";
+
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack2;
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_down", 0);
+
+
+						if (anim_->getParamIndex("hammer_att") != -1)
+							anim_->setParamValue("hammer_att", 2);
+
+						isAttacking = true;
+						creaTrigger(70);
+
+						stoppedSawTime = sdlutils().currRealTime();
+					}
+					else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack2) {
+						std::cout << "Martillazo! el primero\n";
+
+						//Set player as sawing
+						CURRENT_STATUS = STATUS::OnAnimationLock;
+						CURRENT_ATTACK = ATTACKS::Attack1;
+						entity_->getMngr()->getSoundMngr()->playSoundEffect("hammer_lateral", 0);
+
+						//Activate attack animation + sawing on attack
+						if (anim_->getParamIndex("hammer_att") != -1)
+							anim_->setParamValue("hammer_att", 1);
+
+						isAttacking = true;
+						creaTrigger(65);
+
+						//Time control variables
+						stoppedSawTime = sdlutils().currRealTime();
+					}
+				}
 			}
-			CURRENT_STATUS = STATUS::Iddle;
-			CURRENT_ATTACK = ATTACKS::NotAttacking;
+			//Check out of input cases
+			if (CURRENT_STATUS == STATUS::OnAnimationLock && stoppedSawTime + animationLockTime < sdlutils().currRealTime()) {
+				//Deactivate animation lock
+				std::cout << "STOPPED ANIMATION\n";
+				CURRENT_STATUS = STATUS::OnCombo;
+				comboActivationTime = sdlutils().currRealTime();
+
+				if (trigger != nullptr) {
+					trigger->setActive(false);
+					trigger = nullptr;
+				}
+			}
+			else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
+				//Deactivate combo availability
+				std::cout << "STOPPED COMBO\n";
+				CURRENT_STATUS = STATUS::Iddle;
+				CURRENT_ATTACK = ATTACKS::NotAttacking;
+
+				isAttacking = false;
+				anim_->setParamValue("hammer_att", 0);
+			}
+
+			/*if (anim_->isComplete() && anim_->getParamIndex("hammer_att") != ATTACKS::NotAttacking && anim_->getParamIndex("hammer_att") == CURRENT_ATTACK) {
+				anim_->setParamValue("hammer_att", 0);
+			}*/
+
+			//Updating the trigger's position
+			if (trigger != nullptr) {
+				if (anim_->isFlipX()) trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + (-triggerOffSetX)) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+				else trigger->getComponent<BoxCollider>()->getBody()->SetTransform(b2Vec2((tr_->getPos().getX() + triggerOffSetX) / sdlutils().getPPM(),
+					(tr_->getPos().getY() + triggerOffSetY) / sdlutils().getPPM()), 0.0f);
+			}
+		}
+		else {
+			if (CURRENT_STATUS != STATUS::Iddle) {
+				isAttacking = false;
+				if (trigger != nullptr) {
+					trigger->setActive(false);
+					trigger = nullptr;
+				}
+				CURRENT_STATUS = STATUS::Iddle;
+				CURRENT_ATTACK = ATTACKS::NotAttacking;
+			}
 		}
 	}
+#pragma endregion
 }
 
 void Hammer::creaTrigger(int damage) {

@@ -429,7 +429,7 @@ void TutorialState::createPlayer(const Config& playerConfig)
 	//Animations
 	anim_controller->addAnimation("idle", &sdlutils().images().at("player_idle"), 4, 6, 24, 24, -1);
 	anim_controller->addAnimation("run", &sdlutils().images().at("player_run"), 4, 5, 20, 24, -1);
-	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 6, 24, 24, 0);
+	anim_controller->addAnimation("jump", &sdlutils().images().at("player_jump"), 4, 6, 24, 36, 0);
 	anim_controller->addAnimation("dash_ground", &sdlutils().images().at("player_dash_ground"), 3, 4, 12, 60, 0, 0, 11, Vector2D(0.5, 0.2));
 	anim_controller->addAnimation("dash_air", &sdlutils().images().at("player_dash_air"), 3, 4, 12, 60, 0, 0, 11, Vector2D(0.5, 0.5));
 	anim_controller->addAnimation("death", &sdlutils().images().at("player_death"), 6, 8, 48, 20, 0, 0, 47, Vector2D(0.5, 0.7));
@@ -519,8 +519,8 @@ void TutorialState::createPlayer(const Config& playerConfig)
 
 #pragma region Hammer
 //---HAMMER---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 23, 0, 1, 16, Vector2D(0.75, 0.69));
-	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 20, 0, 17, 30, Vector2D(0.75, 0.69));
+	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 60, 0, 1, 16, Vector2D(0.75, 0.69));
+	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 60, 0, 17, 30, Vector2D(0.75, 0.69));
 
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);
@@ -596,7 +596,7 @@ void TutorialState::createRoom()
 	Config floor{};
 	floor.pos = Vector2D(sdlutils().width() * App::camera_Zoom_Out, sdlutils().height()* App::camera_Zoom_Out);
 	floor.vel = Vector2D(0, 0);
-	floor.size = Vector2D(sdlutils().width() * 2.0f * App::camera_Zoom_Out, 100.0f);
+	floor.size = Vector2D(sdlutils().width() * 2.1f * App::camera_Zoom_Out, sdlutils().width() * 2.0f * App::camera_Zoom_Out*0.08);
 	floor.friction = 0.2f;
 	floor.physicType = STATIC;
 	floor.fixedRotation = true;
@@ -631,6 +631,14 @@ void TutorialState::createRoom()
 void TutorialState::createBoxFloor(const Config& entityConfig)
 {
 	auto* box_Floor = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
-	//box_Floor->getComponent<BoxCollider>()->setPhysicalTransform(entityConfig.pos.getX(), entityConfig.pos.getY(), entityConfig.rotation);
+	if (entityConfig.col == GROUND) {
+		box_Floor->addComponent<Animation>("f", &sdlutils().images().at("cloud"), 1, 1, 1, 1, 0);
+		box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 
+			entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation,Vector2D(entityConfig.size.getX(), entityConfig.size.getY()*0.6));
+	}
+	else {
+		box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 
+			entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
+	}
+	
 }

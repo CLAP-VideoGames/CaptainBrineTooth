@@ -409,6 +409,10 @@
 			"file": "assets/background/ice/ice_layer_5.png"
 		},
 		{
+			"id": "cloud",
+			"file": "assets/sprites/tutorial_floor.png"
+		},
+		{
 			"id": "piedra",
 			"file": "assets/sprites/pesca/piedraPesca.png"
 		},

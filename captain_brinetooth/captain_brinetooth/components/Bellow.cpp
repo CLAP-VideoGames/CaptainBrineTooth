@@ -13,31 +13,32 @@ void Bellow::init() {
 }
 
 void Bellow::update() {
-	if (!entity_->getComponent<PlayerController>()->isPlayerDashing()) {
-		if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
-			if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
+	if (entity_->hasComponent<Player_Health>()) {
+		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && entity_->getComponent<Player_Health>()->getLife() > 0) {
+			if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
+				if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
 
-				//Player not attacking or in combo
-				if (CURRENT_STATUS == STATUS::Iddle && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {
-					std::cout << "Started shooting\n";
+					//Player not attacking or in combo
+					if (CURRENT_STATUS == STATUS::Iddle && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {
+						std::cout << "Started shooting\n";
 
-					//Set player as sawing
-					CURRENT_STATUS = STATUS::Shooting;
-					//Activate attack animation + sawing on attack
-					if (anim_->getParamIndex("bellow_att") != -1)
-						anim_->setParamValue("bellow_att", 1);
+						//Set player as sawing
+						CURRENT_STATUS = STATUS::Shooting;
+						//Activate attack animation + sawing on attack
+						if (anim_->getParamIndex("bellow_att") != -1)
+							anim_->setParamValue("bellow_att", 1);
 
-					//Shoot
-					isAttacking = true;
-					shoot();
+						//Shoot
+						isAttacking = true;
+						shoot();
 
-					//Time control variables
-					shotActivationTime = sdlutils().currRealTime();
+						//Time control variables
+						shotActivationTime = sdlutils().currRealTime();
+					}
 				}
 			}
 		}
 	}
-	
 
 	//Check out of input cases
 	if (CURRENT_STATUS == STATUS::Shooting && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {
