@@ -151,6 +151,33 @@ void Enemy_Health::update(){
 			}
 			barSize.setX((lifes * initBarSize.getX()) / initLifes);
 			if (barSize.getX() <= 0) barSize.setX(0);
+
+			//Cambio color 
+			entity_->getComponent<AnimBlendGraph>()->setColor(207, 59, 82);
+			skip_reset_ = true;
+			cd_reset_ = 6;
+			//Particula HIT
+			if (particle_hit == nullptr) {
+				std::string name;
+				int z = sdlutils().rand().teCuoto(0, 3);
+				switch (z)
+				{
+				case 0:
+					name = "enemy_hit_1";
+					break;
+				case 1:
+					name = "enemy_hit_2";
+					break;
+				case 2:
+					name = "enemy_hit_3";
+					break;
+				}
+				particle_hit = entity_->getMngr()->addEntity();
+				particle_hit->addComponent<Transform>(trParent_->getPos(), Vector2D(), trParent_->getW() * 0.75, trParent_->getH() * 0.75, 0.0);
+				particle_hit->addComponent<Animation>("hit", &sdlutils().images().at(name), 2, 3, 6, 30, 0);
+				particle_hit->getComponent<Animation>()->setAlpha(160);
+			}
+			SDL_Delay(App::FPS);	//Se salta un frame
 		}
 	}
 	//Particula Hit

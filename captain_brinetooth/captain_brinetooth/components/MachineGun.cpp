@@ -138,6 +138,6 @@ void MachineGun::shoot() {
 	bullet->addComponent<BoxCollider>(DYNAMIC, PLAYER_ATTACK, PLAYER_ATTACK_MASK, true);
 	bullet->getComponent<BoxCollider>()->getBody()->SetGravityScale(0);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
-	bullet->addComponent<WeaponDamageDetection>(7);
+	bullet->addComponent<WeaponDamageDetection>(7, 0, true);
 	bullet->addComponent<DestroyOnCollision>(); // esto da problemas si no se hacen bien las capas de colision?
 }

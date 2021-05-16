@@ -10,7 +10,7 @@
 
 class WeaponDamageDetection : public Component {
 public:
-	WeaponDamageDetection(int damageToApply, int typeOfDamage = 0);
+	WeaponDamageDetection(int damageToApply, int typeOfDamage = 0, bool destroyOnCollision = false);
 	virtual ~WeaponDamageDetection();
 
 	void init() override;
@@ -23,4 +23,5 @@ public:
 	void ApplyDamage(Entity* enemy);
 private:
 	int damageToApply_, typeOfDamage_;
+	bool destroyOnCollision_;
 };

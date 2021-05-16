@@ -1,6 +1,6 @@
 #include "WeaponDamageDetection.h"
 
-WeaponDamageDetection::WeaponDamageDetection(int damageToApply, int typeOfDamage) : damageToApply_(damageToApply), typeOfDamage_(typeOfDamage) {
+WeaponDamageDetection::WeaponDamageDetection(int damageToApply, int typeOfDamage, bool destroyOnCollision) : damageToApply_(damageToApply), typeOfDamage_(typeOfDamage), destroyOnCollision_(destroyOnCollision) {
 }
 
 WeaponDamageDetection::~WeaponDamageDetection()
@@ -38,4 +38,6 @@ void WeaponDamageDetection::ContactEnemy(b2Contact* contact) {
 
 void WeaponDamageDetection::ApplyDamage(Entity* enemy) {
 	enemy->getComponent<Enemy_Health>()->loseLife(damageToApply_, typeOfDamage_);
+	if (destroyOnCollision_)
+		entity_->setActive(false);
 }
