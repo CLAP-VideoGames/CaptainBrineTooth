@@ -142,7 +142,7 @@ void PescaState::createPesca(const Config& entityConfig) {
 }
 void PescaState::createRandomReward(const Config& entityConfig)
 {
-	//0 espada 1 martillo 2 sierra ---> se iran añadiendo segun vaya habiendo mas armas
+	//0 espada 1 martillo 2 sierra ---> se iran aï¿½adiendo segun vaya habiendo mas armas
 	float offset = 10;
 	int x = sdlutils().width() * App::camera_Zoom_Out;
 	int random;
@@ -160,9 +160,10 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			{
 				random = sdlutils().rand().teCuoto(0, 6);
 			}
-			auto* reward0 = createBasicEntity(Vector2D(x + (100 * App::camera_Zoom_Out * j), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
+			auto* reward0 = createBasicEntity(Vector2D(x + (150 * App::camera_Zoom_Out * j) + (75 * App::camera_Zoom_Out * i), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
+			
 
-			//If player has not the weapon we try adding another weapon that player hasn´t
+			//If player has not the weapon we try adding another weapon that player hasnï¿½t
 			while (playerInv->hasWeapon(random))
 			{
 				random = sdlutils().rand().teCuoto(0, 6);
@@ -194,9 +195,12 @@ void PescaState::createRandomReward(const Config& entityConfig)
 }
 
 void PescaState::crearBasura() {
+	int rndx, rndy;
 	for (int i = 0; i < totalBasura; i++) {
-		int rndx = sdlutils().rand().teCuoto(screen_width * 0.15, screen_width * 0.75);
-		int rndy = sdlutils().rand().teCuoto(screen_heigth * 0.6f, screen_heigth * 0.9f);
+		do {
+			rndx = sdlutils().rand().teCuoto(screen_width * 0.15, screen_width * 0.75);
+			rndy = sdlutils().rand().teCuoto(screen_heigth * 0.6f, screen_heigth * 0.9f);
+		} while (!checkBasura(rndx, rndy));
 		auto* basura = createBasicEntity(Vector2D(rndx, rndy), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 		int random = sdlutils().rand().teCuoto(30, 32);
 		if (random == 30) {
@@ -210,6 +214,23 @@ void PescaState::crearBasura() {
 		}
 		basura->addComponent<BoxCollider>(STATIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
 		basura->addComponent<Reward>(random, playerRef, app);
+		basuras.push_back(basura);
 	}
+}
+
+bool PescaState::checkBasura(int x, int y)
+{
+	if (basuras.empty()) {
+		return true;
+	}
+	else {
+		int i = 0;
+		while ((i < basuras.size()) && ((x + 50 < basuras[i]->getComponent<Transform>()->getPos().getX() - 50 || x - 50 > basuras[i]->getComponent<Transform>()->getPos().getX() + 50) || (y + 50 < basuras[i]->getComponent<Transform>()->getPos().getY() - 50 || y - 50 > basuras[i]->getComponent<Transform>()->getPos().getY() + 50))){
+			i++;
+		}
+		if (i == basuras.size())
+			return true;
+	}
+	return false;
 }
 

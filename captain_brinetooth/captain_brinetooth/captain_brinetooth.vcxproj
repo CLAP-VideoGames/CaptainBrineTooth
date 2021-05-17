@@ -205,6 +205,7 @@
     <ClInclude Include="components\ShootDetect.h" />
     <ClInclude Include="components\Slider.h" />
     <ClInclude Include="components\Sword.h" />
+    <ClInclude Include="components\ThornFishAttack.h" />
     <ClInclude Include="components\Transform.h" />
     <ClInclude Include="components\TriggerCollider.h" />
     <ClInclude Include="components\VideoPlayer.h" />
@@ -304,6 +305,7 @@
     <ClCompile Include="components\ShootDetect.cpp" />
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
+    <ClCompile Include="components\ThornFishAttack.cpp" />
     <ClCompile Include="components\Transform.cpp" />
     <ClCompile Include="components\TriggerCollider.cpp" />
     <ClCompile Include="components\VideoPlayer.cpp" />

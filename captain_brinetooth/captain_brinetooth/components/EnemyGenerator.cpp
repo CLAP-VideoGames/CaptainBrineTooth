@@ -29,6 +29,9 @@ Entity* EnemyGenerator::generateRandomEnemy(Vector2D pos)
 	case 3:
 		return generatePompeyWorm(pos);
 		break;
+	case 4:
+		return generateThornFish(pos);
+		break;
 	default:
 		break;
 	}
@@ -214,6 +217,47 @@ Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 	gusano->addComponent<ContactDamage>();
 
 	return gusano;
+}
+
+Entity* EnemyGenerator::generateThornFish(Vector2D pos)
+{
+	Config thornfish{};
+	thornfish.pos = Vector2D(300, sdlutils().height() * 1.7f);
+	thornfish.vel = Vector2D(0, 0);
+	thornfish.size = Vector2D(180.0f, 120.0f);
+	thornfish.friction = 0.7;
+	thornfish.physicType = DYNAMIC;
+	thornfish.fixedRotation = true;
+	thornfish.rotation = 0.0f;
+	thornfish.col = ENEMY;
+	thornfish.colMask = ENEMY_MASK;
+
+	auto* thorn = createBasicEntity(pos, thornfish.size, thornfish.rotation, thornfish.vel);
+	thorn->addComponent<BoxCollider>(thornfish.physicType, thornfish.col, thornfish.colMask, false,
+		thornfish.friction, thornfish.fixedRotation, thornfish.rotation, Vector2D(thornfish.size.getX() * 0.3, thornfish.size.getY() * 0.7),
+		Vector2D(), 20000);
+	AnimBlendGraph* thorn_anim_controller = thorn->addComponent<AnimBlendGraph>();
+	thorn_anim_controller->addAnimation("idle", &sdlutils().images().at("thornfish_idle"), 1, 12, 8, 12, -1, Vector2D(0.5, 0.6));
+	thorn_anim_controller->addAnimation("attack_ini", &sdlutils().images().at("thornfish_attack"), 1, 8, 8, 12, 0, 0, 4, Vector2D(0.5, 0.6));
+	thorn_anim_controller->addAnimation("attack_end", &sdlutils().images().at("thornfish_attack"), 1, 8, 8, 24, 0, 5, 7, Vector2D(0.5, 0.6));
+	thorn_anim_controller->addAnimation("death", &sdlutils().images().at("thornfish_death"), 2, 3, 6, 24, 0, 0, 4, Vector2D(0.5, 0.6));
+	//Proportion?
+	thorn_anim_controller->keepProportion("idle", Vector2D(thorn->getComponent<Transform>()->getW(), thorn->getComponent<Transform>()->getH()));
+	thorn_anim_controller->addTransition("idle", "attack_ini", "Attack", 1, false);
+	thorn_anim_controller->addTransition("attack_end", "idle", "Attack", 0, true);
+	thorn_anim_controller->addTransition("attack_ini", "idle", "Attack", 0, false);
+	thorn_anim_controller->addTransition("attack_ini", "attack_end", "Attack", 2, true);
+	thorn_anim_controller->addTransition("idle", "death", "Dead", 1, false);
+	thorn_anim_controller->addTransition("attack_ini", "death", "Dead", 1, false);
+	thorn_anim_controller->addTransition("attack_end", "death", "Dead", 1, false);
+	thorn_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
+	thorn_anim_controller->setParamValue("Dead", 0);
+	thorn_anim_controller->setParamValue("Attack", 0);
+	thorn->addComponent<ThornFishAttack>();
+	thorn->addComponent<Enemy_Health>(150, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	thorn->addComponent<ContactDamage>();
+
+	return thorn;
 }
 
 Entity* EnemyGenerator::createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel)

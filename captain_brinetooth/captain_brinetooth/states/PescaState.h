@@ -15,6 +15,7 @@ public:
 	void createPesca(const Config& entityConfig);
 	void createRandomReward(const Config& entityConfig);
 	void crearBasura();
+	bool checkBasura(int x, int y);
 	App* getApp() { return app; }
 protected:
 	Entity* playerRef;
@@ -32,6 +33,7 @@ protected:
 	bool space_pressed_;
 	Entity* s;
 	Entity*	m3;
+	std::vector<Entity*> basuras;
 	//DamageCollisionCallbacks collisionListener;
 	
 };

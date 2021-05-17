@@ -12,11 +12,12 @@
 #include "..//components/FringeHeadAtack.h"
 #include "..//components/ContactDamage.h"
 #include "..//components/PompeyWormAttack.h"
+#include "..//components/ThornFishAttack.h"
 #include "..//components/FishlerController.h"
 
 class EnemyGenerator : public Component
 {
-	const int NUM_ENEMIES = 4; //Indica la cantidad de tipos de enemigos que existen
+	const int NUM_ENEMIES = 5; //Indica la cantidad de tipos de enemigos que existen
 public:
 	struct Config {
 		Vector2D pos, vel, size;
@@ -57,6 +58,7 @@ private:
 	Entity* generateMedusa(Vector2D pos);
 	Entity* generateElfShark(Vector2D pos);
 	Entity* generatePompeyWorm(Vector2D pos);
+	Entity* generateThornFish(Vector2D pos);
 
 	Entity* createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel);
 };
