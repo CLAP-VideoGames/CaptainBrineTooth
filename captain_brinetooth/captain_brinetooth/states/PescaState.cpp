@@ -1,10 +1,11 @@
 #include "PescaState.h"
 #include "../components/Inventory.h"
-#include "../states/PasueState.h"
+#include "../sdlutils/InputHandler.h"
 using namespace ColLayers;
 
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
+
 };
 
 
