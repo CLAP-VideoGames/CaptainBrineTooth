@@ -58,6 +58,7 @@ void MenuState::init() {
 		//y = (int)((App::camera.h - h) * (0.48 + 0.22 * nBoton));
 		botonCargar->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
 		botonCargar->addComponent<Button>(&sdlutils().images().at("continuar_menu"), changeToGame, app, manager_->getSoundMngr());
+		//botonCargar->addComponent<Fade>(Vector2D(cam.w, cam.h), Vector2D(0, 0), 1500, 1000);
 		w *= 1.25;
 		h *= 1.25;
 		x = (int)((App::camera.w - w) * 0.5);

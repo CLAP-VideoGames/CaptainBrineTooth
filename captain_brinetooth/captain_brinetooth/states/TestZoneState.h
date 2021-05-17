@@ -11,7 +11,7 @@ public:
 	virtual void update();
 
 	void createPlayer(const Config& playerConfig);
-	void createBoxFloor(const Config& entityConfig);
+	Entity* createBoxFloor(const Config& entityConfig);
 	void createPompeyWorm(const Config& enemy1Config);
 	void createElfShark(const Config& entityConfig);
 	void createFlowerJellyHat(const Config& entityConfig);

@@ -23,7 +23,8 @@ void TestZoneState::init() {
 	//groupLayer.push_back({ &sdlutils().images().at("bg_layer4"), 0.40});
 	//bgParallax->addGroupLayer(groupLayer);
 
-	//--Player--
+	//-----Player-----
+	#pragma region Player
 	Config playerConfig{};
 	playerConfig.pos = Vector2D(100, sdlutils().height() * 1.5f);
 	playerConfig.vel = Vector2D(0, 0);
@@ -35,6 +36,7 @@ void TestZoneState::init() {
 	playerConfig.col = PLAYER;
 	playerConfig.colMask = PLAYER_MASK;
 	createPlayer(playerConfig);
+#pragma endregion
 
 	//---SUELO---
 	Config floor{};
@@ -48,6 +50,7 @@ void TestZoneState::init() {
 	floor.col = GROUND;
 	floor.colMask = GROUND_MASK;
 	createBoxFloor(floor);
+
 	Config floor2{};
 	floor2.pos = Vector2D(0, sdlutils().height() * 2.0f - 350);
 	floor2.vel = Vector2D(0, 0);
@@ -59,10 +62,53 @@ void TestZoneState::init() {
 	floor2.col = GROUND;
 	floor2.colMask = GROUND_MASK;
 	createBoxFloor(floor2);
+
+#pragma region TestJoint
+
+	//Config floor3{};
+	//floor3.pos = Vector2D(-900, sdlutils().height() * 2.0f - 550);
+	//floor3.vel = Vector2D(0, 0);
+	//floor3.size = Vector2D(400, 100.0f);
+	//floor3.friction = 0.2f;
+	//floor3.physicType = STATIC;
+	//floor3.fixedRotation = true;
+	//floor3.rotation = 0.0f;
+	//floor3.col = GROUND;
+	//floor3.colMask = GROUND_MASK;
+	//auto* father = createBoxFloor(floor3);
+	//
+	//Config floor4{};
+	//floor4.pos = Vector2D(-900, sdlutils().height() * 2.0f - 550 + 50.0f);
+	//floor4.vel = Vector2D(0, 0);
+	//floor4.size = Vector2D(50.0f, 50.0f);
+	//floor4.friction = 0.2f;
+	//floor4.physicType = DYNAMIC;
+	//floor4.fixedRotation = true;
+	//floor4.rotation = 0.0f;
+	//floor4.col = GROUND;
+	//floor4.colMask = GROUND_MASK;
+	//auto* child = createBoxFloor(floor4);
+
+
+	//auto* bodyA = father->getComponent<BoxCollider>()->getBody();
+	//auto* bodyB = child->getComponent<BoxCollider>()->getBody();
+
+
+	//b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();
+	//b2joint->Initialize(bodyA, bodyB, bodyB->GetWorldCenter());
+	//b2joint->motorSpeed = 6;
+	//b2joint->maxMotorTorque = 1000.0f;
+	//b2joint->enableMotor = true;
+	//b2joint->collideConnected = true;
+	///*b2joint->localAnchorA.Set(1, 0);
+	//b2joint->localAnchorB.Set(2, 0);*/
+	//manager_->getWorld()->CreateJoint(b2joint);
 #pragma endregion
-//-----Player-----
-#pragma region Player
+
+
+
 #pragma endregion
+
 //-----Enemies-----
 #pragma region Enemies
 	/*#pragma region PompeyWorm
@@ -392,8 +438,6 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<Inventory>()->addWeapon(4);
 
-
-
 	player->addComponent<LoseLife>();
 
 	//Seteamos al Player como MainHandler
@@ -401,11 +445,12 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 }
 /// <summary>
 /// Crea un suelo Statico
-void TestZoneState::createBoxFloor(const Config& entityConfig) {
+Entity* TestZoneState::createBoxFloor(const Config& entityConfig) {
 
 	auto* box_Floor = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	box_Floor->addComponent<Animation>("Floor", &sdlutils().images().at("red_square"), 1, 1, 1, 1, 0);
 	box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
+	return box_Floor;
 }
 #pragma region PompeyWorm
 void TestZoneState::createPompeyWorm(const Config& enemy1Config)

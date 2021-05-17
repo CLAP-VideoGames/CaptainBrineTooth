@@ -60,9 +60,7 @@ void TutorialState::update()
 	GameState::update();
 }
 
-void TutorialState::startGame(App* app, SoundManager* snd)
-{
-	snd->ChangeMainMusic("Nivel1");
+void TutorialState::startGame(App* app, SoundManager* snd){
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,false)); //Cuando accedes al juego desde el tutorial no se carga partida
 }
@@ -395,6 +393,7 @@ void TutorialState::createButton(Texture* t, Vector2D pos, Vector2D size, void(*
 {
 	auto* button = createBasicEntity(Vector2D(pos.getX(), pos.getY()), Vector2D(size.getX(), size.getY()), 0.0f, Vector2D(0, 0));
 	button->addComponent<Button>(t, callback, app, manager_->getSoundMngr());
+	button->addComponent<Fade>(Vector2D(sdlutils().width(), sdlutils().height()), Vector2D(0, 0), 1500, 1000);
 	panel.push_back(button);
 }
 
