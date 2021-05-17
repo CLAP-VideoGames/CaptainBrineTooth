@@ -88,7 +88,7 @@ void SDLUtils::initSDLExtensions() {
 	int mixInit_ret = Mix_Init(
 			MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG);
 	assert(mixInit_ret != 0);
-	SoundEffect::setNumberofChannels(8); // we start with 8 channels
+	SoundEffect::setNumberofChannels(12); // we start with 8 channels
 }
 
 void SDLUtils::loadReasources(std::string filename) {
