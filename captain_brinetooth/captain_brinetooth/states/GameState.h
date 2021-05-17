@@ -34,6 +34,7 @@
 #include "../components/ElfSharkAttack.h"
 #include "../components/PompeyWormAttack.h"
 #include "../components/FringeHeadAtack.h"
+#include "../components/ThornFishAttack.h"
 #include "../components/PlayerController.h"
 #include "../components/Crab.h"
 #include "../components/MachineGun.h"

@@ -26,6 +26,7 @@ class LoseLife;
 class FringeHeadAtack;
 class ElfSharkAttack;
 class PompeyWormAttack;
+class ThornFishAttack;
 class Button;
 class Sword;
 class Hammer;
@@ -88,6 +89,7 @@ class Fists;
 	FringeHeadAtack,\
 	ElfSharkAttack,\
 	PompeyWormAttack,\
+	ThornFishAttack,\
 	Button,\
 	Sword,\
     ShootDetect,\

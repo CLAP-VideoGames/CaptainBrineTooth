@@ -16,6 +16,7 @@ public:
 	void createElfShark(const Config& entityConfig);
 	void createFlowerJellyHat(const Config& entityConfig);
 	void createFringeHead(const Config& entityConfig);
+	void createThornFish(const Config& entityConfig);
 	void createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType);
 protected:
 	SDL_Rect cam {};
