@@ -543,7 +543,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	if (save)
 	{
 		ifstream readtxt;
-		readtxt.open("savedGame.dat");
+		readtxt.open("assets//user_data//data.dat");
 		float life;
 		int weapon1;
 		int weapon2;
@@ -597,11 +597,6 @@ void PlayState::createSaveDataandSTate()
 
 	}
 	sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
-
-
-
-
-
 }
 Entity* PlayState::getBackgroundLevel(){
 	return backgroundLevel;

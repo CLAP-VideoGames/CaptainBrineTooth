@@ -142,15 +142,15 @@ void PauseState::quitGame(App* game, SoundManager* snd) {
 }
 void PauseState::savePartida(infoPartida info)
 {
-	std::ofstream datatxt;
+	std::ofstream output;
 	
-	string file = "savedGame.dat";
-	datatxt.open(file);
-	datatxt << "Vida: " << info.playerLife << endl;
-	datatxt << "Arma0: " << info.weapon1<< endl;
-	datatxt << "Arma1: " << info.weapon2 << endl;
-	datatxt.close();
+	string name = "data";
+	string file = "assets//user_data//" + name + ".dat";
+	output.open(file);
+	if (!output.is_open()) throw string("Can't find file" + name + ".dat");
 
-
-
+	output << "Vida: " << info.playerLife << endl;
+	output << "Arma0: " << info.weapon1<< endl;
+	output << "Arma1: " << info.weapon2 << endl;
+	output.close();
  }
