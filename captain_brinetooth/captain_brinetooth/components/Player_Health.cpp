@@ -19,6 +19,40 @@ void Player_Health::init()
 	time_ = 0;
 	frameSize = Vector2D(w, h);
 
+	#pragma region Curas
+	//Curas y valor (todas llenas)
+	maxValueHeal_ = 750;
+	for (int i = 0; i < maxHeals_; i++) {
+		auto* e = entity_->getMngr()->addEntity();
+		e->addComponent<Transform>(Vector2D(), Vector2D(), 48 * App::camera_Zoom_Out, 48 * App::camera_Zoom_Out, 0.0f);
+		auto* e_anim_controller = e->addComponent<AnimBlendGraph>();
+		e_anim_controller->addAnimation("heal_0", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 0, 0);
+		e_anim_controller->addAnimation("heal_20", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 1, 1);
+		e_anim_controller->addAnimation("heal_40", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 2, 2);
+		e_anim_controller->addAnimation("heal_60", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 3, 3);
+		e_anim_controller->addAnimation("heal_80", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 4, 4);
+		e_anim_controller->addAnimation("heal_100", &sdlutils().images().at("player_heal"), 3, 5, 15, 12, -1, 5, 12);
+		e_anim_controller->addTransition("heal_0", "heal_20", "Value", 1, false);
+		e_anim_controller->addTransition("heal_0", "heal_40", "Value", 2, false);
+		e_anim_controller->addTransition("heal_0", "heal_60", "Value", 3, false);
+		e_anim_controller->addTransition("heal_0", "heal_80", "Value", 4, false);
+		e_anim_controller->addTransition("heal_0", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_20", "heal_40", "Value", 2, false);
+		e_anim_controller->addTransition("heal_20", "heal_60", "Value", 3, false);
+		e_anim_controller->addTransition("heal_20", "heal_80", "Value", 4, false);
+		e_anim_controller->addTransition("heal_20", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_40", "heal_60", "Value", 3, false);
+		e_anim_controller->addTransition("heal_40", "heal_80", "Value", 4, false);
+		e_anim_controller->addTransition("heal_40", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_60", "heal_80", "Value", 4, false);
+		e_anim_controller->addTransition("heal_60", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_80", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_100", "heal_0", "Value", 0, false);
+		e_anim_controller->setParamValue("Value", 5);
+		heals.push_back(e);
+		healsValues.push_back(maxValueHeal_);
+	}
+	#pragma endregion
 	resetLifes();
 	invulnerability_ = false;
 	elpased_time_invul_ = 0;
@@ -35,8 +69,8 @@ void Player_Health::render()
 
 	for (int i = 0; i < vidas-0.5; i++)
 	{
-		aux = Vector2D(10 + 35 * i * zoom, 10);
-		SDL_Rect dest = build_sdlrect(aux, (src.w / 4) * zoom, (src.h / 4)* zoom);
+		aux = Vector2D(16 + 48 * i * zoom, 16);
+		SDL_Rect dest = build_sdlrect(aux, (src.w / 3.5) * zoom, (src.h / 4)* zoom);
 
 		fVida->render(src, dest);
 		vidaRestante--;
@@ -45,20 +79,20 @@ void Player_Health::render()
 	// Si hay media vida, renderizamos medio anzuelo
 	if (vidaRestante > 0)
 	{
-		aux = Vector2D(10 + 35 * (vidas-0.5) * zoom, 10);
-		SDL_Rect dest = build_sdlrect(aux, (src.w / 4) * zoom, (src.h / 4)* zoom);
+		aux = Vector2D(16 + 48 * (vidas-0.5) * zoom, 16);
+		SDL_Rect dest = build_sdlrect(aux, (src.w / 3.5) * zoom, (src.h / 4)* zoom);
 		hVida->render(src, dest);
 	}
 	
 	if (currentVidas < maxVidas)
 	{
-		aux = Vector2D(aux.getX() + (zoom * 50), 10);
-		SDL_Rect dest = build_sdlrect(aux, (src.w / 6) * zoom, (src.h / 5) * zoom);
+		aux = Vector2D(aux.getX()+4 + (zoom * 50), 8);
+		SDL_Rect dest = build_sdlrect(aux, (src.w / 3.5) * zoom, (src.h / 3.5) * zoom);
 		vVida->render(dest);
 		for (int i = 1; i < (maxVidas - currentVidas); i++)
 		{
-			aux = Vector2D(aux.getX() + (zoom * 50) - 10, 10);
-			SDL_Rect dest = build_sdlrect(aux, (src.w / 6 )* zoom, (src.h / 5)*zoom);
+			aux = Vector2D(aux.getX()+4 + (zoom * 50), 8);
+			SDL_Rect dest = build_sdlrect(aux, (src.w / 3.5)* zoom, (src.h / 3.5)*zoom);
 			vVida->render(dest);
 		}
 	}
@@ -78,22 +112,48 @@ void Player_Health::render()
 	//Invulnerabilidad
 	if (invulnerability_ && sdlutils().currRealTime() > elpased_time_invul_ + cd_invul_)
 		invulnerability_ = false;
-	
+
 }
 
 void Player_Health::update()
 {
-	if (ih().keyDownEvent())
+	//Muerte automatica
+	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDL_SCANCODE_0)) {
 			vidas = 0.5;
 			loseLife();
 		}
+	}
+	//Curacion
+	if (ih().mouseButtonEvent() || ih().getMouseButtonHeld()) {
+		//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
+		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::MIDDLE)) {
+			heal();
+		}
+	}
 	//Tiempo despues de muerto
 	if (entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "death" && entity_->getComponent<AnimBlendGraph>()->isComplete() && deadCountdown == 0)
 		deadCountdown = sdlutils().currRealTime();
 
 	if(deadCountdown + dead_time < sdlutils().currRealTime() && deadCountdown != 0)
 		respawn();
+
+	//Curas
+	for (int i = 0; i < maxHeals_; i++) {
+		int v = healsValues[i] / (maxValueHeal_ / 5);
+		heals[i]->getComponent<AnimBlendGraph>()->setParamValue("Value", v);
+		heals[i]->getComponent<Transform>()->getPos().set(
+			Vector2D(App::camera.x + 24 + heals[i]->getComponent<Transform>()->getW() * 0.5 + heals[i]->getComponent<Transform>()->getW() * i, App::camera.y + 64 + heals[i]->getComponent<Transform>()->getH()));
+	}
+	if (particle_heal != nullptr) {
+		if (particle_heal->getComponent<Animation>()->getState() == 0) {
+			particle_heal->setActive(false);
+			particle_heal = nullptr;
+		}
+		else {
+			particle_heal->getComponent<Transform>()->getPos() = entity_->getComponent<Transform>()->getPos();
+		}
+	}
 }
 
 void Player_Health::loseLife() 
@@ -122,6 +182,43 @@ void Player_Health::loseLife()
 		entity_->getComponent<BoxCollider>()->setSpeed(Vector2D(0,0));
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_death", 0);
 		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
+	}
+}
+
+void Player_Health::heal()
+{
+	if (vidas > 0) {
+		int i = healsValues.size() - 1;
+		while (i >= 0 && healsValues[i] != maxValueHeal_) i--;
+		if (i >= 0) {
+			vidas += 3;	//VALOR A CURAR
+			if (vidas > maxVidas)
+				vidas = maxVidas;
+			healsValues[i] = 0;
+			//Particulas
+			particle_heal = entity_->getMngr()->addEntity();
+			particle_heal->addComponent<Transform>(entity_->getComponent<Transform>()->getPos(), Vector2D(), entity_->getComponent<Transform>()->getW()*0.75, entity_->getComponent<Transform>()->getW() * 1.25, 0.0);
+			particle_heal->addComponent<Animation>("h", &sdlutils().images().at("healing_effect"), 2, 3, 6, 12, 0);
+			particle_heal->getComponent<Animation>()->setAlpha(192);
+		}
+	}
+}
+
+void Player_Health::chargeHeal(int charge)
+{
+	int i = 0;
+	while (i < maxHeals_ && healsValues[i] >= maxValueHeal_) i++;
+	if (i < maxHeals_) {
+		healsValues[i] += charge;
+		if (healsValues[i] >= maxValueHeal_) {
+			charge = healsValues[i] - maxValueHeal_;
+			healsValues[i] = maxValueHeal_;
+			if (i + 1 < maxHeals_) {
+				healsValues[i + 1] += charge;
+				if (healsValues[i + 1] >= maxValueHeal_)
+					healsValues[i + 1] = maxValueHeal_;
+			}
+		}
 	}
 }
 

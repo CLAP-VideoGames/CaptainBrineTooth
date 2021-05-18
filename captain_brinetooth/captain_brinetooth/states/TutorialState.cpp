@@ -328,7 +328,7 @@ void TutorialState::stepWeapon()
 void TutorialState::stepHealth()
 {
 	step_ = 6; 
-	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
+	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app, 5, 2);
 	player->addComponent<LoseLife>();
 	//Indicacion
 	Entity* b = manager_->addEntity();

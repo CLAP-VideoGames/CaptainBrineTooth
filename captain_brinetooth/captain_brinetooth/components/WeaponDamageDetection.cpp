@@ -38,6 +38,8 @@ void WeaponDamageDetection::ContactEnemy(b2Contact* contact) {
 
 void WeaponDamageDetection::ApplyDamage(Entity* enemy) {
 	enemy->getComponent<Enemy_Health>()->loseLife(damageToApply_, typeOfDamage_);
+	if(entity_->getMngr()->getHandler<Player>()->hasComponent<Player_Health>())
+		entity_->getMngr()->getHandler<Player>()->getComponent<Player_Health>()->chargeHeal(damageToApply_);
 	if (destroyOnCollision_)
 		entity_->setActive(false);
 }

@@ -29,6 +29,14 @@
 			"file": "assets/sprites/player/playercana.png"
 		},
 		{
+			"id": "player_heal",
+			"file": "assets/sprites/player/HUD/player_heal.png"
+		},
+		{
+			"id": "healing_effect",
+			"file": "assets/sprites/player/healing_effect.png"
+		},
+		{
 			"id": "cuerda",
 			"file": "assets/sprites/player/cuerda.png"
 		},

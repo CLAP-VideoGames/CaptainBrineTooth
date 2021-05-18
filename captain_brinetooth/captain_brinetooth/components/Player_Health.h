@@ -10,7 +10,8 @@
 
 class Player_Health : public Component {
 public:
-	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game) : fVida(tex), hVida(tex2), vVida(tex3), tiempoanimacion(tanim), g(game)
+	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game, int maxLifes, int maxHeals) 
+		: fVida(tex), hVida(tex2), vVida(tex3), tiempoanimacion(tanim), g(game), maxVidas(maxLifes), maxHeals_(maxHeals)
 	{};
 	virtual ~Player_Health() {};
 
@@ -22,6 +23,9 @@ public:
 
 	void loseLife();
 
+	void heal();
+	void chargeHeal(int charge);
+
 	int getLife();
 
 	void resetLifes();
@@ -32,8 +36,11 @@ public:
 	const bool& getInvulnerable();
 
 private:
-	float vidas;
-	float maxVidas = 10;
+	float vidas, maxVidas;
+	int maxHeals_, maxValueHeal_;
+	std::vector<int> healsValues;
+	std::vector<Entity*> heals;
+	Entity* particle_heal;
 	Texture* fVida;
 	Texture* hVida;
 	Texture* vVida;

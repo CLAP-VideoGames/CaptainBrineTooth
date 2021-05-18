@@ -517,7 +517,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	player->addComponent<BoxCollider>(playerConfig.physicType, PLAYER, PLAYER_MASK, false,
 		playerConfig.friction, playerConfig.fixedRotation, playerConfig.rotation, Vector2D(playerConfig.size.getX() * 0.6, playerConfig.size.getY() * 0.95));
 	player->addComponent<TriggerCollider>("Feet", PLAYER_JUMP, PLAYER_JUMP_MASK, Vector2D(0, 0.25), Vector2D(55.0f, 15.0f));
-	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app);
+	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app, 5, 2);
 	player->addComponent<Armas_HUD>(app);
 
 	/*if(playerConfig.physicType != KINEMATIC)*/ player->addComponent<PlayerController>();
