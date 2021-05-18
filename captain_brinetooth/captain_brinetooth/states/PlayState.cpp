@@ -543,7 +543,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	if (save)
 	{
 		ifstream readtxt;
-		readtxt.open("assets//user_data//data.dat");
+		string file = "data.dat";
+		readtxt.open("assets//user_data//" + file);
+		if (!readtxt) throw string("Can't find file" + file);
 		float life;
 		int weapon1;
 		int weapon2;
