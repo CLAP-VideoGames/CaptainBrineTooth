@@ -3,6 +3,15 @@
 
 void TutorialState::init()
 {
+	//Fade. Para que se sette el Fade
+	GameState::init();
+	fadeComp = manager_->getHandler<Fader>()->getComponent<Fade>();
+	if (fadeComp != nullptr) {
+		fadeComp->setTimeIn(100);
+		fadeComp->setTimeOut(2000);
+		fadeComp->triggerFade();
+	}
+
 	auto* bg = createBasicEntity(Vector2D(sdlutils().width() * App::camera_Zoom_Out, sdlutils().height()*App::camera_Zoom_Out *0.75), 
 		Vector2D(sdlutils().width() * App::camera_Zoom_Out * 3.0f, sdlutils().height() * App::camera_Zoom_Out * 2.0f), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("sky"), 1, 1, 1, 1, 0);
@@ -84,7 +93,7 @@ void TutorialState::skipTutorial()
 	createButton(&sdlutils().images().at("yes_button"), Vector2D(x, y), Vector2D(w, h), startTutorial);
 	x = (int)((App::camera.w - w) * 0.65);
 	y = (int)((App::camera.h - h) * 0.55);
-	createButton(&sdlutils().images().at("no_button"), Vector2D(x, y), Vector2D(w, h), startGame);
+	createButton(&sdlutils().images().at("no_button"), Vector2D(x, y), Vector2D(w, h), startGame, true);
 	//Message
 	w = (int)sdlutils().width() * 0.5 * App::camera_Zoom_Out;
 	h = (int)w * 0.04;
@@ -104,7 +113,7 @@ void TutorialState::readyPanel()
 	int x = (int)((App::camera.w - w) * 0.5);
 	int y = (int)((App::camera.h - h) * 0.55);
 	// Continue
-	createButton(&sdlutils().images().at("continuar_menu"), Vector2D(x, y), Vector2D(w, h), startGame);
+	createButton(&sdlutils().images().at("continuar_menu"), Vector2D(x, y), Vector2D(w, h), startGame, true);
 	//Message
 	w = (int)sdlutils().width() * 0.5 * App::camera_Zoom_Out;
 	h = (int)w * 0.04;
@@ -389,11 +398,9 @@ void TutorialState::receiveInput()
 	}
 }
 
-void TutorialState::createButton(Texture* t, Vector2D pos, Vector2D size, void(*callback)(App*, SoundManager*))
-{
+void TutorialState::createButton(Texture* t, Vector2D pos, Vector2D size, void(*callback)(App*, SoundManager*), bool canFadeOut_){
 	auto* button = createBasicEntity(Vector2D(pos.getX(), pos.getY()), Vector2D(size.getX(), size.getY()), 0.0f, Vector2D(0, 0));
-	button->addComponent<Button>(t, callback, app, manager_->getSoundMngr());
-	button->addComponent<Fade>(Vector2D(sdlutils().width(), sdlutils().height()), Vector2D(0, 0), 1500, 1000);
+	button->addComponent<Button>(t, callback, app, manager_->getSoundMngr())->canFadeOut(canFadeOut_);
 	panel.push_back(button);
 }
 

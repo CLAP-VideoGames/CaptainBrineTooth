@@ -9,6 +9,15 @@ IntroState::~IntroState(){
 }
 
 void IntroState::init() {
+	//Para que se sette el Fade
+	GameState::init();
+	//Fade
+	fadeComp = manager_->getHandler<Fader>()->getComponent<Fade>();
+	if (fadeComp != nullptr) {
+		fadeComp->setTimeIn(3000);
+		fadeComp->setTimeOut(3000);
+		fadeComp->triggerFade();
+	}
 	//Video
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
@@ -21,15 +30,13 @@ void IntroState::init() {
 	//Sonido
 	manager_->getSoundMngr()->setGeneralVolume(10);
 	manager_->getSoundMngr()->playIntroMusic();
-	//Fade
-	fade = manager_->addEntity();
-	fadeComp = fade->addComponent<Fade>(Vector2D(App::camera.w, App::camera.h), Vector2D(0, 0), 3000, 3000);
 }
 
 void IntroState::update(){
 	if (ih().mouseButtonEvent()) {
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			fadeComp->setState(Fade::STATE_FADE::Out);
+			fadeComp->triggerFade();
 			manager_->getSoundMngr()->stopIntroMusic();
 		}
 	}

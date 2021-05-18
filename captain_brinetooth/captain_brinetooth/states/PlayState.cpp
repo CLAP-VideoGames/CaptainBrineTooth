@@ -18,6 +18,7 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, 
 	//auto anim = suelo->addComponent<AnimBlendGraph>();
 	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
 	//suelo->addComponent<BoxCollider>();
+	fadeComp = nullptr;
 	save = saved;
 }
 
@@ -25,6 +26,13 @@ PlayState::~PlayState() {
 }
 
 void PlayState::init() {
+	GameState::init();
+	fadeComp = manager_->getHandler<Fader>()->getComponent<Fade>();
+	if (fadeComp != nullptr) {
+		fadeComp->setTimeIn(1000);
+		fadeComp->setTimeOut(2000);
+		fadeComp->triggerFade();
+	}
 	//---BG----
 	backgroundLevel = createBasicEntity(Vector2D(960, 640), Vector2D(2560, 1440), 0.0f, Vector2D(0, 0));
 	auto* bgParallax = backgroundLevel->addComponent<ParallaxScroll>();
@@ -55,7 +63,10 @@ void PlayState::init() {
 	int swordNumber = 0;*/
 	//createWeaponGiver(swordGiverConfig, swordNumber);
 
-	getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->setPlayer2spawn();
+	auto* map = getMngr()->getHandler<Map>();
+	if(map != nullptr){
+		map->getComponent<MapProcedural>()->setPlayer2spawn();
+	}
 
 	/*Config hammerGiverConfig{};
 	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());

@@ -6,6 +6,8 @@ Button::Button(Texture* t, CallBackOnClick* c, App* g, SoundManager* snd) : tex(
 	soundController = snd;
 	selected = false;
 	mouseOnButton = false;
+	canFadeOut_ = false;
+	eventTriggered_ = false;
 }
 
 Button::~Button(){
@@ -13,14 +15,21 @@ Button::~Button(){
 }
 
 void Button::init(){
+
+	auto* fader = entity_->getMngr()->getHandler<Fader>();
+	if (fader != nullptr)
+		fade = fader->getComponent<Fade>();
+
 	apply_offset = false;
 }
 
 void Button::update(){
 	handleEvent();
-	if (fade != nullptr){
-		if(fade->getFadeOutComplete())
+	if (fade != nullptr && canFadeOut_){
+		if (fade->getFadeOutComplete() && eventTriggered_){
 			cboq(game, soundController);
+			eventTriggered_ = false;
+		}
 	}
 }
 
@@ -67,9 +76,10 @@ bool Button::handleEvent(){
 		//Si el usuario sigue dentro del boton, este ha sido seleccionado, y el boton izquierdo ya no esta mantenido
 		if (!ih().getLeftMouseButtonPressed() && selected) {
 			//En caso de haber un componente Fade, ejecutar su callback cuando haya terminado el fade OUt (Update)
-			fade = entity_->getComponent<Fade>();
-			if (fade != nullptr) {
+			eventTriggered_ = true;
+			if (fade != nullptr && canFadeOut_) {
 				fade->setState(Fade::STATE_FADE::Out);
+				fade->triggerFade();
 				soundController->playSoundEffect("sonido_barco", 0);
 			}
 			else {
@@ -101,4 +111,8 @@ void Button::setTexColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 	SDL_SetTextureColorMod(tex->getTexture(), r, g, b);
 	SDL_SetTextureAlphaMod(tex->getTexture(), a);
+}
+
+void Button::canFadeOut(bool b){
+	canFadeOut_ = b;
 }

@@ -8,6 +8,7 @@ Fade::Fade(const Vector2D& size, const Vector2D& pos, const int& timeIn, const i
 	timeIn_ = timeIn * App::FPS;
 	timeOut_ = timeOut* App::FPS;
 	state_ = state;
+	play = false;
 }
 
 Fade::~Fade(){
@@ -19,17 +20,39 @@ void Fade::init(){
 }
 
 void Fade::update(){
-	if (state_ == STATE_FADE::In && !fadeInComplete){
-		colorFade.a = floor(sdlutils().lerpPrecise(colorFade.a, 0, percentageIn));
-		if (colorFade.a <= 0)
-			fadeInComplete = true;
 
+	if (play){
+		if (state_ == STATE_FADE::In && !fadeInComplete){
+			colorFade.a = floor(sdlutils().lerpPrecise(colorFade.a, 0, percentageIn));
+			if (colorFade.a <= 0){
+				fadeInComplete = true;
+				play = false;
+			}
+
+		}
+		else if(state_ == STATE_FADE::Out && !fadeOutComplete){
+			colorFade.a = ceil(sdlutils().lerpPrecise(colorFade.a, 255, percentageOut));
+			if (colorFade.a >= 255){
+				fadeOutComplete = true;
+				play = false;
+			}
+		}
 	}
-	else if(state_ == STATE_FADE::Out && !fadeOutComplete){
-		colorFade.a = ceil(sdlutils().lerpPrecise(colorFade.a, 255, percentageOut));
-		if(colorFade.a >= 255)
-			fadeOutComplete = true;
-	}
+}
+
+void Fade::triggerFade() {
+	if (!play) play = true;
+}
+
+void Fade::setTimeIn(int time) {
+	timeIn_ = time * App::FPS;
+	percentageIn = ((float)255 / (float)timeIn_);
+}
+
+
+void Fade::setTimeOut(int time) {
+	timeOut_ = time * App::FPS;
+	percentageOut = ((float)255 / (float)timeOut_);
 }
 
 

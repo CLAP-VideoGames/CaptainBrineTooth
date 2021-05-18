@@ -129,6 +129,8 @@ struct Group_1;
 struct Player;
 struct Rod;
 struct Map;
+struct Fader;
 #define _HDLRS_LIST_ Player, \
 					Map,\
-                    Rod
+                    Rod,\
+					Fader

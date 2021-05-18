@@ -6,15 +6,19 @@
 
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 	cam = a->camera;
+	fadeComp = nullptr;
 }
 
 void MenuState::init() {
-	auto* fondo = manager_->addEntity();
-	SDL_Rect rectPos;
-	rectPos.x = 0;
-	rectPos.y = 0;
-	rectPos.w = cam.w;
-	rectPos.h = cam.h;
+	//Fade. Para que se sette el Fade
+	GameState::init();
+	//Fade
+	fadeComp = manager_->getHandler<Fader>()->getComponent<Fade>();
+	if (fadeComp != nullptr) {
+		fadeComp->setTimeIn(1000);
+		fadeComp->setTimeOut(2000);
+		fadeComp->triggerFade();
+	}
 
 	//Background
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
@@ -57,14 +61,11 @@ void MenuState::init() {
 		y = (int)((y + h * 1.2));
 		//y = (int)((App::camera.h - h) * (0.48 + 0.22 * nBoton));
 		botonCargar->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
-		botonCargar->addComponent<Button>(&sdlutils().images().at("continuar_menu"), changeToGame, app, manager_->getSoundMngr());
-		//botonCargar->addComponent<Fade>(Vector2D(cam.w, cam.h), Vector2D(0, 0), 1500, 1000);
+		botonCargar->addComponent<Button>(&sdlutils().images().at("continuar_menu"), changeToGame, app, manager_->getSoundMngr())->canFadeOut(true);
 		w *= 1.25;
 		h *= 1.25;
 		x = (int)((App::camera.w - w) * 0.5);
 	}
-	
-
 
 	//Creditos
 	auto* creditos = manager_->addEntity();
@@ -90,9 +91,7 @@ void MenuState::init() {
 	auto* botonIniciar = manager_->addEntity();
 	y = (int)((y - ((h * 1.2))));
 	botonIniciar->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), w, h, 0.0f);
-	botonIniciar->addComponent<Button>(&sdlutils().images().at("nueva_partida_menu"), changeToTutorial, app, manager_->getSoundMngr());
-	botonIniciar->addComponent<Fade>(Vector2D(cam.w, cam.h), Vector2D(0, 0), 1500, 1000);
-
+	botonIniciar->addComponent<Button>(&sdlutils().images().at("nueva_partida_menu"), changeToTutorial, app, manager_->getSoundMngr())->canFadeOut(true);
 #pragma endregion
 }
 

@@ -2,6 +2,7 @@
 #include "../ecs/Component.h"
 #include "../sdlutils/SDLUtils.h"
 #include <math.h>
+#include "../game/App.h"
 
 class Fade : public Component{
 public:
@@ -30,8 +31,27 @@ public:
 		return fadeOutComplete;
 	}
 
+	/// <summary>
+	/// Inicia el Fade según el estado en que esté
+	/// </summary>
+	void triggerFade();
+
+	/// <summary>
+	/// Asigna el tiempo de Fade Out en milisegundos
+	/// </summary>
+	/// <param name="time"> en milisegundos</param>
+	void setTimeIn(int time);
+	
+	/// <summary>
+	/// Asigna el tiempo de Fade Out en milisegundos
+	/// </summary>
+	/// <param name="time"> en milisegundos</param>
+	void setTimeOut(int time);
+
 private:
+
 	int timeIn_, timeOut_;
+	bool play;
 	float percentageIn, percentageOut;
 
 	bool fadeOutComplete = false, fadeInComplete = false;

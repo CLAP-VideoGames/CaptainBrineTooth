@@ -27,4 +27,5 @@ private:
 	MapProcedural* map;
 	Vector2D camLimits;
 	bool save;
+	Fade* fadeComp;
 };

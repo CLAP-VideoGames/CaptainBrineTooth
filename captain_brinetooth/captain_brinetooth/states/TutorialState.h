@@ -25,7 +25,7 @@ public:
 	//Panels
 	void skipTutorial();
 	void readyPanel();
-	void createButton(Texture* t, Vector2D pos, Vector2D size, void(*callback)(App*, SoundManager*));
+	void createButton(Texture* t, Vector2D pos, Vector2D size, void(*callback)(App*, SoundManager*), bool canFadeOut_ = false);
 	void clearPanel();
 	void clearStep();
 	//Entities
@@ -42,4 +42,5 @@ private:
 	float wait_Time = 4000, countDown;
 	Entity* player;
 	Entity* enemy;
+	Fade* fadeComp;
 };

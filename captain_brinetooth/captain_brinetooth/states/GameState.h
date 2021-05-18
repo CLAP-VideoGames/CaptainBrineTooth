@@ -79,7 +79,7 @@ public:
 	virtual void render() const;
 	virtual void update();
 	virtual void refresh();
-	virtual void init() {};
+	virtual void init();
 
 	SDL_Rect ScaleSDL_Rect(Texture* text, const Vector2D& pos, float zoomFactor, float sizeFactor, bool centered = false);
 
@@ -92,6 +92,7 @@ public:
 protected:
 	Manager* manager_;
 	App* app;
+	Entity* fader;
 	std::vector<Entity*> stage;
 	bool popped;
 };

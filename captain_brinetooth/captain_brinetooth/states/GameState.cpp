@@ -7,6 +7,7 @@ GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) 
 	popped = false;
 	manager_ = new Manager(a,mundo, snd, &popped);
 }
+
 GameState::~GameState() {
 	//Se tiene que borrar el manager de cada Estado
 	delete manager_;
@@ -20,6 +21,9 @@ Entity* GameState::createBasicEntity(const Vector2D& pos, const Vector2D& size, 
 
 void GameState::render() const {
 	manager_->render();
+	//Se tiene que dibujar siempre lo último
+	if(fader != nullptr)
+		fader->render();
 	
 }
 void GameState::update() {
@@ -28,6 +32,12 @@ void GameState::update() {
 }
 void GameState::refresh() {
 	manager_->refresh();
+}
+
+void GameState::init(){
+	fader = manager_->addEntity();
+	fader->addComponent<Fade>(Vector2D(App::camera.w, App::camera.h), Vector2D(0, 0), 1000, 1000);
+	manager_->setHandler<Fader>(fader);
 }
 
 SDL_Rect GameState::ScaleSDL_Rect(Texture* text, const Vector2D& pos, float zoomFactor, float sizeFactor, bool centered){
