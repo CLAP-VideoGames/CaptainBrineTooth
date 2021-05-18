@@ -271,6 +271,7 @@ void MapProcedural::update() {
 		{
 
 		}*/
+
 		SDL_PumpEvents();
 		SDL_FlushEvent(SDL_KEYDOWN);
 		SDL_FlushEvent(SDL_KEYUP);

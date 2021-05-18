@@ -140,7 +140,7 @@ void Player_Health::update()
 		respawn();
 
 	//Curas
-	for (int i = 0; i < maxHeals_; i++) {
+	for (size_t i = 0; i < maxHeals_; i++) {
 		int v = healsValues[i] / (maxValueHeal_ / 5);
 		heals[i]->getComponent<AnimBlendGraph>()->setParamValue("Value", v);
 		heals[i]->getComponent<Transform>()->getPos().set(
@@ -208,7 +208,7 @@ void Player_Health::heal()
 
 void Player_Health::chargeHeal(int charge)
 {
-	int i = 0;
+	size_t i = 0;
 	while (i < maxHeals_ && healsValues[i] >= maxValueHeal_) i++;
 	if (i < maxHeals_) {
 		healsValues[i] += charge;
@@ -255,7 +255,5 @@ void Player_Health::respawn()
 	Manager* mngr = entity_->getMngr();
 	mngr->getSoundMngr()->ChangeMainMusic("Nivel1");
 
-	sM->popState();
 	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr(),false));
-
 }
