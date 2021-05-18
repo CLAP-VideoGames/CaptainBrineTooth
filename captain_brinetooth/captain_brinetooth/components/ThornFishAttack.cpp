@@ -65,7 +65,7 @@ void ThornFishAttack::createAttackTrigger()
 	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 	attackTrigger_->addComponent<ContactDamage>();
 	// Reproducimos el sonido de la electircidad
-	entity_->getMngr()->getSoundMngr()->playSoundEffect("mordisco_elfshark", 300);
+	entity_->getMngr()->getSoundMngr()->playSoundEffect("electricidad", 300);
 }
 
 void ThornFishAttack::attack()

@@ -192,6 +192,7 @@ void Player_Health::heal()
 		int i = healsValues.size() - 1;
 		while (i >= 0 && healsValues[i] != maxValueHeal_) i--;
 		if (i >= 0) {
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("heal", 0);
 			vidas += 3;	//VALOR A CURAR
 			if (vidas > maxVidas)
 				vidas = maxVidas;

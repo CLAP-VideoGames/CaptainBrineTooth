@@ -480,6 +480,14 @@
 			"file": "assets/sounds/player/pescar_objetos.mp3"
 		},
 		{
+			"id": "heal",
+			"file": "assets/sounds/player/heal.mp3"
+		},
+		{
+			"id": "bottle_filled",
+			"file": "assets/sounds/player/bottle_filled.mp3"
+		},
+		{
 			"id": "get_weapon",
 			"file": "assets/sounds/player/get_weapon.wav"
 		},
