@@ -5,7 +5,9 @@ using namespace ColLayers;
 
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
-
+	SDL_PumpEvents();
+	SDL_FlushEvent(SDL_KEYDOWN);
+	SDL_FlushEvent(SDL_KEYUP);
 };
 
 
