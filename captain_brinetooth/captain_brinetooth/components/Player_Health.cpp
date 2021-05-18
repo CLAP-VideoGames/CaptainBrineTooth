@@ -87,12 +87,11 @@ void Player_Health::render()
 	
 	if (currentVidas < maxVidas)
 	{
-		aux = Vector2D(aux.getX()+4 + (zoom * 50), 8);
-		SDL_Rect dest = build_sdlrect(aux, (src.w / 3.5) * zoom, (src.h / 3.5) * zoom);
-		vVida->render(dest);
-		for (int i = 1; i < (maxVidas - currentVidas); i++)
+		if (vidas == 0)
+			aux.setX(-32);
+		for (int i = 0; i < (maxVidas - currentVidas); i++)
 		{
-			aux = Vector2D(aux.getX()+4 + (zoom * 50), 8);
+			aux = Vector2D(aux.getX() + (zoom * 48), 8);
 			SDL_Rect dest = build_sdlrect(aux, (src.w / 3.5)* zoom, (src.h / 3.5)*zoom);
 			vVida->render(dest);
 		}
