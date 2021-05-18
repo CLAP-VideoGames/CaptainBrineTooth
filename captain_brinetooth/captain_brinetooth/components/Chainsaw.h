@@ -12,6 +12,7 @@
 #include "AnimBlendGraph.h"
 #include "WeaponDamageDetection.h"
 #include "PlayerController.h"
+#include "Player_Health.h"
 
 
 class Chainsaw : public WeaponComponent {

@@ -13,6 +13,7 @@
 #include "AnimBlendGraph.h"
 #include "WeaponDamageDetection.h"
 #include "PlayerController.h"
+#include "Player_Health.h"
 #include "DisableOnExit.h"
 #include "DestroyOnCollision.h"
 #include "InkMovement.h"

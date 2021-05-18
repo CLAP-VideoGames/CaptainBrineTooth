@@ -34,6 +34,7 @@ public:
 	void setLife(float life);
 
 	const bool& getInvulnerable();
+	const bool& getPlayerIsDying();
 
 private:
 	float vidas, maxVidas;
@@ -56,5 +57,7 @@ private:
 	App* g;
 	float tiempoanimacion; // Tiempo entre frame y frame
 	int nFrame = 0;
+
+	bool playerIsDying;
 };
 

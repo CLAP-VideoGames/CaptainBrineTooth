@@ -57,6 +57,7 @@ void Player_Health::init()
 	invulnerability_ = false;
 	elpased_time_invul_ = 0;
 	deadCountdown = 0;
+	playerIsDying = false;
 }
 
 void Player_Health::render()
@@ -182,6 +183,7 @@ void Player_Health::loseLife()
 		entity_->getComponent<BoxCollider>()->setSpeed(Vector2D(0,0));
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_death", 0);
 		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
+		playerIsDying = true;
 	}
 }
 
@@ -236,6 +238,12 @@ const bool& Player_Health::getInvulnerable()
 {
 	return invulnerability_;
 }
+
+const bool& Player_Health::getPlayerIsDying()
+{
+	return playerIsDying;
+}
+
 void Player_Health::setLife(float life)
 {
 	vidas = life;
