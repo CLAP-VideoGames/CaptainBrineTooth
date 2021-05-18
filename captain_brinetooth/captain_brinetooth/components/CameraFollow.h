@@ -3,6 +3,9 @@
 #include "Transform.h"
 #include "..//ecs/Entity.h"
 #include "..//game/App.h"
+#include "../sdlutils/SDLUtils.h"
+#include "AnimBlendGraph.h"
+#include "BoxCollider.h"
 
 class App;
 
