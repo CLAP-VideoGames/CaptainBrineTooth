@@ -1,11 +1,12 @@
 #include "SoundManager.h"
 #include "../sdlutils/SDLUtils.h"
 
-void SoundManager::setGeneralVolume(int volume){
-	volumenGeneral = volume;
+void SoundManager::setGeneralVolume(int volumeMusic, int volumeEffects){
+	volumenGeneral = volumeMusic;
+	volumenEfectos = volumeEffects;
 
 	setMusicVolume(volumenGeneral);
-	setEffectsVolume(volumenGeneral);
+	setEffectsVolume(volumenEfectos);
 }
 
 void SoundManager::playMainMusic()

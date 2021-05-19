@@ -60,7 +60,7 @@ void App::init() {
 	stateMachine->refreshStates();
 
 	// Iniciamos el juego con X volumen
-	stateMachine->currentState()->getMngr()->getSoundMngr()->setGeneralVolume(10);
+	stateMachine->currentState()->getMngr()->getSoundMngr()->setGeneralVolume(10,10);
 
 	world_->SetContactListener(&collisionListener);
 	//Habilitamos el hecho de poder realizar colores de SDL con Alpha. Solo los Colores de SDL

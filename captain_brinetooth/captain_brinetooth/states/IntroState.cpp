@@ -28,7 +28,7 @@ void IntroState::init() {
 	auto* video = manager_->addEntity();
 	video->addComponent<VideoPlayer>(videos);
 	//Sonido
-	manager_->getSoundMngr()->setGeneralVolume(10);
+	manager_->getSoundMngr()->setGeneralVolume(10,10);
 	manager_->getSoundMngr()->playIntroMusic();
 }
 

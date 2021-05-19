@@ -30,7 +30,7 @@ public:
 	int PauseVolume() { return volumenPausa; }
 	int EffectsVolume() { return volumenEfectos; }
 
-	void setGeneralVolume(int volume); // Poner el volumen GENERAL a cierto nivel especifico
+	void setGeneralVolume(int volumeMusic, int volumeEffects); // Poner el volumen GENERAL a cierto nivel especifico
 	void setMusicVolume(int volume); // Poner el volumen de la MUSICA a cierto nivel especifico
 	void setEffectsVolume(int volume); // Poner el volumen de los EFECTOS a cierto nivel especifico
 

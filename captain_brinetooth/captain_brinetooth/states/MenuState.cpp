@@ -7,6 +7,16 @@
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 	cam = a->camera;
 	fadeComp = nullptr;
+	if (manager_->getSoundMngr()->GeneralVolume() > manager_->getSoundMngr()->PauseVolume())
+	{
+		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->GeneralVolume(), manager_->getSoundMngr()->EffectsVolume());
+	}
+	else
+	{
+		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->PauseVolume(), manager_->getSoundMngr()->EffectsVolume());
+	}
+
+	manager_->getSoundMngr()->playMainMusic();
 }
 
 void MenuState::init() {
@@ -27,16 +37,7 @@ void MenuState::init() {
 	videos.push_back(video__);
 	auto* video = manager_->addEntity();
 	video->addComponent<VideoPlayer>(videos);
-	if (manager_->getSoundMngr()->GeneralVolume() > manager_->getSoundMngr()->PauseVolume())
-	{
-		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->GeneralVolume());
-	}
-	else
-	{
-		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->PauseVolume());
-	}
-
-	manager_->getSoundMngr()->playMainMusic();
+	
 
 	// Titulo
 	auto* title = manager_->addEntity();
