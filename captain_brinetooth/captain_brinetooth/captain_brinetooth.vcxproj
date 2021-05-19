@@ -212,6 +212,7 @@
     <ClInclude Include="components\VideoPlayer.h" />
     <ClInclude Include="components\WeaponComponent.h" />
     <ClInclude Include="components\WeaponDamageDetection.h" />
+    <ClInclude Include="CreditsState.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />
     <ClInclude Include="ecs\ecs_defs_example.h" />
@@ -313,6 +314,7 @@
     <ClCompile Include="components\TriggerCollider.cpp" />
     <ClCompile Include="components\VideoPlayer.cpp" />
     <ClCompile Include="components\WeaponDamageDetection.cpp" />
+    <ClCompile Include="CreditsState.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />

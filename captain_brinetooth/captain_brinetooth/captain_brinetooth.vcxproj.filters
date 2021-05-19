@@ -402,6 +402,9 @@
     <ClInclude Include="states\SkillTreeState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
+    <ClInclude Include="CreditsState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -670,6 +673,9 @@
       <Filter>Archivos de origen\components</Filter>
     </ClCompile>
     <ClCompile Include="states\SkillTreeState.cpp">
+      <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="CreditsState.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
   </ItemGroup>
