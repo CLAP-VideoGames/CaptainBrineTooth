@@ -571,15 +571,22 @@ void PlayState::createSaveDataandSTate()
 	StateMachine* sM = app->getStateMachine();
 	//Savings players Data 
 	infoPartida infoPlayer;
+	infoPlayer.abilities[0] = false;
+	infoPlayer.abilities[1] = false;
+	infoPlayer.abilities[2] = false;
+	infoPlayer.abilities[3] = false;
+	infoPlayer.abilities[4] = false;
+	infoPlayer.abilities[5] = false;
+
 	Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
 
 	//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-	for (int i = 0; i < 6; i++)
-	{
-		infoPlayer.abilities[0] = playerrefAux->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	infoPlayer.abilities[0] = playerrefAux->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
 
 
-	}
+	//}
 	sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
 }
 Entity* PlayState::getBackgroundLevel() {
