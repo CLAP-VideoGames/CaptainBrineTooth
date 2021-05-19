@@ -9,13 +9,13 @@
 #include "../states/StateMachine.h"
 #include "../states/PescaState.h"
 
-Reward::Reward(int w, Entity* p, App* a)
+Reward::Reward(int w, Entity* p, App* a, float speed)
 {
 	weapontoGive = (PosibleWeapons)w;
 	catched = false;
 	playerRef = p;
 	app = a;
-	
+	vel = speed;
 	
 	//Falta incializar los limites para tener una referencia cuando el cebo se mueva 
 }
@@ -27,8 +27,11 @@ void Reward::init()
 	collider_ = entity_->getComponent<BoxCollider>();
 	assert(collider_ != nullptr);
 
+	int r = sdlutils().rand().teCuoto(0, 2);	
+	if (r == 0)vel = -vel;
 	collider_->getBody()->SetGravityScale(0.0f);
-	collider_->setSpeed(Vector2D(-App::camera_Zoom_Out, 0));
+	
+	collider_->setSpeed(Vector2D(vel, 0));
 	collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
 	entity_->setCollisionMethod(baitCollision);
 	collider_->getFixture()->SetSensor(true);
@@ -38,8 +41,10 @@ void Reward::update()
 
 	if (!catched) //Bait remains moving if not catched 
 	{
-		if (tr_->getPos().getX() < tr_->getW())
-			adjustIfLimits();
+		if (tr_->getPos().getX() < tr_->getW()&& vel<0)
+			adjustIfLimits(0);
+		else if (tr_->getPos().getX()+ tr_->getW() >sdlutils().width()*App::camera_Zoom_Out && vel>0)
+			adjustIfLimits(1);
 	}
 	else
 	{
@@ -101,12 +106,20 @@ void Reward::baitCatched(Entity* h)
 
 	catched = true;
 }
-void Reward::adjustIfLimits()
+void Reward::adjustIfLimits(int side)
 {
 	//We have to check limits in orden to set position if neccesary
 	//If not  we just use speed in x in order to move it 
-	tr_->getPos().setX(sdlutils().width() * App::camera_Zoom_Out);
-	collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
+	if (side == 0)
+	{
+		tr_->getPos().setX(sdlutils().width() * App::camera_Zoom_Out);
+		collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
+	}
+	else
+	{
+		tr_->getPos().setX(tr_->getW());
+		collider_->setPhysicalTransform(tr_->getPos().getX(), tr_->getPos().getY(), 0.0f);
+	}
 }
 void Reward::giveReward()
 {

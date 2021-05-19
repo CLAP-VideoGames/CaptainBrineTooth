@@ -8,7 +8,7 @@ enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachine
 class Reward : public Component
 {
 public:
-	Reward(int w,Entity* p,App* a);
+	Reward(int w,Entity* p,App* a,float speed);
 	virtual ~Reward() {};
 	void init() override;
 	void update() override;
@@ -26,7 +26,9 @@ private:
 	Transform* tr_;
 	BoxCollider* collider_;
 	Vector2D speed;
-	void adjustIfLimits();
+	float vel;
+	void adjustIfLimits(int side);
+	int side;
 
 	static void baitCollision(b2Contact* contact);
 	void baitCatched(Entity* hook); // Metodo para la colision con el gancho en el que la velocidad se pone a cero y el cebo se pone donde esta el gancho(Cambio de animacion)

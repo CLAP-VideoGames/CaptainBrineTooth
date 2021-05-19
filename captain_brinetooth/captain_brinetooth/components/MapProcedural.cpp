@@ -266,16 +266,16 @@ void MapProcedural::update() {
 			e->setActive(false);
 		}
 
-		/*SDL_Event event;
+		SDL_Event event;
 		while (SDL_PollEvent(&event))
 		{
+			SDL_PumpEvents();
+			SDL_FlushEvent(SDL_KEYDOWN);
+			SDL_FlushEvent(SDL_KEYUP);
 
-		}*/
+		}
 
-		SDL_PumpEvents();
-		SDL_FlushEvent(SDL_KEYDOWN);
-		SDL_FlushEvent(SDL_KEYUP);
-			
+		
 		pesca.clear(); 
 		stopFishing = false;
 	}

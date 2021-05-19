@@ -41,21 +41,21 @@ void PescaState::init() {
 	screen_width = sdlutils().width() * App::camera_Zoom_Out;
 	screen_heigth = sdlutils().height() * App::camera_Zoom_Out;
 
-	w_reward = (int)40 * App::camera_Zoom_Out;
-	h_reward = (int)30 * App::camera_Zoom_Out;    //mantener aspect ratio
+	w_reward = (int)60 * App::camera_Zoom_Out;
+	h_reward = (int)40 * App::camera_Zoom_Out;    //mantener aspect ratio
 	int y = (int)(screen_heigth * 0.5 - h_reward);	//Offset hacia abajo con respecto al jugador
 
 	//Fill array
 	for (int i = 0; i < rows_; i++)
 	{
-		y = (int)(y + h_reward * 3);	//establece la posicion y de la columna, solo hay que cambiar el numero
+		y = (int)(y + h_reward * 2);	//establece la posicion y de la columna, solo hay que cambiar el numero
 		rowHeights.push_back(y);
 	}
 
 	auto* bg = createBasicEntity(Vector2D(screen_width / 2, screen_heigth / 2), Vector2D(screen_width, screen_heigth), 0.0f, Vector2D(0, 0));
 	bg->addComponent<Animation>("1", &sdlutils().images().at("fondoPesca"), 1, 10, 10, 3, -1);
 	//---------
-	entitiesPerLine = 4;
+	entitiesPerLine = 1;
 	totalBasura = sdlutils().rand().teCuoto(0, 10); //AHora la basura tiene un rango en cuanto a cantidad de aparicion 
 
 	Config gancho{};
@@ -146,12 +146,36 @@ void PescaState::createPesca(const Config& entityConfig) {
 void PescaState::createRandomReward(const Config& entityConfig)
 {
 	//0 espada 1 martillo 2 sierra ---> se iran a�adiendo segun vaya habiendo mas armas
+
+
+
+	//MIRAR PARA HACER LAS PROBABILIDADES 
+	//Filas: solo pueden salir las que estan puestas
+	//Niveles: salen con mas probabilidad esas armas 
+
+	//En cada fila solo se pone lo que tienes aqui
+	// fila  1  Espada, Escupetintas
+	// fila  2  Sierra, Puños Cangrejo
+	// fila  3  Ametralladora, Martillo
+
+	//En los nieveles puede salir en cada uno todas las armas pero en funcion del nivel se ve cuales armas son mas probable
+	//Nivel 1  Espada, Escupetintas
+	//Nivel 2  Sierra, Puños Cangrejo
+	//Nivel 3  Ametralladora, Martillo
+
+	//1 fila 
+	//2 fila todas menos el martillo
+
+
 	float offset = 10;
+	float speedperlevel = 2;
 	int x = sdlutils().width() * App::camera_Zoom_Out;
 	int random;
+	int probabInLevel;
+
 	int entitiesaux = entitiesPerLine;
 	Inventory* playerInv = playerRef->getComponent<Inventory>();
-	int lastRandom=90; //Inicialmente no hay ultimo arma generada asi que ponemos un numero grande para que el bucle no se confunda haciendo comprobaciones 
+	int lastRandom = 90; //Inicialmente no hay ultimo arma generada asi que ponemos un numero grande para que el bucle no se confunda haciendo comprobaciones 
 
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < entitiesaux; j++)
@@ -159,12 +183,12 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			random = sdlutils().rand().teCuoto(0, 6);
 
 			//Si vuelve a salir el mismo arma que antes volvemos a generar otra 
-			while (random ==lastRandom )
+			while (random == lastRandom)
 			{
 				random = sdlutils().rand().teCuoto(0, 6);
 			}
-			auto* reward0 = createBasicEntity(Vector2D(x + (150 * App::camera_Zoom_Out * j) + (75 * App::camera_Zoom_Out * i), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
-			
+			auto* reward0 = createBasicEntity(Vector2D(x + (400 * App::camera_Zoom_Out * j) + (75 * App::camera_Zoom_Out * i), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
+
 
 			//If player has not the weapon we try adding another weapon that player hasn�t
 			while (playerInv->hasWeapon(random))
@@ -172,28 +196,33 @@ void PescaState::createRandomReward(const Config& entityConfig)
 				random = sdlutils().rand().teCuoto(0, 6);
 			}
 			if (random == 0)
+			{
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
-
-			else if (random == 1)
+			}
+			else if (random == 1){
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
-
-			else if (random == 2)
+			}
+			else if (random == 2) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
-			else if (random == 3)
+			}
+			else if (random == 3) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("crab"), 1, 1, 1, 1, 0);
-			else if (random == 4)
+			}
+			else if (random == 4) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("machine_gun"), 1, 1, 1, 1, 0);
-			else if (random == 5)
+			}
+			else if (random == 5) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("escupetintas"), 1, 1, 1, 1, 0);
+			}
 
 
-
-			reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
-			reward0->addComponent<Reward>(random, playerRef, app);
+				reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
+			reward0->addComponent<Reward>(random, playerRef, app,speedperlevel);
 			lastRandom = random; //Guardamos el ultimo random para saber que recompensa se ha generado la ultima 
 
 		}
-		entitiesaux--;
+		entitiesaux++;
+		speedperlevel += 1.5;
 	}
 }
 
@@ -216,7 +245,7 @@ void PescaState::crearBasura() {
 			basura->addComponent<Animation>("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 		}
 		basura->addComponent<BoxCollider>(STATIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
-		basura->addComponent<Reward>(random, playerRef, app);
+		basura->addComponent<Reward>(random, playerRef, app,0);
 		basuras.push_back(basura);
 	}
 }
@@ -228,7 +257,7 @@ bool PescaState::checkBasura(int x, int y)
 	}
 	else {
 		int i = 0;
-		while ((i < basuras.size()) && ((x + 50 < basuras[i]->getComponent<Transform>()->getPos().getX() - 50 || x - 50 > basuras[i]->getComponent<Transform>()->getPos().getX() + 50) || (y + 50 < basuras[i]->getComponent<Transform>()->getPos().getY() - 50 || y - 50 > basuras[i]->getComponent<Transform>()->getPos().getY() + 50))){
+		while ((i < basuras.size()) && ((x + 50 < basuras[i]->getComponent<Transform>()->getPos().getX() - 50 || x - 50 > basuras[i]->getComponent<Transform>()->getPos().getX() + 50) || (y + 50 < basuras[i]->getComponent<Transform>()->getPos().getY() - 50 || y - 50 > basuras[i]->getComponent<Transform>()->getPos().getY() + 50))) {
 			i++;
 		}
 		if (i == basuras.size())
