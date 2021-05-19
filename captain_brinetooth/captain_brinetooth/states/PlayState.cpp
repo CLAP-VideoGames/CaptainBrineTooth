@@ -1,5 +1,6 @@
 ﻿#include "PlayState.h"
 #include "PasueState.h"
+#include "../components/SkillTree.h"
 #include <fstream>
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
@@ -64,7 +65,7 @@ void PlayState::init() {
 	//createWeaponGiver(swordGiverConfig, swordNumber);
 
 	auto* map = getMngr()->getHandler<Map>();
-	if(map != nullptr){
+	if (map != nullptr) {
 		map->getComponent<MapProcedural>()->setPlayer2spawn();
 	}
 
@@ -531,8 +532,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app, 5, 2);
 	player->addComponent<Armas_HUD>(app);
 
-	/*if(playerConfig.physicType != KINEMATIC)*/ player->addComponent<PlayerController>();
-	//else player->addComponent<KeyBoardCtrl>(map);
+	player->addComponent<PlayerController>();
+
 
 	//Por testing basura
 	player->addComponent<CameraFollow>(Vector2D(100.0f, -80.0f), 0.08f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
@@ -545,27 +546,18 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		string file = "data.dat";
 		readtxt.open("assets//user_data//" + file);
 		if (!readtxt) throw string("Can't find file" + file);
-		float life;
-		int weapon1;
-		int weapon2;
-		string info;
-		readtxt >> info;
-
-		if (info == "Vida:")readtxt >> life;
-		readtxt >> info;
-		if (info == "Arma0:")readtxt >> weapon1;
-		readtxt >> info;
-		if (info == "Arma1:")readtxt >> weapon2;
-
-		player->getComponent<Player_Health>()->setLife(life);
-
-		if (weapon2 < 100 && weapon1 < 100){
-			if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon1);
-			if (weapon1 < 100)player->getComponent<Inventory>()->addWeapon(weapon2);
+		std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
+		int ability;
+		for (int i = 0; i < 6; i++)
+		{
+			//Vamos leyendo habilidad a habilidad  guardandola en el array
+			readtxt >> ability;
+			infoabilities[i] = (bool)ability; 
 		}
+		//Falta la lectura de puntos pero no esta implementada todavia 
+		//Tras leer las habilidades se las damos al usuario 
+		player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
 
-		if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon2);
-		if (weapon1 < 100)player->getComponent<Inventory>()->addWeapon(weapon1);
 
 	}
 	//Seteamos al Player como MainHandler
@@ -580,25 +572,17 @@ void PlayState::createSaveDataandSTate()
 	//Savings players Data 
 	infoPartida infoPlayer;
 	Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
-	infoPlayer.playerLife = playerrefAux->getComponent<Player_Health>()->getLife();
-	infoPlayer.weapon1 = playerrefAux->getComponent<Inventory>()->getWeapon(0);
-	infoPlayer.weapon2 = playerrefAux->getComponent<Inventory>()->getWeapon(1);
+
 	//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-	if (playerrefAux->getComponent<Inventory>()->emptyInventory())
+	for (int i = 0; i < 6; i++)
 	{
-		infoPlayer.weapon1 = 100;
-		infoPlayer.weapon2 = 100;
-	}
-	else    //Si tiene un arma ponemos la otra a 100( como si fuese null) si no leemos las dos puesto que tendria dos armas
-	{
-		if(playerrefAux->getComponent<Inventory>()->hasOneWeapon())infoPlayer.weapon2 = 100;
-		//si no tiene el inventario lleno , con lo cual se le pasa direcatente la lectura de las armas 
+		infoPlayer.abilities[0] = playerrefAux->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
 
 
 	}
 	sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
 }
-Entity* PlayState::getBackgroundLevel(){
+Entity* PlayState::getBackgroundLevel() {
 	return backgroundLevel;
 }
 void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
