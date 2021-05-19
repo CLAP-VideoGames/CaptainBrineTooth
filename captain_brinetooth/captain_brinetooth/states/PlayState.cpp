@@ -540,8 +540,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<LoseLife>();
 
-	if (save)
-	{
+	if (save) {
 		ifstream readtxt;
 		string file = "data.dat";
 		readtxt.open("assets//user_data//" + file);
@@ -559,7 +558,6 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		if (info == "Arma1:")readtxt >> weapon2;
 
 		player->getComponent<Player_Health>()->setLife(life);
-
 
 		if (weapon2 < 100 && weapon1 < 100){
 			if (weapon2 < 100)player->getComponent<Inventory>()->addWeapon(weapon1);

@@ -16,6 +16,7 @@ static infoPartida partida;
 class PauseState :public GameState {
 public:
 	PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, infoPartida info);
+	
 	virtual void init();
 	virtual void render() const;
 	virtual void update();

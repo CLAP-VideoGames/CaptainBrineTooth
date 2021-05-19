@@ -203,6 +203,7 @@
     <ClInclude Include="components\Reward.h" />
     <ClInclude Include="components\Rotate.h" />
     <ClInclude Include="components\ShootDetect.h" />
+    <ClInclude Include="components\SkillTree.h" />
     <ClInclude Include="components\Slider.h" />
     <ClInclude Include="components\Sword.h" />
     <ClInclude Include="components\ThornFishAttack.h" />
@@ -243,6 +244,7 @@
     <ClInclude Include="states\PasueState.h" />
     <ClInclude Include="states\PescaState.h" />
     <ClInclude Include="states\PlayState.h" />
+    <ClInclude Include="states\SkillTreeState.h" />
     <ClInclude Include="states\StateMachine.h" />
     <ClInclude Include="states\MenuState.h" />
     <ClInclude Include="states\TestZoneState.h" />
@@ -303,6 +305,7 @@
     <ClCompile Include="components\Reward.cpp" />
     <ClCompile Include="components\Rotate.cpp" />
     <ClCompile Include="components\ShootDetect.cpp" />
+    <ClCompile Include="components\SkillTree.cpp" />
     <ClCompile Include="components\Slider.cpp" />
     <ClCompile Include="components\Sword.cpp" />
     <ClCompile Include="components\ThornFishAttack.cpp" />
@@ -330,6 +333,7 @@
     <ClCompile Include="states\PasueState.cpp" />
     <ClCompile Include="states\PescaState.cpp" />
     <ClCompile Include="states\PlayState.cpp" />
+    <ClCompile Include="states\SkillTreeState.cpp" />
     <ClCompile Include="states\StateMachine.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
     <ClCompile Include="states\TestZoneState.cpp" />

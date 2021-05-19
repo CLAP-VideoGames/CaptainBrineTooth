@@ -396,6 +396,12 @@
     <ClInclude Include="components\ThornFishAttack.h">
       <Filter>Archivos de encabezado\components\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="components\SkillTree.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="states\SkillTreeState.h">
+      <Filter>Archivos de encabezado\states</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -659,6 +665,12 @@
     </ClCompile>
     <ClCompile Include="components\ThornFishAttack.cpp">
       <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="components\SkillTree.cpp">
+      <Filter>Archivos de origen\components</Filter>
+    </ClCompile>
+    <ClCompile Include="states\SkillTreeState.cpp">
+      <Filter>Archivos de origen\states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

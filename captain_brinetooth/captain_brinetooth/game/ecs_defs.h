@@ -52,6 +52,7 @@ class Fade;
 class JellyHatBehavior;
 class Connections;
 class Inventory;
+class SkillTree;
 class GetAWeaponOnCollision;
 class Cuerda;
 class PescaController;
@@ -93,6 +94,7 @@ class Fists;
 	Button,\
 	Sword,\
     ShootDetect,\
+    SkillTree,\
     Slider,\
     DisableOnExit,\
     ContactDamage,\
