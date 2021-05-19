@@ -546,17 +546,17 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		string file = "data.dat";
 		readtxt.open("assets//user_data//" + file);
 		if (!readtxt) throw string("Can't find file" + file);
-		std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
-		int ability;
-		for (int i = 0; i < 6; i++)
-		{
-			//Vamos leyendo habilidad a habilidad  guardandola en el array
-			readtxt >> ability;
-			infoabilities[i] = (bool)ability; 
-		}
-		//Falta la lectura de puntos pero no esta implementada todavia 
-		//Tras leer las habilidades se las damos al usuario 
-		player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
+		//std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
+		//int ability;
+		//for (int i = 0; i < 6; i++)
+		//{
+		//	//Vamos leyendo habilidad a habilidad  guardandola en el array
+		//	readtxt >> ability;
+		//	infoabilities[i] = (bool)ability; 
+		//}
+		////Falta la lectura de puntos pero no esta implementada todavia 
+		////Tras leer las habilidades se las damos al usuario 
+		//player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
 
 
 	}

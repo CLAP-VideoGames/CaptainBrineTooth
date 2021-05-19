@@ -148,7 +148,7 @@ void PauseState::savePartida(infoPartida info)
 	string file = "assets//user_data//" + name + ".dat";
 	output.open(file);
 	if (!output.is_open()) throw string("Can't find file" + name + ".dat");
-	for (int i = 0; i < 6; i++)output << (int)info.abilities[i] << " "; //Guardamos la informacion de las habilidades en funcion de 0 1 para facilitar la conversion al leer el archivo
+	//for (int i = 0; i < 6; i++)output << (int)info.abilities[i] << " "; //Guardamos la informacion de las habilidades en funcion de 0 1 para facilitar la conversion al leer el archivo
 	
 	
 	output.close();
