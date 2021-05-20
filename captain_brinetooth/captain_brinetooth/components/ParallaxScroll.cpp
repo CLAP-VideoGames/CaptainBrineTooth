@@ -27,6 +27,15 @@ void ParallaxScroll::init(){
 	layerGroup.push_back(layers_);
 	layers_.clear();
 
+	//level2
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_aztec_layer1"), 0.2));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_aztec_layer2"), 0.3));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_aztec_layer3"), 0.4));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_aztec_layer4"), 0.5));
+	layers_.push_back(addLayer(&sdlutils().images().at("bg_aztec_layer5"), 0.6));
+	layerGroup.push_back(layers_);
+	layers_.clear();
+
 	//level 3
 	layers_.push_back(addLayer(&sdlutils().images().at("bg_ice_layer1"), 0.2));
 	layers_.push_back(addLayer(&sdlutils().images().at("bg_ice_layer2"), 0.25));

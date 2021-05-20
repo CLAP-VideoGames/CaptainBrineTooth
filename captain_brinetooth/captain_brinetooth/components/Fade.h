@@ -32,7 +32,7 @@ public:
 	}
 
 	/// <summary>
-	/// Inicia el Fade según el estado en que esté
+	/// Inicia el Fade según el estado en que estE
 	/// </summary>
 	void triggerFade();
 

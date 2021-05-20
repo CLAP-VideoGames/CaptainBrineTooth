@@ -588,7 +588,7 @@ void TutorialState::createEnemy()
 	entityConfig.colMask = ENEMY_MASK;
 	enemy = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
 	AnimBlendGraph* enemy_anim_controller = enemy->addComponent<AnimBlendGraph>();
-	enemy_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1); 
+	enemy_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 5, 5, 25, 8, -1, 0, 21);
 	enemy_anim_controller->addAnimation("death", &sdlutils().images().at("medusa_death"), 2, 3, 6, 12, 0, 0, 4);
 	enemy_anim_controller->addTransition("idle", "death", "Dead", 1, false);
 	enemy_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
