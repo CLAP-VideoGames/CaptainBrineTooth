@@ -5,9 +5,10 @@ using namespace ColLayers;
 
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
-	SDL_PumpEvents();
+	
 	SDL_FlushEvent(SDL_KEYDOWN);
 	SDL_FlushEvent(SDL_KEYUP);
+
 };
 
 
@@ -220,6 +221,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			reward0->addComponent<Reward>(random, playerRef, app,speedperlevel);
 			lastRandom = random; //Guardamos el ultimo random para saber que recompensa se ha generado la ultima 
 
+			speedperlevel += 0.12;
 		}
 		entitiesaux++;
 		speedperlevel += 1.5;

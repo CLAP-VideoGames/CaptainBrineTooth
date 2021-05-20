@@ -38,7 +38,7 @@ App::App() {
 	//----Inicio de Tutorial------
 	//stateMachine->pushState(new TutorialState(this, world_, sndProvisional));
 	//----Inicio de Juego------
-	stateMachine->pushState(new PlayState(this, world_, sndProvisional,false));
+	stateMachine->pushState(new PlayState(this, world_, sndProvisional, false));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//-----Zona de pesca------
@@ -61,7 +61,7 @@ void App::init() {
 	stateMachine->refreshStates();
 
 	// Iniciamos el juego con X volumen
-	stateMachine->currentState()->getMngr()->getSoundMngr()->setGeneralVolume(10,10);
+	stateMachine->currentState()->getMngr()->getSoundMngr()->setGeneralVolume(10, 10);
 
 	world_->SetContactListener(&collisionListener);
 	//Habilitamos el hecho de poder realizar colores de SDL con Alpha. Solo los Colores de SDL
@@ -170,7 +170,18 @@ void App::changeToPesca()
 	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
 	w->SetContactListener(&collisionListener);
 	auto p = stateMachine->currentState()->getMngr()->getHandler<Player>();
-	stateMachine->pushState(new PescaState(this, w, sndProvisional,p, stateMachine->currentState()->getMngr()->getWorld()));
+
+	if (p->getComponent<AnimBlendGraph>()->isFlipX()) //Si esta flipeado = ha entrado con velocidad a la derecha 
+	{
+		p->getComponent<PlayerController>()->setMoveLeft(true); //Contrarrestamos la velocidad con una contraria 
+
+	}
+	else //Si no  esta flipeado = ha entrado con velocidad a la izquierda 
+	{
+
+		p->getComponent<PlayerController>()->setMoveRight(true); //Contrarrestamos la velocidad con una contraria
+	}
+	stateMachine->pushState(new PescaState(this, w, sndProvisional, p, stateMachine->currentState()->getMngr()->getWorld()));
 }
 
 /// <summary>

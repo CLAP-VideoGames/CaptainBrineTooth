@@ -11,7 +11,7 @@
 #define new DEBUG_NEW
 #endif
 
-MapProcedural::MapProcedural(int nR, int f, App* s){
+MapProcedural::MapProcedural(int nR, int f, App* s) {
 	nRooms = nR;
 	lvl = nullptr;
 	fase = f;
@@ -87,7 +87,7 @@ int MapProcedural::checkMatch(const char& ch) {
 	else return -1;
 }
 
-bool MapProcedural::matchConnections(int tileNum, Cardinals oppositeDir){
+bool MapProcedural::matchConnections(int tileNum, Cardinals oppositeDir) {
 	int i = 0;
 	while (i < 4 && roomNames[tileNum].name[i] != cardinals[(int)oppositeDir]) i++;
 	return (i < 4);
@@ -99,7 +99,7 @@ void MapProcedural::initConnections(CurrentRoom* r) {
 	setConnections(r, r->cons);
 }
 
-void MapProcedural::setConnections(CurrentRoom* r, const std::array<bool, 4> & rConnections) {
+void MapProcedural::setConnections(CurrentRoom* r, const std::array<bool, 4>& rConnections) {
 	for (int i = 0; i < 4; i++)
 		if (rConnections[i])  r->conections[i] = initializeRoom(i);
 }
@@ -107,15 +107,15 @@ void MapProcedural::setConnections(CurrentRoom* r, const std::array<bool, 4> & r
 Room MapProcedural::initializeRoom(int dir) {
 	int tile = -1;
 	bool concuerda = false;
-	if (roomsExplored < 1){
+	if (roomsExplored < 1) {
 		concuerda = true;
 		tile = getRandomTileFromArea(Starts);
 	}
 	else if (roomsExplored == (nRooms - 1))
 		tile = getRandomTileFromArea(Final);
-	else 
+	else
 		tile = sdlutils().rand().teCuoto(areaLimits[0], areaLimits[1] + 1); //Habitación intermedia
-	
+
 	Cardinals opositeDir = getOppositeDir((Cardinals)dir);
 
 	if (tile != -1 && !concuerda)
@@ -281,22 +281,12 @@ void MapProcedural::update() {
 			e->setActive(false);
 		}
 
-		SDL_Event event;
-		while (SDL_PollEvent(&event))
-		{
-			SDL_PumpEvents();
-			SDL_FlushEvent(SDL_KEYDOWN);
-			SDL_FlushEvent(SDL_KEYUP);
-
-		}
-
-		
-		pesca.clear(); 
+		pesca.clear();
 		stopFishing = false;
 	}
 }
 
-void MapProcedural::refreshCollider(){
+void MapProcedural::refreshCollider() {
 	if (entity_->hasComponent<MapCollider>()) {
 		entity_->removeComponent<MapCollider>();
 
@@ -335,18 +325,18 @@ void MapProcedural::TravelNextRoom(int dir) {
 	createConnectionTriggers(dir, travel);
 }
 
-void MapProcedural::setPlayer2spawn(){
+void MapProcedural::setPlayer2spawn() {
 	tmx::Vector2f playerpos = lvl->getPlayerPos();
 	entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0.0f);
 }
 
-void MapProcedural::loadTileFiles(){
+void MapProcedural::loadTileFiles() {
 
-	if(!roomNames.empty()) roomNames.clear();
+	if (!roomNames.empty()) roomNames.clear();
 	//Leeemos los distintos directorios
 	int roomsRead = 0;
 
-	if(fase<3){
+	if (fase < 3) {
 		string fase_ = std::to_string(fase);
 		std::string starts = "assets/maps/level_starts" + fase_;
 		std::string rooms = "assets/maps/level_rooms" + fase_;
@@ -357,7 +347,7 @@ void MapProcedural::loadTileFiles(){
 		areaLimits[1] = roomsRead; //Asertamos la frontera entre habitaciones y finales
 		ReadDirectory(ends, roomsRead);
 	}
-	else{
+	else {
 		std::string boss = "assets/maps/level_boss";
 		ReadDirectory(boss, roomsRead);
 	}
@@ -373,7 +363,7 @@ void MapProcedural::initBoss() {
 	currentRoom = initilizeCurrentRoom(roomNames[tile]);
 }
 
-void MapProcedural::initRun(){
+void MapProcedural::initRun() {
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel" + std::to_string(fase));
 	backgroundLayer->setLevelBackground(fase);
 	startRun_ = false;
@@ -393,7 +383,7 @@ CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 
 	Entity* player = entity_->getMngr()->getHandler<Player>();
 
-	if (player != nullptr){
+	if (player != nullptr) {
 		player->getComponent<CameraFollow>()->setCamMaxLimits(lvl->getMaxCoordenates());
 		player->getComponent<CameraFollow>()->setCamToEntity(1);
 	}
@@ -401,9 +391,9 @@ CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 	refreshCollider();
 
 	//No habrá más conexiones cuando haya llegado al nivel de boss
-	if(fase < 3)
+	if (fase < 3)
 		initConnections(r);
-	
+
 	//Queremos que los triggers hagan viajar al player a otras habitaciones. Como se va a cagar la primera hab, dir es -1. No hay dir opuesta
 	createConnectionTriggers(-1, travel);
 
@@ -465,11 +455,11 @@ void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 		string ruta = entry.path().u8string();//Cogemos toda la ruta
 
 							//No usada //TipoStart
-		RoomNames rN{"", ruta, false, 1};
+		RoomNames rN{ "", ruta, false, 1 };
 
 		int puntoCorte = entry.path().string().find_last_of("\\"); //Encontramos donde est� la divisi�n con el nombre
 		ruta[puntoCorte] = '/';
-		
+
 		rN.name = entry.path().filename().string(); //Nombre real del nivel
 
 		roomNames.push_back(rN);
@@ -490,18 +480,18 @@ Vector2D MapProcedural::getPlayerPos() {
 	return spawn;
 }
 
-void MapProcedural::startRun(bool start){
+void MapProcedural::startRun(bool start) {
 	startRun_ = start;
 }
 
-void MapProcedural::deleteTriggers(){
+void MapProcedural::deleteTriggers() {
 	if (!triggers.empty()) {
 		for (Entity* ent : triggers) ent->setActive(false);
 		triggers.clear();
 	}
 }
 
-int MapProcedural::getRandomTileFromArea(Area a){
+int MapProcedural::getRandomTileFromArea(Area a) {
 	if (a == Starts) return sdlutils().rand().teCuoto(0, areaLimits[(int)a]);
 	else if (a == Mid) return sdlutils().rand().teCuoto(areaLimits[0], areaLimits[a]);
 	else if (a == Boss) return sdlutils().rand().teCuoto(0, roomNames.size());
@@ -525,9 +515,9 @@ Cardinals MapProcedural::getOppositeDir(Cardinals dir) {
 	else return Cardinals::None;
 }
 
-bool MapProcedural::isZoneCompleted(){ return roomsExplored == nRooms; }
+bool MapProcedural::isZoneCompleted() { return roomsExplored == nRooms; }
 
-int MapProcedural::getPhase(){ return fase; }
+int MapProcedural::getPhase() { return fase; }
 
 void MapProcedural::setTravelZone() { travelZone = true; }
 

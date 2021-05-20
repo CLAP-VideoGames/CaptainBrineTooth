@@ -46,7 +46,7 @@ void PlayerController::update()
 	else
 		receiveInput = true;
 
-	if (receiveInput){
+	if (receiveInput) {
 		if (paralized) {
 			timer = sdlutils().currRealTime();
 			paralized = false;
@@ -71,7 +71,7 @@ void PlayerController::update()
 			if (ih().isKeyDown(SDL_SCANCODE_A)) {
 				moveLeft = true;
 			}
-			
+
 			if (ih().isKeyDown(SDL_SCANCODE_D)) {
 				moveRight = true;
 			}
@@ -86,7 +86,7 @@ void PlayerController::update()
 			//Realizar da�o
 			//health_->loseLife();
 			snd->playSoundEffect("player_jump", 300);
-			
+
 
 		}
 		//Para juego final añadir && canDash
@@ -98,9 +98,9 @@ void PlayerController::update()
 				animController_->flipX(true);
 				collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
 			}
-			else if (moveLeft) { 
+			else if (moveLeft) {
 				animController_->flipX(false);
-				collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed); 
+				collider_->applyLinearForce(Vector2D(-1, 0), dashSpeed);
 			}
 			else {
 				if (animController_->isFlipX())collider_->applyLinearForce(Vector2D(1, 0), dashSpeed);
@@ -116,14 +116,14 @@ void PlayerController::update()
 	//isOnGround();
 	//std::cout << "\n" << isOnFloor;
 	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
-		isOnGround();
+	isOnGround();
 	/*if (collider_->getBody()->GetLinearVelocity().y < 0.1 && collider_->getBody()->GetLinearVelocity().y > -0.1 && !isDashing) {
 	}
-	else 
+	else
 		isOnFloor = false;*/
 #pragma endregion
 #pragma region Animaciones
-	//Esta tocando suelo
+		//Esta tocando suelo
 	if (isOnFloor) {
 		animController_->setParamValue("NotOnFloor", 0);
 	}
@@ -151,7 +151,7 @@ void PlayerController::update()
 #pragma endregion
 #pragma region Movement
 	//Ambas direcciones o ninguna
-	if (!isDashing){
+	if (!isDashing) {
 		if ((moveLeft && moveRight) || (!moveLeft && !moveRight)) {
 			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 		}
@@ -198,7 +198,7 @@ void PlayerController::update()
 		lasTimeDashed = sdlutils().currRealTime();
 		canDash = true;
 	}
-	if (animController_->getParamValue("Dead") == 1) 
+	if (animController_->getParamValue("Dead") == 1)
 		collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 #pragma endregion
 }
@@ -251,7 +251,7 @@ void PlayerController::OnTriggerEnter(b2Contact* contact)
 				}
 			}
 		}
-		
+
 		else {
 			bodyA = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 			if (bodyA != nullptr) {
@@ -324,4 +324,6 @@ const bool& PlayerController::isPlayerDashing()
 {
 	return isDashing;
 }
+void PlayerController::setMoveLeft(bool state) { moveLeft = state; }
+void PlayerController::setMoveRight(bool state) { moveRight = state; }
 

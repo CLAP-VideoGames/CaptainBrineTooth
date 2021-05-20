@@ -24,7 +24,8 @@ PlayerController(const float & speed = 3.0f, const float& forceJ = 0.9f , const 
 	void initEntityColliders();
 	void createJointTrigger(Entity* trigger);
 	void playerReceiveInput(bool state);
-
+	void setMoveLeft(bool state);
+	void setMoveRight(bool state);
 	void Paralize() { paralized = true; };
 
 	static void OnTriggerEnter(b2Contact* contact);
