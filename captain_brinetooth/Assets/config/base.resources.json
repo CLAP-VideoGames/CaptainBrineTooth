@@ -417,6 +417,26 @@
 			"file": "assets/background/ice/ice_layer_5.png"
 		},
 		{
+			"id": "bg_aztec_layer1",
+			"file": "assets/background/aztec/aztec_layer_1.png"
+		},
+		{
+			"id": "bg_aztec_layer2",
+			"file": "assets/background/aztec/aztec_layer_2.png"
+		},
+		{
+			"id": "bg_aztec_layer3",
+			"file": "assets/background/aztec/aztec_layer_3.png"
+		},
+		{
+			"id": "bg_aztec_layer4",
+			"file": "assets/background/aztec/aztec_layer_4.png"
+		},
+		{
+			"id": "bg_aztec_layer5",
+			"file": "assets/background/aztec/aztec_layer_5.png"
+		},
+		{
 			"id": "cloud",
 			"file": "assets/sprites/tutorial_floor.png"
 		},
