@@ -12,6 +12,14 @@ Enemy_Health::Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color&
 	skip_reset_ = false;
 }
 
+Enemy_Health::~Enemy_Health()
+{
+	if (particle_hit != nullptr) {
+		particle_hit->setActive(false);
+		particle_hit = nullptr;
+	}
+}
+
 /// <summary>
 /// Realiza daño al enemigo. El segundo parametro es 0 por defecto,
 /// pero si se asigna a 1 el enemigo es electrificado y a 2 el enemigo se envenena

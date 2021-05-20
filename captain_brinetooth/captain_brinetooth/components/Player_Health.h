@@ -13,7 +13,7 @@ public:
 	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game, int maxLifes, int maxHeals) 
 		: fVida(tex), hVida(tex2), vVida(tex3), tiempoanimacion(tanim), g(game), maxVidas(maxLifes), maxHeals_(maxHeals)
 	{};
-	virtual ~Player_Health() {};
+	virtual ~Player_Health();
 
 	void init() override;
 

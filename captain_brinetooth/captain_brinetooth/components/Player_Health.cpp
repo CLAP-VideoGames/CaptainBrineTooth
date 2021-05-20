@@ -9,6 +9,18 @@
 #endif
 #include "../states/PlayState.h"
 
+Player_Health::~Player_Health()
+{
+	for (Entity* e : heals) {
+		e->setActive(false);
+		e = nullptr;
+	}
+	if (particle_heal != nullptr) {
+		particle_heal->setActive(false);
+		particle_heal = nullptr;
+	}
+}
+
 void Player_Health::init()
 {
 	frame = Vector2D(0, 15);
@@ -37,17 +49,25 @@ void Player_Health::init()
 		e_anim_controller->addTransition("heal_0", "heal_60", "Value", 3, false);
 		e_anim_controller->addTransition("heal_0", "heal_80", "Value", 4, false);
 		e_anim_controller->addTransition("heal_0", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_20", "heal_0", "Value", 0, false);
 		e_anim_controller->addTransition("heal_20", "heal_40", "Value", 2, false);
 		e_anim_controller->addTransition("heal_20", "heal_60", "Value", 3, false);
 		e_anim_controller->addTransition("heal_20", "heal_80", "Value", 4, false);
 		e_anim_controller->addTransition("heal_20", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_40", "heal_0", "Value", 0, false);
 		e_anim_controller->addTransition("heal_40", "heal_60", "Value", 3, false);
 		e_anim_controller->addTransition("heal_40", "heal_80", "Value", 4, false);
 		e_anim_controller->addTransition("heal_40", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_60", "heal_0", "Value", 0, false);
 		e_anim_controller->addTransition("heal_60", "heal_80", "Value", 4, false);
 		e_anim_controller->addTransition("heal_60", "heal_100", "Value", 5, false);
+		e_anim_controller->addTransition("heal_80", "heal_0", "Value", 0, false);
 		e_anim_controller->addTransition("heal_80", "heal_100", "Value", 5, false);
 		e_anim_controller->addTransition("heal_100", "heal_0", "Value", 0, false);
+		e_anim_controller->addTransition("heal_100", "heal_20", "Value", 1, false);
+		e_anim_controller->addTransition("heal_100", "heal_40", "Value", 2, false);
+		e_anim_controller->addTransition("heal_100", "heal_60", "Value", 3, false);
+		e_anim_controller->addTransition("heal_100", "heal_80", "Value", 4, false);
 		e_anim_controller->setParamValue("Value", 5);
 		heals.push_back(e);
 		healsValues.push_back(maxValueHeal_);
@@ -197,6 +217,11 @@ void Player_Health::heal()
 			if (vidas > maxVidas)
 				vidas = maxVidas;
 			healsValues[i] = 0;
+			//Actualizar valor de las curas
+			if (i + 1 < healsValues.size()) {
+				healsValues[i] = healsValues[i + 1];
+				healsValues[i + 1] = 0;
+			}
 			//Particulas
 			particle_heal = entity_->getMngr()->addEntity();
 			particle_heal->addComponent<Transform>(entity_->getComponent<Transform>()->getPos(), Vector2D(), entity_->getComponent<Transform>()->getW()*0.75, entity_->getComponent<Transform>()->getW() * 1.25, 0.0);

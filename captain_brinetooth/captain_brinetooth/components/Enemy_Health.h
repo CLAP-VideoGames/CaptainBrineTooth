@@ -13,7 +13,7 @@ class Enemy_Health : public Component
 {
 public:
 	Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color& color, int offsetY);
-	virtual ~Enemy_Health() {};
+	virtual ~Enemy_Health();
 
 	void init() override;
 	void render() override;
