@@ -402,7 +402,7 @@
     <ClInclude Include="states\SkillTreeState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
-    <ClInclude Include="CreditsState.h">
+    <ClInclude Include="states\CreditsState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
   </ItemGroup>
@@ -675,7 +675,7 @@
     <ClCompile Include="states\SkillTreeState.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
-    <ClCompile Include="CreditsState.cpp">
+    <ClCompile Include="states\CreditsState.cpp">
       <Filter>Archivos de origen\states</Filter>
     </ClCompile>
   </ItemGroup>

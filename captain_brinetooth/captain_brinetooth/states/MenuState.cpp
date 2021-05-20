@@ -2,6 +2,7 @@
 #include "OptionsState.h"
 #include "PlayState.h"
 #include "TestZoneState.h"
+#include "CreditsState.h"
 #include "TutorialState.h"
 
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
@@ -73,7 +74,7 @@ void MenuState::init() {
 	int x_ = (int)((App::camera.w - w) * 0.02);
 	int y_ = (int)((App::camera.h - h) * 0.98);
 	creditos->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), w * 0.7, h * 0.7, 0.0f);
-	creditos->addComponent<Button>(&sdlutils().images().at("creditos_menu"), salirMenu, app, manager_->getSoundMngr());
+	creditos->addComponent<Button>(&sdlutils().images().at("creditos_menu"), changeToCredits, app, manager_->getSoundMngr());
 
 	// Boton de salir
 	auto* salir = manager_->addEntity();
@@ -109,6 +110,13 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,app->getloadSavedGame()));
 	app->setloadSavedGame(false);
+}
+
+void MenuState::changeToCredits(App* app, SoundManager* snd) {
+	snd->playSoundEffect("sonido_barco", 0);
+	
+	StateMachine* sM = app->getStateMachine();
+	sM->changeState(new CreditsState(app, sM->currentState()->getMngr()->getWorld(), snd));
 }
 
 void MenuState::changeToOptions(App* app, SoundManager* snd) {

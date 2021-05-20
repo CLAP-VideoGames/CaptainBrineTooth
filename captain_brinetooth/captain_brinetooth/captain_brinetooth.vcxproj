@@ -212,7 +212,6 @@
     <ClInclude Include="components\VideoPlayer.h" />
     <ClInclude Include="components\WeaponComponent.h" />
     <ClInclude Include="components\WeaponDamageDetection.h" />
-    <ClInclude Include="CreditsState.h" />
     <ClInclude Include="ecs\Component.h" />
     <ClInclude Include="ecs\ecs.h" />
     <ClInclude Include="ecs\ecs_defs_example.h" />
@@ -239,6 +238,7 @@
     <ClInclude Include="sdlutils\SoundEffect.h" />
     <ClInclude Include="sdlutils\Texture.h" />
     <ClInclude Include="sdlutils\VirtualTimer.h" />
+    <ClInclude Include="states\CreditsState.h" />
     <ClInclude Include="states\GameState.h" />
     <ClInclude Include="states\IntroState.h" />
     <ClInclude Include="states\OptionsState.h" />
@@ -314,7 +314,6 @@
     <ClCompile Include="components\TriggerCollider.cpp" />
     <ClCompile Include="components\VideoPlayer.cpp" />
     <ClCompile Include="components\WeaponDamageDetection.cpp" />
-    <ClCompile Include="CreditsState.cpp" />
     <ClCompile Include="ecs\Entity.cpp" />
     <ClCompile Include="ecs\Manager.cpp" />
     <ClCompile Include="ecs\SoundManager.cpp" />
@@ -329,6 +328,7 @@
     <ClCompile Include="sdlutils\sdlutils_demo.cpp" />
     <ClCompile Include="sdlutils\SoundEffect.cpp" />
     <ClCompile Include="sdlutils\Texture.cpp" />
+    <ClCompile Include="states\CreditsState.cpp" />
     <ClCompile Include="states\GameState.cpp" />
     <ClCompile Include="states\IntroState.cpp" />
     <ClCompile Include="states\OptionsState.cpp" />
