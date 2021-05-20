@@ -41,6 +41,7 @@ App::App() {
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional,false));
 	//-----Zona de pruebas------
 	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	//-----Zona de pesca------
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional,nullptr,world_));
 }
 

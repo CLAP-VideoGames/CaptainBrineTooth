@@ -32,7 +32,6 @@ MapProcedural::~MapProcedural() {
 }
 
 void MapProcedural::init() {
-
 	PlayState* playState = dynamic_cast<PlayState*>(states->getStateMachine()->currentState());
 	//Obtenemos el playStat para poder cambiar el fondo en cada nivel
 	if (playState != nullptr)
