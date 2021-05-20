@@ -49,6 +49,12 @@ void SoundManager::setMusicVolume(int volume)
 	
 }
 
+void SoundManager::fadeOutMusic()
+{
+	sdlutils().musics().at(mainMusic).fadeOutMusic(2000);
+	sdlutils().musics().at(pauseMusic).fadeOutMusic(2000);
+}
+
 void SoundManager::setEffectsVolume(int volume)
 {
 	volumenEfectos = volume;

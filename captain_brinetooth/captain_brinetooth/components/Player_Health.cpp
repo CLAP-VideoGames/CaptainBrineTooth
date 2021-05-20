@@ -200,7 +200,9 @@ void Player_Health::loseLife()
 	if (vidas <= 0)
 	{
 		entity_->getComponent<BoxCollider>()->setSpeed(Vector2D(0,0));
-		entity_->getMngr()->getSoundMngr()->playSoundEffect("player_death", 0);
+		entity_->getMngr()->getSoundMngr()->fadeOutMusic();
+		entity_->getMngr()->getSoundMngr()->playSoundEffect("muerte_jugador", 0);
+		//entity_->getMngr()->getSoundMngr()->playSoundEffect("player_death", 0);
 		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
 		playerIsDying = true;
 	}

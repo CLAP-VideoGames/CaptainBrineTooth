@@ -50,6 +50,15 @@ public:
 		return Mix_PlayChannel(channel, chunk_, -1);
 	}
 
+	inline int fadeOutMusic(int segundos, int channel = -1)
+	{
+		_CHECK_CHANNEL_(channel);
+		// fade out all channels to finish 3 seconds from now
+		return Mix_FadeOutChannel(channel, segundos);
+
+
+	}
+
 	// static methods for sound effects
 	//
 	inline static void pauseChannel(int channel = -1) {

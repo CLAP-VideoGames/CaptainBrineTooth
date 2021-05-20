@@ -56,6 +56,8 @@ public:
 
 	void ChangeMainMusic(std::string newMusic); // Cambiar de cancion principal
 
+	void fadeOutMusic();
+
 	void playSoundEffect(std::string effect, Uint32 seg);
 
 	void stopMusic();

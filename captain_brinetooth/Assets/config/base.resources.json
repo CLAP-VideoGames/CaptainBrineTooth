@@ -452,6 +452,10 @@
 			"file": "assets/sounds/player/player_hurt1.wav"
 		},
 		{
+			"id": "muerte_jugador",
+			"file": "assets/sounds/player/musica_muerte.mp3"
+		},
+		{
 			"id": "player_hurt1",
 			"file": "assets/sounds/player/player_hurt1.wav"
 		},
