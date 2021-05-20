@@ -71,7 +71,9 @@ public:
 	
 	vector<char> getConNames() {return connectionsNames; }
 
-	tmx::Vector2f getEnd() { return end; }
+	tmx::Vector2f getEnd() { return endPos; }
+
+	tmx::Vector2f getStorePos() { return storePos; }
 
 	bool finalRoom() { return finalR; }
 
@@ -115,8 +117,9 @@ private:
 	vector<tmx::Vector2f> connectionSize;
 	vector<tmx::Vector2f> pescaPos;
 
-	tmx::Vector2f end;
+	tmx::Vector2f endPos;
 	tmx::Vector2f bossPos;
+	tmx::Vector2f storePos;
 
 	bool finalR = false;
 

@@ -139,6 +139,22 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 	vector<tmx::Vector2f> positions = lvl->getConPos();	//Las posiciones de las conexiones
 	vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
 	vector<char> names = lvl->getConNames();
+	tmx::Vector2f storePos;
+	if (dir == -1) {
+		storePos = lvl->getStorePos();
+		//Generar trigger para que se pueda entrar en el arbol de habilidades
+		auto* t = entity_->getMngr()->addEntity();
+
+		Vector2D pos = Vector2D(storePos.x, storePos.y);
+
+		t->addComponent<Transform>(pos, Vector2D(0, 0), 400, 650, 0);
+
+		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+
+		//t->setCollisionMethod(method);
+
+		triggers.push_back(t);
+	}
 
 	Cardinals oppositeDir = getOppositeDir((Cardinals)dir);
 

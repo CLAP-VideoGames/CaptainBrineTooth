@@ -173,10 +173,11 @@ void Level0::load(const string& path) {
 					playerPos = spawn.getPosition();
 				}
 				else if (spawn.getName() == "end") {
-					end = spawn.getPosition();
+					endPos = spawn.getPosition();
 					finalR = true;
 				}
 				else if (spawn.getName() == "boss") bossPos = spawn.getPosition();
+				else if (spawn.getName() == "store") storePos = spawn.getPosition();
 				else
 					enemiePos.push_back(spawn.getPosition());
 			}
