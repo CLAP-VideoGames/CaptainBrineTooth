@@ -480,7 +480,7 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 	gusano_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
-	gusano->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	gusano->addComponent<Enemy_Health>(300, 20, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	gusano->addComponent<ContactDamage>();
 }
 #pragma endregion
@@ -517,7 +517,7 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	elf_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
-	elf->addComponent<Enemy_Health>(300, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	elf->addComponent<Enemy_Health>(300, 20, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	elf->addComponent<ContactDamage>();
 }
 #pragma endregion
@@ -530,7 +530,7 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1_anim_controller->addTransition("idle", "death", "Dead", 1, false);
 	fjh1_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
 	fjh1_anim_controller->setParamValue("Dead", 0);
-	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	fjh1->addComponent<Enemy_Health>(300, 20, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7, true, 0.0, Vector2D(), Vector2D(),10000);
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
@@ -556,7 +556,7 @@ void TestZoneState::createFringeHead(const Config& entityConfig)
 	anim_controller->setParamValue("Dead", 0);
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(200, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
+	enemy->addComponent<Enemy_Health>(200, 20, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
 	enemy->addComponent<ContactDamage>();
 }
 #pragma endregion
@@ -585,7 +585,7 @@ void TestZoneState::createThornFish(const Config& entityConfig) {
 	thorn_anim_controller->setParamValue("Dead", 0);
 	thorn_anim_controller->setParamValue("Attack", 0);
 	thorn->addComponent<ThornFishAttack>();
-	thorn->addComponent<Enemy_Health>(150, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	thorn->addComponent<Enemy_Health>(150, 20, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	thorn->addComponent<ContactDamage>();
 }
 #pragma endregion

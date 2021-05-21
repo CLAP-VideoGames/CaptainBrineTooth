@@ -54,7 +54,7 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 	fishler->addComponent<BoxCollider>(fishlerConfig.physicType, fishlerConfig.col, fishlerConfig.colMask, false, fishlerConfig.friction, true, 0.0, Vector2D(), Vector2D(), 10000);
 	AnimBlendGraph* fishler_anim_controller = fishler->addComponent<AnimBlendGraph>();
 	fishler_anim_controller->addAnimation("sinMoverse", &sdlutils().images().at(fishlerConfig.spriteId), 1, 1, 1, 23, 1);
-	fishler->addComponent<Enemy_Health>(5000, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	fishler->addComponent<Enemy_Health>(5000, 500, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fishler->addComponent<FishlerController>();
 	fishler->addComponent<ContactDamage>();
 
@@ -90,7 +90,7 @@ Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 	anim_controller->setParamValue("Dead", 0);
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(125, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
+	enemy->addComponent<Enemy_Health>(125, 12, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
 	enemy->addComponent<ContactDamage>();
 
 	return enemy;
@@ -116,7 +116,7 @@ Entity* EnemyGenerator::generateMedusa(Vector2D pos)
 	fjh1_anim_controller->addTransition("idle", "death", "Dead", 1, false);
 	fjh1_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
 	fjh1_anim_controller->setParamValue("Dead", 0);
-	fjh1->addComponent<Enemy_Health>(150, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	fjh1->addComponent<Enemy_Health>(150, 15, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask, false, 0.7f, true, 0.0, Vector2D(), Vector2D(), 10000);
 	fjh1->addComponent<ContactDamage>();
 
@@ -167,7 +167,7 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 	elf_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(900.0f, 400.0f));
 	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
-	elf->addComponent<Enemy_Health>(225, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	elf->addComponent<Enemy_Health>(225, 22, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	elf->addComponent<ContactDamage>();
 
 	return elf;
@@ -213,7 +213,7 @@ Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 	gusano_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
-	gusano->addComponent<Enemy_Health>(175, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	gusano->addComponent<Enemy_Health>(175, 18, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	gusano->addComponent<ContactDamage>();
 
 	return gusano;
@@ -254,7 +254,7 @@ Entity* EnemyGenerator::generateThornFish(Vector2D pos)
 	thorn_anim_controller->setParamValue("Dead", 0);
 	thorn_anim_controller->setParamValue("Attack", 0);
 	thorn->addComponent<ThornFishAttack>();
-	thorn->addComponent<Enemy_Health>(150, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	thorn->addComponent<Enemy_Health>(150, 15, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	thorn->addComponent<ContactDamage>();
 
 	return thorn;

@@ -1,8 +1,9 @@
 #include "Enemy_Health.h"
 
 
-Enemy_Health::Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color& color, int offsetY = 25) {
+Enemy_Health::Enemy_Health(int health, int reward, const Vector2D& sizeBar, const SDL_Color& color, int offsetY = 25) {
 	lifes = initLifes = health;
+	reward_ = reward;
 	offsetY_ = offsetY;
 
 	barColor = color;
@@ -204,6 +205,11 @@ void Enemy_Health::update(){
 		EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
 		if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
 		if (particle_hit != nullptr) particle_hit->setActive(false);
+		//Dar recompensas
+		entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addCoins(reward_);
+		int rand = sdlutils().rand().teCuoto(0,20);
+		if (rand == 0)
+			entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addBaits(1);
 		SDL_Delay(100);
 	}
 }

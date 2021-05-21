@@ -19,9 +19,11 @@ class Inventory : public Component {
 public:
 	Inventory() : currentWeaponNumber(0), currentSelectedWeapon(0) {}
 
-	virtual ~Inventory() {
-		currentWeapon = nullptr;
-	}
+	virtual ~Inventory();
+
+	virtual void init() override;
+	virtual void render() override;
+	virtual void update() override;
 
 	void addWeapon(int weapToAdd);
 	void switchSelectedWeapon();
@@ -29,10 +31,16 @@ public:
 	int getWeapon(int numofweapon);
 	bool hasOneWeapon();
 	bool emptyInventory();
-	virtual void init() override;
-	virtual void update() override;
-
 	bool playerAttacking();
+
+	//Coins & Baits
+	const int& getCoins();
+	void addCoins(int n);
+	void substractCoins(int n);
+	const int& getBaits();
+	void addBaits(int n);
+	void substractBaits(int n);
+	void renderNumber(Vector2D pos, Vector2D size, int n);
 
 private:
 	enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeInk };
@@ -49,4 +57,10 @@ private:
 	std::array<PosibleWeapons, 2> weapArray_;
 
 	WeaponComponent* currentWeapon;
+
+	//Coins & Bait
+	int coins_, baits_;
+	std::vector<Texture*> textures_;
+	Texture* coin_tex_;
+	Texture* bait_tex_;
 };

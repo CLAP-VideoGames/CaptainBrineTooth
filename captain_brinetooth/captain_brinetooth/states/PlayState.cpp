@@ -600,7 +600,7 @@ void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& we
 	weaponGiver->addComponent<BoxCollider>(weaponGiverConfig.physicType, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true);
 	weaponGiver->addComponent<GetAWeaponOnCollision>(weaponType);
 }
-
+/*
 /// <summary>
 /// Crea una caja roja que posee f�sicas y controlador de teclado
 /// </summary>
@@ -648,7 +648,7 @@ void PlayState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
 	fjh1->addComponent<ContactDamage>();
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
-}
+}*/
 
 
 

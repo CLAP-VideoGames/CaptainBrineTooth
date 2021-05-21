@@ -46,7 +46,7 @@ void CameraFollow::actPosAdvanced(){
 	else
 		offset.setX(-offset_.getX());//mira izquierda
 	//Y axis
-	if (down_time_ >= cd_down_ || entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y > 6)
+	if (down_time_ >= cd_down_ || entity_->getComponent<BoxCollider>()->getBody()->GetLinearVelocity().y > 7)
 		offset.setY(-offset_.getY() * 3);//mira abajo
 	else if (up_time_ >= cd_up_)
 		offset.setY(offset_.getY() * 3);//mira arriba

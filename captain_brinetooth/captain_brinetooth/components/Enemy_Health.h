@@ -6,13 +6,14 @@
 #include  "../ecs/Manager.h"
 #include "../game/App.h"
 #include "EnemyTrigger.h"
+#include "Inventory.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 
 class Enemy_Health : public Component
 {
 public:
-	Enemy_Health(int health, const Vector2D& sizeBar, const SDL_Color& color, int offsetY);
+	Enemy_Health(int health, int reward, const Vector2D& sizeBar, const SDL_Color& color, int offsetY);
 	virtual ~Enemy_Health();
 
 	void init() override;
@@ -45,5 +46,7 @@ private:
 
 	bool isElectrified;
 	int electrifyDamage = 150;
+
+	int reward_;
 };
 

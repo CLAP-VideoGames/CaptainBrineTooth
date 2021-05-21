@@ -45,6 +45,10 @@
 			"file": "assets/sprites/player/HUD/numbers.png"
 		},
 		{
+			"id": "plus_minus",
+			"file": "assets/sprites/player/HUD/plus_minus.png"
+		},
+		{
 			"id": "healing_effect",
 			"file": "assets/sprites/player/healing_effect.png"
 		},

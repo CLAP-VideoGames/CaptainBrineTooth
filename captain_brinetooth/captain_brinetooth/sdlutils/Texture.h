@@ -17,6 +17,9 @@ public:
 	Texture(const Texture&) = delete;
 	Texture& operator=(const Texture&) = delete;
 
+	//Empty
+	Texture() {};
+
 	// can be moved
 	Texture& operator=(Texture &&other) noexcept;
 	Texture(Texture &&other) noexcept;
