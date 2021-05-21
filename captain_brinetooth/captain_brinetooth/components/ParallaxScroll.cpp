@@ -49,9 +49,28 @@ void ParallaxScroll::init(){
 void ParallaxScroll::render(){
 	for (int i = 0; i < layerGroup[levelBackGround].size(); i++) {
 		//Construccion de los rectangulos fuente(textura) y destino (entidad)
-		Vector2D destPos = Vector2D(tr_->getPos().getX() - (tr_->getW() * 0.5f), tr_->getPos().getY() - (tr_->getH() * 0.5f));
+		Vector2D size;
+		Vector2D pos;
+		if (levelBackGround == 0) {
+			size = Vector2D(tr_->getW(), tr_->getH());
+			pos = Vector2D(960, 640);
+		}
+		else if (levelBackGround == 1) {
+			size = Vector2D(2560, 2560);
+			pos = Vector2D(900, 1280);
+		}
+		else if (levelBackGround == 2) {
+			size = Vector2D(2560, 2560);
+			pos = Vector2D(900, 1280);
+		}
+		else {
+			size = Vector2D(tr_->getW(), tr_->getH());
+			pos = Vector2D(960, 640);
+		}
+
+		Vector2D destPos = Vector2D(pos.getX() - (size.getX() * 0.5f), pos.getY() - (size.getY() * 0.5f));
 		SDL_Rect dest = build_sdlrect(destPos.getX() - (App::camera.x* layerGroup[levelBackGround][i]->scrollRatio_), destPos.getY() - App::camera.y,
-			tr_->getW(), tr_->getH());
+			size.getX(), size.getY());
 		layerGroup[levelBackGround][i]->tex_->render(dest, 0);
 	}
 }
