@@ -33,6 +33,18 @@
 			"file": "assets/sprites/player/HUD/player_heal.png"
 		},
 		{
+			"id": "coin",
+			"file": "assets/sprites/player/HUD/coin.png"
+		},
+		{
+			"id": "bait",
+			"file": "assets/sprites/player/HUD/bait.png"
+		},
+		{
+			"id": "numbers",
+			"file": "assets/sprites/player/HUD/numbers.png"
+		},
+		{
 			"id": "healing_effect",
 			"file": "assets/sprites/player/healing_effect.png"
 		},
