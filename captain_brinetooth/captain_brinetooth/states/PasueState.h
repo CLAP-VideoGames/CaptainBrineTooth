@@ -8,7 +8,7 @@ class Entity;
 struct infoPartida
 {
 	bool abilities[6];
-	float points;
+	int points;
 	//etc..
 };
 static infoPartida partida;

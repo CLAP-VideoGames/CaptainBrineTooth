@@ -542,7 +542,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	player->addComponent<LoseLife>();
 
 	if (save) {
+		
 		ifstream readtxt;
+		int pointsRead;
 		string file = "data.dat";
 		readtxt.open("assets//user_data//" + file);
 		if (!readtxt) throw string("Can't find file" + file);
@@ -557,15 +559,14 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		////Falta la lectura de puntos pero no esta implementada todavia 
 		////Tras leer las habilidades se las damos al usuario 
 		//player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
-
-
+		readtxt >> pointsRead;
+		player->getComponent<Inventory>()->addCoins(pointsRead);
 	}
 	//Seteamos al Player como MainHandler
 	manager_->setHandler<Player>(player);
-
-	//Carga de archivo
+//Carga de archivo
 }
-void PlayState::createSaveDataandSTate()
+void PlayState::createSaveDataandSTate() //Este metodo guarda los valores del jugador y los pasa al estado de pausa para cuando se cargue otra partida 
 {
 
 	StateMachine* sM = app->getStateMachine();
@@ -579,6 +580,8 @@ void PlayState::createSaveDataandSTate()
 	infoPlayer.abilities[5] = false;
 
 	Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
+	Inventory* in = playerrefAux->getComponent<Inventory>();
+	infoPlayer.points = in->getCoins(); //OBtenemos las monedas con un getter
 
 	//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
 	//for (int i = 0; i < 6; i++)

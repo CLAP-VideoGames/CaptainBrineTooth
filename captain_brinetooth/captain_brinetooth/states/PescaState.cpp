@@ -3,12 +3,16 @@
 #include "../sdlutils/InputHandler.h"
 using namespace ColLayers;
 
+PescaState::PescaState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* p, std::shared_ptr <b2World> maux) : GameState(a, mundo, snd)
+{
+	playerRef = p;   //Referencia al jugador par obtener su inventario
+	playWorld = maux; //Mundo auxiliar creado para la pesca 
+	//Para que el jugador despues de este estado aparezca parado
+	p->getComponent<PlayerController>()->setMoveRight(false); 
+	p->getComponent<PlayerController>()->setMoveLeft(false);
+}
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
-	
-	SDL_FlushEvent(SDL_KEYDOWN);
-	SDL_FlushEvent(SDL_KEYUP);
-
 };
 
 
@@ -197,7 +201,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			{
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
 			}
-			else if (random == 1){
+			else if (random == 1) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
 			}
 			else if (random == 2) {
@@ -214,8 +218,8 @@ void PescaState::createRandomReward(const Config& entityConfig)
 			}
 
 
-				reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
-			reward0->addComponent<Reward>(random, playerRef, app,speedperlevel);
+			reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
+			reward0->addComponent<Reward>(random, playerRef, app, speedperlevel);
 			lastRandom = random; //Guardamos el ultimo random para saber que recompensa se ha generado la ultima 
 
 			speedperlevel += 0.12;
@@ -244,7 +248,7 @@ void PescaState::crearBasura() {
 			basura->addComponent<Animation>("idle", &sdlutils().images().at("piedra"), 1, 1, 1, 1, 0);
 		}
 		basura->addComponent<BoxCollider>(STATIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
-		basura->addComponent<Reward>(random, playerRef, app,0);
+		basura->addComponent<Reward>(random, playerRef, app, 0);
 		basuras.push_back(basura);
 	}
 }
