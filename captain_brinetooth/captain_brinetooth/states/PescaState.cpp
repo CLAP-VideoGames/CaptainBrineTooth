@@ -15,9 +15,6 @@ PescaState::~PescaState() {
 void PescaState::update() {
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
-			StateMachine* sM = app->getStateMachine();
-		}
 		if (ih().isKeyDown(SDL_SCANCODE_SPACE) && !space_pressed_) {
 			space_pressed_ = true;
 			s->setActive(false);
@@ -57,7 +54,7 @@ void PescaState::init() {
 	bg->addComponent<Animation>("1", &sdlutils().images().at("fondoPesca"), 1, 10, 10, 3, -1);
 	//---------
 	entitiesPerLine = 1;
-	totalBasura = sdlutils().rand().teCuoto(0, 10); //AHora la basura tiene un rango en cuanto a cantidad de aparicion 
+	totalBasura = sdlutils().rand().teCuoto(3, 9); //AHora la basura tiene un rango en cuanto a cantidad de aparicion 
 
 	Config gancho{};
 	gancho.pos = Vector2D(screen_width / 2.0, screen_heigth * 0.22);
