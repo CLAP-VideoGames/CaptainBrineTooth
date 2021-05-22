@@ -27,6 +27,22 @@ public:
 	/// </summary>
 	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr,Vector2D anchor = Vector2D(0.5, 0.5));
 
+	/// <summary>
+	//Constructora de una animacion a partir de una textura con inicio y fin definidos
+	//repeat -1, es un bucle
+	//Anchor point por defecto es (0.5,0.5)
+	//Recibe un modificador (variable durante ejecución) que altera la velocidad de la animacion
+	/// </summary>
+	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int* modifier, Vector2D anchor = Vector2D(0.5, 0.5));
+
+	/// <summary>
+	//Constructora de una animacion a partir de una textura con inicio y fin definidos
+	//repeat -1, es un bucle
+	//Anchor point por defecto es (0.5,0.5)
+	//Recibe un modificador (variable durante ejecución) que altera la velocidad de la animacion
+	/// </summary>
+	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr, int* modifier, Vector2D anchor = Vector2D(0.5, 0.5));
+
 	virtual ~Animation();
 
 	void init() override;
@@ -57,11 +73,16 @@ protected:
 	std::vector<Vector2D> framepos_;	//Posicion de frames no vacios de la textura
 	int startfr_, endfr_, actfr_;		//Frame inicial, final y actual de la animacion
 	State state_;
-	Uint32 framerate_;	
+	Uint32 framerate_;
+	int* speedModifier;
 	int repeat_;
 	Uint32 lastUpdateTime;
 	bool flip_horizontal_;	//Flip
 	Vector2D anchorPoint_;
 	Uint8 alpha_, red_, green_, blue_;
+private:
+	//Esta variable me sirve para cuando la animacion no recibe un puntero modificador 
+	//y necesito que dure hasta el final de la vida del componente
+	int auxSpeedModifier = 1; 
 };
 

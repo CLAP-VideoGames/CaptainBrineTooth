@@ -76,7 +76,7 @@ public:
 	/// Devuelve la referencia del modificador de velocidad de ataque
 	/// </summary>
 	/// <returns></returns>
-	int& getSpeedModifier();
+	int* getSpeedModifier();
 
 	/// <summary>
 	/// Asigna a la entidad la habilidad de tipo Skill al estado deseado

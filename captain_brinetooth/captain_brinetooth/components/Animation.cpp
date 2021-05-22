@@ -12,12 +12,32 @@ Animation::Animation(std::string id, Texture* tex, int rows, int cols, int frame
 	id_(id), tex_(tex), frames_(frames), framerate_(framerate), repeat_(repeat), startfr_(0), endfr_(frames - 1), anchorPoint_(anchor) {	//startfr_ y endfr_ se inicializan por defecto en esta constructora
 	framewidth_ = tex->width() / cols;
 	frameheight_ = tex->height() / rows;
+
+	speedModifier = &auxSpeedModifier;
 }
 
 Animation::Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr, Vector2D anchor) :
 	id_(id), tex_(tex), frames_(frames), framerate_(framerate), repeat_(repeat), startfr_(startfr), endfr_(endfr), anchorPoint_(anchor) {	//startfr_ y endfr_ se inicializan por defecto en esta constructora
 	framewidth_ = tex->width() / cols;
 	frameheight_ = tex->height() / rows;
+
+	speedModifier = &auxSpeedModifier;
+}
+
+Animation::Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int* modifier, Vector2D anchor) :
+	id_(id), tex_(tex), frames_(frames), framerate_(framerate), repeat_(repeat), startfr_(0), endfr_(frames - 1), anchorPoint_(anchor) {	//startfr_ y endfr_ se inicializan por defecto en esta constructora
+	framewidth_ = tex->width() / cols;
+	frameheight_ = tex->height() / rows;
+
+	speedModifier = modifier;
+}
+
+Animation::Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr, int* modifier, Vector2D anchor) :
+	id_(id), tex_(tex), frames_(frames), framerate_(framerate), repeat_(repeat), startfr_(startfr), endfr_(endfr), anchorPoint_(anchor) {	//startfr_ y endfr_ se inicializan por defecto en esta constructora
+	
+	framewidth_ = tex->width() / cols;
+	frameheight_ = tex->height() / rows;
+	speedModifier = modifier;
 }
 
 Animation::~Animation(){
@@ -57,7 +77,8 @@ void Animation::render()
 	if (state_ == Playing) {
 		//Actualiza el frame segun el framerate
 		Uint32 frameTime = sdlutils().currRealTime() - lastUpdateTime;
-		if (frameTime >= (1000 / framerate_)) {
+		
+		if (frameTime >= (1000 / (framerate_*(*speedModifier)))) {
 			nextFrame();
 			lastUpdateTime = sdlutils().currRealTime();
 		}

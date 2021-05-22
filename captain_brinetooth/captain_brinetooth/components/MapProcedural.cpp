@@ -344,6 +344,8 @@ void MapProcedural::update() {
 
 		pesca.clear();
 		stopFishing = false;
+		//Se cancela a veces la llamada de collisionExit de la pesca, y necesita resetearse
+		scarceBaitError = false;
 	}
 
 	if (ih().keyDownEvent()) {

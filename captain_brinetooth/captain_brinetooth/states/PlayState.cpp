@@ -216,8 +216,8 @@ void PlayState::createMap() {
 void PlayState::createPlayer(const Config& playerConfig) {
 	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
 
-	player->addComponent<SkillTree>();
-	int speedModifer = player->addComponent<SkillTree>()->getSpeedModifier();
+	SkillTree* skillTree_ = player->addComponent<SkillTree>();
+	int* speedModifer = skillTree_->getSpeedModifier();
 
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
@@ -269,10 +269,10 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//-WEAPONS------------------------------------------------------------------------------------------------------
 #pragma region Chainsaw
 	//---CHAINSAW---------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 1, 8, Vector2D(0.75, 0.72));
-	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 9, 18, Vector2D(0.75, 0.72));
-	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 28, 0, 19, 27, Vector2D(0.75, 0.72));
-	anim_controller->addAnimation("chainsaw_attack4", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, -1, 28, 47, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 1, 8, speedModifer, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack2", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 9, 18, speedModifer, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack3", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 28, 0, 19, 27, speedModifer, Vector2D(0.75, 0.72));
+	anim_controller->addAnimation("chainsaw_attack4", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 24, -1, 28, 47, speedModifer, Vector2D(0.75, 0.72));
 
 	anim_controller->addTransition("run", "chainsaw_attack1", "chainsaw_att", 1, false);
 	anim_controller->addTransition("idle", "chainsaw_attack1", "chainsaw_att", 1, false);
@@ -317,10 +317,10 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 #pragma region Sword
 	//---SWORD------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, 0, 1, 9, Vector2D(0.71, 0.69));
-	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, 0, 12, 22, Vector2D(0.71, 0.69));
-	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, 0, 23, 35, Vector2D(0.71, 0.69));
-	anim_controller->addAnimation("sword_attack4", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, -1, 36, 47, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack1", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, 0, 1, 9, speedModifer, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack2", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, 0, 12, 22, speedModifer, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack3", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, 0, 23, 35, speedModifer, Vector2D(0.71, 0.69));
+	anim_controller->addAnimation("sword_attack4", &sdlutils().images().at("sword_combo"), 6, 8, 48, 60, -1, 36, 47, speedModifer, Vector2D(0.71, 0.69));
 
 	anim_controller->addTransition("run", "sword_attack1", "sword_att", 1, false);
 	anim_controller->addTransition("idle", "sword_attack1", "sword_att", 1, false);
@@ -365,8 +365,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 #pragma region Hammer
 //---HAMMER---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 1, 16, Vector2D(0.75, 0.69));
-	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 17, 30, Vector2D(0.75, 0.69));
+	anim_controller->addAnimation("hammer_attack1", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 1, 16, speedModifer, Vector2D(0.75, 0.69));
+	anim_controller->addAnimation("hammer_attack2", &sdlutils().images().at("hammer_combo"), 5, 7, 31, 48, 0, 17, 30, speedModifer, Vector2D(0.75, 0.69));
 
 	anim_controller->addTransition("run", "hammer_attack1", "hammer_att", 1, false);
 	anim_controller->addTransition("idle", "hammer_attack1", "hammer_att", 1, false);
@@ -397,9 +397,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 //
 //#pragma region Crab
 ////---CRAB---------------------------------------------------------------------------------------------------------
-	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 35, 0, 1, 8, Vector2D(0.71, 0.5));
-	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
-	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("crab_attack1", &sdlutils().images().at("crab_combo"), 6, 7, 39, 35, 0, 1, 8, speedModifer, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("crab_attack2", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 8, 25, speedModifer, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("crab_attack3", &sdlutils().images().at("crab_combo"), 6, 7, 39, 48, 0, 27, 38, speedModifer, Vector2D(0.71, 0.5));
 
 	anim_controller->addTransition("run", "crab_attack1", "crab_att", 1, false);
 	anim_controller->addTransition("idle", "crab_attack1", "crab_att", 1, false);
@@ -438,9 +438,9 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	//FISTS
 
-	anim_controller->addAnimation("fist_attack1", &sdlutils().images().at("fists_combo"), 6, 7, 39, 35, 0, 1, 8, Vector2D(0.71, 0.5));
-	anim_controller->addAnimation("fist_attack2", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
-	anim_controller->addAnimation("fist_attack3", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("fist_attack1", &sdlutils().images().at("fists_combo"), 6, 7, 39, 35, 0, 1, 8, speedModifer,Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("fist_attack2", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 8, 25, speedModifer, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("fist_attack3", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 27, 38, speedModifer, Vector2D(0.71, 0.5));
 
 	anim_controller->addTransition("run", "fist_attack1", "fist_att", 1, false);
 	anim_controller->addTransition("idle", "fist_attack1", "fist_att", 1, false);
@@ -481,8 +481,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//#pragma endregion
 	//
 	//#pragma region MachineGun
-	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, Vector2D(0.65, 0.5));
-	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, Vector2D(0.65, 0.5));
+	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, speedModifer, Vector2D(0.65, 0.5));
+	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, speedModifer, Vector2D(0.65, 0.5));
 
 	anim_controller->addTransition("run", "machine_gun1", "machineGun_att", 1, false);
 	anim_controller->addTransition("idle", "machine_gun1", "machineGun_att", 1, false);
@@ -506,8 +506,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->setParamValue("machineGun_att", 0);
 
 	//Bellow
-
-	anim_controller->addAnimation("bellow", &sdlutils().images().at("squid_combo"), 3, 4, 12, 48, 1, Vector2D(0.67, 0.5));
+	anim_controller->addAnimation("bellow", &sdlutils().images().at("squid_combo"), 3, 4, 12, 48, 1, speedModifer, Vector2D(0.67, 0.5));
 
 	anim_controller->addTransition("run", "bellow", "bellow_att", 1, false);
 	anim_controller->addTransition("idle", "bellow", "bellow_att", 1, false);
