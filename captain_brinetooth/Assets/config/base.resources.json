@@ -189,6 +189,10 @@
 			"file": "assets/sprites/enemies/hits/enemy_hit_3.png"
 		},
 		{
+			"id": "particle_coins",
+			"file": "assets/sprites/enemies/hits/particle_coins.png"
+		},
+		{
 			"id": "fullvida",
 			"file": "assets/sprites/player/HUD/anzuelo_sheet.png"
 		},

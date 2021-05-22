@@ -36,6 +36,7 @@ private:
 	Vector2D barSize, initBarSize;
 
 	Entity* particle_hit;
+	Entity* particle_coins;
 
 	SDL_Rect bar, base;
 	Transform* trParent_;

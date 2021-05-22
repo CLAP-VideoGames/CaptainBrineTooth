@@ -19,6 +19,10 @@ Enemy_Health::~Enemy_Health()
 		particle_hit->setActive(false);
 		particle_hit = nullptr;
 	}
+	if (particle_coins != nullptr) {
+		particle_coins->setActive(false);
+		particle_coins = nullptr;
+	}
 }
 
 /// <summary>
@@ -42,6 +46,11 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("muerte_monstruo", 15);
 		//Borrar collider
 		entity_->removeComponent<ContactDamage>();
+
+		//Particulas monedas
+		particle_coins = entity_->getMngr()->addEntity();
+		particle_coins->addComponent<Transform>(Vector2D(trParent_->getPos().getX(), trParent_->getPos().getY()+ trParent_->getH()*0.5), Vector2D(), trParent_->getW()*0.9, trParent_->getW()*0.75, 0.0);
+		particle_coins->addComponent<Animation>("coins", &sdlutils().images().at("particle_coins"), 3, 4, 12, 48, 0, 0, 10);
 	}
 	else
 	{
@@ -157,10 +166,6 @@ void Enemy_Health::update(){
 			poisonCurrentTickTime = sdlutils().currRealTime();
 			if (lifes <= 0) {
 				entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
-			//	entity_->setActive(false);
-			//	//Tenemos que eliminar el Trigger del enemigo (si tiene)
-			//	EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
-			//	if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
 			}
 			barSize.setX((lifes * initBarSize.getX()) / initLifes);
 			if (barSize.getX() <= 0) barSize.setX(0);
@@ -201,6 +206,16 @@ void Enemy_Health::update(){
 		}
 		else {
 			particle_hit->getComponent<Transform>()->getPos() = entity_->getComponent<Transform>()->getPos();
+		}
+	}
+	//Particula Coins
+	if (particle_coins != nullptr) {
+		if (particle_coins->getComponent<Animation>()->getState() == 0) {
+			particle_coins->setActive(false);
+			particle_coins = nullptr;
+		}
+		else {
+			particle_coins->getComponent<Transform>()->getPos() = entity_->getComponent<Transform>()->getPos();
 		}
 	}
 	if (entity_->getComponent<AnimBlendGraph>()->getCurrentAnimation()->getID() == "death" && entity_->getComponent<AnimBlendGraph>()->isComplete()) {
