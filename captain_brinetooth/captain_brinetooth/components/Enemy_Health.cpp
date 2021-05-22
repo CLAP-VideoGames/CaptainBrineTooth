@@ -105,6 +105,10 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 	SDL_Delay(App::FPS);	//Se salta un frame
 }
 
+int Enemy_Health::getMaxHealth() {
+	return initLifes;
+}
+
 void Enemy_Health::init(){
 	trParent_ = entity_->getComponent<Transform>();
 }

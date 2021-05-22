@@ -9,11 +9,12 @@ SkillTree::~SkillTree()
 }
 
 void SkillTree::init(){
-	setSkillLimitPoints(Spines, 1500);
+	setSkillLimitPoints(DoubleDamage, 1500);
 	setSkillLimitPoints(SpeedAttack, 1500);
 	setSkillLimitPoints(StealLife, 1500);
 
 	speedModifier = 1;
+	attackModifier = 1;
 	counterattackSpines = 100;
 	//El guardado tiene que venir de la siguiente manera:
 	//p int
@@ -77,6 +78,25 @@ int SkillTree::getMaxSkills(){
 	return playerSkills.size();
 }
 
-int SkillTree::getCounterAttack(){
+float SkillTree::getCounterAttackPercentage(){
 	return counterattackSpines;
+}
+
+int SkillTree::getAttackModifier(){
+	return attackModifier;
+}
+
+void SkillTree::setAttackModifier(int attack){
+	attackModifier = attack;
+} 
+
+void SkillTree::setCounterAttackPercentage(float points)
+{
+	if (points < 0) counterattackSpines = 0;
+	else if (points > 1) counterattackSpines = 1;
+	else counterattackSpines = points;
+}
+
+void SkillTree::setSpeedModifier(int n){
+	speedModifier = n;
 }

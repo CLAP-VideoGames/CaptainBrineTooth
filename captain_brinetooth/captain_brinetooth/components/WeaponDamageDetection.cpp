@@ -1,4 +1,5 @@
 #include "WeaponDamageDetection.h"
+#include "SkillTree.h"
 
 WeaponDamageDetection::WeaponDamageDetection(int damageToApply, int typeOfDamage, bool destroyOnCollision) : damageToApply_(damageToApply), typeOfDamage_(typeOfDamage), destroyOnCollision_(destroyOnCollision) {
 }
@@ -37,6 +38,11 @@ void WeaponDamageDetection::ContactEnemy(b2Contact* contact) {
 }
 
 void WeaponDamageDetection::ApplyDamage(Entity* enemy) {
+	//Obtenemos el SkillTree al estilo Samir
+	SkillTree* sklTree = entity_->getMngr()->getHandler<Player>() != nullptr ? entity_->getMngr()->getHandler<Player>()->getComponent<SkillTree>() : nullptr;
+
+	damageToApply_ *= sklTree->getAttackModifier();
+
 	enemy->getComponent<Enemy_Health>()->loseLife(damageToApply_, typeOfDamage_);
 	if(entity_->getMngr()->getHandler<Player>()->hasComponent<Player_Health>())
 		entity_->getMngr()->getHandler<Player>()->getComponent<Player_Health>()->chargeHeal(damageToApply_);

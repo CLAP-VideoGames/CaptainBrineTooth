@@ -1,4 +1,6 @@
 #include "ContactDamage.h"
+#include "Enemy_Health.h"
+#include "SkillTree.h"
 #include "../ecs/Entity.h"
 #include "../utils/Vector2D.h"
 #include "../ecs/Manager.h"
@@ -39,5 +41,15 @@ void ContactDamage::makeDamage()
 	Player_Health* pH = p->getComponent<Player_Health>(); //El jugador pierde una vida;
 
 	if (!pH->getInvulnerable())
+	{
 		pH->loseLife();
+ 		SkillTree* sklTree = p->getComponent<SkillTree>();
+		if (sklTree->hasSkill(Spines)){
+			float damagePoints = sklTree->getCounterAttackPercentage();
+			Enemy_Health* enemyH = enemy_->getComponent<Enemy_Health>();
+			if (enemyH) {
+				enemyH->loseLife(damagePoints * enemyH->getHealth());
+			}
+		}
+	}
 }

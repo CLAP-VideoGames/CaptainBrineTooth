@@ -18,14 +18,14 @@ public:
 	/// Pregunta si la habilidad type está activa o no
 	/// </summary>
 	/// <param name="type"></param>
-	/// <returns></returns>
+	/// <returns>devuelve true si esta activa, de lo contrario false</returns>
 	bool hasSkill(Skill type);
 	
 	/// <summary>
 	/// Pregunta si la habilidad type está activa o no
 	/// </summary>
 	/// <param name="type"></param>
-	/// <returns></returns>
+	/// <returns>devuelve true si esta activa, de lo contrario false</returns>
 	bool hasSkill(int type);
 
 	/// <summary>
@@ -45,7 +45,38 @@ public:
 	/// Devuelve el número máximo de habilidades
 	/// </summary>
 	/// <returns></returns>
-	int getCounterAttack();
+	float getCounterAttackPercentage();
+
+	/// <summary>
+	/// Devuelve el modificador de ataque
+	/// </summary>
+	/// <returns></returns>
+	int getAttackModifier();
+
+
+	/// <summary>
+	/// Define el modificador de cantidad de ataque
+	/// </summary>
+	void setAttackModifier(int attack);
+
+	/// <summary>
+	/// Define el número de puntos de daño que recibe el causante de daño al jugador
+	/// </summary>
+	/// <returns></returns>
+	void setCounterAttackPercentage(float points);
+
+
+	/// <summary>
+	/// Define el multiplicador de velocidad con el que el jugador va a atacar
+	/// </summary>
+	/// <param name="n"></param>
+	void setSpeedModifier(int n);
+
+	/// <summary>
+	/// Devuelve la referencia del modificador de velocidad de ataque
+	/// </summary>
+	/// <returns></returns>
+	int& getSpeedModifier();
 
 	/// <summary>
 	/// Asigna a la entidad la habilidad de tipo Skill al estado deseado
@@ -70,19 +101,13 @@ public:
 	/// </summary>
 	/// <param name="skillsFromMatch"></param>
 	void initSkillsFromMatch(std::array<bool, 6> skillsFromMatch);
-	
-	/// <summary>
-	/// Devuelve la referencia del modificador de velocidad de ataque
-	/// </summary>
-	/// <returns></returns>
-	int& getSpeedModifier();
 
 private:
 	std::array<std::pair<bool, int>, 6> playerSkills {};
 
 	int speedModifier;
-
-	int counterattackSpines;
+	int attackModifier;
+	float counterattackSpines;
 
 };
 

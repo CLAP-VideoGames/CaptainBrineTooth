@@ -17,6 +17,7 @@ void ThornFishAttack::init()
 {
 	entitytr_ = entity_->getComponent<Transform>();
 	assert(entitytr_ != nullptr);
+	entity_Parent_ = entity_;
 	attackTriggerSize_ = Vector2D(entitytr_->getW(), entitytr_->getH() * 1.25);
 	cd_attack_time = sdlutils().rand().teCuoto(2500, 5000);
 	elapsed_time_lastAttack = sdlutils().currRealTime();

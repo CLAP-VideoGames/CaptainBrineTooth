@@ -16,6 +16,10 @@ public:
 
 	void setSpines();
 
+	void setDoubleDamage();
+
+	void setSpeedAttack();
+
 private:
 	SDL_Rect cam;
 	GameState* stRend;

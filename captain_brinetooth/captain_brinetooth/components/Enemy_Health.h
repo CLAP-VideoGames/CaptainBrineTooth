@@ -21,8 +21,12 @@ public:
 	void update() override;
 
 	void loseLife(int damage, int typeOfDamage = 0);
+
 	void setHealth(int health) { lifes = health; };
+
 	int getHealth() { return lifes; };
+
+	int getMaxHealth();
 
 private:
 	SDL_Color barColor;

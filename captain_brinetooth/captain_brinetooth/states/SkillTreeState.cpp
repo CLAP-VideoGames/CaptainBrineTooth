@@ -14,12 +14,15 @@ SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr
 
 void SkillTreeState::init(){
 	skillTree_ = player->getComponent<SkillTree>();
-	points = player->getComponent<Inventory>()->getCoins();
+	//points = player->getComponent<Inventory>()->getCoins();
+	points = 1600;
 
 	plH = player->getComponent<Player_Health>();
 
 	setExtraLives();
 	setExtraHeal();
+	setSpines();
+	setDoubleDamage();
 }
 
 void SkillTreeState::render() const
@@ -55,4 +58,15 @@ void SkillTreeState::setExtraHeal(){
 
 void SkillTreeState::setSpines() {
 	skillTree_->setSkill(Spines, true, points);
+	skillTree_->setCounterAttackPercentage(0.1f);
+}
+
+void SkillTreeState::setDoubleDamage(){
+	skillTree_->setSkill(DoubleDamage, true, points);
+	skillTree_->setSpeedModifier(2);
+}
+
+void SkillTreeState::setSpeedAttack(){
+	skillTree_->setSkill(SpeedAttack, true, points);
+	skillTree_->setAttackModifier(2);
 }

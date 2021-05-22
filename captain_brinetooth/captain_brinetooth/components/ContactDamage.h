@@ -5,7 +5,6 @@
 class ContactDamage : public Component
 {
 public:
-
 	ContactDamage(Entity* enemy) : enemy_(enemy) {};
 	virtual ~ContactDamage() {};
 	void init() override;
