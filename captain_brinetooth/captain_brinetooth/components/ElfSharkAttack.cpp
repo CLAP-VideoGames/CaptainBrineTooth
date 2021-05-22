@@ -125,7 +125,7 @@ void ElfSharkAttack::createAttackTrigger()
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + offsetX, entitytr_->getPos().getY() + offsetY),
 		Vector2D(0, 0), tiggerSize_.getX(), tiggerSize_.getY(), 0.0f);
 	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
-	attackTrigger_->addComponent<ContactDamage>();
+	attackTrigger_->addComponent<ContactDamage>(entity_Parent_);
 	// Reproducimos el sonido de mordisco
 	entity_->getMngr()->getSoundMngr()->playSoundEffect("mordisco_elfshark", 300);
 }

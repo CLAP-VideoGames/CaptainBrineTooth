@@ -6,12 +6,14 @@ class ContactDamage : public Component
 {
 public:
 
-	ContactDamage() {};
+	ContactDamage(Entity* enemy) : enemy_(enemy) {};
 	virtual ~ContactDamage() {};
 	void init() override;
 	void update() override {};
 	void render() override {};
 	void makeDamage();
 	static void callDamage(b2Contact* contact);
+private:
+	Entity* enemy_;
 };
 

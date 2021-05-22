@@ -63,7 +63,7 @@ void ThornFishAttack::createAttackTrigger()
 	attackTrigger_->addComponent<Transform>(Vector2D(entitytr_->getPos().getX() + width_offset, entitytr_->getPos().getY()),
 		Vector2D(0, 0), attackTriggerSize_.getX(), attackTriggerSize_.getY(), 0.0f);
 	attackTrigger_->addComponent<BoxCollider>(KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
-	attackTrigger_->addComponent<ContactDamage>();
+	attackTrigger_->addComponent<ContactDamage>(entity_Parent_);
 	// Reproducimos el sonido de la electircidad
 	entity_->getMngr()->getSoundMngr()->playSoundEffect("electricidad", 300);
 }

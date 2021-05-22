@@ -121,6 +121,6 @@ void ShootDetect::createBullet()
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, false, 0.7,true,bulletRotation);
 	bullet->getComponent<BoxCollider>()->getBody()->SetGravityScale(0);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletdir,velocity);
-	bullet->addComponent<ContactDamage>();
+	bullet->addComponent<ContactDamage>(enemy);
 	bullet->addComponent<DestroyOnCollision>();
 }

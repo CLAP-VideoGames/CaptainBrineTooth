@@ -481,7 +481,7 @@ void TestZoneState::createPompeyWorm(const Config& enemy1Config)
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
 	gusano->addComponent<Enemy_Health>(300, 20, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
-	gusano->addComponent<ContactDamage>();
+	gusano->addComponent<ContactDamage>(gusano);
 }
 #pragma endregion
 #pragma region ElfShark
@@ -518,7 +518,7 @@ void TestZoneState::createElfShark(const Config& entityConfig) {
 	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
 	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
 	elf->addComponent<Enemy_Health>(300, 20, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
-	elf->addComponent<ContactDamage>();
+	elf->addComponent<ContactDamage>(elf);
 }
 #pragma endregion
 #pragma region JellyHat
@@ -532,7 +532,7 @@ void TestZoneState::createFlowerJellyHat(const Config& entityConfig) {
 	fjh1_anim_controller->setParamValue("Dead", 0);
 	fjh1->addComponent<Enemy_Health>(300, 20, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 0.7, true, 0.0, Vector2D(), Vector2D(),10000);
-	fjh1->addComponent<ContactDamage>();
+	fjh1->addComponent<ContactDamage>(fjh1);
 	fjh1->addComponent<JellyHatBehavior>(fjh1);
 }
 #pragma endregion
@@ -557,7 +557,7 @@ void TestZoneState::createFringeHead(const Config& entityConfig)
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
 	enemy->addComponent<Enemy_Health>(200, 20, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
-	enemy->addComponent<ContactDamage>();
+	enemy->addComponent<ContactDamage>(enemy);
 }
 #pragma endregion
 
@@ -586,7 +586,7 @@ void TestZoneState::createThornFish(const Config& entityConfig) {
 	thorn_anim_controller->setParamValue("Attack", 0);
 	thorn->addComponent<ThornFishAttack>();
 	thorn->addComponent<Enemy_Health>(150, 20, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
-	thorn->addComponent<ContactDamage>();
+	thorn->addComponent<ContactDamage>(thorn);
 }
 #pragma endregion
 void TestZoneState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {

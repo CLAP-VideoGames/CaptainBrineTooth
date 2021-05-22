@@ -273,7 +273,7 @@ void FishlerController::creaTrigger() {
 		Vector2D(0, 0), triggerWidth, triggerHeight, 0.0f);
 
 	trigger->addComponent<BoxCollider>(TYPE::KINEMATIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
-	trigger->addComponent<ContactDamage>();
+	trigger->addComponent<ContactDamage>(entity_);
 	trigger->addComponent<DisableOnExit>();
 }
 
@@ -300,7 +300,7 @@ void FishlerController::shoot() {
 	bullet->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 	bullet->getComponent<BoxCollider>()->getBody()->SetGravityScale(0);
 	bullet->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
-	bullet->addComponent<ContactDamage>();
+	bullet->addComponent<ContactDamage>(entity_);
 	bullet->addComponent<DestroyOnCollision>();
 }
 
@@ -348,5 +348,5 @@ void FishlerController::shootSpike() {
 	spike->addComponent<BoxCollider>(DYNAMIC, ENEMY_ATTACK, ENEMY_ATTACK_MASK, true);
 	spike->getComponent<BoxCollider>()->applyForce(bulletvel, bulletVelocity);
 	spike->addComponent<GetStuckOnWall>();
-	spike->addComponent<ContactDamage>();
+	spike->addComponent<ContactDamage>(entity_);
 }
