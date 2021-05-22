@@ -164,16 +164,17 @@ private:
 	void stoppedFishing() {stopFishing = true;}
 
 protected:
-	bool gonTotravel, travelZone, stopFishing, startRun_, canAccess, isLobby;
+	bool gonTotravel, travelZone, stopFishing, startRun_, canAccess, isLobby, scarceBaitError;
 	int nRooms, nRoomNames = 10, nextDir = -1;
 	int roomsExplored;	//Numero de habitaciones exploradas
-	int fase;				//Número de la zona en la que está el player
+	int fase;			//Número de la zona en la que está el player
+	int timeBaitError, lastTime;
 
 	App* app;
 	ParallaxScroll* backgroundLayer;
 	Level0* lvl;
 	MapCollider* chainCollider;
-	Texture* accessButton;
+	Texture* accessButton, *scarceBait;
 	Vector2D accessB_Size;
 	Entity* player;
 

@@ -47,7 +47,7 @@ public:
 	/// <param name="type"> habilidad</param>
 	/// <param name="state"> estado de la habilidad (activo/desactivo)</param>
 	/// <param name="points"> puntuación actual del jugador</param>
-	/// <returns> devuelve false en caso de que la puntuación no sea suficiente para actividad la habilidad. 
+	/// <returns> devuelve false en caso de que la puntuación no sea suficiente para activar la habilidad. 
 	/// De lo contrario devuelve true</returns>
 	bool setSkill(Skill type, bool state, int points);
 

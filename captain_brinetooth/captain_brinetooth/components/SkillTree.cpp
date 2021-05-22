@@ -9,9 +9,9 @@ SkillTree::~SkillTree()
 }
 
 void SkillTree::init(){
-	playerSkills[(int)Spines].second = 1500;
-	playerSkills[(int)SpeedAttack].second = 2500;
-	playerSkills[(int)StealLife].second = 3500;
+	setSkillLimitPoints(Spines, 1500);
+	setSkillLimitPoints(SpeedAttack, 1500);
+	setSkillLimitPoints(StealLife, 1500);
 	//El guardado tiene que venir de la siguiente manera:
 	//p int
 	//skills true false true false false true

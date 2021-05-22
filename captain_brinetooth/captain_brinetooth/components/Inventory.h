@@ -17,7 +17,7 @@
 
 class Inventory : public Component {
 public:
-	Inventory() : currentWeaponNumber(0), currentSelectedWeapon(0) {}
+	Inventory() : currentWeaponNumber(0), currentSelectedWeapon(0), coins_(0), baits_(0){}
 
 	virtual ~Inventory();
 

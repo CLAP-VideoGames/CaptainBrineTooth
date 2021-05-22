@@ -11,7 +11,7 @@ public:
 	virtual void init();
 	virtual void update();
 
-	void createLevel0();
+	void createMap();
 	void createPlayer(const Config& playerConfig);
 	void createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType);
 	void createBoxTest(const Config& entityConfig);

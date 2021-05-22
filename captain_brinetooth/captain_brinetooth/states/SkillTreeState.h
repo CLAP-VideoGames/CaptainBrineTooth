@@ -14,4 +14,6 @@ private:
 	SDL_Rect cam;
 	GameState* stRend;
 	Entity* player;
+	SkillTree* skillTree_;
+	int points;
 };

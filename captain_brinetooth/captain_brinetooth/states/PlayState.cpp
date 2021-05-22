@@ -39,7 +39,7 @@ void PlayState::init() {
 	auto* bgParallax = backgroundLevel->addComponent<ParallaxScroll>();
 
 	//SE TIENE QUE CREAR PRIMERO EL NIVEL Y LUEGO EL PLAYER
-	createLevel0();
+	createMap();
 
 	Config playerConfig{};
 	playerConfig.pos = getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getPlayerPos();
@@ -204,7 +204,7 @@ void PlayState::update() {
 /// <summary>
 /// Crea el tile nivel 0 con f�sicas
 /// </summary>
-void PlayState::createLevel0() {
+void PlayState::createMap() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
@@ -215,6 +215,8 @@ void PlayState::createLevel0() {
 
 void PlayState::createPlayer(const Config& playerConfig) {
 	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
+
+	player->addComponent<SkillTree>();
 
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER

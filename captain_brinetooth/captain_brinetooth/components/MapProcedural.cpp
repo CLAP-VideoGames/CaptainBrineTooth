@@ -1,5 +1,6 @@
 #include "MapProcedural.h"
 #include "CameraFollow.h"
+#include "Inventory.h"
 #include "../states/StateMachine.h"
 #include "../states/SkillTreeState.h"
 #include "../states/PlayState.h"
@@ -21,11 +22,14 @@ MapProcedural::MapProcedural(int nR, int f, App* s) {
 	backgroundLayer = nullptr;
 
 	accessButton = nullptr;
+	scarceBait = nullptr;
 	accessB_Size = {};
 	player = nullptr;
+	timeBaitError = 1500;
+	lastTime = 0;
 
 	std::cout << roomsExplored << std::endl;
-	gonTotravel = travelZone = stopFishing = startRun_ = canAccess = false;
+	gonTotravel = travelZone = stopFishing = startRun_ = canAccess = scarceBaitError = false;
 	currentRoom = nullptr;
 }
 
@@ -37,9 +41,13 @@ MapProcedural::~MapProcedural() {
 }
 
 void MapProcedural::init() {
+	//FeedBack Initialization
 	accessButton = &sdlutils().images().at("player_controls");
+	scarceBait = &sdlutils().msgs().at("scarceBaits");
+	lastTime = sdlutils().currRealTime();
 	accessB_Size = Vector2D(accessButton->width(), accessButton->height());
 
+	//Run Initialization
 	PlayState* playState = dynamic_cast<PlayState*>(app->getStateMachine()->currentState());
 	//Obtenemos el playStat para poder cambiar el fondo en cada nivel
 	if (playState != nullptr)
@@ -74,13 +82,9 @@ void MapProcedural::leaveLobby(b2Contact* contact) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
 
-
-
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
 	m->getComponent<MapProcedural>()->startRun(true);
-
-
 }
 
 void MapProcedural::onEnterAccessTrigger(b2Contact* contact) {
@@ -90,12 +94,15 @@ void MapProcedural::onEnterAccessTrigger(b2Contact* contact) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
 
-	Entity* m = trigger->getMngr()->getHandler<Map>();
-
-	if (m != nullptr) {
-		MapProcedural* map = m->getComponent<MapProcedural>();
-		if (&map != nullptr || &map != NULL)
-			map->pressToAccess(true);
+	if (trigger->isActive()) {
+		Entity* m = nullptr;
+		m = trigger->getMngr()->getHandler<Map>();
+		if (m != nullptr) {
+			MapProcedural* map = nullptr; 
+			map = m->getComponent<MapProcedural>();
+			if (map != nullptr)
+				map->pressToAccess(true);
+		}
 	}
 }
 
@@ -106,14 +113,17 @@ void MapProcedural::onExitAccessTrigger(b2Contact* contact) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
 
-	if (trigger->isActive())
-	{
-		Entity* m = trigger->getMngr()->getHandler<Map>();
-
-		if (m != nullptr) {
-			MapProcedural* map = m->getComponent<MapProcedural>();
-			if (map != NULL)
-				map->pressToAccess(false);
+	if (trigger->isActive()){
+		if (contact->GetNext() != NULL)
+		{
+			Entity* m = nullptr;
+			m = trigger->getMngr()->getHandler<Map>();
+			if (m != nullptr) {
+				MapProcedural* map = nullptr;
+				map = m->getComponent<MapProcedural>();
+				if (map != nullptr)
+					map->pressToAccess(false);
+			}
 		}
 	}
 }
@@ -344,9 +354,24 @@ void MapProcedural::update() {
 			else{
 				playerCollider_ = player->getComponent<BoxCollider>();
 				playerCollider_->setSpeed(Vector2D(0.0f, 0.0f));
-				app->changeToPesca();
-				stoppedFishing();
+
+				int baits_ = player->getComponent<Inventory>()->getBaits();
+
+				if (baits_ > 0) {
+					app->changeToPesca();
+					stoppedFishing();
+				}
+				else{
+					scarceBaitError = true;
+					lastTime = sdlutils().currRealTime();
+				}
 			}
+		}
+	}
+
+	if (scarceBaitError){
+		if (sdlutils().currRealTime() - lastTime > timeBaitError){
+			scarceBaitError = false;
 		}
 	}
 }
@@ -360,19 +385,31 @@ void MapProcedural::render() {
 		if (player != nullptr) {
 			Transform* tr_ = player->getComponent<Transform>();
 			playerPos = tr_->getPos();
-			playerPos.setX(playerPos.getX() - (tr_->getW()/2));
+			playerPos.setX(playerPos.getX());
 			playerPos.setY(playerPos.getY() + (tr_->getH()/2));
 		}
 
 		float w = accessB_Size.getX()/(4 * 3);
 		float h = accessB_Size.getY()/(2 * 3);
 		//Vector2D destPos(App::camera.w / 2 - (w/2), App::camera.h / 2/*playerPos.getY()*//* - (h / 2)*/);
-		Vector2D destPos(playerPos.getX() - (App::camera.x), playerPos.getY() - (App::camera.y) + (h / 3));
+		Vector2D destPos(playerPos.getX() - (w / 2) - (App::camera.x), playerPos.getY() - (App::camera.y) + (h / 3));
 		SDL_Rect dest = build_sdlrect(destPos, w , h);
 
 		Vector2D pos(0.0f, 0.0f);
 		SDL_Rect src = build_sdlrect(pos, ((float)accessButton->width() / 4), ((float)accessButton->height() / 2));
 		accessButton->render(src, dest, 0.0f);
+
+		//En caso de no haber suficientes anzuelos, sale un mensaje de advertencia al jugador durante x segundos
+		if (scarceBaitError){
+			float w = scarceBait->width()*0.5;
+			float h = scarceBait->height()*0.5;
+			//Se pone debajo del boton de la tecla E
+			destPos.setY(destPos.getY() + dest.h);
+
+			destPos.setX(playerPos.getX() - (w / 2) - (App::camera.x));
+			dest = build_sdlrect(destPos, w, h);
+			scarceBait->render(dest);
+		}
 	}
 }
 
@@ -445,6 +482,7 @@ void MapProcedural::loadTileFiles() {
 
 void MapProcedural::pressToAccess(bool entered) {
 	canAccess = entered;
+	if (scarceBaitError) scarceBaitError = false;
 }
 
 void MapProcedural::initBoss() {
