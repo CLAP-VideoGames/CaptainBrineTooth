@@ -40,7 +40,7 @@ public:
 	const int& getBaits();
 	void addBaits(int n);
 	void substractBaits(int n);
-	void renderNumber(Vector2D pos, Vector2D size, int n);
+	void renderNumber(Vector2D pos, Vector2D size, int n, int n2);
 
 private:
 	enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeInk };
@@ -60,7 +60,12 @@ private:
 
 	//Coins & Bait
 	int coins_, baits_;
+	int display_coins, temp_coins, display_baits, temp_baits;
 	std::vector<Texture*> textures_;
 	Texture* coin_tex_;
 	Texture* bait_tex_;
+	std::vector<Vector2D> framepos;
+	int actfr;
+	float lastUpdateTime;
+	float elapsedtime_temp_coins, elapsedtime_temp_baits, cd_temp = 1000;
 };

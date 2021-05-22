@@ -108,6 +108,11 @@ void TutorialState::readyPanel()
 {
 	player->setActive(false);
 	enemy->setActive(false);
+	for (Entity* e : room_) {
+		e->setActive(false);
+		e = nullptr;
+	}
+
 	int w = (int)sdlutils().width() * 0.15 * App::camera_Zoom_Out;
 	int h = (int)w * 0.4;
 	int x = (int)((App::camera.w - w) * 0.5);
@@ -648,5 +653,5 @@ void TutorialState::createBoxFloor(const Config& entityConfig)
 		box_Floor->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, false, 
 			entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
 	}
-	
+	room_.push_back(box_Floor);
 }

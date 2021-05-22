@@ -36,6 +36,7 @@ public:
 private:
 	std::vector<Entity*> panel; 
 	std::vector<Entity*> stepImg;
+	std::vector<Entity*> room_;
 	std::vector<Vector2D> stepImgPos;
 	int step_;
 	bool moveLeft_, moveRight_, jump_, camera_Up_, camera_Down_, dash_, attack_, weapon_, nextStep_;

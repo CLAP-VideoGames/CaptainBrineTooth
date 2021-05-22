@@ -33,7 +33,7 @@ void Player_Health::init()
 
 	#pragma region Curas
 	//Curas y valor (todas llenas)
-	maxValueHeal_ = 750;
+	maxValueHeal_ = 1500;
 	for (int i = 0; i < maxHeals_; i++) {
 		auto* e = entity_->getMngr()->addEntity();
 		e->addComponent<Transform>(Vector2D(), Vector2D(), 48 * App::camera_Zoom_Out, 48 * App::camera_Zoom_Out, 0.0f);
