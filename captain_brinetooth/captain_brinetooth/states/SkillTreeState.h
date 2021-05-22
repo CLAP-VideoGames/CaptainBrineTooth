@@ -14,6 +14,8 @@ public:
 
 	void setExtraHeal();
 
+	void setSpines();
+
 private:
 	SDL_Rect cam;
 	GameState* stRend;

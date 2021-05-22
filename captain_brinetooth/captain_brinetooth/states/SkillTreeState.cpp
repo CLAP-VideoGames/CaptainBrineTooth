@@ -52,3 +52,7 @@ void SkillTreeState::setExtraHeal(){
 	plH->setMaxHeals(plH->getMaxHeals() + 1);
 	plH->createHeal();
 }
+
+void SkillTreeState::setSpines() {
+	skillTree_->setSkill(Spines, true, points);
+}

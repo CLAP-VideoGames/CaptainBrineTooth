@@ -40,6 +40,12 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	int getMaxSkills();
+	
+	/// <summary>
+	/// Devuelve el número máximo de habilidades
+	/// </summary>
+	/// <returns></returns>
+	int getCounterAttack();
 
 	/// <summary>
 	/// Asigna a la entidad la habilidad de tipo Skill al estado deseado
@@ -65,11 +71,18 @@ public:
 	/// <param name="skillsFromMatch"></param>
 	void initSkillsFromMatch(std::array<bool, 6> skillsFromMatch);
 	
+	/// <summary>
+	/// Devuelve la referencia del modificador de velocidad de ataque
+	/// </summary>
+	/// <returns></returns>
 	int& getSpeedModifier();
 
 private:
 	std::array<std::pair<bool, int>, 6> playerSkills {};
 
 	int speedModifier;
+
+	int counterattackSpines;
+
 };
 
