@@ -64,8 +64,12 @@ public:
 	/// </summary>
 	/// <param name="skillsFromMatch"></param>
 	void initSkillsFromMatch(std::array<bool, 6> skillsFromMatch);
+	
+	int& getSpeedModifier();
 
 private:
 	std::array<std::pair<bool, int>, 6> playerSkills {};
+
+	int speedModifier;
 };
 

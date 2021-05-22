@@ -35,42 +35,7 @@ void Player_Health::init()
 	//Curas y valor (todas llenas)
 	maxValueHeal_ = 1500;
 	for (int i = 0; i < maxHeals_; i++) {
-		auto* e = entity_->getMngr()->addEntity();
-		e->addComponent<Transform>(Vector2D(), Vector2D(), 48 * App::camera_Zoom_Out, 48 * App::camera_Zoom_Out, 0.0f);
-		auto* e_anim_controller = e->addComponent<AnimBlendGraph>();
-		e_anim_controller->addAnimation("heal_0", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 0, 0);
-		e_anim_controller->addAnimation("heal_20", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 1, 1);
-		e_anim_controller->addAnimation("heal_40", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 2, 2);
-		e_anim_controller->addAnimation("heal_60", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 3, 3);
-		e_anim_controller->addAnimation("heal_80", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 4, 4);
-		e_anim_controller->addAnimation("heal_100", &sdlutils().images().at("player_heal"), 3, 5, 15, 12, -1, 5, 12);
-		e_anim_controller->addTransition("heal_0", "heal_20", "Value", 1, false);
-		e_anim_controller->addTransition("heal_0", "heal_40", "Value", 2, false);
-		e_anim_controller->addTransition("heal_0", "heal_60", "Value", 3, false);
-		e_anim_controller->addTransition("heal_0", "heal_80", "Value", 4, false);
-		e_anim_controller->addTransition("heal_0", "heal_100", "Value", 5, false);
-		e_anim_controller->addTransition("heal_20", "heal_0", "Value", 0, false);
-		e_anim_controller->addTransition("heal_20", "heal_40", "Value", 2, false);
-		e_anim_controller->addTransition("heal_20", "heal_60", "Value", 3, false);
-		e_anim_controller->addTransition("heal_20", "heal_80", "Value", 4, false);
-		e_anim_controller->addTransition("heal_20", "heal_100", "Value", 5, false);
-		e_anim_controller->addTransition("heal_40", "heal_0", "Value", 0, false);
-		e_anim_controller->addTransition("heal_40", "heal_60", "Value", 3, false);
-		e_anim_controller->addTransition("heal_40", "heal_80", "Value", 4, false);
-		e_anim_controller->addTransition("heal_40", "heal_100", "Value", 5, false);
-		e_anim_controller->addTransition("heal_60", "heal_0", "Value", 0, false);
-		e_anim_controller->addTransition("heal_60", "heal_80", "Value", 4, false);
-		e_anim_controller->addTransition("heal_60", "heal_100", "Value", 5, false);
-		e_anim_controller->addTransition("heal_80", "heal_0", "Value", 0, false);
-		e_anim_controller->addTransition("heal_80", "heal_100", "Value", 5, false);
-		e_anim_controller->addTransition("heal_100", "heal_0", "Value", 0, false);
-		e_anim_controller->addTransition("heal_100", "heal_20", "Value", 1, false);
-		e_anim_controller->addTransition("heal_100", "heal_40", "Value", 2, false);
-		e_anim_controller->addTransition("heal_100", "heal_60", "Value", 3, false);
-		e_anim_controller->addTransition("heal_100", "heal_80", "Value", 4, false);
-		e_anim_controller->setParamValue("Value", 5);
-		heals.push_back(e);
-		healsValues.push_back(maxValueHeal_);
+		createHeal();
 	}
 	#pragma endregion
 	resetLifes();
@@ -78,6 +43,45 @@ void Player_Health::init()
 	elpased_time_invul_ = 0;
 	deadCountdown = 0;
 	playerIsDying = false;
+}
+
+void Player_Health::createHeal() {
+	auto* e = entity_->getMngr()->addEntity();
+	e->addComponent<Transform>(Vector2D(), Vector2D(), 48 * App::camera_Zoom_Out, 48 * App::camera_Zoom_Out, 0.0f);
+	auto* e_anim_controller = e->addComponent<AnimBlendGraph>();
+	e_anim_controller->addAnimation("heal_0", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 0, 0);
+	e_anim_controller->addAnimation("heal_20", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 1, 1);
+	e_anim_controller->addAnimation("heal_40", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 2, 2);
+	e_anim_controller->addAnimation("heal_60", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 3, 3);
+	e_anim_controller->addAnimation("heal_80", &sdlutils().images().at("player_heal"), 3, 5, 15, 1, 0, 4, 4);
+	e_anim_controller->addAnimation("heal_100", &sdlutils().images().at("player_heal"), 3, 5, 15, 12, -1, 5, 12);
+	e_anim_controller->addTransition("heal_0", "heal_20", "Value", 1, false);
+	e_anim_controller->addTransition("heal_0", "heal_40", "Value", 2, false);
+	e_anim_controller->addTransition("heal_0", "heal_60", "Value", 3, false);
+	e_anim_controller->addTransition("heal_0", "heal_80", "Value", 4, false);
+	e_anim_controller->addTransition("heal_0", "heal_100", "Value", 5, false);
+	e_anim_controller->addTransition("heal_20", "heal_0", "Value", 0, false);
+	e_anim_controller->addTransition("heal_20", "heal_40", "Value", 2, false);
+	e_anim_controller->addTransition("heal_20", "heal_60", "Value", 3, false);
+	e_anim_controller->addTransition("heal_20", "heal_80", "Value", 4, false);
+	e_anim_controller->addTransition("heal_20", "heal_100", "Value", 5, false);
+	e_anim_controller->addTransition("heal_40", "heal_0", "Value", 0, false);
+	e_anim_controller->addTransition("heal_40", "heal_60", "Value", 3, false);
+	e_anim_controller->addTransition("heal_40", "heal_80", "Value", 4, false);
+	e_anim_controller->addTransition("heal_40", "heal_100", "Value", 5, false);
+	e_anim_controller->addTransition("heal_60", "heal_0", "Value", 0, false);
+	e_anim_controller->addTransition("heal_60", "heal_80", "Value", 4, false);
+	e_anim_controller->addTransition("heal_60", "heal_100", "Value", 5, false);
+	e_anim_controller->addTransition("heal_80", "heal_0", "Value", 0, false);
+	e_anim_controller->addTransition("heal_80", "heal_100", "Value", 5, false);
+	e_anim_controller->addTransition("heal_100", "heal_0", "Value", 0, false);
+	e_anim_controller->addTransition("heal_100", "heal_20", "Value", 1, false);
+	e_anim_controller->addTransition("heal_100", "heal_40", "Value", 2, false);
+	e_anim_controller->addTransition("heal_100", "heal_60", "Value", 3, false);
+	e_anim_controller->addTransition("heal_100", "heal_80", "Value", 4, false);
+	e_anim_controller->setParamValue("Value", 5);
+	heals.push_back(e);
+	healsValues.push_back(maxValueHeal_);
 }
 
 void Player_Health::render()
@@ -208,6 +212,19 @@ void Player_Health::loseLife()
 	}
 }
 
+void Player_Health::setMaxLifes(int n){
+	maxVidas = n;
+}
+
+void Player_Health::setMaxHeals(int n){
+	maxHeals_ = n;
+}
+
+float Player_Health::getMaxLifes()
+{
+	return maxVidas;
+}
+
 void Player_Health::heal()
 {
 	if (vidas > 0) {
@@ -251,33 +268,31 @@ void Player_Health::chargeHeal(int charge)
 	}
 }
 
-int Player_Health::getLife()
-{
+int Player_Health::getMaxHeals(){
+	return maxHeals_;
+}
+
+int Player_Health::getLife(){
 	return vidas;
 }
 
-void Player_Health::resetLifes()
-{  
+void Player_Health::resetLifes(){  
 	vidas = maxVidas;
 }
 
-const bool& Player_Health::getInvulnerable()
-{
+const bool& Player_Health::getInvulnerable(){
 	return invulnerability_;
 }
 
-const bool& Player_Health::getPlayerIsDying()
-{
+const bool& Player_Health::getPlayerIsDying(){
 	return playerIsDying;
 }
 
-void Player_Health::setLife(float life)
-{
+void Player_Health::setLife(float life){
 	vidas = life;
 }
 
-void Player_Health::respawn()
-{
+void Player_Health::respawn(){
 	StateMachine* sM = g->getStateMachine();
 	Manager* mngr = entity_->getMngr();
 	mngr->getSoundMngr()->ChangeMainMusic("Nivel1");

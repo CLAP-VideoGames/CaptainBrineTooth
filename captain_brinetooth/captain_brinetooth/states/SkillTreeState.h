@@ -9,11 +9,16 @@ public:
 	virtual void init();
 	virtual void render() const;
 	virtual void update();
+	
+	void setExtraLives();
+
+	void setExtraHeal();
 
 private:
 	SDL_Rect cam;
 	GameState* stRend;
 	Entity* player;
 	SkillTree* skillTree_;
+	Player_Health* plH;
 	int points;
 };

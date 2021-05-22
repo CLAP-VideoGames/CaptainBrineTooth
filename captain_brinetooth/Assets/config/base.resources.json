@@ -909,7 +909,7 @@
 			"id": "scarceBaits",
 			"text": "Debes tener al menos 1 anzuelo!",
 			"font": "Freaks-of-nature72",
-			"color": "0x000000ff"
+			"color": "0xffffffff"
 		}
 
 	],

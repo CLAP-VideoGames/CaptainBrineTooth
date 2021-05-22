@@ -20,21 +20,83 @@ public:
 	void render() override;
 
 	void update() override;
+	
+	/// <summary>
+	/// Crea una entidad que simboliza los frascos de cura del jugador
+	/// </summary>
+	void createHeal();
 
+	/// <summary>
+	/// 
+	/// </summary>
 	void loseLife();
 
-	void heal();
-	void chargeHeal(int charge);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="n"></param>
+	void setMaxLifes(int n);
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="n"></param>
+	void setMaxHeals(int n);
 
-	int getLife();
-
-	void resetLifes();
-
-	void respawn();
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="life"></param>
 	void setLife(float life);
 
-	const bool& getInvulnerable();
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	float getMaxLifes();	
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	int getMaxHeals();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	int getLife();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	void resetLifes();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	void heal();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="charge"></param>
+	void chargeHeal(int charge);
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+	void respawn();
+	
+	/// <summary>
+	/// 
+	/// </summary>
 	const bool& getPlayerIsDying();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	const bool& getInvulnerable();
 
 private:
 	float vidas, maxVidas;

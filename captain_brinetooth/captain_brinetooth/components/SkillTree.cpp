@@ -66,6 +66,10 @@ void SkillTree::initSkillsFromMatch(std::array<bool, 6> skillsFromMatch){
 	}
 }
 
+int& SkillTree::getSpeedModifier(){
+	return speedModifier;
+}
+
 int SkillTree::getMaxSkills(){
 	return playerSkills.size();
 }
