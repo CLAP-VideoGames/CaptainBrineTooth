@@ -1,9 +1,10 @@
 #include "SkillTreeState.h"
 
-SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd)
+SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* player_) : GameState(a, mundo, snd)
 {
 	stRend = stateToRender;
 	cam = a->camera;
+	player = player_;
 }
 
 void SkillTreeState::init()

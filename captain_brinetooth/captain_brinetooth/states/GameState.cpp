@@ -5,6 +5,7 @@
 GameState::GameState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) {
 	app = a;
 	popped = false;
+	fader = nullptr;
 	manager_ = new Manager(a,mundo, snd, &popped);
 }
 
@@ -24,7 +25,6 @@ void GameState::render() const {
 	//Se tiene que dibujar siempre lo último
 	if(fader != nullptr)
 		fader->render();
-	
 }
 void GameState::update() {
 	manager_->update();

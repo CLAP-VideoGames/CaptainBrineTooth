@@ -249,48 +249,8 @@
 			"file": "assets/sprites/fondo.png"
 		},
 		{
-			"id": "titulo",
-			"file": "assets/sprites/botones/title.png"
-		},
-		{
-			"id": "jugar",
-			"file": "assets/sprites/botones/jugar.png"
-		},
-		{
-			"id": "opciones",
-			"file": "assets/sprites/botones/opciones.png"
-		},
-		{
-			"id": "salir",
-			"file": "assets/sprites/botones/salir.png"
-		},
-		{
-			"id": "jugar2",
-			"file": "assets/sprites/botones/jugar2.png"
-		},
-		{
-			"id": "opciones2",
-			"file": "assets/sprites/botones/opciones2.png"
-		},
-		{
-			"id": "salir2",
-			"file": "assets/sprites/botones/salir2.png"
-		},
-		{
 			"id": "nuevapartida",
 			"file": "assets/sprites/nuevapartida.png"
-		},
-		{
-			"id": "flecha+",
-			"file": "assets/sprites/botones/Flecha+.png"
-		},
-		{
-			"id": "flecha-",
-			"file": "assets/sprites/botones/Flecha-.png"
-		},
-		{
-			"id": "volverMenu",
-			"file": "assets/sprites/botones/volver.png"
 		},
 		{
 			"id": "barra",
@@ -305,24 +265,12 @@
 			"file": "assets/sprites/botones/volumen.png"
 		},
 		{
-			"id": "continuar",
-			"file": "assets/sprites/botones/continuar.png"
-		},
-		{
-			"id": "menu",
-			"file": "assets/sprites/botones/menu.png"
-		},
-		{
 			"id": "efectos",
 			"file": "assets/sprites/botones/efectos.png"
 		},
 		{
 			"id": "brillo",
 			"file": "assets/sprites/botones/brillo.png"
-		},
-		{
-			"id": "fondoOpciones",
-			"file": "assets/sprites/botones/fondoOpciones.jpg"
 		},
 		{
 			"id": "fullscreen_on",

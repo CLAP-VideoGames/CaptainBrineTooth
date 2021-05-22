@@ -4,6 +4,7 @@
 #include "../ecs/Component.h"
 #include "../levels/Level0.h"
 #include "../ecs/Entity.h"
+#include "../sdlutils/SDLUtils.h"
 #include "MapCollider.h"
 #include "../components/Connections.h"
 #include "ParallaxScroll.h"
@@ -60,10 +61,14 @@ public:
 
 	void update() override;
 
+	void render() override;
+
 	void deleteTriggers();
 
 	//-------SET RUN------------------
 	void loadTileFiles();
+
+	void pressToAccess(bool entered);
 
 	void TravelNextRoom(int dir);
 
@@ -90,7 +95,7 @@ public:
 
 	int getRandomTileFromArea(Area a);
 
-	App* getStates() { return states; }
+	App* getStates() { return app; }
 	
 	Vector2D getPlayerPos();
 private:
@@ -102,7 +107,9 @@ private:
 
 	static void travelNextZone(b2Contact* contact);
 
-	static void pescar(b2Contact* contact);
+	static void onEnterAccessTrigger(b2Contact* contact);
+
+	static void onExitAccessTrigger(b2Contact* contact);
 
 	//---------CONNECTIONS---------------
 	int checkMatch(const char& ch);
@@ -157,15 +164,18 @@ private:
 	void stoppedFishing() {stopFishing = true;}
 
 protected:
-	bool gonTotravel, travelZone, stopFishing, startRun_;
+	bool gonTotravel, travelZone, stopFishing, startRun_, canAccess, isLobby;
 	int nRooms, nRoomNames = 10, nextDir = -1;
 	int roomsExplored;	//Numero de habitaciones exploradas
 	int fase;				//Número de la zona en la que está el player
 
-	App* states;
+	App* app;
 	ParallaxScroll* backgroundLayer;
 	Level0* lvl;
 	MapCollider* chainCollider;
+	Texture* accessButton;
+	Vector2D accessB_Size;
+	Entity* player;
 
 	//Habitacion actual
 	CurrentRoom* currentRoom;

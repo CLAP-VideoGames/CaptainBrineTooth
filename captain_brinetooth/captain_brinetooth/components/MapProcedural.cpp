@@ -1,6 +1,7 @@
 #include "MapProcedural.h"
 #include "CameraFollow.h"
 #include "../states/StateMachine.h"
+#include "../states/SkillTreeState.h"
 #include "../states/PlayState.h"
 
 #define _CRTDBG_MAP_ALLOC
@@ -15,12 +16,16 @@ MapProcedural::MapProcedural(int nR, int f, App* s) {
 	nRooms = nR;
 	lvl = nullptr;
 	fase = f;
-	states = s;
+	app = s;
 	roomsExplored = 0;
 	backgroundLayer = nullptr;
 
+	accessButton = nullptr;
+	accessB_Size = {};
+	player = nullptr;
+
 	std::cout << roomsExplored << std::endl;
-	gonTotravel = travelZone = stopFishing = startRun_ = false;
+	gonTotravel = travelZone = stopFishing = startRun_ = canAccess = false;
 	currentRoom = nullptr;
 }
 
@@ -32,7 +37,10 @@ MapProcedural::~MapProcedural() {
 }
 
 void MapProcedural::init() {
-	PlayState* playState = dynamic_cast<PlayState*>(states->getStateMachine()->currentState());
+	accessButton = &sdlutils().images().at("player_controls");
+	accessB_Size = Vector2D(accessButton->width(), accessButton->height());
+
+	PlayState* playState = dynamic_cast<PlayState*>(app->getStateMachine()->currentState());
 	//Obtenemos el playStat para poder cambiar el fondo en cada nivel
 	if (playState != nullptr)
 		backgroundLayer = playState->getBackgroundLevel()->getComponent<ParallaxScroll>();
@@ -49,6 +57,8 @@ void MapProcedural::loadLobby() {
 	//Cambiamos la musica
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Lobby");
 
+	isLobby = true;
+
 	lvl->load(LOBBY);
 
 	if (!entity_->hasComponent<MapCollider>())
@@ -64,11 +74,48 @@ void MapProcedural::leaveLobby(b2Contact* contact) {
 		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 	}
 
+
+
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
 	m->getComponent<MapProcedural>()->startRun(true);
 
 
+}
+
+void MapProcedural::onEnterAccessTrigger(b2Contact* contact) {
+	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	//Si el contacto es el player, obtenemos el otro contacto que nos interesa, es decir, el trigger
+	if (trigger == trigger->getMngr()->getHandler<Player>()) {
+		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+	}
+
+	Entity* m = trigger->getMngr()->getHandler<Map>();
+
+	if (m != nullptr) {
+		MapProcedural* map = m->getComponent<MapProcedural>();
+		if (&map != nullptr || &map != NULL)
+			map->pressToAccess(true);
+	}
+}
+
+void MapProcedural::onExitAccessTrigger(b2Contact* contact) {
+	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	//Si el contacto es el player, obtenemos el otro contacto que nos interesa, es decir, el trigger
+	if (trigger == trigger->getMngr()->getHandler<Player>()) {
+		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+	}
+
+	if (trigger->isActive())
+	{
+		Entity* m = trigger->getMngr()->getHandler<Map>();
+
+		if (m != nullptr) {
+			MapProcedural* map = m->getComponent<MapProcedural>();
+			if (map != NULL)
+				map->pressToAccess(false);
+		}
+	}
 }
 
 void MapProcedural::getConec(const string& name, std::array<bool, 4>& cons) {
@@ -140,7 +187,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 	vector<tmx::Vector2f> size = lvl->getConSize();	//Los tamaños de las conexiones
 	vector<char> names = lvl->getConNames();
 	tmx::Vector2f storePos;
-	if (dir == -1) {
+	if (isLobby) {
 		storePos = lvl->getStorePos();
 		//Generar trigger para que se pueda entrar en el arbol de habilidades
 		auto* t = entity_->getMngr()->addEntity();
@@ -151,7 +198,9 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
-		//t->setCollisionMethod(method);
+		t->setCollisionMethod(onEnterAccessTrigger);
+
+		t->setEndCollisionMethod(onExitAccessTrigger);
 
 		triggers.push_back(t);
 	}
@@ -169,7 +218,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 			int x = pos.getX();
 			int y = pos.getY();
 
-			Entity* player = entity_->getMngr()->getHandler<Player>();
+			player = entity_->getMngr()->getHandler<Player>();
 			playerCollider_ = player->getComponent<BoxCollider>();
 			playerCollider_->setPhysicalTransform(x, y, 0);
 			playerCollider_->setSpeed(Vector2D(0.0f, 0.0f));
@@ -190,10 +239,10 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 	}
 	tmx::Vector2f playerpos = lvl->getPlayerPos();
 
-	auto* player = entity_->getMngr()->getHandler<Player>();
+	player = entity_->getMngr()->getHandler<Player>();
 	//Si solo ha explorado la habitacion inicial (cuando se crea la habitacion inicial, roomExplored = 1)
 	//Si es la sala inicial, posicionamos al player en el Spawn Player
-	if (player != NULL && roomsExplored < 2 && playerpos.x != 0)
+	if (player != nullptr && roomsExplored < 2 && playerpos.x != 0)
 		player->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0);
 
 	//Si es un final room, creamos el trigger que hace pasar de zona
@@ -230,7 +279,9 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
-			t->setCollisionMethod(pescar);
+			t->setCollisionMethod(onEnterAccessTrigger);
+
+			t->setEndCollisionMethod(onExitAccessTrigger);
 
 			pesca.push_back(t);
 		}
@@ -283,6 +334,45 @@ void MapProcedural::update() {
 
 		pesca.clear();
 		stopFishing = false;
+	}
+
+	if (ih().keyDownEvent()) {
+		if (canAccess && ih().isKeyDown(SDL_SCANCODE_E)) {
+			if (isLobby){
+				app->getStateMachine()->pushState(new SkillTreeState(app->getStateMachine()->currentState(), app, entity_->getWorld(), entity_->getMngr()->getSoundMngr(), player));
+			}
+			else{
+				playerCollider_ = player->getComponent<BoxCollider>();
+				playerCollider_->setSpeed(Vector2D(0.0f, 0.0f));
+				app->changeToPesca();
+				stoppedFishing();
+			}
+		}
+	}
+}
+
+void MapProcedural::render() {
+	if (canAccess) {
+		player = entity_->getMngr()->getHandler<Player>();
+		//Renderizamos el botton para que acceder a acciones
+		//c -> 4 | r -> 2 
+		Vector2D playerPos;
+		if (player != nullptr) {
+			Transform* tr_ = player->getComponent<Transform>();
+			playerPos = tr_->getPos();
+			playerPos.setX(playerPos.getX() - (tr_->getW()/2));
+			playerPos.setY(playerPos.getY() + (tr_->getH()/2));
+		}
+
+		float w = accessB_Size.getX()/(4 * 3);
+		float h = accessB_Size.getY()/(2 * 3);
+		//Vector2D destPos(App::camera.w / 2 - (w/2), App::camera.h / 2/*playerPos.getY()*//* - (h / 2)*/);
+		Vector2D destPos(playerPos.getX() - (App::camera.x), playerPos.getY() - (App::camera.y) + (h / 3));
+		SDL_Rect dest = build_sdlrect(destPos, w , h);
+
+		Vector2D pos(0.0f, 0.0f);
+		SDL_Rect src = build_sdlrect(pos, ((float)accessButton->width() / 4), ((float)accessButton->height() / 2));
+		accessButton->render(src, dest, 0.0f);
 	}
 }
 
@@ -353,6 +443,10 @@ void MapProcedural::loadTileFiles() {
 	}
 }
 
+void MapProcedural::pressToAccess(bool entered) {
+	canAccess = entered;
+}
+
 void MapProcedural::initBoss() {
 	// Se inicia la musica del nivel correspondiente
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("FinalBoss");
@@ -366,12 +460,13 @@ void MapProcedural::initBoss() {
 void MapProcedural::initRun() {
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("Nivel" + std::to_string(fase));
 	backgroundLayer->setLevelBackground(fase);
-	startRun_ = false;
 	int tile = getRandomTileFromArea(Starts);
 	roomNames[tile].used = true;
 	roomsExplored++;
 	//std::cout << roomsExplored << std::endl;
 	currentRoom = initilizeCurrentRoom(roomNames[tile]);
+	//Tiene que estar aqui debajo para que el createTrigger verifique que se ha pasado a la run
+	startRun_ = false;
 }
 
 CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
@@ -434,20 +529,6 @@ void MapProcedural::travel(b2Contact* contact) {
 	map->getComponent<MapProcedural>()->setTravel(true, dir);
 }
 
-void MapProcedural::pescar(b2Contact* contact) {
-	Entity* trigger = (Entity*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-
-	if (trigger == trigger->getMngr()->getHandler<Player>()) {
-		trigger = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-	}
-
-
-	playerCollider_ = trigger->getMngr()->getHandler<Player>()->getComponent<BoxCollider>();
-	playerCollider_->setSpeed(Vector2D(0.0f, 0.0f));
-	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->getStates()->changeToPesca();
-	trigger->getMngr()->getHandler<Map>()->getComponent<MapProcedural>()->stoppedFishing();
-}
-
 void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {
 	std::string path = p;
 
@@ -482,6 +563,7 @@ Vector2D MapProcedural::getPlayerPos() {
 
 void MapProcedural::startRun(bool start) {
 	startRun_ = start;
+	isLobby = false;
 }
 
 void MapProcedural::deleteTriggers() {
