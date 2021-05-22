@@ -23,6 +23,7 @@ void SkillTreeState::init(){
 	setExtraHeal();
 	setSpines();
 	setDoubleDamage();
+	setSpeedAttack();
 }
 
 void SkillTreeState::render() const
@@ -63,10 +64,10 @@ void SkillTreeState::setSpines() {
 
 void SkillTreeState::setDoubleDamage(){
 	skillTree_->setSkill(DoubleDamage, true, points);
-	skillTree_->setSpeedModifier(2);
+	skillTree_->setAttackModifier(2);
 }
 
 void SkillTreeState::setSpeedAttack(){
 	skillTree_->setSkill(SpeedAttack, true, points);
-	skillTree_->setAttackModifier(2);
+	skillTree_->setSpeedModifier(2);
 }
