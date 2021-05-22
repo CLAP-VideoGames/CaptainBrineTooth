@@ -604,7 +604,10 @@
 			"id": "mordisco_elfshark",
 			"file": "assets/sounds/enemies/mordisco_elfshark.mp3"
 		},
-
+		{
+			"id": "mordisco",
+			"file": "assets/sounds/enemies/mordisco.mp3"
+		},
 		{
 			"id": "gaviota",
 			"file": "assets/sounds/gaviota.mp3"

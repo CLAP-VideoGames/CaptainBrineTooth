@@ -425,6 +425,7 @@ void TutorialState::clearStep()
 	for (Entity* ent : stepImg) {
 		ent->setActive(false);
 	}
+	manager_->getSoundMngr()->playSoundEffect("get_weapon", 0);
 	stepImg.clear();
 	stepImgPos.clear();
 	countDown = sdlutils().currRealTime();
