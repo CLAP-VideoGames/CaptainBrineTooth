@@ -226,7 +226,7 @@ void Enemy_Health::update(){
 		if (particle_hit != nullptr) particle_hit->setActive(false);
 		//Dar recompensas
 		entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addCoins(reward_);
-		int rand = sdlutils().rand().teCuoto(0,10);
+		int rand = sdlutils().rand().teCuoto(0,6);
 		if (rand == 0)
 			entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addBaits(1);
 		SDL_Delay(100);
