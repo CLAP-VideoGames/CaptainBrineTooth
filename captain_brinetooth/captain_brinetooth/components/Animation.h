@@ -33,7 +33,7 @@ public:
 	//Anchor point por defecto es (0.5,0.5)
 	//Recibe un modificador (variable durante ejecución) que altera la velocidad de la animacion
 	/// </summary>
-	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int* modifier, Vector2D anchor = Vector2D(0.5, 0.5));
+	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, float* modifier, Vector2D anchor = Vector2D(0.5, 0.5));
 
 	/// <summary>
 	//Constructora de una animacion a partir de una textura con inicio y fin definidos
@@ -41,7 +41,7 @@ public:
 	//Anchor point por defecto es (0.5,0.5)
 	//Recibe un modificador (variable durante ejecución) que altera la velocidad de la animacion
 	/// </summary>
-	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr, int* modifier, Vector2D anchor = Vector2D(0.5, 0.5));
+	Animation(std::string id, Texture* tex, int rows, int cols, int frames, Uint32 framerate, int repeat, int startfr, int endfr, float* modifier, Vector2D anchor = Vector2D(0.5, 0.5));
 
 	virtual ~Animation();
 
@@ -74,7 +74,7 @@ protected:
 	int startfr_, endfr_, actfr_;		//Frame inicial, final y actual de la animacion
 	State state_;
 	Uint32 framerate_;
-	int* speedModifier;
+	float* speedModifier;
 	int repeat_;
 	Uint32 lastUpdateTime;
 	bool flip_horizontal_;	//Flip
@@ -83,6 +83,6 @@ protected:
 private:
 	//Esta variable me sirve para cuando la animacion no recibe un puntero modificador 
 	//y necesito que dure hasta el final de la vida del componente
-	int auxSpeedModifier = 1; 
+	float auxSpeedModifier = 1;
 };
 

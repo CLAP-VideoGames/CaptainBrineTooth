@@ -405,6 +405,9 @@
     <ClInclude Include="states\CreditsState.h">
       <Filter>Archivos de encabezado\states</Filter>
     </ClInclude>
+    <ClInclude Include="components\ExplanationMessage.h">
+      <Filter>Archivos de encabezado\components\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="captain_brinetooth.rc">
@@ -677,6 +680,9 @@
     </ClCompile>
     <ClCompile Include="states\CreditsState.cpp">
       <Filter>Archivos de origen\states</Filter>
+    </ClCompile>
+    <ClCompile Include="components\ExplanationMessage.cpp">
+      <Filter>Archivos de origen\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

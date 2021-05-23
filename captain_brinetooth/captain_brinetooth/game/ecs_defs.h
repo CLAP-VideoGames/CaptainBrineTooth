@@ -52,6 +52,7 @@ class Fade;
 class JellyHatBehavior;
 class Connections;
 class Inventory;
+class ExplanationMessage;
 class SkillTree;
 class GetAWeaponOnCollision;
 class Cuerda;
@@ -71,6 +72,7 @@ class Fists;
 	AnimBlendGraph,\
 	ParallaxScroll,\
 	Rotate,\
+	ExplanationMessage,\
 	BoxCollider,\
 	TriggerCollider,\
 	Player_Health,\

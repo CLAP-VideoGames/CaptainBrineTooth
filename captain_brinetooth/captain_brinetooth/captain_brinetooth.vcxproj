@@ -164,6 +164,7 @@
     <ClInclude Include="components\Cuerda.h" />
     <ClInclude Include="components\ElectricWhip.h" />
     <ClInclude Include="components\EnemyGenerator.h" />
+    <ClInclude Include="components\ExplanationMessage.h" />
     <ClInclude Include="components\Fade.h" />
     <ClInclude Include="components\FishlerController.h" />
     <ClInclude Include="components\Fists.h" />
@@ -278,6 +279,7 @@
     <ClCompile Include="components\enemyMovement.cpp" />
     <ClCompile Include="components\EnemyTrigger.cpp" />
     <ClCompile Include="components\Enemy_Health.cpp" />
+    <ClCompile Include="components\ExplanationMessage.cpp" />
     <ClCompile Include="components\Fade.cpp" />
     <ClCompile Include="components\FishlerController.cpp" />
     <ClCompile Include="components\Fists.cpp" />

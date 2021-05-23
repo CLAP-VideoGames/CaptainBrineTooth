@@ -76,7 +76,7 @@ void SkillTree::initSkillsFromMatch(std::array<bool, 6> skillsFromMatch){
 	}
 }
 
-int* SkillTree::getSpeedModifier(){
+float* SkillTree::getSpeedModifier(){
 	return &speedModifier;
 }
 
@@ -103,6 +103,6 @@ void SkillTree::setCounterAttackPercentage(float points)
 	else counterattackSpines = points;
 }
 
-void SkillTree::setSpeedModifier(int n){
+void SkillTree::setSpeedModifier(float n){
 	speedModifier = n;
 }

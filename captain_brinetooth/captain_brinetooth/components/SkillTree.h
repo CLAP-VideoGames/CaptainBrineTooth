@@ -71,13 +71,13 @@ public:
 	/// Define el multiplicador de velocidad con el que el jugador va a atacar
 	/// </summary>
 	/// <param name="n"></param>
-	void setSpeedModifier(int n);
+	void setSpeedModifier(float n);
 
 	/// <summary>
 	/// Devuelve la referencia del modificador de velocidad de ataque
 	/// </summary>
 	/// <returns></returns>
-	int* getSpeedModifier();
+	float* getSpeedModifier();
 
 	/// <summary>
 	/// Asigna a la entidad la habilidad de tipo Skill al estado deseado
@@ -106,7 +106,7 @@ public:
 private:
 	std::array<std::pair<bool, int>, 6> playerSkills {};
 
-	int speedModifier;
+	float speedModifier;
 	int attackModifier;
 	float counterattackSpines;
 	Inventory* invent_;

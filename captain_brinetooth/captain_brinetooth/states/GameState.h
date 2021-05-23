@@ -41,6 +41,7 @@
 #include "../components/Image.h"
 #include "../components/JellyHatBehavior.h"
 #include "../components/Slider.h"
+#include "../components/ExplanationMessage.h"
 #include "../components/Inventory.h"
 #include "../components/GetAWeaponOnCollision.h"
 #include "../components/Gancho.h"

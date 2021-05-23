@@ -125,6 +125,7 @@ void SkillTreeState::createTable(){
 	auto* spines = manager_->addEntity();
 	spines->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
 	spines->addComponent<Button>(textureSpine, activateSpines, app, manager_->getSoundMngr());
+	spines->addComponent<ExplanationMessage>();
 	//Heal
 	Texture* textureHeal = &sdlutils().images().at("healBait");
 	x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));
@@ -183,7 +184,7 @@ void SkillTreeState::setSpines() {
 	if(skillTree_->setSkill(Spines, true, points))
 		points = player->getComponent<Inventory>()->getCoins();
 	//Accion
-	skillTree_->setCounterAttackPercentage(0.1f);
+	skillTree_->setCounterAttackPercentage(0.07f);
 	manager_->getSoundMngr()->playSoundEffect("Escamas_Arapaima", 0);
 
 }
@@ -201,7 +202,7 @@ void SkillTreeState::setSpeedAttack(){//Si se ha podido comprar la habilidad, qu
 	if(skillTree_->setSkill(SpeedAttack, true, points))
 		points = player->getComponent<Inventory>()->getCoins();
 	//Accion
-	skillTree_->setSpeedModifier(2);
+	skillTree_->setSpeedModifier(1.3f);
 	manager_->getSoundMngr()->playSoundEffect("BrineStone", 0);
 
 }

@@ -499,6 +499,10 @@ void MapProcedural::pressToAccess(bool entered) {
 }
 
 void MapProcedural::initBoss() {
+	auto* p = entity_->getMngr()->getHandler<Player>();
+	SkillTree* sT = nullptr;
+	if (p) sT = p->getComponent<SkillTree>();
+	if(sT) sT->setCounterAttackPercentage(0.03f);
 	// Se inicia la musica del nivel correspondiente
 	entity_->getMngr()->getSoundMngr()->ChangeMainMusic("FinalBoss");
 	roomsExplored = 0;

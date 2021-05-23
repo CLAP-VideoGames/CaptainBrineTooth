@@ -216,7 +216,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
 
 	SkillTree* skillTree_ = player->addComponent<SkillTree>();
-	int* speedModifer = skillTree_->getSpeedModifier();
+	float* speedModifer = skillTree_->getSpeedModifier();
 
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
