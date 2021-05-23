@@ -70,22 +70,22 @@ void Inventory::update() {
 	}
 	//Coins & Baits
 	if (temp_coins != 0 && elapsedtime_temp_coins + cd_temp < sdlutils().currRealTime()) {
-		if (temp_coins > 0) {
+		if (temp_coins > 0) {	//Suma de monedas
 			entity_->getMngr()->getSoundMngr()->playSoundEffect("coin_collect", 0);
 			display_coins++;
 			temp_coins--;
 		}
-		else {
+		else {	//Resta de monedas
 			display_coins--;
 			temp_coins++;
 		}
 	}
 	if (temp_baits != 0 && elapsedtime_temp_baits + cd_temp < sdlutils().currRealTime()) {
-		if (temp_baits > 0) {
+		if (temp_baits > 0) {	//Suma de cebos
 			display_baits++;
 			temp_baits--;
 		}
-		else {
+		else {	//Resta de cebos
 			display_baits--;
 			temp_baits++;
 		}

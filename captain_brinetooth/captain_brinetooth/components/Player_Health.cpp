@@ -253,10 +253,10 @@ void Player_Health::heal()
 void Player_Health::chargeHeal(int charge)
 {
 	size_t i = 0;
-	while (i < maxHeals_ && healsValues[i] >= maxValueHeal_) i++;
+	while (i < maxHeals_ && healsValues[i] >= maxValueHeal_) i++;	//Busca si hay algun frasco vacio
 	if (i < maxHeals_) {
-		healsValues[i] += charge;
-		if (healsValues[i] >= maxValueHeal_) {
+		healsValues[i] += charge;	//CARGA DE LA CURA
+		if (healsValues[i] >= maxValueHeal_) {	//Si se sobre carga se carga la siguiente
 			charge = healsValues[i] - maxValueHeal_;
 			healsValues[i] = maxValueHeal_;
 			if (i + 1 < maxHeals_) {
