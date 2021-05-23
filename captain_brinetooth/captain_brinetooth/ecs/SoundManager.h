@@ -38,11 +38,17 @@ public:
 
 	void playPauseMusic(); // Detener todo los sonidos y musica del juego principal y tocar la musica del menu de Pausa
 
+	/// <summary>
+	/// Metodo para tocar exclusivamente la cancion de la intro (Con el Change Music se necesita una version de pausa, que aqui es innecesaria)
+	/// </summary>
 	void playIntroMusic() {
 		sdlutils().musics().at("fondo_video").setChannelVolume(volumenGeneral);
 		sdlutils().musics().at("fondo_video").playforMusic();
 	}
 
+	/// <summary>
+	/// Detenemos la cancion de intro y metemos 2 efectos de sonido
+	/// </summary>
 	void stopIntroMusic()
 	{
 		sdlutils().musics().at("fondo_video").haltChannel();
@@ -50,12 +56,24 @@ public:
 		sdlutils().soundEffects().at("gaviota").play();
 	}
 
-	void resumeMainMusic(); // Retomar toda la musica del juego principal despues de detener la musica de Pausa
+	/// <summary>
+	/// Retomar toda la musica del juego principal despues de detener la musica de Pausa
+	/// </summary>
+	void resumeMainMusic(); 
 
+	/// <summary>
+	/// Aumentamos el volumen a la cancion de pausa y muteamos la cancion normal
+	/// </summary>
 	void pauseMainMusic(std::string newMusic);
 
+	/// <summary>
+	/// Cambiamos la cancion normal y la de pausa por otra nueva
+	/// </summary>
 	void ChangeMainMusic(std::string newMusic); // Cambiar de cancion principal
 
+	/// <summary>
+	/// Metemos efecto de fade out a la cancion
+	/// </summary>
 	void fadeOutMusic();
 
 	void playSoundEffect(std::string effect, Uint32 seg);

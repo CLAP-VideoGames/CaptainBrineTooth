@@ -96,23 +96,10 @@ void SoundManager::playPauseMusic()
 
 void SoundManager::resumeMainMusic()
 {
-	
 		volumenGeneral = volumenPausa;
 		volumenPausa = 0;
 		sdlutils().musics().at(pauseMusic).setChannelVolume(0);
 		sdlutils().musics().at(mainMusic).setChannelVolume(volumenGeneral);
-	
-	/*else
-	{
-		sdlutils().musics().at("Pescando").haltChannel();
-		sdlutils().musics().at("PescandoPausa").haltChannel();
-
-		mainMusic = "CofreTesoro";
-		pauseMusic = "CofreTesoroPausa";
-
-		sdlutils().musics().at(mainMusic).resumeChannel();
-		sdlutils().musics().at(pauseMusic).resumeChannel();
-	}*/
 }
 
 void SoundManager::pauseMainMusic(std::string newMusic)

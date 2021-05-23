@@ -20,6 +20,10 @@ MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) 
 	manager_->getSoundMngr()->playMainMusic();
 }
 
+
+/// <summary>
+/// Iniciamos el fade in, metemos el titulo, los botones y el fondo
+/// </summary>
 void MenuState::init() {
 	//Fade. Para que se sette el Fade
 	GameState::init();

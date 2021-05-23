@@ -184,6 +184,7 @@ void Player_Health::loseLife()
 {
 	int x = sdlutils().rand().teCuoto(0, 2);
 
+	// Elegimos un sonido de jugador herido y lo tocamos
 	switch (x)
 	{
 	case 0:
@@ -206,7 +207,6 @@ void Player_Health::loseLife()
 		entity_->getComponent<BoxCollider>()->setSpeed(Vector2D(0,0));
 		entity_->getMngr()->getSoundMngr()->fadeOutMusic();
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("muerte_jugador", 0);
-		//entity_->getMngr()->getSoundMngr()->playSoundEffect("player_death", 0);
 		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
 		playerIsDying = true;
 	}

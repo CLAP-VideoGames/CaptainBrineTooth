@@ -6,6 +6,9 @@ OptionsState::OptionsState(App* a, std::shared_ptr<b2World> mundo, SoundManager*
 	cam = a->camera;
 }
 
+/// <summary>
+/// Metemos los botones y los sliders
+/// </summary>
 void OptionsState::init(){
 	auto* fondo = manager_->addEntity();
 
@@ -16,7 +19,6 @@ void OptionsState::init(){
 	posImage.h = cam.h;
 
 	fondo->addComponent<Image>(&sdlutils().images().at("bg_options"), posImage, "fondoOpciones");
-	//manager_->getSoundMngr()->playPauseMusic();
 
 	// Back Button
 	int w = (int)sdlutils().width() * 0.25 * App::camera_Zoom_Out * 0.65;
@@ -57,12 +59,15 @@ void OptionsState::createButton(Texture* imageTexture, Vector2D pos, Vector2D si
 	button->addComponent<Button>(imageTexture, callback, app, manager_->getSoundMngr());
 }
 
+/// <summary>
+///  Las entidades de createVolume, Effects y Brightness estan separadas en metodos para poder utilizarlos en otros sitios como PauseState
+/// </summary>
+
+
 Entity* OptionsState::createVolume(Manager* mngr, const Vector2D& pos, const std::pair<Vector2D, Vector2D>& sizes, Texture* textures[2], const int& volume, App* a){
 	Entity* sliderVolume = mngr->addEntity();
-	//
 	Slider* slider = sliderVolume->addComponent<Slider>(pos, sizes, textures, controlVolume, &sdlutils().images().at("volumen"), a, 0.5f, 50.0f);
 
-	////Est� mmmuy alto
 	float newVol = (float)volume / (float)(mngr->getSoundMngr()->getMaxVol()/2);
 	slider->setSlider(newVol);
 
@@ -89,7 +94,7 @@ Entity* OptionsState::createBrightness(Manager* mngr, const Vector2D& pos, const
 }
 
 void OptionsState::update() {
-	GameState::update(); //esto se podria quitar ya que solo va a hacer un update
+	GameState::update(); 
 	if (fullscreen_button != nullptr) {
 		auto flags = SDL_GetWindowFlags(sdlutils().window());
 		if (flags & SDL_WINDOW_FULLSCREEN) {
@@ -100,7 +105,6 @@ void OptionsState::update() {
 
 void OptionsState::controlVolume(float value, Entity* ent){
 	SoundManager* snd = ent->getMngr()->getSoundMngr();
-	//Est� mmmuy alto
 	int newVol = value * (float)(snd->getMaxVol()/2);
 	snd->setMusicVolume(newVol);
 }
@@ -124,7 +128,6 @@ void OptionsState::controlBrightness(float value, Entity* ent){
 
 void OptionsState::volverMenu(App* app, SoundManager* snd){
 	snd->playSoundEffect("gaviota",0);
-	//snd->resumeMainMusic();
 	app->getStateMachine()->popState();
 }
 
