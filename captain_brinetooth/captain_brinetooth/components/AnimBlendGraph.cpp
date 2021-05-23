@@ -157,7 +157,7 @@ void AnimBlendGraph::setParamValue(std::string paramName, int value)
 	}
 }
 
-const int& AnimBlendGraph::getParamIndex(std::string paramName)
+int AnimBlendGraph::getParamIndex(std::string paramName)
 {
 	int i = 0;
 	while (i < params_.size() && params_[i]->name_ != paramName) i++; //Busqueda del parametro por su nombre

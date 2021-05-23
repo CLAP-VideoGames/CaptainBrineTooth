@@ -72,7 +72,7 @@ public:
 	/// </summary>
 	/// <param name="paramName"></param>
 	/// <returns></returns>
-	const int& getParamIndex(std::string paramName);
+	int getParamIndex(std::string paramName);
 	/// <summary>
 	/// Mantiene las proporciones entre animaciones que no comparten el mismo tamaño
 	/// Se necesita el nombre de la animacion por defecto y el tamaño que se quiere representar
