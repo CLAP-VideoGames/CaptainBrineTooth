@@ -50,6 +50,7 @@
 #include "../components/VideoPlayer.h"
 #include "../components/Fade.h"
 #include "../components/FishlerController.h"
+#include "../components/SkillTree.h"
 
 class Manager;
 class App;

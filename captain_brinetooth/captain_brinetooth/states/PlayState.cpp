@@ -1,6 +1,5 @@
 ﻿#include "PlayState.h"
 #include "PasueState.h"
-#include "../components/SkillTree.h"
 #include <fstream>
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";

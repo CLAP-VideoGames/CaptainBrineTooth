@@ -434,6 +434,7 @@ void TutorialState::clearStep()
 void TutorialState::createPlayer(const Config& playerConfig)
 {
 	player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
+	player->addComponent<SkillTree>();
 
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
