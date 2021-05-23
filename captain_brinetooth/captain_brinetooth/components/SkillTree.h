@@ -4,7 +4,7 @@
 #pragma once
 
 //DLC Anzuelos, Agua Potable, Escamas de Arapaima, Dientes de Piraña, Armas de Salmuere, Infección de anémonas
-enum Skill { ExtraLives, ExtraHeal, Spines, DoubleDamage, SpeedAttack, StealLife};
+enum Skill { ExtraLives, ExtraHeal, Spines, ExtraDamage, SpeedAttack, StealLife};
 
 class SkillTree : public Component {
 public:

@@ -114,8 +114,7 @@ void MapProcedural::onExitAccessTrigger(b2Contact* contact) {
 	}
 
 	if (trigger->isActive()){
-		if (contact->GetNext() != NULL)
-		{
+		if (trigger->componentsSize()>0){
 			Entity* m = nullptr;
 			m = trigger->getMngr()->getHandler<Map>();
 			if (m != nullptr) {

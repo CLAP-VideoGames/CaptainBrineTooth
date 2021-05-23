@@ -9,15 +9,18 @@ SkillTree::~SkillTree()
 }
 
 void SkillTree::init(){
-	setSkillLimitPoints(DoubleDamage, 1500);
-	setSkillLimitPoints(SpeedAttack, 1500);
+	setSkillLimitPoints(ExtraDamage, 1600);
+	setSkillLimitPoints(SpeedAttack, 1400);
 	setSkillLimitPoints(StealLife, 1500);
+	setSkillLimitPoints(ExtraHeal, 1200);
+	setSkillLimitPoints(Spines, 2000);
 
 	speedModifier = 1;
 	attackModifier = 1;
 	counterattackSpines = 100;
 
 	invent_ = entity_->getComponent<Inventory>();
+
 	//El guardado tiene que venir de la siguiente manera:
 	//p int
 	//skills true false true false false true

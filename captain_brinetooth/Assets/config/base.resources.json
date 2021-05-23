@@ -447,6 +447,34 @@
 		{
 			"id": "fondoPesca",
 			"file": "assets/sprites/pesca/fondoPesca.png"
+		},
+		{
+			"id": "healBait",
+			"file": "assets/sprites/skill/healBait.png"
+		},
+		{
+			"id": "doubleBait",
+			"file": "assets/sprites/skill/doubleBait.png"
+		},
+		{
+			"id": "extraBait",
+			"file": "assets/sprites/skill/extraBait.png"
+		},
+		{
+			"id": "speedBait",
+			"file": "assets/sprites/skill/speedBait.png"
+		},
+		{
+			"id": "spineBait",
+			"file": "assets/sprites/skill/spineBait.png"
+		},
+		{
+			"id": "skillTable",
+			"file": "assets/sprites/skill/skillTable.png"
+		},
+		{
+			"id": "skillBackground",
+			"file": "assets/sprites/skill/skillBackground.png"
 		}
 	],
 
@@ -527,9 +555,6 @@
 			"id": "corcho",
 			"file": "assets/sounds/player/corcho_alt.mp3"
 		},
-
-
-
 		{
 			"id": "sword_whoosh0",
 			"file": "assets/sounds/weapons/sword/sword_whoosh.mp3"
@@ -956,6 +981,12 @@
 		{
 			"id": "scarceBaits",
 			"text": "Debes tener al menos 1 anzuelo!",
+			"font": "Freaks-of-nature72",
+			"color": "0xffffffff"
+		},
+		{
+			"id": "skillsTitle",
+			"text": "Habilidades",
 			"font": "Freaks-of-nature72",
 			"color": "0xffffffff"
 		}

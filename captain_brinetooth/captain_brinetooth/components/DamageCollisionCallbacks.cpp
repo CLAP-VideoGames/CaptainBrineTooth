@@ -19,8 +19,7 @@ void DamageCollisionCallbacks::BeginContact(b2Contact* contact)
         cosaB->playCollisionMethod(contact);
 }
 
-void DamageCollisionCallbacks::EndContact(b2Contact* contact)
-{
+void DamageCollisionCallbacks::EndContact(b2Contact* contact) {
     //Debugg
     if (sdlutils().getConsoleDebug()) std::cout << "STOPPED TOUCHING\n";
 

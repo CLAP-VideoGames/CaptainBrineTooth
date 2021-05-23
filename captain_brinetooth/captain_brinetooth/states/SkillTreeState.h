@@ -17,6 +17,8 @@ public:
 	static void activateSpeedAttack(App* app, SoundManager* snd);
 
 
+	void createTable();
+
 	void setExtraLives();
 
 	void setExtraHeal();

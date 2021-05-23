@@ -151,6 +151,10 @@ public:
 		}
 	}
 
+	int componentsSize() {
+		return components_.size();
+	}
+
 private:
 
 
