@@ -48,6 +48,7 @@ void SkillTreeState::setExtraLives() {
 	
 	plH->setMaxLifes(plH->getMaxLifes() + 2);
 	plH->resetLifes();
+	manager_->getSoundMngr()->playSoundEffect("Kit_anzuelos",0);
 }
 
 void SkillTreeState::setExtraHeal(){
@@ -55,19 +56,26 @@ void SkillTreeState::setExtraHeal(){
 
 	plH->setMaxHeals(plH->getMaxHeals() + 1);
 	plH->createHeal();
+	manager_->getSoundMngr()->playSoundEffect("Agua_potable", 0);
+
 }
 
 void SkillTreeState::setSpines() {
 	skillTree_->setSkill(Spines, true, points);
 	skillTree_->setCounterAttackPercentage(0.1f);
+	manager_->getSoundMngr()->playSoundEffect("Escamas_Arapaima", 0);
+
 }
 
 void SkillTreeState::setDoubleDamage(){
 	skillTree_->setSkill(DoubleDamage, true, points);
 	skillTree_->setAttackModifier(2);
+	manager_->getSoundMngr()->playSoundEffect("Collar_piranas", 0);
 }
 
 void SkillTreeState::setSpeedAttack(){
 	skillTree_->setSkill(SpeedAttack, true, points);
 	skillTree_->setSpeedModifier(2);
+	manager_->getSoundMngr()->playSoundEffect("BrineStone", 0);
+
 }

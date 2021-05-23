@@ -503,6 +503,27 @@
 			"id": "get_trash",
 			"file": "assets/sounds/player/get_trash.wav"
 		},
+		{
+			"id": "Agua_potable",
+			"file": "assets/sounds/player/Agua_potable.mp3"
+		},
+		{
+			"id": "BrineStone",
+			"file": "assets/sounds/player/BrineStone.mp3"
+		},
+		{
+			"id": "Collar_piranas",
+			"file": "assets/sounds/player/Collar_piranas.mp3"
+		},
+		{
+			"id": "Escamas_Arapaima",
+			"file": "assets/sounds/player/Escamas_Arapaima.mp3"
+		},
+		{
+			"id": "Kit_anzuelos",
+			"file": "assets/sounds/player/Kit_anzuelos.mp3"
+		},
+
 
 
 		{
