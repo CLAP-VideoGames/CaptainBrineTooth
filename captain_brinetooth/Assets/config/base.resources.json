@@ -409,6 +409,18 @@
 			"file": "assets/background/aztec/aztec_layer_5.png"
 		},
 		{
+			"id": "aztec_portal",
+			"file": "assets/sprites/other/aztec_portal.png"
+		},
+		{
+			"id": "ice_portal",
+			"file": "assets/sprites/other/ice_portal.png"
+		},
+		{
+			"id": "fishing_rod",
+			"file": "assets/sprites/other/fishing_rod.png"
+		},
+		{
 			"id": "cloud",
 			"file": "assets/sprites/tutorial_floor.png"
 		},
@@ -603,10 +615,6 @@
 		{
 			"id": "enemy_hurt2",
 			"file": "assets/sounds/enemies/enemy_hurt2.mp3"
-		},
-		{
-			"id": "coin_collect",
-			"file": "assets/sounds/enemies/coin_collect.mp3"
 		},
 		{
 			"id": "mordisco_elfshark",
