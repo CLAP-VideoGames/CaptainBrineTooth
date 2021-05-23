@@ -593,6 +593,10 @@
 			"file": "assets/sounds/weapons/pick_weapon.mp3"
 		},
 		{
+			"id": "coin_collect",
+			"file": "assets/sounds/enemies/coin_collect.mp3"
+		},
+		{
 			"id": "crecimiento_medusa",
 			"file": "assets/sounds/enemies/crecimiento_medusa.mp3"
 		},

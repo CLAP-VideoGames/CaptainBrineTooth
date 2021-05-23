@@ -71,7 +71,7 @@ void Inventory::update() {
 	//Coins & Baits
 	if (temp_coins != 0 && elapsedtime_temp_coins + cd_temp < sdlutils().currRealTime()) {
 		if (temp_coins > 0) {
-			//entity_->getMngr()->getSoundMngr()->playSoundEffect("coin_collect", 0);
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("coin_collect", 0);
 			display_coins++;
 			temp_coins--;
 		}
