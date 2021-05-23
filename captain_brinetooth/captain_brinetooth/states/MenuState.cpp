@@ -8,18 +8,7 @@
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 	cam = a->camera;
 	fadeComp = nullptr;
-	if (manager_->getSoundMngr()->GeneralVolume() > manager_->getSoundMngr()->PauseVolume())
-	{
-		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->GeneralVolume(), manager_->getSoundMngr()->EffectsVolume());
-	}
-	else
-	{
-		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->PauseVolume(), manager_->getSoundMngr()->EffectsVolume());
-	}
-
-	manager_->getSoundMngr()->playMainMusic();
 }
-
 
 /// <summary>
 /// Iniciamos el fade in, metemos el titulo, los botones y el fondo
@@ -34,6 +23,17 @@ void MenuState::init() {
 		fadeComp->setTimeOut(2000);
 		fadeComp->triggerFade();
 	}
+
+	//Setear los sonidos
+	if (manager_->getSoundMngr()->GeneralVolume() > manager_->getSoundMngr()->PauseVolume())
+	{
+		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->GeneralVolume(), manager_->getSoundMngr()->EffectsVolume());
+	}
+	else {
+		manager_->getSoundMngr()->setGeneralVolume(manager_->getSoundMngr()->PauseVolume(), manager_->getSoundMngr()->EffectsVolume());
+	}
+
+	manager_->getSoundMngr()->playMainMusic();
 
 	//Background
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;

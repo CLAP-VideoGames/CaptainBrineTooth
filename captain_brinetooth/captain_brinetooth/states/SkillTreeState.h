@@ -10,6 +10,13 @@ public:
 	virtual void render() const;
 	virtual void update();
 	
+	static void activateExtraLives(App* app, SoundManager* snd);
+	static void activateExtraHeals(App* app, SoundManager* snd);
+	static void activateSpines(App* app, SoundManager* snd);
+	static void activateDoubleDamage(App* app, SoundManager* snd);
+	static void activateSpeedAttack(App* app, SoundManager* snd);
+
+
 	void setExtraLives();
 
 	void setExtraHeal();

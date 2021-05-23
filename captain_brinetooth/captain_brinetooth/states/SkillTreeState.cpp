@@ -15,15 +15,23 @@ SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr
 void SkillTreeState::init(){
 	skillTree_ = player->getComponent<SkillTree>();
 	points = player->getComponent<Inventory>()->getCoins();
-	//points = 1600;
 
 	plH = player->getComponent<Player_Health>();
 
-	setExtraLives();
-	setExtraHeal();
-	setSpines();
-	setDoubleDamage();
-	setSpeedAttack();
+	//int w = (int)sdlutils().width() * App::camera_Zoom_Out * 0.35;
+	//int h = (int)w * 0.6;	//mantener aspect ratio
+	////Creditos
+	//auto* creditos = manager_->addEntity();
+	//int x_ = (int)((App::camera.w - w) * 0.02);
+	//int y_ = (int)((App::camera.h - h) * 0.98);
+	//creditos->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), w * 0.7, h * 0.7, 0.0f);
+
+	//creditos->addComponent<Button>(&sdlutils().images().at("creditos_menu"), activateExtraLives, app, manager_->getSoundMngr());
+	//setExtraLives();
+	//setExtraHeal();
+	//setSpines();
+	//setDoubleDamage();
+	//setSpeedAttack();
 }
 
 void SkillTreeState::render() const
@@ -40,6 +48,41 @@ void SkillTreeState::update()
 		}
 	}
 	GameState::update();
+}
+
+void SkillTreeState::activateExtraLives(App* app, SoundManager* snd){
+	StateMachine* sM = app->getStateMachine();
+	SkillTreeState* sTS = dynamic_cast<SkillTreeState*>(sM->currentState());
+
+	if (sTS) sTS->setExtraLives();
+}
+
+void SkillTreeState::activateExtraHeals(App* app, SoundManager* snd){
+	StateMachine* sM = app->getStateMachine();
+	SkillTreeState* sTS = dynamic_cast<SkillTreeState*>(sM->currentState());
+
+	if (sTS) sTS->setExtraHeal();
+}
+
+void SkillTreeState::activateSpines(App* app, SoundManager* snd){
+	StateMachine* sM = app->getStateMachine();
+	SkillTreeState* sTS = dynamic_cast<SkillTreeState*>(sM->currentState());
+
+	if (sTS) sTS->setSpines();
+}
+
+void SkillTreeState::activateDoubleDamage(App* app, SoundManager* snd) {
+	StateMachine* sM = app->getStateMachine();
+	SkillTreeState* sTS = dynamic_cast<SkillTreeState*>(sM->currentState());
+
+	if (sTS) sTS->setDoubleDamage();
+}
+
+void SkillTreeState::activateSpeedAttack(App* app, SoundManager* snd){
+	StateMachine* sM = app->getStateMachine();
+	SkillTreeState* sTS = dynamic_cast<SkillTreeState*>(sM->currentState());
+
+	if (sTS) sTS->setSpeedAttack();
 }
 
 void SkillTreeState::setExtraLives() {
