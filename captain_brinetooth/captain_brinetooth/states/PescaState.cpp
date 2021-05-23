@@ -75,17 +75,17 @@ void PescaState::init() {
 	auto* a = manager_->addEntity();
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.1f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 0, 0);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 0, 0);
 
 	auto* d = manager_->addEntity();
 	Vector2D dPos = Vector2D(sdlutils().width() * 0.9f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	d->addComponent<Transform>(dPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 1, 1);
+	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 1, 1);
 
 	s = manager_->addEntity();
 	Vector2D sPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.4f * App::camera_Zoom_Out);
 	s->addComponent<Transform>(sPos, Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
-	s->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 5, 5);
+	s->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 5, 5);
 	//Messages
 	int x = (int)(aPos.getX());
 	y = (int)(aPos.getY() + a->getComponent<Transform>()->getH());

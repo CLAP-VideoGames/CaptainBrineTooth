@@ -160,14 +160,14 @@ void TutorialState::stepMovement()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.3f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos,Vector2D(0, 0),50.0f*App::camera_Zoom_Out, 50.0f* App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 0, 0);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 0, 0);
 	stepImg.push_back(a);
 
 	Entity* d = manager_->addEntity();
 	Vector2D dPos = Vector2D(sdlutils().width() * 0.7f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(dPos);
 	d->addComponent<Transform>(dPos,Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 1, 1);
+	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 1, 1);
 	stepImg.push_back(d);
 
 	//Messages
@@ -196,7 +196,7 @@ void TutorialState::stepJump()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 5, 5);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 5, 5);
 	stepImg.push_back(a);
 	
 	//Messages
@@ -217,14 +217,14 @@ void TutorialState::stepCamera()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.3f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 2, 2);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 2, 2);
 	stepImg.push_back(a);
 
 	Entity* d = manager_->addEntity();
 	Vector2D dPos = Vector2D(sdlutils().width() * 0.7f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(dPos);
 	d->addComponent<Transform>(dPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 3, 3);
+	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 3, 3);
 	stepImg.push_back(d);
 
 	//Messages
@@ -254,7 +254,7 @@ void TutorialState::stepDash()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 80.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 4, 4);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 4, 4);
 	stepImg.push_back(a);
 
 	//Messages
@@ -286,7 +286,7 @@ void TutorialState::stepAttack()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 6, 6);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 6, 6);
 	stepImg.push_back(a);
 
 	//Messages
@@ -309,7 +309,7 @@ void TutorialState::stepWeapon()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 2, 4, 8, 1, 0, 7, 7);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 7, 7);
 	stepImg.push_back(a);
 
 	//Indicacion

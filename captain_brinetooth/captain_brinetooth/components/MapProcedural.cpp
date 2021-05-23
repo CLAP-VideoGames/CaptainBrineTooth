@@ -395,21 +395,22 @@ void MapProcedural::render() {
 		//Renderizamos el botton para que acceder a acciones
 		//c -> 4 | r -> 2 
 		Vector2D playerPos;
+		Transform* tr_ = nullptr;
 		if (player != nullptr) {
-			Transform* tr_ = player->getComponent<Transform>();
+			tr_ = player->getComponent<Transform>();
 			playerPos = tr_->getPos();
 			playerPos.setX(playerPos.getX());
 			playerPos.setY(playerPos.getY() + (tr_->getH()/2));
 		}
 
-		float w = accessB_Size.getX()/(4 * 3);
-		float h = accessB_Size.getY()/(2 * 3);
+		float w = accessB_Size.getX() / (4 * 3.5);
+		float h = accessB_Size.getY() / (3 * 3.5);
 		//Vector2D destPos(App::camera.w / 2 - (w/2), App::camera.h / 2/*playerPos.getY()*//* - (h / 2)*/);
-		Vector2D destPos(playerPos.getX() - (w / 2) - (App::camera.x), playerPos.getY() - (App::camera.y) + (h / 3));
+		Vector2D destPos(playerPos.getX() - (w / 2) - (App::camera.x), playerPos.getY() - (App::camera.y) -(tr_->getH() * 1.25 + h));
 		SDL_Rect dest = build_sdlrect(destPos, w , h);
 
-		Vector2D pos(0.0f, 0.0f);
-		SDL_Rect src = build_sdlrect(pos, ((float)accessButton->width() / 4), ((float)accessButton->height() / 2));
+		Vector2D pos(0, 2 * (float)(accessButton->height() / 3));
+		SDL_Rect src = build_sdlrect(pos, ((float)accessButton->width() / 4), ((float)accessButton->height() / 3));
 		accessButton->render(src, dest, 0.0f);
 
 		//En caso de no haber suficientes anzuelos, sale un mensaje de advertencia al jugador durante x segundos
@@ -417,7 +418,7 @@ void MapProcedural::render() {
 			float w = scarceBait->width()*0.5;
 			float h = scarceBait->height()*0.5;
 			//Se pone debajo del boton de la tecla E
-			destPos.setY(destPos.getY() + dest.h);
+			destPos.setY(destPos.getY() - dest.h);
 
 			destPos.setX(playerPos.getX() - (w / 2) - (App::camera.x));
 			dest = build_sdlrect(destPos, w, h);
