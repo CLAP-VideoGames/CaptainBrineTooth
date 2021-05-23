@@ -605,6 +605,10 @@
 			"file": "assets/sounds/enemies/enemy_hurt2.mp3"
 		},
 		{
+			"id": "coin_collect",
+			"file": "assets/sounds/enemies/coin_collect.mp3"
+		},
+		{
 			"id": "mordisco_elfshark",
 			"file": "assets/sounds/enemies/mordisco_elfshark.mp3"
 		},
