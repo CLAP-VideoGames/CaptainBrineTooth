@@ -263,7 +263,16 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 		Vector2D pos(end.x, end.y);
 
-		t->addComponent<Transform>(pos, Vector2D(0, 0), 100, 100, 0);
+		t->addComponent<Transform>(Vector2D(pos.getX()+35, pos.getY()-75), Vector2D(0, 0), 100, 150, 0);
+
+		if (fase == 0) {
+			t->addComponent<Animation>("portal", &sdlutils().images().at("aztec_portal"), 2, 2, 4, 8, -1);
+			t->getComponent<Animation>()->setAlpha(208);
+		}
+		else if (fase == 1) {
+			t->addComponent<Animation>("portal", &sdlutils().images().at("ice_portal"), 2, 2, 4, 8, -1);
+			t->getComponent<Animation>()->setAlpha(208);
+		}
 
 		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
@@ -285,7 +294,9 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			auto* t = entity_->getMngr()->addEntity();
 
-			t->addComponent<Transform>(pescaPos, Vector2D(0, 0), 50, 50, 0);
+			t->addComponent<Transform>(Vector2D(pescaPos.getX(), pescaPos.getY()-75), Vector2D(0, 0), 75, 75, 0);
+
+			t->addComponent<Animation>("rod", &sdlutils().images().at("fishing_rod"), 2, 3, 6, 4, -1);
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
