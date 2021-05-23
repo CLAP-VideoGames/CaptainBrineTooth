@@ -6,6 +6,7 @@
 #include "../game/App.h"
 #include "../assets/assets.h"
 #include "..//components/AnimBlendGraph.h"
+#include "..//components/MapProcedural.h"
 #include "../components/CameraFollow.h"
 
 #include <tmxlite\Layer.hpp>
@@ -240,8 +241,7 @@ void Level0::clearTileset() {
 	tiles_.clear();
 }
 
-void Level0::spawnEnemies()
-{
+void Level0::spawnEnemies() {
 	if (bossPos.x != 0) {
 		Vector2D realPos(bossPos.x, bossPos.y);
 
@@ -250,11 +250,14 @@ void Level0::spawnEnemies()
 
 	for (tmx::Vector2f pos : enemiePos) {
 		Vector2D realPos(pos.x, pos.y);
-
+		
+		MapProcedural* map = entity_->getComponent<MapProcedural>();
+		int phase = 0;
+		if (map) phase = map->getPhase();
+		//int phase
+		generator->setPhase(phase);
 		enemigos.push_back(generator->generateRandomEnemy(realPos));
 	}
-
-
 }
 
 void Level0::clearLevelVectors() {

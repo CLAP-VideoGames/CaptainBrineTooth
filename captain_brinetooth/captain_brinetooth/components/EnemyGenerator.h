@@ -51,8 +51,9 @@ public:
 	Entity* generateRandomEnemy(Vector2D pos);
 	Entity* generateFishler(Vector2D pos);
 
-private:
+	void setPhase(int fase);
 
+private:
 
 	Entity* generateFringeHead(Vector2D pos);
 	Entity* generateMedusa(Vector2D pos);
@@ -61,4 +62,6 @@ private:
 	Entity* generateThornFish(Vector2D pos);
 
 	Entity* createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel);
+
+	int phase;
 };

@@ -61,6 +61,10 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 	return fishler;
 }
 
+void EnemyGenerator::setPhase(int fase) {
+	phase = fase;
+}
+
 Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 {
 	Config fringeHead{};
