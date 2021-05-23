@@ -257,6 +257,7 @@ void Player_Health::chargeHeal(int charge)
 	if (i < maxHeals_) {
 		healsValues[i] += charge;	//CARGA DE LA CURA
 		if (healsValues[i] >= maxValueHeal_) {	//Si se sobre carga se carga la siguiente
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("corcho", 0);
 			charge = healsValues[i] - maxValueHeal_;
 			healsValues[i] = maxValueHeal_;
 			if (i + 1 < maxHeals_) {

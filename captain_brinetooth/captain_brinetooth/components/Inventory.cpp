@@ -76,6 +76,7 @@ void Inventory::update() {
 			temp_coins--;
 		}
 		else {	//Resta de monedas
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("coin_collect", 0);
 			display_coins--;
 			temp_coins++;
 		}

@@ -523,6 +523,10 @@
 			"id": "Kit_anzuelos",
 			"file": "assets/sounds/player/Kit_anzuelos.mp3"
 		},
+		{
+			"id": "corcho",
+			"file": "assets/sounds/player/corcho_alt.mp3"
+		},
 
 
 
