@@ -45,8 +45,10 @@ public:
 		}
 	};
 
-	EnemyGenerator();
-	~EnemyGenerator();
+	EnemyGenerator() {};
+	~EnemyGenerator() {};
+	void init() override;
+	void update() override;
 
 	Entity* generateRandomEnemy(Vector2D pos);
 	Entity* generateFishler(Vector2D pos);
@@ -64,4 +66,5 @@ private:
 	Entity* createBasicEntity(const Vector2D& pos, const Vector2D& size, const float& rotation, const Vector2D& vel);
 
 	int phase;
+	float reward_mod_;
 };
