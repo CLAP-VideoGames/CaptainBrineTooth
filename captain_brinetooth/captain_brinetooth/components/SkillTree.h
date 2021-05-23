@@ -1,4 +1,5 @@
 #include "../ecs/Component.h"
+#include "../components/Inventory.h"
 #include <array>
 #pragma once
 
@@ -108,6 +109,6 @@ private:
 	int speedModifier;
 	int attackModifier;
 	float counterattackSpines;
-
+	Inventory* invent_;
 };
 

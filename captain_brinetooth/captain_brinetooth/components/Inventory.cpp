@@ -275,8 +275,7 @@ void Inventory::addCoins(int n)
 	
 }
 
-void Inventory::substractCoins(int n)
-{
+void Inventory::substractCoins(int n){
 	temp_coins -= n;
 	if (coins_ - temp_coins <= 0) temp_coins = coins_;
 	coins_ -= n;

@@ -14,8 +14,8 @@ SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr
 
 void SkillTreeState::init(){
 	skillTree_ = player->getComponent<SkillTree>();
-	//points = player->getComponent<Inventory>()->getCoins();
-	points = 1600;
+	points = player->getComponent<Inventory>()->getCoins();
+	//points = 1600;
 
 	plH = player->getComponent<Player_Health>();
 
@@ -43,7 +43,9 @@ void SkillTreeState::update()
 }
 
 void SkillTreeState::setExtraLives() {
-	skillTree_->setSkill(ExtraLives, true, points);
+	//Si se ha podido comprar la habilidad, que se actualicen las monedas
+	if(skillTree_->setSkill(ExtraLives, true, points))
+		points = player->getComponent<Inventory>()->getCoins();
 
 	
 	plH->setMaxLifes(plH->getMaxLifes() + 2);
@@ -52,29 +54,38 @@ void SkillTreeState::setExtraLives() {
 }
 
 void SkillTreeState::setExtraHeal(){
-	skillTree_->setSkill(ExtraHeal, true, points);
-
+	//Si se ha podido comprar la habilidad, que se actualicen las monedas
+	if(skillTree_->setSkill(ExtraHeal, true, points))
+		points = player->getComponent<Inventory>()->getCoins();
+	//Accion
 	plH->setMaxHeals(plH->getMaxHeals() + 1);
 	plH->createHeal();
 	manager_->getSoundMngr()->playSoundEffect("Agua_potable", 0);
-
 }
 
 void SkillTreeState::setSpines() {
-	skillTree_->setSkill(Spines, true, points);
+	//Si se ha podido comprar la habilidad, que se actualicen las monedas
+	if(skillTree_->setSkill(Spines, true, points))
+		points = player->getComponent<Inventory>()->getCoins();
+	//Accion
 	skillTree_->setCounterAttackPercentage(0.1f);
 	manager_->getSoundMngr()->playSoundEffect("Escamas_Arapaima", 0);
 
 }
 
 void SkillTreeState::setDoubleDamage(){
-	skillTree_->setSkill(DoubleDamage, true, points);
+	//Si se ha podido comprar la habilidad, que se actualicen las monedas
+	if(skillTree_->setSkill(DoubleDamage, true, points)) 
+		points = player->getComponent<Inventory>()->getCoins();
+	//Accion
 	skillTree_->setAttackModifier(2);
 	manager_->getSoundMngr()->playSoundEffect("Collar_piranas", 0);
 }
 
-void SkillTreeState::setSpeedAttack(){
-	skillTree_->setSkill(SpeedAttack, true, points);
+void SkillTreeState::setSpeedAttack(){//Si se ha podido comprar la habilidad, que se actualicen las monedas
+	if(skillTree_->setSkill(SpeedAttack, true, points))
+		points = player->getComponent<Inventory>()->getCoins();
+	//Accion
 	skillTree_->setSpeedModifier(2);
 	manager_->getSoundMngr()->playSoundEffect("BrineStone", 0);
 

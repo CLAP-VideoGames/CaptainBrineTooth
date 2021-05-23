@@ -16,6 +16,8 @@ void SkillTree::init(){
 	speedModifier = 1;
 	attackModifier = 1;
 	counterattackSpines = 100;
+
+	invent_ = entity_->getComponent<Inventory>();
 	//El guardado tiene que venir de la siguiente manera:
 	//p int
 	//skills true false true false false true
@@ -46,6 +48,7 @@ bool SkillTree::setSkill(Skill type, bool state, int points){
 	if (state){
 		if (points >= playerSkills[(int)type].second) {
 			playerSkills[(int)type].first = state;
+			if (invent_) invent_->substractBaits(playerSkills[(int)type].second);
 			return true;
 		}
 		else return false;
