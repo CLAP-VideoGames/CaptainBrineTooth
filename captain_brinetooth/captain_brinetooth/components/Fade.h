@@ -16,7 +16,8 @@ public:
 	void update() override;
 
 	inline void setState(STATE_FADE state){
-		state_ = state;
+		if(state_ != state)
+			state_ = state;
 	}
 
 	inline void setColor(const SDL_Color& color){

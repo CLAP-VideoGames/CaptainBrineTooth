@@ -9,6 +9,7 @@ CreditsState::~CreditsState() {
 }
 
 void CreditsState::init(){
+	manager_->getSoundMngr()->stopIntroMusic();
 	//Para que se sette el Fade
 	GameState::init();
 	//Fade
@@ -19,15 +20,16 @@ void CreditsState::init(){
 		fadeComp->triggerFade();
 	}
 
+	sdlutils().soundEffects().at("credits_sound").play();
+
 	//Video
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
-	std::pair<const char*, std::pair<bool, int>> video__ = { sdlutils().videos().at("intro").c_str(), {false, 1} };
+	std::pair<const char*, std::pair<bool, int>> video__ = { sdlutils().videos().at("credits").c_str(), {false, 1} };
 	videos.push_back(video__);
-	std::pair<const char*, std::pair<bool, int>> video_ = { sdlutils().videos().at("introLoop").c_str(), {true, 1} };
-	videos.push_back(video_);
 	auto* video = manager_->addEntity();
-	video->addComponent<VideoPlayer>(videos);
+	videoP = video->addComponent<VideoPlayer>(videos);
+	videoP->setForcePop(true);
 }
 
 void CreditsState::update(){
@@ -35,8 +37,19 @@ void CreditsState::update(){
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			fadeComp->setState(Fade::STATE_FADE::Out);
 			fadeComp->triggerFade();
-			manager_->getSoundMngr()->stopIntroMusic();
+			
 		}
+	}
+
+	if (ih().keyDownEvent()){
+		fadeComp->setState(Fade::STATE_FADE::Out);
+		fadeComp->triggerFade();
+		manager_->getSoundMngr()->stopIntroMusic();
+	}
+
+	if(videoP->queueEmpty()){ 
+		StateMachine* sM = app->getStateMachine();
+		sM->changeState(new MenuState(app, sM->currentState()->getMngr()->getWorld(), manager_->getSoundMngr()));
 	}
 
 	GameState::update();

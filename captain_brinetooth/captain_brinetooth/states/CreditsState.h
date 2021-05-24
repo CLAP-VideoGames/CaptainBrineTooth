@@ -13,6 +13,7 @@ public:
 	App* getApp() { return app; }
 protected:
 	Fade* fadeComp;
+	VideoPlayer* videoP;
 };
 
 

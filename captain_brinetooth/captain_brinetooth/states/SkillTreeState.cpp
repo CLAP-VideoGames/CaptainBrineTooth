@@ -1,6 +1,7 @@
 #include "SkillTreeState.h"
 #include "../components/SkillTree.h"
 #include "../components/Inventory.h"
+#include "../components/ExplanationMessage.h"
 #include "../components/Player_Health.h"
 
 SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* player_) : GameState(a, mundo, snd){
@@ -125,7 +126,10 @@ void SkillTreeState::createTable(){
 	auto* spines = manager_->addEntity();
 	spines->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
 	spines->addComponent<Button>(textureSpine, activateSpines, app, manager_->getSoundMngr());
-	spines->addComponent<ExplanationMessage>();
+	ExplanationMessage* eM = spines->addComponent<ExplanationMessage>();
+	eM->push_backTexture(&sdlutils().images().at("spines_avail"));
+	eM->push_backTexture(&sdlutils().images().at("spines_unavail"));
+	eM->setCurrentTexture(0);
 	//Heal
 	Texture* textureHeal = &sdlutils().images().at("healBait");
 	x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));
@@ -133,6 +137,10 @@ void SkillTreeState::createTable(){
 	auto* heal = manager_->addEntity();
 	heal->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
 	heal->addComponent<Button>(textureHeal, activateExtraHeals, app, manager_->getSoundMngr());
+	ExplanationMessage* eMsecond = heal->addComponent<ExplanationMessage>();
+	eMsecond->push_backTexture(&sdlutils().images().at("heal_avail"));
+	eMsecond->push_backTexture(&sdlutils().images().at("heal_unavail"));
+	eMsecond->setCurrentTexture(0);
 	//Baits
 	Texture* textureBait = &sdlutils().images().at("extraBait");
 	x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));
@@ -140,6 +148,10 @@ void SkillTreeState::createTable(){
 	auto* baits = manager_->addEntity();
 	baits->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
 	baits->addComponent<Button>(textureBait, activateExtraLives, app, manager_->getSoundMngr());
+	ExplanationMessage* eMthird = baits->addComponent<ExplanationMessage>();
+	eMthird->push_backTexture(&sdlutils().images().at("bait_avail"));
+	eMthird->push_backTexture(&sdlutils().images().at("bait_unavail"));
+	eMthird->setCurrentTexture(0);
 	
 	//Rama Derecha
 	//ExtraDamage
@@ -149,6 +161,10 @@ void SkillTreeState::createTable(){
 	auto* damage = manager_->addEntity();
 	damage->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
 	damage->addComponent<Button>(textureDamage, activateDoubleDamage, app, manager_->getSoundMngr());
+	ExplanationMessage* eMforth = damage->addComponent<ExplanationMessage>();
+	eMforth->push_backTexture(&sdlutils().images().at("double_avail"));
+	eMforth->push_backTexture(&sdlutils().images().at("double_unavail"));
+	eMforth->setCurrentTexture(0);
 	//ExtraSpeed
 	Texture* textureSpeed = &sdlutils().images().at("speedBait");
 	x_ = (int)(((App::camera.w / 2) + sizeSkills.getX() * 1.2));
@@ -156,6 +172,10 @@ void SkillTreeState::createTable(){
 	auto* speed = manager_->addEntity();
 	speed->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
 	speed->addComponent<Button>(textureSpeed, activateSpeedAttack, app, manager_->getSoundMngr());
+	ExplanationMessage* eMfifth = speed->addComponent<ExplanationMessage>();
+	eMfifth->push_backTexture(&sdlutils().images().at("speed_avail"));
+	eMfifth->push_backTexture(&sdlutils().images().at("speed_unavail"));
+	eMfifth->setCurrentTexture(0);
 }
 
 void SkillTreeState::setExtraLives() {

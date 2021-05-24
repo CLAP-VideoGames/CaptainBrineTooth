@@ -480,8 +480,8 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//#pragma endregion
 	//
 	//#pragma region MachineGun
-	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, speedModifer, Vector2D(0.65, 0.5));
-	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, speedModifer, Vector2D(0.65, 0.5));
+	anim_controller->addAnimation("machine_gun1", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, -1, 1, 7, Vector2D(0.65, 0.5));
+	anim_controller->addAnimation("machine_gun2", &sdlutils().images().at("machineGun_combo"), 5, 6, 29, 48, 0, 8, 27, Vector2D(0.65, 0.5));
 
 	anim_controller->addTransition("run", "machine_gun1", "machineGun_att", 1, false);
 	anim_controller->addTransition("idle", "machine_gun1", "machineGun_att", 1, false);
@@ -505,7 +505,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	anim_controller->setParamValue("machineGun_att", 0);
 
 	//Bellow
-	anim_controller->addAnimation("bellow", &sdlutils().images().at("squid_combo"), 3, 4, 12, 48, 1, speedModifer, Vector2D(0.67, 0.5));
+	anim_controller->addAnimation("bellow", &sdlutils().images().at("squid_combo"), 3, 4, 12, 48, 1, Vector2D(0.67, 0.5));
 
 	anim_controller->addTransition("run", "bellow", "bellow_att", 1, false);
 	anim_controller->addTransition("idle", "bellow", "bellow_att", 1, false);

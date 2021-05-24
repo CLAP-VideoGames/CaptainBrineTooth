@@ -26,7 +26,7 @@ void IntroState::init() {
 	std::pair<const char*, std::pair<bool, int>> video_ = { sdlutils().videos().at("introLoop").c_str(), {true, 1} };
 	videos.push_back(video_);
 	auto* video = manager_->addEntity();
-	video->addComponent<VideoPlayer>(videos);
+	videoP = video->addComponent<VideoPlayer>(videos);
 	//Sonido
 	manager_->getSoundMngr()->setGeneralVolume(10,10);
 	manager_->getSoundMngr()->playIntroMusic();
@@ -37,13 +37,23 @@ void IntroState::update(){
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			fadeComp->setState(Fade::STATE_FADE::Out);
 			fadeComp->triggerFade();
-			manager_->getSoundMngr()->stopIntroMusic();
 		}
+	}
+
+	if (ih().keyDownEvent()) {
+		fadeComp->setState(Fade::STATE_FADE::Out);
+		fadeComp->triggerFade();
+		manager_->getSoundMngr()->stopIntroMusic();
+	}
+
+	if (videoP->queueEmpty()) {
+		StateMachine* sM = app->getStateMachine();
+		sM->changeState(new MenuState(app, sM->currentState()->getMngr()->getWorld(), manager_->getSoundMngr()));
 	}
 
 	GameState::update();
 
-	if (fadeComp->getFadeOutComplete()){
+	if (fadeComp->getFadeOutComplete()) {
 		StateMachine* sM = app->getStateMachine();
 		sM->changeState(new MenuState(app, sM->currentState()->getMngr()->getWorld(), manager_->getSoundMngr()));
 	}

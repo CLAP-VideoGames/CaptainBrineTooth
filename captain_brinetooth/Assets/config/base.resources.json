@@ -475,6 +475,50 @@
 		{
 			"id": "skillBackground",
 			"file": "assets/sprites/skill/skillBackground.png"
+		},
+		{
+			"id": "skillBackground",
+			"file": "assets/sprites/skill/skillBackground.png"
+		},
+		{
+			"id": "spines_avail",
+			"file": "assets/sprites/explanations/escamas.png"
+		},
+		{
+			"id": "spines_unavail",
+			"file": "assets/sprites/explanations/escamas_not.png"
+		},
+		{
+			"id": "speed_avail",
+			"file": "assets/sprites/explanations/salmuera.png"
+		},
+		{
+			"id": "speed_unavail",
+			"file": "assets/sprites/explanations/salmuera_not.png"
+		},
+		{
+			"id": "bait_avail",
+			"file": "assets/sprites/explanations/coral.png"
+		},
+		{
+			"id": "bait_unavail",
+			"file": "assets/sprites/explanations/coral_not.png"
+		},
+		{
+			"id": "double_avail",
+			"file": "assets/sprites/explanations/dientes.png"
+		},
+		{
+			"id": "double_unavail",
+			"file": "assets/sprites/explanations/dientes_not.png"
+		},
+		{
+			"id": "heal_avail",
+			"file": "assets/sprites/explanations/algas.png"
+		},
+		{
+			"id": "heal_unavail",
+			"file": "assets/sprites/explanations/algas_not.png"
 		}
 	],
 
@@ -697,6 +741,10 @@
 		{
 			"id": "electricidad",
 			"file": "assets/sounds/enemies/electricidad.wav"
+		},
+		{
+			"id": "credits_sound",
+			"file": "assets/sounds/credits_sound.mp3"
 		}
 	],
 
@@ -1005,6 +1053,10 @@
 		{
 			"id": "introLoop",
 			"file": "assets/videos/intro_loop.mp4"
+		},
+		{
+			"id": "credits",
+			"file": "assets/videos/credits.mp4"
 		}
 	]
 }

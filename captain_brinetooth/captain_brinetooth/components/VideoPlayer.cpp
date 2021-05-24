@@ -48,12 +48,14 @@ void VideoPlayer::update(){
 				paused = !paused;
 			}
 			else if (event.key.keysym.sym == SDLK_ESCAPE) {
-				queueVideos.front().done = 1;
+				if(!queueVideos.empty())
+					queueVideos.front().done = 1;
 				break;
 			}
 		}
 		else if (event.type == SDL_QUIT) {
-			queueVideos.front().done = 1;
+			if(!queueVideos.empty())
+				queueVideos.front().done = 1;
 			break;
 		}
 	}
@@ -125,8 +127,10 @@ void VideoPlayer::update(){
 		available = true;
 	}
 
-	if (queueVideos.front().done){
-		popVideo();
+	if (!queueVideos.empty() && queueVideos.front().done){
+		if (!forcePop)
+			popVideo();
+		else forcePopVideo();
 	}
 
 }
@@ -267,9 +271,21 @@ SDL_Rect& VideoPlayer::getRect(){
 	return sdlRect;
 }
 
+bool VideoPlayer::queueEmpty(){
+	return queueVideos.empty();
+}
+
+void VideoPlayer::setForcePop(bool n){
+	forcePop = n;
+}
+
 void VideoPlayer::changeTexture(){
 	if(sdlTexture != nullptr)
 		SDL_DestroyTexture(sdlTexture);
 
-	sdlTexture = queueVideos.front().actTexture();
+	if(!queueVideos.empty())
+		sdlTexture = queueVideos.front().actTexture();
+	else{
+		sdlTexture = nullptr;
+	}
 }
