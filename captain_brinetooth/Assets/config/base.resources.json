@@ -205,6 +205,10 @@
 			"file": "assets/sprites/enemies/fishler/Fishler_SPIKE.png"
 		},
 		{
+			"id": "fishler_death",
+			"file": "assets/sprites/enemies/fishler/fishler_death.png"
+		},
+		{
 			"id": "enemy_hit_1",
 			"file": "assets/sprites/enemies/hits/enemy_hit_1.png"
 		},
