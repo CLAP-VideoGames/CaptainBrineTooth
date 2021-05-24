@@ -1005,6 +1005,10 @@
 		{
 			"id": "introLoop",
 			"file": "assets/videos/intro_loop.mp4"
+		},
+		{
+			"id": "credits",
+			"file": "assets/videos/credits.mp4"
 		}
 	]
 }
