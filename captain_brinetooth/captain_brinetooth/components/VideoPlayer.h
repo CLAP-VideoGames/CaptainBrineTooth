@@ -90,6 +90,18 @@ public:
 	/// <returns></returns>
 	SDL_Rect& getRect();
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns>Devuelve true si la cola está vacia</returns>
+	bool queueEmpty();
+
+	/// <summary>
+	/// Define el booleano de control de forcePop
+	/// </summary>
+	/// <param name="n"></param>
+	void setForcePop(bool n);
+
 private:
 
 	void changeTexture();
@@ -106,6 +118,6 @@ private:
 	//Controlares de decodificación del video
 	int paused = 0;
 	int ret = 0;
-	bool available = false;
+	bool available = false, forcePop = false;
 };
 

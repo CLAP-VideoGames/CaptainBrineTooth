@@ -13,5 +13,7 @@ public:
 private:
 	Entity* video = nullptr, *fade = nullptr;
 	Fade* fadeComp = nullptr;
+
+	VideoPlayer* videoP = nullptr;
 };
 

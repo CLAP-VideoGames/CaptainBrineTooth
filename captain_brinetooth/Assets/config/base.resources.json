@@ -475,6 +475,10 @@
 		{
 			"id": "skillBackground",
 			"file": "assets/sprites/skill/skillBackground.png"
+		},
+		{
+			"id": "skillBackground",
+			"file": "assets/sprites/skill/skillBackground.png"
 		}
 	],
 
@@ -697,6 +701,10 @@
 		{
 			"id": "electricidad",
 			"file": "assets/sounds/enemies/electricidad.wav"
+		},
+		{
+			"id": "credits_sound",
+			"file": "assets/sounds/credits_sound.mp3"
 		}
 	],
 
