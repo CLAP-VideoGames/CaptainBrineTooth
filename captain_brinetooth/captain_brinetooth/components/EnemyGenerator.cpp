@@ -105,7 +105,7 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 	fishler_anim_controller->setParamValue("fishler_action", 0);
 	fishler_anim_controller->setParamValue("Dead", 0);
 
-	fishler->addComponent<Enemy_Health>(2000, 500, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	fishler->addComponent<Enemy_Health>(5000, 500, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fishler->addComponent<FishlerController>();
 	fishler->addComponent<ContactDamage>(fishler);
 
