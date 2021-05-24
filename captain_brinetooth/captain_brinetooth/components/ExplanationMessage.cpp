@@ -45,7 +45,8 @@ void ExplanationMessage::push_backTexture(Texture* t){
 }
 
 void ExplanationMessage::setCurrentTexture(int i){
-	if (i < textures.size()) currentTexture = textures[i];
+	if (i < textures.size()) 
+		currentTexture = textures[i];
 }
 
 int ExplanationMessage::getSizeTextures(){

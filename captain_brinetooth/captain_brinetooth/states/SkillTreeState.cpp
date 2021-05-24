@@ -11,6 +11,8 @@ SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr
 	skillTree_ = nullptr;
 	points = -1;
 	plH = nullptr;
+
+	explMssgs_ = {};
 }
 
 void SkillTreeState::init(){
@@ -18,34 +20,25 @@ void SkillTreeState::init(){
 	points = player->getComponent<Inventory>()->getCoins();
 
 	plH = player->getComponent<Player_Health>();
-
-	//int w = (int)sdlutils().width() * App::camera_Zoom_Out * 0.35;
-	//int h = (int)w * 0.6;	//mantener aspect ratio
-	////Creditos
-	//auto* creditos = manager_->addEntity();
-	//int x_ = (int)((App::camera.w - w) * 0.02);
-	//int y_ = (int)((App::camera.h - h) * 0.98);
-	//creditos->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), w * 0.7, h * 0.7, 0.0f);
-
-	//creditos->addComponent<Button>(&sdlutils().images().at("healBait"), activateExtraLives, app, manager_->getSoundMngr());
 	
 	createTable();
-
-	//setExtraLives();
-	//setExtraHeal();
-	//setSpines();
-	//setDoubleDamage();
-	//setSpeedAttack();
 }
 
-void SkillTreeState::render() const
-{
+void SkillTreeState::render() const {
 	stRend->render();
 	GameState::render();
 }
 
-void SkillTreeState::update()
-{
+void SkillTreeState::update() {
+
+	for (size_t i = 0; i < 5; i++){
+		//skillTree_->hasSkill(1);
+		int limitPoints = skillTree_->getSkillLimitPoints(i);
+
+		if (points < limitPoints) 
+			explMssgs_[i]->setCurrentTexture(1);
+	}
+
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			app->getStateMachine()->popState();
@@ -119,17 +112,18 @@ void SkillTreeState::createTable(){
 	table->addComponent<Image>(&sdlutils().images().at("skillTable"), SDL_Rect{ x, y, w, h }, "title");
 
 	//Rama Izquierda
-	//Spines
-	Texture* textureSpine = &sdlutils().images().at("spineBait");
-	int x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));
-	int y_ = (int)((App::camera.h) * 0.27);
-	auto* spines = manager_->addEntity();
-	spines->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
-	spines->addComponent<Button>(textureSpine, activateSpines, app, manager_->getSoundMngr());
-	ExplanationMessage* eM = spines->addComponent<ExplanationMessage>();
-	eM->push_backTexture(&sdlutils().images().at("spines_avail"));
-	eM->push_backTexture(&sdlutils().images().at("spines_unavail"));
-	eM->setCurrentTexture(0);
+	//Baits
+	Texture* textureBait = &sdlutils().images().at("extraBait");
+	int x_ = (int)(((App::camera.w / 2) - sizeSkills.getX() * 0.5));
+	int y_ = (int)((App::camera.h) * 0.63);
+	auto* baits = manager_->addEntity();
+	baits->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
+	baits->addComponent<Button>(textureBait, activateExtraLives, app, manager_->getSoundMngr());
+	ExplanationMessage* eMthird = baits->addComponent<ExplanationMessage>();
+	eMthird->push_backTexture(&sdlutils().images().at("bait_avail"));
+	eMthird->push_backTexture(&sdlutils().images().at("bait_unavail"));
+	eMthird->setCurrentTexture(0);
+	explMssgs_.push_back(eMthird);
 	//Heal
 	Texture* textureHeal = &sdlutils().images().at("healBait");
 	x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));
@@ -141,17 +135,19 @@ void SkillTreeState::createTable(){
 	eMsecond->push_backTexture(&sdlutils().images().at("heal_avail"));
 	eMsecond->push_backTexture(&sdlutils().images().at("heal_unavail"));
 	eMsecond->setCurrentTexture(0);
-	//Baits
-	Texture* textureBait = &sdlutils().images().at("extraBait");
-	x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));
-	y_ = (int)((App::camera.h) * 0.63);
-	auto* baits = manager_->addEntity();
-	baits->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
-	baits->addComponent<Button>(textureBait, activateExtraLives, app, manager_->getSoundMngr());
-	ExplanationMessage* eMthird = baits->addComponent<ExplanationMessage>();
-	eMthird->push_backTexture(&sdlutils().images().at("bait_avail"));
-	eMthird->push_backTexture(&sdlutils().images().at("bait_unavail"));
-	eMthird->setCurrentTexture(0);
+	explMssgs_.push_back(eMsecond);
+	//Spines
+	Texture* textureSpine = &sdlutils().images().at("spineBait");
+	x_ = (int)(((App::camera.w / 2) - sizeSkills.getX() * 2.2));
+	y_ = (int)((App::camera.h) * 0.27);
+	auto* spines = manager_->addEntity();
+	spines->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
+	spines->addComponent<Button>(textureSpine, activateSpines, app, manager_->getSoundMngr());
+	ExplanationMessage* eM = spines->addComponent<ExplanationMessage>();
+	eM->push_backTexture(&sdlutils().images().at("spines_avail"));
+	eM->push_backTexture(&sdlutils().images().at("spines_unavail"));
+	eM->setCurrentTexture(0);
+	explMssgs_.push_back(eM);
 	
 	//Rama Derecha
 	//ExtraDamage
@@ -165,6 +161,7 @@ void SkillTreeState::createTable(){
 	eMforth->push_backTexture(&sdlutils().images().at("double_avail"));
 	eMforth->push_backTexture(&sdlutils().images().at("double_unavail"));
 	eMforth->setCurrentTexture(0);
+	explMssgs_.push_back(eMforth);
 	//ExtraSpeed
 	Texture* textureSpeed = &sdlutils().images().at("speedBait");
 	x_ = (int)(((App::camera.w / 2) + sizeSkills.getX() * 1.2));
@@ -176,53 +173,66 @@ void SkillTreeState::createTable(){
 	eMfifth->push_backTexture(&sdlutils().images().at("speed_avail"));
 	eMfifth->push_backTexture(&sdlutils().images().at("speed_unavail"));
 	eMfifth->setCurrentTexture(0);
+	explMssgs_.push_back(eMfifth);
 }
 
 void SkillTreeState::setExtraLives() {
 	//Si se ha podido comprar la habilidad, que se actualicen las monedas
-	if(skillTree_->setSkill(ExtraLives, true, points))
-		points = player->getComponent<Inventory>()->getCoins();
-
-	
-	plH->setMaxLifes(plH->getMaxLifes() + 2);
-	plH->resetLifes();
-	manager_->getSoundMngr()->playSoundEffect("Kit_anzuelos",0);
+	if (!skillTree_->hasSkill(ExtraLives) && skillTree_->setSkill(ExtraLives, true, points)) {
+		Inventory* invent = player->getComponent<Inventory>();
+		invent->substractCoins(skillTree_->getSkillLimitPoints(ExtraLives));
+		points = invent->getCoins();
+		//Accion
+		plH->setMaxLifes(plH->getMaxLifes() + 2);
+		plH->resetLifes();
+		manager_->getSoundMngr()->playSoundEffect("Kit_anzuelos",0);
+	}
 }
 
 void SkillTreeState::setExtraHeal(){
 	//Si se ha podido comprar la habilidad, que se actualicen las monedas
-	if(skillTree_->setSkill(ExtraHeal, true, points))
-		points = player->getComponent<Inventory>()->getCoins();
-	//Accion
-	plH->setMaxHeals(plH->getMaxHeals() + 1);
-	plH->createHeal();
-	manager_->getSoundMngr()->playSoundEffect("Agua_potable", 0);
+	if (!skillTree_->hasSkill(ExtraHeal) && skillTree_->setSkill(ExtraHeal, true, points)) {
+		Inventory* invent = player->getComponent<Inventory>();
+		invent->substractCoins(skillTree_->getSkillLimitPoints(ExtraHeal));
+		points = invent->getCoins();
+		//Accion
+		plH->setMaxHeals(plH->getMaxHeals() + 1);
+		plH->createHeal();
+		manager_->getSoundMngr()->playSoundEffect("Agua_potable", 0);
+	}
 }
 
 void SkillTreeState::setSpines() {
 	//Si se ha podido comprar la habilidad, que se actualicen las monedas
-	if(skillTree_->setSkill(Spines, true, points))
-		points = player->getComponent<Inventory>()->getCoins();
-	//Accion
-	skillTree_->setCounterAttackPercentage(0.07f);
-	manager_->getSoundMngr()->playSoundEffect("Escamas_Arapaima", 0);
-
+	if (!skillTree_->hasSkill(Spines) && skillTree_->setSkill(Spines, true, points)){
+		Inventory* invent = player->getComponent<Inventory>();
+		invent->substractCoins(skillTree_->getSkillLimitPoints(Spines));
+		//Accion
+		points = invent->getCoins();
+		skillTree_->setCounterAttackPercentage(0.07f);
+		manager_->getSoundMngr()->playSoundEffect("Escamas_Arapaima", 0);
+	}
 }
 
 void SkillTreeState::setDoubleDamage(){
 	//Si se ha podido comprar la habilidad, que se actualicen las monedas
-	if(skillTree_->setSkill(ExtraDamage, true, points)) 
-		points = player->getComponent<Inventory>()->getCoins();
-	//Accion
-	skillTree_->setAttackModifier(2);
-	manager_->getSoundMngr()->playSoundEffect("Collar_piranas", 0);
+	if (!skillTree_->hasSkill(ExtraDamage) && skillTree_->setSkill(ExtraDamage, true, points)) {
+		Inventory* invent = player->getComponent<Inventory>();
+		invent->substractCoins(skillTree_->getSkillLimitPoints(ExtraDamage));
+		points = invent->getCoins();
+		//Accion
+		skillTree_->setAttackModifier(2);
+		manager_->getSoundMngr()->playSoundEffect("Collar_piranas", 0);
+	}
 }
 
 void SkillTreeState::setSpeedAttack(){//Si se ha podido comprar la habilidad, que se actualicen las monedas
-	if(skillTree_->setSkill(SpeedAttack, true, points))
-		points = player->getComponent<Inventory>()->getCoins();
-	//Accion
-	skillTree_->setSpeedModifier(1.3f);
-	manager_->getSoundMngr()->playSoundEffect("BrineStone", 0);
-
+	if (!skillTree_->hasSkill(SpeedAttack) && skillTree_->setSkill(SpeedAttack, true, points)) {
+		Inventory* invent = player->getComponent<Inventory>();
+		invent->substractCoins(skillTree_->getSkillLimitPoints(SpeedAttack));
+		points = invent->getCoins();
+		//Accion
+		skillTree_->setSpeedModifier(1.3f);
+		manager_->getSoundMngr()->playSoundEffect("BrineStone", 0);
+	}
 }

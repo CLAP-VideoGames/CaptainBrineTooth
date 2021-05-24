@@ -34,7 +34,14 @@ public:
 	/// </summary>
 	/// <param name="type"></param>
 	/// <returns></returns>
-	int getSkillLimitPoints(Skill type);
+	int getSkillLimitPoints(Skill type);	
+	
+	/// <summary>
+	/// Devuelve el número límite de una habilidad para poder ser activada
+	/// </summary>
+	/// <param name="type"></param>
+	/// <returns></returns>
+	int getSkillLimitPoints(int type);
 
 	/// <summary>
 	/// Devuelve el número máximo de habilidades

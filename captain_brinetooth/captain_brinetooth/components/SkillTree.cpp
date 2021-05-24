@@ -9,11 +9,11 @@ SkillTree::~SkillTree()
 }
 
 void SkillTree::init(){
-	setSkillLimitPoints(ExtraDamage, 1600);
-	setSkillLimitPoints(SpeedAttack, 1400);
-	setSkillLimitPoints(StealLife, 1500);
+	setSkillLimitPoints(ExtraLives, 800);
 	setSkillLimitPoints(ExtraHeal, 1200);
 	setSkillLimitPoints(Spines, 2000);
+	setSkillLimitPoints(ExtraDamage, 1600);
+	setSkillLimitPoints(SpeedAttack, 1400);
 
 	speedModifier = 1;
 	attackModifier = 1;
@@ -47,6 +47,11 @@ int SkillTree::getSkillLimitPoints(Skill type)
 	return playerSkills[(int)type].second;
 }
 
+int SkillTree::getSkillLimitPoints(int type)
+{
+	return playerSkills[type].second;
+}
+
 bool SkillTree::setSkill(Skill type, bool state, int points){
 	if (state){
 		if (points >= playerSkills[(int)type].second) {
@@ -62,12 +67,8 @@ bool SkillTree::setSkill(Skill type, bool state, int points){
 }
 
 bool SkillTree::setSkillLimitPoints(Skill type, int p){
-	if ((int)type > 3) {
-		playerSkills[(int)type].second = p;
-		return true;
-	}
-
-	return false;
+	playerSkills[(int)type].second = p;
+	return true;
 }
 
 void SkillTree::initSkillsFromMatch(std::array<bool, 6> skillsFromMatch){

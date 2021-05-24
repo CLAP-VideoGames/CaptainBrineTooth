@@ -36,4 +36,5 @@ private:
 	SkillTree* skillTree_;
 	Player_Health* plH;
 	int points;
+	vector<ExplanationMessage*> explMssgs_;
 };
