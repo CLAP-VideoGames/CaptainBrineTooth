@@ -75,7 +75,7 @@ void Inventory::update() {
 			display_coins++;
 			temp_coins--;
 		}
-		else {	//Resta de monedas
+		else if (temp_coins < 0) {	//Resta de monedas
 			entity_->getMngr()->getSoundMngr()->playSoundEffect("coin_collect", 0);
 			display_coins--;
 			temp_coins++;
@@ -86,7 +86,7 @@ void Inventory::update() {
 			display_baits++;
 			temp_baits--;
 		}
-		else {	//Resta de cebos
+		else if(temp_baits < 0){	//Resta de cebos
 			display_baits--;
 			temp_baits++;
 		}
