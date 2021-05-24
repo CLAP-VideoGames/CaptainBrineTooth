@@ -7,6 +7,7 @@
 #include "../game/App.h"
 #include "EnemyTrigger.h"
 #include "Inventory.h"
+#include "FishlerController.h"
 #include "../sdlutils/macros.h"
 #include "../sdlutils/SDLUtils.h"
 
@@ -43,6 +44,7 @@ private:
 	int offsetY_;
 
 	int lifes, initLifes;
+	bool alreadyLostHalfHealth;
 
 	bool isPoisoned;
 	int poisonDamage = 7;

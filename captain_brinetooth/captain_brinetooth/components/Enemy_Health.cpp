@@ -11,6 +11,8 @@ Enemy_Health::Enemy_Health(int health, int reward, const Vector2D& sizeBar, cons
 
 	barSize = initBarSize = sizeBar;
 	skip_reset_ = false;
+
+	alreadyLostHalfHealth = false;
 }
 
 Enemy_Health::~Enemy_Health()
@@ -66,6 +68,14 @@ void Enemy_Health::loseLife(int damage, int typeOfDamage){
 			break;
 		case 2:
 			entity_->getMngr()->getSoundMngr()->playSoundEffect("enemy_hurt2", 15);
+		}
+
+		//Cambio de fase de Fishler
+		if (!alreadyLostHalfHealth && lifes < initLifes / 2) {
+			alreadyLostHalfHealth = true;
+
+			if (entity_->hasComponent<FishlerController>())
+				entity_->getComponent<FishlerController>()->changePhase();
 		}
 	}
 
@@ -169,6 +179,14 @@ void Enemy_Health::update(){
 			}
 			barSize.setX((lifes * initBarSize.getX()) / initLifes);
 			if (barSize.getX() <= 0) barSize.setX(0);
+
+			//Cambio de fase de Fishler
+			if (!alreadyLostHalfHealth && lifes < initLifes / 2) {
+				alreadyLostHalfHealth = true;
+
+				if (entity_->hasComponent<FishlerController>())
+					entity_->getComponent<FishlerController>()->changePhase();
+			}
 
 			//Cambio color 
 			entity_->getComponent<AnimBlendGraph>()->setColor(207, 59, 82);

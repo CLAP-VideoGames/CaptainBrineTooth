@@ -3,6 +3,7 @@
 #include "../ecs/Component.h"
 #include "../ecs/Entity.h"
 #include "BoxCollider.h"
+#include "MapCollider.h"
 #include "../game/CollisionLayers.h"
 #include <iostream>
 

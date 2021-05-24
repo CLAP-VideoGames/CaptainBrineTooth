@@ -2,6 +2,7 @@
 
 void GetStuckOnWall::init() {
 	collider = entity_->getComponent<BoxCollider>();
+	entity_->setCollisionMethod(ContactGround);
 }
 
 void GetStuckOnWall::ContactGround(b2Contact* contact) {
@@ -10,14 +11,9 @@ void GetStuckOnWall::ContactGround(b2Contact* contact) {
 	Entity* cosaB = (Entity*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
 
 	if (cosaA != nullptr) {
-		if (cosaA->getComponent<BoxCollider>() != nullptr) {
-			if (cosaA->getComponent<BoxCollider>()->getColLayer() == GROUND) {
-				if (cosaB != nullptr) {
-					cosaB->getComponent<GetStuckOnWall>()->getStuck();
-				}
-			}
-			else if (cosaB->getComponent<BoxCollider>()->getColLayer() == GROUND) {
-				cosaA->getComponent<GetStuckOnWall>()->getStuck();
+		if (cosaA->getComponent<MapCollider>() != nullptr) {
+			if (cosaB != nullptr) {
+				cosaB->getComponent<GetStuckOnWall>()->getStuck();
 			}
 		}
 	}

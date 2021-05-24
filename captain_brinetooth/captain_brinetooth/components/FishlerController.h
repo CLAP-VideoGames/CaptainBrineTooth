@@ -29,24 +29,17 @@ public:
 	void init() override;
 	void update() override;
 
-	static void playerDetected(b2Contact* contact);
-	static void playerLost(b2Contact* contact);
-	void playerDetection(bool entered);
-	void playerCloseDetection();
-
 	void creaTrigger();
 	void shoot();
 
-	void createFloorDetection();
-	void changeToOnFloor();
-	static void floorTouched(b2Contact* contact);
-
 	void shootSpike();
+
+	void changePhase();
 
 protected:
 	enum PHASE {Phase1, Phase2};
-	enum MOVEMENT_STATE {Iddle, Stunned, AttackTelegraph, Attacking, Walking};
-	enum ATTACKS {NotAttacking, RushAttack, Bite, Shoot, Spikes, Tentacles};
+	enum MOVEMENT_STATE {Iddle, PhaseChange, AttackTelegraph, Attacking, Walking};
+	enum ATTACKS {NotAttacking, RushAttack, Shoot, Spikes, Tentacles};
 
 	PHASE currentPhase;
 	MOVEMENT_STATE currentMovement;
@@ -63,30 +56,24 @@ protected:
 	float triggerOffSetY;
 
 	Transform* playertr;
-	Entity* playerCloseDetect;
-	Vector2D playerCloseSize;
-	bool playerIsClose;
-
-	Entity* floorDetect;
-	bool onFloor;	//Determines when Fishler is on the floor an therefore he is able to jump
 
 	float walkingSpeed;
 	float rushSpeed;
 	float bulletVelocity;
 	float spikeVelocity;
 
+	bool changePhaseRequest;
+
 #pragma region Timers
 	//Main loop timers
 	Timer movementTimer;
 	Timer attackTelegraphTimer;
 	Timer attackTimer;
+	Timer phaseChangeTimer;
 
 	//Attack times
 	float rushAttackTelegraphTime;
 	float rushAttackTime;
-
-	float biteAttackTelegraphTime;
-	float biteAttackTime;
 
 	float shootAttackTelegraphTime;
 	float shootAttackTime;

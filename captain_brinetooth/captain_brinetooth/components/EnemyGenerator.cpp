@@ -58,20 +58,53 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 {
 	Config fishlerConfig{};
 	fishlerConfig.vel = Vector2D();
-	fishlerConfig.size = Vector2D(100, 200);
+	fishlerConfig.size = Vector2D(300, 200);
 	fishlerConfig.friction = 0.0f;
 	fishlerConfig.physicType = DYNAMIC;
 	fishlerConfig.col = ENEMY;
 	fishlerConfig.colMask = ENEMY_MASK;
 	fishlerConfig.fixedRotation = true;
 	fishlerConfig.rotation = 0.0f;
-	fishlerConfig.spriteId = "espada";
 	Entity* fishler = entity_->getMngr()->addEntity();
 	fishler->addComponent<Transform>(pos, fishlerConfig.vel, fishlerConfig.size.getX(), fishlerConfig.size.getY(), fishlerConfig.rotation);
-	fishler->addComponent<BoxCollider>(fishlerConfig.physicType, fishlerConfig.col, fishlerConfig.colMask, false, fishlerConfig.friction, true, 0.0, Vector2D(), Vector2D(), 10000);
+	fishler->addComponent<BoxCollider>(fishlerConfig.physicType, fishlerConfig.col, fishlerConfig.colMask, false, fishlerConfig.friction, true,
+		0.0, Vector2D(fishlerConfig.size.getX()*0.2f, fishlerConfig.size.getY()), Vector2D(), 10000);
 	AnimBlendGraph* fishler_anim_controller = fishler->addComponent<AnimBlendGraph>();
-	fishler_anim_controller->addAnimation("sinMoverse", &sdlutils().images().at(fishlerConfig.spriteId), 1, 1, 1, 23, 1);
-	fishler->addComponent<Enemy_Health>(5000, 500, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
+	fishler_anim_controller->addAnimation("move", &sdlutils().images().at("fishler_move"), 2, 3, 4, 10, -1);
+	fishler_anim_controller->addAnimation("iddle", &sdlutils().images().at("fishler_iddle"), 4, 3, 11, 5, 1);
+	fishler_anim_controller->addAnimation("gun", &sdlutils().images().at("fishler_gun"), 3, 3, 8, 10, 1);
+	fishler_anim_controller->addAnimation("spikes", &sdlutils().images().at("fishler_spikes"), 6, 3, 16, 5, 1);
+	fishler_anim_controller->addAnimation("run_ready", &sdlutils().images().at("fishler_run"), 8, 6, 43, 5, 1, 1, 20);
+	fishler_anim_controller->addAnimation("run", &sdlutils().images().at("fishler_run"), 8, 6, 43, 5, -1, 21, 34);
+	fishler_anim_controller->addAnimation("death", &sdlutils().images().at("fishler_iddle"), 4, 3, 11, 5, 1);
+
+	//Trancisiones
+	fishler_anim_controller->addTransition("move", "gun", "fishler_action", 1, false);
+	fishler_anim_controller->addTransition("move", "run_ready", "fishler_action", 2, false);
+	fishler_anim_controller->addTransition("run_ready", "run", "fishler_action", 3, false);
+	fishler_anim_controller->addTransition("move", "spikes", "fishler_action", 4, false);
+	fishler_anim_controller->addTransition("gun", "move", "fishler_action", 0, false);
+	fishler_anim_controller->addTransition("run", "move", "fishler_action", 0, false);
+	fishler_anim_controller->addTransition("spikes", "move", "fishler_action", 0, false);
+
+	//Phase change
+	fishler_anim_controller->addTransition("move", "iddle", "fishler_action", 5, false);
+	fishler_anim_controller->addTransition("gun", "iddle", "fishler_action", 5, false);
+	fishler_anim_controller->addTransition("run", "iddle", "fishler_action", 5, false);
+	fishler_anim_controller->addTransition("iddle", "spikes", "fishler_action", 4, false);
+
+	//Death
+	fishler_anim_controller->addTransition("iddle", "death", "Dead", 1, false);
+	fishler_anim_controller->addTransition("move", "death", "Dead", 1, false);
+	fishler_anim_controller->addTransition("gun", "death", "Dead", 1, false);
+	fishler_anim_controller->addTransition("spikes", "death", "Dead", 1, false);
+	fishler_anim_controller->addTransition("run_ready", "death", "Dead", 1, false);
+	fishler_anim_controller->addTransition("run", "death", "Dead", 1, false);
+
+	fishler_anim_controller->setParamValue("fishler_action", 0);
+	fishler_anim_controller->setParamValue("Dead", 0);
+
+	fishler->addComponent<Enemy_Health>(2000, 500, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
 	fishler->addComponent<FishlerController>();
 	fishler->addComponent<ContactDamage>(fishler);
 

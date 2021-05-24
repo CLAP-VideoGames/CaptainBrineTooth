@@ -177,6 +177,34 @@
 			"file": "assets/sprites/enemies/thornfish/thornfish_death.png"
 		},
 		{
+			"id": "fishler_iddle",
+			"file": "assets/sprites/enemies/fishler/Fishler_IDLE.png"
+		},
+		{
+			"id": "fishler_gun",
+			"file": "assets/sprites/enemies/fishler/Fishler_GUN.png"
+		},
+		{
+			"id": "fishler_move",
+			"file": "assets/sprites/enemies/fishler/Fishler_MOVE.png"
+		},
+		{
+			"id": "fishler_run",
+			"file": "assets/sprites/enemies/fishler/Fishler_TACKLE.png"
+		},
+		{
+			"id": "fishler_bullet",
+			"file": "assets/sprites/enemies/fishler/Fishler_BULLET.png"
+		},
+		{
+			"id": "fishler_spikes",
+			"file": "assets/sprites/enemies/fishler/Fishler_SPIKES.png"
+		},
+		{
+			"id": "fishler_spike",
+			"file": "assets/sprites/enemies/fishler/Fishler_SPIKE.png"
+		},
+		{
 			"id": "enemy_hit_1",
 			"file": "assets/sprites/enemies/hits/enemy_hit_1.png"
 		},
