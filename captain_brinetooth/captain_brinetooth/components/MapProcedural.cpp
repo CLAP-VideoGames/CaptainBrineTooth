@@ -203,9 +203,10 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 		Vector2D pos = Vector2D(storePos.x, storePos.y);
 
-		t->addComponent<Transform>(pos, Vector2D(0, 0), 400, 650, 0);
+		t->addComponent<Transform>(pos, Vector2D(0, 0), 112, 120, 0);
 
 		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
+		t->addComponent<Animation>("skill", &sdlutils().images().at("skillTableExterior"),1,1,1,1,0, Vector2D(0.5, 0.5));
 
 		t->setCollisionMethod(onEnterAccessTrigger);
 

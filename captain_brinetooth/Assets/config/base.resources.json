@@ -501,6 +501,10 @@
 			"file": "assets/sprites/skill/skillTable.png"
 		},
 		{
+			"id": "skillTableExterior",
+			"file": "assets/sprites/skill/skillTableExterior.png"
+		},
+		{
 			"id": "skillBackground",
 			"file": "assets/sprites/skill/skillBackground.png"
 		},
@@ -1056,7 +1060,7 @@
 		},
 		{
 			"id": "scarceBaits",
-			"text": "Debes tener al menos 1 anzuelo!",
+			"text": "Debes tener al menos 1 cebo!",
 			"font": "Freaks-of-nature72",
 			"color": "0xffffffff"
 		},
