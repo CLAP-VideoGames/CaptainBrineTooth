@@ -1,6 +1,7 @@
 #include "SkillTreeState.h"
 #include "../components/SkillTree.h"
 #include "../components/Inventory.h"
+#include "../components/ExplanationMessage.h"
 #include "../components/Player_Health.h"
 
 SkillTreeState::SkillTreeState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* player_) : GameState(a, mundo, snd){
@@ -125,7 +126,10 @@ void SkillTreeState::createTable(){
 	auto* spines = manager_->addEntity();
 	spines->addComponent<Transform>(Vector2D(x_, y_), Vector2D(0, 0), sizeSkills.getX() * 0.7, sizeSkills.getY() * 0.7, 0.0f);
 	spines->addComponent<Button>(textureSpine, activateSpines, app, manager_->getSoundMngr());
-	spines->addComponent<ExplanationMessage>();
+	ExplanationMessage* eM = spines->addComponent<ExplanationMessage>();
+	eM->push_backTexture(&sdlutils().images().at("spines_avail"));
+	eM->push_backTexture(&sdlutils().images().at("spines_unavail"));
+	eM->setCurrentTexture(0);
 	//Heal
 	Texture* textureHeal = &sdlutils().images().at("healBait");
 	x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));

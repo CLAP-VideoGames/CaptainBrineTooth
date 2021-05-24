@@ -479,6 +479,14 @@
 		{
 			"id": "skillBackground",
 			"file": "assets/sprites/skill/skillBackground.png"
+		},
+		{
+			"id": "spines_avail",
+			"file": "assets/sprites/explanations/dientes.png"
+		},
+		{
+			"id": "spines_unavail",
+			"file": "assets/sprites/explanations/dientes_not.png"
 		}
 	],
 
