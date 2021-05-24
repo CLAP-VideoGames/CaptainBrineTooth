@@ -170,6 +170,7 @@ void App::changeToPesca()
 	std::shared_ptr<b2World>w = std::make_shared<b2World>(gravity);
 	w->SetContactListener(&collisionListener);
 	auto p = stateMachine->currentState()->getMngr()->getHandler<Player>();
+	auto m = stateMachine->currentState()->getMngr()->getHandler<Map>();
 
 	if (p->getComponent<AnimBlendGraph>()->isFlipX()) //Si esta flipeado = ha entrado con velocidad a la derecha 
 	{
@@ -181,7 +182,7 @@ void App::changeToPesca()
 
 		p->getComponent<PlayerController>()->setMoveRight(true); //Contrarrestamos la velocidad con una contraria
 	}
-	stateMachine->pushState(new PescaState(this, w, sndProvisional, p, stateMachine->currentState()->getMngr()->getWorld()));
+	stateMachine->pushState(new PescaState(this, w, sndProvisional, p, m, stateMachine->currentState()->getMngr()->getWorld()));
 }
 
 /// <summary>

@@ -3,13 +3,14 @@
 #include "../sdlutils/InputHandler.h"
 using namespace ColLayers;
 
-PescaState::PescaState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* p, std::shared_ptr <b2World> maux) : GameState(a, mundo, snd)
+PescaState::PescaState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, Entity* p, Entity* map, std::shared_ptr <b2World> maux) : GameState(a, mundo, snd)
 {
 	playerRef = p;   //Referencia al jugador par obtener su inventario
 	playWorld = maux; //Mundo auxiliar creado para la pesca 
 	//Para que el jugador despues de este estado aparezca parado
 	p->getComponent<PlayerController>()->setMoveRight(false); 
 	p->getComponent<PlayerController>()->setMoveLeft(false);
+	mapRef = map;
 }
 PescaState::~PescaState() {
 	app->setCameraZoomOut(main_zoom);
@@ -177,50 +178,128 @@ void PescaState::createRandomReward(const Config& entityConfig)
 
 	int entitiesaux = entitiesPerLine;
 	Inventory* playerInv = playerRef->getComponent<Inventory>();
-	int lastRandom = 90; //Inicialmente no hay ultimo arma generada asi que ponemos un numero grande para que el bucle no se confunda haciendo comprobaciones 
+	int lastRandom = 200; //Inicialmente no hay ultimo arma generada asi que ponemos un numero grande para que el bucle no se confunda haciendo comprobaciones 
+
+	int fase = 0;
+	if (mapRef->getComponent<MapProcedural>() != nullptr) {
+		fase = mapRef->getComponent<MapProcedural>()->getPhase();
+	}
+
+	int espada = 20;
+	int escupetintas = 40;
+	int martillo = 55;
+	int sierra = 70;
+	int crab = 85;
+	int machinegun = 100;
+
+
+	if (fase == 0) {
+		int espada = 25;
+		int escupetintas = 50;
+		int martillo = 65;
+		int sierra = 80;
+		int crab = 90;
+		int machinegun = 100;
+	}
+	else if (fase == 1) {
+		int espada = 10;
+		int escupetintas = 20;
+		int martillo = 35;
+		int sierra = 60;
+		int crab = 85;
+		int machinegun = 100;
+	}
+	else if (fase == 2) {
+		int espada = 10;
+		int escupetintas = 20;
+		int martillo = 45;
+		int sierra = 60;
+		int crab = 75;
+		int machinegun = 100;
+	}
+
+	int weapon = 0;
+
 
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < entitiesaux; j++)
 		{
-			random = sdlutils().rand().teCuoto(0, 6);
-
-			//Si vuelve a salir el mismo arma que antes volvemos a generar otra 
-			while (random == lastRandom)
-			{
-				random = sdlutils().rand().teCuoto(0, 6);
+			random = sdlutils().rand().teCuoto(1, 101);
+			if (random <= espada) {
+				weapon = 0;
 			}
+			else if (random > espada && random <= escupetintas) {
+				weapon = 5;
+			}
+			else if (random > escupetintas && random <= martillo) {
+				weapon = 1;
+			}
+			else if (random > martillo && random <= sierra) {
+				weapon = 2;
+			}
+			else if (random > sierra && random <= crab) {
+				weapon = 3;
+			}
+			else if (random > crab && random <= machinegun) {
+				weapon = 4;
+			}
+			//Si vuelve a salir el mismo arma que antes volvemos a generar otra 
+			while (lastRandom == weapon && playerInv->hasWeapon(weapon))
+			{
+				random = sdlutils().rand().teCuoto(1, 101);
+				if (random <= espada) {
+					weapon = 0;
+				}
+				else if (random > espada && random <= escupetintas) {
+					weapon = 5;
+				}
+				else if (random > escupetintas && random <= martillo) {
+					weapon = 1;
+				}
+				else if (random > martillo && random <= sierra) {
+					weapon = 2;
+				}
+				else if (random > sierra && random <= crab) {
+					weapon = 3;
+				}
+				else if (random > crab && random <= machinegun) {
+					weapon = 4;
+				}
+			}
+
 			auto* reward0 = createBasicEntity(Vector2D(x + (400 * App::camera_Zoom_Out * j) + (75 * App::camera_Zoom_Out * i), rowHeights[i]), Vector2D(w_reward, h_reward), 0.0f, Vector2D(0, 0));
 
 
 			//If player has not the weapon we try adding another weapon that player hasn�t
-			while (playerInv->hasWeapon(random))
+			/*while (playerInv->hasWeapon(random))
 			{
 				random = sdlutils().rand().teCuoto(0, 6);
-			}
-			if (random == 0)
-			{
+			}*/
+
+
+			if (random <= espada) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("espada"), 1, 1, 1, 1, 0);
 			}
-			else if (random == 1) {
+			else if (random > espada && random <= escupetintas) {
+				reward0->addComponent<Animation>("idle", &sdlutils().images().at("escupetintas"), 1, 1, 1, 1, 0);
+			}
+			else if (random > escupetintas && random <= martillo) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("martillo"), 1, 1, 1, 1, 0);
 			}
-			else if (random == 2) {
+			else if (random > martillo && random <= sierra) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("sierra"), 1, 1, 1, 1, 0);
 			}
-			else if (random == 3) {
+			else if (random > sierra && random <= crab) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("crab"), 1, 1, 1, 1, 0);
 			}
-			else if (random == 4) {
+			else if (random > crab && random <= machinegun) {
 				reward0->addComponent<Animation>("idle", &sdlutils().images().at("machine_gun"), 1, 1, 1, 1, 0);
-			}
-			else if (random == 5) {
-				reward0->addComponent<Animation>("idle", &sdlutils().images().at("escupetintas"), 1, 1, 1, 1, 0);
 			}
 
 
 			reward0->addComponent<BoxCollider>(DYNAMIC, CEBO_GANCHO, CEBO_GANCHO_MASK);
-			reward0->addComponent<Reward>(random, playerRef, app, speedperlevel);
-			lastRandom = random; //Guardamos el ultimo random para saber que recompensa se ha generado la ultima 
+			reward0->addComponent<Reward>(weapon, playerRef, app, speedperlevel);
+			lastRandom = weapon; //Guardamos el ultimo random para saber que recompensa se ha generado la ultima 
 
 			speedperlevel += 0.12;
 		}
