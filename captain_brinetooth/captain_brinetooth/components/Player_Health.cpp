@@ -141,18 +141,12 @@ void Player_Health::render()
 
 void Player_Health::update()
 {
-	//Muerte automatica
-	if (ih().keyDownEvent()) {
-		if (ih().isKeyDown(SDL_SCANCODE_0)) {
-			vidas = 0.5;
-			loseLife();
-		}
-	}
 	//Curacion
 	if (ih().mouseButtonEvent() || ih().getMouseButtonHeld()) {
 		//Si el boton fue el izquierdo o si el izquierdo se sigue presionando
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::MIDDLE)) {
-			heal();
+			if(vidas < maxVidas && vidas > 0)
+				heal();
 		}
 	}
 	//Tiempo despues de muerto
