@@ -3,7 +3,7 @@
 
 ExplanationMessage::ExplanationMessage()
 {
-	size = Vector2D(100, 50);
+	size = Vector2D(320, 128);
 	textures = {};
 	render_ = false;
 	currentTexture = nullptr;
@@ -32,8 +32,8 @@ void ExplanationMessage::render(){
 	if (render_){
 		if (currentTexture != nullptr) {
 			Vector2D pos = Vector2D(mouseP.x, mouseP.y);
-			SDL_Rect dest = build_sdlrect(pos, tr->getW(), tr->getH());
-			//SDL_Rect dest = build_sdlrect(pos, size.getX(), size.getX());
+			//SDL_Rect dest = build_sdlrect(pos, tr->getW(), tr->getH());
+			SDL_Rect dest = build_sdlrect(pos, size.getX(), size.getY());
 			currentTexture->render(dest);
 		}
 	}
