@@ -1,0 +1,10 @@
+Durante el desarrollo, hemos tenido que dejar fuera 2 armas, la anguila electrica y la ballena, hemos dejado fuera también un par de estados alterados y un solo enemigo
+Hemos tenio que cambiar el comportamiento de algunos enemigos para simplificarlo. Todo lo demás lo hemos conseguido.
+
+Cosas buenas del juego: Buen arte visual, buen arte sonoro, movimiento satisfactorio, guardado de partida.
+Cosas no tan buenas del juego: ataques, bugs ocasionales.
+
+Cosas buenas del desarrollo: Buena comunicación, buen reparto de tareas, buen entendimiento entre los miembros.
+Cosas no tan buenas del desarrollo: El pivotal un poco regular.
+
+(Contribución de cada uno ya te la envié por correo).
