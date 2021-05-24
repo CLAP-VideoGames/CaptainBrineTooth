@@ -346,6 +346,13 @@ void Inventory::renderNumber(Vector2D pos, Vector2D size, int n, int n2)
 				num = num / 10;
 			}
 		}
+		else if (n2 < 0) {
+			int num = n2 * -1;
+			while (num > 0) {
+				dig.push_back(num % 10);
+				num = num / 10;
+			}
+		}
 		else
 			dig.push_back(0);
 
