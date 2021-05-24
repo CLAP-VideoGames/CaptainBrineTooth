@@ -8,6 +8,7 @@
 #include "DisableOnExit.h"
 #include "DestroyOnCollision.h"
 #include "GetStuckOnWall.h"
+#include "Enemy_Health.h"
 #include "../sdlutils/SDLUtils.h"
 #include "../ecs/Manager.h"
 #include "../game/CollisionLayers.h"
@@ -49,6 +50,7 @@ protected:
 	BoxCollider* collider_;
 	AnimBlendGraph* anim_;
 	Entity* trigger;
+	Enemy_Health* health;
 
 	float triggerWidth;
 	float triggerHeight;

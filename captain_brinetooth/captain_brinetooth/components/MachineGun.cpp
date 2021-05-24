@@ -16,7 +16,7 @@ void MachineGun::init() {
 
 void MachineGun::update() {
 	if (entity_->hasComponent<Player_Health>()) {
-		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && !entity_->getComponent<Player_Health>()->getPlayerIsDying() && entity_->getComponent<Player_Health>()->getLife() > 0) {
+		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && !entity_->getComponent<Player_Health>()->getPlayerIsDying()) {
 			if (ih().mouseButtonEvent() || ih().keyDownEvent()) {
 				if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
 

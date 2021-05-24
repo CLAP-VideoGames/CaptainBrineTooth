@@ -71,12 +71,12 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 		0.0, Vector2D(fishlerConfig.size.getX()*0.2f, fishlerConfig.size.getY()), Vector2D(), 10000);
 	AnimBlendGraph* fishler_anim_controller = fishler->addComponent<AnimBlendGraph>();
 	fishler_anim_controller->addAnimation("move", &sdlutils().images().at("fishler_move"), 2, 3, 4, 10, -1);
-	fishler_anim_controller->addAnimation("iddle", &sdlutils().images().at("fishler_iddle"), 4, 3, 11, 5, 1);
-	fishler_anim_controller->addAnimation("gun", &sdlutils().images().at("fishler_gun"), 3, 3, 8, 10, 1);
-	fishler_anim_controller->addAnimation("spikes", &sdlutils().images().at("fishler_spikes"), 6, 3, 16, 5, 1);
-	fishler_anim_controller->addAnimation("run_ready", &sdlutils().images().at("fishler_run"), 8, 6, 43, 5, 1, 1, 20);
+	fishler_anim_controller->addAnimation("iddle", &sdlutils().images().at("fishler_iddle"), 4, 3, 11, 5, 0);
+	fishler_anim_controller->addAnimation("gun", &sdlutils().images().at("fishler_gun"), 3, 3, 8, 10, 0);
+	fishler_anim_controller->addAnimation("spikes", &sdlutils().images().at("fishler_spikes"), 6, 3, 16, 5, 0);
+	fishler_anim_controller->addAnimation("run_ready", &sdlutils().images().at("fishler_run"), 8, 6, 43, 5, 0, 1, 20);
 	fishler_anim_controller->addAnimation("run", &sdlutils().images().at("fishler_run"), 8, 6, 43, 5, -1, 21, 34);
-	fishler_anim_controller->addAnimation("death", &sdlutils().images().at("fishler_iddle"), 4, 3, 11, 5, 1);
+	fishler_anim_controller->addAnimation("death", &sdlutils().images().at("fishler_death"), 5, 7, 35, 12, 0);
 
 	//Trancisiones
 	fishler_anim_controller->addTransition("move", "gun", "fishler_action", 1, false);
@@ -100,6 +100,7 @@ Entity* EnemyGenerator::generateFishler(Vector2D pos)
 	fishler_anim_controller->addTransition("spikes", "death", "Dead", 1, false);
 	fishler_anim_controller->addTransition("run_ready", "death", "Dead", 1, false);
 	fishler_anim_controller->addTransition("run", "death", "Dead", 1, false);
+	fishler_anim_controller->addTransition("death", "iddle", "Dead", 99, false);
 
 	fishler_anim_controller->setParamValue("fishler_action", 0);
 	fishler_anim_controller->setParamValue("Dead", 0);

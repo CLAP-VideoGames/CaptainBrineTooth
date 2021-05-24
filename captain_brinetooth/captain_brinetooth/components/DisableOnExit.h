@@ -6,12 +6,13 @@
 class DisableOnExit : public Component
 {
 public:
-	DisableOnExit();
+	DisableOnExit(float time = 2000);
 	virtual ~DisableOnExit() {};
 
 	void update() override;
 
 private:
 	float timer_;
+	float timeBeforeDestroy;
 };
 

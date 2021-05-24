@@ -1,9 +1,9 @@
 #include "DisableOnExit.h"
 
-DisableOnExit::DisableOnExit() : timer_(sdlutils().currRealTime()) {};
+DisableOnExit::DisableOnExit(float time) : timer_(sdlutils().currRealTime()), timeBeforeDestroy(time) {};
 
 void DisableOnExit::update() {
-	if (timer_ + 2000 < sdlutils().currRealTime()) {
+	if (timer_ + timeBeforeDestroy < sdlutils().currRealTime()) {
 		entity_->setActive(false);
 		timer_ = sdlutils().currRealTime();
 	}

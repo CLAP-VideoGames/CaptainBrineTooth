@@ -14,7 +14,7 @@ void Sword::init() {
 
 void Sword::update() {
 	if (entity_->hasComponent<Player_Health>()) {
-		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && !entity_->getComponent<Player_Health>()->getPlayerIsDying() && entity_->getComponent<Player_Health>()->getLife() > 0) {
+		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && !entity_->getComponent<Player_Health>()->getPlayerIsDying()) {
 			if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
 				if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
 
