@@ -70,8 +70,8 @@
   <object id="7" x="2176" y="832">
    <polygon points="0,0 256,0 256,128 128,128 128,192 0,192"/>
   </object>
-  <object id="11" x="0" y="0">
-   <polygon points="0,0 0,2560 3200,2560 3200,0"/>
+  <object id="11" x="32" y="32">
+   <polygon points="0,0 0,2496 3136,2496 3136,0"/>
   </object>
  </objectgroup>
 </map>

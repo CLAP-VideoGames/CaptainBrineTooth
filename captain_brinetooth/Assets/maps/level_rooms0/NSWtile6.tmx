@@ -31,13 +31,13 @@
   <object id="13" name="S" x="1152" y="1216" width="256" height="64"/>
  </objectgroup>
  <objectgroup id="4" name="spawns">
-  <object id="14" x="1664" y="1088">
+  <object id="14" x="1472" y="1152">
    <point/>
   </object>
-  <object id="16" x="377.868" y="939.271">
+  <object id="16" x="576" y="960">
    <point/>
   </object>
-  <object id="17" x="727.665" y="872.335">
+  <object id="17" x="1088" y="960">
    <point/>
   </object>
  </objectgroup>
@@ -57,8 +57,8 @@
   <object id="21" x="0" y="0">
    <polyline points="0,0 0,1280 1920,1280 1920,0 0,0"/>
   </object>
-  <object id="22" x="0" y="0">
-   <polygon points="0,0 0,1280 1920,1280 1920,0"/>
+  <object id="22" x="32" y="32">
+   <polygon points="0,0 0,1216 1856,1216 1856,0"/>
   </object>
  </objectgroup>
 </map>

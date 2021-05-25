@@ -32,10 +32,10 @@
   <object id="3" name="end" x="384" y="896">
    <point/>
   </object>
-  <object id="8" x="1155.2" y="893.927">
+  <object id="8" x="1088" y="896">
    <point/>
   </object>
-  <object id="9" x="887.449" y="954.386">
+  <object id="9" x="1344" y="960">
    <point/>
   </object>
  </objectgroup>
@@ -46,8 +46,8 @@
   <object id="2" x="320" y="896" visible="0">
    <polygon points="0,0 192,0 192,64 0,64"/>
   </object>
-  <object id="13" x="0" y="0">
-   <polygon points="0,0 0,1280 1920,1280 1920,0"/>
+  <object id="13" x="32" y="32">
+   <polygon points="0,0 0,1216 1856,1216 1856,0"/>
   </object>
  </objectgroup>
 </map>

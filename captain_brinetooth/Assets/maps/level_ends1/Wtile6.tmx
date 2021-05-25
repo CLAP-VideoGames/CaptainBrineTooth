@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="30" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="24">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="30" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="24">
  <tileset firstgid="1" source="../tileset2.tsx"/>
  <layer id="1" name="tiles" width="30" height="40">
   <data encoding="csv">
@@ -52,22 +52,22 @@
   <object id="4" name="end" x="1472" y="448">
    <point/>
   </object>
-  <object id="6" x="532.102" y="2227.98">
+  <object id="6" x="704" y="2240">
    <point/>
   </object>
-  <object id="8" x="1198.01" y="2221.76">
+  <object id="8" x="1152" y="2240">
    <point/>
   </object>
-  <object id="11" x="709.469" y="1783.01">
+  <object id="11" x="896" y="1792">
    <point/>
   </object>
-  <object id="14" x="1294.47" y="1331.81">
+  <object id="14" x="1216" y="1344">
    <point/>
   </object>
-  <object id="18" x="631.676" y="889.948">
+  <object id="18" x="960" y="896">
    <point/>
   </object>
-  <object id="20" x="1029.97" y="432.527">
+  <object id="20" x="960" y="448">
    <point/>
   </object>
  </objectgroup>
@@ -78,8 +78,8 @@
   <object id="2" x="1408" y="448">
    <polygon points="0,0 192,0 192,64 0,64"/>
   </object>
-  <object id="23" x="0" y="0">
-   <polygon points="0,0 0,2560 1920,2560 1920,0"/>
+  <object id="23" x="32" y="32">
+   <polygon points="0,0 0,2496 1856,2496 1856,0"/>
   </object>
  </objectgroup>
 </map>
