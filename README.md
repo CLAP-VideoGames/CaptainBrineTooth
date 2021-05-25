@@ -272,7 +272,7 @@ Item que restaura 3 anzuelos de vida. El jugador empezará con 2 usos como máxi
 | --- | --- | --- | --- |
 | Tiburón Martillo | Ataca con un swing lateral, mandando hacia atrás al enemigo ( **KnockBack** ) | ![Tiburon Martillo](readmeImages/tiburonMartillo.jpg) | DAÑO = 65 primer golpe, 70 segundo golpe |
 | Pez Sierra | Estilo de combate: 2 swings y una estocada con la sierra que se puede mantener unos instantes. Matar a un enemigo supone un buff de ataque y velocidad. Se puede acumular buffs hasta un límite. Después de X tiempo, se devuelve los stats del jugador a la normalidad | ![Pez Sierra](readmeImages/pezSierra.jpg) | DAÑO: 80 primer golpe, 80 segundo golpe, 90 último golpe |
-| Puños Crustáceos | Atacas dando puñetazos | DAÑO 80 primer golpe, 60 segundo golpe, 110 tercer golpe |
+| Puños Crustáceos | Atacas dando puñetazos | ![Puño crustaceo](readmeImages/punioCrustaceo.jpg) | DAÑO 80 primer golpe, 60 segundo golpe, 110 tercer golpe |
 | Puos normales | Atacas dando puñetazos (Arma base) | ![Puño normal](readmeImages/punioNormal.jpg) | Daño 20 primer golpe, 20 * 2 golpes, 40 tercer golpe |
 
 **Armas a DISTANCIA**
