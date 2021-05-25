@@ -242,7 +242,7 @@ void Enemy_Health::update(){
 		EnemyTrigger* enT = entity_->getComponent<EnemyTrigger>();
 		if (enT != nullptr) enT->getTriggerEntity()->setActive(false);
 		if (particle_hit != nullptr) particle_hit->setActive(false);
-		if (particle_coins != nullptr) particle_coins->setActive(false);
+		if (particle_coins != nullptr) { particle_coins->setActive(false);  particle_coins = nullptr; }
 		//Dar recompensas
 		entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addCoins(reward_);
 		int rand = sdlutils().rand().teCuoto(0,6);
