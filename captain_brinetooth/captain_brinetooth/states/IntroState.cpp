@@ -43,12 +43,13 @@ void IntroState::update(){
 	if (ih().keyDownEvent()) {
 		fadeComp->setState(Fade::STATE_FADE::Out);
 		fadeComp->triggerFade();
-		manager_->getSoundMngr()->stopIntroMusic();
 	}
 
 	if (videoP->queueEmpty()) {
 		StateMachine* sM = app->getStateMachine();
 		sM->changeState(new MenuState(app, sM->currentState()->getMngr()->getWorld(), manager_->getSoundMngr()));
+		manager_->getSoundMngr()->stopIntroMusic();
+
 	}
 
 	GameState::update();
@@ -56,6 +57,8 @@ void IntroState::update(){
 	if (fadeComp->getFadeOutComplete()) {
 		StateMachine* sM = app->getStateMachine();
 		sM->changeState(new MenuState(app, sM->currentState()->getMngr()->getWorld(), manager_->getSoundMngr()));
+		manager_->getSoundMngr()->stopIntroMusic();
+
 	}
 }
 

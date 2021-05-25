@@ -791,10 +791,6 @@
 		{
 			"id": "electricidad",
 			"file": "assets/sounds/enemies/electricidad.wav"
-		},
-		{
-			"id": "credits_sound",
-			"file": "assets/sounds/credits_sound.mp3"
 		}
 	],
 
@@ -874,6 +870,14 @@
 		{
 			"id": "fondo_video",
 			"file": "assets/sounds/fondo_video.mp3"
+		},
+		{
+			"id": "credits_sound",
+			"file": "assets/sounds/credits_sound.mp3"
+		},
+		{
+			"id": "credits_soundPausa",
+			"file": "assets/sounds/credits_soundPausa.mp3"
 		}
 
 	],

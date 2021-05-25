@@ -20,8 +20,8 @@ void CreditsState::init(){
 		fadeComp->triggerFade();
 	}
 
-	sdlutils().soundEffects().at("credits_sound").play();
-
+	//sdlutils().musics().at("credits_sound").play();
+	manager_->getSoundMngr()->ChangeMainMusic("credits_sound");
 	//Video
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
@@ -37,19 +37,21 @@ void CreditsState::update(){
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			fadeComp->setState(Fade::STATE_FADE::Out);
 			fadeComp->triggerFade();
-			
 		}
 	}
 
 	if (ih().keyDownEvent()){
 		fadeComp->setState(Fade::STATE_FADE::Out);
 		fadeComp->triggerFade();
-		manager_->getSoundMngr()->stopIntroMusic();
+
 	}
 
 	if(videoP->queueEmpty()){ 
 		StateMachine* sM = app->getStateMachine();
 		sM->changeState(new MenuState(app, sM->currentState()->getMngr()->getWorld(), manager_->getSoundMngr()));
+		
+		manager_->getSoundMngr()->fadeOutMusic();
+		manager_->getSoundMngr()->ChangeMainMusic("Menu");
 	}
 
 	GameState::update();
@@ -57,5 +59,8 @@ void CreditsState::update(){
 	if (fadeComp->getFadeOutComplete()) {
 		StateMachine* sM = app->getStateMachine();
 		sM->changeState(new MenuState(app, sM->currentState()->getMngr()->getWorld(), manager_->getSoundMngr()));
+		manager_->getSoundMngr()->fadeOutMusic();
+		manager_->getSoundMngr()->ChangeMainMusic("Menu");
+
 	}
 }
