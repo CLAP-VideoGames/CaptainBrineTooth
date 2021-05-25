@@ -172,6 +172,7 @@ void FishlerController::update() {
 				currentMovement = MOVEMENT_STATE::PhaseChange;
 
 				phaseChangeTimer.currentTime = sdlutils().currRealTime();
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("fishler_risa", 0);
 
 				anim_->setParamValue("fishler_action", 5);
 
@@ -226,6 +227,7 @@ void FishlerController::update() {
 		}
 	}
 	else {
+
 		collider_->setSpeed(Vector2D());
 	}
 }

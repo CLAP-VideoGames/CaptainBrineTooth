@@ -770,6 +770,10 @@
 			"id": "explosion_pez",
 			"file": "assets/sounds/enemies/explosion_pez.mp3"
 		},
+		{
+			"id": "fishler_risa",
+			"file": "assets/sounds/enemies/fishler_risa.mp3"
+		},
 
 
 		{
