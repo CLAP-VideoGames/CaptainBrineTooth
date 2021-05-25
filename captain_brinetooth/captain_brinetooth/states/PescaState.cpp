@@ -245,7 +245,7 @@ void PescaState::createRandomReward(const Config& entityConfig)
 				weapon = 4;
 			}
 			//Si vuelve a salir el mismo arma que antes volvemos a generar otra 
-			while (lastRandom == weapon && playerInv->hasWeapon(weapon))
+			while (lastRandom == weapon || playerInv->hasWeapon(weapon))
 			{
 				random = sdlutils().rand().teCuoto(1, 101);
 				if (random <= espada) {
@@ -272,10 +272,6 @@ void PescaState::createRandomReward(const Config& entityConfig)
 
 
 			//If player has not the weapon we try adding another weapon that player hasn�t
-			/*while (playerInv->hasWeapon(random))
-			{
-				random = sdlutils().rand().teCuoto(0, 6);
-			}*/
 
 
 			if (random <= espada) {
