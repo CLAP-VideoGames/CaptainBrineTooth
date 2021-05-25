@@ -549,22 +549,20 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		string file = "data.dat";
 		readtxt.open("assets//user_data//" + file);
 		if (!readtxt) throw string("Can't find file" + file);
-		//std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
-		//int ability;
-		//for (int i = 0; i < 6; i++)
-		//{
-		//	//Vamos leyendo habilidad a habilidad  guardandola en el array
-		//	readtxt >> ability;
-		//	infoabilities[i] = (bool)ability; 
-		//}
-		////Falta la lectura de puntos pero no esta implementada todavia 
-		////Tras leer las habilidades se las damos al usuario 
-		//player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
+		std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
+		int ability;
+		for (int i = 0; i < 6; i++)
+		{
+			//Vamos leyendo habilidad a habilidad  guardandola en el array
+			readtxt >> ability;
+			infoabilities[i] = (bool)ability; 
+		}
+		//Falta la lectura de puntos pero no esta implementada todavia 
+		//Tras leer las habilidades se las damos al usuario 
+		player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
 		readtxt >> pointsRead;
 		player->getComponent<Inventory>()->addCoins(pointsRead);
 	}
-	//TEST BORRAR
-	player->getComponent<Inventory>()->addCoins(3000);
 	//Seteamos al Player como MainHandler
 	manager_->setHandler<Player>(player);
 //Carga de archivo
@@ -575,24 +573,16 @@ void PlayState::createSaveDataandSTate() //Este metodo guarda los valores del ju
 	StateMachine* sM = app->getStateMachine();
 	//Savings players Data 
 	infoPartida infoPlayer;
-	infoPlayer.abilities[0] = false;
-	infoPlayer.abilities[1] = false;
-	infoPlayer.abilities[2] = false;
-	infoPlayer.abilities[3] = false;
-	infoPlayer.abilities[4] = false;
-	infoPlayer.abilities[5] = false;
 
 	Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
 	Inventory* in = playerrefAux->getComponent<Inventory>();
 	infoPlayer.points = in->getCoins(); //OBtenemos las monedas con un getter
 
 	//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-	//for (int i = 0; i < 6; i++)
-	//{
-	//	infoPlayer.abilities[0] = playerrefAux->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
-
-
-	//}
+	for (int i = 0; i < 6; i++)
+	{
+		infoPlayer.abilities[i] = playerrefAux->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
+	}
 	sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
 }
 Entity* PlayState::getBackgroundLevel() {

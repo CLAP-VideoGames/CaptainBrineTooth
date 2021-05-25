@@ -35,6 +35,7 @@ void PescaState::init() {
 	//-----Map-----
 #pragma region Map
 	//Metodo para cambiar el zoom 
+	playerRef->getComponent<Inventory>()->substractBaits(1);
 	main_zoom = app->getCameraZoomOut();
 	app->setCameraZoomOut(2.0f);
 	space_pressed_ = false;
