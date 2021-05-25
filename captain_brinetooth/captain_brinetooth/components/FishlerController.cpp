@@ -66,6 +66,7 @@ void FishlerController::update() {
 			case ATTACKS::RushAttack:
 				attackTelegraphTimer.maxTime = rushAttackTelegraphTime;
 				attackTelegraphTimer.currentTime = sdlutils().currRealTime();
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("fishler_run", 0);
 
 				if ((playertr->getPos().getX() < tr_->getPos().getX())) {
 					anim_->flipX(true);
@@ -81,7 +82,7 @@ void FishlerController::update() {
 			case ATTACKS::Shoot:
 				attackTelegraphTimer.maxTime = shootAttackTelegraphTime;
 				attackTelegraphTimer.currentTime = sdlutils().currRealTime();
-
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("fishler_shot", 0);
 				if ((playertr->getPos().getX() < tr_->getPos().getX())) {
 					anim_->flipX(true);
 				}
@@ -96,6 +97,7 @@ void FishlerController::update() {
 			case ATTACKS::Spikes:
 				attackTelegraphTimer.maxTime = spikesAttackTelegraphTime;
 				attackTelegraphTimer.currentTime = sdlutils().currRealTime();
+				entity_->getMngr()->getSoundMngr()->playSoundEffect("explosion_pez", 0);
 
 				if ((playertr->getPos().getX() < tr_->getPos().getX())) {
 					anim_->flipX(false);
@@ -208,9 +210,9 @@ void FishlerController::update() {
 			//Disparar pinchos
 			currentMovement = MOVEMENT_STATE::AttackTelegraph;
 			currentAttack = ATTACKS::Spikes;
-
 			attackTelegraphTimer.maxTime = spikesAttackTelegraphTime;
 			attackTelegraphTimer.currentTime = sdlutils().currRealTime();
+			entity_->getMngr()->getSoundMngr()->playSoundEffect("explosion_pez", 0);
 
 			if ((playertr->getPos().getX() < tr_->getPos().getX())) {
 				anim_->flipX(false);

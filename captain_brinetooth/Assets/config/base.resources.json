@@ -759,6 +759,20 @@
 			"file": "assets/sounds/enemies/mordisco.mp3"
 		},
 		{
+			"id": "fishler_run",
+			"file": "assets/sounds/enemies/fishler_run.mp3"
+		},
+		{
+			"id": "fishler_shot",
+			"file": "assets/sounds/enemies/fishler_shot.mp3"
+		},
+		{
+			"id": "explosion_pez",
+			"file": "assets/sounds/enemies/explosion_pez.mp3"
+		},
+
+
+		{
 			"id": "gaviota",
 			"file": "assets/sounds/gaviota.mp3"
 		},
