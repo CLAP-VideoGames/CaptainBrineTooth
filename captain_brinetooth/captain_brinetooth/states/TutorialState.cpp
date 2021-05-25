@@ -33,10 +33,14 @@ void TutorialState::update()
 		}
 	}
 	if (countDown + wait_Time < sdlutils().currRealTime()) {
-		if (step_ < 6 && step_ >= 0 && nextStep_) {
-			if (weapon_) {
+		if (step_ < 7 && step_ >= 0 && nextStep_) {
+			if (heal_) {
 				clearStep();
 				stepHealth();
+			}
+			else if (weapon_) {
+				clearStep();
+				stepHeal();
 			}
 			else if (attack_) {
 				clearStep();
@@ -59,10 +63,20 @@ void TutorialState::update()
 				stepJump();
 			}
 		}
-		else if (step_ == 6) {
-			step_ = 7;
-			clearStep();
-			readyPanel();
+		else if (step_ >= 7) {
+			step_++;
+			if (step_ == 8) {
+				clearStep();
+				stepCoin();
+			}
+			else if (step_ == 9) {
+				clearStep();
+				stepBait();
+			}
+			else {
+				clearStep();
+				readyPanel();
+			}
 		}
 		nextStep_ = false;
 	}
@@ -160,14 +174,14 @@ void TutorialState::stepMovement()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.3f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos,Vector2D(0, 0),50.0f*App::camera_Zoom_Out, 50.0f* App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 0, 0);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 0, 0);
 	stepImg.push_back(a);
 
 	Entity* d = manager_->addEntity();
 	Vector2D dPos = Vector2D(sdlutils().width() * 0.7f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(dPos);
 	d->addComponent<Transform>(dPos,Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 1, 1);
+	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 1, 1);
 	stepImg.push_back(d);
 
 	//Messages
@@ -196,7 +210,7 @@ void TutorialState::stepJump()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 5, 5);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 5, 5);
 	stepImg.push_back(a);
 	
 	//Messages
@@ -207,6 +221,7 @@ void TutorialState::stepJump()
 	m->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 100.0f * App::camera_Zoom_Out, 30.0f * App::camera_Zoom_Out, 0.0f);
 	m->addComponent<Animation>("a", &sdlutils().msgs().at("jump"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m);
+	countDown = sdlutils().currRealTime() - 2000;
 }
 
 void TutorialState::stepCamera()
@@ -217,14 +232,14 @@ void TutorialState::stepCamera()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.3f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 2, 2);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 2, 2);
 	stepImg.push_back(a);
 
 	Entity* d = manager_->addEntity();
 	Vector2D dPos = Vector2D(sdlutils().width() * 0.7f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(dPos);
 	d->addComponent<Transform>(dPos, Vector2D(0, 0), 50.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
-	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 3, 3);
+	d->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 3, 3);
 	stepImg.push_back(d);
 
 	//Messages
@@ -254,7 +269,7 @@ void TutorialState::stepDash()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 80.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 4, 4);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 4, 4);
 	stepImg.push_back(a);
 
 	//Messages
@@ -273,7 +288,7 @@ void TutorialState::stepDash()
 	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.7 * App::camera_Zoom_Out, sdlutils().width() * 0.5 * App::camera_Zoom_Out * 0.07, 0.0f);
 	m2->addComponent<Animation>("a", &sdlutils().msgs().at("dash_explanation"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m2);
-	countDown = sdlutils().currRealTime() - 4000;
+	countDown = sdlutils().currRealTime() - 2000;
 }
 
 void TutorialState::stepAttack()
@@ -286,7 +301,7 @@ void TutorialState::stepAttack()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 6, 6);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 6, 6);
 	stepImg.push_back(a);
 
 	//Messages
@@ -297,8 +312,10 @@ void TutorialState::stepAttack()
 	m->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 100.0f * App::camera_Zoom_Out, 20.0f * App::camera_Zoom_Out, 0.0f);
 	m->addComponent<Animation>("a", &sdlutils().msgs().at("attack"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m);
-	countDown = sdlutils().currRealTime() + 4000;
+	countDown = sdlutils().currRealTime() + 2000;
 }
+
+
 
 void TutorialState::stepWeapon()
 {
@@ -309,7 +326,7 @@ void TutorialState::stepWeapon()
 	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
 	stepImgPos.push_back(aPos);
 	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
-	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 8, 1, 0, 7, 7);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 7, 7);
 	stepImg.push_back(a);
 
 	//Indicacion
@@ -336,30 +353,107 @@ void TutorialState::stepWeapon()
 	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.5 * App::camera_Zoom_Out, sdlutils().width() * 0.45 * App::camera_Zoom_Out * 0.08, 0.0f);
 	m2->addComponent<Animation>("a", &sdlutils().msgs().at("switch_explanation"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m2);
-	countDown = sdlutils().currRealTime() + 4000;
+	countDown = sdlutils().currRealTime() + 2000;
+}
+
+void TutorialState::stepHeal()
+{
+	step_ = 6;
+	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app, 5, 2);
+	player->addComponent<LoseLife>();
+	//Perder 5 vidas
+	player->getComponent<Player_Health>()->loseLife();
+	player->getComponent<Player_Health>()->loseLife();
+	player->getComponent<Player_Health>()->loseLife();
+	player->getComponent<Player_Health>()->loseLife();
+	player->getComponent<Player_Health>()->loseLife();
+	//Imagenes
+	Entity* a = manager_->addEntity();
+	Vector2D aPos = Vector2D(sdlutils().width() * 0.5f * App::camera_Zoom_Out, sdlutils().height() * 0.1f * App::camera_Zoom_Out);
+	stepImgPos.push_back(aPos);
+	a->addComponent<Transform>(aPos, Vector2D(0, 0), 120.0f * App::camera_Zoom_Out, 120.0f * App::camera_Zoom_Out, 0.0f);
+	a->addComponent<Animation>("p", &sdlutils().images().at("player_controls"), 3, 4, 12, 1, 0, 9, 9);
+	stepImg.push_back(a);
+
+	//Messages
+	int x = (int)(aPos.getX());
+	int y = (int)(aPos.getY() + a->getComponent<Transform>()->getH());
+	stepImgPos.push_back(Vector2D(x, y));
+	Entity* m = manager_->addEntity();
+	m->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), 180.0f * App::camera_Zoom_Out, 30.0f * App::camera_Zoom_Out, 0.0f);
+	m->addComponent<Animation>("a", &sdlutils().msgs().at("heal"), 1, 1, 1, 1, 0);
+	stepImg.push_back(m);
+
+	x = (int)(sdlutils().width() * 0.52f * App::camera_Zoom_Out);
+	y = (int)(y + 50 * App::camera_Zoom_Out);
+	stepImgPos.push_back(Vector2D(x, y));
+	Entity* m2 = manager_->addEntity();
+	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.5 * App::camera_Zoom_Out, sdlutils().width() * 0.4 * App::camera_Zoom_Out * 0.08, 0.0f);
+	m2->addComponent<Animation>("a", &sdlutils().msgs().at("heal_explanation"), 1, 1, 1, 1, 0);
+	stepImg.push_back(m2);
+	countDown = sdlutils().currRealTime() - 2000;
+
 }
 
 void TutorialState::stepHealth()
 {
-	step_ = 6; 
-	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app, 5, 2);
-	player->addComponent<LoseLife>();
+	step_ = 7; 
 	//Indicacion
 	Entity* b = manager_->addEntity();
-	Vector2D bPos = Vector2D(sdlutils().width() * 0.35f * App::camera_Zoom_Out, sdlutils().height() * 0.06f * App::camera_Zoom_Out);
+	Vector2D bPos = Vector2D(sdlutils().width() * 0.25f * App::camera_Zoom_Out, sdlutils().height() * 0.06f * App::camera_Zoom_Out);
 	stepImgPos.push_back(bPos);
 	b->addComponent<Transform>(bPos, Vector2D(0, 0), 80.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out,0.0f);
 	b->addComponent<Animation>("p", &sdlutils().images().at("arrow"), 1, 1, 1, 1, 0);
 	stepImg.push_back(b);
 	//Messages
-	int x = (int)(sdlutils().width() * 0.65f * App::camera_Zoom_Out);
+	int x = (int)(sdlutils().width() * 0.55f * App::camera_Zoom_Out);
 	int y = (int)(sdlutils().height() * 0.05f * App::camera_Zoom_Out);
 	stepImgPos.push_back(Vector2D(x, y));
 	Entity* m2 = manager_->addEntity();
 	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.5 * App::camera_Zoom_Out, sdlutils().width() * 0.5 * App::camera_Zoom_Out * 0.06, 0.0f);
 	m2->addComponent<Animation>("a", &sdlutils().msgs().at("health_explanation"), 1, 1, 1, 1, 0);
 	stepImg.push_back(m2);
-	countDown = sdlutils().currRealTime() + 4000;
+	countDown = sdlutils().currRealTime() + 3000;
+}
+
+void TutorialState::stepCoin()
+{
+	//Indicacion
+	Entity* b = manager_->addEntity();
+	Vector2D bPos = Vector2D(sdlutils().width() * 0.11f * App::camera_Zoom_Out, sdlutils().height() * 0.26f * App::camera_Zoom_Out);
+	stepImgPos.push_back(bPos);
+	b->addComponent<Transform>(bPos, Vector2D(0, 0), 80.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
+	b->addComponent<Animation>("p", &sdlutils().images().at("arrow"), 1, 1, 1, 1, 0);
+	stepImg.push_back(b);
+	//Messages
+	int x = (int)(sdlutils().width() * 0.5f * App::camera_Zoom_Out);
+	int y = (int)(sdlutils().height() * 0.25f * App::camera_Zoom_Out);
+	stepImgPos.push_back(Vector2D(x, y));
+	Entity* m2 = manager_->addEntity();
+	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.7 * App::camera_Zoom_Out, sdlutils().width() * 0.5 * App::camera_Zoom_Out * 0.06, 0.0f);
+	m2->addComponent<Animation>("a", &sdlutils().msgs().at("coin_explanation"), 1, 1, 1, 1, 0);
+	stepImg.push_back(m2);
+	countDown = sdlutils().currRealTime() + 3000;
+}
+
+void TutorialState::stepBait()
+{
+	//Indicacion
+	Entity* b = manager_->addEntity();
+	Vector2D bPos = Vector2D(sdlutils().width() * 0.1f * App::camera_Zoom_Out, sdlutils().height() * 0.34f * App::camera_Zoom_Out);
+	stepImgPos.push_back(bPos);
+	b->addComponent<Transform>(bPos, Vector2D(0, 0), 80.0f * App::camera_Zoom_Out, 50.0f * App::camera_Zoom_Out, 0.0f);
+	b->addComponent<Animation>("p", &sdlutils().images().at("arrow"), 1, 1, 1, 1, 0);
+	stepImg.push_back(b);
+	//Messages
+	int x = (int)(sdlutils().width() * 0.5f * App::camera_Zoom_Out);
+	int y = (int)(sdlutils().height() * 0.33f * App::camera_Zoom_Out);
+	stepImgPos.push_back(Vector2D(x, y));
+	Entity* m2 = manager_->addEntity();
+	m2->addComponent<Transform>(Vector2D(x, y), Vector2D(0, 0), sdlutils().width() * 0.7 * App::camera_Zoom_Out, sdlutils().width() * 0.5 * App::camera_Zoom_Out * 0.06, 0.0f);
+	m2->addComponent<Animation>("a", &sdlutils().msgs().at("bait_explanation"), 1, 1, 1, 1, 0);
+	stepImg.push_back(m2);
+	countDown = sdlutils().currRealTime() + 3000;
 }
 
 void TutorialState::receiveInput()
@@ -392,6 +486,10 @@ void TutorialState::receiveInput()
 		}
 	}
 	if (ih().mouseButtonEvent()) {
+		if (step_ == 6 && ih().getMouseButtonState(InputHandler::MOUSEBUTTON::MIDDLE)) {
+			heal_ = true;
+			nextStep_ = true;
+		}
 		if (step_ == 5 && ih().getMouseButtonState(InputHandler::MOUSEBUTTON::RIGHT)) {
 			weapon_ = true;
 			nextStep_ = true;

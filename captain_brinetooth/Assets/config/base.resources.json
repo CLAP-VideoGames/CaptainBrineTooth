@@ -1061,6 +1061,12 @@
 			"color": "0x000000ff"
 		},
 		{
+			"id": "heal",
+			"text": "Usar curas",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
 			"id": "switch_explanation",
 			"text": "Abajo a la izquierda se muestra el arma en uso",
 			"font": "Freaks-of-nature72",
@@ -1075,6 +1081,25 @@
 		{
 			"id": "dash_explanation",
 			"text": "Deslizarse te hace inmune y te permite atravesar enemigos",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "heal_explanation",
+			"text": "Las curas se vuelven a llenar pegando a los enemigos",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		{
+			"id": "coin_explanation",
+			"text": "Matar enemigos te otorga dinero con lo que comprar habilidades ",
+			"font": "Freaks-of-nature72",
+			"color": "0x000000ff"
+		},
+		
+		{
+			"id": "bait_explanation",
+			"text": "Tambien hay una probabilidad de que te den cebos para pescar armas",
 			"font": "Freaks-of-nature72",
 			"color": "0x000000ff"
 		},

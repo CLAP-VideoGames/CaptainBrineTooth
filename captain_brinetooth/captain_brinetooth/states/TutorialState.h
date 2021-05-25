@@ -17,6 +17,9 @@ public:
 	void stepDash();
 	void stepWeapon();
 	void stepAttack();
+	void stepHeal();
+	void stepCoin();
+	void stepBait();
 	void stepHealth();
 	void receiveInput();
 	//Callbacks
@@ -39,7 +42,7 @@ private:
 	std::vector<Entity*> room_;
 	std::vector<Vector2D> stepImgPos;
 	int step_;
-	bool moveLeft_, moveRight_, jump_, camera_Up_, camera_Down_, dash_, attack_, weapon_, nextStep_;
+	bool moveLeft_, moveRight_, jump_, camera_Up_, camera_Down_, dash_, attack_, weapon_,heal_, nextStep_;
 	float wait_Time = 4000, countDown;
 	Entity* player;
 	Entity* enemy;

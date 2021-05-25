@@ -564,10 +564,6 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		player->getComponent<Inventory>()->addCoins(pointsRead);
 		
 	}
-	//Seteamos al Player como MainHandler
-	player->getComponent<Inventory>()->addBaits(1);
-	player->getComponent<Inventory>()->addWeapon(1);
-	player->getComponent<Inventory>()->addWeapon(2);
 	manager_->setHandler<Player>(player);
 //Carga de archivo
 }
