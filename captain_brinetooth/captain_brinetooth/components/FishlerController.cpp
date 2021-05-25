@@ -25,7 +25,7 @@ void FishlerController::init() {
 	shootAttackTelegraphTime = 500;
 	shootAttackTime = 1000;
 
-	spikesAttackTelegraphTime = 1700;
+	spikesAttackTelegraphTime = 1900;
 	spikeAttackTime = 1000;
 
 	changePhaseRequest = false;
