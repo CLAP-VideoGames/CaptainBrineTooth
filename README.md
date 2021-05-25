@@ -277,8 +277,8 @@ Item que restaura 3 anzuelos de vida. El jugador empezará con 2 usos como máxi
 
 **Armas a DISTANCIA**
 
-| Ametralladora de anchoas | Dispara balas con mucha cadencia. El arma se sobrecalienta y no puedes disparar durante un tiempo | Pez que escupe anchoas | DAÑO 7 de daño por bala |
-| --- | --- | --- | --- | --- |
+| Ametralladora de anchoas | Dispara balas con mucha cadencia. El arma se sobrecalienta y no puedes disparar durante un tiempo | ![Ametralladora](readmeImages/ametralladora.jpg) | DAÑO 7 de daño por bala |
+| --- | --- | --- | --- |
 | Escupe-Tintas | Ataca con una nube oscura de tinta que envenena y ralentiza (La nube dura 2 segundos aprox) | ![Escupe Tinta](readmeImages/escupeTinta.jpg) | DAÑO 20 por disparo. 7 por veneno * 1 segundo |
 
   4.7. **Árbol de Anzuelos**
