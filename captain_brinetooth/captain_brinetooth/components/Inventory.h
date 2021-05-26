@@ -60,7 +60,7 @@ private:
 
 	//Coins & Bait
 	int coins_, baits_;
-	int display_coins, temp_coins, display_baits, temp_baits;
+	int display_coins, temp_coins, display_baits, temp_baits, increase_, aux_coins;
 	std::vector<Texture*> textures_;
 	Texture* coin_tex_;
 	Texture* bait_tex_;

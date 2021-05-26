@@ -22,13 +22,14 @@ void Inventory::init() {
 		hud->actualizarNewWeapon(0, &sdlutils().images().at("fist"));
 	}
 	//Init Coins & Baits
-	coins_, temp_coins, display_coins = 0;
+	coins_, temp_coins, display_coins, aux_coins = 0;
 	baits_, temp_baits, display_baits = 0;
 	for (int y = 0; y < 2; y++) {
 		for (int x = 0; x < 3; x++)
 			framepos.push_back(Vector2D(x, y));
 	}
 	actfr = 0;
+	increase_ = 1;
 	elapsedtime_temp_baits = elapsedtime_temp_coins = sdlutils().currRealTime();
 	coin_tex_ = &sdlutils().images().at("coin");
 	textures_.push_back(coin_tex_);
@@ -72,15 +73,36 @@ void Inventory::update() {
 	if (temp_coins != 0 && elapsedtime_temp_coins + cd_temp < sdlutils().currRealTime()) {
 		if (temp_coins > 0) {	//Suma de monedas
 			entity_->getMngr()->getSoundMngr()->playSoundEffect("coin_collect", 0);
-			display_coins++;
-			temp_coins--;
+			//Aumento de velocidad de suma
+			if (aux_coins - 25 > temp_coins) {
+				aux_coins = temp_coins;
+				increase_++;
+			}
+			display_coins += increase_;
+			temp_coins -= increase_;
+			if (temp_coins < 0) {
+				temp_coins = 0;
+				display_coins = coins_;
+			}
 		}
 		else if (temp_coins < 0) {	//Resta de monedas
 			entity_->getMngr()->getSoundMngr()->playSoundEffect("coin_collect", 0);
-			display_coins--;
-			temp_coins++;
+			//Aumento de velocidad de resta
+			if (aux_coins + 25 < temp_coins) {
+				aux_coins = temp_coins;
+				increase_++;
+			}
+			display_coins -= increase_;
+			temp_coins += increase_; 
+			if (temp_coins > 0) {
+				temp_coins = 0;
+				display_coins = coins_;
+			}
 		}
 	}
+	else 
+		increase_ = 1;	//Reset de incremento
+	
 	if (temp_baits != 0 && elapsedtime_temp_baits + cd_temp < sdlutils().currRealTime()) {
 		if (temp_baits > 0) {	//Suma de cebos
 			display_baits++;
@@ -272,6 +294,7 @@ void Inventory::addCoins(int n)
 {
 	coins_ += n;
 	temp_coins += n;
+	aux_coins = temp_coins;
 	elapsedtime_temp_coins = sdlutils().currRealTime();
 	
 }
@@ -282,6 +305,7 @@ void Inventory::substractCoins(int n){
 	coins_ -= n;
 	if (coins_ <= 0) coins_ = 0;
 
+	aux_coins = temp_coins;
 	elapsedtime_temp_coins = sdlutils().currRealTime();
 }
 
