@@ -113,7 +113,11 @@ void SkillTreeState::createTable(){
 
 	//Rama Izquierda
 	//Baits
-	Texture* textureBait = &sdlutils().images().at("extraBait");
+	Texture* textureBait;
+	if(skillTree_->hasSkill(ExtraLives))
+		textureBait = &sdlutils().images().at("extraBait_taken");
+	else textureBait = &sdlutils().images().at("extraBait");
+
 	int x_ = (int)(((App::camera.w / 2) - sizeSkills.getX() * 0.5));
 	int y_ = (int)((App::camera.h) * 0.63);
 	auto* baits = manager_->addEntity();
@@ -125,7 +129,10 @@ void SkillTreeState::createTable(){
 	eMthird->setCurrentTexture(0);
 	explMssgs_.push_back(eMthird);
 	//Heal
-	Texture* textureHeal = &sdlutils().images().at("healBait");
+	Texture* textureHeal;
+	if (skillTree_->hasSkill(ExtraHeal))
+		textureHeal = &sdlutils().images().at("healBait_taken");
+	else textureHeal = &sdlutils().images().at("healBait");
 	x_ = (int)(((App::camera.w/2) - sizeSkills.getX()*2.2));
 	y_ = (int)((App::camera.h) * 0.45);
 	auto* heal = manager_->addEntity();
@@ -137,7 +144,10 @@ void SkillTreeState::createTable(){
 	eMsecond->setCurrentTexture(0);
 	explMssgs_.push_back(eMsecond);
 	//Spines
-	Texture* textureSpine = &sdlutils().images().at("spineBait");
+	Texture* textureSpine;
+	if (skillTree_->hasSkill(Spines))
+		textureSpine = &sdlutils().images().at("spineBait_taken");
+	else textureSpine = &sdlutils().images().at("spineBait");
 	x_ = (int)(((App::camera.w / 2) - sizeSkills.getX() * 2.2));
 	y_ = (int)((App::camera.h) * 0.27);
 	auto* spines = manager_->addEntity();
@@ -151,7 +161,10 @@ void SkillTreeState::createTable(){
 	
 	//Rama Derecha
 	//ExtraDamage
-	Texture* textureDamage = &sdlutils().images().at("doubleBait");
+	Texture* textureDamage;
+	if (skillTree_->hasSkill(ExtraDamage))
+		textureDamage = &sdlutils().images().at("doubleBait_taken");
+	else textureDamage = &sdlutils().images().at("doubleBait");
 	x_ = (int)(((App::camera.w / 2) + sizeSkills.getX() * 1.2));
 	y_ = (int)((App::camera.h) * 0.27);
 	auto* damage = manager_->addEntity();
@@ -163,7 +176,10 @@ void SkillTreeState::createTable(){
 	eMforth->setCurrentTexture(0);
 	explMssgs_.push_back(eMforth);
 	//ExtraSpeed
-	Texture* textureSpeed = &sdlutils().images().at("speedBait");
+	Texture* textureSpeed;
+	if (skillTree_->hasSkill(SpeedAttack))
+		textureSpeed = &sdlutils().images().at("speedBait_taken");
+	else textureSpeed = &sdlutils().images().at("speedBait");
 	x_ = (int)(((App::camera.w / 2) + sizeSkills.getX() * 1.2));
 	y_ = (int)((App::camera.h) * 0.45);
 	auto* speed = manager_->addEntity();

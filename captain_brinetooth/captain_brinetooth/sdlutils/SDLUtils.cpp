@@ -38,7 +38,7 @@ std::string SDLUtils::getNameFilePath(std::string& path){
 }
 
 bool SDLUtils::getDebug() const{
-	return true;
+	return false;
 }
 
 void SDLUtils::initWindow() {

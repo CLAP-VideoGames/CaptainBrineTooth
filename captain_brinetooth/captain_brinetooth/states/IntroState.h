@@ -9,11 +9,14 @@ public:
 
 	void init() override;
 	void update() override;
+	void render() const override;
 
 private:
 	Entity* video = nullptr, *fade = nullptr;
 	Fade* fadeComp = nullptr;
 
 	VideoPlayer* videoP = nullptr;
+	Texture* skip;
+	Vector2D pos;
 };
 

@@ -496,8 +496,10 @@ void MapProcedural::loadTileFiles() {
 }
 
 void MapProcedural::pressToAccess(bool entered) {
-	canAccess = entered;
-	if (scarceBaitError) scarceBaitError = false;
+	if (this != nullptr){
+		canAccess = entered;
+		if (scarceBaitError) scarceBaitError = false;
+	}
 }
 
 void MapProcedural::initBoss() {

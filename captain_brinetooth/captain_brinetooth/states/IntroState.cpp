@@ -1,14 +1,19 @@
 #include "IntroState.h"
 #include "MenuState.h"
+#include "../sdlutils/SDLUtils.h"
 
 IntroState::IntroState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 
 }
 
 IntroState::~IntroState(){
+	
 }
 
 void IntroState::init() {
+	pos = Vector2D(sdlutils().width() / 2, sdlutils().height() / 1.1);
+	skip = &sdlutils().msgs().at("anyKey");
+
 	//Para que se sette el Fade
 	GameState::init();
 	//Fade
@@ -21,6 +26,10 @@ void IntroState::init() {
 	//Video
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
+	std::pair<const char*, std::pair<bool, int>> video1 = { sdlutils().videos().at("logo").c_str(), {false, 20} };
+	videos.push_back(video1);
+	std::pair<const char*, std::pair<bool, int>> video2 = { sdlutils().videos().at("lore").c_str(), {false, 34} };
+	videos.push_back(video2);
 	std::pair<const char*, std::pair<bool, int>> video__ = { sdlutils().videos().at("intro").c_str(), {false, 1} };
 	videos.push_back(video__);
 	std::pair<const char*, std::pair<bool, int>> video_ = { sdlutils().videos().at("introLoop").c_str(), {true, 1} };
@@ -60,6 +69,19 @@ void IntroState::update(){
 		manager_->getSoundMngr()->stopIntroMusic();
 
 	}
+}
+
+void IntroState::render() const {
+	GameState::render();
+
+	float w = skip->width() * 0.3;
+	float h = skip->height() * 0.3;
+	//Se pone debajo del boton de la tecla E
+	Vector2D newPos;
+	newPos.setY(pos.getY() - (h / 2));
+	newPos.setX(pos.getX() - (w / 2));
+	SDL_Rect dest = build_sdlrect(newPos, w, h);
+	skip->render(dest);
 }
 
 

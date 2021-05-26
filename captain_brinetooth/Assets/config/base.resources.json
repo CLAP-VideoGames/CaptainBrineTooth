@@ -485,20 +485,40 @@
 			"file": "assets/sprites/skill/healBait.png"
 		},
 		{
+			"id": "healBait_taken",
+			"file": "assets/sprites/skill/healBait_taken.png"
+		},
+		{
 			"id": "doubleBait",
 			"file": "assets/sprites/skill/doubleBait.png"
+		},
+		{
+			"id": "doubleBait_taken",
+			"file": "assets/sprites/skill/doubleBait_taken.png"
 		},
 		{
 			"id": "extraBait",
 			"file": "assets/sprites/skill/extraBait.png"
 		},
 		{
+			"id": "extraBait_taken",
+			"file": "assets/sprites/skill/extraBait_taken.png"
+		},
+		{
 			"id": "speedBait",
 			"file": "assets/sprites/skill/speedBait.png"
 		},
 		{
+			"id": "speedBait_taken",
+			"file": "assets/sprites/skill/speedBait_taken.png"
+		},
+		{
 			"id": "spineBait",
 			"file": "assets/sprites/skill/spineBait.png"
+		},
+		{
+			"id": "spineBait_taken",
+			"file": "assets/sprites/skill/spineBait_taken.png"
 		},
 		{
 			"id": "skillTable",
@@ -1120,6 +1140,12 @@
 			"text": "Habilidades",
 			"font": "Freaks-of-nature72",
 			"color": "0xffffffff"
+		},
+		{
+			"id": "anyKey",
+			"text": "Presiona cualquier tecla para continuar",
+			"font": "Freaks-of-nature72",
+			"color": "0x9b9b9bff"
 		}
 
 	],
@@ -1140,6 +1166,14 @@
 		{
 			"id": "credits",
 			"file": "assets/videos/credits.mp4"
+		},
+		{
+			"id": "logo",
+			"file": "assets/videos/logo.mp4"
+		},
+		{
+			"id": "lore",
+			"file": "assets/videos/lore.mp4"
 		}
 	]
 }
