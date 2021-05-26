@@ -9,6 +9,7 @@
 #endif
 #include "../states/PlayState.h"
 
+static infoPartida partidaAct;
 Player_Health::~Player_Health()
 {
 	for (Entity* e : heals) {
@@ -291,6 +292,8 @@ void Player_Health::respawn(){
 	StateMachine* sM = g->getStateMachine();
 	Manager* mngr = entity_->getMngr();
 	mngr->getSoundMngr()->ChangeMainMusic("Nivel1");
+	infoPartida p;
+	p.points = entity_->getComponent<Inventory>()->getCoins();
 
-	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr(),false));
+	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr(),false,p.points,true));
 }

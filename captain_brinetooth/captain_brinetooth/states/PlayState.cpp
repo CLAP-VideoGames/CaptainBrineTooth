@@ -1,7 +1,7 @@
 ﻿#include "PlayState.h"
 #include "PasueState.h"
 #include <fstream>
-
+struct infopartida;
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 
 #define _CRTDBG_MAP_ALLOC
@@ -11,7 +11,7 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 #define  DEBUG_NEW
 #endif
 
-PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool saved) : GameState(a, mundo, snd) {
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd,bool saved,int p, bool died ) : GameState(a, mundo, snd) {
 	//Testing floor
 	//auto suelo = manager_->addEntity();
 	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
@@ -20,6 +20,8 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, 
 	//suelo->addComponent<BoxCollider>();
 	fadeComp = nullptr;
 	save = saved;
+	if (died)coinsAfterRespawn = p;
+	else coinsAfterRespawn = 0;
 }
 
 PlayState::~PlayState() {
@@ -184,6 +186,7 @@ void PlayState::init() {
 	fishler->addComponent<FishlerController>();
 	fishler->addComponent<ContactDamage>();*/
 }
+
 
 void PlayState::update() {
 	//Queremos que, en el estado que hayan objetos físicos, se actualicen las físicas
@@ -539,13 +542,13 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//Por testing basura
 	player->addComponent<CameraFollow>(Vector2D(100.0f, -80.0f), 0.08f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
-
+	if (coinsAfterRespawn > 0)player->getComponent<Inventory>()->addCoins(coinsAfterRespawn);
 	player->addComponent<LoseLife>();
 
 	if (save) {
 		
 		ifstream readtxt;
-		int pointsRead;
+		int pointsRead=0;
 		string file = "data.dat";
 		readtxt.open("assets//user_data//" + file);
 		if (!readtxt) throw string("Can't find file" + file);
@@ -560,7 +563,6 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		//Falta la lectura de puntos pero no esta implementada todavia 
 		//Tras leer las habilidades se las damos al usuario 
 		player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
-		readtxt >> pointsRead;
 		player->getComponent<Inventory>()->addCoins(pointsRead);
 		
 	}

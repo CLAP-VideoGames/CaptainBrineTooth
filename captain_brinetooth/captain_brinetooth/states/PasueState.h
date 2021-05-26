@@ -5,12 +5,7 @@
 
 class Entity;
 
-struct infoPartida
-{
-	bool abilities[6];
-	int points;
-	//etc..
-};
+struct infoPartida;
 static infoPartida partida;
 class PauseState :public GameState {
 public:

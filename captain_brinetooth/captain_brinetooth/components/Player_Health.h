@@ -5,8 +5,12 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../game/App.h"
 
+struct infoPartida
+{
+	bool abilities[6];
+	int points;
 
-
+};
 
 class Player_Health : public Component {
 public:

@@ -1,11 +1,11 @@
 #pragma once
 #include "GameState.h"
 class Entity;
-
+struct infopartida;
 class PlayState : public GameState
 {
 public:
-	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool save);
+	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool saved, int  p, bool died = false);
 	virtual ~PlayState();
 
 	virtual void init();
@@ -28,4 +28,5 @@ private:
 	Vector2D camLimits;
 	bool save;
 	Fade* fadeComp;
+	int coinsAfterRespawn;
 };

@@ -112,7 +112,7 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 	snd->playSoundEffect("sonido_barco", 0);
 	
 	StateMachine* sM = app->getStateMachine();
-	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,app->getloadSavedGame()));
+	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,app->getloadSavedGame(),0));
 	app->setloadSavedGame(false);
 }
 
