@@ -552,6 +552,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		string file = "data.dat";
 		readtxt.open("assets//user_data//" + file);
 		if (!readtxt) throw string("Can't find file" + file);
+		readtxt >> pointsRead;
 		std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
 		int ability;
 		for (int i = 0; i < 6; i++)

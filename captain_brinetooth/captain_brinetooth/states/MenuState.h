@@ -15,6 +15,7 @@ public:
 	static void changeToOptions(App* app, SoundManager* snd);
 	static void changeToTutorial(App* app, SoundManager* snd);
 	static void changeToCredits(App* app, SoundManager* snd);
+	void chechSaveFile();
 
 private:
 	SDL_Rect cam;

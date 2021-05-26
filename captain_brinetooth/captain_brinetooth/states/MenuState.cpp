@@ -5,6 +5,7 @@
 #include "CreditsState.h"
 #include "TutorialState.h"
 
+#include <fstream>
 MenuState::MenuState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd){
 	cam = a->camera;
 	fadeComp = nullptr;
@@ -23,7 +24,8 @@ void MenuState::init() {
 		fadeComp->setTimeOut(2000);
 		fadeComp->triggerFade();
 	}
-
+	//CHECK SAVE FILe
+	chechSaveFile();
 	//Setear los sonidos
 	if (manager_->getSoundMngr()->GeneralVolume() > manager_->getSoundMngr()->PauseVolume())
 	{
@@ -59,7 +61,7 @@ void MenuState::init() {
 	x = (int)((App::camera.w - w) * 0.5);
 
 	//Boton Cargar
-	if (!saved_game) {
+	if (saved_game) {
 		auto* botonCargar = manager_->addEntity();
 		w *= 0.8;
 		h *= 0.8;
@@ -113,7 +115,6 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 	
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,app->getloadSavedGame(),0));
-	app->setloadSavedGame(false);
 }
 
 void MenuState::changeToCredits(App* app, SoundManager* snd) {
@@ -121,6 +122,17 @@ void MenuState::changeToCredits(App* app, SoundManager* snd) {
 	
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new CreditsState(app, sM->currentState()->getMngr()->getWorld(), snd));
+}
+
+void MenuState::chechSaveFile()
+{
+	ifstream readtxt;
+	int pointsRead = 0;
+	string file = "data.dat";
+	readtxt.open("assets//user_data//" + file);
+	if (!readtxt) saved_game = false;
+	else saved_game = true;
+	app->setloadSavedGame(saved_game);
 }
 
 void MenuState::changeToOptions(App* app, SoundManager* snd) {
