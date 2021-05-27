@@ -11,7 +11,7 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 #define  DEBUG_NEW
 #endif
 
-PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd,bool saved,int p, bool died ) : GameState(a, mundo, snd) {
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd,bool saved,int coins, bool ab[6], bool died ) : GameState(a, mundo, snd) {
 	//Testing floor
 	//auto suelo = manager_->addEntity();
 	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
@@ -20,8 +20,7 @@ PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd,b
 	//suelo->addComponent<BoxCollider>();
 	fadeComp = nullptr;
 	save = saved;
-	if (died)coinsAfterRespawn = p;
-	else coinsAfterRespawn = 0;
+	dataInRespawn(died, coins, ab);
 }
 
 PlayState::~PlayState() {
@@ -542,7 +541,11 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	//Por testing basura
 	player->addComponent<CameraFollow>(Vector2D(100.0f, -80.0f), 0.08f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
+	//Si mueres se mantienen las monedas y las habilidades
 	if (coinsAfterRespawn > 0)player->getComponent<Inventory>()->addCoins(coinsAfterRespawn);
+	if (saveAbilities) player->getComponent<SkillTree>()->initSkillsFromMatch(abilitiesAux);
+
+
 	player->addComponent<LoseLife>();
 
 	if (save) {
@@ -555,7 +558,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		readtxt >> pointsRead;
 		std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
 		int ability;
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			//Vamos leyendo habilidad a habilidad  guardandola en el array
 			readtxt >> ability;
@@ -567,7 +570,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		player->getComponent<Inventory>()->addCoins(pointsRead);
 		
 	}
-	
+	player->getComponent<Inventory>()->addCoins(5000);
 	manager_->setHandler<Player>(player);
 //Carga de archivo
 }
@@ -583,7 +586,7 @@ void PlayState::createSaveDataandSTate() //Este metodo guarda los valores del ju
 	infoPlayer.points = in->getCoins(); //OBtenemos las monedas con un getter
 
 	//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		infoPlayer.abilities[i] = playerrefAux->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
 	}
@@ -591,6 +594,27 @@ void PlayState::createSaveDataandSTate() //Este metodo guarda los valores del ju
 }
 Entity* PlayState::getBackgroundLevel() {
 	return backgroundLevel;
+}
+void PlayState::dataInRespawn(bool died, int coins , bool ab[6])
+{
+
+	std::array<bool, 6> abAux;
+	
+	if (died)
+	{
+		for (int i = 0; i < 5; i++)abAux[i] = ab[i]; //Volcamos la estructura que a priori es incompatible 
+		coinsAfterRespawn = coins;
+		for (int i = 0; i < 5; i++)abilitiesAux[i] = abAux[i];
+		saveAbilities = true;
+		
+	}
+	else
+	{
+		saveAbilities = false;
+		coinsAfterRespawn = 0;
+	}
+
+
 }
 void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
 	auto* weaponGiver = createBasicEntity(weaponGiverConfig.pos, weaponGiverConfig.size, weaponGiverConfig.rotation, weaponGiverConfig.vel);

@@ -294,6 +294,16 @@ void Player_Health::respawn(){
 	mngr->getSoundMngr()->ChangeMainMusic("Nivel1");
 	infoPartida p;
 	p.points = entity_->getComponent<Inventory>()->getCoins();
+	bool abAux[6];
+	//Load Abilities from player when died
+	for (int i = 0; i < 5; i++)
+	{
+		p.abilities[i] = entity_->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		abAux[i] = p.abilities[i];
+	}
 
-	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr(),false,p.points,true));
+	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr(),false, p.points,abAux,true));
 }

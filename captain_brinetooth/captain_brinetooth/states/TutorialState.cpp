@@ -85,7 +85,7 @@ void TutorialState::update()
 
 void TutorialState::startGame(App* app, SoundManager* snd){
 	StateMachine* sM = app->getStateMachine();
-	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,false,0)); //Cuando accedes al juego desde el tutorial no se carga partida
+	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,false,0,nullptr)); //Cuando accedes al juego desde el tutorial no se carga partida
 }
 
 void TutorialState::startTutorial(App* app, SoundManager* snd)

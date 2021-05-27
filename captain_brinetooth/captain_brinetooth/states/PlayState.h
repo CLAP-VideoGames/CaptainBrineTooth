@@ -5,7 +5,7 @@ struct infopartida;
 class PlayState : public GameState
 {
 public:
-	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool saved, int  p, bool died = false);
+	PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, bool saved, int  coins, bool ab[6]=nullptr, bool died = false );
 	virtual ~PlayState();
 
 	virtual void init();
@@ -22,6 +22,9 @@ public:
 	Entity* getBackgroundLevel();
 
 private:
+	void dataInRespawn(bool died,int coins, bool ab[6]);
+
+
 	Entity* backgroundLevel;
 	SDL_Rect cam;
 	MapProcedural* map;
@@ -29,4 +32,6 @@ private:
 	bool save;
 	Fade* fadeComp;
 	int coinsAfterRespawn;
+	std::array<bool, 6> abilitiesAux;
+	bool saveAbilities;
 };

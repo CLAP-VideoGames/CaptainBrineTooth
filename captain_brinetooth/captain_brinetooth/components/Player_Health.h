@@ -7,7 +7,7 @@
 
 struct infoPartida
 {
-	bool abilities[6];
+	std::array<bool, 6> abilities;
 	int points;
 
 };
