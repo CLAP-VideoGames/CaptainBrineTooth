@@ -41,7 +41,12 @@ public:
 	/// <summary>
 	/// Metodo para tocar exclusivamente la cancion de la intro (Con el Change Music se necesita una version de pausa, que aqui es innecesaria)
 	/// </summary>
-	void playIntroMusic() {
+	void playIntroMusic(std:: string nombre) {
+		sdlutils().musics().at(nombre).setChannelVolume(volumenGeneral);
+		sdlutils().musics().at(nombre).play();
+	}
+
+	void playIntroLoopMusic() {
 		sdlutils().musics().at("fondo_video").setChannelVolume(volumenGeneral);
 		sdlutils().musics().at("fondo_video").playforMusic();
 	}
@@ -51,7 +56,12 @@ public:
 	/// </summary>
 	void stopIntroMusic()
 	{
-		sdlutils().musics().at("fondo_video").haltChannel();
+		std::map<std::string, SoundEffect>::iterator it = sdlutils().musics().begin();
+		while (it != sdlutils().musics().end())
+		{
+			it->second.haltChannel();
+			++it;
+		}
 		sdlutils().soundEffects().at("ola").play();
 		sdlutils().soundEffects().at("gaviota").play();
 	}

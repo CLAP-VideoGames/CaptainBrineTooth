@@ -820,6 +820,14 @@
 
 	"musics": [
 		{
+			"id": "introStudio",
+			"file": "assets/sounds/introStudio_alt.mp3"
+		},
+		{
+			"id": "cinematica",
+			"file": "assets/sounds/cinematica.mp3"
+		},
+		{
 			"id": "Menu",
 			"file": "assets/sounds/soundtrack/drunken_sailor.mp3"
 		},

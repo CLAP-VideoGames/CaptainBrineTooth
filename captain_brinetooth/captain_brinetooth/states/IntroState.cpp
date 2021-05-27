@@ -38,10 +38,18 @@ void IntroState::init() {
 	videoP = video->addComponent<VideoPlayer>(videos);
 	//Sonido
 	manager_->getSoundMngr()->setGeneralVolume(10,10);
-	manager_->getSoundMngr()->playIntroMusic();
+	manager_->getSoundMngr()->playIntroMusic("introStudio");
+	manager_->getSoundMngr()->playIntroMusic("cinematica");
+
 }
 
 void IntroState::update(){
+	if (!finalSong && videoP->queueSize() == 0)
+	{
+		manager_->getSoundMngr()->playIntroLoopMusic();
+		finalSong = true;
+	}
+	
 	if (ih().mouseButtonEvent()) {
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			fadeComp->setState(Fade::STATE_FADE::Out);

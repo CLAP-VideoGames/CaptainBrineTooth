@@ -18,5 +18,7 @@ private:
 	VideoPlayer* videoP = nullptr;
 	Texture* skip;
 	Vector2D pos;
+
+	bool finalSong = false;
 };
 

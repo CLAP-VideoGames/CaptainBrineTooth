@@ -59,6 +59,7 @@ public:
 	void update() override;
 	void render() override;
 	
+	int queueSize() { return queueVideos.size(); }
 	int createVideo(Video& video_);
 	/// <summary>
 	/// Crea los videos con todos sus atributos para ser renderizado
