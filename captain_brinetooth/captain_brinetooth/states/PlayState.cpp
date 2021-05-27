@@ -566,6 +566,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		}
 		//Falta la lectura de puntos pero no esta implementada todavia 
 		//Tras leer las habilidades se las damos al usuario 
+		player->getComponent<Inventory>()->addCoins(pointsRead);
 		player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
 		
 		
