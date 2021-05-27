@@ -567,6 +567,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 		player->getComponent<Inventory>()->addCoins(pointsRead);
 		
 	}
+	
 	manager_->setHandler<Player>(player);
 //Carga de archivo
 }
