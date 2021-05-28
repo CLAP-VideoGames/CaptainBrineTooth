@@ -237,7 +237,7 @@ void SkillTreeState::setDoubleDamage(){
 		invent->substractCoins(skillTree_->getSkillLimitPoints(ExtraDamage));
 		points = invent->getCoins();
 		//Accion
-		skillTree_->setAttackModifier(2);
+		skillTree_->setAttackModifier(1.5);
 		manager_->getSoundMngr()->playSoundEffect("Collar_piranas", 0);
 	}
 }

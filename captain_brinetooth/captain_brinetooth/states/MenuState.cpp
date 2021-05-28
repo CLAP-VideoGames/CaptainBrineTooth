@@ -25,7 +25,7 @@ void MenuState::init() {
 		fadeComp->triggerFade();
 	}
 	//CHECK SAVE FILe
-	chechSaveFile();
+	checkSaveFile();
 	//Setear los sonidos
 	if (manager_->getSoundMngr()->GeneralVolume() > manager_->getSoundMngr()->PauseVolume())
 	{
@@ -61,7 +61,7 @@ void MenuState::init() {
 	x = (int)((App::camera.w - w) * 0.5);
 
 	//Boton Cargar
-	if (saved_game) {
+	if (app->IsSavedGame()) {
 		auto* botonCargar = manager_->addEntity();
 		w *= 0.8;
 		h *= 0.8;
@@ -114,7 +114,7 @@ void MenuState::changeToGame(App* app, SoundManager* snd) {
 	snd->playSoundEffect("sonido_barco", 0);
 	
 	StateMachine* sM = app->getStateMachine();
-	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,app->getloadSavedGame(),0,nullptr));
+	sM->changeState(new PlayState(app, sM->currentState()->getMngr()->getWorld(), snd,0,nullptr));
 }
 
 void MenuState::changeToCredits(App* app, SoundManager* snd) {
@@ -124,15 +124,20 @@ void MenuState::changeToCredits(App* app, SoundManager* snd) {
 	sM->changeState(new CreditsState(app, sM->currentState()->getMngr()->getWorld(), snd));
 }
 
-void MenuState::chechSaveFile()
+void MenuState::checkSaveFile()
 {
+	bool saved_game;
 	ifstream readtxt;
 	int pointsRead = 0;
 	string file = "data.dat";
 	readtxt.open("assets//user_data//" + file);
 	if (!readtxt) saved_game = false;
-	else saved_game = true;
-	app->setloadSavedGame(saved_game);
+	else {
+		readtxt >> pointsRead;
+		if (pointsRead < 0) saved_game = false;
+		else saved_game = true;
+	}
+	app->setIsSavedGame(saved_game);
 }
 
 void MenuState::changeToOptions(App* app, SoundManager* snd) {

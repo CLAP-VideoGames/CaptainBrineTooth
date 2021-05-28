@@ -11,20 +11,10 @@ const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
 #define  DEBUG_NEW
 #endif
 
-PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd,bool saved,int coins, bool ab[6], bool died ) : GameState(a, mundo, snd) {
-	//Testing floor
-	//auto suelo = manager_->addEntity();
-	//suelo->addComponent<Transform>(Vector2D(500, 600), Vector2D(), 500, 20, 0.0f);
-	//auto anim = suelo->addComponent<AnimBlendGraph>();
-	//anim->addAnimation("idle", &sdlutils().images().at("debug_square"), 1, 1, 1, 24, 0);
-	//suelo->addComponent<BoxCollider>();
+PlayState::PlayState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd,int coins, bool ab[6], bool died ) : GameState(a, mundo, snd) {
 	fadeComp = nullptr;
-	save = saved;
-	dataInRespawn(died, coins, ab);
 }
 
-PlayState::~PlayState() {
-}
 
 void PlayState::init() {
 	GameState::init();
@@ -52,138 +42,11 @@ void PlayState::init() {
 	playerConfig.rotation = 0.0f;
 	createPlayer(playerConfig);
 
-	/*Config swordGiverConfig{};
-	swordGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height());
-	swordGiverConfig.vel = Vector2D();
-	swordGiverConfig.size = Vector2D(50, 50);
-	swordGiverConfig.friction = 0.2f;
-	swordGiverConfig.physicType = STATIC;
-	swordGiverConfig.fixedRotation = true;
-	swordGiverConfig.rotation = 0.0f;
-	swordGiverConfig.spriteId = "espada";
-	int swordNumber = 0;*/
-	//createWeaponGiver(swordGiverConfig, swordNumber);
 
 	auto* map = getMngr()->getHandler<Map>();
 	if (map != nullptr) {
 		map->getComponent<MapProcedural>()->setPlayer2spawn();
 	}
-
-	/*Config hammerGiverConfig{};
-	hammerGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height());
-	hammerGiverConfig.vel = Vector2D();
-	hammerGiverConfig.size = Vector2D(50, 50);
-	hammerGiverConfig.friction = 0.2f;
-	hammerGiverConfig.physicType = STATIC;
-	hammerGiverConfig.fixedRotation = true;
-	hammerGiverConfig.rotation = 0.0f;
-	hammerGiverConfig.spriteId = "martillo";
-	int hammerNumber = 1;
-	createWeaponGiver(hammerGiverConfig, hammerNumber);*/
-
-	//Config chainsawGiverConfig{};
-	//chainsawGiverConfig.pos = Vector2D(sdlutils().width() / 2.5f, sdlutils().height() - 100);
-	//chainsawGiverConfig.vel = Vector2D();
-	//chainsawGiverConfig.size = Vector2D(50, 50);
-	//chainsawGiverConfig.friction = 0.2f;
-	//chainsawGiverConfig.physicType = STATIC;
-	//chainsawGiverConfig.fixedRotation = true;
-	//chainsawGiverConfig.rotation = 0.0f;
-	//chainsawGiverConfig.spriteId = "sierra";
-	//int chainsawNumber = 2;
-	//createWeaponGiver(chainsawGiverConfig, chainsawNumber);
-
-	//Config crabGiverConfig{};
-	//crabGiverConfig.pos = Vector2D(sdlutils().width() / 2.0f, sdlutils().height() - 100);
-	//crabGiverConfig.vel = Vector2D();
-	//crabGiverConfig.size = Vector2D(50, 50);
-	//crabGiverConfig.friction = 0.2f;
-	//crabGiverConfig.physicType = STATIC;
-	//crabGiverConfig.fixedRotation = true;
-	//crabGiverConfig.rotation = 0.0f;
-	//crabGiverConfig.spriteId = "crab";
-	//int crabNumber = 3;
-	//createWeaponGiver(crabGiverConfig, crabNumber);
-
-	//Config machineGunGiverConfig{};
-	//machineGunGiverConfig.pos = Vector2D(sdlutils().width() / 1.75f, sdlutils().height());
-	//machineGunGiverConfig.vel = Vector2D();
-	//machineGunGiverConfig.size = Vector2D(50, 50);
-	//machineGunGiverConfig.friction = 0.2f;
-	//machineGunGiverConfig.physicType = STATIC;
-	//machineGunGiverConfig.fixedRotation = true;
-	//machineGunGiverConfig.rotation = 0.0f;
-	//machineGunGiverConfig.spriteId = "machine_gun";
-	//int machineGunNumber = 4;
-	//createWeaponGiver(machineGunGiverConfig, machineGunNumber);
-
-	/*Config whipGiverConfig{};
-	whipGiverConfig.pos = Vector2D(sdlutils().width() / 1.75f, sdlutils().height() - 100);
-	whipGiverConfig.vel = Vector2D();
-	whipGiverConfig.size = Vector2D(50, 50);
-	whipGiverConfig.friction = 0.2f;
-	whipGiverConfig.physicType = STATIC;
-	whipGiverConfig.fixedRotation = true;
-	whipGiverConfig.rotation = 0.0f;
-	whipGiverConfig.spriteId = "anguila";
-	int whipNumber = 5;
-	createWeaponGiver(whipGiverConfig, whipNumber);*/
-
-	/*Config bellowGiverConfig{};
-	bellowGiverConfig.pos = Vector2D(sdlutils().width() / 1.5f, sdlutils().height());
-	bellowGiverConfig.vel = Vector2D();
-	bellowGiverConfig.size = Vector2D(50, 50);
-	bellowGiverConfig.friction = 0.2f;
-	bellowGiverConfig.physicType = STATIC;
-	bellowGiverConfig.fixedRotation = true;
-	bellowGiverConfig.rotation = 0.0f;
-	bellowGiverConfig.spriteId = "escupetintas";
-	int bellowNumber = 5;
-	createWeaponGiver(bellowGiverConfig, bellowNumber);*/
-
-	//Config elfShark{};
-	//elfShark.pos = Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f);
-	//elfShark.vel = Vector2D(0, 0);
-	//elfShark.size = Vector2D(180.0f, 180.0f);
-	//elfShark.friction = 0.2f;
-	//elfShark.physicType = KINEMATIC;
-	//elfShark.fixedRotation = true;
-	//elfShark.rotation = 0.0f;
-	//elfShark.col = ENEMY;
-	//elfShark.colMask = ENEMY_MASK;
-	//createElfShark(elfShark);
-
-	//Config flowerJellyHat{};
-	//flowerJellyHat.pos = Vector2D(sdlutils().width() * 0.8f, sdlutils().height() * 0.8f);
-	//flowerJellyHat.vel = Vector2D(0, 0);
-	//flowerJellyHat.size = Vector2D(100.0f, 100.0f);
-	//flowerJellyHat.friction = 0.2f;
-	//flowerJellyHat.physicType = DYNAMIC;
-	//flowerJellyHat.fixedRotation = true;
-	//flowerJellyHat.rotation = 0.0f;
-	//flowerJellyHat.col = ENEMY;
-	//flowerJellyHat.colMask = ENEMY_MASK;
-	//createFlowerJellyHat(flowerJellyHat);
-
-	/*Config fishlerConfig{};
-	fishlerConfig.pos = Vector2D(sdlutils().width(), sdlutils().height() * 1.3f);
-	fishlerConfig.vel = Vector2D();
-	fishlerConfig.size = Vector2D(100, 200);
-	fishlerConfig.friction = 0.0f;
-	fishlerConfig.physicType = DYNAMIC;
-	fishlerConfig.col = ENEMY;
-	fishlerConfig.colMask = ENEMY_MASK;
-	fishlerConfig.fixedRotation = true;
-	fishlerConfig.rotation = 0.0f;
-	fishlerConfig.spriteId = "espada";
-	Entity* fishler = manager_->addEntity();
-	fishler->addComponent<Transform>(fishlerConfig.pos, fishlerConfig.vel, fishlerConfig.size.getX(), fishlerConfig.size.getY(), fishlerConfig.rotation);
-	fishler->addComponent<BoxCollider>(fishlerConfig.physicType, fishlerConfig.col, fishlerConfig.colMask, false, fishlerConfig.friction, true, 0.0, Vector2D(), Vector2D(), 10000);
-	AnimBlendGraph* fishler_anim_controller = fishler->addComponent<AnimBlendGraph>();
-	fishler_anim_controller->addAnimation("sinMoverse", &sdlutils().images().at(fishlerConfig.spriteId), 1, 1, 1, 23, 1);
-	fishler->addComponent<Enemy_Health>(5000, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
-	fishler->addComponent<FishlerController>();
-	fishler->addComponent<ContactDamage>();*/
 }
 
 
@@ -192,11 +55,10 @@ void PlayState::update() {
 	manager_->getWorld()->Step(1.0f / 60.0f, 6, 2);
 	if (ih().keyDownEvent()) {
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
-			app->setloadSavedGame(true);
 			manager_->getSoundMngr()->playPauseMusic();
 			StateMachine* sM = app->getStateMachine();
-			//Pusheamos n nuevo estado de pausa pero antes guardando las vidas y el inventario del player 
-			createSaveDataandSTate();
+			//Pusheamos nuevo estado de pausa 
+			sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr()));
 		}
 	}
 	GameState::update();
@@ -537,86 +399,21 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<PlayerController>();
 
-
-	//Por testing basura
 	player->addComponent<CameraFollow>(Vector2D(100.0f, -80.0f), 0.08f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	player->addComponent<Inventory>();
-	//Si mueres se mantienen las monedas y las habilidades
-	if (coinsAfterRespawn > 0)player->getComponent<Inventory>()->addCoins(coinsAfterRespawn);
-	if (saveAbilities) player->getComponent<SkillTree>()->initSkillsFromMatch(abilitiesAux);
-
 
 	player->addComponent<LoseLife>();
 
-	if (save) {
-		
-		ifstream readtxt;
-		int pointsRead=0;
-		string file = "data.dat";
-		readtxt.open("assets//user_data//" + file);
-		if (!readtxt) throw string("Can't find file" + file);
-		readtxt >> pointsRead;
-		std::array<bool,6>infoabilities; //Guardamos las abilidades del txt en el documento de text
-		int ability;
-		for (int i = 0; i < 5; i++)
-		{
-			//Vamos leyendo habilidad a habilidad  guardandola en el array
-			readtxt >> ability;
-			infoabilities[i] = (bool)ability; 
-		}
-		//Falta la lectura de puntos pero no esta implementada todavia 
-		//Tras leer las habilidades se las damos al usuario 
-		player->getComponent<Inventory>()->addCoins(pointsRead);
-		player->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities); 
-		
-		
-	}
-	
+	//Carga de archivo
 	manager_->setHandler<Player>(player);
-//Carga de archivo
+	if (app->IsSavedGame())
+		loadGame();
 }
-void PlayState::createSaveDataandSTate() //Este metodo guarda los valores del jugador y los pasa al estado de pausa para cuando se cargue otra partida 
-{
 
-	StateMachine* sM = app->getStateMachine();
-	//Savings players Data 
-	infoPartida infoPlayer;
-
-	Entity* playerrefAux = app->getStateMachine()->currentState()->getMngr()->getHandler<Player>();
-	Inventory* in = playerrefAux->getComponent<Inventory>();
-	infoPlayer.points = in->getCoins(); //OBtenemos las monedas con un getter
-
-	//Si no hay armas las ponemos a 0 como decision de diseño en el elemento de guardado 
-	for (int i = 0; i < 5; i++)
-	{
-		infoPlayer.abilities[i] = playerrefAux->getComponent<SkillTree>()->hasSkill(i); //Guardamos las habilidades del player 
-	}
-	sM->pushState(new PauseState(this, app, sM->currentState()->getMngr()->getWorld(), sM->currentState()->getMngr()->getSoundMngr(), infoPlayer));
-}
 Entity* PlayState::getBackgroundLevel() {
 	return backgroundLevel;
 }
-void PlayState::dataInRespawn(bool died, int coins , bool ab[6])
-{
 
-	std::array<bool, 6> abAux;
-	
-	if (died)
-	{
-		for (int i = 0; i < 5; i++)abAux[i] = ab[i]; //Volcamos la estructura que a priori es incompatible 
-		coinsAfterRespawn = coins;
-		for (int i = 0; i < 5; i++)abilitiesAux[i] = abAux[i];
-		saveAbilities = true;
-		
-	}
-	else
-	{
-		saveAbilities = false;
-		coinsAfterRespawn = 0;
-	}
-
-
-}
 void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& weaponType) {
 	auto* weaponGiver = createBasicEntity(weaponGiverConfig.pos, weaponGiverConfig.size, weaponGiverConfig.rotation, weaponGiverConfig.vel);
 
@@ -625,55 +422,3 @@ void PlayState::createWeaponGiver(const Config& weaponGiverConfig, const int& we
 	weaponGiver->addComponent<BoxCollider>(weaponGiverConfig.physicType, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true);
 	weaponGiver->addComponent<GetAWeaponOnCollision>(weaponType);
 }
-/*
-/// <summary>
-/// Crea una caja roja que posee f�sicas y controlador de teclado
-/// </summary>
-/// <param name="pos">Posici�n</param>
-/// <param name="vel">Velocidad (por defecto es cero)</param>
-/// <param name="height">Altura en pixeles</param>
-/// <param name="width">Anchura en pixeles</param>
-/// <param name="rotation">Rotacion (por defecto es cero)</param>
-/// <param name="physicType">Determina el tipo f�sico del objeto (STATIC, DYNAMIC, KINEMATIC)</param>
-void PlayState::createBoxTest(const Config& entityConfig) {
-	auto* box = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-
-	auto* anim_controller = box->addComponent<AnimBlendGraph>();
-
-	box->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask, entityConfig.isTrigger, entityConfig.friction, entityConfig.fixedRotation, entityConfig.rotation);
-	//box->addComponent<CameraFollow>(box->getComponent<Transform>());
-
-	if (entityConfig.physicType == 1 || entityConfig.physicType == 2)
-		box->addComponent<KeyBoardCtrl>(map);
-}
-
-void PlayState::createElfShark(const Config& entityConfig) {
-#pragma region ElfShark
-	auto* elf1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	//auto* elf1 = manager_->addEntity();
-	//Transform* t = elf1->addComponent<Transform>(Vector2D(sdlutils().width() * 1.6f, sdlutils().height() * 0.3f), Vector2D(0, 0), 180.0f, 180.0f, 0.0f);
-	//elf1->addComponent<BoxCollider>(KINEMATIC, ENEMY, ENEMY_MASK);
-	elf1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	AnimBlendGraph* elf1_anim_controller = elf1->addComponent<AnimBlendGraph>();
-	elf1_anim_controller->addAnimation("idle", &sdlutils().images().at("Elf_Shark"), 1, 3, 1, 1, -1);
-	elf1_anim_controller->addAnimation("attack", &sdlutils().images().at("Elf_Shark"), 1, 3, 3, 8, 0);
-	elf1_anim_controller->addTransition("idle", "attack", "Attack", 1, false);
-	elf1_anim_controller->addTransition("attack", "idle", "Attack", 0, true);
-	auto* trigger_elf1 = elf1->addComponent<EnemyTrigger>(Vector2D(1000.0f, 600.0f));
-	trigger_elf1->addTriggerComponent<ElfSharkAttack>(elf1);
-	elf1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
-#pragma endregion
-}
-
-void PlayState::createFlowerJellyHat(const Config& entityConfig) {
-	auto* fjh1 = createBasicEntity(entityConfig.pos, entityConfig.size, entityConfig.rotation, entityConfig.vel);
-	AnimBlendGraph* fjh1_anim_controller = fjh1->addComponent<AnimBlendGraph>();
-	fjh1_anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 8, -1);
-	fjh1->addComponent<Enemy_Health>(300, Vector2D(300, 20), build_sdlcolor(255, 0, 0, 255), 50);
-	fjh1->addComponent<BoxCollider>(entityConfig.physicType, entityConfig.col, entityConfig.colMask);
-	fjh1->addComponent<ContactDamage>();
-	fjh1->addComponent<JellyHatBehavior>(fjh1);
-}*/
-
-
-

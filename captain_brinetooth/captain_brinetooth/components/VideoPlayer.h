@@ -100,7 +100,7 @@ public:
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <returns>Devuelve true si la cola est· vacia</returns>
+	/// <returns>Devuelve true si la cola estÅEvacia</returns>
 	bool queueEmpty();
 
 	/// <summary>
@@ -110,7 +110,7 @@ public:
 	void setForcePop(bool n);
 
 	/// <summary>
-	/// Devuelve el nombre del video que se est· reproduciendo actualemente.
+	/// Devuelve el nombre del video que se estÅEreproduciendo actualemente.
 	/// </summary>
 	/// <returns>Si no hay videos, se devuelve ""</returns>
 	std::string getFrontName(){

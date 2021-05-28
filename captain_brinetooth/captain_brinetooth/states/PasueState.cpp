@@ -5,10 +5,9 @@
 using namespace std;
 
 
-PauseState::PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd, infoPartida info) : GameState(a, mundo, snd) {
+PauseState::PauseState(GameState* stateToRender, App* a, std::shared_ptr<b2World> mundo, SoundManager* snd) : GameState(a, mundo, snd) {
 	stRend = stateToRender;
 	cam = a->camera;
-	partida = info;
 }
 
 void PauseState::init() {
@@ -43,7 +42,7 @@ void PauseState::backToMenu(App* app, SoundManager* snd) {
 	StateMachine* sM = app->getStateMachine();
 	Manager* mngr = sM->currentState()->getMngr();
 	sM->popState();
-	savePartida(partida);
+	app->getStateMachine()->currentState()->saveGame();
 	sM->changeState(new MenuState(app, mngr->getWorld(), mngr->getSoundMngr()));
 }
 
@@ -140,20 +139,3 @@ void PauseState::clearPanel() {
 void PauseState::quitGame(App* game, SoundManager* snd) {
 	game->exitGame();
 }
-void PauseState::savePartida(infoPartida info)
-{
-	std::ofstream output;
-	
-	string name = "data";
-	string file = "assets//user_data//" + name + ".dat";
-	output.open(file);
-	if (!output.is_open()) throw string("Can't find file" + name + ".dat");
-	output << info.points<< endl;
-	for (int i = 0; i < 6; i++)
-	{
-		bool ab = info.abilities[i];
-		if((int)info.abilities[i]<=1)output << (int)info.abilities[i] << " "; //Guardamos la informacion de las habilidades en funcion de 0 1 para facilitar la conversion al leer el archivo
-	}
-	
-	output.close();
- }

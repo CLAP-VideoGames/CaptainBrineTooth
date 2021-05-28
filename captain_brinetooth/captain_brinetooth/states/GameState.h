@@ -57,6 +57,12 @@ class Manager;
 class App;
 class Entity;
 
+//Info de guardado
+struct GameInfo {
+	std::array<bool, 6> abilities;
+	int points;
+};
+
 class GameState
 {
 public:
@@ -90,6 +96,11 @@ public:
 
 	void popState() { popped = true; };
 	bool isPopped() { return popped; };
+
+	void saveGame();
+	void loadGame();
+
+	GameInfo gameInfo;
 
 protected:
 	Manager* manager_;

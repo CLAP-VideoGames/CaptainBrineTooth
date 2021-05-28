@@ -26,14 +26,6 @@ void SkillTree::init(){
 	//skills true false true false false true
 }
 
-void SkillTree::update()
-{
-}
-
-void SkillTree::render()
-{
-}
-
 bool SkillTree::hasSkill(Skill type){
 	return playerSkills[(int)type].first;
 }
@@ -71,9 +63,32 @@ bool SkillTree::setSkillLimitPoints(Skill type, int p){
 	return true;
 }
 
-void SkillTree::initSkillsFromMatch(std::array<bool, 6> skillsFromMatch){
+void SkillTree::initSkillsFromMatch(std::array<bool, 5> skillsFromMatch){
 	for (size_t i = 0; i < skillsFromMatch.size(); i++){
 		playerSkills[i].first = skillsFromMatch[i];
+		//Load respective buffs if active
+		if (playerSkills[i].first) {
+			auto* plH = entity_->getComponent<Player_Health>();
+			switch (i) {
+			case 0:	//Lives
+				plH->setMaxLifes(plH->getMaxLifes() + 2);
+				plH->resetLifes();
+				break;
+			case 1:	//Heals
+				plH->setMaxHeals(plH->getMaxHeals() + 1);
+				plH->createHeal();
+				break;
+			case 2:	//Spines
+				setCounterAttackPercentage(0.07);
+				break;
+			case 3:	//Damage
+				setAttackModifier(1.5);
+				break;
+			case 4:	//Speed
+				setSpeedModifier(1.3);
+				break;
+			}
+		}
 	}
 }
 

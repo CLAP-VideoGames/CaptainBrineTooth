@@ -183,7 +183,7 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 	Config elfShark{};
 	elfShark.vel = Vector2D(0, 0);
 	elfShark.size = Vector2D(240.0f, 200.0f);
-	elfShark.friction = 0.2f;
+	elfShark.friction = 100;
 	elfShark.physicType = DYNAMIC;
 	elfShark.fixedRotation = true;
 	elfShark.rotation = 0.0f;

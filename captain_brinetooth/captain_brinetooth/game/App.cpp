@@ -13,6 +13,7 @@
 #include "../states/PescaState.h"
 #include "../states/OptionsState.h"
 #include "../states/TutorialState.h"
+#include <fstream>
 //tiledmap
 
 const auto MAP_PATH = "assets/maps/levelTest/levelTest.tmx";
@@ -144,12 +145,8 @@ void App::ShakeCamera(int time) {
 
 void App::fullScreen()
 {
-	//sdlutils().toggleFullScreen(); // Esto de aqui hace que explote el ordenador
-
 	// Actualizamos la camara
 	camera = { 0 ,0,(int)(window.getX()),(int)(window.getY()) };
-
-
 	camera_Zoom_Out = 1.0f;
 }
 
@@ -185,6 +182,7 @@ void App::changeToPesca()
 	stateMachine->pushState(new PescaState(this, w, sndProvisional, p, m, stateMachine->currentState()->getMngr()->getWorld()));
 }
 
+
 /// <summary>
 /// Crea un entidad b�sica, con el componente Transform
 /// </summary>
@@ -199,39 +197,4 @@ Entity* App::createBasicEntity(const Vector2D& pos, const Vector2D& size, const 
 	auto* entity_ = mngr_->addEntity();
 	entity_->addComponent<Transform>(pos, vel, size.getX(), size.getY(), rotation);
 	return entity_;
-}
-
-void App::createMedusa(Vector2D pos, Vector2D vel, Vector2D size, float rotation)
-{
-	auto* enemy1 = createBasicEntity(pos, size, rotation, vel);
-
-	auto* anim_controller = enemy1->addComponent<AnimBlendGraph>();
-
-	//id //Text //rows // cols //frames //frameRate //loop // startFrame //finalFrame
-	anim_controller->addAnimation("idle", &sdlutils().images().at("Medusa"), 7, 6, 38, 40, -1, 0, 37);
-	enemy1->addComponent<BoxCollider>();
-	//enemy1->addComponent<EnemyMovement>(Vector2D(1, 0));
-}
-
-void App::createJointMedusa(Entity* ground)
-{
-	////Creacion de una medusa fisica que va a estar anclada al techo
-	//auto* physBody = mngr_->addEntity(false);
-	//physBody->addComponent<Transform>(Vector2D(50.0f, 50.0f), Vector2D(), 50.0f, 50.0f, 0.0f);
-	//physBody->addComponent<FramedImage>(&sdlutils().images().at("Medusa"), 7, 6, 200.0f, 4);
-	//physBody->addComponent<BoxCollider>(0.0f, 1);
-
-
-	//b2RevoluteJointDef* b2joint = new b2RevoluteJointDef();
-	////Asignar a que cuerpos esta asociado el joint 
-	//b2joint->bodyA = physBody->getComponent<BoxCollider>()->getBody();
-	//b2joint->bodyB = ground->getComponent<BoxCollider>()->getBody();
-	////Si sus colisiones estan o no estan conectadas 
-	//b2joint->collideConnected = true;
-	////No se del todo como van las anclas 
-	//b2joint->localAnchorA.Set(1, 0);
-	////Mas o menos en lamitad de su anclaje 
-	//b2joint->localAnchorB.Set(2, 0);
-	//// Faltan los atributos -> Motor speed(Como de rapido va) , MaxmotorTorque (como de poderoso es) 
-	//world_->CreateJoint(b2joint);
 }

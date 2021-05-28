@@ -4,7 +4,7 @@
 #pragma once
 
 //DLC Anzuelos, Agua Potable, Escamas de Arapaima, Dientes de Piraña, Armas de Salmuere, Infección de anémonas
-enum Skill { ExtraLives, ExtraHeal, Spines, ExtraDamage, SpeedAttack, StealLife};
+enum Skill { ExtraLives, ExtraHeal, Spines, ExtraDamage, SpeedAttack};
 
 class SkillTree : public Component {
 public:
@@ -12,32 +12,30 @@ public:
 	~SkillTree();
 
 	void init() override;
-	void update() override;
-	void render() override;
 
 	/// <summary>
-	/// Pregunta si la habilidad type está activa o no
+	/// Pregunta si la habilidad type estEactiva o no
 	/// </summary>
 	/// <param name="type"></param>
 	/// <returns>devuelve true si esta activa, de lo contrario false</returns>
 	bool hasSkill(Skill type);
 	
 	/// <summary>
-	/// Pregunta si la habilidad type está activa o no
+	/// Pregunta si la habilidad type estEactiva o no
 	/// </summary>
 	/// <param name="type"></param>
 	/// <returns>devuelve true si esta activa, de lo contrario false</returns>
 	bool hasSkill(int type);
 
 	/// <summary>
-	/// Devuelve el número límite de una habilidad para poder ser activada
+	/// Devuelve el número lúŠite de una habilidad para poder ser activada
 	/// </summary>
 	/// <param name="type"></param>
 	/// <returns></returns>
 	int getSkillLimitPoints(Skill type);	
 	
 	/// <summary>
-	/// Devuelve el número límite de una habilidad para poder ser activada
+	/// Devuelve el número lúŠite de una habilidad para poder ser activada
 	/// </summary>
 	/// <param name="type"></param>
 	/// <returns></returns>
@@ -108,10 +106,10 @@ public:
 	/// Inicializa los valores de las habilidades de la partida guardada
 	/// </summary>
 	/// <param name="skillsFromMatch"></param>
-	void initSkillsFromMatch(std::array<bool, 6> skillsFromMatch);
+	void initSkillsFromMatch(std::array<bool, 5> skillsFromMatch);
 
 private:
-	std::array<std::pair<bool, int>, 6> playerSkills {};
+	std::array<std::pair<bool, int>, 5> playerSkills {};
 
 	float speedModifier;
 	int attackModifier;

@@ -4,6 +4,8 @@
 #include "../states/StateMachine.h"
 #include "../states/SkillTreeState.h"
 #include "../states/PlayState.h"
+#include "../states/GameState.h"
+#include "../states/StateMachine.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include<iostream>
@@ -465,11 +467,15 @@ void MapProcedural::TravelNextRoom(int dir) {
 	initConnections(currentRoom);
 
 	createConnectionTriggers(dir, travel);
+
 }
 
 void MapProcedural::setPlayer2spawn() {
 	tmx::Vector2f playerpos = lvl->getPlayerPos();
 	entity_->getMngr()->getHandler<Player>()->getComponent<BoxCollider>()->setPhysicalTransform(playerpos.x, playerpos.y, 0.0f);
+
+	//Guardado
+	app->getStateMachine()->currentState()->saveGame();
 }
 
 void MapProcedural::loadTileFiles() {
@@ -551,6 +557,9 @@ CurrentRoom* MapProcedural::initilizeCurrentRoom(const RoomNames& tag) {
 	//Queremos que los triggers hagan viajar al player a otras habitaciones. Como se va a cagar la primera hab, dir es -1. No hay dir opuesta
 	createConnectionTriggers(-1, travel);
 
+	//Guardado automatico
+	app->getStateMachine()->currentState()->saveGame();
+
 	return r;
 }
 
@@ -565,7 +574,10 @@ void MapProcedural::travelNextZone(b2Contact* contact) {
 
 	auto* m = trigger->getMngr()->getHandler<Map>();
 
+	MapProcedural* mapP = m->getComponent<MapProcedural>();
 	m->getComponent<MapProcedural>()->setTravelZone();
+	//Guardado automatico
+	mapP->app->getStateMachine()->currentState()->saveGame();
 }
 
 void MapProcedural::travel(b2Contact* contact) {
@@ -586,6 +598,9 @@ void MapProcedural::travel(b2Contact* contact) {
 	dir = mapP->checkMatch(d);
 
 	map->getComponent<MapProcedural>()->setTravel(true, dir);
+
+	//Guardado automatico
+	mapP->app->getStateMachine()->currentState()->saveGame();
 }
 
 void MapProcedural::ReadDirectory(const string& p, int& roomsRead) {

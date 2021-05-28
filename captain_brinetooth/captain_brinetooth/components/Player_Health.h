@@ -5,13 +5,6 @@
 #include "../sdlutils/SDLUtils.h"
 #include "../game/App.h"
 
-struct infoPartida
-{
-	std::array<bool, 6> abilities;
-	int points;
-
-};
-
 class Player_Health : public Component {
 public:
 	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game, int maxLifes, int maxHeals) 
