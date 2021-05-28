@@ -382,7 +382,7 @@
 		},
 		{
 			"id": "mist_horizontal",
-			"file": "assets/sprites/other/mist.png"
+			"file": "assets/sprites/other/mist_horizontal.png"
 		},
 		{
 			"id": "bg_pausa",
