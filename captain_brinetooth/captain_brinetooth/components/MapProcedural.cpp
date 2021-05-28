@@ -335,6 +335,7 @@ void MapProcedural::update() {
 		roomsExplored = 0;
 		//Nueva zona, fase + 1
 		setPhase(fase + 1);
+		
 		//Numero de salas que habrá en el nivel
 		setNumRooms(nRooms);
 		//Borramos los triggers de la ultima sala

@@ -42,7 +42,6 @@ void PauseState::backToMenu(App* app, SoundManager* snd) {
 	StateMachine* sM = app->getStateMachine();
 	Manager* mngr = sM->currentState()->getMngr();
 	sM->popState();
-	app->getStateMachine()->currentState()->saveGame();
 	sM->changeState(new MenuState(app, mngr->getWorld(), mngr->getSoundMngr()));
 }
 

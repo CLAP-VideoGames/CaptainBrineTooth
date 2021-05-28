@@ -41,7 +41,7 @@ void PlayerController::update()
 	//Gestion del input
 	assert(collider_ != nullptr);
 	//death
-	if (animController_->getParamValue("Dead") == 1)
+	if (animController_->getCurrentAnimation()->getID() == "death")
 		receiveInput = false;
 	else
 		receiveInput = true;
@@ -110,6 +110,9 @@ void PlayerController::update()
 			canDash = false;
 			std::cout << "dash_pressed";
 		}
+	}
+	else {
+		collider_->setSpeed(Vector2D(0, 0));
 	}
 #pragma endregion
 #pragma region States
