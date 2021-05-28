@@ -1186,6 +1186,10 @@
 		{
 			"id": "lore",
 			"file": "assets/videos/lore.mp4"
+		},
+		{
+			"id": "end",
+			"file": "assets/videos/end.mp4"
 		}
 	]
 }

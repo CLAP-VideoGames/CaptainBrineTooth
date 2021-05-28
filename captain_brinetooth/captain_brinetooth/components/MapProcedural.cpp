@@ -229,7 +229,6 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 		//Vector2D size;
 		Vector2D pos(positions[i].x, positions[i].y);
 
-
 		t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
 		//Posicionamos al jugador en la salida opuesta a la que ha entrado
 		if (dir != -1 && names[i] == cardinals[(int)oppositeDir]) {

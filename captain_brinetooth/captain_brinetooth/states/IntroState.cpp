@@ -19,8 +19,8 @@ void IntroState::init() {
 	//Fade
 	fadeComp = manager_->getHandler<Fader>()->getComponent<Fade>();
 	if (fadeComp != nullptr) {
-		fadeComp->setTimeIn(3000);
-		fadeComp->setTimeOut(3000);
+		fadeComp->setTimeIn(2000);
+		fadeComp->setTimeOut(1500);
 		fadeComp->setState(Fade::STATE_FADE::In);
 		fadeComp->triggerFade();
 	}

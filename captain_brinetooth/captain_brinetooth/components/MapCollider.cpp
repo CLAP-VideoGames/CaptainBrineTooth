@@ -15,28 +15,33 @@ void MapCollider::init()
 
 void MapCollider::render()
 {
+	#ifdef _DEBUG
 	if (sdlutils().getDebug()) {
 		for (int i = 0; i < bodies_.size(); i++) {
 			SDL_SetRenderDrawColor(sdlutils().renderer(), 255, 0, 0, SDL_ALPHA_OPAQUE);
 			SDL_RenderDrawLines(sdlutils().renderer(), bodies_[i].realPoints, bodies_[i].sizeVs + 1);
 		}
 	}
+	#endif // _DEBUG
 }
 
 void MapCollider::update()
 {
-	if (sdlutils().getDebug()) {
-		//Hay que hacer esto pero no quiero hacer esto pero hay que hacer esto pero no quiero hacer esto pero aun asi hay que hacerlo
-		for (bodyChain& bodyC : bodies_) {
-			for (int i = 0; i < bodyC.sizeVs + 1; i++) {
-				//Quitamos el valor antiguo aplicado al punto, y le aplicamos el valor actual de la cámara 
-				bodyC.realPoints[i].x = bodyC.realPoints[i].x + camPos.getX() - App::camera.x;
-				bodyC.realPoints[i].y = bodyC.realPoints[i].y + camPos.getY() - App::camera.y;
+	#ifdef _DEBUG
+
+		if (sdlutils().getDebug()) {
+			//Hay que hacer esto pero no quiero hacer esto pero hay que hacer esto pero no quiero hacer esto pero aun asi hay que hacerlo
+			for (bodyChain& bodyC : bodies_) {
+				for (int i = 0; i < bodyC.sizeVs + 1; i++) {
+					//Quitamos el valor antiguo aplicado al punto, y le aplicamos el valor actual de la cámara 
+					bodyC.realPoints[i].x = bodyC.realPoints[i].x + camPos.getX() - App::camera.x;
+					bodyC.realPoints[i].y = bodyC.realPoints[i].y + camPos.getY() - App::camera.y;
+				}
 			}
-		}
-		//Almacenamos la posicion de la cámara para poder contrarestar el valor a los vertices
-		camPos = Vector2D(App::camera.x, App::camera.y);
+			//Almacenamos la posicion de la cámara para poder contrarestar el valor a los vertices
+			camPos = Vector2D(App::camera.x, App::camera.y);
 	}
+	#endif // _DEBUG
 }
 
 void MapCollider::createChainFixture() {

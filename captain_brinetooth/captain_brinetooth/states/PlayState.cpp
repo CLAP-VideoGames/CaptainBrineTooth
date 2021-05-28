@@ -1,5 +1,6 @@
 ﻿#include "PlayState.h"
 #include "PasueState.h"
+#include "EndState.h"
 #include <fstream>
 struct infopartida;
 const auto MAP_PATH = "assets/maps/levelTest/levelTest - copia.tmx";
@@ -66,8 +67,7 @@ void PlayState::update() {
 	//Si la fase es mayor que dos, es que se encuentra con el Boss
 	if (fadeComp->getFadeOutComplete() && map->getPhase() > 2) {
 		StateMachine* sM = app->getStateMachine();
-		manager_->getSoundMngr()->ChangeMainMusic("Nivel1");
-		sM->changeState(new PlayState(app, manager_->getWorld(), manager_->getSoundMngr(), true));
+		sM->changeState(new EndState(app, manager_->getWorld(), manager_->getSoundMngr()));
 	}
 }
 

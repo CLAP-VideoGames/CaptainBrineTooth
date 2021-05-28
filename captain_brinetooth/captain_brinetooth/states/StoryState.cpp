@@ -16,8 +16,8 @@ void StoryState::init() {
 	//Fade
 	fadeComp = manager_->getHandler<Fader>()->getComponent<Fade>();
 	if (fadeComp != nullptr) {
-		fadeComp->setTimeIn(3000);
-		fadeComp->setTimeOut(3000);
+		fadeComp->setTimeIn(1500);
+		fadeComp->setTimeOut(1000);
 		fadeComp->triggerFade();
 	}
 	//Video

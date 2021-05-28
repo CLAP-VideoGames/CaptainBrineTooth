@@ -198,6 +198,8 @@ void SkillTreeState::setExtraLives() {
 		Inventory* invent = player->getComponent<Inventory>();
 		invent->substractCoins(skillTree_->getSkillLimitPoints(ExtraLives));
 		points = invent->getCoins();
+		//Guardado
+		stRend->saveGame();
 		//Accion
 		plH->setMaxLifes(plH->getMaxLifes() + 2);
 		plH->resetLifes();
@@ -211,6 +213,8 @@ void SkillTreeState::setExtraHeal(){
 		Inventory* invent = player->getComponent<Inventory>();
 		invent->substractCoins(skillTree_->getSkillLimitPoints(ExtraHeal));
 		points = invent->getCoins();
+		//Guardado
+		stRend->saveGame();
 		//Accion
 		plH->setMaxHeals(plH->getMaxHeals() + 1);
 		plH->createHeal();
@@ -223,6 +227,8 @@ void SkillTreeState::setSpines() {
 	if (!skillTree_->hasSkill(Spines) && skillTree_->setSkill(Spines, true, points)){
 		Inventory* invent = player->getComponent<Inventory>();
 		invent->substractCoins(skillTree_->getSkillLimitPoints(Spines));
+		//Guardado
+		stRend->saveGame();
 		//Accion
 		points = invent->getCoins();
 		skillTree_->setCounterAttackPercentage(0.07f);
@@ -236,6 +242,8 @@ void SkillTreeState::setDoubleDamage(){
 		Inventory* invent = player->getComponent<Inventory>();
 		invent->substractCoins(skillTree_->getSkillLimitPoints(ExtraDamage));
 		points = invent->getCoins();
+		//Guardado
+		stRend->saveGame();
 		//Accion
 		skillTree_->setAttackModifier(1.5);
 		manager_->getSoundMngr()->playSoundEffect("Collar_piranas", 0);
@@ -247,6 +255,8 @@ void SkillTreeState::setSpeedAttack(){//Si se ha podido comprar la habilidad, qu
 		Inventory* invent = player->getComponent<Inventory>();
 		invent->substractCoins(skillTree_->getSkillLimitPoints(SpeedAttack));
 		points = invent->getCoins();
+		//Guardado
+		stRend->saveGame();
 		//Accion
 		skillTree_->setSpeedModifier(1.3f);
 		manager_->getSoundMngr()->playSoundEffect("BrineStone", 0);

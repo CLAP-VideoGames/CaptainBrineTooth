@@ -109,6 +109,7 @@ void BoxCollider::update() {
 }
 
 void BoxCollider::render() {
+	#ifdef _DEBUG
 	if (sdlutils().getDebug()) {
 		SDL_SetRenderDrawColor(sdlutils().renderer(), 0, 255, 0, 255);
 
@@ -123,6 +124,7 @@ void BoxCollider::render() {
 
 		SDL_RenderDrawRect(sdlutils().renderer(), &dest);
 	}
+	#endif
 }
 
 void BoxCollider::setSpeed(Vector2D speed) {

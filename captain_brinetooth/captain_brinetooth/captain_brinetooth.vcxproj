@@ -240,6 +240,7 @@
     <ClInclude Include="sdlutils\Texture.h" />
     <ClInclude Include="sdlutils\VirtualTimer.h" />
     <ClInclude Include="states\CreditsState.h" />
+    <ClInclude Include="states\EndState.h" />
     <ClInclude Include="states\GameState.h" />
     <ClInclude Include="states\IntroState.h" />
     <ClInclude Include="states\OptionsState.h" />
@@ -332,6 +333,7 @@
     <ClCompile Include="sdlutils\SoundEffect.cpp" />
     <ClCompile Include="sdlutils\Texture.cpp" />
     <ClCompile Include="states\CreditsState.cpp" />
+    <ClCompile Include="states\EndState.cpp" />
     <ClCompile Include="states\GameState.cpp" />
     <ClCompile Include="states\IntroState.cpp" />
     <ClCompile Include="states\OptionsState.cpp" />
