@@ -401,3 +401,71 @@ Algunas de las habilidades son:
 - _Flashback diseño del nivel_
 - _Rogue Legacy_
 - _Diseño de nivel brutal Yoshi Island_
+
+**Testing**
+
+**Formulario**
+
+![Formulario 0](readmeImages/Testing formulario images/Testing_Captain_Brinetooth_-_Formularios_de_Google-0000.png)
+![Formulario 1](readmeImages/Testing formulario images/Testing_Captain_Brinetooth_-_Formularios_de_Google-0001.png)
+![Formulario 2](readmeImages/Testing formulario images/Testing_Captain_Brinetooth_-_Formularios_de_Google-0002.png)
+![Formulario 3](readmeImages/Testing formulario images/Testing_Captain_Brinetooth_-_Formularios_de_Google-0003.png)
+
+**Respuestas al formulario**
+
+![Respuesta 0](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0000.png)
+![Respuesta 1](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0001.png)
+![Respuesta 2](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0002.png)
+![Respuesta 3](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0003.png)
+![Respuesta 4](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0004.png)
+![Respuesta 5](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0005.png)
+![Respuesta 6](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0006.png)
+![Respuesta 7](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0007.png)
+![Respuesta 8](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0008.png)
+![Respuesta 9](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0009.png)
+![Respuesta 10](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0010.png)
+![Respuesta 11](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0011.png)
+![Respuesta 12](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0012.png)
+![Respuesta 13](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0013.png)
+![Respuesta 14](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0014.png)
+![Respuesta 15](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0015.png)
+![Respuesta 16](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0016.png)
+![Respuesta 17](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0017.png)
+![Respuesta 18](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0018.png)
+![Respuesta 19](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0019.png)
+![Respuesta 20](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0020.png)
+![Respuesta 21](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0021.png)
+![Respuesta 22](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0022.png)
+![Respuesta 23](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0023.png)
+![Respuesta 24](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0024.png)
+![Respuesta 25](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0025.png)
+![Respuesta 26](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0026.png)
+![Respuesta 27](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0027.png)
+![Respuesta 28](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0028.png)
+![Respuesta 29](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0029.png)
+![Respuesta 30](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0030.png)
+![Respuesta 31](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0031.png)
+![Respuesta 32](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0032.png)
+![Respuesta 33](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0033.png)
+![Respuesta 34](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0034.png)
+![Respuesta 35](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0035.png)
+![Respuesta 36](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0036.png)
+![Respuesta 37](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0037.png)
+![Respuesta 38](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0038.png)
+![Respuesta 39](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0039.png)
+![Respuesta 40](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0040.png)
+![Respuesta 41](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0041.png)
+![Respuesta 42](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0042.png)
+![Respuesta 43](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0043.png)
+![Respuesta 44](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0044.png)
+![Respuesta 45](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0045.png)
+![Respuesta 46](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0046.png)
+![Respuesta 47](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0047.png)
+![Respuesta 48](readmeImages/Respuestas/Testing_Captain_Brinetooth_-_Respuestas-0048.png)
+
+**UML**
+
+![UML](readmeImages/uml.jpg)
+
+**Controles**
+
