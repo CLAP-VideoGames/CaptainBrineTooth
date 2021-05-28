@@ -246,6 +246,8 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
+			//t->addComponent<Animation>("skill", &sdlutils().images().at("skillTableExterior"), 1, 1, 1, 1, 0, Vector2D(0.5, 0.5));
+
 			t->addComponent<Connections>(names[i]);
 
 			t->setCollisionMethod(method);
@@ -339,7 +341,6 @@ void MapProcedural::update() {
 		roomsExplored = 0;
 		//Nueva zona, fase + 1
 		setPhase(fase + 1);
-		
 		//Numero de salas que habrá en el nivel
 		setNumRooms(nRooms);
 		//Borramos los triggers de la ultima sala

@@ -1,8 +1,12 @@
 #include "FishlerController.h"
 
+#include "../states/StateMachine.h"
 #include "../states/GameState.h"
 
 void FishlerController::init() {
+
+	fader = entity_->getMngr()->getApp()->getStateMachine()->currentState()->getFader();
+
 	currentPhase = Phase1;
 	currentMovement = Walking;
 	currentAttack = NotAttacking;
@@ -238,6 +242,12 @@ void FishlerController::update() {
 			saved_ = true;
 		}
 		collider_->setSpeed(Vector2D());
+
+		Fade* fade = fader->getComponent<Fade>();
+
+		fade->setState(Fade::STATE_FADE::Out);
+		fade->setTimeOut(5500);
+		fade->triggerFade();
 	}
 }
 

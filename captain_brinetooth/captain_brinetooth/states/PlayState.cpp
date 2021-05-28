@@ -62,6 +62,13 @@ void PlayState::update() {
 		}
 	}
 	GameState::update();
+
+	//Si la fase es mayor que dos, es que se encuentra con el Boss
+	if (fadeComp->getFadeOutComplete() && map->getPhase() > 2) {
+		StateMachine* sM = app->getStateMachine();
+		manager_->getSoundMngr()->ChangeMainMusic("Nivel1");
+		sM->changeState(new PlayState(app, manager_->getWorld(), manager_->getSoundMngr(), true));
+	}
 }
 
 /// <summary>
@@ -71,7 +78,7 @@ void PlayState::createMap() {
 	auto* nivel = manager_->addEntity();
 	nivel->addComponent<EnemyGenerator>();
 	Level0* levelTile = nivel->addComponent<Level0>(MAP_PATH, manager_->getWorld());
-	map = nivel->addComponent<MapProcedural>(7, 0, app);
+	map = nivel->addComponent<MapProcedural>(7, 2, app);
 	getMngr()->setHandler<Map>(nivel);
 	camLimits = levelTile->getMaxCoordenates();
 }
@@ -400,7 +407,10 @@ void PlayState::createPlayer(const Config& playerConfig) {
 	player->addComponent<PlayerController>();
 
 	player->addComponent<CameraFollow>(Vector2D(100.0f, -80.0f), 0.08f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
-	player->addComponent<Inventory>();
+	Inventory* invent = player->addComponent<Inventory>();
+	//BORRAR
+	invent->addCoins(3000);
+	invent->addWeapon(1);
 
 	player->addComponent<LoseLife>();
 

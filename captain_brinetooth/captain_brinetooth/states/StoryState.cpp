@@ -8,8 +8,7 @@ StoryState::~StoryState()
 {
 }
 
-void StoryState::init()
-{
+void StoryState::init() {
 	pos = Vector2D(sdlutils().width() / 2, sdlutils().height() / 1.1);
 	skip = &sdlutils().msgs().at("anyKey");
 

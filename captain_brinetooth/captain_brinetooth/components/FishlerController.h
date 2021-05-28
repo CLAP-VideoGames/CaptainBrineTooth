@@ -50,6 +50,7 @@ protected:
 	BoxCollider* collider_;
 	AnimBlendGraph* anim_;
 	Entity* trigger;
+	Entity* fader;
 	Enemy_Health* health;
 
 	float triggerWidth;

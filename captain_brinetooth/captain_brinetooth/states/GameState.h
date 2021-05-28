@@ -95,11 +95,15 @@ public:
 	App* getApp() { return app; };
 
 	void popState() { popped = true; };
+
 	bool isPopped() { return popped; };
 
 	void saveGame();
+
 	void loadGame();
 	void deleteSaveFile();
+
+	Entity* getFader();
 
 	GameInfo gameInfo;
 

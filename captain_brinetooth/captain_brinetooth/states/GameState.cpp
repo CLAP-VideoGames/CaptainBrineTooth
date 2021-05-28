@@ -23,7 +23,7 @@ Entity* GameState::createBasicEntity(const Vector2D& pos, const Vector2D& size, 
 
 void GameState::render() const {
 	manager_->render();
-	//Se tiene que dibujar siempre lo último
+	//Se tiene que dibujar siempre lo ï¿½ltimo
 	if(fader != nullptr)
 		fader->render();
 }
@@ -99,6 +99,10 @@ void GameState::loadGame()
 		manager_->getHandler<Player>()->getComponent<Inventory>()->addCoins(pointsRead);
 		manager_->getHandler<Player>()->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities);
 	}
+}
+
+Entity* GameState::getFader() {
+	return fader;
 }
 
 void GameState::deleteSaveFile()
