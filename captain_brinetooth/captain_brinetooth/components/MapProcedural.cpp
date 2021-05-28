@@ -229,6 +229,8 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 		//Vector2D size;
 		Vector2D pos(positions[i].x, positions[i].y);
 
+
+		t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
 		//Posicionamos al jugador en la salida opuesta a la que ha entrado
 		if (dir != -1 && names[i] == cardinals[(int)oppositeDir]) {
 			int x = pos.getX();
@@ -240,9 +242,13 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 			playerCollider_->setSpeed(Vector2D(0.0f, 0.0f));
 
 			player->getComponent<CameraFollow>()->setCamToEntity();
+
+
+			if(dir == (int)Cardinals::N || dir == (int)Cardinals::W) t->addComponent<Animation>("Grid", &sdlutils().images().at("grid"), 1, 1, 1, 1, 0);
+			else t->addComponent<Animation>("Grid", &sdlutils().images().at("verticalGrid"), 1, 1, 1, 1, 0);
 		}
 		else { //Creamos los colliders de los triggers la sala actual
-			t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
+			//t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
@@ -251,9 +257,8 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 			t->addComponent<Connections>(names[i]);
 
 			t->setCollisionMethod(method);
-
-			triggers.push_back(t);
 		}
+			triggers.push_back(t);
 	}
 	tmx::Vector2f playerpos = lvl->getPlayerPos();
 

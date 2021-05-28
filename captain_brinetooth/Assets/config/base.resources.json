@@ -576,10 +576,18 @@
 			"id": "heal_avail",
 			"file": "assets/sprites/explanations/algas.png"
 		},
-		{
-			"id": "heal_unavail",
-			"file": "assets/sprites/explanations/algas_not.png"
-		}
+    {
+      "id": "heal_unavail",
+      "file": "assets/sprites/explanations/algas_not.png"
+    },
+    {
+      "id": "grid",
+      "file": "assets/sprites/rejas.png"
+    },
+    {
+      "id": "verticalGrid",
+      "file": "assets/sprites/rejas_Vertical.png"
+    }
 	],
 
 	"sounds": [
