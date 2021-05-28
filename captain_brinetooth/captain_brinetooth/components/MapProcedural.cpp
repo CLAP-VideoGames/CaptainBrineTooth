@@ -244,7 +244,7 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 			player->getComponent<CameraFollow>()->setCamToEntity();
 
 
-			if(dir == (int)Cardinals::N || dir == (int)Cardinals::W) t->addComponent<Animation>("Grid", &sdlutils().images().at("grid"), 1, 1, 1, 1, 0);
+			if(dir == (int)Cardinals::N || dir == (int)Cardinals::S) t->addComponent<Animation>("Grid", &sdlutils().images().at("grid"), 1, 1, 1, 1, 0);
 			else t->addComponent<Animation>("Grid", &sdlutils().images().at("verticalGrid"), 1, 1, 1, 1, 0);
 
 		}
@@ -253,9 +253,24 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
-			t->addComponent<Animation>("mist", &sdlutils().images().at("mist"), 4, 5, 20, 12, -1, Vector2D(0.5, 0.5));
-
 			t->addComponent<Connections>(names[i]);
+
+			if (names[i] == 'E' || names[i] == 'W') {
+				auto* transformer = t->getComponent<Transform>();
+
+				transformer->setW(transformer->getW() * 3);
+
+				if (names[i] == 'E')t->addComponent<Animation>("mist", &sdlutils().images().at("mist"), 4, 5, 20, 12, -1, Vector2D(0.3, 0.5));
+				else t->addComponent<Animation>("mist", &sdlutils().images().at("mist"), 4, 5, 20, 12, -1, Vector2D(0.7, 0.5));
+			}
+			else {
+				auto* transformer = t->getComponent<Transform>();
+
+				transformer->setH(transformer->getH() * 3);
+
+				if(names[i] == 'N')t->addComponent<Animation>("mist", &sdlutils().images().at("mist_horizontal"), 4, 5, 20, 12, -1, Vector2D(0.5, 0.7));
+				else t->addComponent<Animation>("mist", &sdlutils().images().at("mist_horizontal"), 4, 5, 20, 12, -1, Vector2D(0.5, 0.3));
+			}
 
 			t->setCollisionMethod(method);
 		}
