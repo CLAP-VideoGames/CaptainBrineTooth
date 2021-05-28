@@ -31,9 +31,9 @@ App::App() {
 
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
-	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
+	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto---
-	stateMachine->pushState(new MenuState(this, world_, sndProvisional));
+	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
 	//stateMachine->pushState(new OptionsState(this, world_, sndProvisional));
 	//----Inicio de Tutorial------
