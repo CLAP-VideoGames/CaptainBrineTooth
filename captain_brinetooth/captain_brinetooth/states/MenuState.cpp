@@ -105,7 +105,8 @@ void MenuState::init() {
 
 void MenuState::changeToTutorial(App* app, SoundManager* snd) {
 	snd->playSoundEffect("sonido_barco", 0);
-
+	//Borrado de archivo anterior
+	app->getStateMachine()->currentState()->deleteSaveFile();
 	StateMachine* sM = app->getStateMachine();
 	sM->changeState(new TutorialState(app, sM->currentState()->getMngr()->getWorld(), snd));
 }

@@ -99,6 +99,7 @@ public:
 
 	void saveGame();
 	void loadGame();
+	void deleteSaveFile();
 
 	GameInfo gameInfo;
 

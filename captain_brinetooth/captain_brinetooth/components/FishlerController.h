@@ -65,6 +65,7 @@ protected:
 	float spikeVelocity;
 
 	bool changePhaseRequest;
+	bool saved_;
 
 #pragma region Timers
 	//Main loop timers

@@ -1,5 +1,7 @@
 #include "FishlerController.h"
 
+#include "../states/GameState.h"
+
 void FishlerController::init() {
 	currentPhase = Phase1;
 	currentMovement = Walking;
@@ -36,6 +38,9 @@ void FishlerController::init() {
 	triggerHeight = 200;
 	triggerOffSetX = -100;
 	triggerOffSetY = 0;
+
+	//Booleano de guardado
+	saved_ = false;
 }
 
 FishlerController::~FishlerController() {
@@ -227,7 +232,11 @@ void FishlerController::update() {
 		}
 	}
 	else {
-
+		//Guardado al morir
+		if (!saved_) {
+			entity_->getMngr()->getApp()->getStateMachine()->currentState()->saveGame();
+			saved_ = true;
+		}
 		collider_->setSpeed(Vector2D());
 	}
 }

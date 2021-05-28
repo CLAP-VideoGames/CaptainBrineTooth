@@ -75,6 +75,8 @@ void GameState::saveGame()
 		output << ab << " "; //Guardamos la informacion de las habilidades en funcion de 0 1 para facilitar la conversion al leer el archivo
 	}
 	output.close();
+
+	app->setIsSavedGame(true);
 }
 
 void GameState::loadGame()
@@ -97,4 +99,17 @@ void GameState::loadGame()
 		manager_->getHandler<Player>()->getComponent<Inventory>()->addCoins(pointsRead);
 		manager_->getHandler<Player>()->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities);
 	}
+}
+
+void GameState::deleteSaveFile()
+{
+	int status;
+	status = remove("assets//user_data//data.dat");
+	if (status == 0)
+		cout << "\nFile Deleted Successfully!";
+	else
+		cout << "\nErorr Occurred!";
+	cout << endl;
+
+	app->setIsSavedGame(false);
 }

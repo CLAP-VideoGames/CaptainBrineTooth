@@ -90,7 +90,7 @@ void Player_Health::render()
 	float currentVidas = vidas+0.5;
 	src = build_sdlrect(frame, frameSize.getX(), frameSize.getY());
 	Vector2D aux = Vector2D(10 + 35 * 0, 10);
-	float zoom = g->camera_Zoom_Out;
+	float zoom = app->camera_Zoom_Out;
 
 	for (int i = 0; i < vidas-0.5; i++)
 	{
@@ -191,7 +191,7 @@ void Player_Health::loseLife()
 	default:
 		break;
 	}
-	if (vidas >= 0.5) { vidas -= 0.5f;  g->ShakeCamera(20); }
+	if (vidas >= 0.5) { vidas -= 0.5f;  app->ShakeCamera(20); }
 
 	invulnerability_ = true;
 	elpased_time_invul_ = sdlutils().currRealTime();
@@ -203,6 +203,8 @@ void Player_Health::loseLife()
 		entity_->getMngr()->getSoundMngr()->playSoundEffect("muerte_jugador", 0);
 		entity_->getComponent<AnimBlendGraph>()->setParamValue("Dead", 1);
 		playerIsDying = true;
+		//Guardado
+		app->getStateMachine()->currentState()->saveGame();
 	}
 }
 
@@ -288,9 +290,9 @@ void Player_Health::setLife(float life){
 }
 
 void Player_Health::respawn(){
-	StateMachine* sM = g->getStateMachine();
+	StateMachine* sM = app->getStateMachine();
 	Manager* mngr = entity_->getMngr();
 	mngr->getSoundMngr()->ChangeMainMusic("Nivel1");
 
-	sM->changeState(new PlayState(g, mngr->getWorld(), mngr->getSoundMngr(),true));
+	sM->changeState(new PlayState(app, mngr->getWorld(), mngr->getSoundMngr(),true));
 }

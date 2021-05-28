@@ -8,7 +8,7 @@
 class Player_Health : public Component {
 public:
 	Player_Health(Texture* tex, Texture* tex2, Texture* tex3, float tanim, App* game, int maxLifes, int maxHeals) 
-		: fVida(tex), hVida(tex2), vVida(tex3), tiempoanimacion(tanim), g(game), maxVidas(maxLifes), maxHeals_(maxHeals)
+		: fVida(tex), hVida(tex2), vVida(tex3), tiempoanimacion(tanim), app(game), maxVidas(maxLifes), maxHeals_(maxHeals)
 	{};
 	virtual ~Player_Health();
 
@@ -113,7 +113,7 @@ private:
 	float cd_invul_ = 1500, elpased_time_invul_; 
 	float deadCountdown, dead_time = 1500;
 
-	App* g;
+	App* app;
 	float tiempoanimacion; // Tiempo entre frame y frame
 	int nFrame = 0;
 
