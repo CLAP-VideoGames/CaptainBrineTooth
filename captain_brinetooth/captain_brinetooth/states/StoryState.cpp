@@ -24,7 +24,7 @@ void StoryState::init() {
 	//Video
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
-	std::pair<const char*, std::pair<bool, int>> video2 = { sdlutils().videos().at("lore").c_str(), {false, 10/*34*/} };
+	std::pair<const char*, std::pair<bool, int>> video2 = { sdlutils().videos().at("lore").c_str(), {false, 1/*34*/} };
 	videos.push_back(video2);
 	auto* video = manager_->addEntity();
 	videoP = video->addComponent<VideoPlayer>(videos);
