@@ -404,6 +404,7 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<LoseLife>();
 
+
 	//Carga de archivo
 	manager_->setHandler<Player>(player);
 	if (app->IsSavedGame())

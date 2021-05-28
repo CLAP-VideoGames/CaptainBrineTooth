@@ -1,5 +1,5 @@
 ﻿#include "Inventory.h"
-
+#include "SkillTree.h"
 
 
 Inventory::~Inventory()
@@ -36,6 +36,18 @@ void Inventory::init() {
 	bait_tex_ = &sdlutils().images().at("bait");
 	textures_.push_back(bait_tex_);
 	lastUpdateTime = sdlutils().currRealTime();
+
+	//Skills
+
+	//Initialization of the textures for the skillTree
+	skills.push_back(&sdlutils().images().at("extraBait"));
+	skills.push_back(&sdlutils().images().at("healBait"));
+	skills.push_back(&sdlutils().images().at("spineBait"));
+	skills.push_back(&sdlutils().images().at("doubleBait"));
+	skills.push_back(&sdlutils().images().at("speedBait"));
+
+	//Catching of the player component
+	currentSkills = entity_->getComponent<SkillTree>();
 }
 
 void Inventory::render()
@@ -60,6 +72,8 @@ void Inventory::render()
 		actfr = actfr % 6;
 		lastUpdateTime = sdlutils().currRealTime();
 	}
+
+	drawSkills(destPos + Vector2D(0, 20));
 }
 
 void Inventory::update() {
@@ -395,5 +409,27 @@ void Inventory::renderNumber(Vector2D pos, Vector2D size, int n, int n2)
 			number2->render(src, dest);
 			i++;
 		}
+	}
+}
+
+void Inventory::drawSkills(Vector2D initPos)
+{
+	int acumulator = 0; //To keep the offset between skills
+	Vector2D size;
+	for (int i = 0; i < currentSkills->getMaxSkills(); i++) {
+	    if (currentSkills->hasSkill(i)) {
+			size.setX(skills[i]->width());
+			size.setY(skills[i]->height());
+
+			size = size * 0.1;
+
+			Vector2D currentPos(initPos.getX(), initPos.getY() + size.getY() * acumulator);
+
+	        SDL_Rect dest = build_sdlrect(currentPos,size.getX(),size.getY());
+
+	        skills[i]->render(dest);
+
+	        acumulator++;
+	    }
 	}
 }

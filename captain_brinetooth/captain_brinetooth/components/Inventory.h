@@ -14,7 +14,7 @@
 #include "Armas_HUD.h"
 #include "WeaponComponent.h"
 
-
+class SkillTree;
 class Inventory : public Component {
 public:
 	Inventory() : currentWeaponNumber(0), currentSelectedWeapon(0), coins_(0), baits_(0){}
@@ -42,6 +42,8 @@ public:
 	void substractBaits(int n);
 	void renderNumber(Vector2D pos, Vector2D size, int n, int n2);
 
+	void drawSkills(Vector2D initPos);
+
 private:
 	enum PosibleWeapons { TypeSword, TypeHammer, TypeChainsaw, TypeCrab, TypeMachineGun, TypeInk };
 	void addWeaponById(int weapToAdd);
@@ -68,4 +70,8 @@ private:
 	int actfr;
 	float lastUpdateTime;
 	float elapsedtime_temp_coins, elapsedtime_temp_baits, cd_temp = 1000;
+
+	//Skills
+	std::vector<Texture*> skills;
+	SkillTree* currentSkills;
 };
