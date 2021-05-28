@@ -145,7 +145,8 @@ Entity* EnemyGenerator::generateFringeHead(Vector2D pos)
 	anim_controller->setParamValue("Dead", 0);
 	anim_controller->setParamValue("Shoot", 0);
 	enemy->addComponent<FringeHeadAtack>();
-	enemy->addComponent<Enemy_Health>(125, 12 * reward_mod_, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
+	float rew = 12 * reward_mod_;
+	enemy->addComponent<Enemy_Health>(125, (int)rew, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 200), 50);
 	enemy->addComponent<ContactDamage>(enemy);
 
 	return enemy;
@@ -171,7 +172,8 @@ Entity* EnemyGenerator::generateMedusa(Vector2D pos)
 	fjh1_anim_controller->addTransition("idle", "death", "Dead", 1, false);
 	fjh1_anim_controller->addTransition("death", "idle", "Dead", 99, false);	//Necesario crear una transicion para crear un animstate
 	fjh1_anim_controller->setParamValue("Dead", 0);
-	fjh1->addComponent<Enemy_Health>(150, 15 * reward_mod_, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	float rew = 15 * reward_mod_;
+	fjh1->addComponent<Enemy_Health>(150, (int)rew, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	fjh1->addComponent<BoxCollider>(flowerJellyHat.physicType, flowerJellyHat.col, flowerJellyHat.colMask, false, 0.7f, true, 0.0, Vector2D(), Vector2D(), 10000);
 	fjh1->addComponent<ContactDamage>(fjh1);
 
@@ -222,7 +224,8 @@ Entity* EnemyGenerator::generateElfShark(Vector2D pos)
 	elf_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_elf = elf->addComponent<EnemyTrigger>(Vector2D(900.0f, 400.0f));
 	trigger_elf->addTriggerComponent<ElfSharkAttack>(elf);
-	elf->addComponent<Enemy_Health>(225, 22 * reward_mod_, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	float rew = 22 * reward_mod_;
+	elf->addComponent<Enemy_Health>(225, (int)rew, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	elf->addComponent<ContactDamage>(elf);
 
 	return elf;
@@ -268,7 +271,8 @@ Entity* EnemyGenerator::generatePompeyWorm(Vector2D pos)
 	gusano_anim_controller->setParamValue("Attack", 0);
 	auto* trigger_gusano = gusano->addComponent<EnemyTrigger>(Vector2D(800.0f, 500.0f));
 	trigger_gusano->addTriggerComponent<PompeyWormAttack>(gusano);
-	gusano->addComponent<Enemy_Health>(175, 18 * reward_mod_, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	float rew = 18 * reward_mod_;
+	gusano->addComponent<Enemy_Health>(175, (int)rew, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	gusano->addComponent<ContactDamage>(gusano);
 
 	return gusano;
@@ -309,7 +313,8 @@ Entity* EnemyGenerator::generateThornFish(Vector2D pos)
 	thorn_anim_controller->setParamValue("Dead", 0);
 	thorn_anim_controller->setParamValue("Attack", 0);
 	thorn->addComponent<ThornFishAttack>();
-	thorn->addComponent<Enemy_Health>(150, 15*reward_mod_, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
+	float rew = 15 * reward_mod_;
+	thorn->addComponent<Enemy_Health>(150, (int)rew, Vector2D(50, 5), build_sdlcolor(255, 0, 0, 255), 50);
 	thorn->addComponent<ContactDamage>(thorn);
 
 	return thorn;
