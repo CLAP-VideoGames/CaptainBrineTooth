@@ -1,7 +1,6 @@
 #include "StoryState.h"
 
 StoryState::StoryState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd): GameState(a,mundo, snd){
-
 }
 
 StoryState::~StoryState()

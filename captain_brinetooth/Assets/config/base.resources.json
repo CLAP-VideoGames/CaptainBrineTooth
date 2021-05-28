@@ -381,6 +381,10 @@
 			"file": "assets/sprites/other/mist.png"
 		},
 		{
+			"id": "mist_horizontal",
+			"file": "assets/sprites/other/mist.png"
+		},
+		{
 			"id": "bg_pausa",
 			"file": "assets/background/bg_pausa.png"
 		},

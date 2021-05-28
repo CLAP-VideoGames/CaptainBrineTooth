@@ -246,13 +246,14 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 
 			if(dir == (int)Cardinals::N || dir == (int)Cardinals::W) t->addComponent<Animation>("Grid", &sdlutils().images().at("grid"), 1, 1, 1, 1, 0);
 			else t->addComponent<Animation>("Grid", &sdlutils().images().at("verticalGrid"), 1, 1, 1, 1, 0);
+
 		}
 		else { //Creamos los colliders de los triggers la sala actual
 			//t->addComponent<Transform>(pos, Vector2D(0, 0), size[i].x, size[i].y, 0);
 
 			t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
-			//t->addComponent<Animation>("skill", &sdlutils().images().at("skillTableExterior"), 1, 1, 1, 1, 0, Vector2D(0.5, 0.5));
+			t->addComponent<Animation>("mist", &sdlutils().images().at("mist"), 4, 5, 20, 12, -1, Vector2D(0.5, 0.5));
 
 			t->addComponent<Connections>(names[i]);
 
