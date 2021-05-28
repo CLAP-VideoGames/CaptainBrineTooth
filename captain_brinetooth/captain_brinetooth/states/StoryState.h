@@ -1,19 +1,18 @@
-#pragma once
 #include "../states/GameState.h"
-#include "../states/StoryState.h"
+#include "../states/MenuState.h"
 
-class IntroState : public GameState
-{
+#pragma once
+class StoryState : public GameState {
 public:
-	IntroState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
-	~IntroState();
+	StoryState(App* a, std::shared_ptr<b2World> mundo, SoundManager* snd);
+	~StoryState();
 
 	void init() override;
 	void update() override;
 	void render() const override;
 
 private:
-	Entity* video = nullptr, *fade = nullptr;
+	Entity* video = nullptr, * fade = nullptr;
 	Fade* fadeComp = nullptr;
 
 	VideoPlayer* videoP = nullptr;
@@ -22,4 +21,3 @@ private:
 
 	bool finalSong = false;
 };
-

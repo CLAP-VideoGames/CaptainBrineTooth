@@ -249,6 +249,7 @@
     <ClInclude Include="states\SkillTreeState.h" />
     <ClInclude Include="states\StateMachine.h" />
     <ClInclude Include="states\MenuState.h" />
+    <ClInclude Include="states\StoryState.h" />
     <ClInclude Include="states\TestZoneState.h" />
     <ClInclude Include="states\TutorialState.h" />
     <ClInclude Include="targetver.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="states\SkillTreeState.cpp" />
     <ClCompile Include="states\StateMachine.cpp" />
     <ClCompile Include="states\MenuState.cpp" />
+    <ClCompile Include="states\StoryState.cpp" />
     <ClCompile Include="states\TestZoneState.cpp" />
     <ClCompile Include="states\TutorialState.cpp" />
     <ClCompile Include="utils\Collisions.cpp" />
