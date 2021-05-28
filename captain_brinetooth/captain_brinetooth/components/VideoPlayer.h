@@ -59,7 +59,13 @@ public:
 	void update() override;
 	void render() override;
 	
+	/// <summary>
+	/// Devuelve el numero de elementos de la cola
+	/// </summary>
+	/// <param name="video_"></param>
+	/// <returns></returns>
 	int queueSize() { return queueVideos.size(); }
+
 	int createVideo(Video& video_);
 	/// <summary>
 	/// Crea los videos con todos sus atributos para ser renderizado
@@ -102,6 +108,20 @@ public:
 	/// </summary>
 	/// <param name="n"></param>
 	void setForcePop(bool n);
+
+	/// <summary>
+	/// Devuelve el nombre del video que se está reproduciendo actualemente.
+	/// </summary>
+	/// <returns>Si no hay videos, se devuelve ""</returns>
+	std::string getFrontName(){
+		if (!queueVideos.empty()){
+			const char* s = queueVideos.front().filename;
+			std::string str(s);
+			std::string file = s;
+			return sdlutils().getNameFilePathByCutter(file, '/');
+		}
+		return "";
+	}
 
 private:
 

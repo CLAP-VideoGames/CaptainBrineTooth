@@ -46,6 +46,8 @@ public:
 	//string nameFilePath
 	std::string getNameFilePath(std::string& path);
 
+	std::string getNameFilePathByCutter(std::string& path, char cutter = '/');
+
 	// access to the underlying SDL_Window -- in principle not needed
 	inline SDL_Window* window() {
 		return window_;

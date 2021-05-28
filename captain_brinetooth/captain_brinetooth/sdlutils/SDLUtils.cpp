@@ -37,6 +37,13 @@ std::string SDLUtils::getNameFilePath(std::string& path){
 	return namePath;
 }
 
+std::string SDLUtils::getNameFilePathByCutter(std::string& path, char cutter) {
+	size_t puntoCorte = path.find_last_of(cutter);
+	int length = path.length(); //Final del string
+	std::string namePath = path.substr(puntoCorte + 1, length);
+	return namePath;
+}
+
 bool SDLUtils::getDebug() const{
 	return false;
 }

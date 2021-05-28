@@ -44,12 +44,17 @@ void IntroState::init() {
 }
 
 void IntroState::update(){
-	if (!finalSong && videoP->queueSize() == 0)
+	string name = videoP->getFrontName();
+
+	if (!finalSong && name == "intro.mp4")
 	{
+		
 		manager_->getSoundMngr()->playIntroLoopMusic();
 		finalSong = true;
 	}
-	
+
+
+
 	if (ih().mouseButtonEvent()) {
 		if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			fadeComp->setState(Fade::STATE_FADE::Out);
