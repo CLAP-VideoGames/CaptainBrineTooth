@@ -246,7 +246,7 @@ void FishlerController::update() {
 		Fade* fade = fader->getComponent<Fade>();
 
 		fade->setState(Fade::STATE_FADE::Out);
-		fade->setTimeOut(5500);
+		fade->setTimeOut(9500);
 		fade->triggerFade();
 	}
 }

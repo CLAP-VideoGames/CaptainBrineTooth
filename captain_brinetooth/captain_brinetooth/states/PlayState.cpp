@@ -408,10 +408,6 @@ void PlayState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<CameraFollow>(Vector2D(100.0f, -80.0f), 0.08f, false, false, manager_->getHandler<Map>()->getComponent<Level0>()->getMaxCoordenates()); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 	Inventory* invent = player->addComponent<Inventory>();
-	//BORRAR
-	invent->addCoins(3000);
-	invent->addWeapon(1);
-
 	player->addComponent<LoseLife>();
 
 
