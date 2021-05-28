@@ -99,11 +99,13 @@ void MapProcedural::onEnterAccessTrigger(b2Contact* contact) {
 	if (trigger->isActive()) {
 		Entity* m = nullptr;
 		m = trigger->getMngr()->getHandler<Map>();
-		if (m != nullptr) {
+		if (m != nullptr && m->componentsSize() > 0) {
 			MapProcedural* map = nullptr; 
-			map = m->getComponent<MapProcedural>();
-			if (map != nullptr)
-				map->pressToAccess(true);
+			if (m->hasComponent<MapProcedural>()) {
+				map = m->getComponent<MapProcedural>();
+				if (map != nullptr)
+					map->pressToAccess(true);
+			}
 		}
 	}
 }
@@ -119,11 +121,13 @@ void MapProcedural::onExitAccessTrigger(b2Contact* contact) {
 		if (trigger->componentsSize()>0){
 			Entity* m = nullptr;
 			m = trigger->getMngr()->getHandler<Map>();
-			if (m != nullptr) {
+			if (m != nullptr && m->componentsSize() > 0) {
 				MapProcedural* map = nullptr;
-				map = m->getComponent<MapProcedural>();
-				if (map != nullptr)
-					map->pressToAccess(false);
+				if (m->hasComponent<MapProcedural>()) {
+					map = m->getComponent<MapProcedural>();
+					if (map != nullptr)
+						map->pressToAccess(false);
+				}
 			}
 		}
 	}

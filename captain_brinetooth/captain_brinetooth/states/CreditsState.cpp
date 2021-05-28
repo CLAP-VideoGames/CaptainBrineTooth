@@ -25,7 +25,7 @@ void CreditsState::init(){
 	//Video
 	std::deque<std::pair<const char*, std::pair<bool, int>>> videos;
 	//Filename, loop, frameRate
-	std::pair<const char*, std::pair<bool, int>> video__ = { sdlutils().videos().at("credits").c_str(), {false, 1} };
+	std::pair<const char*, std::pair<bool, int>> video__ = { sdlutils().videos().at("credits").c_str(), {false, 29} };
 	videos.push_back(video__);
 	auto* video = manager_->addEntity();
 	videoP = video->addComponent<VideoPlayer>(videos);
