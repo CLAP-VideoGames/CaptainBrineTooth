@@ -1,6 +1,8 @@
 # CaptainBrineTooth
 This repository is made for the development of the videoGame Captain BrineTooth.
 
+Nombre del grupo: Cleon Llamalo Ángel Pls(CLAP)
+
 **Documento de diseño de videojuego**
 
 _David Brey Plaza, Adrià Carreras Bagur, Miguel Hernández García, Ángel López Benítez, Óscar Maya Jiménez, Juan Diego Mendoza Reyes, Iván Prado Echegaray, José Daniel Rave Robayo, Daniel Ruiz Figueroa_
@@ -18,9 +20,14 @@ _David Brey Plaza, Adrià Carreras Bagur, Miguel Hernández García, Ángel Lóp
 
 Captain BrineTooth es un videojuego surgido como proyecto para la asignatura Proyectos 2 en la Universidad Complutense de Madrid. Los desarrolladores iniciales son estudiantes aún novatos en la realización de videojuegos con C + +.
 
+Plataforma de gestión: pivotaltracker
+Plataforma de comunicación: Discord
+
 La gestión de este proyecto se realizará en Pivotal Tracker: (https://www.pivotaltracker.com/n/projects/2489365)
 
 El control de versiones se realizará utilizando GitHub: (https://github.com/JosedaMachine/CaptainBrineTooth)
+
+Página web pública: https://captainbrinetooth.wordpress.com/
 
 Captain BrineTooth no tiene antecedentes o predecesores.
 
@@ -469,3 +476,4 @@ Algunas de las habilidades son:
 
 **Controles**
 
+![ControlesGrandes](readmeImages/controlesGrandes.jpg)
