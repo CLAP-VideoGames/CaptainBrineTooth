@@ -377,6 +377,10 @@
 			"file": "assets/background/sky.png"
 		},
 		{
+			"id": "mist",
+			"file": "assets/sprites/other/mist.png"
+		},
+		{
 			"id": "bg_pausa",
 			"file": "assets/background/bg_pausa.png"
 		},

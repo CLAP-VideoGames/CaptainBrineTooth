@@ -38,6 +38,7 @@ private:
 
 	Entity* particle_hit;
 	Entity* particle_coins;
+	Entity* fader;	//Unico para bosses
 
 	SDL_Rect bar, base;
 	Transform* trParent_;
@@ -55,5 +56,7 @@ private:
 	int electrifyDamage = 150;
 
 	int reward_;
+
+	bool saved_;
 };
 
