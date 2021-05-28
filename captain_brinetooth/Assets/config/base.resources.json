@@ -457,6 +457,10 @@
 			"file": "assets/sprites/other/ice_portal.png"
 		},
 		{
+			"id": "boss_portal",
+			"file": "assets/sprites/other/boss_portal.png"
+		},
+		{
 			"id": "fishing_rod",
 			"file": "assets/sprites/other/fishing_rod.png"
 		},

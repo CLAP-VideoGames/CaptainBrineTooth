@@ -302,6 +302,10 @@ void MapProcedural::createConnectionTriggers(int dir, CallBackCollision* method)
 			t->addComponent<Animation>("portal", &sdlutils().images().at("ice_portal"), 2, 2, 4, 8, -1);
 			t->getComponent<Animation>()->setAlpha(208);
 		}
+		else if (fase == 2) {
+			t->addComponent<Animation>("portal", &sdlutils().images().at("boss_portal"), 2, 2, 4, 8, -1);
+			t->getComponent<Animation>()->setAlpha(208);
+		}
 
 		t->addComponent<BoxCollider>(STATIC, PLAYER_DETECTION, PLAYER_DETECTION_MASK, true, 0, true, 0.0);
 
