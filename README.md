@@ -1,7 +1,7 @@
 # CaptainBrineTooth
 This repository is made for the development of the videoGame Captain BrineTooth.
 
-Nombre del grupo: Cleon Llamalo Ángel Pls(CLAP)
+Nombre del grupo (Antiguo): Cleon Llámalo Ángel Pls( **CLAP** ) 
 
 **Documento de diseño de videojuego**
 
