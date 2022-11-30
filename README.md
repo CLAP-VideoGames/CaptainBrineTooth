@@ -1,6 +1,6 @@
 # CaptainBrineTooth
 This repository is made for the development of the videoGame Captain BrineTooth.
-Download it from here [here]([https://github.com/CLAP-VideoGames/K_Engine](https://josedamachine.itch.io/captain-brinetooth)).
+Download it from [here]([https://josedamachine.itch.io/captain-brinetooth]).
 Nombre del grupo (Antiguo): Cleon Llámalo Ángel Pls( **CLAP** ) 
 
 **Documento de diseño de videojuego**
