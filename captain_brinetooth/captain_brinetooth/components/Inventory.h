@@ -39,6 +39,7 @@ public:
 	void substractCoins(int n);
 	const int& getBaits();
 	void addBaits(int n);
+	void addPityBait(int n);
 	void substractBaits(int n);
 	void renderNumber(Vector2D pos, Vector2D size, int n, int n2);
 
@@ -61,7 +62,7 @@ private:
 	WeaponComponent* currentWeapon;
 
 	//Coins & Bait
-	int coins_, baits_;
+	int coins_, baits_, pityBait_, pityCount;
 	int display_coins, temp_coins, display_baits, temp_baits, increase_, aux_coins;
 	std::vector<Texture*> textures_;
 	Texture* coin_tex_;

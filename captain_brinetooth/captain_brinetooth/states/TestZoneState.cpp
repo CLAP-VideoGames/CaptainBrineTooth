@@ -234,6 +234,9 @@ void TestZoneState::init() {
 void TestZoneState::createPlayer(const Config& playerConfig) {
 	auto* player = createBasicEntity(playerConfig.pos, playerConfig.size, playerConfig.rotation, playerConfig.vel);
 
+
+	SkillTree* skillTree_ = player->addComponent<SkillTree>();
+
 #pragma region Animations
 	//Plantilla de uso de ANIMATION CONTROLLER
 	auto* anim_controller = player->addComponent<AnimBlendGraph>();
@@ -283,6 +286,49 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 	//--------------------------------------------------------------------------------------------------------------
 #pragma region Weapons
 	//-WEAPONS------------------------------------------------------------------------------------------------------
+#pragma region Fists
+	//FISTS
+
+	anim_controller->addAnimation("fist_attack1", &sdlutils().images().at("fists_combo"), 6, 7, 39, 35, 0, 1, 8, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("fist_attack2", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 8, 25, Vector2D(0.71, 0.5));
+	anim_controller->addAnimation("fist_attack3", &sdlutils().images().at("fists_combo"), 6, 7, 39, 48, 0, 27, 38, Vector2D(0.71, 0.5));
+
+	anim_controller->addTransition("run", "fist_attack1", "fist_att", 1, false);
+	anim_controller->addTransition("idle", "fist_attack1", "fist_att", 1, false);
+	anim_controller->addTransition("jump", "fist_attack1", "fist_att", 1, false);
+	anim_controller->addTransition("fist_attack1", "run", "fist_att", 0, true);
+	anim_controller->addTransition("fist_attack1", "fist_attack2", "fist_att", 2, true);
+	anim_controller->addTransition("run", "fist_attack2", "fist_att", 2, false);
+	anim_controller->addTransition("idle", "fist_attack2", "fist_att", 2, false);
+	anim_controller->addTransition("jump", "fist_attack2", "fist_att", 2, false);
+	anim_controller->addTransition("fist_attack2", "run", "fist_att", 0, false);
+	anim_controller->addTransition("fist_attack2", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("run", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("idle", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("jump", "fist_attack3", "fist_att", 3, false);
+	anim_controller->addTransition("fist_attack3", "run", "fist_att", 0, false);
+	anim_controller->addTransition("fist_attack3", "fist_attack1", "fist_att", 1, true);
+
+	anim_controller->addTransition("fist_attack1", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("fist_attack1", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "fist_attack1", "fist_att", 1, true);
+	anim_controller->addTransition("dash_ground", "fist_attack1", "fist_att", 1, true);
+	anim_controller->addTransition("fist_attack2", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("fist_attack2", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "fist_attack2", "fist_att", 2, true);
+	anim_controller->addTransition("dash_ground", "fist_attack2", "fist_att", 2, true);
+	anim_controller->addTransition("fist_attack3", "dash_air", "Dash_Air", 1, false);
+	anim_controller->addTransition("fist_attack3", "dash_ground", "Dash_Ground", 1, false);
+	anim_controller->addTransition("dash_air", "fist_attack3", "fist_att", 3, true);
+	anim_controller->addTransition("dash_ground", "fist_attack3", "fist_att", 3, true);
+	//death
+	anim_controller->addTransition("fist_attack1", "death", "Dead", 1, false);
+	anim_controller->addTransition("fist_attack2", "death", "Dead", 1, false);
+	anim_controller->addTransition("fist_attack3", "death", "Dead", 1, false);
+
+	anim_controller->setParamValue("fist_att", 0);
+#pragma endregion 
+
 #pragma region Chainsaw
 	//---CHAINSAW---------------------------------------------------------------------------------------------------
 	anim_controller->addAnimation("chainsaw_attack1", &sdlutils().images().at("chainsaw_combo"), 6, 8, 48, 15, 0, 1, 8, Vector2D(0.75, 0.72));
@@ -436,9 +482,9 @@ void TestZoneState::createPlayer(const Config& playerConfig) {
 
 	player->addComponent<CameraFollow>(Vector2D(200.0f, -80.0f), 0.1f, true, true); //Vector2D offset y porcentaje de la velocidad de la camara, mas bajo mas lento sigue
 
-	player->addComponent<Inventory>()->addWeapon(4);
+	player->addComponent<Inventory>()/*->addWeapon(0)*/;
 
-	player->addComponent<LoseLife>();
+	player->addComponent<LoseHealth>();
 
 	//Seteamos al Player como MainHandler
 	manager_->setHandler<Player>(player);

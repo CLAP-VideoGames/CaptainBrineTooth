@@ -149,6 +149,8 @@ void Enemy_Health::update(){
 		int rand = sdlutils().rand().teCuoto(0,6);
 		if (rand == 0)
 			entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addBaits(1);
+		else
+			entity_->getMngr()->getHandler<Player>()->getComponent<Inventory>()->addPityBait(1);
 		SDL_Delay(100);
 		if (entity_->hasComponent<FishlerController>()) {
 			//Guardado al morir

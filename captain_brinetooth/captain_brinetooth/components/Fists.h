@@ -36,14 +36,14 @@ public:
 	void creaTrigger(int damage);
 
 private:
-	enum STATUS { Iddle, Sawing, OnAnimationLock, OnCombo };
+	enum STATUS { Idle, Sawing, OnAnimationLock, OnCombo };
 	enum ATTACKS { NotAttacking, Attack1, Attack2, Attack3 };
 
 	Transform* tr_;
 	AnimBlendGraph* anim_controller;
 
 	//Local control variables (don't touch or change them except in code)
-	int CURRENT_STATUS = STATUS::Iddle;
+	int CURRENT_STATUS = STATUS::Idle;
 	int CURRENT_ATTACK = ATTACKS::NotAttacking;
 	float sawActivationTime;
 	float stoppedSawTime;

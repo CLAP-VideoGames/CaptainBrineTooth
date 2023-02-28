@@ -8,11 +8,11 @@
 
 //This component functions as an example of a component that can be used to trigger an effect when said entity collides with something
 
-class LoseLife : public Component {
+class LoseHealth : public Component {
 public:
-	LoseLife() {
+	LoseHealth() {
 	}
-	virtual ~LoseLife() {
+	virtual ~LoseHealth() {
 	}
 
 	void init() override {

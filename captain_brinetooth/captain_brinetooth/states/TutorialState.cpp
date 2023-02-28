@@ -360,7 +360,7 @@ void TutorialState::stepHeal()
 {
 	step_ = 6;
 	player->addComponent<Player_Health>(&sdlutils().images().at("fullvida"), &sdlutils().images().at("mediavida"), &sdlutils().images().at("vacio"), 300.0f, app, 5, 2);
-	player->addComponent<LoseLife>();
+	player->addComponent<LoseHealth>();
 	//Perder 5 vidas
 	player->getComponent<Player_Health>()->loseLife();
 	player->getComponent<Player_Health>()->loseLife();

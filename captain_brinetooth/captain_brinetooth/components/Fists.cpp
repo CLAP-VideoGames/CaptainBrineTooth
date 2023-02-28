@@ -17,9 +17,8 @@ void Fists::update() {
 		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && !entity_->getComponent<Player_Health>()->getPlayerIsDying()) {
 			if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
 				if (ih().getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) || ih().isKeyDown(SDL_CONTROLLER_BUTTON_X)) {
-
 					//Player not attacking or in combo
-					if (CURRENT_STATUS == STATUS::Iddle && stoppedAttackingTime + timeBeforeNextAttackStarts < sdlutils().currRealTime()) {
+					if (CURRENT_STATUS == STATUS::Idle && stoppedAttackingTime + timeBeforeNextAttackStarts < sdlutils().currRealTime()) {
 						std::cout << "Fist attack\n";
 
 						//Set player as sawing
@@ -121,7 +120,7 @@ void Fists::update() {
 			else if (CURRENT_STATUS == STATUS::OnCombo && comboActivationTime + maxComboPanningTime < sdlutils().currRealTime()) {
 				//Deactivate combo availability
 				std::cout << "STOPPED COMBO\n";
-				CURRENT_STATUS = STATUS::Iddle;
+				CURRENT_STATUS = STATUS::Idle;
 				CURRENT_ATTACK = ATTACKS::NotAttacking;
 
 				stoppedAttackingTime = sdlutils().currRealTime();
@@ -159,13 +158,13 @@ void Fists::update() {
 			}
 		}
 		else {
-			if (CURRENT_STATUS != STATUS::Iddle) {
+			if (CURRENT_STATUS != STATUS::Idle) {
 				isAttacking = false;
 				if (trigger != nullptr) {
 					trigger->setActive(false);
 					trigger = nullptr;
 				}
-				CURRENT_STATUS = STATUS::Iddle;
+				CURRENT_STATUS = STATUS::Idle;
 				CURRENT_ATTACK = ATTACKS::NotAttacking;
 			}
 		}

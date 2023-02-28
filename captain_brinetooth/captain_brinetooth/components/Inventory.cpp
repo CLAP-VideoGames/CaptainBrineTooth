@@ -23,7 +23,8 @@ void Inventory::init() {
 	}
 	//Init Coins & Baits
 	coins_, temp_coins, display_coins, aux_coins = 0;
-	baits_, temp_baits, display_baits = 0;
+	baits_, temp_baits, display_baits, pityBait_;
+	pityCount = 8;
 	for (int y = 0; y < 2; y++) {
 		for (int x = 0; x < 3; x++)
 			framepos.push_back(Vector2D(x, y));
@@ -292,6 +293,13 @@ void Inventory::addBaits(int n)
 	baits_ += n;
 	temp_baits += n;
 	elapsedtime_temp_baits = sdlutils().currRealTime();
+}
+
+void Inventory::addPityBait(int n)
+{
+	pityCount += n;
+	if (pityCount >= pityBait_)
+		addBaits(1);
 }
 
 void Inventory::substractBaits(int n)

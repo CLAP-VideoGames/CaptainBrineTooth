@@ -28,11 +28,12 @@ Texture::Texture(SDL_Renderer *renderer, const std::string &fileName) {
 
 	SDL_Surface *surface = IMG_Load(fileName.c_str());
 	if (surface == nullptr)
-		throw "Couldn't load image: " + fileName;
+		throw "Couldn't preload image: " + fileName;
 
 	texture_ = SDL_CreateTextureFromSurface(renderer, surface);
 	if (texture_ == nullptr) {
 		SDL_FreeSurface(surface);
+		std::cout<<IMG_GetError();
 		throw "Couldn't load image: " + fileName;
 	}
 

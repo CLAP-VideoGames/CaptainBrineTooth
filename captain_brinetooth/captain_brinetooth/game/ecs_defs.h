@@ -22,7 +22,7 @@ class MapCollider;
 class PlayerController;
 class CameraFollow;
 class SoundManager;
-class LoseLife;
+class LoseHealth;
 class FringeHeadAtack;
 class ElfSharkAttack;
 class PompeyWormAttack;
@@ -86,7 +86,7 @@ class Fists;
 	Reward,\
     Gancho,\
     SoundManager,\
-	LoseLife,\
+	LoseHealth,\
 	Fade,\
 	EnemyTrigger,\
 	FringeHeadAtack,\

@@ -31,7 +31,7 @@ App::App() {
 
 	sndProvisional = new SoundManager(0, "Menu");
 	////----Inicio de Intro----
-	stateMachine->pushState(new IntroState(this, world_, sndProvisional));
+	//stateMachine->pushState(new IntroState(this, world_, sndProvisional));
 	//----Inicio por defecto---
 	//stateMachine->pushState(new MenuState(this, world_, sndProvisional));
 	//----Inicio de Options----
@@ -41,7 +41,7 @@ App::App() {
 	//----Inicio de Juego------
 	//stateMachine->pushState(new PlayState(this, world_, sndProvisional, false, 0));
 	//-----Zona de pruebas------
-	//stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
+	stateMachine->pushState(new TestZoneState(this, world_, sndProvisional));
 	//-----Zona de pesca------
 	//stateMachine->pushState(new PescaState(this, world_, sndProvisional,nullptr,world_));
 }

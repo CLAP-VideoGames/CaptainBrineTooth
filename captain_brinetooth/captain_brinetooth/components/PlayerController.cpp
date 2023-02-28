@@ -32,11 +32,17 @@ void PlayerController::init()
 	moveLeft = moveRight = paralized = false;
 	receiveInput = true;
 	jumpkey_pressed = false;
+	atkPityCd = 400;
 }
 
 
 void PlayerController::update()
 {
+	//Timer del cancel
+	atkPityTimer = sdlutils().currRealTime();
+	if (entity_->getComponent<Inventory>()->playerAttacking()) 
+		int io= 0;
+	bool pityAnimAtk = (entity_->getComponent<Inventory>()->playerAttacking()&&atkPityTimer<= atkPityCdTimer) ? true : false;
 #pragma region Input
 	//Gestion del input
 	assert(collider_ != nullptr);
@@ -86,8 +92,6 @@ void PlayerController::update()
 			//Realizar da�o
 			//health_->loseLife();
 			snd->playSoundEffect("player_jump", 300);
-
-
 		}
 		//Para juego final añadir && canDash
 		if (ih().isKeyDown(SDLK_LSHIFT) && canDash) {
@@ -116,14 +120,10 @@ void PlayerController::update()
 	}
 #pragma endregion
 #pragma region States
-	//isOnGround();
 	//std::cout << "\n" << isOnFloor;
 	//std::cout << "\n" << animController_->getParamValue("NotOnFloor");
 	isOnGround();
-	/*if (collider_->getBody()->GetLinearVelocity().y < 0.1 && collider_->getBody()->GetLinearVelocity().y > -0.1 && !isDashing) {
-	}
-	else
-		isOnFloor = false;*/
+
 #pragma endregion
 #pragma region Animaciones
 		//Esta tocando suelo
@@ -153,17 +153,23 @@ void PlayerController::update()
 	}
 #pragma endregion
 #pragma region Movement
+	float speedModifier = 1.0f;
 	//Ambas direcciones o ninguna
 	if (!isDashing) {
+		//Slow cuando se ataca
+		if (entity_->getComponent<Inventory>()->playerAttacking() && isOnFloor) {
+			speedModifier = 0.5f;
+		}
+
 		if ((moveLeft && moveRight) || (!moveLeft && !moveRight)) {
 			collider_->setSpeed(Vector2D(0, collider_->getBody()->GetLinearVelocity().y));
 		}
 		else {
 			if (moveLeft) {	//izqda
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-				collider_->setSpeed(Vector2D(-speed_, vel.y));
+				collider_->setSpeed(Vector2D(-speed_* speedModifier, vel.y));
 				if (entity_->hasComponent<Inventory>()) {
-					if (!entity_->getComponent<Inventory>()->playerAttacking()) {
+					if (!entity_->getComponent<Inventory>()->playerAttacking() || pityAnimAtk) {
 						animController_->flipX(false);
 					}
 				}
@@ -173,9 +179,9 @@ void PlayerController::update()
 			}
 			if (moveRight) {	//drcha
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-				collider_->setSpeed(Vector2D(speed_, vel.y));
+				collider_->setSpeed(Vector2D(speed_*speedModifier, vel.y));
 				if (entity_->hasComponent<Inventory>()) {
-					if (!entity_->getComponent<Inventory>()->playerAttacking()) {
+					if (!entity_->getComponent<Inventory>()->playerAttacking() || pityAnimAtk) {
 						animController_->flipX(true);
 					}
 				}
@@ -329,4 +335,8 @@ const bool& PlayerController::isPlayerDashing()
 }
 void PlayerController::setMoveLeft(bool state) { moveLeft = state; }
 void PlayerController::setMoveRight(bool state) { moveRight = state; }
+
+void PlayerController::startAtkCancelTimer() { 
+	atkPityCdTimer = atkPityTimer + atkPityCd;
+};
 

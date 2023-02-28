@@ -27,6 +27,7 @@ PlayerController(const float & speed = 3.0f, const float& forceJ = 0.9f , const 
 	void setMoveLeft(bool state);
 	void setMoveRight(bool state);
 	void Paralize() { paralized = true; };
+	void startAtkCancelTimer();
 
 	static void OnTriggerEnter(b2Contact* contact);
 	static void OnTriggerExit(b2Contact* contact);
@@ -46,5 +47,6 @@ private:
 	float speed_, forceJump_, maxSpeed, dashSpeed, gravity;
 	//Flags
 	bool isOnFloor, isOnAir, isDashing, canDash, moveLeft, moveRight, paralized, jumpkey_pressed;
+	float atkPityTimer = 0.0f, atkPityCd, atkPityCdTimer;
 	
 };
