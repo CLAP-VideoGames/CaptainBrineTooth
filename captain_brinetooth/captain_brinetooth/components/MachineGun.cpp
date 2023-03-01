@@ -22,6 +22,7 @@ void MachineGun::update() {
 
 					//Player not attacking or in combo
 					if (CURRENT_STATUS == STATUS::Iddle && overheat <= maxOverheat && startedReloading + reloadingTime < sdlutils().currRealTime()) {
+						entity_->getComponent<PlayerController>()->canFlipAtk();
 						std::cout << "Started shooting\n";
 
 						//Set player as sawing

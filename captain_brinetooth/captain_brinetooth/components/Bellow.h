@@ -20,12 +20,12 @@
 #include "../levels/Level0.h"
 
 
-class Bellow : public WeaponComponent {
+class InkSackGun : public WeaponComponent {
 public:
-	Bellow() :
+	InkSackGun() :
 		tr_(nullptr) {
 	}
-	virtual ~Bellow() {
+	virtual ~InkSackGun() {
 		if (anim_->getParamIndex("bellow_att") != -1)
 			anim_->setParamValue("bellow_att", 0);
 	}

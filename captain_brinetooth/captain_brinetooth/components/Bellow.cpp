@@ -6,13 +6,13 @@
 
 using namespace ColLayers;
 
-void Bellow::init() {
+void InkSackGun::init() {
 	tr_ = entity_->getComponent<Transform>();
 	assert(tr_ != nullptr);
 	anim_ = entity_->getComponent<AnimBlendGraph>();
 }
 
-void Bellow::update() {
+void InkSackGun::update() {
 	if (entity_->hasComponent<Player_Health>()) {
 		if (!entity_->getComponent<PlayerController>()->isPlayerDashing() && !entity_->getComponent<Player_Health>()->getPlayerIsDying()) {
 			if (ih().mouseButtonEvent() || ih().keyUpEvent()) {
@@ -20,6 +20,7 @@ void Bellow::update() {
 
 					//Player not attacking or in combo
 					if (CURRENT_STATUS == STATUS::Iddle && shotActivationTime + timeBetweenShots < sdlutils().currRealTime()) {
+						entity_->getComponent<PlayerController>()->canFlipAtk();
 						std::cout << "Started shooting\n";
 
 						//Set player as sawing
@@ -53,7 +54,7 @@ void Bellow::update() {
 	}
 }
 
-void Bellow::shoot() {
+void InkSackGun::shoot() {
 	auto* level0 = entity_->getMngr()->getHandler<Map>()->getComponent<Level0>();
 	Entity* bullet = entity_->getMngr()->addEntity();
 

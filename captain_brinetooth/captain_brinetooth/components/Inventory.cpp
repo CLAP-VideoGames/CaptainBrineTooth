@@ -23,8 +23,9 @@ void Inventory::init() {
 	}
 	//Init Coins & Baits
 	coins_, temp_coins, display_coins, aux_coins = 0;
-	baits_, temp_baits, display_baits, pityBait_;
-	pityCount = 8;
+	baits_, temp_baits, display_baits, pityCount = 0;
+	pityBait_ = 8;
+
 	for (int y = 0; y < 2; y++) {
 		for (int x = 0; x < 3; x++)
 			framepos.push_back(Vector2D(x, y));
@@ -215,7 +216,7 @@ void Inventory::addWeaponById(int weapToAdd) {
 		currentWeapon = entity_->addComponent<MachineGun>();
 		break;
 	case PosibleWeapons::TypeInk:
-		currentWeapon = entity_->addComponent<Bellow>();
+		currentWeapon = entity_->addComponent<InkSackGun>();
 		break;
 	}
 }
@@ -269,7 +270,7 @@ void Inventory::removeWeaponById(int weapToAdd) {
 		entity_->removeComponent<MachineGun>();
 		break;
 	case PosibleWeapons::TypeInk:
-		entity_->removeComponent<Bellow>();
+		entity_->removeComponent<InkSackGun>();
 		break;
 	}
 }
@@ -293,13 +294,16 @@ void Inventory::addBaits(int n)
 	baits_ += n;
 	temp_baits += n;
 	elapsedtime_temp_baits = sdlutils().currRealTime();
+	pityCount = 0;
 }
 
 void Inventory::addPityBait(int n)
 {
 	pityCount += n;
-	if (pityCount >= pityBait_)
+	if (pityCount >= pityBait_) {
 		addBaits(1);
+		pityCount = 0;
+	}
 }
 
 void Inventory::substractBaits(int n)

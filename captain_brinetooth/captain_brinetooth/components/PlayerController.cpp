@@ -32,17 +32,12 @@ void PlayerController::init()
 	moveLeft = moveRight = paralized = false;
 	receiveInput = true;
 	jumpkey_pressed = false;
-	atkPityCd = 400;
+	allowFlipAtk, flipAtk = false;
 }
 
 
 void PlayerController::update()
 {
-	//Timer del cancel
-	atkPityTimer = sdlutils().currRealTime();
-	if (entity_->getComponent<Inventory>()->playerAttacking()) 
-		int io= 0;
-	bool pityAnimAtk = (entity_->getComponent<Inventory>()->playerAttacking()&&atkPityTimer<= atkPityCdTimer) ? true : false;
 #pragma region Input
 	//Gestion del input
 	assert(collider_ != nullptr);
@@ -76,10 +71,14 @@ void PlayerController::update()
 		if (ih().keyDownEvent()) {
 			if (ih().isKeyDown(SDL_SCANCODE_A)) {
 				moveLeft = true;
+				if (entity_->getComponent<Inventory>()->playerAttacking())
+					allowFlipAtk = true;
 			}
 
 			if (ih().isKeyDown(SDL_SCANCODE_D)) {
 				moveRight = true;
+				if (entity_->getComponent<Inventory>()->playerAttacking())
+					allowFlipAtk = true;
 			}
 		}
 
@@ -169,8 +168,11 @@ void PlayerController::update()
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(-speed_* speedModifier, vel.y));
 				if (entity_->hasComponent<Inventory>()) {
-					if (!entity_->getComponent<Inventory>()->playerAttacking() || pityAnimAtk) {
-						animController_->flipX(false);
+					if (!entity_->getComponent<Inventory>()->playerAttacking() || flipAtk) {
+						animController_->flipX(false); 
+						if (flipAtk) {
+							flipAtk = false; allowFlipAtk = false;
+						}
 					}
 				}
 				else {
@@ -181,8 +183,11 @@ void PlayerController::update()
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
 				collider_->setSpeed(Vector2D(speed_*speedModifier, vel.y));
 				if (entity_->hasComponent<Inventory>()) {
-					if (!entity_->getComponent<Inventory>()->playerAttacking() || pityAnimAtk) {
+					if (!entity_->getComponent<Inventory>()->playerAttacking() || flipAtk) {
 						animController_->flipX(true);
+						if (flipAtk) {
+							flipAtk = false; allowFlipAtk = false;
+						}
 					}
 				}
 				else {
@@ -336,7 +341,8 @@ const bool& PlayerController::isPlayerDashing()
 void PlayerController::setMoveLeft(bool state) { moveLeft = state; }
 void PlayerController::setMoveRight(bool state) { moveRight = state; }
 
-void PlayerController::startAtkCancelTimer() { 
-	atkPityCdTimer = atkPityTimer + atkPityCd;
+void PlayerController::canFlipAtk() { 
+	if(allowFlipAtk)
+		flipAtk = true;
 };
 

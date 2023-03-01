@@ -46,7 +46,7 @@ class Gancho;
 class Crab;
 class MachineGun;
 class ElectricWhip;
-class Bellow;
+class InkSackGun;
 class VideoPlayer;
 class Fade;
 class JellyHatBehavior;
@@ -110,7 +110,7 @@ class Fists;
 	Crab,\
 	MachineGun,\
 	ElectricWhip,\
-	Bellow,\
+	InkSackGun,\
 	Connections,\
 	VideoPlayer,\
 	JellyHatBehavior,\

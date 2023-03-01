@@ -43,6 +43,7 @@ void Sword::update() {
 						stoppedSawTime = sdlutils().currRealTime();
 					}
 					else if (CURRENT_STATUS == STATUS::OnCombo) {
+						entity_->getComponent<PlayerController>()->canFlipAtk();
 						switch (CURRENT_ATTACK)
 						{
 						case ATTACKS::Attack1:

@@ -38,6 +38,8 @@ void Hammer::update() {
 					}
 					//Player already attacked once
 					else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack1) {
+						entity_->getComponent<PlayerController>()->canFlipAtk();
+						entity_->getComponent<PlayerController>()->canFlipAtk();
 						std::cout << "Martillazo! el segundo\n";
 
 						CURRENT_STATUS = STATUS::OnAnimationLock;
@@ -54,6 +56,7 @@ void Hammer::update() {
 						stoppedSawTime = sdlutils().currRealTime();
 					}
 					else if (CURRENT_STATUS == STATUS::OnCombo && CURRENT_ATTACK == ATTACKS::Attack2) {
+						entity_->getComponent<PlayerController>()->canFlipAtk();
 						std::cout << "Martillazo! el primero\n";
 
 						//Set player as sawing
