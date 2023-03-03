@@ -11,6 +11,12 @@
 // Instead of a Singleton class, we could make it part of
 // SDLUtils as well.
 
+#define DEATH_ZONE_X 23200
+#define DEATH_ZONE_Y 3200
+
+
+#define MAX_ANALOG 32767
+
 class InputHandler: public Singleton<InputHandler> {
 
 	friend Singleton<InputHandler> ;
@@ -52,6 +58,13 @@ public:
 		case SDL_MOUSEBUTTONUP:
 			onMouseButtonChange(event, false);
 			break;
+		case SDL_CONTROLLERAXISMOTION:
+		case SDL_CONTROLLERBUTTONDOWN:
+			onKeyDown(event);
+			break;
+		case SDL_CONTROLLERBUTTONUP:
+			onKeyUp(event);
+			break;
 		default:
 			break;
 		}
@@ -62,12 +75,65 @@ public:
 		return isKeyDownEvent_;
 	}
 
+	inline bool isGamePadButtonDown(SDL_Scancode key, MOUSEBUTTON b) {
+		bool pressGamePadButton = false;
+
+		switch (key){
+		case SDL_SCANCODE_SPACE:
+			pressGamePadButton = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A);
+			break;
+		case SDL_SCANCODE_LSHIFT:
+			pressGamePadButton = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B);
+			break;
+		case SDL_SCANCODE_A: {
+			int ret = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+
+			if (ret < 0 + DEATH_ZONE_X && ret > 0 - DEATH_ZONE_X) ret = 0;
+			else if (ret < 0 - DEATH_ZONE_X)
+				ret = 1;
+			else ret = 0;
+
+			pressGamePadButton = ret;
+		}
+			break;
+		case SDL_SCANCODE_D: {
+			int ret = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+
+			if (ret < 0 + DEATH_ZONE_X && ret > 0 - DEATH_ZONE_X) ret = 0;
+			else if (ret > 0 + DEATH_ZONE_X)
+				ret = 1;
+			else ret = 0;
+
+			pressGamePadButton = ret;
+		}
+			break;
+		default:
+			break;
+		}
+
+		switch (b) {
+		case InputHandler::MOUSEBUTTON::LEFT:
+			pressGamePadButton = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X);
+			break;
+		case InputHandler::MOUSEBUTTON::MIDDLE:
+			pressGamePadButton = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_Y);
+			break;
+		default:
+			break;
+		}
+
+
+		
+		return pressGamePadButton;
+	}
+
+
 	inline bool keyUpEvent() {
 		return isKeyUpEvent_;
 	}
 
 	inline bool isKeyDown(SDL_Scancode key) {
-		return keyDownEvent() && kbState_[key] == 1;
+		return (keyDownEvent() && kbState_[key] == 1) || (keyDownEvent() && isGamePadButtonDown(key, InputHandler::MOUSEBUTTON::RIGHT));
 	}
 
 	inline bool isKeyDown(SDL_Keycode key) {
@@ -96,7 +162,7 @@ public:
 	}
 
 	inline int getMouseButtonState(MOUSEBUTTON b) {
-		return mbState_[b];
+		return mbState_[b] || isGamePadButtonDown(SDL_SCANCODE_0,b);
 	}
 
 	inline bool getMouseButtonHeld(){
@@ -118,6 +184,13 @@ private:
 	InputHandler() {
 		kbState_ = SDL_GetKeyboardState(0);
 		clearState();
+
+		int i = 0;
+		while (controller == nullptr && i < SDL_NumJoysticks()) {
+			if (SDL_IsGameController(i))
+				controller = SDL_GameControllerOpen(i);
+			i++;
+		}
 	}
 
 	inline void onKeyDown(const SDL_Event&) {
@@ -126,6 +199,10 @@ private:
 
 	inline void onKeyUp(const SDL_Event&) {
 		isKeyUpEvent_ = true;
+	}
+
+	inline void onGamePadButtonDown(const SDL_Event&) {
+		isGamePadButtonDownEvent_ = true;
 	}
 
 	inline void onMouseMotion(const SDL_Event &event) {
@@ -152,9 +229,21 @@ private:
 		default:
 			break;
 		}
+		switch (event.type)
+		{
+		case SDL_CONTROLLERBUTTONUP:
+			isMouseButtonEvent_ = true;
+			break;
+		case SDL_CONTROLLERBUTTONDOWN:
+			isMouseButtonEvent_ = true;
+			break;
+		default:
+			break;
+		}
 	}
 
 	bool isKeyUpEvent_;
+	bool isGamePadButtonDownEvent_;
 	bool isKeyDownEvent_;
 	bool isMouseMotionEvent_;
 	bool isMouseButtonEvent_;
@@ -164,6 +253,7 @@ private:
 	bool isLeftMousePressed_;
 	std::pair<Sint32, Sint32> mousePos_;
 	std::array<bool, 3> mbState_;
+	_SDL_GameController* controller = nullptr;
 	const Uint8 *kbState_;
 };
 

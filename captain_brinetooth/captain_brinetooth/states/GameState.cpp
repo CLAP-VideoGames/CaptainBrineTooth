@@ -95,6 +95,7 @@ void GameState::loadGame()
 			readtxt >> ability;
 			infoabilities[i] = (bool)ability;
 		}
+		readtxt.close();
 		//Tras leer las habilidades se las damos al usuario 
 		manager_->getHandler<Player>()->getComponent<Inventory>()->addCoins(pointsRead);
 		manager_->getHandler<Player>()->getComponent<SkillTree>()->initSkillsFromMatch(infoabilities);
