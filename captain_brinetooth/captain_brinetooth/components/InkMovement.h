@@ -9,12 +9,7 @@
 
 class InkMovement : public Component {
 public:
-	InkMovement(bool lookingLeft) :
-		lookingLeft_(lookingLeft)
-	{
-		initialVelocity = 10;
-		deacceleration = 0.9;
-	}
+	InkMovement(bool lookingLeft);
 	virtual ~InkMovement() {
 	}
 

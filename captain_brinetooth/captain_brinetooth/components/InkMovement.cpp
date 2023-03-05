@@ -1,9 +1,16 @@
 #include "InkMovement.h"
 
+InkMovement::InkMovement(bool lookingLeft)
+{
+	lookingLeft_ = lookingLeft;
+	initialVelocity = 2;
+	deacceleration = 0.985;
+}
+
 void InkMovement::init() {
 	box = entity_->getComponent<BoxCollider>();
 
-	box->getBody()->SetGravityScale(0);
+	box->getBody()->SetGravityScale(box->getBody()->GetGravityScale()*0.2f);
 
 	float xVel;
 

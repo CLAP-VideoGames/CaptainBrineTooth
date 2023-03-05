@@ -71,14 +71,16 @@ void PlayerController::update()
 		if (ih().keyDownEvent()) {
 			if (ih().isKeyDown(SDL_SCANCODE_A)) {
 				moveLeft = true;
-				if (entity_->getComponent<Inventory>()->playerAttacking())
-					allowFlipAtk = true;
+				if (entity_->hasComponent<Inventory>())
+					if (entity_->getComponent<Inventory>()->playerAttacking())
+						allowFlipAtk = true;
 			}
 
 			if (ih().isKeyDown(SDL_SCANCODE_D)) {
 				moveRight = true;
-				if (entity_->getComponent<Inventory>()->playerAttacking())
-					allowFlipAtk = true;
+				if (entity_->hasComponent<Inventory>())
+					if (entity_->getComponent<Inventory>()->playerAttacking())
+						allowFlipAtk = true;
 			}
 		}
 
@@ -125,7 +127,7 @@ void PlayerController::update()
 
 #pragma endregion
 #pragma region Animaciones
-		//Esta tocando suelo
+	//Esta tocando suelo
 	if (isOnFloor) {
 		animController_->setParamValue("NotOnFloor", 0);
 	}
@@ -156,8 +158,14 @@ void PlayerController::update()
 	//Ambas direcciones o ninguna
 	if (!isDashing) {
 		//Slow cuando se ataca
-		if (entity_->getComponent<Inventory>()->playerAttacking() && isOnFloor) {
-			speedModifier = 0.5f;
+
+		if (entity_->hasComponent<Inventory>()) {
+			if (entity_->getComponent<Inventory>()->playerAttacking() && isOnFloor)
+				speedModifier = 0.5f;
+
+			else if (isOnFloor)
+				speedModifier = 0.5f;
+
 		}
 
 		if ((moveLeft && moveRight) || (!moveLeft && !moveRight)) {
@@ -166,10 +174,10 @@ void PlayerController::update()
 		else {
 			if (moveLeft) {	//izqda
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-				collider_->setSpeed(Vector2D(-speed_* speedModifier, vel.y));
+				collider_->setSpeed(Vector2D(-speed_ * speedModifier, vel.y));
 				if (entity_->hasComponent<Inventory>()) {
 					if (!entity_->getComponent<Inventory>()->playerAttacking() || flipAtk) {
-						animController_->flipX(false); 
+						animController_->flipX(false);
 						if (flipAtk) {
 							flipAtk = false; allowFlipAtk = false;
 						}
@@ -181,7 +189,7 @@ void PlayerController::update()
 			}
 			if (moveRight) {	//drcha
 				b2Vec2 vel = collider_->getBody()->GetLinearVelocity();
-				collider_->setSpeed(Vector2D(speed_*speedModifier, vel.y));
+				collider_->setSpeed(Vector2D(speed_ * speedModifier, vel.y));
 				if (entity_->hasComponent<Inventory>()) {
 					if (!entity_->getComponent<Inventory>()->playerAttacking() || flipAtk) {
 						animController_->flipX(true);
@@ -341,8 +349,8 @@ const bool& PlayerController::isPlayerDashing()
 void PlayerController::setMoveLeft(bool state) { moveLeft = state; }
 void PlayerController::setMoveRight(bool state) { moveRight = state; }
 
-void PlayerController::canFlipAtk() { 
-	if(allowFlipAtk)
+void PlayerController::canFlipAtk() {
+	if (allowFlipAtk)
 		flipAtk = true;
 };
 
